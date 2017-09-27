@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberListSelect;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.mycollab.module.project.CurrentProjectVariables;

@@ -4,7 +4,7 @@ import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.MilestoneEvent;
+import com.mycollab.mobile.module.project.event.MilestoneEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.project.CurrentProjectVariables;

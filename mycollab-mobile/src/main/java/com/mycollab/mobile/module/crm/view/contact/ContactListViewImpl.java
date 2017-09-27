@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.crm.view.contact;
 
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.ContactEvent;
+import com.mycollab.mobile.module.crm.event.ContactEvent;
 import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.SearchInputField;

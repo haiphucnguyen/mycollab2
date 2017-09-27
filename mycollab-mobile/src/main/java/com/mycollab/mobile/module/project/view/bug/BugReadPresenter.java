@@ -2,8 +2,8 @@ package com.mycollab.mobile.module.project.view.bug;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.BugEvent;
-import com.mycollab.mobile.module.project.events.TicketEvent;
+import com.mycollab.mobile.module.project.event.BugEvent;
+import com.mycollab.mobile.module.project.event.TicketEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.project.CurrentProjectVariables;

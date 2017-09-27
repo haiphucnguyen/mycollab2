@@ -9,7 +9,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.mobile.module.project.ui.TimeLogComp;
 import com.mycollab.mobile.module.project.ui.TimeLogEditView;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;

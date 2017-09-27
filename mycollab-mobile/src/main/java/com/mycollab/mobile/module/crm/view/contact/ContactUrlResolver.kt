@@ -2,8 +2,8 @@ package com.mycollab.mobile.module.crm.view.contact
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.crm.events.ContactEvent
-import com.mycollab.mobile.module.crm.events.CrmEvent.GotoActivitiesView
+import com.mycollab.mobile.module.crm.event.ContactEvent
+import com.mycollab.mobile.module.crm.event.CrmEvent.GotoActivitiesView
 import com.mycollab.mobile.module.crm.view.CrmModuleScreenData
 import com.mycollab.mobile.module.crm.view.CrmUrlResolver
 import com.mycollab.module.crm.domain.Contact

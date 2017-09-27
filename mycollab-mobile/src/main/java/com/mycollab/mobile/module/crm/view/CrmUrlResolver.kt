@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.crm.view
 
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.crm.events.CrmEvent
+import com.mycollab.mobile.module.crm.event.CrmEvent
 import com.mycollab.mobile.module.crm.view.account.AccountUrlResolver
 import com.mycollab.mobile.module.crm.view.activity.ActivityUrlResolver
 import com.mycollab.mobile.module.crm.view.campaign.CampaignUrlResolver
@@ -10,7 +10,7 @@ import com.mycollab.mobile.module.crm.view.contact.ContactUrlResolver
 import com.mycollab.mobile.module.crm.view.lead.LeadUrlResolver
 import com.mycollab.mobile.module.crm.view.opportunity.OpportunityUrlResolver
 import com.mycollab.mobile.shell.ModuleHelper
-import com.mycollab.mobile.shell.events.ShellEvent
+import com.mycollab.mobile.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.UrlResolver
 
 /**

@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.mobile.MobileApplication;
-import com.mycollab.mobile.module.user.events.UserEvent;
+import com.mycollab.mobile.module.user.event.UserEvent;
 import com.mycollab.mobile.mvp.AbstractPresenter;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.PageView;

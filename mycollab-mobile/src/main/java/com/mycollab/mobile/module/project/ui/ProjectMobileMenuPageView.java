@@ -2,8 +2,8 @@ package com.mycollab.mobile.module.project.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.*;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.module.project.event.*;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;

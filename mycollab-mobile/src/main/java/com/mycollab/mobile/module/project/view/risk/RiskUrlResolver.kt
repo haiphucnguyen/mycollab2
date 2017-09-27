@@ -2,7 +2,7 @@ package com.mycollab.mobile.module.project.view.risk
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.project.events.ProjectEvent
+import com.mycollab.mobile.module.project.event.ProjectEvent
 import com.mycollab.mobile.module.project.view.ProjectUrlResolver
 import com.mycollab.mobile.module.project.view.parameters.ProjectScreenData
 import com.mycollab.mobile.module.project.view.parameters.RiskScreenData

@@ -1,11 +1,11 @@
 package com.mycollab.premium.mobile.module.crm.view.account;
 
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.AccountEvent;
+import com.mycollab.mobile.module.crm.event.AccountEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.module.crm.view.account.AccountAddView;
 import com.mycollab.mobile.module.crm.view.account.IAccountAddPresenter;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.service.AccountService;

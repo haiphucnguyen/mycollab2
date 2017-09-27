@@ -2,7 +2,7 @@ package com.mycollab.premium.mobile.module.project.view.bug;
 
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.BugEvent;
+import com.mycollab.mobile.module.project.event.BugEvent;
 import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.bug.BugAddView;

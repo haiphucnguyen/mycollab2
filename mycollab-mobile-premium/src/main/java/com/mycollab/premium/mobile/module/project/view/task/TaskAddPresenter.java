@@ -6,7 +6,7 @@ import com.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUpl
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.task.ITaskAddPresenter;
 import com.mycollab.mobile.module.project.view.task.TaskAddView;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;

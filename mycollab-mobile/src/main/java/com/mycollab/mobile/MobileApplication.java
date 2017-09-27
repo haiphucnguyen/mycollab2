@@ -10,7 +10,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.mobile.module.user.view.LoginPresenter;
 import com.mycollab.mobile.shell.view.ShellUrlResolver;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.shell.view.ShellController;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;

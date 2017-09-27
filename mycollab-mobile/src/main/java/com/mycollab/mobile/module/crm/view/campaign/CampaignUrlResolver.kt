@@ -2,8 +2,8 @@ package com.mycollab.mobile.module.crm.view.campaign
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.crm.events.CampaignEvent
-import com.mycollab.mobile.module.crm.events.CrmEvent
+import com.mycollab.mobile.module.crm.event.CampaignEvent
+import com.mycollab.mobile.module.crm.event.CrmEvent
 import com.mycollab.mobile.module.crm.view.CrmModuleScreenData
 import com.mycollab.mobile.module.crm.view.CrmUrlResolver
 import com.mycollab.module.crm.domain.CampaignWithBLOBs

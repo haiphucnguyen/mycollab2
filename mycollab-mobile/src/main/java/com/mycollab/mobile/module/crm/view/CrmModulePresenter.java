@@ -4,7 +4,7 @@ import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.MobileApplication;
-import com.mycollab.mobile.module.crm.events.CrmEvent;
+import com.mycollab.mobile.module.crm.event.CrmEvent;
 import com.mycollab.mobile.shell.ModuleHelper;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

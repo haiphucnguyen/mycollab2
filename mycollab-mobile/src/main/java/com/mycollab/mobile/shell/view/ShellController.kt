@@ -5,10 +5,10 @@ import com.mycollab.eventmanager.ApplicationEventListener
 import com.mycollab.mobile.MobileApplication
 import com.mycollab.mobile.module.crm.view.CrmModulePresenter
 import com.mycollab.mobile.module.crm.view.CrmModuleScreenData
-import com.mycollab.mobile.module.project.ProjectModuleScreenData
 import com.mycollab.mobile.module.project.view.ProjectModulePresenter
+import com.mycollab.mobile.module.project.view.parameters.ProjectModuleScreenData
 import com.mycollab.mobile.module.user.view.LoginPresenter
-import com.mycollab.mobile.shell.events.ShellEvent
+import com.mycollab.mobile.shell.event.ShellEvent
 import com.mycollab.mobile.ui.IMobileView
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver
@@ -44,14 +44,14 @@ class ShellController(val mainNav: NavigationManager) : AbstractController() {
         this.register(object : ApplicationEventListener<ShellEvent.GotoCrmModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoCrmModule) {
                 val presenter = PresenterResolver.getPresenter(CrmModulePresenter::class.java)
-                val screenData = CrmModuleScreenData.GotoModule(event.data as Array<out String>?)
+                val screenData = CrmModuleScreenData.GotoModule(event.data as Array<String>?)
                 presenter.go(mainNav, screenData)
             }
         })
         this.register(object : ApplicationEventListener<ShellEvent.GotoProjectModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoProjectModule) {
                 val presenter = PresenterResolver.getPresenter(ProjectModulePresenter::class.java)
-                val screenData = ProjectModuleScreenData.GotoModule(event.data as Array<out String>?)
+                val screenData = ProjectModuleScreenData.GotoModule(event.data as Array<String>?)
                 presenter.go(mainNav, screenData)
             }
         })
@@ -62,7 +62,7 @@ class ShellController(val mainNav: NavigationManager) : AbstractController() {
                     if (event.data is IMobileView) {
                         (event.data as IMobileView).setPreviousComponent(mainNav.currentComponent)
                     }
-                    mainNav.navigateTo(event.data as Component)
+                    mainNav.navigateTo(event.data)
                 }
             }
         })

@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.mobile.module.user.events.UserEvent;
+import com.mycollab.mobile.module.user.event.UserEvent;
 import com.mycollab.mobile.ui.AbstractMobileMainView;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.vaadin.AppUI;

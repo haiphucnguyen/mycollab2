@@ -3,7 +3,7 @@ package com.mycollab.mobile.shell.view;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.mobile.mvp.AbstractPresenter;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;

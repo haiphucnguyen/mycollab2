@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.crm.view.opportunity;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.crm.events.OpportunityEvent;
+import com.mycollab.mobile.module.crm.event.OpportunityEvent;
 import com.mycollab.mobile.module.crm.ui.CrmPreviewFormControlsGenerator;
 import com.mycollab.mobile.module.crm.view.activity.RelatedActivityNavigatorButton;
 import com.mycollab.mobile.module.crm.view.contact.RelatedContactNavigatorButton;

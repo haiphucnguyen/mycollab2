@@ -4,7 +4,7 @@ import com.mycollab.common.UrlEncodeDecoder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.ProjectMemberEvent;
+import com.mycollab.mobile.module.project.event.ProjectMemberEvent;
 import com.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.mycollab.mobile.ui.ConfirmDialog;

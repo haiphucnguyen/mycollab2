@@ -2,9 +2,9 @@ package com.mycollab.premium.mobile.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.RiskEvent;
+import com.mycollab.mobile.module.project.event.RiskEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;

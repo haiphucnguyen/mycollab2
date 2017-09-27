@@ -2,8 +2,8 @@ package com.mycollab.mobile.module.crm.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.*;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.module.crm.event.*;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.i18n.*;

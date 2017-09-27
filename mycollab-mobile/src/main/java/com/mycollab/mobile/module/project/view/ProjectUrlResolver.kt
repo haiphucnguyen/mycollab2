@@ -6,7 +6,7 @@ import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.mobile.module.project.events.ProjectEvent
+import com.mycollab.mobile.module.project.event.ProjectEvent
 import com.mycollab.mobile.module.project.view.bug.BugUrlResolver
 import com.mycollab.mobile.module.project.view.message.MessageUrlResolver
 import com.mycollab.mobile.module.project.view.milestone.MilestoneUrlResolver
@@ -16,7 +16,7 @@ import com.mycollab.mobile.module.project.view.settings.UserUrlResolver
 import com.mycollab.mobile.module.project.view.task.TaskUrlResolver
 import com.mycollab.mobile.module.project.view.ticket.TicketUrlResolver
 import com.mycollab.mobile.shell.ModuleHelper
-import com.mycollab.mobile.shell.events.ShellEvent
+import com.mycollab.mobile.shell.event.ShellEvent
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI

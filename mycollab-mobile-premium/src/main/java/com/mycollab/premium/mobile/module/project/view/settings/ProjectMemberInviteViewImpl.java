@@ -2,7 +2,7 @@ package com.mycollab.premium.mobile.module.project.view.settings;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.SecurityI18nEnum;
-import com.mycollab.mobile.module.project.events.ProjectMemberEvent;
+import com.mycollab.mobile.module.project.event.ProjectMemberEvent;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberInviteView;
 import com.mycollab.mobile.module.project.view.settings.ProjectRoleListSelect;
 import com.mycollab.mobile.ui.AbstractMobilePageView;

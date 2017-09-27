@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.crm.view.account;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.crm.events.AccountEvent;
+import com.mycollab.mobile.module.crm.event.AccountEvent;
 import com.mycollab.mobile.module.crm.ui.CrmPreviewFormControlsGenerator;
 import com.mycollab.mobile.module.crm.view.activity.RelatedActivityNavigatorButton;
 import com.mycollab.mobile.module.crm.view.cases.RelatedCaseNavigatorButton;

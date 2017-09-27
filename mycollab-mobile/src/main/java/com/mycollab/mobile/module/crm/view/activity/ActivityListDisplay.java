@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.crm.view.activity;
 
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.ActivityEvent;
+import com.mycollab.mobile.module.crm.event.ActivityEvent;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.crm.CrmTypeConstants;

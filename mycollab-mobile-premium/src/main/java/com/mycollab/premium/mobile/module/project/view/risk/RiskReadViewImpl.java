@@ -9,7 +9,7 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.RiskEvent;
+import com.mycollab.mobile.module.project.event.RiskEvent;
 import com.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
 import com.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;

@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.ActivityEvent;
+import com.mycollab.mobile.module.crm.event.ActivityEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.crm.CrmLinkGenerator;

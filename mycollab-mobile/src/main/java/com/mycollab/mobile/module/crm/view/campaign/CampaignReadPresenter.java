@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.crm.view.campaign;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.crm.events.CampaignEvent;
+import com.mycollab.mobile.module.crm.event.CampaignEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.crm.domain.SimpleCampaign;

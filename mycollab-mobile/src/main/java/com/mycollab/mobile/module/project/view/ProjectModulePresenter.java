@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.project.view;
 import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.MobileApplication;
-import com.mycollab.mobile.module.project.events.ProjectEvent;
+import com.mycollab.mobile.module.project.event.ProjectEvent;
 import com.mycollab.mobile.shell.ModuleHelper;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.vaadin.AppUI;

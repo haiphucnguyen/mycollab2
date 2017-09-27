@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.project.view.milestone;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.form.view.DynaFormLayout;
-import com.mycollab.mobile.module.project.events.MilestoneEvent;
+import com.mycollab.mobile.module.project.event.MilestoneEvent;
 import com.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.mycollab.mobile.module.project.view.ticket.TicketNavigatorButton;

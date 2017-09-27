@@ -9,7 +9,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.MilestoneEvent;
+import com.mycollab.mobile.module.project.event.MilestoneEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.SearchInputView;
 import com.mycollab.mobile.ui.SearchNavigationButton;

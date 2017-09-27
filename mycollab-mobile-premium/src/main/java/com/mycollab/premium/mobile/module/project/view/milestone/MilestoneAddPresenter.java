@@ -5,7 +5,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.milestone.IMilestoneAddPresenter;
 import com.mycollab.mobile.module.project.view.milestone.MilestoneAddView;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.Milestone;

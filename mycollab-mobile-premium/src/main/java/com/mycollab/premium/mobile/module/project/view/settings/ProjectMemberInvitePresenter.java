@@ -2,11 +2,11 @@ package com.mycollab.premium.mobile.module.project.view.settings;
 
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.module.project.events.ProjectMemberEvent;
+import com.mycollab.mobile.module.project.event.ProjectMemberEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.settings.IProjectMemberInvitePresenter;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberInviteView;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;

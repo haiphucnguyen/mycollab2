@@ -2,7 +2,7 @@ package com.mycollab.mobile.shell.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.mobile.shell.events.ShellEvent;
+import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.AbstractMobileMainView;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.vaadin.UserUIContext;
