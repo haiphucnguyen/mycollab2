@@ -43,8 +43,8 @@ public class AccountSelectionWindow extends MWindow {
     }
 
     private void createAccountList() {
-        tableItem = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname(), AccountTableFieldDef.city(),
-                AccountTableFieldDef.assignUser()));
+        tableItem = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname, AccountTableFieldDef.city,
+                AccountTableFieldDef.assignUser));
 
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);

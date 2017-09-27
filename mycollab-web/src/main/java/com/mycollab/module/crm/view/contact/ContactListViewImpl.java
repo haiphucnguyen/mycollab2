@@ -39,9 +39,9 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
 
     @Override
     protected AbstractPagedBeanTable<ContactSearchCriteria, SimpleContact> createBeanTable() {
-        return new ContactTableDisplay(CrmTypeConstants.CONTACT, ContactTableFieldDef.selected(),
-                Arrays.asList(ContactTableFieldDef.name(), ContactTableFieldDef.title(),
-                        ContactTableFieldDef.account(), ContactTableFieldDef.email(), ContactTableFieldDef.phoneOffice()));
+        return new ContactTableDisplay(CrmTypeConstants.CONTACT, ContactTableFieldDef.selected,
+                Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.title,
+                        ContactTableFieldDef.account, ContactTableFieldDef.email, ContactTableFieldDef.phoneOffice));
     }
 
     @Override

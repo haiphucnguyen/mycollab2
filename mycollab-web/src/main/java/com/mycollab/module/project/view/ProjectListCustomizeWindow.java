@@ -22,10 +22,10 @@ public class ProjectListCustomizeWindow extends CustomizedTableWindow {
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(ProjectTableFieldDef.projectName(), ProjectTableFieldDef.client(),
-                ProjectTableFieldDef.lead(), ProjectTableFieldDef.startDate(), ProjectTableFieldDef.status(),
-                ProjectTableFieldDef.homePage(), ProjectTableFieldDef.budget(), ProjectTableFieldDef.endDate(),
-                ProjectTableFieldDef.createdDate(), ProjectTableFieldDef.rate(), ProjectTableFieldDef.overtimeRate(),
-                ProjectTableFieldDef.budget(), ProjectTableFieldDef.actualBudget());
+        return Arrays.asList(ProjectTableFieldDef.projectName, ProjectTableFieldDef.client,
+                ProjectTableFieldDef.lead, ProjectTableFieldDef.startDate, ProjectTableFieldDef.status,
+                ProjectTableFieldDef.homePage, ProjectTableFieldDef.budget, ProjectTableFieldDef.endDate,
+                ProjectTableFieldDef.createdDate, ProjectTableFieldDef.rate, ProjectTableFieldDef.overtimeRate,
+                ProjectTableFieldDef.budget, ProjectTableFieldDef.actualBudget);
     }
 }

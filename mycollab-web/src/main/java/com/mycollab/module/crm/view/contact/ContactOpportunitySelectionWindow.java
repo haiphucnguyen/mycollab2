@@ -32,9 +32,9 @@ public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindo
 
     @Override
     protected void initUI() {
-        tableItem = new OpportunityTableDisplay(OpportunityTableFieldDef.selected(), Arrays.asList(
-                OpportunityTableFieldDef.opportunityName(), OpportunityTableFieldDef.saleStage(),
-                OpportunityTableFieldDef.expectedCloseDate()));
+        tableItem = new OpportunityTableDisplay(OpportunityTableFieldDef.selected, Arrays.asList(
+                OpportunityTableFieldDef.opportunityName, OpportunityTableFieldDef.saleStage,
+                OpportunityTableFieldDef.expectedCloseDate));
 
         tableItem.addGeneratedColumn("opportunityname", (source, itemId, columnId) -> {
             final SimpleOpportunity opportunity = tableItem.getBeanByIndex(itemId);

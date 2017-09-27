@@ -40,10 +40,10 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
     @Override
     protected AbstractPagedBeanTable<CaseSearchCriteria, SimpleCase> createBeanTable() {
         return new CaseTableDisplay(
-                CrmTypeConstants.CASE, CaseTableFieldDef.selected(),
-                Arrays.asList(CaseTableFieldDef.subject(), CaseTableFieldDef.account(),
-                        CaseTableFieldDef.priority(), CaseTableFieldDef.status(),
-                        CaseTableFieldDef.assignUser(), CaseTableFieldDef.createdTime()));
+                CrmTypeConstants.CASE, CaseTableFieldDef.selected,
+                Arrays.asList(CaseTableFieldDef.subject, CaseTableFieldDef.account,
+                        CaseTableFieldDef.priority, CaseTableFieldDef.status,
+                        CaseTableFieldDef.assignUser, CaseTableFieldDef.createdTime));
     }
 
     @Override

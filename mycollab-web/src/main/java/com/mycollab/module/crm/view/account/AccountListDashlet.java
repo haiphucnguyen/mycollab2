@@ -29,8 +29,8 @@ public class AccountListDashlet extends Depot {
     public AccountListDashlet() {
         super(UserUIContext.getMessage(AccountI18nEnum.MY_ITEMS), new VerticalLayout());
         this.setMargin(new MarginInfo(true, false, false, false));
-        tableItem = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname(),
-                AccountTableFieldDef.phoneoffice(), AccountTableFieldDef.email()));
+        tableItem = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname,
+                AccountTableFieldDef.phoneoffice, AccountTableFieldDef.email));
         bodyContent.addComponent(tableItem);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new AccountListCustomizeWindow(tableItem)))

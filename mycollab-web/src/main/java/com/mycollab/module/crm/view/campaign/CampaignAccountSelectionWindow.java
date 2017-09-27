@@ -32,9 +32,9 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
 
     @Override
     protected void initUI() {
-        tableItem = new AccountTableDisplay(AccountTableFieldDef.selected(),
-                Arrays.asList(AccountTableFieldDef.accountname(), AccountTableFieldDef.phoneoffice(),
-                        AccountTableFieldDef.email(), AccountTableFieldDef.city()));
+        tableItem = new AccountTableDisplay(AccountTableFieldDef.selected,
+                Arrays.asList(AccountTableFieldDef.accountname, AccountTableFieldDef.phoneoffice,
+                        AccountTableFieldDef.email, AccountTableFieldDef.city));
 
         tableItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
             SimpleAccount account = tableItem.getBeanByIndex(itemId);

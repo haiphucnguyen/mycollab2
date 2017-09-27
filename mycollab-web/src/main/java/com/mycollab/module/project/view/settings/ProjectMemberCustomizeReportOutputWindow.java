@@ -27,17 +27,17 @@ public class ProjectMemberCustomizeReportOutputWindow extends CustomizeReportOut
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(ProjectMemberTableFieldDef.memberName(), ProjectMemberTableFieldDef.roleName(),
-                ProjectMemberTableFieldDef.billingRate(), ProjectMemberTableFieldDef.overtimeRate());
+        return Arrays.asList(ProjectMemberTableFieldDef.memberName, ProjectMemberTableFieldDef.roleName,
+                ProjectMemberTableFieldDef.billingRate, ProjectMemberTableFieldDef.overtimeRate);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(ProjectMemberTableFieldDef.projectName(), ProjectMemberTableFieldDef.memberName(),
-                ProjectMemberTableFieldDef.roleName(), ProjectMemberTableFieldDef.numOpenTasks(),
-                ProjectMemberTableFieldDef.numOpenBugs(), ProjectMemberTableFieldDef.totalBillableLogTime(),
-                ProjectMemberTableFieldDef.totalNonBillableLogTime(), ProjectMemberTableFieldDef.billingRate(),
-                ProjectMemberTableFieldDef.overtimeRate());
+        return Arrays.asList(ProjectMemberTableFieldDef.projectName, ProjectMemberTableFieldDef.memberName,
+                ProjectMemberTableFieldDef.roleName, ProjectMemberTableFieldDef.numOpenTasks,
+                ProjectMemberTableFieldDef.numOpenBugs, ProjectMemberTableFieldDef.totalBillableLogTime,
+                ProjectMemberTableFieldDef.totalNonBillableLogTime, ProjectMemberTableFieldDef.billingRate,
+                ProjectMemberTableFieldDef.overtimeRate);
     }
 
     @Override

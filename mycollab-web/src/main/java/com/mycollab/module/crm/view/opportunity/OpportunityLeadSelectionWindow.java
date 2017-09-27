@@ -30,9 +30,9 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
 
     @Override
     protected void initUI() {
-        tableItem = new LeadTableDisplay(LeadTableFieldDef.selected(),
-                Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.status(),
-                        LeadTableFieldDef.email(), LeadTableFieldDef.phoneoffice()));
+        tableItem = new LeadTableDisplay(LeadTableFieldDef.selected,
+                Arrays.asList(LeadTableFieldDef.name, LeadTableFieldDef.status,
+                        LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
 
         tableItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
             final SimpleLead lead = tableItem.getBeanByIndex(itemId);

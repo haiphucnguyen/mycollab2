@@ -39,10 +39,10 @@ public class LeadListViewImpl extends AbstractListItemComp<LeadSearchCriteria, S
 
     @Override
     protected AbstractPagedBeanTable<LeadSearchCriteria, SimpleLead> createBeanTable() {
-        return new LeadTableDisplay(CrmTypeConstants.LEAD, LeadTableFieldDef.selected(),
-                Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.status(),
-                        LeadTableFieldDef.accountName(), LeadTableFieldDef.phoneoffice(),
-                        LeadTableFieldDef.email(), LeadTableFieldDef.assignedUser()));
+        return new LeadTableDisplay(CrmTypeConstants.LEAD, LeadTableFieldDef.selected,
+                Arrays.asList(LeadTableFieldDef.name, LeadTableFieldDef.status,
+                        LeadTableFieldDef.accountName, LeadTableFieldDef.phoneoffice,
+                        LeadTableFieldDef.email, LeadTableFieldDef.assignedUser));
     }
 
     @Override

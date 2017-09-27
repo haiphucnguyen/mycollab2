@@ -4,7 +4,7 @@ import com.mycollab.common.TableViewField;
 import com.mycollab.db.query.VariableInjector;
 import com.mycollab.module.user.AdminTypeConstants;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
-import com.mycollab.module.user.accountsettings.view.UserTableFieldDef;
+import com.mycollab.module.user.accountsettings.fielddef.UserTableFieldDef;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
@@ -28,16 +28,16 @@ public class UserCustomizeReportOutputWindow extends CustomizeReportOutputWindow
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(UserTableFieldDef.displayName(), UserTableFieldDef.roleName(),
-                UserTableFieldDef.email(), UserTableFieldDef.birthday(),
-                UserTableFieldDef.officePhone(), UserTableFieldDef.homePhone(), UserTableFieldDef.company());
+        return Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
+                UserTableFieldDef.email, UserTableFieldDef.birthday,
+                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(UserTableFieldDef.displayName(), UserTableFieldDef.roleName(),
-                UserTableFieldDef.email(), UserTableFieldDef.birthday(),
-                UserTableFieldDef.officePhone(), UserTableFieldDef.homePhone(), UserTableFieldDef.company());
+        return Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
+                UserTableFieldDef.email, UserTableFieldDef.birthday,
+                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company);
     }
 
     @Override

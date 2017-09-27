@@ -84,8 +84,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         constructRemainTimeEntryPanel();
 
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
-                Arrays.asList(TimeTableFieldDef.logUser(), TimeTableFieldDef.logForDate(), TimeTableFieldDef.logValue(),
-                        TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), new TableViewField(null, "id",
+                Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
+                        TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new TableViewField(null, "id",
                                 WebUIConstants.TABLE_CONTROL_WIDTH)));
 
         tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {

@@ -43,9 +43,9 @@ public class OpportunitySelectionWindow extends MWindow {
     }
 
     private void createOpportunityList() {
-        tableItem = new OpportunityTableDisplay(Arrays.asList(OpportunityTableFieldDef.opportunityName(),
-                OpportunityTableFieldDef.saleStage(), OpportunityTableFieldDef.accountName(),
-                OpportunityTableFieldDef.assignUser()));
+        tableItem = new OpportunityTableDisplay(Arrays.asList(OpportunityTableFieldDef.opportunityName,
+                OpportunityTableFieldDef.saleStage, OpportunityTableFieldDef.accountName,
+                OpportunityTableFieldDef.assignUser));
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 

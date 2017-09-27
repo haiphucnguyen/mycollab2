@@ -32,19 +32,19 @@ public class BugCustomizeReportOutputWindow extends CustomizeReportOutputWindow<
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
-                BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
-                BugTableFieldDef.logBy(), BugTableFieldDef.dueDate(), BugTableFieldDef.assignUser(),
-                BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
+        return Arrays.asList(BugTableFieldDef.summary, BugTableFieldDef.environment, BugTableFieldDef.priority,
+                BugTableFieldDef.severity, BugTableFieldDef.status, BugTableFieldDef.resolution,
+                BugTableFieldDef.logBy, BugTableFieldDef.dueDate, BugTableFieldDef.assignUser,
+                BugTableFieldDef.billableHours, BugTableFieldDef.nonBillableHours);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
-                BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
-                BugTableFieldDef.logBy(), BugTableFieldDef.startDate(), BugTableFieldDef.endDate(), BugTableFieldDef.dueDate(),
-                BugTableFieldDef.assignUser(), BugTableFieldDef.milestoneName(), BugTableFieldDef.billableHours(),
-                BugTableFieldDef.nonBillableHours());
+        return Arrays.asList(BugTableFieldDef.summary, BugTableFieldDef.environment, BugTableFieldDef.priority,
+                BugTableFieldDef.severity, BugTableFieldDef.status, BugTableFieldDef.resolution,
+                BugTableFieldDef.logBy, BugTableFieldDef.startDate, BugTableFieldDef.endDate, BugTableFieldDef.dueDate,
+                BugTableFieldDef.assignUser, BugTableFieldDef.milestoneName, BugTableFieldDef.billableHours,
+                BugTableFieldDef.nonBillableHours);
     }
 
     @Override

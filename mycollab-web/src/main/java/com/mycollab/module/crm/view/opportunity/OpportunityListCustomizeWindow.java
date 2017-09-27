@@ -22,16 +22,16 @@ public class OpportunityListCustomizeWindow extends CustomizedTableWindow {
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(OpportunityTableFieldDef.accountName(),
-                OpportunityTableFieldDef.amount(),
-                OpportunityTableFieldDef.assignUser(),
-                OpportunityTableFieldDef.campaignName(),
-                OpportunityTableFieldDef.currency(),
-                OpportunityTableFieldDef.expectedCloseDate(),
-                OpportunityTableFieldDef.leadSource(),
-                OpportunityTableFieldDef.opportunityName(),
-                OpportunityTableFieldDef.probability(),
-                OpportunityTableFieldDef.type());
+        return Arrays.asList(OpportunityTableFieldDef.accountName,
+                OpportunityTableFieldDef.amount,
+                OpportunityTableFieldDef.assignUser,
+                OpportunityTableFieldDef.campaignName,
+                OpportunityTableFieldDef.currency,
+                OpportunityTableFieldDef.expectedCloseDate,
+                OpportunityTableFieldDef.leadSource,
+                OpportunityTableFieldDef.opportunityName,
+                OpportunityTableFieldDef.probability,
+                OpportunityTableFieldDef.type);
     }
 
 }

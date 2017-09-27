@@ -41,8 +41,8 @@ public class CampaignSelectionWindow extends MWindow {
     }
 
     private void createCampaignList() {
-        tableItem = new CampaignTableDisplay(Arrays.asList(CampaignTableFieldDef.campaignname(), CampaignTableFieldDef.type(),
-                CampaignTableFieldDef.status(), CampaignTableFieldDef.endDate(), CampaignTableFieldDef.assignUser()));
+        tableItem = new CampaignTableDisplay(Arrays.asList(CampaignTableFieldDef.campaignname, CampaignTableFieldDef.type,
+                CampaignTableFieldDef.status, CampaignTableFieldDef.endDate, CampaignTableFieldDef.assignUser));
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 

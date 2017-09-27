@@ -27,9 +27,9 @@ public class OpportunityContactSelectionWindow extends RelatedItemSelectionWindo
 
     @Override
     protected void initUI() {
-        tableItem = new ContactTableDisplay(ContactTableFieldDef.selected(),
-                Arrays.asList(ContactTableFieldDef.name(), ContactTableFieldDef.email(),
-                        ContactTableFieldDef.phoneOffice(), ContactTableFieldDef.account()));
+        tableItem = new ContactTableDisplay(ContactTableFieldDef.selected,
+                Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.email,
+                        ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account));
 
         Button selectBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), clickEvent -> close());
         selectBtn.setStyleName(WebThemes.BUTTON_ACTION);

@@ -33,9 +33,9 @@ class LeadCampaignSelectionWindow extends RelatedItemSelectionWindow<SimpleCampa
 
     @Override
     protected void initUI() {
-        tableItem = new CampaignTableDisplay(CampaignTableFieldDef.selected(),
-                Arrays.asList(CampaignTableFieldDef.campaignname(), CampaignTableFieldDef.status(),
-                        CampaignTableFieldDef.type(), CampaignTableFieldDef.endDate()));
+        tableItem = new CampaignTableDisplay(CampaignTableFieldDef.selected,
+                Arrays.asList(CampaignTableFieldDef.campaignname, CampaignTableFieldDef.status,
+                        CampaignTableFieldDef.type, CampaignTableFieldDef.endDate));
 
         tableItem.addGeneratedColumn("campaignname", (source, itemId, columnId) -> {
             final SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);

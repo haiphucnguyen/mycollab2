@@ -36,17 +36,17 @@ public class TicketCustomizeReportOutputWindow extends CustomizeReportOutputWind
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(TicketTableFieldDef.name(), TicketTableFieldDef.startdate(), TicketTableFieldDef.duedate(),
-                TicketTableFieldDef.priority(), TicketTableFieldDef.assignee(),
-                TicketTableFieldDef.billableHours(), TicketTableFieldDef.nonBillableHours());
+        return Arrays.asList(TicketTableFieldDef.name, TicketTableFieldDef.startdate, TicketTableFieldDef.duedate,
+                TicketTableFieldDef.priority, TicketTableFieldDef.assignee,
+                TicketTableFieldDef.billableHours, TicketTableFieldDef.nonBillableHours);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(TicketTableFieldDef.name(), TicketTableFieldDef.description(), TicketTableFieldDef.startdate(),
-                TicketTableFieldDef.enddate(), TicketTableFieldDef.duedate(),
-                TicketTableFieldDef.priority(), TicketTableFieldDef.logUser(),
-                TicketTableFieldDef.assignee(), TicketTableFieldDef.milestoneName(),
-                TicketTableFieldDef.billableHours(), TicketTableFieldDef.nonBillableHours());
+        return Arrays.asList(TicketTableFieldDef.name, TicketTableFieldDef.description, TicketTableFieldDef.startdate,
+                TicketTableFieldDef.enddate, TicketTableFieldDef.duedate,
+                TicketTableFieldDef.priority, TicketTableFieldDef.logUser,
+                TicketTableFieldDef.assignee, TicketTableFieldDef.milestoneName,
+                TicketTableFieldDef.billableHours, TicketTableFieldDef.nonBillableHours);
     }
 }

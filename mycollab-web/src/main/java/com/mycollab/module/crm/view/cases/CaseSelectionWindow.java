@@ -40,8 +40,8 @@ public class CaseSelectionWindow extends MWindow {
     }
 
     private void createCaseList() {
-        tableItem = new CaseTableDisplay(Arrays.asList(CaseTableFieldDef.subject(), CaseTableFieldDef.account(),
-                CaseTableFieldDef.priority(), CaseTableFieldDef.status(), CaseTableFieldDef.assignUser()));
+        tableItem = new CaseTableDisplay(Arrays.asList(CaseTableFieldDef.subject, CaseTableFieldDef.account,
+                CaseTableFieldDef.priority, CaseTableFieldDef.status, CaseTableFieldDef.assignUser));
         tableItem.setDisplayNumItems(10);
 
         tableItem.addGeneratedColumn("subject", (source, itemId, columnId) -> {

@@ -39,10 +39,10 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
 
     @Override
     protected AbstractPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> createBeanTable() {
-        return new CampaignTableDisplay(CrmTypeConstants.CAMPAIGN, CampaignTableFieldDef.selected(),
-                Arrays.asList(CampaignTableFieldDef.campaignname(), CampaignTableFieldDef.status(),
-                        CampaignTableFieldDef.type(), CampaignTableFieldDef.expectedRevenue(),
-                        CampaignTableFieldDef.endDate(), CampaignTableFieldDef.assignUser()));
+        return new CampaignTableDisplay(CrmTypeConstants.CAMPAIGN, CampaignTableFieldDef.selected,
+                Arrays.asList(CampaignTableFieldDef.campaignname, CampaignTableFieldDef.status,
+                        CampaignTableFieldDef.type, CampaignTableFieldDef.expectedRevenue,
+                        CampaignTableFieldDef.endDate, CampaignTableFieldDef.assignUser));
     }
 
     @Override

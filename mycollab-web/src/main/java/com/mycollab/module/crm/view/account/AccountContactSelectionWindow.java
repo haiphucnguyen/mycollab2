@@ -30,8 +30,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
 
     @Override
     protected void initUI() {
-        this.tableItem = new ContactTableDisplay(ContactTableFieldDef.selected(), Arrays.asList(ContactTableFieldDef.name(),
-                ContactTableFieldDef.title(), ContactTableFieldDef.account(), ContactTableFieldDef.phoneOffice()));
+        this.tableItem = new ContactTableDisplay(ContactTableFieldDef.selected, Arrays.asList(ContactTableFieldDef.name,
+                ContactTableFieldDef.title, ContactTableFieldDef.account, ContactTableFieldDef.phoneOffice));
 
         tableItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
             final SimpleContact contact = tableItem.getBeanByIndex(itemId);

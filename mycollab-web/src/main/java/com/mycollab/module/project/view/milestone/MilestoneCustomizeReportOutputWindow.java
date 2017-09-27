@@ -29,15 +29,15 @@ public class MilestoneCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(MilestoneTableFieldDef.milestoneName(), MilestoneTableFieldDef.startDate(),
-                MilestoneTableFieldDef.endDate(), MilestoneTableFieldDef.status(), MilestoneTableFieldDef.assignee());
+        return Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
+                MilestoneTableFieldDef.endDate, MilestoneTableFieldDef.status, MilestoneTableFieldDef.assignee);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(MilestoneTableFieldDef.milestoneName(), MilestoneTableFieldDef.startDate(),
-                MilestoneTableFieldDef.endDate(), MilestoneTableFieldDef.status(), MilestoneTableFieldDef.assignee(),
-                MilestoneTableFieldDef.billableHours(), MilestoneTableFieldDef.nonBillableHours());
+        return Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
+                MilestoneTableFieldDef.endDate, MilestoneTableFieldDef.status, MilestoneTableFieldDef.assignee,
+                MilestoneTableFieldDef.billableHours, MilestoneTableFieldDef.nonBillableHours);
     }
 
     @Override

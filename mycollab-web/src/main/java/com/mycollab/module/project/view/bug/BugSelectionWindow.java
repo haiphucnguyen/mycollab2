@@ -53,7 +53,7 @@ public class BugSelectionWindow extends MWindow {
 
     private DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> createBugTable() {
         final DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> tableItem = new BugTableDisplay(
-                Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.severity(), BugTableFieldDef.resolution()));
+                Arrays.asList(BugTableFieldDef.summary, BugTableFieldDef.severity, BugTableFieldDef.resolution));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
         tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {

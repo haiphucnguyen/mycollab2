@@ -42,8 +42,8 @@ public class LeadSelectionWindow extends MWindow {
     }
 
     private void createLeadList() {
-        tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name(), LeadTableFieldDef.status(),
-                LeadTableFieldDef.assignedUser(), LeadTableFieldDef.accountName()));
+        tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name, LeadTableFieldDef.status,
+                LeadTableFieldDef.assignedUser, LeadTableFieldDef.accountName));
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 

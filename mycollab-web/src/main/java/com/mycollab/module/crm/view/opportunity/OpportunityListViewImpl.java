@@ -41,10 +41,10 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
     @Override
     protected AbstractPagedBeanTable<OpportunitySearchCriteria, SimpleOpportunity> createBeanTable() {
         return new OpportunityTableDisplay(CrmTypeConstants.OPPORTUNITY,
-                OpportunityTableFieldDef.selected(), Arrays.asList(
-                OpportunityTableFieldDef.opportunityName(), OpportunityTableFieldDef.accountName(),
-                OpportunityTableFieldDef.saleStage(), OpportunityTableFieldDef.amount(),
-                OpportunityTableFieldDef.expectedCloseDate(), OpportunityTableFieldDef.assignUser()));
+                OpportunityTableFieldDef.selected, Arrays.asList(
+                OpportunityTableFieldDef.opportunityName, OpportunityTableFieldDef.accountName,
+                OpportunityTableFieldDef.saleStage, OpportunityTableFieldDef.amount,
+                OpportunityTableFieldDef.expectedCloseDate, OpportunityTableFieldDef.assignUser));
     }
 
     @Override

@@ -30,9 +30,9 @@ public class CaseContactSelectionWindow extends RelatedItemSelectionWindow<Simpl
 
     @Override
     protected void initUI() {
-        tableItem = new ContactTableDisplay(ContactTableFieldDef.selected(),
-                Arrays.asList(ContactTableFieldDef.name(), ContactTableFieldDef.email(),
-                        ContactTableFieldDef.phoneOffice(), ContactTableFieldDef.account()));
+        tableItem = new ContactTableDisplay(ContactTableFieldDef.selected,
+                Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.email,
+                        ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account));
 
         tableItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
             final SimpleContact contact = tableItem.getBeanByIndex(itemId);

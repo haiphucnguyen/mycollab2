@@ -30,8 +30,8 @@ public class LeadListDashlet extends Depot {
         super(UserUIContext.getMessage(LeadI18nEnum.MY_ITEMS), new VerticalLayout());
         this.setMargin(new MarginInfo(true, false, false, false));
 
-        tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name(),
-                LeadTableFieldDef.email(), LeadTableFieldDef.phoneoffice()));
+        tableItem = new LeadTableDisplay(Arrays.asList(LeadTableFieldDef.name,
+                LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
         bodyContent.addComponent(tableItem);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new LeadListCustomizeWindow(tableItem)))

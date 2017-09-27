@@ -29,16 +29,16 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(), TimeTableFieldDef.logValue(),
-                TimeTableFieldDef.logForDate(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
-                TimeTableFieldDef.project());
+        return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+                TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
+                TimeTableFieldDef.project);
     }
 
     @Override
     protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(), TimeTableFieldDef.logValue(),
-                TimeTableFieldDef.logForDate(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
-                TimeTableFieldDef.project());
+        return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+                TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
+                TimeTableFieldDef.project);
     }
 
     @Override

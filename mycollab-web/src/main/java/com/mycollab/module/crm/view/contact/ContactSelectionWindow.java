@@ -44,8 +44,8 @@ public class ContactSelectionWindow extends MWindow {
     }
 
     private void createContactList() {
-        tableItem = new ContactTableDisplay(Arrays.asList(ContactTableFieldDef.name(), ContactTableFieldDef.account(),
-                ContactTableFieldDef.phoneOffice(), ContactTableFieldDef.email(), ContactTableFieldDef.assignUser()));
+        tableItem = new ContactTableDisplay(Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.account,
+                ContactTableFieldDef.phoneOffice, ContactTableFieldDef.email, ContactTableFieldDef.assignUser));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
 

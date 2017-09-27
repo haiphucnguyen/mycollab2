@@ -225,15 +225,15 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
         if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupByState)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
-                    TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
-                    TimeTableFieldDef.id()), this.tableClickListener);
+                    TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
+                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
+                    TimeTableFieldDef.id), this.tableClickListener);
 
         } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupByState)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
-                    TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
-                    TimeTableFieldDef.id()), this.tableClickListener);
+                    TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
+                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
+                    TimeTableFieldDef.id), this.tableClickListener);
         } else {
             throw new MyCollabException("Do not support view type: " + groupByState);
         }

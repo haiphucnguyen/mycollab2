@@ -1,7 +1,7 @@
 package com.mycollab.module.user.accountsettings.team.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.module.user.accountsettings.view.RoleTableFieldDef;
+import com.mycollab.module.user.accountsettings.fielddef.RoleTableFieldDef;
 import com.mycollab.module.user.domain.SimpleRole;
 import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.mycollab.security.RolePermissionCollections;
@@ -48,8 +48,8 @@ public class RoleListViewImpl extends AbstractVerticalPageView implements RoleLi
     }
 
     private void generateDisplayTable() {
-        tableItem = new RoleTableDisplay(RoleTableFieldDef.selected(), Arrays.asList(
-                RoleTableFieldDef.rolename(), RoleTableFieldDef.isDefault(), RoleTableFieldDef.description()));
+        tableItem = new RoleTableDisplay(RoleTableFieldDef.selected, Arrays.asList(
+                RoleTableFieldDef.rolename, RoleTableFieldDef.isDefault, RoleTableFieldDef.description));
         listLayout.addComponent(constructTableActionControls());
         listLayout.addComponent(tableItem);
     }
