@@ -52,7 +52,7 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
 
             @Override
             protected void onSelectExtra(String id) {
-                if (ViewItemAction.MAIL_ACTION().equals(id)) {
+                if (ViewItemAction.MAIL_ACTION.equals(id)) {
                     if (isSelectAll) {
                         NotificationUtil.showWarningNotification(UserUIContext
                                 .getMessage(ErrorI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
@@ -67,7 +67,7 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
                         UI.getCurrent().addWindow(new MailFormWindow(lstMail));
                     }
 
-                } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
+                } else if (ViewItemAction.MASS_UPDATE_ACTION.equals(id)) {
                     MassUpdateCaseWindow massUpdateWindow = new MassUpdateCaseWindow(
                             UserUIContext.getMessage(GenericI18Enum.WINDOW_MASS_UPDATE_TITLE, UserUIContext.getMessage(CaseI18nEnum.LIST)),
                             CaseListPresenter.this);

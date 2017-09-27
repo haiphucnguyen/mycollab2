@@ -37,7 +37,7 @@ class CallRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
     @Autowired private val callService: CallService? = null
     private val mapper: CallFieldNameMapper = CallFieldNameMapper()
 
-    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCall =
+    override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCall? =
             callService!!.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = CallI18nEnum.MAIL_CREATE_ITEM_SUBJECT

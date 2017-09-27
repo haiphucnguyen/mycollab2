@@ -8,11 +8,11 @@ import com.mycollab.db.arguments.StringSearchField
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectGenericItemSearchCriteria : SearchCriteria(){
-    lateinit var prjKeys: SetSearchField<Int>
-    lateinit var txtValue: StringSearchField
-    lateinit var createdUsers: SetSearchField<String> 
-    lateinit var types: SetSearchField<String> 
-    lateinit var monitorProjectIds: SetSearchField<Int> 
-    lateinit var tagNames: SetSearchField<String> 
+class ProjectGenericItemSearchCriteria : SearchCriteria() {
+    var prjKeys: SetSearchField<Int>? = null
+    var txtValue: StringSearchField? = null
+    var createdUsers: SetSearchField<String>? = null
+    var types: SetSearchField<String>? = null
+    var monitorProjectIds: SetSearchField<Int>? = null
+    var tagNames: SetSearchField<String>? = null
 }

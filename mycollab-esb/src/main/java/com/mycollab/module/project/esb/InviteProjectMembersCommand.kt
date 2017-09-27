@@ -50,74 +50,78 @@ class InviteProjectMembersCommand(private val userService: UserService,
         val user = userService.findUserInAccount(event.inviteUser, event.sAccountId)
         val billingAccount = projectService.getAccountInfoOfProject(event.projectId)
 
-        contentGenerator.putVariable("inviteUser", user.getDisplayName())
-        contentGenerator.putVariable("inviteMessage", event.inviteMessage)
-        contentGenerator.putVariable("project", project)
-        contentGenerator.putVariable("password", "")
-        contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(billingAccount.id, billingAccount.logopath))
+        if (user != null) {
+            contentGenerator.putVariable("inviteUser", user.displayName)
+            contentGenerator.putVariable("inviteMessage", event.inviteMessage)
+            contentGenerator.putVariable("project", project)
+            contentGenerator.putVariable("password", "")
+            contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(billingAccount.id, billingAccount.logopath))
 
-        event.emails.forEach { inviteeEmail ->
-            val invitee = userService.findUserInAccount(inviteeEmail, event.sAccountId)
-            contentGenerator.putVariable("inviteeEmail", inviteeEmail)
-            if (invitee != null) {
-                if (RegisterStatusConstants.ACTIVE != invitee.registerstatus) {
-                    userService.updateUserAccountStatus(inviteeEmail, event.sAccountId, RegisterStatusConstants.ACTIVE)
-                }
-            } else {
-                val systemGuestRoleId = roleService.getDefaultRoleId(event.sAccountId)
-                if (systemGuestRoleId == null) {
-                    LOG.error("Can not find the guess role of account ", event.sAccountId)
-                }
+            event.emails.forEach { inviteeEmail ->
+                val invitee = userService.findUserInAccount(inviteeEmail, event.sAccountId)
+                contentGenerator.putVariable("inviteeEmail", inviteeEmail)
+                if (invitee != null) {
+                    if (RegisterStatusConstants.ACTIVE != invitee.registerstatus) {
+                        userService.updateUserAccountStatus(inviteeEmail, event.sAccountId, RegisterStatusConstants.ACTIVE)
+                    }
+                } else {
+                    val systemGuestRoleId = roleService.getDefaultRoleId(event.sAccountId)
+                    if (systemGuestRoleId == null) {
+                        LOG.error("Can not find the guess role of account ", event.sAccountId)
+                    }
 
-                val newUser = User()
-                newUser.email = inviteeEmail
-                val password = RandomPasswordGenerator.generateRandomPassword()
-                contentGenerator.putVariable("password", password)
-                newUser.password = password
-                userService.saveUserAccount(newUser, systemGuestRoleId, billingAccount.subdomain, event.sAccountId, event.inviteUser, false)
+                    val newUser = User()
+                    newUser.email = inviteeEmail
+                    val password = RandomPasswordGenerator.generateRandomPassword()
+                    contentGenerator.putVariable("password", password)
+                    newUser.password = password
+                    userService.saveUserAccount(newUser, systemGuestRoleId, billingAccount.subdomain, event.sAccountId, event.inviteUser, false)
+                }
+                val projectMember = projectMemberService.findMemberByUsername(inviteeEmail, event.projectId, event.sAccountId)
+                if (projectMember != null) {
+                    if (ProjectMemberStatusConstants.ACTIVE != projectMember.status) {
+                        projectMember.status = ProjectMemberStatusConstants.NOT_ACCESS_YET
+                    } else {
+                        return
+                    }
+                    if (event.projectRoleId == null || event.projectRoleId!! < 0) {
+                        projectMember.isadmin = true
+                        projectMember.projectroleid = null
+                    } else {
+                        projectMember.isadmin = false
+                        projectMember.projectroleid = event.projectRoleId
+                    }
+                    projectMemberService.updateWithSession(projectMember, "")
+                } else {
+                    val member = ProjectMember()
+                    member.projectid = event.projectId
+                    member.username = inviteeEmail
+                    member.joindate = Date()
+                    member.saccountid = event.sAccountId
+                    member.billingrate = project.defaultbillingrate
+                    member.overtimebillingrate = project.defaultovertimebillingrate
+                    member.status = ProjectMemberStatusConstants.NOT_ACCESS_YET
+                    if (event.projectRoleId == null || event.projectRoleId!! < 0) {
+                        member.isadmin = true
+                        member.projectroleid = null
+                    } else {
+                        member.isadmin = false
+                        member.projectroleid = event.projectRoleId
+                    }
+                    projectMemberService.saveWithSession(member, "")
+                }
+                contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
+                        DateTimeUtils.getCurrentYear()))
+                contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(deploymentMode.getSiteUrl(billingAccount.getSubdomain()),
+                        event.projectId))
+                val subject = LocalizationHelper.getMessage(Locale.US, ProjectMemberI18nEnum.MAIL_INVITE_USERS_SUBJECT,
+                        project.name, SiteConfiguration.getDefaultSiteName())
+                val content = contentGenerator.parseFile("mailMemberInvitationNotifier.ftl", Locale.US)
+                val toUser = listOf(MailRecipientField(inviteeEmail, inviteeEmail))
+                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), toUser, subject, content)
             }
-            val projectMember = projectMemberService.findMemberByUsername(inviteeEmail, event.projectId, event.sAccountId)
-            if (projectMember != null) {
-                if (ProjectMemberStatusConstants.ACTIVE != projectMember.status) {
-                    projectMember.status = ProjectMemberStatusConstants.NOT_ACCESS_YET
-                } else {
-                    return
-                }
-                if (event.projectRoleId == null || event.projectRoleId!! < 0) {
-                    projectMember.isadmin = true
-                    projectMember.projectroleid = null
-                } else {
-                    projectMember.isadmin = false
-                    projectMember.projectroleid = event.projectRoleId
-                }
-                projectMemberService.updateWithSession(projectMember, "")
-            } else {
-                val member = ProjectMember()
-                member.projectid = event.projectId
-                member.username = inviteeEmail
-                member.joindate = Date()
-                member.saccountid = event.sAccountId
-                member.billingrate = project.defaultbillingrate
-                member.overtimebillingrate = project.defaultovertimebillingrate
-                member.status = ProjectMemberStatusConstants.NOT_ACCESS_YET
-                if (event.projectRoleId == null || event.projectRoleId!! < 0) {
-                    member.isadmin = true
-                    member.projectroleid = null
-                } else {
-                    member.isadmin = false
-                    member.projectroleid = event.projectRoleId
-                }
-                projectMemberService.saveWithSession(member, "")
-            }
-            contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
-                    DateTimeUtils.getCurrentYear()))
-            contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(deploymentMode.getSiteUrl(billingAccount.getSubdomain()),
-                    event.projectId))
-            val subject = LocalizationHelper.getMessage(Locale.US, ProjectMemberI18nEnum.MAIL_INVITE_USERS_SUBJECT,
-                    project.name, SiteConfiguration.getDefaultSiteName())
-            val content = contentGenerator.parseFile("mailMemberInvitationNotifier.ftl", Locale.US)
-            val toUser = listOf(MailRecipientField(inviteeEmail, inviteeEmail))
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), toUser, subject, content)
+        } else {
+            LOG.error("Can not find user ${event.inviteUser} in account ${event.sAccountId}")
         }
     }
 }

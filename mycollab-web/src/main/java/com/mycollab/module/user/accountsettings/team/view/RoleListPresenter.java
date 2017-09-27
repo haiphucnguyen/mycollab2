@@ -49,7 +49,7 @@ public class RoleListPresenter extends ListSelectionPresenter<RoleListView, Role
         view.getPopupActionHandlers().setMassActionHandler(new DefaultMassEditActionHandler(this) {
             @Override
             protected void onSelectExtra(String id) {
-                if (ViewItemAction.MAIL_ACTION().equals(id)) {
+                if (ViewItemAction.MAIL_ACTION.equals(id)) {
                     UI.getCurrent().addWindow(new MailFormWindow());
                 }
             }

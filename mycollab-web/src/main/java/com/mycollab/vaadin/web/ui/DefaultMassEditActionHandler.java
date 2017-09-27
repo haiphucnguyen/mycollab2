@@ -30,7 +30,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
 
     @Override
     public void onSelect(String id) {
-        if (ViewItemAction.DELETE_ACTION().equals(id)) {
+        if (ViewItemAction.DELETE_ACTION.equals(id)) {
             ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                     UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),

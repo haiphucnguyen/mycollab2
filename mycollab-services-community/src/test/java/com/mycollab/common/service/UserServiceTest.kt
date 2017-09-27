@@ -35,13 +35,13 @@ class UserServiceTest : IntegrationServiceTest() {
     @Test
     fun updateUserEmail() {
         val user = userService!!.findUserByUserNameInAccount("hainguyen@esofthead.com", 1)
-        assertThat(user.email).isEqualTo("hainguyen@esofthead.com")
+        assertThat(user!!.email).isEqualTo("hainguyen@esofthead.com")
 
         user.email = "hannguyen@esofthead.com"
         userService.updateUserAccount(user, 1)
 
         val anotherUser = userService.findUserByUserNameInAccount("hannguyen@esofthead.com", 1)
-        assertThat(anotherUser.email).isEqualTo("hannguyen@esofthead.com")
+        assertThat(anotherUser!!.email).isEqualTo("hannguyen@esofthead.com")
         assertThat(anotherUser.lastname).isEqualTo("Hai")
     }
 
@@ -56,7 +56,7 @@ class UserServiceTest : IntegrationServiceTest() {
     @Test
     fun testFindUserByUsernameInAccount() {
         val user = userService!!.findUserByUserNameInAccount("hainguyen@esofthead.com", 1)
-        assertThat(user.username).isEqualTo("hainguyen@esofthead.com")
+        assertThat(user!!.username).isEqualTo("hainguyen@esofthead.com")
         assertThat(user.accountId).isEqualTo(1)
         assertThat(user.firstname).isEqualTo("Nguyen")
         assertThat(user.lastname).isEqualTo("Hai")

@@ -51,7 +51,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
 
             @Override
             protected void onSelectExtra(String id) {
-                if (ViewItemAction.MAIL_ACTION().equals(id)) {
+                if (ViewItemAction.MAIL_ACTION.equals(id)) {
                     if (isSelectAll) {
                         NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
                     } else {
@@ -66,7 +66,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
                         UI.getCurrent().addWindow(new MailFormWindow(lstMail));
                     }
 
-                } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
+                } else if (ViewItemAction.MASS_UPDATE_ACTION.equals(id)) {
                     MassUpdateLeadWindow massUpdateWindow = new MassUpdateLeadWindow(UserUIContext.getMessage(
                             GenericI18Enum.WINDOW_MASS_UPDATE_TITLE, UserUIContext.getMessage(LeadI18nEnum.LIST)),
                             LeadListPresenter.this);

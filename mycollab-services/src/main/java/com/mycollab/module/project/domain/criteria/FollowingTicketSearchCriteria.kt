@@ -8,5 +8,5 @@ import com.mycollab.db.arguments.StringSearchField
  * @since 6.0.0
  */
 class FollowingTicketSearchCriteria : MonitorSearchCriteria() {
-    lateinit var name: StringSearchField
+    var name: StringSearchField? = null
 }
