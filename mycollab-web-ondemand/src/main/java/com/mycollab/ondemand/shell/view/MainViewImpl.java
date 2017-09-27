@@ -13,7 +13,7 @@ import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapperExt;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;

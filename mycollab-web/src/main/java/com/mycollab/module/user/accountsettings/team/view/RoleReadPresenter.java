@@ -6,7 +6,7 @@ import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.domain.Role;
 import com.mycollab.module.user.domain.SimpleRole;
-import com.mycollab.module.user.events.RoleEvent;
+import com.mycollab.module.user.event.RoleEvent;
 import com.mycollab.module.user.service.RoleService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;

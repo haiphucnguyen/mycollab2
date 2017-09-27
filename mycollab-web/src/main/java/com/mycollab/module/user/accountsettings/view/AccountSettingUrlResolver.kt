@@ -2,9 +2,9 @@ package com.mycollab.module.user.accountsettings.view
 
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.user.accountsettings.view.events.ProfileEvent
-import com.mycollab.module.user.accountsettings.view.events.SetupEvent
-import com.mycollab.shell.events.ShellEvent
+import com.mycollab.module.user.accountsettings.view.event.ProfileEvent
+import com.mycollab.module.user.accountsettings.view.event.SetupEvent
+import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.UrlResolver
 import com.mycollab.vaadin.web.ui.ModuleHelper
 

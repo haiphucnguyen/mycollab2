@@ -15,7 +15,7 @@ import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.premium.shell.view.components.BuyPremiumSoftwareWindow;
 import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.spring.AppContextUtil;

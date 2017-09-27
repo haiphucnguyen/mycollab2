@@ -7,7 +7,7 @@ import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent;
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
 import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;

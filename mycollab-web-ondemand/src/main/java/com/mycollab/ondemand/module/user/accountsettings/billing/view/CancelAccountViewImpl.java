@@ -5,7 +5,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
-import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
+import com.mycollab.module.user.accountsettings.view.event.AccountBillingEvent;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;

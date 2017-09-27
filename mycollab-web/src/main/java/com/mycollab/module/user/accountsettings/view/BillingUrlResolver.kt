@@ -1,7 +1,7 @@
 package com.mycollab.module.user.accountsettings.view
 
 import com.mycollab.eventmanager.EventBusFactory
-import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent
+import com.mycollab.module.user.accountsettings.view.event.AccountBillingEvent
 
 /**
  * @author MyCollab Ltd

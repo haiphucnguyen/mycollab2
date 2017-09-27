@@ -9,7 +9,7 @@ import com.mycollab.module.ecm.domain.Resource;
 import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.ecm.service.ResourceService;
-import com.mycollab.module.file.events.FileEvent;
+import com.mycollab.module.file.event.FileEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.google.common.eventbus.Subscribe;

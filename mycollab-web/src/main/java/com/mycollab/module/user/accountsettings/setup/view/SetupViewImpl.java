@@ -9,7 +9,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
-import com.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.mycollab.module.user.accountsettings.view.event.ProfileEvent;
 import com.mycollab.servlet.InstallUtils;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;

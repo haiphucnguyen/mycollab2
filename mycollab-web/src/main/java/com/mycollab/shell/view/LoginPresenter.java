@@ -3,7 +3,7 @@ package com.mycollab.shell.view;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.user.events.UserEvent.PlainLogin;
+import com.mycollab.module.user.event.UserEvent.PlainLogin;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.PageView.ViewListener;
 import com.mycollab.vaadin.mvp.ScreenData;

@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;
-import com.mycollab.module.user.events.UserEvent;
+import com.mycollab.module.user.event.UserEvent;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;

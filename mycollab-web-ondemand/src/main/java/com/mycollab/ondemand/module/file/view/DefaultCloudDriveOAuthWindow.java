@@ -10,7 +10,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.ecm.domain.ExternalDrive;
 import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.file.CloudDriveInfo;
-import com.mycollab.module.file.events.FileEvent;
+import com.mycollab.module.file.event.FileEvent;
 import com.mycollab.ondemand.module.file.event.CloudDriveOAuthCallbackEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;

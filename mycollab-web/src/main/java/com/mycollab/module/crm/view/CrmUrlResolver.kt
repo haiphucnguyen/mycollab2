@@ -11,7 +11,7 @@ import com.mycollab.module.crm.view.file.FileUrlResolver
 import com.mycollab.module.crm.view.lead.LeadUrlResolver
 import com.mycollab.module.crm.view.opportunity.OpportunityUrlResolver
 import com.mycollab.module.crm.view.setting.CrmSettingUrlResolver
-import com.mycollab.shell.events.ShellEvent
+import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.UrlResolver
 import com.mycollab.vaadin.web.ui.ModuleHelper
 

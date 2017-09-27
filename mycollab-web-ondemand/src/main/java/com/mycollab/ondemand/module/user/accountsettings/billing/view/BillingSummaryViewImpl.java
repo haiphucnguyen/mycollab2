@@ -10,7 +10,7 @@ import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
-import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent;
+import com.mycollab.module.user.accountsettings.view.event.AccountBillingEvent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.service.UserService;

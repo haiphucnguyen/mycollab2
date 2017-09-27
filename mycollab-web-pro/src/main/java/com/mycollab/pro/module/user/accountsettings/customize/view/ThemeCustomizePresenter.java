@@ -9,9 +9,9 @@ import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePr
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent;
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent.ResetTheme;
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent.SaveTheme;
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent.ResetTheme;
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent.SaveTheme;
 import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.service.AccountThemeService;
 import com.mycollab.security.BooleanPermissionFlag;

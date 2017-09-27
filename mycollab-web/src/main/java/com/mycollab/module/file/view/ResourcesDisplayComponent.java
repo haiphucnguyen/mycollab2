@@ -15,7 +15,7 @@ import com.mycollab.module.ecm.service.ExternalDriveService;
 import com.mycollab.module.ecm.service.ExternalResourceService;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.module.file.events.FileEvent;
+import com.mycollab.module.file.event.FileEvent;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.user.domain.SimpleUser;

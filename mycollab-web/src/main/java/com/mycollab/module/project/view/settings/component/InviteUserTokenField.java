@@ -37,7 +37,6 @@ public class InviteUserTokenField extends CssLayout implements SuggestField.NewI
     private boolean isFocusing = false;
 
     public InviteUserTokenField() {
-        super();
         inviteEmails = new HashSet<>();
         this.setWidth("100%");
         this.addStyleName("member-token");

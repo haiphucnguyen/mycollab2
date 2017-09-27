@@ -1,9 +1,9 @@
 package com.mycollab.pro.module.file.view
 
 import com.mycollab.eventmanager.ApplicationEventListener
-import com.mycollab.module.file.events.FileEvent
 import com.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
 import com.google.common.eventbus.Subscribe
+import com.mycollab.module.file.event.FileEvent
 
 /**
   * @author MyCollab Ltd

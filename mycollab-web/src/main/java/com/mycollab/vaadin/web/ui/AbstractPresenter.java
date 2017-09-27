@@ -7,7 +7,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.view.AccountModulePresenter;
 import com.mycollab.security.PermissionChecker;
 import com.mycollab.security.PermissionMap;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;

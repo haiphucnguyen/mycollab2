@@ -8,7 +8,7 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.service.UserService;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;

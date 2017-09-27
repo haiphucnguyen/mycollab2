@@ -5,7 +5,7 @@ import com.mycollab.common.i18n.ShellI18nEnum
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.mail.service.ExtMailService
-import com.mycollab.shell.events.ShellEvent
+import com.mycollab.shell.event.ShellEvent
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.ui.NotificationUtil

@@ -6,7 +6,7 @@ import com.mycollab.module.billing.RegisterStatusConstants;
 import com.mycollab.module.billing.UserStatusConstants;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.domain.SimpleUser;
-import com.mycollab.module.user.events.UserEvent;
+import com.mycollab.module.user.event.UserEvent;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;

@@ -17,7 +17,7 @@ import com.mycollab.module.project.view.settings.component.ComponentListSelect;
 import com.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.mycollab.module.project.view.settings.component.VersionListSelect;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;

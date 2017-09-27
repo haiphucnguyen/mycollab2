@@ -3,7 +3,7 @@ package com.mycollab.module.user.accountsettings.team.view;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.domain.Role;
-import com.mycollab.module.user.events.RoleEvent;
+import com.mycollab.module.user.event.RoleEvent;
 import com.mycollab.module.user.service.RoleService;
 import com.mycollab.security.AccessPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;

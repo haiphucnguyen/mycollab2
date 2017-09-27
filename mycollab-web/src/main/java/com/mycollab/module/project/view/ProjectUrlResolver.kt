@@ -17,7 +17,7 @@ import com.mycollab.module.project.view.settings.*
 import com.mycollab.module.project.view.task.TaskUrlResolver
 import com.mycollab.module.project.view.ticket.TicketUrlResolver
 import com.mycollab.module.project.view.time.InvoiceUrlResolver
-import com.mycollab.shell.events.ShellEvent
+import com.mycollab.shell.event.ShellEvent
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.PageActionChain

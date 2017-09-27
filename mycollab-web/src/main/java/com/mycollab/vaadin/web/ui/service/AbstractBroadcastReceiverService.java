@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.mycollab.cache.service.CacheService;
 import com.mycollab.core.AbstractNotification;
 import com.mycollab.core.BroadcastMessage;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.web.DesktopApplication;

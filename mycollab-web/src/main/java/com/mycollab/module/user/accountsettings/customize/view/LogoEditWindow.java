@@ -8,7 +8,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.file.service.AccountLogoService;
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent;
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

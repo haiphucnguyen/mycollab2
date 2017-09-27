@@ -6,7 +6,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.Page;
 

@@ -11,10 +11,10 @@ import com.mycollab.module.user.accountsettings.customize.view.AccountSettingPre
 import com.mycollab.module.user.accountsettings.profile.view.ProfilePresenter
 import com.mycollab.module.user.accountsettings.setup.view.SetupPresenter
 import com.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter
-import com.mycollab.module.user.accountsettings.view.events.AccountBillingEvent
-import com.mycollab.module.user.accountsettings.view.events.ProfileEvent
-import com.mycollab.module.user.accountsettings.view.events.SettingEvent
-import com.mycollab.module.user.accountsettings.view.events.SetupEvent
+import com.mycollab.module.user.accountsettings.view.event.AccountBillingEvent
+import com.mycollab.module.user.accountsettings.view.event.ProfileEvent
+import com.mycollab.module.user.accountsettings.view.event.SettingEvent
+import com.mycollab.module.user.accountsettings.view.event.SetupEvent
 import com.mycollab.module.user.accountsettings.view.parameters.BillingScreenData
 import com.mycollab.module.user.accountsettings.view.parameters.RoleScreenData
 import com.mycollab.module.user.accountsettings.view.parameters.SettingExtScreenData
@@ -23,8 +23,8 @@ import com.mycollab.module.user.domain.Role
 import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.module.user.domain.criteria.RoleSearchCriteria
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria
-import com.mycollab.module.user.events.RoleEvent
-import com.mycollab.module.user.events.UserEvent
+import com.mycollab.module.user.event.RoleEvent
+import com.mycollab.module.user.event.UserEvent
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver

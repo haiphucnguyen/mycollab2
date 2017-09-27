@@ -12,7 +12,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.db.query.SearchQueryInfo;
 import com.mycollab.eventmanager.EventBusFactory;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

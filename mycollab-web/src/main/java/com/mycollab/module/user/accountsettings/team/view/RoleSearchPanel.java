@@ -5,7 +5,7 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
-import com.mycollab.module.user.events.RoleEvent;
+import com.mycollab.module.user.event.RoleEvent;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;

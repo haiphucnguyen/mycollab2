@@ -10,7 +10,7 @@ import com.mycollab.module.project.view.ProjectModulePresenter
 import com.mycollab.module.project.view.parameters.ProjectModuleScreenData
 import com.mycollab.module.user.accountsettings.view.AccountModulePresenter
 import com.mycollab.premium.module.user.accountsettings.view.AccountModuleScreenData
-import com.mycollab.shell.events.ShellEvent
+import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver
 

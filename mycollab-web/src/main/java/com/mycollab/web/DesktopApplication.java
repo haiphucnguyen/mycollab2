@@ -19,7 +19,7 @@ import com.mycollab.module.user.domain.UserAccountExample;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.shell.view.ShellController;
-import com.mycollab.shell.events.ShellEvent;
+import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.shell.view.LoginPresenter;
 import com.mycollab.shell.view.LoginView;
 import com.mycollab.shell.view.MainWindowContainer;
