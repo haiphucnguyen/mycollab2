@@ -12,13 +12,12 @@ import java.util.UUID;
  * @since 5.2.11
  */
 public class PrintButton extends MButton {
-    private BrowserWindowOpener printWindowOpener;
     private FormReportStreamSource formReportStreamSource;
 
     public PrintButton() {
         setIcon(FontAwesome.PRINT);
         formReportStreamSource = new FormReportStreamSource(new FormReportTemplateExecutor(""));
-        printWindowOpener = new BrowserWindowOpener(new StreamResource(formReportStreamSource, UUID.randomUUID().toString() + ".pdf"));
+        BrowserWindowOpener printWindowOpener = new BrowserWindowOpener(new StreamResource(formReportStreamSource, UUID.randomUUID().toString() + ".pdf"));
         printWindowOpener.extend(this);
     }
 

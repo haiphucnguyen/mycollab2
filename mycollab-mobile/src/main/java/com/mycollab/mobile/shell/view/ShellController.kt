@@ -44,14 +44,14 @@ class ShellController(val mainNav: NavigationManager) : AbstractController() {
         this.register(object : ApplicationEventListener<ShellEvent.GotoCrmModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoCrmModule) {
                 val presenter = PresenterResolver.getPresenter(CrmModulePresenter::class.java)
-                val screenData = CrmModuleScreenData.GotoModule(event.data as Array<String>?)
+                val screenData = CrmModuleScreenData.GotoModule(event.data as? Array<String>)
                 presenter.go(mainNav, screenData)
             }
         })
         this.register(object : ApplicationEventListener<ShellEvent.GotoProjectModule> {
             @Subscribe override fun handle(event: ShellEvent.GotoProjectModule) {
                 val presenter = PresenterResolver.getPresenter(ProjectModulePresenter::class.java)
-                val screenData = ProjectModuleScreenData.GotoModule(event.data as Array<String>?)
+                val screenData = ProjectModuleScreenData.GotoModule(event.data as? Array<String>)
                 presenter.go(mainNav, screenData)
             }
         })
