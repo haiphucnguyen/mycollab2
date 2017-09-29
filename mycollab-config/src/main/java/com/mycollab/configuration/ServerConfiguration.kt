@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 @Profile("production")
 @ConfigurationProperties(prefix = "server")
 class ServerConfiguration(val storageSystem: String = STORAGE_FILE, val port: Int? = 8080,
-                          val apiUrl: String, val pull_method: String) {
+                          val apiUrl: String, val pull_method: String?) {
 
     constructor(): this("", 8080, "", "")
 

@@ -4,7 +4,6 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.event.AccountEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.module.crm.view.account.AccountAddView;
-import com.mycollab.mobile.module.crm.view.account.IAccountAddPresenter;
 import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleAccount;
@@ -14,6 +13,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
+import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.HasComponents;
@@ -22,7 +22,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> implements IAccountAddPresenter {
+public class AccountAddPresenter extends AbstractCrmPresenter<AccountAddView> implements IPresenter<AccountAddView> {
     private static final long serialVersionUID = -3664699848882470039L;
 
     public AccountAddPresenter() {

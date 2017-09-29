@@ -3,10 +3,7 @@ package com.mycollab.mobile.module.crm.view.campaign;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.event.CampaignEvent;
 import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
-import com.mycollab.mobile.ui.AbstractPagedBeanList;
-import com.mycollab.mobile.ui.SearchInputField;
-import com.mycollab.mobile.ui.SearchInputView;
-import com.mycollab.mobile.ui.SearchNavigationButton;
+import com.mycollab.mobile.ui.*;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.mycollab.module.crm.i18n.CampaignI18nEnum;
@@ -27,7 +24,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 4.0
  */
 @ViewComponent
-public class CampaignListViewImpl extends AbstractListPageView<CampaignSearchCriteria, SimpleCampaign> implements CampaignListView {
+public class CampaignListViewImpl extends AbstractListPageView<CampaignSearchCriteria, SimpleCampaign> implements IListView<CampaignSearchCriteria, SimpleCampaign> {
     private static final long serialVersionUID = -8743010493576179868L;
 
     public CampaignListViewImpl() {

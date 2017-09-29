@@ -12,18 +12,14 @@ import com.mycollab.db.persistence.service.DefaultService
 import com.mycollab.module.crm.CrmTypeConstants
 import com.mycollab.module.crm.dao.LeadMapper
 import com.mycollab.module.crm.dao.LeadMapperExt
-import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria
 import com.mycollab.module.crm.domain.*
+import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria
 import com.mycollab.module.crm.service.*
 import com.mycollab.spring.AppContextUtil
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Collections
-import java.util.GregorianCalendar
+import java.util.*
 
 @Service
 @Transactional

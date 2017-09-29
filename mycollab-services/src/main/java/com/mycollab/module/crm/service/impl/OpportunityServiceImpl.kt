@@ -19,12 +19,9 @@ import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria
 import com.mycollab.module.crm.service.ContactService
 import com.mycollab.module.crm.service.OpportunityService
 import com.mycollab.spring.AppContextUtil
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-
-import java.util.Collections
-import java.util.GregorianCalendar
+import java.util.*
 
 /**
  * @author MyCollab Ltd.

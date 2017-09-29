@@ -3,10 +3,7 @@ package com.mycollab.mobile.module.crm.view.account;
 import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.event.AccountEvent;
 import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
-import com.mycollab.mobile.ui.AbstractPagedBeanList;
-import com.mycollab.mobile.ui.SearchInputField;
-import com.mycollab.mobile.ui.SearchInputView;
-import com.mycollab.mobile.ui.SearchNavigationButton;
+import com.mycollab.mobile.ui.*;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
@@ -26,7 +23,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 3.0
  */
 @ViewComponent
-public class AccountListViewImpl extends AbstractListPageView<AccountSearchCriteria, SimpleAccount> implements AccountListView {
+public class AccountListViewImpl extends AbstractListPageView<AccountSearchCriteria, SimpleAccount> implements IListView<AccountSearchCriteria, SimpleAccount> {
     private static final long serialVersionUID = -500810154594390148L;
 
     public AccountListViewImpl() {

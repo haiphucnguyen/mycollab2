@@ -6,7 +6,6 @@ import com.mycollab.eventmanager.EventBusFactory;
 import com.mycollab.mobile.module.crm.event.CampaignEvent;
 import com.mycollab.mobile.module.crm.view.AbstractCrmPresenter;
 import com.mycollab.mobile.module.crm.view.campaign.CampaignAddView;
-import com.mycollab.mobile.module.crm.view.campaign.ICampaignAddPresenter;
 import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCampaign;
@@ -17,6 +16,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.events.DefaultEditFormHandler;
+import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.HasComponents;
@@ -25,7 +25,7 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> implements ICampaignAddPresenter {
+public class CampaignAddPresenter extends AbstractCrmPresenter<CampaignAddView> implements IPresenter<CampaignAddView> {
     private static final long serialVersionUID = 1L;
 
     public CampaignAddPresenter() {

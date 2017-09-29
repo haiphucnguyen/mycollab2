@@ -17,8 +17,7 @@ import java.util.regex.Pattern
  */
 object FileUtils {
 
-    private lateinit var _homeFolder: File
-
+    private var _homeFolder: File
 
     init {
         val userFolder = System.getProperty("user.dir")

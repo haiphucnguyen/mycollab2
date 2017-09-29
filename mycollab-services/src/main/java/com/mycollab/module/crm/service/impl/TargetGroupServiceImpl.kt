@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional
 class TargetGroupServiceImpl(private val targetGroupMapper: TargetGroupMapper,
                              private val targetGroupMapperExt: TargetGroupMapperExt) : DefaultService<Int, TargetGroup, TargetGroupSearchCriteria>(), TargetGroupService {
 
-
     override val crudMapper: ICrudGenericDAO<Int, TargetGroup>
         get() = targetGroupMapper as ICrudGenericDAO<Int, TargetGroup>
 

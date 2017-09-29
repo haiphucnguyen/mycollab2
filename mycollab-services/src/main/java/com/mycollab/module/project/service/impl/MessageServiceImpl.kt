@@ -19,7 +19,6 @@ import com.mycollab.module.project.domain.criteria.MessageSearchCriteria
 import com.mycollab.module.project.esb.DeleteProjectMessageEvent
 import com.mycollab.module.project.service.MessageService
 import com.mycollab.module.project.service.ProjectActivityStreamService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
