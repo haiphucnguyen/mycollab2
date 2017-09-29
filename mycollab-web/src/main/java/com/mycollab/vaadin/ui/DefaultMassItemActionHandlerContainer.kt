@@ -84,7 +84,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
      * @param downloadFileName
      * @param description
      */
-    fun addDownloadActionItem(exportType: ReportExportType, resource: Resource, groupId: String, downloadFileName: String, description: String) {
+    private fun addDownloadActionItem(exportType: ReportExportType, resource: Resource, groupId: String, downloadFileName: String, description: String) {
         var group = groupMap[groupId]
         if (group == null) {
             group = ButtonGroup()
@@ -104,7 +104,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
         }
     }
 
-    protected fun buildStreamResource(id: ReportExportType): StreamResource? {
+    private fun buildStreamResource(id: ReportExportType): StreamResource? {
         if (actionHandler != null) {
             val streamResource = actionHandler!!.buildStreamResource(id)
             if (streamResource != null) {

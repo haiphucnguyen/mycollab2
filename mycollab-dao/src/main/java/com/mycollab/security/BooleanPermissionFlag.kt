@@ -21,7 +21,7 @@ class BooleanPermissionFlag : PermissionFlag() {
          * @return
          */
         fun beTrue(flag: Int?): Boolean {
-            return flag === TRUE
+            return flag == TRUE
         }
 
         /**
@@ -31,11 +31,11 @@ class BooleanPermissionFlag : PermissionFlag() {
          * @return
          */
         fun beFalse(flag: Int?): Boolean {
-            return flag === FALSE
+            return flag == FALSE
         }
 
         fun toKey(flag: Int?): SecurityI18nEnum {
-            return if (flag === TRUE) SecurityI18nEnum.YES else SecurityI18nEnum.NO
+            return if (flag == TRUE) SecurityI18nEnum.YES else SecurityI18nEnum.NO
         }
     }
 }

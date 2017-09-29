@@ -36,9 +36,7 @@ public class TableViewField {
 
         TableViewField that = (TableViewField) o;
 
-        if (descKey != null ? !descKey.equals(that.descKey) : that.descKey != null) return false;
-        if (!field.equals(that.field)) return false;
-        return defaultWidth.equals(that.defaultWidth);
+        return (descKey != null ? descKey.equals(that.descKey) : that.descKey == null) && field.equals(that.field) && defaultWidth.equals(that.defaultWidth);
 
     }
 

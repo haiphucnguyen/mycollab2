@@ -323,7 +323,7 @@ class CrmController(val container: CrmModule) : AbstractController() {
         this.register(object : ApplicationEventListener<OpportunityEvent.GotoList> {
             @Subscribe override fun handle(event: OpportunityEvent.GotoList) {
                 val presenter = PresenterResolver.getPresenter(OpportunityListPresenter::class.java)
-                var searchCriteria: OpportunitySearchCriteria?
+                val searchCriteria: OpportunitySearchCriteria
                 when {
                     event.data != null -> searchCriteria = event.data as OpportunitySearchCriteria
                     else -> {

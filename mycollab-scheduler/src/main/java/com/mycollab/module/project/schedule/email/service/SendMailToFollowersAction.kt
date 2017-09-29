@@ -173,7 +173,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
     }
 
-    abstract protected fun buildExtraTemplateVariables(emailNotification: MailContext<B>)
+    abstract protected fun buildExtraTemplateVariables(context: MailContext<B>)
 
     abstract protected fun getItemFieldMapper(): ItemFieldMapper
 

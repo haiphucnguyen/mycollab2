@@ -1,16 +1,13 @@
 package com.mycollab.db.persistence.service
 
+import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.SearchCriteria
 import com.mycollab.db.arguments.SearchField
-import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.persistence.IMassUpdateDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import org.apache.commons.beanutils.PropertyUtils
 import org.apache.ibatis.session.RowBounds
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
-import java.beans.PropertyDescriptor
 import java.io.Serializable
 
 /**

@@ -4,6 +4,7 @@ import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.mycollab.mobile.ui.IListView;
 import com.mycollab.mobile.ui.SearchInputField;
 import com.mycollab.vaadin.mvp.ViewComponent;
 
@@ -12,7 +13,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.4.0
  */
 @ViewComponent
-public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, SimpleActivityStream> implements AllActivitiesView {
+public class AllActivitiesViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, SimpleActivityStream> implements IListView<ActivityStreamSearchCriteria, SimpleActivityStream> {
     private static final long serialVersionUID = 5251742381187041492L;
 
     public AllActivitiesViewImpl() {
