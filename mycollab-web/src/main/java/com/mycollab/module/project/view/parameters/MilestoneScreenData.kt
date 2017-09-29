@@ -17,7 +17,7 @@ object MilestoneScreenData {
 
     class Search(params: MilestoneSearchCriteria) : ScreenData<MilestoneSearchCriteria>(params)
 
-    class Roadmap() : ScreenData<Any>(null)
+    class Roadmap() : ScreenData<*>(null)
 
-    class Kanban() : ScreenData<Any>(null)
+    class Kanban() : ScreenData<*>(null)
 }

@@ -7,9 +7,9 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object BillingScreenData {
-    class CancelAccount : ScreenData<Any>(null)
+    class CancelAccount : ScreenData<*>(null)
 
-    class BillingSummary : ScreenData<Any>(null)
+    class BillingSummary : ScreenData<*>(null)
 
-    class BillingHistory : ScreenData<Any>(null)
+    class BillingHistory : ScreenData<*>(null)
 }

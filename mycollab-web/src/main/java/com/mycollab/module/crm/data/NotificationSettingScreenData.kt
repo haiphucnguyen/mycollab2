@@ -8,5 +8,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  */
 object NotificationSettingScreenData {
 
-    class Read : ScreenData<Any>(null)
+    class Read : ScreenData<*>(null)
 }

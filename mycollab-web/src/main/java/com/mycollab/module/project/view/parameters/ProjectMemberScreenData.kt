@@ -13,7 +13,7 @@ object ProjectMemberScreenData {
 
     class Add(params: ProjectMember) : ScreenData<ProjectMember>(params)
 
-    class InviteProjectMembers : ScreenData<Any>(null)
+    class InviteProjectMembers : ScreenData<*>(null)
 
     class Read(params: Any) : ScreenData<Any>(params)
 }

@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object ProjectSettingScreenData {
-    class ViewSettings : ScreenData<Any>(null)
+    class ViewSettings : ScreenData<*>(null)
 }

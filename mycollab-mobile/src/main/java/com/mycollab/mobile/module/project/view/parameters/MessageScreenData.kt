@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 class MessageScreenData {
-    class Add : ScreenData<Any>(null)
+    class Add : ScreenData<*>(null)
 
     class Read(param: Int) : ScreenData<Int>(param)
 

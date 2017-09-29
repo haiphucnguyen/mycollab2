@@ -38,7 +38,7 @@ interface PreviewFormHandler<T> {
      */
     fun onDelete(data: T)
 
-    fun onPrint(source: Object, data: T)
+    fun onPrint(source: Any, data: T)
 
     /**
      * @param data

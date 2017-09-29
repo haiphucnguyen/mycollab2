@@ -28,14 +28,14 @@ public class ThemeManager {
 
         StringBuilder extraStyles = new StringBuilder();
 
-        extraStyles.append(".v-touchkit-navbar-caption { width: " + (UIUtils.getBrowserWidth() - 144) + "px !important; }");
-        extraStyles.append(".v-touchkit-navbar-caption span { width: " + (UIUtils.getBrowserWidth() - 144) + "px !important; }");
+        extraStyles.append(".v-touchkit-navbar-caption { width: ").append(UIUtils.getBrowserWidth() - 144).append("px !important; }");
+        extraStyles.append(".v-touchkit-navbar-caption span { width: ").append(UIUtils.getBrowserWidth() - 144).append("px !important; }");
 
         if (accountTheme.getVtabsheetbg() != null) {
-            extraStyles.append(".section { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-            extraStyles.append(".v-navbar-quickmenu-content { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-            extraStyles.append(".slidemenu .v-window-contents { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
-            extraStyles.append(".project-dashboard .project-info-layout { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
+            extraStyles.append(".section { background-color: #").append(accountTheme.getVtabsheetbg()).append("; }");
+            extraStyles.append(".v-navbar-quickmenu-content { background-color: #").append(accountTheme.getVtabsheetbg()).append("; }");
+            extraStyles.append(".slidemenu .v-window-contents { background-color: #").append(accountTheme.getVtabsheetbg()).append("; }");
+            extraStyles.append(".project-dashboard .project-info-layout { background-color: #").append(accountTheme.getVtabsheetbg()).append("; }");
         }
 
         if (accountTheme.getVtabsheettext() != null) {

@@ -14,5 +14,5 @@ object TaskScreenData {
 
     class Add(param: Task) : ScreenData<Task>(param) 
 
-    class GotoKanbanView : ScreenData<Any>(null)
+    class GotoKanbanView : ScreenData<*>(null)
 }

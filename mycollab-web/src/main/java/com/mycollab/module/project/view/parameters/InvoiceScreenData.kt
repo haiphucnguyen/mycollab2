@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object InvoiceScreenData {
-    class GotoInvoiceList : ScreenData<Any>(null)
+    class GotoInvoiceList : ScreenData<*>(null)
 }

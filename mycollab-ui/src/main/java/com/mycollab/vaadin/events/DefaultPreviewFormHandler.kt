@@ -15,7 +15,7 @@ open class DefaultPreviewFormHandler<T> : PreviewFormHandler<T> {
 
     override fun onDelete(data: T) {}
 
-    override fun onPrint(source: Object, data: T) {}
+    override fun onPrint(source: Any, data: T) {}
 
     override fun onClone(data: T) {}
 
