@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectScreenData {
+object ProjectScreenData {
     class Goto(param: Int) : ScreenData<Int>(param)
 
     class Add(param: SimpleProject) : ScreenData<SimpleProject>(param)

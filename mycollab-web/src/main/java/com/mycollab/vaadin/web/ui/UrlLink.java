@@ -17,5 +17,4 @@ public class UrlLink extends Link {
         this.setCaption(urlLink);
         this.setTargetName("_blank");
     }
-
 }

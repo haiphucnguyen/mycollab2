@@ -11,5 +11,4 @@ import com.mycollab.vaadin.mvp.IPreviewView;
 public interface MilestoneReadView extends IPreviewView<SimpleMilestone> {
 
     HasPreviewFormHandlers<SimpleMilestone> getPreviewFormHandlers();
-
 }

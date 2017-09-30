@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectEvent {
+object ProjectEvent {
     class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data) 
 
     class GotoProjectList(source: Any, data: Any?) : ApplicationEvent(source, data) 

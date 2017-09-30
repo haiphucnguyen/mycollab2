@@ -32,7 +32,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
      * @param groupId
      * @param description
      */
-    fun addActionItem(id: String, resource: Resource, groupId: String, description: String) {
+    private fun addActionItem(id: String, resource: Resource, groupId: String, description: String) {
         var group = groupMap[groupId]
         if (group == null) {
             group = ButtonGroup()

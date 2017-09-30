@@ -6,7 +6,7 @@ import com.mycollab.events.ApplicationEvent
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class LeadEvent {
+object LeadEvent {
     class Save(source: Any, data: Any?) : ApplicationEvent(source, data)
 
     class Search(source: Any, data: Any?) : ApplicationEvent(source, data)

@@ -6,7 +6,6 @@ import com.mycollab.vaadin.mvp.IPreviewView;
 
 /**
  * @author MyCollab Ltd.
- *
  * @since 4.5.2
  */
 public interface ProjectMemberReadView extends IPreviewView<SimpleProjectMember> {

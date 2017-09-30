@@ -8,7 +8,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class MilestoneScreenData {
+object MilestoneScreenData {
     class Search(param: MilestoneSearchCriteria) : ScreenData<MilestoneSearchCriteria>(param)
 
     class Read(param: Int) : ScreenData<Int>(param)

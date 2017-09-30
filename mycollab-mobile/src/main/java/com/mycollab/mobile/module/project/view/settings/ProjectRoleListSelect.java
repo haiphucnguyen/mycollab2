@@ -23,7 +23,6 @@ public class ProjectRoleListSelect extends ListSelect {
     private static final long serialVersionUID = 1L;
 
     public ProjectRoleListSelect() {
-        super();
         this.setImmediate(true);
         this.setRows(1);
         this.setItemCaptionMode(ItemCaptionMode.PROPERTY);

@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class RiskScreenData {
+object RiskScreenData {
     class Read(param: Int) : ScreenData<Int>(param)
 
     class Add(param: Risk) : ScreenData<Risk>(param)

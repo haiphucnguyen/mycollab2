@@ -7,6 +7,6 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class TicketEvent {
+object TicketEvent {
     class GotoDashboard(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source, data) {}
 }
