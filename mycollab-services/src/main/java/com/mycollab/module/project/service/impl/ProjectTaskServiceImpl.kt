@@ -161,7 +161,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
         return taskMapperExt.findByProjectAndTaskKey(taskKey!!, projectShortName, sAccountId!!)
     }
 
-    override fun findSubTasks(parentTaskId: Int?, sAccountId: Int?, orderField: SearchCriteria.OrderField): List<SimpleTask> {
+    override fun findSubTasks(parentTaskId: Int, sAccountId: Int, orderField: SearchCriteria.OrderField): List<SimpleTask> {
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.saccountid = NumberSearchField(sAccountId)
         searchCriteria.parentTaskId = NumberSearchField(parentTaskId)
@@ -169,7 +169,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
         return taskMapperExt.findPageableListByCriteria(searchCriteria, RowBounds(0, Integer.MAX_VALUE)) as List<SimpleTask>
     }
 
-    override fun getCountOfOpenSubTasks(taskId: Int?): Int? {
+    override fun getCountOfOpenSubTasks(taskId: Int): Int? {
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.parentTaskId = NumberSearchField(taskId)
         searchCriteria.addExtraField(TaskSearchCriteria.p_status.buildPropertyParamNotInList(SearchField.AND,
@@ -177,7 +177,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
         return taskMapperExt.getTotalCount(searchCriteria)
     }
 
-    override fun massUpdateTaskStatuses(parentTaskId: Int?, status: String, @CacheKey sAccountId: Int?) {
+    override fun massUpdateTaskStatuses(parentTaskId: Int, status: String, @CacheKey sAccountId: Int) {
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.parentTaskId = NumberSearchField(parentTaskId)
         searchCriteria.saccountid = NumberSearchField(sAccountId)

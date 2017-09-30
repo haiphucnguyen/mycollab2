@@ -197,7 +197,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         asyncEventBus.post(event)
     }
 
-    override fun getTotalActiveProjectsInAccount(@CacheKey sAccountId: Int?): Int? {
+    override fun getTotalActiveProjectsInAccount(@CacheKey sAccountId: Int): Int? {
         val criteria = ProjectSearchCriteria()
         criteria.saccountid = NumberSearchField(sAccountId)
         criteria.projectStatuses = SetSearchField(StatusI18nEnum.Open.name)

@@ -69,7 +69,7 @@ abstract class AppUI : UI() {
 
         init {
             GroupIdProvider.registerAccountIdProvider(object : GroupIdProvider() {
-                override val groupId: Int?
+                override val groupId: Int
                     get() = AppUI.accountId
 
                 override val groupRequestedUser: String

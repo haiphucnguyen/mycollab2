@@ -4,10 +4,11 @@ import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
 import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.HasComponents;
+
+import static com.mycollab.vaadin.mvp.PresenterResolver.getPresenter;
 
 /**
  * @author MyCollab Ltd.
@@ -26,17 +27,17 @@ public class RolePresenter extends AbstractPresenter<RoleContainer> {
         groupContainer.gotoSubView(UserUIContext.getMessage(RoleI18nEnum.LIST));
 
         if (data == null) {
-            RoleListPresenter listPresenter = PresenterResolver.getPresenter(RoleListPresenter.class);
+            RoleListPresenter listPresenter = getPresenter(RoleListPresenter.class);
             RoleSearchCriteria criteria = new RoleSearchCriteria();
             listPresenter.go(view, new ScreenData.Search<>(criteria));
         } else if (data instanceof RoleScreenData.Add || data instanceof RoleScreenData.Edit) {
-            RoleAddPresenter presenter = PresenterResolver.getPresenter(RoleAddPresenter.class);
+            RoleAddPresenter presenter = getPresenter(RoleAddPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof RoleScreenData.Read) {
-            RoleReadPresenter presenter = PresenterResolver.getPresenter(RoleReadPresenter.class);
+            RoleReadPresenter presenter = getPresenter(RoleReadPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof RoleScreenData.Search) {
-            RoleListPresenter presenter = PresenterResolver.getPresenter(RoleListPresenter.class);
+            RoleListPresenter presenter = getPresenter(RoleListPresenter.class);
             presenter.go(view, data);
         }
     }

@@ -26,13 +26,13 @@ class DeleteUserCommand(private val projectMemberMapper: ProjectMemberMapper,
     fun execute(event: DeleteUserEvent) {
         removeProjectInvolvement(event)
         removeUserMonitorItems(event)
-        asyncEventBus.post(CleanCacheEvent(event.accountid, arrayOf(ProjectMemberService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(event.sAccountId, arrayOf(ProjectMemberService::class.java)))
     }
 
     private fun removeProjectInvolvement(event: DeleteUserEvent) {
         val ex = ProjectMemberExample()
         ex.createCriteria().andStatusNotIn(listOf(ProjectMemberStatusConstants.INACTIVE)).
-                andSaccountidEqualTo(event.accountid).andUsernameEqualTo(event.username)
+                andSaccountidEqualTo(event.sAccountId).andUsernameEqualTo(event.username)
         val projectMember = ProjectMember()
         projectMember.status = ProjectMemberStatusConstants.INACTIVE
         projectMemberMapper.updateByExampleSelective(projectMember, ex)
@@ -40,7 +40,7 @@ class DeleteUserCommand(private val projectMemberMapper: ProjectMemberMapper,
 
     private fun removeUserMonitorItems(event: DeleteUserEvent) {
         val ex = MonitorItemExample()
-        ex.createCriteria().andSaccountidEqualTo(event.accountid).andUserEqualTo(event.username)
+        ex.createCriteria().andSaccountidEqualTo(event.sAccountId).andUserEqualTo(event.username)
         monitorItemMapper.deleteByExample(ex)
     }
 }

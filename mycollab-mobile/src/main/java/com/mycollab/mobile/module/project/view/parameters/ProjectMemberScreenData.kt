@@ -13,7 +13,7 @@ class ProjectMemberScreenData {
 
     class InviteProjectMembers() : ScreenData<*>(null)
 
-    class Read(param: Any?) : ScreenData<Any>(param)
+    class Read(param: Any?) : ScreenData<*>(param)
 
     class Edit(param: SimpleProjectMember) : ScreenData<SimpleProjectMember>(param)
 }

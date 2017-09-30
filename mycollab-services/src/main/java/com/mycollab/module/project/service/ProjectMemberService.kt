@@ -20,7 +20,7 @@ interface ProjectMemberService : IDefaultService<Int, ProjectMember, ProjectMemb
     fun findById(memberId: Int, @CacheKey sAccountId: Int): SimpleProjectMember?
 
     @Cacheable
-    fun isUserBelongToProject(username: String, projectId: Int?, @CacheKey sAccountId: Int?): Boolean
+    fun isUserBelongToProject(username: String, projectId: Int, @CacheKey sAccountId: Int): Boolean
 
     @Cacheable
     fun findMemberByUsername(username: String, projectId: Int, @CacheKey sAccountId: Int): SimpleProjectMember?

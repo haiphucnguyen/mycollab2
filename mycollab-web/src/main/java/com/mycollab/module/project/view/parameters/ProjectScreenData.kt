@@ -14,7 +14,7 @@ object ProjectScreenData {
 
     class Edit(params: Project) : ScreenData<Project>(params)
 
-    class GotoTagList(params: Any) : ScreenData<Any>(params)
+    class GotoTagList(params: Any) : ScreenData<*>(params)
 
     class GotoFavorite() : ScreenData<*>(null)
 

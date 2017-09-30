@@ -66,7 +66,7 @@ class ProjectModuleController(val container: ProjectModule) : AbstractController
         this.register(object : ApplicationEventListener<ClientEvent.GotoEdit> {
             @Subscribe override fun handle(event: ClientEvent.GotoEdit) {
                 val presenter = PresenterResolver.getPresenter(IClientPresenter::class.java)
-                presenter.go(container, ScreenData.Edit<Any>(event.data))
+                presenter.go(container, ScreenData.Edit(event.data))
             }
         })
 
@@ -109,7 +109,7 @@ class ProjectModuleController(val container: ProjectModule) : AbstractController
         this.register(object : ApplicationEventListener<StandUpEvent.GotoList> {
             @Subscribe override fun handle(event: StandUpEvent.GotoList) {
                 val presenter = PresenterResolver.getPresenter(IReportPresenter::class.java)
-                presenter.go(container, StandupScreenData.Search(GregorianCalendar().getTime()))
+                presenter.go(container, StandupScreenData.Search(GregorianCalendar().time))
             }
         })
     }

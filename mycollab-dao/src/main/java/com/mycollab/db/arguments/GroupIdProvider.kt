@@ -6,7 +6,7 @@ package com.mycollab.db.arguments
  */
 abstract class GroupIdProvider {
 
-    abstract val groupId: Int?
+    abstract val groupId: Int
 
     abstract val groupRequestedUser: String
 
@@ -17,7 +17,7 @@ abstract class GroupIdProvider {
             instance = provider
         }
 
-        val accountId: Int?
+        val accountId: Int
             get() = if (instance != null) {
                 try {
                     instance!!.groupId

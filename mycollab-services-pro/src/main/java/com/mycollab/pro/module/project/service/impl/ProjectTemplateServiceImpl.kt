@@ -102,7 +102,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         }
     }
 
-    private fun cloneProjectRoles(projectId: Int?, newProjectId: Int?, username: String, sAccountId: Int?): Map<Int, Int> {
+    private fun cloneProjectRoles(projectId: Int, newProjectId: Int?, username: String, sAccountId: Int?): Map<Int, Int> {
         LOG.info("Clone project roles")
         val mapRoleIds = HashMap<Int, Int>()
         val searchCriteria = ProjectRoleSearchCriteria()
@@ -232,7 +232,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         }
     }
 
-    private fun cloneProjectMembers(projectId: Int?, newProjectId: Int?, mapRoleIds: Map<Int, Int>, username: String) {
+    private fun cloneProjectMembers(projectId: Int, newProjectId: Int?, mapRoleIds: Map<Int, Int>, username: String) {
         LOG.info("Clone project members")
         val searchCriteria = ProjectMemberSearchCriteria()
         searchCriteria.projectId = NumberSearchField(projectId)

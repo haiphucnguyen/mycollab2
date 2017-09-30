@@ -5,9 +5,9 @@ package com.mycollab.db.arguments
  * @since 6.0.0
  */
 open class NumberSearchField constructor(operation: String, var value: Int?, var compareOperator: String) : SearchField(operation) {
-    constructor(value: Int?) : this(SearchField.AND, value, NumberSearchField.EQUAL)
+    constructor(value: Int) : this(SearchField.AND, value, NumberSearchField.EQUAL)
 
-    constructor(value: Int?, compareOperator: String) : this(SearchField.AND, value, compareOperator)
+    constructor(value: Int, compareOperator: String) : this(SearchField.AND, value, compareOperator)
 
     companion object {
         @JvmField val EQUAL = "="

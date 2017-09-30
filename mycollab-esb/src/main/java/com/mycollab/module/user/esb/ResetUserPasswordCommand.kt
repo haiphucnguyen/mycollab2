@@ -53,7 +53,7 @@ class ResetUserPasswordCommand(private val extMailService: ExtMailService,
                             SiteConfiguration.getDefaultSiteName()),
                     contentGenerator.parseFile("mailUserRecoveryPasswordNotifier.ftl", locale))
         } else {
-            LOG.error("Can not reset the password of username ${username} because this user is not existed")
+            LOG.error("Can not reset the password of username $username because this user is not existed")
         }
     }
 }

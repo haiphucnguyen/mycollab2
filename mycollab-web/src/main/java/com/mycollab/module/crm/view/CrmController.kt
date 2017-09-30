@@ -359,7 +359,7 @@ class CrmController(val container: CrmModule) : AbstractController() {
         this.register(object : ApplicationEventListener<OpportunityEvent.GotoContactRoleEdit> {
             @Subscribe override fun handle(event: OpportunityEvent.GotoContactRoleEdit) {
                 val presenter = PresenterResolver.getPresenter(ContactRoleEditPresenter::class.java)
-                presenter.go(container, ScreenData<Any>(event.data))
+                presenter.go(container, ScreenData(event.data))
             }
         })
     }

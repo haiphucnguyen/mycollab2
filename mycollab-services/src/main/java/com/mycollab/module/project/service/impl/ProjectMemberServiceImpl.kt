@@ -100,7 +100,7 @@ class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMap
         asyncEventBus.post(event)
     }
 
-    override fun isUserBelongToProject(username: String, projectId: Int?, sAccountId: Int?): Boolean {
+    override fun isUserBelongToProject(username: String, projectId: Int, sAccountId: Int): Boolean {
         val criteria = ProjectMemberSearchCriteria()
         criteria.projectId = NumberSearchField(projectId)
         criteria.saccountid = NumberSearchField(sAccountId)

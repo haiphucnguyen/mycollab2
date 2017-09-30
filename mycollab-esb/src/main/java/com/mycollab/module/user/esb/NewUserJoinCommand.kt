@@ -76,10 +76,10 @@ class NewUserJoinCommand(private val billingAccountService: BillingAccountServic
                     DateTimeUtils.getCurrentYear()))
             contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.id, account.logopath))
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
-                    String.format("%s has just joined on MyCollab workspace", newUser.displayName),
+                    "${newUser.displayName} has just joined on MyCollab workspace",
                     contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US))
         } else {
-            LOG.error("Can not find the user ${username} in account ${sAccountId}")
+            LOG.error("Can not find the user $username in account $sAccountId")
         }
     }
 }
