@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory
  * @author MyCollab Ltd.
  * @since 3.0
 </V> */
-abstract class AbstractPresenter<V : PageView>(private val viewClass: Class<V>) : IPresenter<V> {
+abstract class AbstractPresenter<out V : PageView>(private val viewClass: Class<V>) : IPresenter<V> {
     private var _view: V? = null
 
     override fun getView(): V? {
