@@ -26,7 +26,7 @@
         <jackson.version>2.9.1</jackson.version>
 
         <kotlin.version>1.1.51</kotlin.version>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->
         <flyway.version>4.2.0</flyway.version>

@@ -3,7 +3,7 @@ package com.mycollab.module.crm.view.parameters
 import com.mycollab.module.crm.domain.CallWithBLOBs
 import com.mycollab.vaadin.mvp.ScreenData
 
-class CallScreenData {
+object CallScreenData {
     class Add(call: CallWithBLOBs) : ScreenData<CallWithBLOBs>(call)
 
     class Edit(call: CallWithBLOBs) : ScreenData<CallWithBLOBs>(call)
