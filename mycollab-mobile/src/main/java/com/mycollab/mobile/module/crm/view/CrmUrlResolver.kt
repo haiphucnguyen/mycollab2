@@ -31,7 +31,7 @@ open class CrmUrlResolver() : UrlResolver() {
     }
 
     override fun handle(vararg params: String) {
-        if (!ModuleHelper.isCurrentCrmModule()) {
+        if (!ModuleHelper.isCurrentCrmModule) {
             EventBusFactory.getInstance().post(ShellEvent.GotoCrmModule(this, params))
         } else {
             super.handle(*params)

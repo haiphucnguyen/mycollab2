@@ -39,7 +39,7 @@ open class ProjectUrlResolver : UrlResolver() {
     }
 
     override fun handle(vararg params: String) {
-        if (!ModuleHelper.isCurrentProjectModule()) {
+        if (!ModuleHelper.isCurrentProjectModule) {
             EventBusFactory.getInstance().post(ShellEvent.GotoProjectModule(this, params))
         } else {
             super.handle(*params)
