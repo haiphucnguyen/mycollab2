@@ -9,11 +9,11 @@ import com.mycollab.module.ecm.domain.Resource
  * @since 6.0.0
  */
 object FileEvent {
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class ResourceRemovedEvent(source: Any, data: Resource) : ApplicationEvent(source, data)
+    class ResourceRemovedEvent(source: Any, data: Resource) : ApplicationEvent(source)
 
-    class ExternalDriveConnectedEvent(source: Any, data: ExternalDrive) : ApplicationEvent(source, data)
+    class ExternalDriveConnectedEvent(source: Any, data: ExternalDrive) : ApplicationEvent(source)
 
-    class ExternalDriveDeleteEvent(source: Any, data: ExternalDrive) : ApplicationEvent(source, data)
+    class ExternalDriveDeleteEvent(source: Any, data: ExternalDrive) : ApplicationEvent(source)
 }

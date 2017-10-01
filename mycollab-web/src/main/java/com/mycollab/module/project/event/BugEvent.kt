@@ -8,13 +8,13 @@ import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
  * @since 6.0.0
  */
 object BugEvent {
-    class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoRead(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class SearchRequest(source: Any, data: BugSearchCriteria) : ApplicationEvent(source, data)
+    class SearchRequest(source: Any, data: BugSearchCriteria) : ApplicationEvent(source)
 
-    class BugChanged(source: Any, data: Int) : ApplicationEvent(source, data)
+    class BugChanged(source: Any, data: Int) : ApplicationEvent(source)
 }

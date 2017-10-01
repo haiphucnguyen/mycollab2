@@ -7,11 +7,11 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ReportEvent {
-    class GotoConsole(source: Any) : ApplicationEvent(source, null) 
+    class GotoConsole(source: Any) : ApplicationEvent(source)
 
-    class GotoTimesheetReport(source: Any) : ApplicationEvent(source, null) 
+    class GotoTimesheetReport(source: Any) : ApplicationEvent(source)
 
-    class GotoWeeklyTimingReport(source: Any) : ApplicationEvent(source, null) 
+    class GotoWeeklyTimingReport(source: Any) : ApplicationEvent(source)
 
-    class GotoUserWorkloadReport(source: Any) : ApplicationEvent(source, null) 
+    class GotoUserWorkloadReport(source: Any) : ApplicationEvent(source)
 }

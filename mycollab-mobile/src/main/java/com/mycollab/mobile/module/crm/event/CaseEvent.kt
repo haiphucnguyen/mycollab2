@@ -7,17 +7,14 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object CaseEvent {
-    class Save(source: Any, data: Any?) : ApplicationEvent(source, data)
 
-    class Search(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoRead(source: Any, data: Any?) : ApplicationEvent(source, data)
-
-    class GotoRelatedItems(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoRelatedItems(source: Any, val data: Any?) : ApplicationEvent(source)
 }

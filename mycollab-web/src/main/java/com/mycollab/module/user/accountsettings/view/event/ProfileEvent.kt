@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ProfileEvent {
-    class GotoProfileView(source: Any) : ApplicationEvent(source, null)
+    class GotoProfileView(source: Any) : ApplicationEvent(source)
 }

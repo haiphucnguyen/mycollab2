@@ -7,9 +7,9 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object MessageEvent {
-    class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoRead(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoRead(source: Any, val data: Any?) : ApplicationEvent(source)
 }

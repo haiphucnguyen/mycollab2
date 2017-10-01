@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ProjectNotificationEvent {
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 }

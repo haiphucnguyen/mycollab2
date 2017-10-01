@@ -5,5 +5,5 @@ package com.mycollab.vaadin.events
  * @since 6.0.0
  */
 interface HasMassItemActionHandler {
-    fun setMassActionHandler(handler: MassItemActionHandler)
+    fun setMassActionHandler(handler: MassItemActionHandler1)
 }

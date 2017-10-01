@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object DocumentEvent {
-    class GotoDashboard(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoDashboard(source: Any, val data: Any?) : ApplicationEvent(source)
 }

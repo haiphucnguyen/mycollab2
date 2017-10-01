@@ -7,7 +7,7 @@ import com.mycollab.reporting.RpFieldsBuilder;
 import com.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.MassItemActionHandler;
+import com.mycollab.vaadin.events.MassItemActionHandler1;
 import com.mycollab.vaadin.events.ViewItemAction;
 import com.mycollab.vaadin.reporting.ReportStreamSource;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public abstract class DefaultMassEditActionHandler implements MassItemActionHandler {
+public abstract class DefaultMassEditActionHandler implements MassItemActionHandler1 {
     private ListSelectionPresenter presenter;
 
     public DefaultMassEditActionHandler(ListSelectionPresenter presenter) {

@@ -7,7 +7,7 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object TimeTrackingEvent {
-    class TimeLoggingEntryChange(source: Any) : ApplicationEvent(source, null)
+    class TimeLoggingEntryChange(source: Any) : ApplicationEvent(source)
 
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 }

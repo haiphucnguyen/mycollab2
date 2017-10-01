@@ -8,11 +8,11 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
  * @since 6.0.0
  */
 object TicketEvent {
-    class GotoDashboard(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoDashboard(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class NewTicketAdded(source: Any, val typeVal: String, val typeIdVal: Int) : ApplicationEvent(source, null)
+    class NewTicketAdded(source: Any, val typeVal: String, val typeIdVal: Int) : ApplicationEvent(source)
 
-    class SearchRequest(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source, data)
+    class SearchRequest(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source)
 
-    class HasTicketPropertyChanged(source: Any, data: String) : ApplicationEvent(source, data)
+    class HasTicketPropertyChanged(source: Any, data: String) : ApplicationEvent(source)
 }

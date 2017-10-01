@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object CrmEvent {
-    class GotoHome(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoHome(source: Any, val data: Any?) : ApplicationEvent(source)
 }

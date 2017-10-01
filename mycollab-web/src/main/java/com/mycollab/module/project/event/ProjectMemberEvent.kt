@@ -10,13 +10,13 @@ object ProjectMemberEvent {
     class InviteProjectMembers(val emails: Collection<String>, val roleId: Int,
                                val roleName: String, val inviteMessage: String)
 
-    class Search(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class Search(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoList(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoInviteMembers(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoInviteMembers(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoRead(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoEdit(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 }

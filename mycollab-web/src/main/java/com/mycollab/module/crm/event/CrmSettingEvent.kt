@@ -7,7 +7,7 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object CrmSettingEvent {
-    class GotoNotificationSetting(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoNotificationSetting(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoCustomViewSetting(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoCustomViewSetting(source: Any, val data: Any?) : ApplicationEvent(source)
 }

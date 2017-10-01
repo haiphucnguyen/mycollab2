@@ -7,11 +7,11 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object SettingEvent {
-    class GotoGeneralSetting(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoGeneralSetting(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoTheme(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoTheme(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class SaveTheme(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class SaveTheme(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class ResetTheme(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class ResetTheme(source: Any, val data: Any?) : ApplicationEvent(source)
 }

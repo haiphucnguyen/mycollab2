@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ProjectContentEvent {
-    class GotoDashboard(source: Any) : ApplicationEvent(source, null)
+    class GotoDashboard(source: Any) : ApplicationEvent(source)
 }

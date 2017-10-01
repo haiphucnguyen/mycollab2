@@ -7,9 +7,9 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object AccountBillingEvent {
-    class CancelAccount(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class CancelAccount(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoSummary(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoSummary(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoHistory(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoHistory(source: Any, val data: Any?) : ApplicationEvent(source)
 }

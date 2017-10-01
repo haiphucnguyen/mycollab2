@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.reporting.ReportExportType
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.events.HasMassItemActionHandler
-import com.mycollab.vaadin.events.MassItemActionHandler
+import com.mycollab.vaadin.events.MassItemActionHandler1
 import com.mycollab.vaadin.events.ViewItemAction
 import com.mycollab.vaadin.web.ui.WebThemes
 import com.vaadin.server.FileDownloader
@@ -22,7 +22,7 @@ import java.io.InputStream
  * @since 6.0.0
  */
 class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemActionHandler {
-    private var actionHandler: MassItemActionHandler? = null
+    private var actionHandler: MassItemActionHandler1? = null
     private val groupMap = mutableMapOf<String, ButtonGroup>()
 
     /**
@@ -114,7 +114,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
         return null
     }
 
-    override fun setMassActionHandler(handler: MassItemActionHandler) {
+    override fun setMassActionHandler(handler: MassItemActionHandler1) {
         actionHandler = handler
     }
 

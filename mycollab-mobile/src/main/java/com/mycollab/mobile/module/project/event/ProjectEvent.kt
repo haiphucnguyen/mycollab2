@@ -7,15 +7,15 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ProjectEvent {
-    class GotoAdd(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoProjectList(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoProjectList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoMyProject(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoMyProject(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class MyProjectActivities(source: Any, data: Int) : ApplicationEvent(source, data) 
+    class MyProjectActivities(source: Any, data: Int) : ApplicationEvent(source)
 
-    class GotoAllActivitiesView(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoAllActivitiesView(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoDashboard(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoDashboard(source: Any, val data: Any?) : ApplicationEvent(source)
 }

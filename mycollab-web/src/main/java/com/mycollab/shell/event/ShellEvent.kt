@@ -7,25 +7,25 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ShellEvent {
-    class NotifyErrorEvent(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class NotifyErrorEvent(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class RefreshPage(source: Any) : ApplicationEvent(source, null)
+    class RefreshPage(source: Any) : ApplicationEvent(source)
 
-    class GotoMainPage(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoMainPage(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class LogOut(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class LogOut(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoProjectModule(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoProjectModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoCrmModule(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoCrmModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoFileModule(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoFileModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoUserAccountModule(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoUserAccountModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoForgotPasswordPage(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoForgotPasswordPage(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class NewNotification(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class NewNotification(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class AddQueryParam(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class AddQueryParam(source: Any, val data: Any?) : ApplicationEvent(source)
 }

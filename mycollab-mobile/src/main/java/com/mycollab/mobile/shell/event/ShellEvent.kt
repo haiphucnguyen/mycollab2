@@ -7,19 +7,19 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ShellEvent {
-    class GotoLoginView(source: Any) : ApplicationEvent(source, null) 
+    class GotoLoginView(source: Any) : ApplicationEvent(source)
 
-    class GotoMainPage(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoMainPage(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoCrmModule(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoCrmModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoProjectModule(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoProjectModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoUserAccountModule(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class GotoUserAccountModule(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class PushView(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class PushView(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class NavigateBack(source: Any, data: Any?) : ApplicationEvent(source, data) 
+    class NavigateBack(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class LogOut(source: Any) : ApplicationEvent(source, null) 
+    class LogOut(source: Any) : ApplicationEvent(source)
 }

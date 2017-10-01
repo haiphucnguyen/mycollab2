@@ -7,5 +7,5 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object CustomizeUIEvent {
-    class UpdateFeaturesList(source: Any) : ApplicationEvent(source, null)
+    class UpdateFeaturesList(source: Any) : ApplicationEvent(source)
 }

@@ -7,25 +7,25 @@ import com.mycollab.events.ApplicationEvent
  * @since 6.0.0
  */
 object ActivityEvent {
-    class GotoCalendar(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoCalendar(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class GotoTodoList(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class GotoTodoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class TaskAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class TaskAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class TaskEdit(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class TaskEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class TaskRead(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class TaskRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class MeetingAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class MeetingAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class MeetingEdit(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class MeetingEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class MeetingRead(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class MeetingRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class CallAdd(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class CallAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class CallEdit(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class CallEdit(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class CallRead(source: Any, data: Any?) : ApplicationEvent(source, data)
+    class CallRead(source: Any, val data: Any?) : ApplicationEvent(source)
 }

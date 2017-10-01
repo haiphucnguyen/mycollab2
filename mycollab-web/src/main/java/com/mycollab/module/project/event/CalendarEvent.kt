@@ -8,5 +8,5 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
  * @since 6.0.0
  */
 object CalendarEvent {
-    class SearchRequest(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source, data)
+    class SearchRequest(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source)
 }
