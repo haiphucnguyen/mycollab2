@@ -6,7 +6,7 @@ import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.assignments.CalendarView;
 import com.mycollab.module.project.view.assignments.ICalendarPresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardContainer;
-import com.mycollab.vaadin.events.HasSearchHandlers;
+import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.NotificationUtil;

@@ -17,7 +17,7 @@ import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;

@@ -5,7 +5,7 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.mobile.module.project.ui.TimeLogComp;
 import com.mycollab.mobile.module.project.ui.TimeLogEditView;

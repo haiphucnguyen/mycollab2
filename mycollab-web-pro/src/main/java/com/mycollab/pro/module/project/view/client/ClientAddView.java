@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.PageView;
 
 /**

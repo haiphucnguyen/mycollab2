@@ -2,8 +2,8 @@ package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;

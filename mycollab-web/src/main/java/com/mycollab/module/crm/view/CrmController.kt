@@ -3,7 +3,7 @@ package com.mycollab.module.crm.view
 import com.google.common.eventbus.Subscribe
 import com.mycollab.core.MyCollabException
 import com.mycollab.db.arguments.NumberSearchField
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.module.crm.data.CustomViewScreenData
 import com.mycollab.module.crm.data.NotificationSettingScreenData
 import com.mycollab.module.crm.domain.*

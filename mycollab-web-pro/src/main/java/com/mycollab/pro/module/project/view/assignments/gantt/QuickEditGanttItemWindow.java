@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view.assignments.gantt;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.event.MilestoneEvent;

@@ -1,6 +1,6 @@
 package com.mycollab.module.crm.view;
 
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.event.CrmEvent;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ScreenData;

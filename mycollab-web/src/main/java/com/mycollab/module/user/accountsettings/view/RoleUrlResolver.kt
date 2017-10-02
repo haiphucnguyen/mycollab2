@@ -1,7 +1,7 @@
 package com.mycollab.module.user.accountsettings.view
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.user.event.RoleEvent
 import com.mycollab.module.user.service.RoleService
 import com.mycollab.spring.AppContextUtil

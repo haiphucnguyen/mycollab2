@@ -9,7 +9,7 @@ import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.db.arguments.StringSearchField
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.mobile.module.project.event.*
 import com.mycollab.mobile.module.project.event.TicketEvent
 import com.mycollab.mobile.module.project.view.message.MessagePresenter

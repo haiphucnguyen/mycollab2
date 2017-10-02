@@ -5,8 +5,8 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleStandupReport;
@@ -37,8 +37,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.

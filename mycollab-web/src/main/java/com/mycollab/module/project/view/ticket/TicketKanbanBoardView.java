@@ -2,7 +2,7 @@ package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.view.IKanbanView;
-import com.mycollab.vaadin.events.HasSearchHandlers;
+import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.PageView;
 
 /**

@@ -1,4 +1,4 @@
-package com.mycollab.vaadin.events;
+package com.mycollab.vaadin.event;
 
 /**
  * @param <T>

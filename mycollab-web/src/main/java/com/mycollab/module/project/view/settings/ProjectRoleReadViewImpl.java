@@ -9,7 +9,7 @@ import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGener
 import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.FormContainer;

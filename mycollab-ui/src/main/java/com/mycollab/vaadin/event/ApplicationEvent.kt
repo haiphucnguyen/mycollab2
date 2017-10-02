@@ -1,4 +1,4 @@
-package com.mycollab.events
+package com.mycollab.vaadin.event
 
 import java.util.*
 

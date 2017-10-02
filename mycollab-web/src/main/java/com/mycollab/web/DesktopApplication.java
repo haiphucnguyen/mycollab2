@@ -8,7 +8,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.user.dao.UserAccountMapper;

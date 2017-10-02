@@ -5,7 +5,7 @@ import com.mycollab.common.UrlTokenizer
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.mobile.module.project.event.ProjectEvent
 import com.mycollab.mobile.module.project.view.bug.BugUrlResolver
 import com.mycollab.mobile.module.project.view.message.MessageUrlResolver

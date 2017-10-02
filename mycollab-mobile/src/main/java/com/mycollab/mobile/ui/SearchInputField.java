@@ -2,8 +2,8 @@ package com.mycollab.mobile.ui;
 
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.vaadin.events.HasSearchHandlers;
-import com.mycollab.vaadin.events.SearchHandler;
+import com.mycollab.vaadin.event.HasSearchHandlers;
+import com.mycollab.vaadin.event.SearchHandler;
 import com.vaadin.ui.TextField;
 import org.vaadin.jouni.dom.Dom;
 import org.vaadin.resetbuttonfortextfield.ResetButtonForTextField;

@@ -1,7 +1,7 @@
 package com.mycollab.vaadin.ui;
 
-import com.mycollab.vaadin.events.IEditFormHandler;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.IEditFormHandler;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 
 import java.util.ArrayList;
 import java.util.List;

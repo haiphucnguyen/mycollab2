@@ -1,7 +1,7 @@
 package com.mycollab.shell.view;
 
 import com.mycollab.common.ModuleNameConstants;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;

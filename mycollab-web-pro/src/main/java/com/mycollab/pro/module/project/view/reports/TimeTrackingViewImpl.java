@@ -8,7 +8,7 @@ import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProject;

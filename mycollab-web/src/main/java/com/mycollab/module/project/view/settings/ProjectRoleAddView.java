@@ -2,7 +2,7 @@ package com.mycollab.module.project.view.settings;
 
 import com.mycollab.module.project.domain.ProjectRole;
 import com.mycollab.security.PermissionMap;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.IFormAddView;
 
 /**

@@ -1,6 +1,6 @@
 package com.mycollab.module.crm.view.file
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.crm.event.DocumentEvent
 import com.mycollab.module.crm.view.CrmUrlResolver
 

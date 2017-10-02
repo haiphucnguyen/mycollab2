@@ -2,7 +2,7 @@ package com.mycollab.mobile.module.project.view.message;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.MessageEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.SearchInputView;

@@ -11,7 +11,7 @@ import com.mycollab.reporting.RpFieldsBuilder;
 import com.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.HasSearchHandlers;
+import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.resources.LazyStreamSource;

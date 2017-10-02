@@ -9,8 +9,8 @@ import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotific
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.mycollab.core.AbstractNotification;
 import com.mycollab.core.NewUpdateAvailableNotification;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.UserUIContext;

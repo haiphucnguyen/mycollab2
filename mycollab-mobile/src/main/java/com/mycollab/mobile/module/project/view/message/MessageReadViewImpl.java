@@ -37,7 +37,6 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
     private final VerticalLayout mainLayout;
 
     public MessageReadViewImpl() {
-        super();
         this.addStyleName("message-read-view");
         this.setCaption(UserUIContext.getMessage(MessageI18nEnum.SINGLE));
         mainLayout = new VerticalLayout();

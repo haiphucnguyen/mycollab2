@@ -1,6 +1,6 @@
 package com.mycollab.module.project.event
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.event.ApplicationEvent
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
 
 /**

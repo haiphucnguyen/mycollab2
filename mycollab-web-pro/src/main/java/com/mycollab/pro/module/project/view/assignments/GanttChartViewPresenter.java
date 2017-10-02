@@ -1,8 +1,8 @@
 package com.mycollab.pro.module.project.view.assignments;
 
 import com.google.common.eventbus.Subscribe;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.AssignWithPredecessors;
 import com.mycollab.module.project.domain.Task;

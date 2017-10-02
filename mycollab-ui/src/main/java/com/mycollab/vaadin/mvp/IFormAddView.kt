@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.mvp
 
-import com.mycollab.vaadin.events.HasEditFormHandlers
+import com.mycollab.vaadin.event.HasEditFormHandlers
 
 /**
  * @param <B>

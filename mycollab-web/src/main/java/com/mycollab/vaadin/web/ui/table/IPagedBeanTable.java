@@ -2,9 +2,9 @@ package com.mycollab.vaadin.web.ui.table;
 
 import com.mycollab.common.TableViewField;
 import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.events.ApplicationEvent;
-import com.mycollab.vaadin.events.HasPageableHandlers;
-import com.mycollab.vaadin.events.HasSelectableItemHandlers;
+import com.mycollab.vaadin.event.ApplicationEvent;
+import com.mycollab.vaadin.event.HasPageableHandlers;
+import com.mycollab.vaadin.event.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
 import com.vaadin.util.ReflectTools;

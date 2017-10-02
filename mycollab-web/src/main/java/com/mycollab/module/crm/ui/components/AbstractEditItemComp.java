@@ -1,6 +1,6 @@
 package com.mycollab.module.crm.ui.components;
 
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.IFormAddView;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;

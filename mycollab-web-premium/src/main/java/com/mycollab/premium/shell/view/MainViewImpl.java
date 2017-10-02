@@ -6,7 +6,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.license.LicenseInfo;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;

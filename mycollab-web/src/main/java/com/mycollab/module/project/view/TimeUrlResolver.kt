@@ -4,7 +4,7 @@ import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.db.query.DateParam
 import com.mycollab.db.query.VariableInjector
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.view.parameters.ProjectScreenData

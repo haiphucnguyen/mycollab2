@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.assignments.gantt;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.TaskPredecessor;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;

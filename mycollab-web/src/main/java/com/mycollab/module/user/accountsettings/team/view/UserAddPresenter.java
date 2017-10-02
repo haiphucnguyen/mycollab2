@@ -1,7 +1,7 @@
 package com.mycollab.module.user.accountsettings.team.view;
 
 import com.mycollab.core.utils.RandomPasswordGenerator;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.billing.RegisterStatusConstants;
 import com.mycollab.module.billing.UserStatusConstants;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
@@ -13,7 +13,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.DefaultEditFormHandler;
+import com.mycollab.vaadin.event.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;

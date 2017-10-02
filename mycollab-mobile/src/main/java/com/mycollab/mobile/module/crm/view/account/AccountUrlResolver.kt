@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.crm.view.account
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.mobile.module.crm.event.AccountEvent
 import com.mycollab.mobile.module.crm.view.CrmUrlResolver
 import com.mycollab.module.crm.domain.Account

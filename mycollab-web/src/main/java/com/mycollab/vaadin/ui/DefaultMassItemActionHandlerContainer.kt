@@ -3,9 +3,9 @@ package com.mycollab.vaadin.ui
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.reporting.ReportExportType
 import com.mycollab.vaadin.UserUIContext
-import com.mycollab.vaadin.events.HasMassItemActionHandler
-import com.mycollab.vaadin.events.MassItemActionHandler
-import com.mycollab.vaadin.events.ViewItemAction
+import com.mycollab.vaadin.event.HasMassItemActionHandler
+import com.mycollab.vaadin.event.MassItemActionHandler
+import com.mycollab.vaadin.event.ViewItemAction
 import com.mycollab.vaadin.web.ui.WebThemes
 import com.vaadin.server.FileDownloader
 import com.vaadin.server.FontAwesome

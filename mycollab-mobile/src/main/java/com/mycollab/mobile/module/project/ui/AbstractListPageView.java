@@ -4,9 +4,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.IListView;
 import com.mycollab.mobile.ui.SearchInputField;
-import com.mycollab.vaadin.events.HasSearchHandlers;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 
 /**
  * @author MyCollab Ltd.

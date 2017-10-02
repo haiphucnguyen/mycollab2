@@ -1,6 +1,6 @@
 package com.mycollab.ondemand.module.file.event
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.event.ApplicationEvent
 import com.mycollab.module.file.CloudDriveInfo
 
 /**

@@ -1,6 +1,6 @@
 package com.mycollab.module.crm.view.setting
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.crm.event.CrmSettingEvent
 import com.mycollab.module.crm.view.CrmUrlResolver
 

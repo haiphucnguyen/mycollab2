@@ -1,6 +1,6 @@
 package com.mycollab.module.file.event
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.event.ApplicationEvent
 import com.mycollab.module.ecm.domain.ExternalDrive
 import com.mycollab.module.ecm.domain.Resource
 

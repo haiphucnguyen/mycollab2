@@ -2,7 +2,7 @@ package com.mycollab.module.project.view.message;
 
 import com.mycollab.module.project.domain.Message;
 import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.PageView;
 
 /**

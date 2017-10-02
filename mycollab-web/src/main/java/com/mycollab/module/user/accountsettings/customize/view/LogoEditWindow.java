@@ -6,7 +6,7 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.service.AccountLogoService;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
 import com.mycollab.spring.AppContextUtil;

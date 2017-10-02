@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.file.view;
 
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.ecm.domain.ExternalDrive;
 import com.mycollab.module.ecm.domain.ExternalFolder;
 import com.mycollab.module.ecm.domain.Folder;

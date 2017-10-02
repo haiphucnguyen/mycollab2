@@ -2,7 +2,7 @@ package com.mycollab.mobile.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.NumberUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.*;
 import com.mycollab.mobile.module.project.ui.ProjectMobileMenuPageView;
 import com.mycollab.module.project.CurrentProjectVariables;

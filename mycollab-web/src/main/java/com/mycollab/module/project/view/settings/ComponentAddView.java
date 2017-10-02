@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view.settings;
 
 import com.mycollab.module.tracker.domain.Component;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.IFormAddView;
 
 /**

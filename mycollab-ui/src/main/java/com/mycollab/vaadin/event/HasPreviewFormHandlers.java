@@ -1,4 +1,4 @@
-package com.mycollab.vaadin.events;
+package com.mycollab.vaadin.event;
 
 /**
  * Interface denote to have at least one instance of class

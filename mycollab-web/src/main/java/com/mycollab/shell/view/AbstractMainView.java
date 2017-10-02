@@ -2,8 +2,8 @@ package com.mycollab.shell.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.ApplicationEventListener;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

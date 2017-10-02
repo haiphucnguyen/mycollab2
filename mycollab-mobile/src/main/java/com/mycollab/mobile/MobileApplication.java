@@ -6,7 +6,7 @@ import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.mobile.module.user.view.LoginPresenter;
 import com.mycollab.mobile.shell.view.ShellUrlResolver;

@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.mvp
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 
 /**
  * @author MyCollab Ltd

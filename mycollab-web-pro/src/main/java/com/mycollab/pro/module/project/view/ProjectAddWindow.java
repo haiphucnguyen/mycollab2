@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.event.ProjectEvent;

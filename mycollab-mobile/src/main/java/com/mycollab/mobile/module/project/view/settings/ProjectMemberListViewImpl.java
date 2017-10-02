@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.project.view.settings;
 
 import com.mycollab.common.GenericLinkUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.ProjectMemberEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;

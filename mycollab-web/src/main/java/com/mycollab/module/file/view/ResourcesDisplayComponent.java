@@ -8,7 +8,7 @@ import com.mycollab.core.DebugException;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.ecm.StorageNames;
 import com.mycollab.module.ecm.domain.*;
 import com.mycollab.module.ecm.service.ExternalDriveService;

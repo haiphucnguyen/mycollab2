@@ -1,7 +1,7 @@
 package com.mycollab.mobile.ui;
 
 import com.mycollab.core.MyCollabException;
-import com.mycollab.vaadin.events.PreviewFormHandler;
+import com.mycollab.vaadin.event.PreviewFormHandler;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 
 import java.util.HashSet;

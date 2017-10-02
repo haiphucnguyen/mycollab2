@@ -9,7 +9,7 @@ import com.mycollab.mobile.ui.AbstractMobileMainView;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.events.ViewEvent;
+import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.EmailField;

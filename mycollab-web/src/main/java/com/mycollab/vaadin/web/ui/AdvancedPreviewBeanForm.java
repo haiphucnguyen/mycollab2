@@ -1,7 +1,7 @@
 package com.mycollab.vaadin.web.ui;
 
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.mycollab.vaadin.events.PreviewFormHandler;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.PreviewFormHandler;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 
 import java.util.HashSet;

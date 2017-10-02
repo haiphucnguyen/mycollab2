@@ -2,7 +2,7 @@ package com.mycollab.module.user.accountsettings.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.mycollab.module.user.accountsettings.customize.view.AccountSettingPresenter;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;

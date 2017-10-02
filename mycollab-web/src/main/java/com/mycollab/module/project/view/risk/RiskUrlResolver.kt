@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view.risk
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.SimpleRisk
 import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.RiskService

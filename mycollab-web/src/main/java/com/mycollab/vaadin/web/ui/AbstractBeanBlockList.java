@@ -2,8 +2,8 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.vaadin.events.HasPageableHandlers;
-import com.mycollab.vaadin.events.PageableHandler;
+import com.mycollab.vaadin.event.HasPageableHandlers;
+import com.mycollab.vaadin.event.PageableHandler;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;

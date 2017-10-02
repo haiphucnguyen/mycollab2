@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.event.*;
 import com.mycollab.module.crm.i18n.*;

@@ -1,6 +1,6 @@
 package com.mycollab.module.file.view
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.UrlResolver
 import com.mycollab.vaadin.web.ui.ModuleHelper

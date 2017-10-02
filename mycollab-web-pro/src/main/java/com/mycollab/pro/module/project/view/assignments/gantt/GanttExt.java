@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.assignments.gantt;
 
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.i18n.GanttI18nEnum;

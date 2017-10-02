@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.project.view.bug.BugUrlResolver

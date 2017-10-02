@@ -1,7 +1,7 @@
 package com.mycollab.shell.view
 
 import com.google.common.eventbus.Subscribe
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver

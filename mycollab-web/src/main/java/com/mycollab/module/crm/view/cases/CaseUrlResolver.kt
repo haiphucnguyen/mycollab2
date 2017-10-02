@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view.cases
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.crm.domain.Account
 import com.mycollab.module.crm.event.CaseEvent
 import com.mycollab.module.crm.view.CrmUrlResolver

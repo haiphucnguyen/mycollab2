@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.project.view;
 
 import com.mycollab.common.ModuleNameConstants;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.mobile.module.project.event.ProjectEvent;
 import com.mycollab.mobile.shell.ModuleHelper;

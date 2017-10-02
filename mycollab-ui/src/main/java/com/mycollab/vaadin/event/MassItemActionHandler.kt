@@ -1,4 +1,4 @@
-package com.mycollab.vaadin.events
+package com.mycollab.vaadin.event
 
 import com.mycollab.reporting.ReportExportType
 import com.vaadin.server.StreamResource

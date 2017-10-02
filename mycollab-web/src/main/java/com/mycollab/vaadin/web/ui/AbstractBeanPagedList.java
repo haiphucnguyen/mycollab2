@@ -2,8 +2,8 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SearchRequest;
-import com.mycollab.vaadin.events.HasPageableHandlers;
-import com.mycollab.vaadin.events.PageableHandler;
+import com.mycollab.vaadin.event.HasPageableHandlers;
+import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;

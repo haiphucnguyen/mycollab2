@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.module.project.domain.SimpleRisk;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.IFormAddView;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 

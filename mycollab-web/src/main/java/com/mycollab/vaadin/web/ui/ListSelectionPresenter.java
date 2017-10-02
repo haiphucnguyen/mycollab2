@@ -3,8 +3,8 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.persistence.service.ISearchableService;
-import com.mycollab.vaadin.events.PageableHandler;
-import com.mycollab.vaadin.events.SelectionOptionHandler;
+import com.mycollab.vaadin.event.PageableHandler;
+import com.mycollab.vaadin.event.SelectionOptionHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;

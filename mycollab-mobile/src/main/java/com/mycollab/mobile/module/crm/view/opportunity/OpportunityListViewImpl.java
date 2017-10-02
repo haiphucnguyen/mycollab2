@@ -1,6 +1,6 @@
 package com.mycollab.mobile.module.crm.view.opportunity;
 
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.crm.event.OpportunityEvent;
 import com.mycollab.mobile.module.crm.ui.AbstractListPageView;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;

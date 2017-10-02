@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view.activity;
 
 import com.mycollab.module.crm.domain.MeetingWithBLOBs;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.IFormAddView;
 
 /**

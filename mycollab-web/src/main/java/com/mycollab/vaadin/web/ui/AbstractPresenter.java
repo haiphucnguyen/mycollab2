@@ -3,7 +3,7 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.core.SecureAccessException;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.user.accountsettings.view.AccountModulePresenter;
 import com.mycollab.security.PermissionChecker;
 import com.mycollab.security.PermissionMap;

@@ -2,7 +2,7 @@ package com.mycollab.module.project.view.milestone
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.SetSearchField
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.SimpleMilestone
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria
 import com.mycollab.module.project.event.ProjectEvent

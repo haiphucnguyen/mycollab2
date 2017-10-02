@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view.page;
 
 import com.mycollab.module.page.domain.Page;
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.IPreviewView;
 
 /**

@@ -1,7 +1,7 @@
 package com.mycollab.shell.view
 
 import com.google.common.eventbus.Subscribe
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.module.crm.view.CrmModulePresenter
 import com.mycollab.module.crm.view.CrmModuleScreenData
 import com.mycollab.module.file.view.IFileModulePresenter

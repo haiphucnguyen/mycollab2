@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view.opportunity;
 
 import com.mycollab.module.crm.domain.SimpleOpportunity;
-import com.mycollab.vaadin.events.HasEditFormHandlers;
+import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.IFormAddView;
 
 /**

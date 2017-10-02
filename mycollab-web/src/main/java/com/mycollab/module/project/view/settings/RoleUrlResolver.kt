@@ -2,7 +2,7 @@ package com.mycollab.module.project.view.settings
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.db.arguments.NumberSearchField
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.ProjectRole
 import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria
 import com.mycollab.module.project.event.ProjectEvent

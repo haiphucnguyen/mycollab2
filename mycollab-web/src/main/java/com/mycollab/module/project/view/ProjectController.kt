@@ -5,7 +5,7 @@ import com.mycollab.common.domain.Tag
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.module.page.domain.Page
 import com.mycollab.module.project.CurrentProjectVariables
 import com.mycollab.module.project.ProjectMemberStatusConstants

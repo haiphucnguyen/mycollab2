@@ -2,7 +2,7 @@ package com.mycollab.mobile.module.project.view.ticket;
 
 import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.BugEvent;
 import com.mycollab.mobile.module.project.event.RiskEvent;
 import com.mycollab.mobile.module.project.event.TaskEvent;

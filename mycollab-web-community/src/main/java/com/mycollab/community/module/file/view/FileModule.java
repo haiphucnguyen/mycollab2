@@ -1,7 +1,7 @@
 package com.mycollab.community.module.file.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.view.IFileModule;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;

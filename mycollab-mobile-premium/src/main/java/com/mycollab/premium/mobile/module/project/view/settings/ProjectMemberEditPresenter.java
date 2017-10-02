@@ -1,7 +1,7 @@
 package com.mycollab.premium.mobile.module.project.view.settings;
 
 import com.mycollab.common.GenericLinkUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.module.project.view.settings.IProjectMemberEditPresenter;
 import com.mycollab.mobile.module.project.view.settings.ProjectMemberEditView;
@@ -13,7 +13,7 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.DefaultEditFormHandler;
+import com.mycollab.vaadin.event.DefaultEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.HasComponents;

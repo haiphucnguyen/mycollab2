@@ -3,7 +3,7 @@ package com.mycollab.pro.module.file.view;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.FileUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.ecm.StorageNames;
 import com.mycollab.module.ecm.domain.ExternalDrive;
 import com.mycollab.module.ecm.domain.ExternalFolder;

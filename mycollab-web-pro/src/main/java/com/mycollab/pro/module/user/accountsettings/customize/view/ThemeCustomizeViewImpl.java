@@ -2,7 +2,7 @@ package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ThemeI18nEnum;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;

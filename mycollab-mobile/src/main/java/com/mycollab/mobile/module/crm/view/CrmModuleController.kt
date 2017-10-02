@@ -2,7 +2,7 @@ package com.mycollab.mobile.module.crm.view
 
 import com.google.common.eventbus.Subscribe
 import com.mycollab.db.arguments.NumberSearchField
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.mobile.module.crm.event.*
 import com.mycollab.mobile.module.crm.event.ActivityEvent.CallEdit
 import com.mycollab.mobile.module.crm.ui.CrmRelatedItemsScreenData
@@ -168,7 +168,7 @@ class CrmModuleController(private val crmViewNavigation: NavigationManager) : Ab
             }
         })
 
-        this.register(object : ApplicationEventListener<ActivityEvent.CallEdit> {
+        this.register(object : ApplicationEventListener<CallEdit> {
 
             @Subscribe
             override fun handle(event: CallEdit) {

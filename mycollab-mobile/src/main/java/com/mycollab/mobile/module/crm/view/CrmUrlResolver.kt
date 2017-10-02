@@ -1,6 +1,6 @@
 package com.mycollab.mobile.module.crm.view
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.mobile.module.crm.event.CrmEvent
 import com.mycollab.mobile.module.crm.view.account.AccountUrlResolver
 import com.mycollab.mobile.module.crm.view.activity.ActivityUrlResolver

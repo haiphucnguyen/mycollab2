@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.query.Param;
 import com.mycollab.db.query.SearchFieldInfo;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;

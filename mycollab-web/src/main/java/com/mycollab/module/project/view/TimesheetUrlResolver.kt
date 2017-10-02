@@ -1,6 +1,6 @@
 package com.mycollab.module.project.view
 
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.event.ReportEvent
 
 /**

@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view;
 
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.event.ReportEvent;
 import com.mycollab.module.project.i18n.BreadcrumbI18nEnum;

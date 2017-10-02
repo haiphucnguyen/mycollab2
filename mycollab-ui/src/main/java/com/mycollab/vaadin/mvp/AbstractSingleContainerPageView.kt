@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.mvp
 
-import com.mycollab.vaadin.events.ViewEvent
+import com.mycollab.vaadin.event.ViewEvent
 import com.vaadin.ui.*
 import com.vaadin.ui.HasComponents.ComponentAttachListener
 import com.vaadin.ui.HasComponents.ComponentDetachListener

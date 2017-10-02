@@ -16,7 +16,7 @@ public class AbstractMobileTabPageView extends TabBarView implements PageView {
 
     /*
      * Now we use EventBus to manage event
-     * @see com.mycollab.eventmanager.EventBusFactory
+     * @see com.mycollab.vaadin.EventBusFactory
      */
     @Deprecated
     @Override

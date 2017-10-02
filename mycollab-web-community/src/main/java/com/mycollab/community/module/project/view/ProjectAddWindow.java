@@ -1,7 +1,7 @@
 package com.mycollab.community.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.service.ProjectService;

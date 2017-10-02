@@ -1,7 +1,7 @@
 package com.mycollab.module.project.view
 
 import com.mycollab.db.arguments.DateSearchField
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria
 import com.mycollab.module.project.event.StandUpEvent
 import org.joda.time.format.DateTimeFormat

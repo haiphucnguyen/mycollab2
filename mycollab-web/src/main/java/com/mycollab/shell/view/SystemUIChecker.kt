@@ -3,7 +3,7 @@ package com.mycollab.shell.view
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.common.i18n.ShellI18nEnum
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.mail.service.ExtMailService
 import com.mycollab.shell.event.ShellEvent
 import com.mycollab.spring.AppContextUtil

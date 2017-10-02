@@ -1,7 +1,7 @@
 package com.mycollab.module.user.accountsettings.view
 
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.user.accountsettings.view.event.ProfileEvent
 import com.mycollab.module.user.accountsettings.view.event.SetupEvent
 import com.mycollab.shell.event.ShellEvent

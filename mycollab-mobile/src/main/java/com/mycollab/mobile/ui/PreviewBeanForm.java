@@ -1,6 +1,6 @@
 package com.mycollab.mobile.ui;
 
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 
 /**
  * MyCollab Ltd

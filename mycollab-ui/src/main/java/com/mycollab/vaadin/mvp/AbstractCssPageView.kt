@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.mvp
 
-import com.mycollab.vaadin.events.ViewEvent
+import com.mycollab.vaadin.event.ViewEvent
 import com.vaadin.ui.CssLayout
 
 import java.io.Serializable

@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view.reports;
 
 import com.mycollab.core.MyCollabException;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.StandupReportStatistic;
 import com.mycollab.module.project.domain.StandupReportWithBLOBs;
@@ -12,7 +12,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.IEditFormHandler;
+import com.mycollab.vaadin.event.IEditFormHandler;
 import com.mycollab.vaadin.ui.*;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;

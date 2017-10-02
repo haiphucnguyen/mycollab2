@@ -1,6 +1,6 @@
 package com.mycollab.module.user.event
 
-import com.mycollab.events.ApplicationEvent
+import com.mycollab.vaadin.event.ApplicationEvent
 
 /**
  * @author MyCollab Ltd

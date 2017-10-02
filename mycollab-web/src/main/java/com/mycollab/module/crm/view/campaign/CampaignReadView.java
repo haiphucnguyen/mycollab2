@@ -1,6 +1,6 @@
 package com.mycollab.module.crm.view.campaign;
 
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.IPreviewView;
 import com.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.mycollab.module.crm.domain.*;

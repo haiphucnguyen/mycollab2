@@ -7,7 +7,7 @@ import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotific
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.mycollab.community.shell.view.components.AdRequestWindow;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;

@@ -1,9 +1,8 @@
 package com.mycollab.mobile.ui
 
-import com.mycollab.vaadin.events.ViewEvent
+import com.mycollab.vaadin.event.ViewEvent
 import com.mycollab.vaadin.mvp.PageView
 import com.vaadin.ui.VerticalLayout
-import java.io.Serializable
 
 /**
  * @author MyCollab Ltd.

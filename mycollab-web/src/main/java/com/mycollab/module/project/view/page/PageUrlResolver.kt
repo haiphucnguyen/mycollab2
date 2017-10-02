@@ -3,7 +3,7 @@ package com.mycollab.module.project.view.page
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.page.domain.Page
 import com.mycollab.module.page.service.PageService
 import com.mycollab.module.project.event.ProjectEvent

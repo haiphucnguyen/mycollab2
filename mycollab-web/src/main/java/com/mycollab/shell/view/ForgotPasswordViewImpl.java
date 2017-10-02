@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.service.UserService;

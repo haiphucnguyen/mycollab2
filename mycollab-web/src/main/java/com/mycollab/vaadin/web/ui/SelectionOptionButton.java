@@ -2,9 +2,9 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.mycollab.vaadin.events.SelectionOptionHandler;
+import com.mycollab.vaadin.event.HasSelectableItemHandlers;
+import com.mycollab.vaadin.event.HasSelectionOptionHandlers;
+import com.mycollab.vaadin.event.SelectionOptionHandler;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;

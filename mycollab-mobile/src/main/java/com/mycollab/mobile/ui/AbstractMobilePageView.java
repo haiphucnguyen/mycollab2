@@ -4,7 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.mobile.MobileApplication;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView;
-import com.mycollab.vaadin.events.ViewEvent;
+import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.NavigationManager;

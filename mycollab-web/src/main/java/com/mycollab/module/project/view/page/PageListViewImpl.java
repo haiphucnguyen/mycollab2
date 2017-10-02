@@ -4,7 +4,7 @@ import com.google.common.collect.Ordering;
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.eventmanager.EventBusFactory;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.page.domain.Folder;
 import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.page.domain.PageResource;

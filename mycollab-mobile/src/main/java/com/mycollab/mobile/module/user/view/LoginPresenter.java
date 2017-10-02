@@ -9,7 +9,7 @@ import com.mycollab.mobile.mvp.AbstractPresenter;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.mvp.PageView;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.mycollab.vaadin.events.ViewEvent;
+import com.mycollab.vaadin.event.ViewEvent;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;

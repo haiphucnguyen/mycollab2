@@ -4,7 +4,7 @@ import com.google.common.eventbus.Subscribe
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
-import com.mycollab.eventmanager.ApplicationEventListener
+import com.mycollab.vaadin.ApplicationEventListener
 import com.mycollab.module.billing.RegisterStatusConstants
 import com.mycollab.module.user.accountsettings.billing.view.IBillingPresenter
 import com.mycollab.module.user.accountsettings.customize.view.AccountSettingPresenter

@@ -1,10 +1,9 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.vaadin.events.HasSearchHandlers;
-import com.mycollab.vaadin.events.SearchHandler;
+import com.mycollab.vaadin.event.HasSearchHandlers;
+import com.mycollab.vaadin.event.SearchHandler;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 
 import java.util.ArrayList;

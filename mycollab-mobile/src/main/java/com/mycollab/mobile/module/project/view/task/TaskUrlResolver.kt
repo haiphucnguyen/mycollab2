@@ -3,7 +3,7 @@ package com.mycollab.mobile.module.project.view.task
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.ResourceNotFoundException
-import com.mycollab.eventmanager.EventBusFactory
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.mobile.module.project.event.ProjectEvent
 import com.mycollab.mobile.module.project.view.ProjectUrlResolver
 import com.mycollab.mobile.module.project.view.parameters.ProjectScreenData

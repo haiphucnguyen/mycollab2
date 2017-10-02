@@ -3,7 +3,7 @@ package com.mycollab.module.crm.view.contact;
 import com.mycollab.module.crm.domain.SimpleActivity;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.IPreviewView;
 import com.mycollab.vaadin.ui.IRelatedListHandlers;
 

@@ -1,7 +1,7 @@
 package com.mycollab.module.crm.view.activity;
 
 import com.mycollab.module.crm.domain.SimpleCall;
-import com.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.IPreviewView;
 
 /**
