@@ -7,7 +7,7 @@ import com.vaadin.server.StreamResource
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-interface MassItemActionHandler1 {
+interface MassItemActionHandler {
     fun onSelect(id: String)
 
     fun buildStreamResource(exportType: ReportExportType): StreamResource

@@ -1,6 +1,7 @@
 package com.mycollab.module.project.view.settings
 
 import com.mycollab.common.UrlTokenizer
+import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.eventmanager.EventBusFactory
@@ -65,8 +66,12 @@ class UserUrlResolver : ProjectUrlResolver() {
             val memberId = token.getInt()
             val projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService::class.java)
             val member = projectMemberService.findById(memberId, AppUI.accountId)
-            val chain = PageActionChain(ProjectScreenData.Goto(projectId), ProjectMemberScreenData.Add(member))
-            EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            if (member != null) {
+                val chain = PageActionChain(ProjectScreenData.Goto(projectId), ProjectMemberScreenData.Add(member))
+                EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            } else {
+                throw ResourceNotFoundException("Can not find member $memberId")
+            }
         }
     }
 }

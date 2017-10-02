@@ -20,7 +20,6 @@ public class MilestoneListSelect extends ValueListSelect {
     private static final long serialVersionUID = 1L;
 
     public MilestoneListSelect() {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
         MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();

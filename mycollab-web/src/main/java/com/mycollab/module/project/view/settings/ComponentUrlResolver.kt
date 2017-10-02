@@ -1,6 +1,7 @@
 package com.mycollab.module.project.view.settings
 
 import com.mycollab.common.UrlTokenizer
+import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.eventmanager.EventBusFactory
 import com.mycollab.module.project.event.ProjectEvent
@@ -64,8 +65,12 @@ class ComponentUrlResolver : ProjectUrlResolver() {
             val componentId = token.getInt()
             val componentService = AppContextUtil.getSpringBean(ComponentService::class.java)
             val component = componentService.findById(componentId, AppUI.accountId)
-            val chain = PageActionChain(ProjectScreenData.Goto(projectId), ComponentScreenData.Edit(component))
-            EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            if (component != null) {
+                val chain = PageActionChain(ProjectScreenData.Goto(projectId), ComponentScreenData.Edit(component))
+                EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            } else {
+                throw ResourceNotFoundException("Can not find component $componentId")
+            }
         }
     }
 }
