@@ -15,7 +15,8 @@ public class PriorityListSelect extends I18NValueListSelect {
     public PriorityListSelect() {
         this.setNullSelectionAllowed(false);
 
-        this.loadData(Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None));
+        this.loadData(Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low,
+                Priority.None));
         this.setValue(this.getItemIds().iterator().next());
     }
 }

@@ -27,7 +27,7 @@ class ContactUrlResolver : CrmUrlResolver() {
     }
 
     class ContactAddUrlResolver : CrmUrlResolver() {
-        protected override fun handlePage(vararg params: String) {
+        override fun handlePage(vararg params: String) {
             EventBusFactory.getInstance().post(ContactEvent.GotoAdd(this, Contact()))
         }
     }
@@ -45,5 +45,4 @@ class ContactUrlResolver : CrmUrlResolver() {
             EventBusFactory.getInstance().post(ContactEvent.GotoRead(this, contactId))
         }
     }
-
 }
