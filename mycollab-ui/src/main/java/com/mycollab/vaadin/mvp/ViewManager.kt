@@ -27,7 +27,7 @@ object ViewManager {
             if (policy != null && policy.scope == ViewScope.PROTOTYPE) {
                 return createInstanceFromCls(viewClass)
             }
-            var value: T? = viewMap[viewClass] as? T
+            var value = viewMap[viewClass] as? T
             return when (value) {
                 null -> {
                     value = createInstanceFromCls(viewClass)
