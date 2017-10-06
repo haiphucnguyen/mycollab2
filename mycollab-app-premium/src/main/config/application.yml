@@ -9,6 +9,7 @@ app:
 server:
   apiUrl: https://api.mycollab.com/api/
   port: 8080
+  storageSystem: file
 
 endpoints:
   sensitive: false

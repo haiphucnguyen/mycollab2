@@ -60,7 +60,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
             @Subscribe
             @Override
             public void handle(CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo event) {
-                cloudDriveInfo = (CloudDriveInfo) event.getData();
+                cloudDriveInfo = event.getData();
                 LOG.debug("Receive cloud drive info: " + BeanUtility.printBeanObj(cloudDriveInfo));
                 AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
                     @Override

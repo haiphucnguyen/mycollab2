@@ -5,8 +5,6 @@ import com.hp.gagawa.java.elements.Img
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.DivLessFormatter
 import com.mycollab.module.file.service.AbstractStorageService
-import com.mycollab.module.project.CurrentProjectVariables
-import com.mycollab.module.project.ProjectLinkBuilder
 import com.mycollab.module.user.service.UserService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
@@ -36,8 +34,7 @@ class ProjectMemberHistoryFieldFormat : HistoryFieldFormat {
                 return if (displayAsHtml!!) {
                     val userAvatar = Img("", AppContextUtil.getSpringBean(AbstractStorageService::class.java)
                             .getAvatarPath(user.avatarid, 16)).setCSSClass(UIConstants.CIRCLE_BOX)
-                    val link = A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.projectId,
-                            user.username)).appendText(StringUtils.trim(user.displayName, 30, true))
+                    val link = A().setId("tag" + TOOLTIP_ID).appendText(StringUtils.trim(user.displayName, 30, true))
                     link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.username))
                     link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())
                     DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, link).write()

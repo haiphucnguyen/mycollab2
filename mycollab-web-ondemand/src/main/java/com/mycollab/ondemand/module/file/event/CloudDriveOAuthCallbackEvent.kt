@@ -8,5 +8,5 @@ import com.mycollab.module.file.CloudDriveInfo
  * @since 6.0.0
  */
 class CloudDriveOAuthCallbackEvent {
-    class ReceiveCloudDriveInfo(source: Any, data: CloudDriveInfo) : ApplicationEvent(source)
+    class ReceiveCloudDriveInfo(source: Any, val data: CloudDriveInfo) : ApplicationEvent(source)
 }
