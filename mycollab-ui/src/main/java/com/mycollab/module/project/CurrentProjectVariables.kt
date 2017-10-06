@@ -26,7 +26,6 @@ object CurrentProjectVariables {
     private val LOG = LoggerFactory.getLogger(CurrentProjectVariables::class.java)
 
     private val CURRENT_PAGE_VAR = "project_page"
-    private val TOGGLE_MENU_FLAG = "toogleProjectMenu"
 
     // get member permission
     @JvmStatic

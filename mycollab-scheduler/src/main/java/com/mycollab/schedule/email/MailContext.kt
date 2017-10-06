@@ -3,6 +3,7 @@ package com.mycollab.schedule.email
 import com.mycollab.common.domain.SimpleRelayEmailNotification
 import com.mycollab.core.utils.TimezoneVal
 import com.mycollab.i18n.LocalizationHelper
+import com.mycollab.module.project.i18n.BugI18nEnum
 import com.mycollab.module.user.domain.SimpleUser
 import java.util.*
 
@@ -28,10 +29,15 @@ class MailContext<B>(val emailNotification: SimpleRelayEmailNotification,
     val type
         get() = emailNotification.type
 
-    fun getMessage(key: Enum<*>, vararg params: String?) = LocalizationHelper.getMessage(locale, key, params)
+    fun getMessage(key: Enum<*>, vararg params: String?) = LocalizationHelper.getMessage(locale, key, *params)
 
     fun getFieldName(fieldMapper: ItemFieldMapper, fieldName: String): String {
         val fieldFormat = fieldMapper.getField(fieldName)
         return if (fieldFormat != null) getMessage(fieldFormat.displayName) else ""
     }
+}
+
+fun main(vararg arg: String) {
+    val s = LocalizationHelper.getMessage(Locale.US, BugI18nEnum.MAIL_CREATE_ITEM_HEADING, arrayOf("H"))
+    println(s)
 }

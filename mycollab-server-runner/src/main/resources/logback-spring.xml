@@ -33,6 +33,7 @@
     <logger name="java.sql" level="INFO"/>
     <logger name="org.apache.ibatis" level="INFO"/>
     <logger name="org.mybatis.spring" level="INFO"/>
+    <logger name="org.jgroups" level="WARN"/>
     <root level="INFO">
         <appender-ref ref="stdout"/>
         <appender-ref ref="email"/>

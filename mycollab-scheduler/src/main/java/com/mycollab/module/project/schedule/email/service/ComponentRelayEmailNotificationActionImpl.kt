@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service
  */
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class ComponentRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<SimpleComponent>(), ComponentRelayEmailNotificationAction {
+class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleComponent>(), ComponentRelayEmailNotificationAction {
     @Autowired private val componentService: ComponentService? = null
     private val mapper = ComponentFieldNameMapper()
 

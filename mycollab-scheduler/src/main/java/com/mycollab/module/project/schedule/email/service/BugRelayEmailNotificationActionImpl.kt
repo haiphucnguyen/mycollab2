@@ -46,7 +46,7 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBug>(), BugRelayEmailNotificationAction {
+class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>(), BugRelayEmailNotificationAction {
 
     @Autowired private val bugService: BugService? = null
     @Autowired private val projectNotificationService: ProjectNotificationSettingService? = null
@@ -99,27 +99,25 @@ class BugRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleBu
         val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId, notification.saccountid)
         var notifyUsers = notification.notifyUsers
 
-        notificationSettings.forEach { notificationSetting ->
-            if (NotificationType.None.name == notificationSetting.level) {
-                notifyUsers = notifyUsers.filter { notifyUser -> notifyUser.username != notificationSetting.username }
-            } else if (NotificationType.Minimal.name == notificationSetting.level) {
-                val findResult = notifyUsers.find { notifyUser -> notifyUser.username == notificationSetting.username }
+        notificationSettings.forEach {
+            if (NotificationType.None.name == it.level) {
+                notifyUsers = notifyUsers.filter { notifyUser -> notifyUser.username != it.username }
+            } else if (NotificationType.Minimal.name == it.level) {
+                val findResult = notifyUsers.find { notifyUser -> notifyUser.username == it.username }
                 if (findResult != null) {
                     val bug = bugService!!.findById(notification.typeid.toInt(), notification.saccountid)
-                    if (notificationSetting.username == bug.assignuser) {
-                        val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
-                                notificationSetting.projectid, notificationSetting.saccountid)
+                    if (it.username == bug.assignuser) {
+                        val prjMember = projectMemberService!!.getActiveUserOfProject(it.username,
+                                it.projectid, it.saccountid)
                         if (prjMember != null) {
                             notifyUsers += prjMember
                         }
                     }
                 }
-            } else if (NotificationType.Full.name == notificationSetting.level) {
-                val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
-                        notificationSetting.projectid, notificationSetting.saccountid)
-                if (prjMember != null) {
-                    notifyUsers += (prjMember)
-                }
+            } else if (NotificationType.Full.name == it.level) {
+                val prjMember = projectMemberService!!.getActiveUserOfProject(it.username,
+                        it.projectid, it.saccountid)
+                if (prjMember != null) notifyUsers += prjMember
             }
         }
         return notifyUsers

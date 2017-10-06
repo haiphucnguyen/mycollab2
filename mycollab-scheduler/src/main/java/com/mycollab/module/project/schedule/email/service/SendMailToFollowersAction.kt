@@ -91,12 +91,12 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 val comments = commentService!!.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
 
-                notifiers.forEach { user ->
-                    val context = MailContext<B>(notification, user, siteUrl)
+                notifiers.forEach {
+                    val context = MailContext<B>(notification, it, siteUrl)
                     context.wrappedBean = bean
                     buildExtraTemplateVariables(context)
                     contentGenerator.putVariable("context", context)
-                    if (comments.size > 0) {
+                    if (comments.isNotEmpty()) {
                         contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Last_Comments_Value, "" + comments.size))
                     }
                     contentGenerator.putVariable("Changes", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Changes))
@@ -106,7 +106,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
                             DateTimeUtils.getCurrentYear()))
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
-                    val userMail = MailRecipientField(user.email, user.username)
+                    val userMail = MailRecipientField(it.email, it.username)
                     val recipients = arrayListOf(userMail)
                     extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
