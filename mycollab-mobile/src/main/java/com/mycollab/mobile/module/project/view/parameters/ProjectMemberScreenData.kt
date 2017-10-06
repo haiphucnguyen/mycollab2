@@ -11,9 +11,9 @@ import com.mycollab.vaadin.mvp.ScreenData
 object ProjectMemberScreenData {
     class Search(param: ProjectMemberSearchCriteria) : ScreenData<ProjectMemberSearchCriteria>(param)
 
-    class InviteProjectMembers() : ScreenData<*>(null)
+    class InviteProjectMembers() : ScreenData<Any>(null)
 
-    class Read(param: Any?) : ScreenData<*>(param)
+    class Read(param: Any?) : ScreenData<Any>(param)
 
     class Edit(param: SimpleProjectMember) : ScreenData<SimpleProjectMember>(param)
 }

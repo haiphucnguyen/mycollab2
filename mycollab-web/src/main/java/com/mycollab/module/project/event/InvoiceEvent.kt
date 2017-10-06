@@ -10,11 +10,11 @@ import com.mycollab.module.project.domain.SimpleInvoice
 object InvoiceEvent {
     class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class NewInvoiceAdded(source: Any, data: SimpleInvoice) : ApplicationEvent(source)
+    class NewInvoiceAdded(source: Any, val data: SimpleInvoice) : ApplicationEvent(source)
 
-    class InvoiceUpdateAdded(source: Any, data: SimpleInvoice) : ApplicationEvent(source)
+    class InvoiceUpdateAdded(source: Any, val data: SimpleInvoice) : ApplicationEvent(source)
 
-    class InvoiceDelete(source: Any, data: SimpleInvoice) : ApplicationEvent(source)
+    class InvoiceDelete(source: Any, val data: SimpleInvoice) : ApplicationEvent(source)
 
-    class DisplayInvoiceView(source: Any, data: SimpleInvoice) : ApplicationEvent(source)
+    class DisplayInvoiceView(source: Any, val data: SimpleInvoice) : ApplicationEvent(source)
 }

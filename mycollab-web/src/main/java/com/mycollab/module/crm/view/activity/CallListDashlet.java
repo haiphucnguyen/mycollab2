@@ -45,7 +45,7 @@ public class CallListDashlet extends Depot {
             final SimpleCall call = (SimpleCall) event.getData();
             if ("isClosed".equals(event.getFieldName())) {
                 call.setIsclosed(true);
-                final CallService callService = AppContextUtil.getSpringBean(CallService.class);
+                CallService callService = AppContextUtil.getSpringBean(CallService.class);
                 callService.updateWithSession(call, UserUIContext.getUsername());
                 display();
             }

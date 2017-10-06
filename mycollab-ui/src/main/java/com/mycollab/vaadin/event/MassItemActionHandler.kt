@@ -10,7 +10,7 @@ import com.vaadin.server.StreamResource
 interface MassItemActionHandler {
     fun onSelect(id: String)
 
-    fun buildStreamResource(exportType: ReportExportType): StreamResource
+    fun buildStreamResource(exportType: ReportExportType): StreamResource?
 }
 
 object ViewItemAction {

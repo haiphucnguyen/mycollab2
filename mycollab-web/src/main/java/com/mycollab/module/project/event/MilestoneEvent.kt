@@ -19,7 +19,7 @@ object MilestoneEvent {
 
     class GotoKanban(source: Any) : ApplicationEvent(source)
 
-    class NewMilestoneAdded(source: Any, data: Int) : ApplicationEvent(source)
+    class NewMilestoneAdded(source: Any, val data: Int) : ApplicationEvent(source)
 
-    class MilestoneDeleted(source: Any, data: Int) : ApplicationEvent(source)
+    class MilestoneDeleted(source: Any, val data: Int) : ApplicationEvent(source)
 }

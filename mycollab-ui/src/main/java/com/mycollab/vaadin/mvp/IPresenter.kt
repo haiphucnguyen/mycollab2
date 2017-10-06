@@ -21,7 +21,7 @@ interface IPresenter<out V : PageView> : Serializable {
      * @param container
      * @param data
      */
-    fun go(container: HasComponents, data: ScreenData<*>?): Boolean
+    fun go(container: HasComponents, data: ScreenData<Any>?): Boolean
 
     /**
      * @return

@@ -7,7 +7,7 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.TaskPredecessor;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.pro.module.project.events.GanttEvent;
+import com.mycollab.pro.module.project.event.GanttEvent;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;

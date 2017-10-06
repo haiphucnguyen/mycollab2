@@ -12,7 +12,7 @@ object TicketEvent {
 
     class NewTicketAdded(source: Any, val typeVal: String, val typeIdVal: Int) : ApplicationEvent(source)
 
-    class SearchRequest(source: Any, data: ProjectTicketSearchCriteria) : ApplicationEvent(source)
+    class SearchRequest(source: Any, val data: ProjectTicketSearchCriteria) : ApplicationEvent(source)
 
-    class HasTicketPropertyChanged(source: Any, data: String) : ApplicationEvent(source)
+    class HasTicketPropertyChanged(source: Any, val data: String) : ApplicationEvent(source)
 }

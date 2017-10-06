@@ -132,42 +132,36 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         calendar.setEventCaptionAsHtml(true);
         calendar.addStyleName("assignment-calendar");
         calendar.setSizeFull();
-        calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
-            @Override
-            public void eventClick(CalendarComponentEvents.EventClick event) {
-                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-                ProjectTicket assignment = calendarEvent.getTicket();
-                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppUI.getAccountId());
-                    UI.getCurrent().addWindow(new TaskAddWindow(task));
-                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                    MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppUI.getAccountId());
-                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                    BugService bugService = AppContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppUI.getAccountId());
-                    UI.getCurrent().addWindow(new BugAddWindow(bug));
-                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                    RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppUI.getAccountId());
-                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
-                }
+        calendar.setHandler((CalendarComponentEvents.EventClickHandler) event -> {
+            GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+            ProjectTicket assignment = calendarEvent.getTicket();
+            if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                SimpleTask task = taskService.findById(assignment.getTypeId(), AppUI.getAccountId());
+                UI.getCurrent().addWindow(new TaskAddWindow(task));
+            } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
+                SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppUI.getAccountId());
+                UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+            } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                SimpleBug bug = bugService.findById(assignment.getTypeId(), AppUI.getAccountId());
+                UI.getCurrent().addWindow(new BugAddWindow(bug));
+            } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+                    CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
+                SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppUI.getAccountId());
+                UI.getCurrent().addWindow(new RiskAddWindow(risk));
             }
         });
 
-        calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
-            @Override
-            public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(
-                            dateClickEvent.getDate(), CurrentProjectVariables.getProjectId(), null, true));
-                }
+        calendar.setHandler((CalendarComponentEvents.DateClickHandler) dateClickEvent -> {
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(
+                        dateClickEvent.getDate(), CurrentProjectVariables.getProjectId(), null, true));
             }
         });
 

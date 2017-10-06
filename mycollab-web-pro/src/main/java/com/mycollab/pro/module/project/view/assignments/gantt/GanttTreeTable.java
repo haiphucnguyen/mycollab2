@@ -20,7 +20,7 @@ import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.GanttAssignmentService;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.components.HumanTimeConverter;
-import com.mycollab.pro.module.project.events.GanttEvent;
+import com.mycollab.pro.module.project.event.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

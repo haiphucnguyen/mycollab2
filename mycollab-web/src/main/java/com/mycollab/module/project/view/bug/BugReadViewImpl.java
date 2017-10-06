@@ -60,7 +60,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 @Override
                 @Subscribe
                 public void handle(BugEvent.BugChanged event) {
-                    Integer bugChangeId = (Integer) event.getData();
+                    Integer bugChangeId = event.getData();
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                     SimpleBug bugChange = bugService.findById(bugChangeId, AppUI.getAccountId());
                     previewItem(bugChange);

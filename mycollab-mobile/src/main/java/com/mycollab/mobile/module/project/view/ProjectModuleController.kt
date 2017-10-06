@@ -64,7 +64,7 @@ class ProjectModuleController(val navManager: NavigationManager) : AbstractContr
                 val criteria = ProjectSearchCriteria()
                 criteria.involvedMember = StringSearchField.and(UserUIContext.getUsername())
                 criteria.projectStatuses = SetSearchField<String>(StatusI18nEnum.Open.name)
-                presenter.go(navManager, ScreenData.Search<ProjectSearchCriteria>(criteria))
+                presenter.go(navManager, ScreenData.Search(criteria))
             }
         })
         this.register(object : ApplicationEventListener<ProjectEvent.GotoMyProject> {
@@ -94,7 +94,7 @@ class ProjectModuleController(val navManager: NavigationManager) : AbstractContr
                 val searchCriteria = ActivityStreamSearchCriteria()
                 searchCriteria.moduleSet = SetSearchField(ModuleNameConstants.PRJ)
                 searchCriteria.saccountid = NumberSearchField(AppUI.accountId)
-                searchCriteria.extraTypeIds = SetSearchField(event.data as Int)
+                searchCriteria.extraTypeIds = SetSearchField(event.projectId)
                 presenter.go(navManager, ProjectScreenData.ProjectActivities(searchCriteria))
             }
         })
@@ -175,14 +175,14 @@ class ProjectModuleController(val navManager: NavigationManager) : AbstractContr
             override fun handle(event: MilestoneEvent.GotoList) {
                 val params = event.data
                 val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
-                if (params == null) {
-                    val criteria = MilestoneSearchCriteria()
-                    criteria.projectIds = SetSearchField<Int>(CurrentProjectVariables.projectId)
-                    presenter.go(navManager, MilestoneScreenData.Search(criteria))
-                } else if (params is MilestoneScreenData.Search) {
-                    presenter.go(navManager, params)
-                } else {
-                    throw MyCollabException("Invalid search parameter $params")
+                when (params) {
+                    null -> {
+                        val criteria = MilestoneSearchCriteria()
+                        criteria.projectIds = SetSearchField<Int>(CurrentProjectVariables.projectId)
+                        presenter.go(navManager, MilestoneScreenData.Search(criteria))
+                    }
+                    is MilestoneScreenData.Search -> presenter.go(navManager, params)
+                    else -> throw MyCollabException("Invalid search parameter $params")
                 }
             }
         })

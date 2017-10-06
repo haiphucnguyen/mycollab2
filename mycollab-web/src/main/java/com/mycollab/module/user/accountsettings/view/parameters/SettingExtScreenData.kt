@@ -7,7 +7,7 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object SettingExtScreenData {
-    class GeneralSetting : ScreenData<*>(null)
+    class GeneralSetting : ScreenData<Any>(null)
 
-    class ThemeCustomize : ScreenData<*>(null)
+    class ThemeCustomize : ScreenData<Any>(null)
 }

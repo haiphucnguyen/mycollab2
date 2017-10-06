@@ -13,7 +13,7 @@ object ProjectEvent {
 
     class GotoMyProject(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class MyProjectActivities(source: Any, data: Int) : ApplicationEvent(source)
+    class MyProjectActivities(source: Any, val projectId: Int) : ApplicationEvent(source)
 
     class GotoAllActivitiesView(source: Any, val data: Any?) : ApplicationEvent(source)
 

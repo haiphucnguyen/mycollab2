@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object FileScreenData {
-    class GotoDashboard : ScreenData<*>(null)
+    class GotoDashboard : ScreenData<Any>(null)
 }

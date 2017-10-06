@@ -33,6 +33,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.UI;
+import org.jetbrains.annotations.NotNull;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -51,7 +52,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
     private MHorizontalLayout headerLayout;
     private MVerticalLayout pagesLayout;
-    private List<PageResource> resources;
+    private List<? extends PageResource> resources;
 
     private static Comparator<PageResource> dateSort = (o1, o2) -> o1.getCreatedTime().compareTo(o2.getCreatedTime());
 
@@ -152,7 +153,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         headerLayout.with(newPageBtn).withAlign(newPageBtn, Alignment.MIDDLE_RIGHT);
     }
 
-    private void displayPages(List<PageResource> resources) {
+    private void displayPages(List<? extends PageResource> resources) {
         this.resources = resources;
         pagesLayout.removeAllComponents();
         if (resources != null) {
@@ -171,7 +172,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     }
 
     @Override
-    public void displayDefaultPages(List<PageResource> resources) {
+    public void displayDefaultPages(List<? extends PageResource> resources) {
         Collections.sort(resources, Ordering.from(dateSort));
         displayPages(resources);
     }

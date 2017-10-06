@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object TicketScreenData {
-    class GotoDashboard(query: Any) : ScreenData<*>(query)
+    class GotoDashboard(query: Any?) : ScreenData<Any>(query)
 }

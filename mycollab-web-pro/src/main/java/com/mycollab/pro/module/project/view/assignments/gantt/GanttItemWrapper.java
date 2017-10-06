@@ -14,7 +14,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
-import com.mycollab.pro.module.project.events.GanttEvent;
+import com.mycollab.pro.module.project.event.GanttEvent;
 import com.mycollab.vaadin.UserUIContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;

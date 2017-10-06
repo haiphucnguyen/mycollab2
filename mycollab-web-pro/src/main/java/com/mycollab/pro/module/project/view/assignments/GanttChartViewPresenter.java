@@ -13,7 +13,7 @@ import com.mycollab.module.project.view.IGanttChartPresenter;
 import com.mycollab.module.project.view.IGanttChartView;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.user.ProjectDashboardContainer;
-import com.mycollab.pro.module.project.events.GanttEvent;
+import com.mycollab.pro.module.project.event.GanttEvent;
 import com.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -61,7 +61,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                 @Override
                 @Subscribe
                 public void handle(GanttEvent.AddGanttItemUpdateToQueue event) {
-                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
+                    GanttItemWrapper item = event.getData();
                     if (item.getId() == null) {
                         if (item.isTask()) {
                             Task newTask = item.buildNewTask();
@@ -84,7 +84,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                 @Subscribe
                 @Override
                 public void handle(GanttEvent.DeleteGanttItemUpdateToQueue event) {
-                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
+                    GanttItemWrapper item = event.getData();
                     if (queueSetTasksUpdate.contains(item.getTask())) {
                         queueSetTasksUpdate.remove(item.getTask());
                     }
@@ -98,7 +98,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<IGanttChartView> 
                 @Subscribe
                 public void handle(GanttEvent.ModifyPredecessors event) {
                     GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getSource();
-                    List<TaskPredecessor> predecessors = (List<TaskPredecessor>) event.getData();
+                    List<TaskPredecessor> predecessors = event.getPredecessors();
                     ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
                     ganttAssignmentService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppUI.getAccountId());
                     ganttItemWrapper.getTask().setPredecessors(predecessors);

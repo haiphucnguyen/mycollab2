@@ -9,5 +9,5 @@ import com.mycollab.vaadin.event.ApplicationEvent
 object StandUpEvent {
     class GotoList(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class DisplayStandupInProject(source: Any, data: Int) : ApplicationEvent(source)
+    class DisplayStandupInProject(source: Any, val data: Int) : ApplicationEvent(source)
 }

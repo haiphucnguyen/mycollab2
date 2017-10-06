@@ -11,11 +11,11 @@ import com.mycollab.pro.module.project.view.assignments.gantt.GanttItemWrapper
 class GanttEvent {
     class ClearGanttItemsNeedUpdate(source: Any) : ApplicationEvent(source)
 
-    class UpdateGanttItem(source: Any, data: GanttItemWrapper) : ApplicationEvent(source)
+    class UpdateGanttItem(source: Any, val data: GanttItemWrapper) : ApplicationEvent(source)
 
-    class DeleteGanttItemUpdateToQueue(source: Any, data: GanttItemWrapper) : ApplicationEvent(source)
+    class DeleteGanttItemUpdateToQueue(source: Any, val data: GanttItemWrapper) : ApplicationEvent(source)
 
-    class AddGanttItemUpdateToQueue(source: Any, data: GanttItemWrapper) : ApplicationEvent(source)
+    class AddGanttItemUpdateToQueue(source: Any, val data: GanttItemWrapper) : ApplicationEvent(source)
 
-    class ModifyPredecessors(source: GanttItemWrapper, predecessors: List<TaskPredecessor>) : ApplicationEvent(source, predecessors)
+    class ModifyPredecessors(source: GanttItemWrapper, val predecessors: List<TaskPredecessor>) : ApplicationEvent(source)
 }

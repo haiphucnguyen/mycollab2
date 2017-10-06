@@ -5,7 +5,7 @@ import com.mycollab.vaadin.mvp.ScreenData
 
 object ActivityScreenData {
 
-    class GotoCalendar : ScreenData<*>(null)
+    class GotoCalendar : ScreenData<Any>(null)
 
     class GotoActivityList(criteria: ActivitySearchCriteria) : ScreenData<ActivitySearchCriteria>(criteria)
 }

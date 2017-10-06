@@ -14,7 +14,7 @@ object BugEvent {
 
     class GotoRead(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class SearchRequest(source: Any, data: BugSearchCriteria) : ApplicationEvent(source)
+    class SearchRequest(source: Any, val data: BugSearchCriteria) : ApplicationEvent(source)
 
-    class BugChanged(source: Any, data: Int) : ApplicationEvent(source)
+    class BugChanged(source: Any, val data: Int) : ApplicationEvent(source)
 }

@@ -30,12 +30,12 @@ abstract class AbstractPresenter<out V : PageView>(private val viewClass: Class<
 
     protected open fun postInitView() {}
 
-    fun go(data: ScreenData<*>) {
+    fun go(data: ScreenData<Any>) {
         val manager = UI.getCurrent().content as NavigationManager
         go(manager, data)
     }
 
-    override fun go(container: HasComponents, data: ScreenData<*>?): Boolean {
+    override fun go(container: HasComponents, data: ScreenData<Any>?): Boolean {
         getView()
 
         when {
@@ -50,7 +50,7 @@ abstract class AbstractPresenter<out V : PageView>(private val viewClass: Class<
         return true
     }
 
-    protected abstract fun onGo(container: HasComponents, data: ScreenData<*>?)
+    protected abstract fun onGo(container: HasComponents, data: ScreenData<Any>?)
 
     private fun checkPermissionAccessIfAny(): Boolean {
         val viewPermission = this.javaClass.getAnnotation(ViewPermission::class.java)

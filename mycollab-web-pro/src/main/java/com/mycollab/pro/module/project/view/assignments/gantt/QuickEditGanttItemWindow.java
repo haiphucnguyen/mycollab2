@@ -14,7 +14,7 @@ import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
-import com.mycollab.pro.module.project.events.GanttEvent;
+import com.mycollab.pro.module.project.event.GanttEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;

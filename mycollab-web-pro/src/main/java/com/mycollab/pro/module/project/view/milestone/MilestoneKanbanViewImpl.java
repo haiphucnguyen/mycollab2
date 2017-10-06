@@ -89,7 +89,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                 @Override
                 @Subscribe
                 public void handle(MilestoneEvent.NewMilestoneAdded event) {
-                    insertMilestone((Integer) event.getData());
+                    insertMilestone(event.getData());
                 }
             };
 

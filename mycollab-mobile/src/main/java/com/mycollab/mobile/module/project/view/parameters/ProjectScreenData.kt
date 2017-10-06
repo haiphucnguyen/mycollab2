@@ -17,7 +17,7 @@ object ProjectScreenData {
 
     class ProjectActivities(param: ActivityStreamSearchCriteria) : ScreenData<ActivityStreamSearchCriteria>(param)
 
-    class GotoDashboard() : ScreenData<*>(null)
+    class GotoDashboard() : ScreenData<Any>(null)
 
     class AllActivities(param: ActivityStreamSearchCriteria) : ScreenData<ActivityStreamSearchCriteria>(param)
 }

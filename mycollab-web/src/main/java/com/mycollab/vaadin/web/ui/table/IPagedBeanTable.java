@@ -46,14 +46,20 @@ public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelecta
 
         private static final long serialVersionUID = 1L;
         private String fieldName;
+        private Object data;
 
         public TableClickEvent(IPagedBeanTable source, Object data, String fieldName) {
-            super(source, data);
+            super(source);
+            this.data = data;
             this.fieldName = fieldName;
         }
 
         public String getFieldName() {
             return fieldName;
+        }
+
+        public Object getData() {
+            return data;
         }
     }
 }

@@ -86,13 +86,7 @@ class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> implements 
 
             List<TaskPredecessor> dependents = item.getDependents();
             if (CollectionUtils.isNotEmpty(dependents)) {
-                Iterator<TaskPredecessor> iterator = predecessors.iterator();
-                while (iterator.hasNext()) {
-                    TaskPredecessor dependent = iterator.next();
-                    if (dependent.getSourceid().intValue() == removedTask.getId().intValue()) {
-                        iterator.remove();
-                    }
-                }
+                predecessors.removeIf(dependent -> dependent.getSourceid().intValue() == removedTask.getId().intValue());
             }
         }
     }

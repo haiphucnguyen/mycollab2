@@ -8,21 +8,21 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object ProjectScreenData {
-    class GotoList : ScreenData<*>(null)
+    class GotoList : ScreenData<Any>(null)
 
     class Goto(params: Int) : ScreenData<Int>(params)
 
     class Edit(params: Project) : ScreenData<Project>(params)
 
-    class GotoTagList(params: Any) : ScreenData<*>(params)
+    class GotoTagList(params: Any?) : ScreenData<Any>(params)
 
-    class GotoFavorite() : ScreenData<*>(null)
+    class GotoFavorite() : ScreenData<Any>(null)
 
     class SearchItem(params: String) : ScreenData<String>(params)
 
-    class GotoGanttChart : ScreenData<*>(null)
+    class GotoGanttChart : ScreenData<Any>(null)
 
-    class GotoReportConsole : ScreenData<*>(null)
+    class GotoReportConsole : ScreenData<Any>(null)
 
-    class GotoCalendarView : ScreenData<*>(null)
+    class GotoCalendarView : ScreenData<Any>(null)
 }

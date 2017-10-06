@@ -20,7 +20,7 @@ object ProjectEvent {
 
     class GotoFavoriteView(source: Any, val data: Any?) : ApplicationEvent(source)
 
-    class SelectFavoriteItem(source: Any, data: ProjectGenericItem) : ApplicationEvent(source)
+    class SelectFavoriteItem(source: Any, val data: ProjectGenericItem) : ApplicationEvent(source)
 
     class TimeLoggingChangedEvent(source: Any) : ApplicationEvent(source)
 

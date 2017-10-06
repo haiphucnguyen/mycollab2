@@ -7,9 +7,9 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object ReportScreenData {
-    class GotoWeeklyTiming : ScreenData<*>(null)
+    class GotoWeeklyTiming : ScreenData<Any>(null)
 
-    class GotoTimesheet : ScreenData<*>(null)
+    class GotoTimesheet : ScreenData<Any>(null)
 
-    class GotoUserWorkload : ScreenData<*>(null)
+    class GotoUserWorkload : ScreenData<Any>(null)
 }
