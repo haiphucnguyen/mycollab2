@@ -1,8 +1,6 @@
 package com.mycollab.module.project.view.ticket;
 
-import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.ClassUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.view.ProjectView;
@@ -10,7 +8,6 @@ import com.mycollab.module.project.view.parameters.TaskScreenData;
 import com.mycollab.module.project.view.parameters.TicketScreenData;
 import com.mycollab.module.project.view.task.TaskAddPresenter;
 import com.mycollab.module.project.view.task.TaskReadPresenter;
-import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -29,7 +26,6 @@ public class TicketPresenter extends AbstractPresenter<TicketContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        System.out.println("Server info: " + BeanUtility.printBeanObj(AppContextUtil.getSpringBean(ServerConfiguration.class)));
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
 

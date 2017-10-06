@@ -21,7 +21,6 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -32,13 +31,11 @@ import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.service.ItemTimeLoggingService;
-import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.module.project.service.ProjectTicketService;
-import com.mycollab.module.project.service.RiskService;
+import com.mycollab.module.project.service.*;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
 import com.mycollab.module.project.ui.components.PriorityComboBox;
+import com.mycollab.module.project.ui.components.UserProjectComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
@@ -49,11 +46,14 @@ import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
+import com.mycollab.module.user.domain.User;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.module.project.view.risk.RiskEditForm;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
+import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
@@ -62,6 +62,7 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -471,38 +472,28 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     private static class NewTicketWindow extends MWindow {
         private ComboBox typeSelection;
         private CssLayout formLayout;
+        private boolean isIncludeMilestone;
+        private Integer selectedProjectId;
 
         NewTicketWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
+            this.selectedProjectId = prjId;
+            this.isIncludeMilestone = isIncludeMilestone;
             this.addStyleName("noscrollable-container");
             MVerticalLayout content = new MVerticalLayout();
             withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
 
+            UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
+            projectListSelect.setNullSelectionAllowed(false);
+
             typeSelection = new ComboBox();
-            typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-            }
+            typeSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-            }
-
-            if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
-            }
-
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
-                typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
-            }
+            projectListSelect.addValueChangeListener(valueChangeEvent -> {
+                SimpleProject selectedProject = (SimpleProject) projectListSelect.getValue();
+                selectedProjectId = selectedProject.getId();
+                loadAssociateTicketTypePerProject();
+            });
 
             typeSelection.setNullSelectionAllowed(false);
             if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
@@ -510,15 +501,47 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             } else {
                 throw new SecureAccessException();
             }
-            typeSelection.setNullSelectionAllowed(false);
             typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, prjId, milestoneId));
 
-            GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
-            formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 0);
+            GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
+            formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
+            formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 1);
             formLayout = new CssLayout();
             formLayout.setWidth("100%");
             content.with(formLayoutHelper.getLayout(), formLayout);
             doChange(date, prjId, milestoneId);
+        }
+
+        private void loadAssociateTicketTypePerProject() {
+            typeSelection.removeAllItems();
+            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+            SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProjectId, AppUI.getAccountId());
+            if (member != null) {
+                PermissionMap permissionMaps = member.getPermissionMaps();
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+                    typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
+                            ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+                }
+
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+                    typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
+                            ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+                }
+
+                if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                    typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
+                    typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
+                            ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                }
+
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                    typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+                    typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
+                            ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+                }
+            }
         }
 
         private void doChange(Date dateValue, final Integer prjId, final Integer milestoneId) {

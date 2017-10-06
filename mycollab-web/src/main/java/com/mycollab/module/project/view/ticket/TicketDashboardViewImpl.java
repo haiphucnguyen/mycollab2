@@ -84,7 +84,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                 @Override
                 @Subscribe
                 public void handle(TicketEvent.SearchRequest event) {
-                    ProjectTicketSearchCriteria criteria = (ProjectTicketSearchCriteria) event.getData();
+                    ProjectTicketSearchCriteria criteria = event.getSearchCriteria();
                     if (criteria != null) {
                         queryTickets(criteria);
                     }

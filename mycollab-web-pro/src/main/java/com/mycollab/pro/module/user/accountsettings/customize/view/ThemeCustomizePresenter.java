@@ -46,7 +46,6 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
     @Override
     protected void postInitView() {
         EventBusFactory.getInstance().register(new ApplicationEventListener<SettingEvent.SaveTheme>() {
-            private static final long serialVersionUID = -1060182248184670399L;
 
             @Subscribe
             @Override
@@ -58,7 +57,6 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             }
         });
         EventBusFactory.getInstance().register(new ApplicationEventListener<SettingEvent.ResetTheme>() {
-            private static final long serialVersionUID = 1594676526731151824L;
 
             @Subscribe
             @Override

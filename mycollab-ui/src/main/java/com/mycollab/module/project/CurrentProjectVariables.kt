@@ -31,7 +31,7 @@ object CurrentProjectVariables {
     // get member permission
     @JvmStatic
     var project: SimpleProject?
-        get() = MyCollabSession.getCurrentUIVariable(CURRENT_PROJECT) as SimpleProject
+        get() = MyCollabSession.getCurrentUIVariable(CURRENT_PROJECT) as? SimpleProject
         set(project) {
             MyCollabSession.putCurrentUIVariable(CURRENT_PROJECT, project)
             val prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService::class.java)
@@ -68,7 +68,7 @@ object CurrentProjectVariables {
         }
 
     private var projectMember: SimpleProjectMember?
-        get() = MyCollabSession.getCurrentUIVariable(PROJECT_MEMBER) as SimpleProjectMember
+        get() = MyCollabSession.getCurrentUIVariable(PROJECT_MEMBER) as? SimpleProjectMember
         set(prjMember) = MyCollabSession.putCurrentUIVariable(PROJECT_MEMBER, prjMember)
 
     @JvmStatic

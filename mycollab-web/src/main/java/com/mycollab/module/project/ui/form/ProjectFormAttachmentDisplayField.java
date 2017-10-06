@@ -32,7 +32,7 @@ public class ProjectFormAttachmentDisplayField extends CustomField {
     @Override
     protected Component initContent() {
         final Component comp = ProjectAttachmentDisplayComponentFactory.getAttachmentDisplayComponent(projectId, type, typeId);
-        if (comp == null || !(comp instanceof AttachmentDisplayComponent)) {
+        if (!(comp instanceof AttachmentDisplayComponent)) {
             return new Label("&nbsp;", ContentMode.HTML);
         } else {
             return comp;

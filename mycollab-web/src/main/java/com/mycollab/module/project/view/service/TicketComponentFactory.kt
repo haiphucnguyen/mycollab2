@@ -32,5 +32,5 @@ interface TicketComponentFactory {
 
     fun createStatusPopupField(ticket: ProjectTicket): AbstractComponent
 
-    fun createNewTicketWindow(date: Date, prjId: Int?, milestoneId: Int?, isIncludeMilestone: Boolean): MWindow
+    fun createNewTicketWindow(date: Date?, prjId: Int?, milestoneId: Int?, isIncludeMilestone: Boolean): MWindow
 }
