@@ -27,9 +27,7 @@ class MilestoneOrderGroup extends TicketGroupOrderComponent {
                     MilestoneTicketGroupComponent groupComponent = milestonesAvailable.get(milestoneId);
                     groupComponent.insertTicket(ticket);
                 } else {
-                    Div milestoneDiv = new DivLessFormatter().appendChild(new Text(" " + ticket.getMilestoneName()));
-
-                    MilestoneTicketGroupComponent groupComponent = new MilestoneTicketGroupComponent(milestoneDiv.write(), milestoneId);
+                    MilestoneTicketGroupComponent groupComponent = new MilestoneTicketGroupComponent(milestoneId);
                     milestonesAvailable.put(milestoneId, groupComponent);
                     int index = milestonesAvailable.getKeyIndex(milestoneId);
                     if (index > -1) {
@@ -46,7 +44,7 @@ class MilestoneOrderGroup extends TicketGroupOrderComponent {
                 }
             } else {
                 if (unspecifiedTickets == null) {
-                    unspecifiedTickets = new MilestoneTicketGroupComponent(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED), null);
+                    unspecifiedTickets = new MilestoneTicketGroupComponent(null);
                     addComponent(unspecifiedTickets);
                 }
                 unspecifiedTickets.insertTicket(ticket);

@@ -1,6 +1,9 @@
 package com.mycollab.module.project.view.ticket;
 
+import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.MilestoneService;
@@ -37,11 +40,9 @@ class MilestoneTicketGroupComponent extends MVerticalLayout implements IGroupCom
     private Label headerLbl;
     private DDVerticalLayout wrapBody;
 
-    private String titleValue;
     private SimpleMilestone milestone;
 
-    MilestoneTicketGroupComponent(String titleValue, Integer milestoneId) {
-        this.titleValue = titleValue;
+    MilestoneTicketGroupComponent(Integer milestoneId) {
         this.setMargin(new MarginInfo(true, false, true, false));
         wrapBody = new DDVerticalLayout();
         wrapBody.setWidth("100%");
@@ -115,6 +116,13 @@ class MilestoneTicketGroupComponent extends MVerticalLayout implements IGroupCom
     }
 
     private void updateTitle() {
-        headerLbl.setValue(String.format("%s (%d)", titleValue, wrapBody.getComponentCount()));
+        String titleValue;
+        if (milestone == null) {
+            titleValue = String.format("%s (%d)", UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED), wrapBody.getComponentCount());
+        } else {
+            titleValue = new DivLessFormatter().appendChild(new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId())).
+                    appendText(String.format("%s (%d)", milestone.getName(), wrapBody.getComponentCount()))).write();
+        }
+        headerLbl.setValue(titleValue);
     }
 }
