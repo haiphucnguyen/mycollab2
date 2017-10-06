@@ -135,6 +135,18 @@ public class SimpleProjectMember extends ProjectMember {
         this.totalNonBillableLogTime = totalNonBillableLogTime;
     }
 
+    public Boolean canRead(String permissionItem) {
+        return permissionMaps != null && permissionMaps.canRead(permissionItem);
+    }
+
+    public Boolean canWrite(String permissionItem) {
+        return permissionMaps != null && permissionMaps.canWrite(permissionItem);
+    }
+
+    public Boolean canAccess(String permissionItem) {
+        return permissionMaps != null && permissionMaps.canAccess(permissionItem);
+    }
+
     public enum Field {
         roleName, memberFullName, totalBillableLogTime, totalNonBillableLogTime, projectName, numOpenTasks, numOpenBugs;
 

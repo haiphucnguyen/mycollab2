@@ -46,7 +46,6 @@ import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
-import com.mycollab.module.user.domain.User;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.module.project.view.risk.RiskEditForm;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
@@ -475,9 +474,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         private boolean isIncludeMilestone;
         private Integer selectedProjectId;
 
-        NewTicketWindow(Date date, final Integer prjId, final Integer milestoneId, boolean isIncludeMilestone) {
+        NewTicketWindow(Date date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
-            this.selectedProjectId = prjId;
+            this.selectedProjectId = projectId;
             this.isIncludeMilestone = isIncludeMilestone;
             this.addStyleName("noscrollable-container");
             MVerticalLayout content = new MVerticalLayout();
@@ -485,23 +484,33 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
             projectListSelect.setNullSelectionAllowed(false);
+            if (projectId != null) {
+                projectListSelect.setValue(projectId);
+            } else {
+                if (CollectionUtils.isNotEmpty(projectListSelect.getItemIds())) {
+                    selectedProjectId = (Integer) projectListSelect.getItemIds().iterator().next();
+                    projectListSelect.select(selectedProjectId);
+                } else {
+                    throw new SecureAccessException();
+                }
+            }
 
             typeSelection = new ComboBox();
             typeSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
             projectListSelect.addValueChangeListener(valueChangeEvent -> {
-                SimpleProject selectedProject = (SimpleProject) projectListSelect.getValue();
-                selectedProjectId = selectedProject.getId();
+                selectedProjectId = (Integer) projectListSelect.getValue();
                 loadAssociateTicketTypePerProject();
             });
 
+            loadAssociateTicketTypePerProject();
             typeSelection.setNullSelectionAllowed(false);
             if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
                 typeSelection.select(typeSelection.getItemIds().iterator().next());
             } else {
                 throw new SecureAccessException();
             }
-            typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, prjId, milestoneId));
+            typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, milestoneId));
 
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
             formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
@@ -509,7 +518,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             formLayout = new CssLayout();
             formLayout.setWidth("100%");
             content.with(formLayoutHelper.getLayout(), formLayout);
-            doChange(date, prjId, milestoneId);
+            doChange(date, milestoneId);
         }
 
         private void loadAssociateTicketTypePerProject() {
@@ -517,39 +526,41 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProjectId, AppUI.getAccountId());
             if (member != null) {
-                PermissionMap permissionMaps = member.getPermissionMaps();
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
                     typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
                             ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
                 }
 
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.BUGS)) {
                     typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
                     typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
                             ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
                 }
 
-                if (isIncludeMilestone && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                if (isIncludeMilestone && (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
                     typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
                     typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
                             ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
                 }
 
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.RISKS)) {
                     typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
                     typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
                             ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
                 }
+                if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
+                    typeSelection.select(typeSelection.getItemIds().iterator().next());
+                }
             }
         }
 
-        private void doChange(Date dateValue, final Integer prjId, final Integer milestoneId) {
+        private void doChange(Date dateValue, final Integer milestoneId) {
             formLayout.removeAllComponents();
             String value = (String) typeSelection.getValue();
             if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(value)) {
                 SimpleTask task = new SimpleTask();
-                task.setProjectid(prjId);
+                task.setProjectid(selectedProjectId);
                 task.setMilestoneid(milestoneId);
                 task.setSaccountid(AppUI.getAccountId());
                 task.setCreateduser(UserUIContext.getUsername());
@@ -564,7 +575,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 formLayout.addComponent(editForm);
             } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(value)) {
                 SimpleBug bug = new SimpleBug();
-                bug.setProjectid(prjId);
+                bug.setProjectid(selectedProjectId);
                 bug.setSaccountid(AppUI.getAccountId());
                 bug.setStartdate(dateValue);
                 bug.setMilestoneid(milestoneId);
@@ -580,7 +591,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             } else if (UserUIContext.getMessage(RiskI18nEnum.SINGLE).equals(value)) {
                 SimpleRisk risk = new SimpleRisk();
                 risk.setSaccountid(AppUI.getAccountId());
-                risk.setProjectid(prjId);
+                risk.setProjectid(selectedProjectId);
                 risk.setStartdate(dateValue);
                 risk.setCreateduser(UserUIContext.getUsername());
                 risk.setMilestoneid(milestoneId);

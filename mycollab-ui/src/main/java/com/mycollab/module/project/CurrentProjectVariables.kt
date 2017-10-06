@@ -77,8 +77,7 @@ object CurrentProjectVariables {
             if (UserUIContext.isAdmin()) {
                 return true
             }
-            val member = projectMember
-            return member != null && member.isProjectOwner
+            return projectMember != null && projectMember!!.isProjectOwner
         }
 
     @JvmStatic
@@ -91,12 +90,11 @@ object CurrentProjectVariables {
             return true
         }
 
-        try {
-            val permissionMap = projectMember!!.permissionMaps
-            return permissionMap != null && permissionMap.canRead(permissionItem)
+        return try {
+            projectMember!!.canRead(permissionItem)
         } catch (e: Exception) {
             LOG.error("Error while checking permission", e)
-            return false
+            false
         }
 
     }
@@ -117,12 +115,11 @@ object CurrentProjectVariables {
             return true
         }
 
-        try {
-            val permissionMap = projectMember!!.permissionMaps
-            return permissionMap != null && permissionMap.canWrite(permissionItem)
+        return try {
+            projectMember!!.canWrite(permissionItem)
         } catch (e: Exception) {
             LOG.error("Error while checking permission", e)
-            return false
+            false
         }
 
     }
@@ -137,12 +134,11 @@ object CurrentProjectVariables {
             return true
         }
 
-        try {
-            val permissionMap = projectMember!!.permissionMaps
-            return permissionMap != null && permissionMap.canAccess(permissionItem)
+        return try {
+            projectMember!!.canAccess(permissionItem)
         } catch (e: Exception) {
             LOG.error("Error while checking permission", e)
-            return false
+            false
         }
 
     }

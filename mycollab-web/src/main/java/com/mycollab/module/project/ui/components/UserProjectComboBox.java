@@ -17,9 +17,9 @@ public class UserProjectComboBox extends ComboBox {
         setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(username, AppUI.getAccountId());
-        addItems(projects);
         projects.forEach(project -> {
-            setItemCaption(project, project.getName());
+            addItem(project.getId());
+            setItemCaption(project.getId(), project.getName());
         });
     }
 }
