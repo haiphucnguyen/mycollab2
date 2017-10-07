@@ -35,7 +35,7 @@ import org.springframework.stereotype.Service
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleComponent>(), ComponentRelayEmailNotificationAction {
-    @Autowired private val componentService: ComponentService? = null
+    @Autowired private lateinit var componentService: ComponentService
     private val mapper = ComponentFieldNameMapper()
 
     override fun buildExtraTemplateVariables(context: MailContext<SimpleComponent>) {
@@ -52,10 +52,10 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
             MonitorTypeConstants.CREATE_ACTION -> ComponentI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> ComponentI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> ComponentI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
@@ -66,7 +66,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
             ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleComponent =
-            componentService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            componentService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getItemName(): String = StringUtils.trim(bean!!.description, 100)
 
@@ -80,7 +80,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    class ComponentFieldNameMapper() : ItemFieldMapper() {
+    class ComponentFieldNameMapper : ItemFieldMapper() {
         init {
             put(Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
             put(Field.status, I18nFieldFormat(Field.status.name, GenericI18Enum.FORM_STATUS,

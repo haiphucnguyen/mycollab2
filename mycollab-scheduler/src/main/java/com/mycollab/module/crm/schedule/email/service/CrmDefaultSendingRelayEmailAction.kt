@@ -35,7 +35,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
     val extMailService: ExtMailService? = null
 
     @Autowired
-    val auditLogService: AuditLogService? = null
+    private lateinit var auditLogService: AuditLogService
 
     @Autowired
     val userService: UserService? = null
@@ -47,19 +47,19 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
     val commentService: CommentService? = null
 
     @Autowired
-    val contentGenerator: IContentGenerator? = null
+    lateinit var contentGenerator: IContentGenerator
 
     protected var bean: B? = null
     protected var changeUser: SimpleUser? = null
     lateinit var siteUrl: String
 
     override fun sendNotificationForCreateAction(notification: SimpleRelayEmailNotification) {
-        val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.CREATE_ACTION)
+        val notifiers = getListNotifyUserWithFilter(notification)
         if ((notifiers != null) && notifiers.isNotEmpty()) {
             onInitAction(notification)
             bean = getBeanInContext(notification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 notifiers.forEach { user ->
                     val notifierFullName = user.displayName
                     if (StringUtils.isBlank(notifierFullName)) {
@@ -86,12 +86,12 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
     }
 
     override fun sendNotificationForUpdateAction(notification: SimpleRelayEmailNotification) {
-        val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.UPDATE_ACTION)
+        val notifiers = getListNotifyUserWithFilter(notification)
         if ((notifiers != null) && notifiers.isNotEmpty()) {
             onInitAction(notification)
             bean = getBeanInContext(notification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 val searchCriteria = CommentSearchCriteria()
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
@@ -118,7 +118,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
                     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
                             DateTimeUtils.getCurrentYear()))
                     val subject = context.getMessage(getUpdateSubjectKey(), context.changeByUserFullName, getItemName())
-                    val auditLog = auditLogService!!.findLastestLog(context.typeid.toInt(), context.saccountid)
+                    val auditLog = auditLogService.findLastestLog(context.typeid.toInt(), context.saccountid)
                     contentGenerator.putVariable("historyLog", auditLog)
                     context.wrappedBean = bean
                     buildExtraTemplateVariables(context)
@@ -134,7 +134,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
     }
 
     override fun sendNotificationForCommentAction(notification: SimpleRelayEmailNotification) {
-        val notifiers = getListNotifyUserWithFilter(notification, MonitorTypeConstants.ADD_COMMENT_ACTION)
+        val notifiers = getListNotifyUserWithFilter(notification)
         if ((notifiers != null) && notifiers.isNotEmpty()) {
             onInitAction(notification)
 
@@ -143,14 +143,14 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
             searchCriteria.typeId = StringSearchField.and(notification.typeid)
             searchCriteria.saccountid = null
             val comments = commentService!!.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
-            contentGenerator!!.putVariable("lastComments", comments)
+            contentGenerator.putVariable("lastComments", comments)
             contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
             notifiers.forEach lit@ { user ->
                 val notifierFullName = user.displayName
                 if (notifierFullName.isNullOrBlank()) {
                     LOG.error("Can not find user $user of notification $notification")
-                    return@lit;
+                    return@lit
                 }
                 val context = MailContext<B>(notification, user, siteUrl)
                 contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(context.locale,
@@ -170,7 +170,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
         }
     }
 
-    private fun getListNotifyUserWithFilter(notification: SimpleRelayEmailNotification, type: String): List<SimpleUser>? {
+    private fun getListNotifyUserWithFilter(notification: SimpleRelayEmailNotification): List<SimpleUser>? {
         return notification.notifyUsers
     }
 

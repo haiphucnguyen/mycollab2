@@ -36,11 +36,11 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class AccountRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleAccount>(), AccountRelayEmailNotificationAction {
-    @Autowired private val accountService: AccountService? = null
+    @Autowired private lateinit var accountService: AccountService
     private val mapper = AccountFieldNameMapper()
 
     override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleAccount? =
-            accountService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            accountService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
@@ -69,7 +69,7 @@ class AccountRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAct
             else -> throw MyCollabException("Not support action ${emailNotification.action}");
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }

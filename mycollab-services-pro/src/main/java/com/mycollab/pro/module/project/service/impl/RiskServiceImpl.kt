@@ -38,13 +38,12 @@ class RiskServiceImpl(private val riskMapper: RiskMapper,
     override val searchMapper: ISearchableDAO<RiskSearchCriteria>
         get() = riskMapperExt
 
-    override fun findById(riskId: Int?, sAccountId: Int?): SimpleRisk {
-        return riskMapperExt.findRiskById(riskId!!)
-    }
+    override fun findById(riskId: Int, sAccountId: Int): SimpleRisk? =
+            riskMapperExt.findRiskById(riskId)
 
     override fun saveWithSession(record: Risk, username: String?): Int {
         val recordId = super.saveWithSession(record, username)
-        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java)))
         return recordId
     }
 

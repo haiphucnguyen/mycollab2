@@ -48,8 +48,8 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>(), BugRelayEmailNotificationAction {
 
-    @Autowired private val bugService: BugService? = null
-    @Autowired private val projectNotificationService: ProjectNotificationSettingService? = null
+    @Autowired private lateinit var bugService: BugService
+    @Autowired private lateinit var projectNotificationService: ProjectNotificationSettingService
 
     private val mapper = BugFieldNameMapper()
 
@@ -67,10 +67,10 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
             MonitorTypeConstants.CREATE_ACTION -> BugI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> BugI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> BugI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectname)
+        contentGenerator.putVariable("projectName", bean!!.projectname)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
@@ -78,7 +78,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
     }
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleBug =
-            bugService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            bugService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getItemName(): String = StringUtils.trim(bean!!.name, 100)
 
@@ -96,7 +96,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
     override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser> {
-        val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId, notification.saccountid)
+        val notificationSettings = projectNotificationService.findNotifications(notification.projectId, notification.saccountid)
         var notifyUsers = notification.notifyUsers
 
         notificationSettings.forEach {
@@ -105,7 +105,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
             } else if (NotificationType.Minimal.name == it.level) {
                 val findResult = notifyUsers.find { notifyUser -> notifyUser.username == it.username }
                 if (findResult != null) {
-                    val bug = bugService!!.findById(notification.typeid.toInt(), notification.saccountid)
+                    val bug = bugService.findById(notification.typeid.toInt(), notification.saccountid)
                     if (it.username == bug.assignuser) {
                         val prjMember = projectMemberService!!.getActiveUserOfProject(it.username,
                                 it.projectid, it.saccountid)
@@ -123,7 +123,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
         return notifyUsers
     }
 
-    class BugFieldNameMapper() : ItemFieldMapper() {
+    class BugFieldNameMapper : ItemFieldMapper() {
         init {
             put(BugWithBLOBs.Field.name, BugI18nEnum.FORM_SUMMARY, isColSpan = true)
             put(BugWithBLOBs.Field.environment, BugI18nEnum.FORM_ENVIRONMENT, isColSpan = true)
@@ -189,12 +189,12 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val userService = AppContextUtil.getSpringBean(UserService::class.java)
                 val user = userService.findUserByUserNameInAccount(value, context.user.accountId)
-                return if (user != null) {
+                if (user != null) {
                     val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                     val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId), user.username)
                     val img = newImg("avatar", userAvatarLink)

@@ -30,7 +30,7 @@ public class ProjectLogoUploadWindow extends MWindow implements ImagePreviewCrop
         withModal(true).withResizable(false).withWidth("200px").withCenter();
         Component projectIcon = ProjectAssetsUtil.projectLogoComp(shortName, projectId, projectAvatar, 100);
         projectIcon.setWidthUndefined();
-        final UploadImageField avatarUploadField = new UploadImageField(this);
+        UploadImageField avatarUploadField = new UploadImageField(this);
         withContent(new MVerticalLayout(projectIcon, avatarUploadField)
                 .withDefaultComponentAlignment(Alignment.TOP_CENTER));
     }

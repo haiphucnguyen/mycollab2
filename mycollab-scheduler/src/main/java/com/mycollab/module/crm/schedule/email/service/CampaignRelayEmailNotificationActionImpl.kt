@@ -35,12 +35,12 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CampaignRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleCampaign>(), CampaignRelayEmailNotificationAction {
-    @Autowired private val campaignService: CampaignService? = null
+class CampaignRelayEmailNotificationActionImpl : CrmDefaultSendingRelayEmailAction<SimpleCampaign>(), CampaignRelayEmailNotificationAction {
+    @Autowired private lateinit var campaignService: CampaignService
     private val mapper: CampaignFieldNameMapper = CampaignFieldNameMapper()
 
     override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCampaign? =
-            campaignService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            campaignService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = CampaignI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
@@ -64,17 +64,17 @@ class CampaignRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAc
             MonitorTypeConstants.CREATE_ACTION -> CampaignI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> CampaignI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> CampaignI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
     override fun getUpdateSubjectKey(): Enum<*> = CampaignI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
-    class CampaignFieldNameMapper() : ItemFieldMapper() {
+    class CampaignFieldNameMapper : ItemFieldMapper() {
         init {
             put(CampaignWithBLOBs.Field.campaignname, GenericI18Enum.FORM_NAME, true)
             put(CampaignWithBLOBs.Field.status, I18nFieldFormat(CampaignWithBLOBs.Field.status.name, GenericI18Enum.FORM_STATUS,

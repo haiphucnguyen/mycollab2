@@ -43,11 +43,11 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<SimpleTask>(), ProjectTaskRelayEmailNotificationAction {
+class ProjectTaskRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleTask>(), ProjectTaskRelayEmailNotificationAction {
 
-    @Autowired private val projectTaskService: ProjectTaskService? = null
+    @Autowired private lateinit var projectTaskService: ProjectTaskService
 
-    @Autowired private val projectNotificationService: ProjectNotificationSettingService? = null
+    @Autowired private lateinit var projectNotificationService: ProjectNotificationSettingService
 
     private val mapper = TaskFieldNameMapper()
 
@@ -65,10 +65,10 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
             MonitorTypeConstants.CREATE_ACTION -> TaskI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> TaskI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> TaskI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
@@ -76,7 +76,7 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
     }
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleTask =
-            projectTaskService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            projectTaskService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getItemName(): String = StringUtils.trim(bean!!.name, 100)
 
@@ -94,17 +94,17 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
     override fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser> {
-        val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId, notification.saccountid)
+        val notificationSettings = projectNotificationService.findNotifications(notification.projectId, notification.saccountid)
         var notifyUsers = notification.notifyUsers
 
         if (notificationSettings != null && notificationSettings.size > 0) {
             notificationSettings.forEach { notificationSetting ->
                 if (NotificationType.None.name == notificationSetting.level) {
-                    notifyUsers = notifyUsers.filter { !(it.username == notificationSetting.username) }
+                    notifyUsers = notifyUsers.filter { it.username != notificationSetting.username }
                 } else if (NotificationType.Minimal.name == notificationSetting.level) {
-                    val findResult = notifyUsers.find { it.username == notificationSetting.username };
+                    val findResult = notifyUsers.find { it.username == notificationSetting.username }
                     if (findResult == null) {
-                        val task = projectTaskService!!.findById(notification.typeid.toInt(), notification.saccountid)
+                        val task = projectTaskService.findById(notification.typeid.toInt(), notification.saccountid)
                         if (notificationSetting.username == task.assignuser) {
                             val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
                                     notificationSetting.projectid, notificationSetting.saccountid)
@@ -126,7 +126,7 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
         return notifyUsers
     }
 
-    class TaskFieldNameMapper() : ItemFieldMapper() {
+    class TaskFieldNameMapper : ItemFieldMapper() {
         init {
             put(Task.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
             put(Task.Field.startdate, DateFieldFormat(Task.Field.startdate.name, GenericI18Enum.FORM_START_DATE))
@@ -158,12 +158,12 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val userService = AppContextUtil.getSpringBean(UserService::class.java)
                 val user = userService.findUserByUserNameInAccount(value, context.user.accountId)
-                return if (user != null) {
+                if (user != null) {
                     val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                     val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId), user.username)
                     val img = FormatUtils.newImg("avatar", userAvatarLink)
@@ -196,7 +196,7 @@ class ProjectTaskRelayEmailNotificationActionImpl() : SendMailToFollowersAction<
             val taskService = AppContextUtil.getSpringBean(ProjectTaskService::class.java)
             val task = taskService.findById(taskId, context.user.accountId)
             return if (task != null) {
-                val img = Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK));
+                val img = Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK))
                 val taskListLink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.taskkey, task.projectShortname)
                 val link = FormatUtils.newA(taskListLink, task.name)
                 return FormatUtils.newLink(img, link).write()

@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component
 @Profile("production")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @DisallowConcurrentExecution
-class CrmSendingRelayEmailNotificationJob() : GenericQuartzJobBean() {
+class CrmSendingRelayEmailNotificationJob : GenericQuartzJobBean() {
     companion object {
         private val LOG = LoggerFactory.getLogger(CrmSendingRelayEmailNotificationJob::class.java)
     }
@@ -41,8 +41,7 @@ class CrmSendingRelayEmailNotificationJob() : GenericQuartzJobBean() {
                 CrmTypeConstants.TASK, CrmTypeConstants.MEETING, CrmTypeConstants.CALL)
 
         val relayEmailNotifications = relayEmailService.findPageableListByCriteria(
-                BasicSearchRequest<RelayEmailNotificationSearchCriteria>(criteria, 0,
-                        Integer.MAX_VALUE)) as List<SimpleRelayEmailNotification>
+                BasicSearchRequest(criteria, 0, Integer.MAX_VALUE)) as List<SimpleRelayEmailNotification>
         relayEmailNotifications.forEach {
             try {
                 val mailServiceCls = MailServiceMap.service(it.type)

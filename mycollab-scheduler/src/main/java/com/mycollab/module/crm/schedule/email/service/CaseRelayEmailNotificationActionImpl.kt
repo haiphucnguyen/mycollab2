@@ -71,7 +71,7 @@ class CaseRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
             else -> throw MyCollabException("Not support action ${emailNotification.action}");
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }

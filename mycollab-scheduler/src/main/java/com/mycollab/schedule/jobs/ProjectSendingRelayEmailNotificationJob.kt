@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component
 @Profile("production")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @DisallowConcurrentExecution
-class ProjectSendingRelayEmailNotificationJob() : GenericQuartzJobBean() {
+class ProjectSendingRelayEmailNotificationJob : GenericQuartzJobBean() {
     companion object {
         private val LOG = LoggerFactory.getLogger(ProjectSendingRelayEmailNotificationJob::class.java)
     }

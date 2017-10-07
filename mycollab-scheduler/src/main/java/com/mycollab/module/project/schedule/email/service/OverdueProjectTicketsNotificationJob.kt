@@ -49,19 +49,19 @@ import java.util.*
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class OverdueProjectTicketsNotificationJob() : GenericQuartzJobBean() {
+class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
 
-    @Autowired private val projectAssignmentService: ProjectTicketService? = null
+    @Autowired private lateinit var projectAssignmentService: ProjectTicketService
 
-    @Autowired private val deploymentMode: IDeploymentMode? = null
+    @Autowired private lateinit var deploymentMode: IDeploymentMode
 
-    @Autowired private val extMailService: ExtMailService? = null
+    @Autowired private lateinit var extMailService: ExtMailService
 
-    @Autowired private val contentGenerator: IContentGenerator? = null
+    @Autowired private lateinit var contentGenerator: IContentGenerator
 
-    @Autowired private val projectMemberService: ProjectMemberService? = null
+    @Autowired private lateinit var projectMemberService: ProjectMemberService
 
-    @Autowired private val projectNotificationService: ProjectNotificationSettingService? = null
+    @Autowired private lateinit var projectNotificationService: ProjectNotificationSettingService
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
@@ -72,15 +72,15 @@ class OverdueProjectTicketsNotificationJob() : GenericQuartzJobBean() {
         val rangeDate = RangeDateSearchField(past.toDate(), now.toDate())
         searchCriteria.dateInRange = rangeDate
         searchCriteria.isOpenned = SearchField()
-        val accounts = projectAssignmentService!!.getAccountsHasOverdueAssignments(searchCriteria)
+        val accounts = projectAssignmentService.getAccountsHasOverdueAssignments(searchCriteria)
         if (accounts != null) {
             accounts.forEach { account ->
                 searchCriteria.saccountid = NumberSearchField(account.id)
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(account.id, account.logopath))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.id, account.logopath))
                 val projectIds = projectAssignmentService.getProjectsHasOverdueAssignments(searchCriteria)
                 for (projectId in projectIds) {
                     searchCriteria.projectIds = SetSearchField<Int>(projectId)
-                    val siteUrl = deploymentMode!!.getSiteUrl(account.subdomain)
+                    val siteUrl = deploymentMode.getSiteUrl(account.subdomain)
                     contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId))
                     val assignments = projectAssignmentService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE)
                     if (assignments.isNotEmpty()) {
@@ -102,7 +102,7 @@ class OverdueProjectTicketsNotificationJob() : GenericQuartzJobBean() {
                             val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
                             val overdueAssignments = LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS) + "(" + assignments.size + ")"
                             contentGenerator.putVariable("overdueAssignments", overdueAssignments)
-                            extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                                     "[%s] %s".format(projectName, overdueAssignments), content)
                         }
                     }
@@ -113,8 +113,8 @@ class OverdueProjectTicketsNotificationJob() : GenericQuartzJobBean() {
 
 
     private fun getNotifiersOfProject(projectId: Int, accountId: Int): Set<SimpleUser> {
-        var notifyUsers = projectMemberService!!.getActiveUsersInProject(projectId, accountId)
-        val notificationSettings = projectNotificationService!!.findNotifications(projectId, accountId)
+        var notifyUsers = projectMemberService.getActiveUsersInProject(projectId, accountId)
+        val notificationSettings = projectNotificationService.findNotifications(projectId, accountId)
         if (notificationSettings.isNotEmpty()) {
             for (setting in notificationSettings) {
                 if ((NotificationType.None.name == setting.level) || (NotificationType.Minimal.name == setting.level)) {

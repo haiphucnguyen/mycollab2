@@ -51,7 +51,7 @@ object ProjectTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateTooltipEntity(locale: Locale, dateFormat: String, type: String, typeId: Int?, sAccountId: Int?, siteUrl: String, timeZone: TimeZone, showProject: Boolean): String? {
+    fun generateTooltipEntity(locale: Locale, dateFormat: String, type: String, typeId: Int, sAccountId: Int, siteUrl: String, timeZone: TimeZone, showProject: Boolean): String? {
         return when (type) {
             ProjectTypeConstants.BUG -> {
                 val bugService = AppContextUtil.getSpringBean(BugService::class.java)

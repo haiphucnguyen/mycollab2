@@ -23,11 +23,11 @@ abstract class GenericQuartzJobBean : QuartzJobBean() {
     override fun executeInternal(context: JobExecutionContext) {
         try {
             executeJob(context)
-            GenericQuartzJobBean.isSendingDbError = false
+            isSendingDbError = false
         } catch (e: TransientDataAccessException) {
-            if (!GenericQuartzJobBean.isSendingDbError) {
+            if (isSendingDbError) {
                 LOG.error("Exception in running schedule", e)
-                GenericQuartzJobBean.isSendingDbError = true
+                isSendingDbError = true
             }
         } catch (e: Exception) {
             LOG.error("Exception in running schedule", e)

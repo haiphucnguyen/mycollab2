@@ -28,8 +28,8 @@ import org.springframework.stereotype.Service
  */
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class VersionRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<SimpleVersion>(), VersionRelayEmailNotificationAction {
-    @Autowired private val versionService: VersionService? = null
+class VersionRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleVersion>(), VersionRelayEmailNotificationAction {
+    @Autowired private lateinit var versionService: VersionService
     private val mapper = VersionFieldNameMapper()
 
     override fun buildExtraTemplateVariables(context: MailContext<SimpleVersion>) {
@@ -46,10 +46,10 @@ class VersionRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<Sim
             MonitorTypeConstants.CREATE_ACTION -> VersionI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> VersionI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> VersionI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
@@ -72,7 +72,7 @@ class VersionRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<Sim
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion =
-            versionService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            versionService.findById(notification.typeid.toInt(), notification.saccountid)
 
     class VersionFieldNameMapper() : ItemFieldMapper() {
         init {

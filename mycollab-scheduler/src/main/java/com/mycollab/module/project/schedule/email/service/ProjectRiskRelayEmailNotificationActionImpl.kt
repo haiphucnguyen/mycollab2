@@ -42,8 +42,8 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class ProjectRiskRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<SimpleRisk>(), ProjectRiskRelayEmailNotificationAction {
-    @Autowired private val riskService: RiskService? = null
+class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleRisk>(), ProjectRiskRelayEmailNotificationAction {
+    @Autowired private lateinit var riskService: RiskService
     private val mapper = ProjectFieldNameMapper()
 
     override fun getItemName(): String = StringUtils.trim(bean!!.name, 100)
@@ -61,8 +61,8 @@ class ProjectRiskRelayEmailNotificationActionImpl() : SendMailToAllMembersAction
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleRisk =
-            riskService!!.findById(notification.typeid.toInt(), notification.saccountid)
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleRisk? =
+            riskService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun buildExtraTemplateVariables(context: MailContext<SimpleRisk>) {
         val emailNotification = context.emailNotification
@@ -77,17 +77,17 @@ class ProjectRiskRelayEmailNotificationActionImpl() : SendMailToAllMembersAction
             MonitorTypeConstants.CREATE_ACTION -> RiskI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> RiskI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> RiskI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
-    class ProjectFieldNameMapper() : ItemFieldMapper() {
+    class ProjectFieldNameMapper : ItemFieldMapper() {
         init {
             put(Risk.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
             put(Risk.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
@@ -120,12 +120,12 @@ class ProjectRiskRelayEmailNotificationActionImpl() : SendMailToAllMembersAction
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val userService = AppContextUtil.getSpringBean(UserService::class.java)
                 val user = userService.findUserByUserNameInAccount(value, context.user.accountId)
-                return if (user != null) {
+                if (user != null) {
                     val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                     val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId),
                             user.username)

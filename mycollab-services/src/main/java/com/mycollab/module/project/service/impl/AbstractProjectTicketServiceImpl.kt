@@ -27,20 +27,20 @@ import org.springframework.beans.factory.annotation.Autowired
 abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTicketSearchCriteria>(), ProjectTicketService {
 
     @Autowired
-    private val projectTicketMapper: ProjectTicketMapper? = null
+    private lateinit var projectTicketMapper: ProjectTicketMapper
 
     override val searchMapper: ISearchableDAO<ProjectTicketSearchCriteria>
-        get() = projectTicketMapper as ISearchableDAO<ProjectTicketSearchCriteria>
+        get() = projectTicketMapper
 
     override fun getTotalCount(criteria: ProjectTicketSearchCriteria): Int {
-        return projectTicketMapper!!.getTotalCountFromRisk(criteria) +
+        return projectTicketMapper.getTotalCountFromRisk(criteria) +
                 projectTicketMapper.getTotalCountFromBug(criteria) +
                 projectTicketMapper.getTotalCountFromTask(criteria) +
                 projectTicketMapper.getTotalCountFromMilestone(criteria)
     }
 
     override fun getTotalTicketsCount(@CacheKey criteria: ProjectTicketSearchCriteria): Int? {
-        return projectTicketMapper!!.getTotalCountFromRisk(criteria) +
+        return projectTicketMapper.getTotalCountFromRisk(criteria) +
                 projectTicketMapper.getTotalCountFromBug(criteria)!! +
                 projectTicketMapper.getTotalCountFromTask(criteria)!!
     }
@@ -50,19 +50,19 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
         newCriteria.typeIds = SetSearchField(typeId)
         newCriteria.types = SetSearchField(type)
         return when (type) {
-            ProjectTypeConstants.TASK -> projectTicketMapper!!.getTotalCountFromTask(newCriteria) > 0
-            ProjectTypeConstants.BUG -> projectTicketMapper!!.getTotalCountFromBug(newCriteria) > 0
-            ProjectTypeConstants.RISK -> projectTicketMapper!!.getTotalCountFromRisk(newCriteria) > 0
+            ProjectTypeConstants.TASK -> projectTicketMapper.getTotalCountFromTask(newCriteria) > 0
+            ProjectTypeConstants.BUG -> projectTicketMapper.getTotalCountFromBug(newCriteria) > 0
+            ProjectTypeConstants.RISK -> projectTicketMapper.getTotalCountFromRisk(newCriteria) > 0
             else -> false
         }
     }
 
     override fun getAccountsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<BillingAccount> {
-        return projectTicketMapper!!.getAccountsHasOverdueAssignments(searchCriteria)
+        return projectTicketMapper.getAccountsHasOverdueAssignments(searchCriteria)
     }
 
     override fun getProjectsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<Int> {
-        return projectTicketMapper!!.getProjectsHasOverdueAssignments(searchCriteria)
+        return projectTicketMapper.getProjectsHasOverdueAssignments(searchCriteria)
     }
 
     override fun findTicket(type: String, typeId: Int?): ProjectTicket? {
@@ -74,15 +74,15 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
     }
 
     override fun getAssigneeSummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> {
-        return projectTicketMapper!!.getAssigneeSummary(criteria)
+        return projectTicketMapper.getAssigneeSummary(criteria)
     }
 
     override fun getPrioritySummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> {
-        return projectTicketMapper!!.getPrioritySummary(criteria)
+        return projectTicketMapper.getPrioritySummary(criteria)
     }
 
     override fun findTicketsByCriteria(@CacheKey searchRequest: BasicSearchRequest<ProjectTicketSearchCriteria>): List<*> {
-        return projectTicketMapper!!.findTicketsByCriteria(searchRequest.searchCriteria,
+        return projectTicketMapper.findTicketsByCriteria(searchRequest.searchCriteria,
                 RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
                         searchRequest.numberOfItems))
     }

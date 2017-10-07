@@ -5,6 +5,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -28,8 +29,7 @@ public class ProjectMemberBlock extends MVerticalLayout {
                 username)).appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        Label userLbl = new Label(userLink.write(), ContentMode.HTML);
-        userLbl.addStyleName(ValoTheme.LABEL_SMALL);
+        ELabel userLbl = ELabel.html(userLink.write()).withStyleName(ValoTheme.LABEL_SMALL);
         with(userAvatar, userLbl);
     }
 }

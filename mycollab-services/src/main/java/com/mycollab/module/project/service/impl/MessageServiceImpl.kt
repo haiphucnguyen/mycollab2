@@ -41,7 +41,7 @@ class MessageServiceImpl(private val messageMapper: MessageMapper,
 
     @CleanCache
     fun postDirtyUpdate(sAccountId: Int?) {
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectActivityStreamService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<Message>, username: String?, sAccountId: Int) {
@@ -50,9 +50,8 @@ class MessageServiceImpl(private val messageMapper: MessageMapper,
         asyncEventBus.post(event)
     }
 
-    override fun findById(messageId: Int?, sAccountId: Int?): SimpleMessage {
-        return messageMapperExt.findMessageById(messageId!!)
-    }
+    override fun findById(messageId: Int, sAccountId: Int): SimpleMessage? =
+         messageMapperExt.findMessageById(messageId)
 
     companion object {
 

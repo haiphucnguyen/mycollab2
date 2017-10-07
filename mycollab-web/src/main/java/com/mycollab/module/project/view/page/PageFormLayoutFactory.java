@@ -12,7 +12,6 @@ import com.vaadin.ui.*;
  * @since 4.4.0
  */
 public class PageFormLayoutFactory extends AbstractFormLayoutFactory {
-    private static final long serialVersionUID = 1L;
 
     private GridFormLayoutHelper informationLayout;
 

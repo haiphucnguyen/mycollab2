@@ -4,6 +4,7 @@ import com.mycollab.common.dao.TimelineTrackingCachingMapper
 import com.mycollab.common.domain.TimelineTrackingCachingExample
 import org.joda.time.LocalDate
 import org.quartz.JobExecutionContext
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Profile
 import org.springframework.context.annotation.Scope
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Component
 @Component
 @Profile("production")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CleanupTimeTrackingCacheDataJob(private val timeTrackingCacheMapper: TimelineTrackingCachingMapper) : GenericQuartzJobBean() {
+class CleanupTimeTrackingCacheDataJob : GenericQuartzJobBean() {
+
+    @Autowired
+    lateinit var timeTrackingCacheMapper: TimelineTrackingCachingMapper
 
     override fun executeJob(context: JobExecutionContext) {
         val ex = TimelineTrackingCachingExample()

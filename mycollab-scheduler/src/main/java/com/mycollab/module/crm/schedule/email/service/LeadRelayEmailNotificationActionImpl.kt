@@ -37,12 +37,12 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class LeadRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleLead>(), LeadRelayEmailNotificationAction {
-    @Autowired private val leadService: LeadService? = null
+class LeadRelayEmailNotificationActionImpl : CrmDefaultSendingRelayEmailAction<SimpleLead>(), LeadRelayEmailNotificationAction {
+    @Autowired private lateinit var leadService: LeadService
     private val mapper = LeadFieldNameMapper()
 
     override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleLead? =
-            leadService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            leadService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = LeadI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
@@ -66,17 +66,17 @@ class LeadRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
             MonitorTypeConstants.CREATE_ACTION -> LeadI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> LeadI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> LeadI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
-    override protected fun getUpdateSubjectKey(): Enum<*> = LeadI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
+    override fun getUpdateSubjectKey(): Enum<*> = LeadI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
-    class LeadFieldNameMapper() : ItemFieldMapper() {
+    class LeadFieldNameMapper : ItemFieldMapper() {
         init {
             put(Lead.Field.firstname, GenericI18Enum.FORM_FIRSTNAME)
             put(Lead.Field.email, EmailLinkFieldFormat("email", GenericI18Enum.FORM_EMAIL))

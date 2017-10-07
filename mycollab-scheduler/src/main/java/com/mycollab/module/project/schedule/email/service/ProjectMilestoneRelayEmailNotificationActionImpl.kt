@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ProjectMilestoneRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<SimpleMilestone>(), ProjectMilestoneRelayEmailNotificationAction {
 
-    @Autowired private val milestoneService: MilestoneService? = null
+    @Autowired private lateinit var milestoneService: MilestoneService
 
     private val mapper = MilestoneFieldNameMapper()
 
@@ -57,7 +57,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl() : SendMailToAllMembersA
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMilestone =
-            milestoneService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            milestoneService.findById(notification.typeid.toInt(), notification.saccountid)
 
     class MilestoneFieldNameMapper() : ItemFieldMapper() {
         init {
@@ -118,10 +118,10 @@ class ProjectMilestoneRelayEmailNotificationActionImpl() : SendMailToAllMembersA
             MonitorTypeConstants.CREATE_ACTION -> MilestoneI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> MilestoneI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> MilestoneI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)

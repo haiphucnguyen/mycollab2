@@ -35,13 +35,13 @@ import org.springframework.beans.factory.annotation.Autowired
  * @since 6.0.0
  */
 abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationAction {
-    @Autowired private val extMailService: ExtMailService? = null
-    @Autowired private val projectService: ProjectService? = null
-    @Autowired private val projectMemberService: ProjectMemberService? = null
-    @Autowired private val projectNotificationService: ProjectNotificationSettingService? = null
-    @Autowired private val commentService: CommentService? = null
-    @Autowired private val auditLogService: AuditLogService? = null
-    @Autowired protected val contentGenerator: IContentGenerator? = null
+    @Autowired private lateinit var extMailService: ExtMailService
+    @Autowired private lateinit var projectService: ProjectService
+    @Autowired private lateinit var projectMemberService: ProjectMemberService
+    @Autowired private lateinit var projectNotificationService: ProjectNotificationSettingService
+    @Autowired private lateinit var commentService: CommentService
+    @Autowired private lateinit var auditLogService: AuditLogService
+    @Autowired lateinit protected var contentGenerator: IContentGenerator
 
     protected var bean: B? = null
     protected var projectMember: SimpleProjectMember? = null
@@ -50,9 +50,9 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
     private var projectId: Int? = null
 
     private fun getNotifyUsers(notification: ProjectRelayEmailNotification): Set<SimpleUser> {
-        var notifyUsers = projectMemberService!!.getActiveUsersInProject(notification.projectId,
+        var notifyUsers = projectMemberService.getActiveUsersInProject(notification.projectId,
                 notification.saccountid)
-        val notificationSettings = projectNotificationService!!.findNotifications(notification.projectId,
+        val notificationSettings = projectNotificationService.findNotifications(notification.projectId,
                 notification.saccountid)
         if (notificationSettings.isNotEmpty()) {
             notificationSettings.forEach { setting ->
@@ -71,7 +71,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 notifiers.forEach { user ->
                     val context = MailContext<B>(notification, user, siteUrl)
                     context.wrappedBean = bean
@@ -84,7 +84,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
                     val userMail = MailRecipientField(user.email, user.username)
                     val recipients = listOf(userMail)
-                    extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.locale))
                 }
             }
@@ -98,8 +98,8 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
-                val auditLog = auditLogService!!.findLastestLog(notification.typeid.toInt(), notification.saccountid)
-                contentGenerator!!.putVariable("historyLog", auditLog)
+                val auditLog = auditLogService.findLastestLog(notification.typeid.toInt(), notification.saccountid)
+                contentGenerator.putVariable("historyLog", auditLog)
                 contentGenerator.putVariable("mapper", getItemFieldMapper())
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
@@ -107,7 +107,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
                 searchCriteria.saccountid = null
-                val comments = commentService!!.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
+                val comments = commentService.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
 
                 notifiers.forEach { user ->
@@ -127,7 +127,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     buildExtraTemplateVariables(context)
                     val userMail = MailRecipientField(user.email, user.username)
                     val recipients = listOf(userMail)
-                    extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
                 }
             }
@@ -145,8 +145,8 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
                 searchCriteria.saccountid = null
-                val comments = commentService!!.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
-                contentGenerator!!.putVariable("lastComments", comments)
+                val comments = commentService.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
+                contentGenerator.putVariable("lastComments", comments)
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
                 notifiers.forEach { user ->
@@ -159,7 +159,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
                     val userMail = MailRecipientField(user.email, user.username)
                     val recipients = listOf(userMail)
-                    extMailService!!.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))
                 }
             }
@@ -169,14 +169,14 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
     private fun onInitAction(notification: ProjectRelayEmailNotification) {
         projectId = notification.projectId
         siteUrl = MailUtils.getSiteUrl(notification.saccountid)
-        val relatedProject = projectService!!.findById(notification.projectId, notification.saccountid)
+        val relatedProject = projectService.findById(notification.projectId, notification.saccountid)
         val projectHyperLink = WebItem(relatedProject.name, ProjectLinkGenerator.generateProjectFullLink(siteUrl, relatedProject.id))
-        contentGenerator!!.putVariable("projectHyperLink", projectHyperLink)
-        projectMember = projectMemberService!!.findMemberByUsername(notification.changeby, notification.projectId,
+        contentGenerator.putVariable("projectHyperLink", projectHyperLink)
+        projectMember = projectMemberService.findMemberByUsername(notification.changeby, notification.projectId,
                 notification.saccountid)
     }
 
-    abstract protected fun getBeanInContext(notification: ProjectRelayEmailNotification): B
+    abstract protected fun getBeanInContext(notification: ProjectRelayEmailNotification): B?
 
     abstract protected fun buildExtraTemplateVariables(context: MailContext<B>)
 

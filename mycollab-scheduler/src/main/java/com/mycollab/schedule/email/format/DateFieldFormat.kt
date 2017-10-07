@@ -24,16 +24,16 @@ class DateFieldFormat(fieldName: String, displayName: Enum<*>) : FieldFormat(fie
             val value = PropertyUtils.getProperty(wrappedBean, fieldName)
             when (value) {
                 null -> Span().write()
-                else -> Span().appendText(DateTimeUtils.formatDate(value as Date, context.user.getDateFormat(),
+                else -> Span().appendText(DateTimeUtils.formatDate(value as Date, context.user.dateFormat,
                         context.locale, TimezoneVal.valueOf(context.user.timezone))).write()
             }
         } catch (e: Exception) {
-            LOG.error("Can not generate email field: " + fieldName, e)
+            LOG.error("Can not generate email field: $fieldName", e)
             Span().write()
         }
     }
 
     override fun formatField(context: MailContext<*>, value: String): String =
             if (StringUtils.isBlank(value)) Span().write() else
-                DateTimeUtils.convertToStringWithUserTimeZone(value, context.user.getDateFormat(), context.locale, context.timeZone)
+                DateTimeUtils.convertToStringWithUserTimeZone(value, context.user.dateFormat, context.locale, context.timeZone)
 }

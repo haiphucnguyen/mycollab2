@@ -23,8 +23,8 @@ import org.springframework.stereotype.Service
  */
 @Service
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class MessageRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<SimpleMessage>(), MessageRelayEmailNotificationAction {
-    @Autowired private val messageService: MessageService? = null
+class MessageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleMessage>(), MessageRelayEmailNotificationAction {
+    @Autowired private lateinit var messageService: MessageService
 
     override fun getItemName(): String = StringUtils.trim(bean!!.title, 100)
 
@@ -41,8 +41,8 @@ class MessageRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<Sim
 
     override fun getItemFieldMapper(): ItemFieldMapper = ItemFieldMapper()
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMessage =
-            messageService!!.findById(notification.typeid.toInt(), notification.saccountid)
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMessage? =
+            messageService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun buildExtraTemplateVariables(context: MailContext<SimpleMessage>) {
         val emailNotification = context.emailNotification
@@ -58,10 +58,10 @@ class MessageRelayEmailNotificationActionImpl() : SendMailToAllMembersAction<Sim
             MonitorTypeConstants.CREATE_ACTION -> MessageI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> MessageI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> MessageI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("projectName", bean!!.projectName)
+        contentGenerator.putVariable("projectName", bean!!.projectName)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)

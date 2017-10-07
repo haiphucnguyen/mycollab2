@@ -33,12 +33,12 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CallRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleCall>(), CallRelayEmailNotificationAction {
-    @Autowired private val callService: CallService? = null
+class CallRelayEmailNotificationActionImpl : CrmDefaultSendingRelayEmailAction<SimpleCall>(), CallRelayEmailNotificationAction {
+    @Autowired private lateinit var callService: CallService
     private val mapper: CallFieldNameMapper = CallFieldNameMapper()
 
     override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleCall? =
-            callService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            callService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = CallI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
@@ -62,17 +62,17 @@ class CallRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction
             MonitorTypeConstants.CREATE_ACTION -> CallI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> CallI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> CallI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
     override fun getUpdateSubjectKey(): Enum<*> = CallI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
-    class CallFieldNameMapper() : ItemFieldMapper() {
+    class CallFieldNameMapper : ItemFieldMapper() {
         init {
             put(CallWithBLOBs.Field.subject, CallI18nEnum.FORM_SUBJECT, true)
             put(CallWithBLOBs.Field.status, GenericI18Enum.FORM_STATUS)

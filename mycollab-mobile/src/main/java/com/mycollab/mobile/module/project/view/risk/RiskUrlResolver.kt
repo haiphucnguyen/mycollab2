@@ -1,7 +1,7 @@
 package com.mycollab.mobile.module.project.view.risk
 
 import com.mycollab.common.UrlTokenizer
-import com.mycollab.vaadin.EventBusFactory
+import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.mobile.module.project.event.ProjectEvent
 import com.mycollab.mobile.module.project.view.ProjectUrlResolver
 import com.mycollab.mobile.module.project.view.parameters.ProjectScreenData
@@ -10,6 +10,7 @@ import com.mycollab.module.project.domain.SimpleRisk
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
+import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -40,8 +41,12 @@ class RiskUrlResolver : ProjectUrlResolver() {
             val riskId = token.getInt()
             val riskService = AppContextUtil.getSpringBean(RiskService::class.java)
             val risk = riskService.findById(riskId, AppUI.accountId)
-            val chain = PageActionChain(ProjectScreenData.Goto(projectId), RiskScreenData.Edit(risk))
-            EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            if (risk != null) {
+                val chain = PageActionChain(ProjectScreenData.Goto(projectId), RiskScreenData.Edit(risk))
+                EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+            } else {
+                throw ResourceNotFoundException("Can noy find risk $params")
+            }
         }
     }
 

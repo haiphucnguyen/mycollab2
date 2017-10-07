@@ -37,7 +37,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
     @Autowired private val projectService: ProjectService? = null
     @Autowired protected val projectMemberService: ProjectMemberService? = null
     @Autowired private val commentService: CommentService? = null
-    @Autowired protected val contentGenerator: IContentGenerator? = null
+    @Autowired protected lateinit var contentGenerator: IContentGenerator
     @Autowired private val auditLogService: AuditLogService? = null
 
     protected var bean: B? = null
@@ -52,7 +52,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 notifiers.forEach { user ->
                     val context = MailContext<B>(notification, user, siteUrl)
                     context.wrappedBean = bean
@@ -79,7 +79,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
                 val auditLog = auditLogService!!.findLastestLog(notification.typeid.toInt(), notification.saccountid)
                 contentGenerator.putVariable("historyLog", auditLog)
@@ -122,7 +122,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
-                contentGenerator!!.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
+                contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 val searchCriteria = CommentSearchCriteria()
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
@@ -154,7 +154,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
         siteUrl = MailUtils.getSiteUrl(notification.saccountid)
         val relatedProject = projectService!!.findById(notification.projectId, notification.saccountid)
         val projectHyperLink = WebItem(relatedProject.name, ProjectLinkGenerator.generateProjectFullLink(siteUrl, relatedProject.id))
-        contentGenerator!!.putVariable("projectHyperLink", projectHyperLink)
+        contentGenerator.putVariable("projectHyperLink", projectHyperLink)
         projectMember = projectMemberService!!.findMemberByUsername(notification.changeby, notification.projectId,
                 notification.saccountid)
     }

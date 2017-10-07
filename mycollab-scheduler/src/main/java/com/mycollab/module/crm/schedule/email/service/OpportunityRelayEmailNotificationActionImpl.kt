@@ -41,12 +41,12 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class OpportunityRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleOpportunity>(), OpportunityRelayEmailNotificationAction {
-    @Autowired private val opportunityService: OpportunityService? = null
+class OpportunityRelayEmailNotificationActionImpl : CrmDefaultSendingRelayEmailAction<SimpleOpportunity>(), OpportunityRelayEmailNotificationAction {
+    @Autowired private lateinit var opportunityService: OpportunityService
     private val mapper: OpportunityFieldNameMapper = OpportunityFieldNameMapper()
 
     override fun getBeanInContext(notification: SimpleRelayEmailNotification): SimpleOpportunity? =
-            opportunityService!!.findById(notification.typeid.toInt(), notification.saccountid)
+            opportunityService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getCreateSubjectKey(): Enum<*> = OpportunityI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
@@ -72,15 +72,15 @@ class OpportunityRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmai
             MonitorTypeConstants.CREATE_ACTION -> OpportunityI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> OpportunityI18nEnum.MAIL_UPDATE_ITEM_HEADING
             MonitorTypeConstants.ADD_COMMENT_ACTION -> OpportunityI18nEnum.MAIL_COMMENT_ITEM_HEADING
-            else -> throw MyCollabException("Not support action ${emailNotification.action}");
+            else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
-    class OpportunityFieldNameMapper() : ItemFieldMapper() {
+    class OpportunityFieldNameMapper : ItemFieldMapper() {
         init {
             put(Opportunity.Field.opportunityname, GenericI18Enum.FORM_NAME)
             put(Opportunity.Field.accountid, AccountFieldFormat(Opportunity.Field.accountid.name, OpportunityI18nEnum.FORM_ACCOUNT_NAME))
@@ -192,12 +192,12 @@ class OpportunityRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmai
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val userService = AppContextUtil.getSpringBean(UserService::class.java)
                 val user = userService.findUserByUserNameInAccount(value, context.user.accountId)
-                return if (user != null) {
+                if (user != null) {
                     val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                     val userLink = AccountLinkGenerator.generatePreviewFullUserLink(MailUtils.getSiteUrl(user.accountId),
                             user.username)

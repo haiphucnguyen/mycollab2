@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class ContactRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAction<SimpleContact>(), ContactRelayEmailNotificationAction {
+class ContactRelayEmailNotificationActionImpl : CrmDefaultSendingRelayEmailAction<SimpleContact>(), ContactRelayEmailNotificationAction {
 
     @Autowired private lateinit var contactService: ContactService
 
@@ -71,14 +71,14 @@ class ContactRelayEmailNotificationActionImpl() : CrmDefaultSendingRelayEmailAct
             else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator!!.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
+        contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
     override fun getUpdateSubjectKey(): Enum<*> = ContactI18nEnum.MAIL_UPDATE_ITEM_SUBJECT
 
-    class ContactFieldNameMapper() : ItemFieldMapper() {
+    class ContactFieldNameMapper : ItemFieldMapper() {
         init {
             put(Contact.Field.firstname, GenericI18Enum.FORM_FIRSTNAME)
             put(Contact.Field.officephone, ContactI18nEnum.FORM_OFFICE_PHONE)
