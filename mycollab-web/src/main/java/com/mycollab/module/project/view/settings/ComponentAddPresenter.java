@@ -6,7 +6,6 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.event.BugComponentEvent;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
-import com.mycollab.module.project.view.bug.BugComponentContainer;
 import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
@@ -76,7 +75,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
-            BugComponentContainer componentContainer = (BugComponentContainer) container;
+            ComponentContainer componentContainer = (ComponentContainer) container;
             componentContainer.removeAllComponents();
             componentContainer.addComponent(view);
 

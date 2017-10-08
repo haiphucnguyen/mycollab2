@@ -3,7 +3,6 @@ package com.mycollab.module.project.view.settings;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.view.bug.BugComponentContainer;
 import com.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -15,11 +14,11 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentPresenter extends AbstractPresenter<BugComponentContainer> {
+public class ComponentPresenter extends AbstractPresenter<ComponentContainer> {
     private static final long serialVersionUID = 1L;
 
     public ComponentPresenter() {
-        super(BugComponentContainer.class);
+        super(ComponentContainer.class);
     }
 
     @Override

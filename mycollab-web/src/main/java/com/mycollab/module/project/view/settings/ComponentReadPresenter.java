@@ -8,7 +8,6 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.BugComponentEvent;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
-import com.mycollab.module.project.view.bug.BugComponentContainer;
 import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -117,7 +116,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (component != null) {
-                    BugComponentContainer componentContainer = (BugComponentContainer) container;
+                    ComponentContainer componentContainer = (ComponentContainer) container;
                     componentContainer.removeAllComponents();
                     componentContainer.addComponent(view);
                     view.previewItem(component);
