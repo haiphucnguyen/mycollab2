@@ -15,6 +15,6 @@ class InvoiceSearchCriteria() : SearchCriteria() {
         @JvmField val p_status = CacheParamMapper.register(ProjectTypeConstants.INVOICE, null,
                  PropertyListParam<String>("status", "m_prj_invoice", "status"))
         @JvmField val p_projectIds = CacheParamMapper.register(ProjectTypeConstants.INVOICE, null,
-                 PropertyListParam<Integer>("projectid", "m_prj_invoice", "projectId"))
+                 PropertyListParam<Int>("projectid", "m_prj_invoice", "projectId"))
     }
 }

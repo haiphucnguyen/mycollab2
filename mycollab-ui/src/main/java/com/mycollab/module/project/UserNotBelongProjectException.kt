@@ -7,7 +7,7 @@ import com.mycollab.core.SecureAccessException
  * @since 5.3.2
  */
 class UserNotBelongProjectException : SecureAccessException {
-    constructor() : super("") {}
+    constructor() : super("")
 
-    constructor(message: String) : super(message) {}
+    constructor(message: String) : super(message)
 }

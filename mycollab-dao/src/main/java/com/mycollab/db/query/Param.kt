@@ -8,19 +8,19 @@ import java.io.Serializable
  * @author MyCollab Ltd.
  * @since 4.0
  */
-abstract class Param @JvmOverloads constructor(var id: String = "") : Serializable {
+abstract class Param @JvmOverloads constructor(val id: String = "") : Serializable {
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj == null) {
+    override fun equals(other: Any?): Boolean {
+        if (other == null) {
             return false
         }
-        if (obj === this) {
+        if (other === this) {
             return true
         }
-        if (obj.javaClass != javaClass) {
+        if (other.javaClass != javaClass) {
             return false
         }
-        val item = obj as Param?
+        val item = other as Param?
         return EqualsBuilder().append(id, item!!.id).build()!!
     }
 

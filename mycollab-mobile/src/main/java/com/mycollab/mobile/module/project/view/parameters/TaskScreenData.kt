@@ -10,7 +10,7 @@ import com.mycollab.vaadin.mvp.ScreenData
 object TaskScreenData {
     class Read(param: Int) : ScreenData<Int>(param) {}
 
-    class Edit(param: SimpleTask) : ScreenData<SimpleTask>(param) {}
+    class Edit(param: SimpleTask) : ScreenData<SimpleTask>(param)
 
-    class Add(param: SimpleTask) : ScreenData<SimpleTask>(param) {}
+    class Add(param: SimpleTask) : ScreenData<SimpleTask>(param)
 }

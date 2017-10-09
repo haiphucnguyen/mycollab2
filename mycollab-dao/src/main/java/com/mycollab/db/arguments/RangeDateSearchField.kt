@@ -11,9 +11,9 @@ class RangeDateSearchField : SearchField {
     var from: Date? = null
     var to: Date? = null
 
-    constructor() {}
+    constructor()
 
-    constructor(from: Date, to: Date) : this(SearchField.AND, from, to) {}
+    constructor(from: Date, to: Date) : this(SearchField.AND, from, to)
 
     constructor(oper: String, from: Date, to: Date) {
         this.operation = oper

@@ -34,7 +34,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class CloudDriveSettingWindow extends MWindow {
+class CloudDriveSettingWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
     private final MVerticalLayout bodyLayout;
@@ -42,7 +42,7 @@ public class CloudDriveSettingWindow extends MWindow {
     private ExternalResourceService externalResourceService;
     private ExternalDriveService externalDriveService;
 
-    public CloudDriveSettingWindow() {
+    CloudDriveSettingWindow() {
         super("Cloud drives setting");
         this.withWidth("800px").withModal(true).withResizable(false);
         MVerticalLayout mainLayout = new MVerticalLayout().withFullWidth();
@@ -77,7 +77,7 @@ public class CloudDriveSettingWindow extends MWindow {
     private class OneDriveConnectionBodyLayout extends VerticalLayout {
         private static final long serialVersionUID = 1L;
         private boolean isEdit = false;
-        private Label foldernameLbl;
+        private Label folderNameLbl;
 
         OneDriveConnectionBodyLayout(final ExternalDrive drive) {
             final MVerticalLayout externalDriveEditLayout = new MVerticalLayout();
@@ -104,9 +104,9 @@ public class CloudDriveSettingWindow extends MWindow {
                 titleLayout.addComponent(lbl);
 
                 // ----construct title --------------
-                foldernameLbl = new Label(drive.getFoldername());
-                foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
-                titleLayout.with(foldernameLbl).expand(foldernameLbl);
+                folderNameLbl = new Label(drive.getFoldername());
+                folderNameLbl.addStyleName(ValoTheme.LABEL_H3);
+                titleLayout.with(folderNameLbl).expand(folderNameLbl);
 
                 final PopupButton popupBtn = new PopupButton();
                 popupBtn.setStyleName(WebThemes.BUTTON_ACTION);
@@ -120,7 +120,7 @@ public class CloudDriveSettingWindow extends MWindow {
                         externalDriveEditLayout.addStyleName("driveEditting");
                         titleLayout.removeComponent(popupBtn);
                         HorizontalLayout layout = editActionHorizontalLayout(drive);
-                        titleLayout.replaceComponent(foldernameLbl, layout);
+                        titleLayout.replaceComponent(folderNameLbl, layout);
                         titleLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
                         titleLayout.setExpandRatio(layout, 1.0f);
                         titleLayout.addComponent(popupBtn);
@@ -175,8 +175,8 @@ public class CloudDriveSettingWindow extends MWindow {
                         drive.setFoldername(folderName);
                         externalDriveService.updateWithSession(drive, UserUIContext.getUsername());
 
-                        foldernameLbl = new Label(folderName);
-                        foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
+                        folderNameLbl = new Label(folderName);
+                        folderNameLbl.addStyleName(ValoTheme.LABEL_H3);
                         ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
                         // TODO: reload external drives
                     }

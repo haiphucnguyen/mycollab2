@@ -8,7 +8,5 @@ import com.mycollab.core.MyCollabException
  */
 class UsageExceedBillingPlanException : MyCollabException {
 
-    constructor() : super("") {}
-
-    constructor(msg: String) : super(msg) {}
+    constructor() : super("")
 }

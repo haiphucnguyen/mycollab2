@@ -6,9 +6,9 @@ package com.mycollab.db.arguments
  */
 class BooleanSearchField(oper: String, var comparision: String?, var isValue: Boolean) : SearchField() {
 
-    @JvmOverloads constructor(value: Boolean = false) : this(SearchField.AND, value) {}
+    @JvmOverloads constructor(value: Boolean = false) : this(SearchField.AND, value)
 
-    constructor(oper: String, value: Boolean) : this(oper, BooleanSearchField.IS, value) {}
+    constructor(oper: String, value: Boolean) : this(oper, BooleanSearchField.IS, value)
 
     init {
         this.operation = oper

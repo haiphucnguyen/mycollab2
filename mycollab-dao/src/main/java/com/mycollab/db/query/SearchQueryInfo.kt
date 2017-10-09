@@ -9,9 +9,9 @@ import java.util.Arrays
  */
 class SearchQueryInfo<S: SearchCriteria>(val queryId: String, var queryName: String, var searchFieldInfos: List<SearchFieldInfo<S>>) {
 
-    constructor(queryName: String, vararg searchFieldInfoArr: SearchFieldInfo<S>) : this(queryName, Arrays.asList(*searchFieldInfoArr)) {}
+    constructor(queryName: String, vararg searchFieldInfoArr: SearchFieldInfo<S>) : this(queryName, Arrays.asList(*searchFieldInfoArr))
 
-    constructor(queryName: String, searchFieldInfos: List<SearchFieldInfo<S>>) : this("", queryName, searchFieldInfos) {}
+    constructor(queryName: String, searchFieldInfos: List<SearchFieldInfo<S>>) : this("", queryName, searchFieldInfos)
 
-    constructor(queryId: String, queryName: String, vararg searchFieldInfoArr: SearchFieldInfo<S>) : this(queryId, queryName, Arrays.asList(*searchFieldInfoArr)) {}
+    constructor(queryId: String, queryName: String, vararg searchFieldInfoArr: SearchFieldInfo<S>) : this(queryId, queryName, Arrays.asList(*searchFieldInfoArr))
 }

@@ -7,5 +7,5 @@ import com.mycollab.vaadin.mvp.ScreenData
  * @since 6.0.0
  */
 object CrmModuleScreenData {
-    class GotoModule(params: Array<String>?) : ScreenData<Array<String>>(params) {}
+    class GotoModule(params: Array<String>?) : ScreenData<Array<String>>(params)
 }

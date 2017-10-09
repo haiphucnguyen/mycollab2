@@ -16,7 +16,7 @@ class FileAttachmentSource : AttachmentSource {
     private var file: File? = null
     private var name: String? = null
 
-    constructor(file: File) : this(null, file) {}
+    constructor(file: File) : this(null, file)
 
     constructor(name: String?, file: File) {
         this.file = file
