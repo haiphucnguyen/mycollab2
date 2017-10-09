@@ -113,19 +113,18 @@ object ProjectTooltipGenerator {
             val trRow4 = Tr()
             val cell41 = buildCellName(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE))
             val assignUserLink = if (task.assignuser != null)
-                AccountLinkGenerator
-                        .generatePreviewFullUserLink(siteURL, task.assignuser)
+                AccountLinkGenerator.generatePreviewFullUserLink(siteURL, task.assignuser)
             else
                 ""
             val assignUserAvatarLink = getAvatarPath(task.assignUserAvatarId, 16)
             val cell42 = buildCellLink(assignUserLink, assignUserAvatarLink, task.assignUserFullName)
             val cell43 = buildCellName(LocalizationHelper.getMessage(locale, MilestoneI18nEnum.SINGLE))
-            val taskgroupLink = if (task.milestoneName != null)
+            val milestoneLink = if (task.milestoneName != null)
                 ProjectLinkGenerator
                         .generateMilestonePreviewFullLink(siteURL, task.projectid!!, task.milestoneid!!)
             else
                 ""
-            val cell44 = buildCellLink(taskgroupLink, task.milestoneName)
+            val cell44 = buildCellLink(milestoneLink, task.milestoneName)
             trRow4.appendChild(cell41, cell42, cell43, cell44)
             tooltipManager.appendRow(trRow4)
 
