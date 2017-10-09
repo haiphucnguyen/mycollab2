@@ -18,9 +18,8 @@ public class ComponentUtils {
     }
 
     public static MButton createCustomizeViewButton() {
-        MButton customizeViewBtn = new MButton("").withIcon(FontAwesome.ADJUST)
-                .withStyleName(WebThemes.BUTTON_ACTION, WebThemes.BUTTON_SMALL_PADDING);
-        customizeViewBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
-        return customizeViewBtn;
+        return new MButton("").withIcon(FontAwesome.ADJUST)
+                .withStyleName(WebThemes.BUTTON_ACTION, WebThemes.BUTTON_SMALL_PADDING)
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
     }
 }

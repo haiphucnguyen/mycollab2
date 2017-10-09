@@ -28,7 +28,7 @@ public class TicketSavedFilterComboBox extends SavedFilterComboBox {
 
     public void setTotalCountNumber(Integer countNumber) {
         componentsText.setReadOnly(false);
-        componentsText.setValue(selectedQueryName + " (" + countNumber + ")");
+        componentsText.setValue(String.format("%s (%d)", selectedQueryName, countNumber));
         componentsText.setReadOnly(true);
     }
 }

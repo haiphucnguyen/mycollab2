@@ -76,13 +76,14 @@ class RoleServiceDBImpl(private val roleMapper: RoleMapper,
         var ex = RoleExample()
         ex.createCriteria().andIsdefaultEqualTo(java.lang.Boolean.TRUE).andSaccountidEqualTo(sAccountId)
         var roles = roleMapper.selectByExample(ex)
-        if (CollectionUtils.isNotEmpty(roles)) {
-            return roles[0].id
-        } else {
-            ex = RoleExample()
-            ex.createCriteria().andRolenameEqualTo(SimpleRole.GUEST).andSaccountidEqualTo(sAccountId)
-            roles = roleMapper.selectByExample(ex)
-            return if (CollectionUtils.isNotEmpty(roles)) roles[0].id else null
+        return when {
+            CollectionUtils.isNotEmpty(roles) -> roles[0].id
+            else -> {
+                ex = RoleExample()
+                ex.createCriteria().andRolenameEqualTo(SimpleRole.GUEST).andSaccountidEqualTo(sAccountId)
+                roles = roleMapper.selectByExample(ex)
+                if (CollectionUtils.isNotEmpty(roles)) roles[0].id else null
+            }
         }
     }
 }

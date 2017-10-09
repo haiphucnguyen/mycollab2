@@ -127,8 +127,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
         List<SimpleUser> users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-        headerText.updateTitle(UserUIContext.getMessage(UserI18nEnum.LIST) + " " +
-                UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, users.size()));
+        headerText.updateTitle(String.format("%s %s", UserUIContext.getMessage(UserI18nEnum.LIST), UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, users.size())));
 
         for (SimpleUser userAccount : users) {
             contentLayout.addComponent(generateMemberBlock(userAccount));
