@@ -19,7 +19,6 @@ public class ServiceMenu extends MHorizontalLayout {
     private static final String SELECTED_STYLENAME = "selected";
 
     public ServiceMenu() {
-        super();
         this.setStyleName(COMPONENT_STYLENAME);
     }
 

@@ -8,4 +8,4 @@ import com.mycollab.vaadin.mvp.ViewComponent
  * @since 1.0
  */
 @ViewComponent
-class ComponentContainer : AbstractVerticalPageView()
+class ProjectComponentContainer : AbstractVerticalPageView()

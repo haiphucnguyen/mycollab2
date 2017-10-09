@@ -116,7 +116,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                 SimpleComponent component = componentService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (component != null) {
-                    ComponentContainer componentContainer = (ComponentContainer) container;
+                    ProjectComponentContainer componentContainer = (ProjectComponentContainer) container;
                     componentContainer.removeAllComponents();
                     componentContainer.addComponent(view);
                     view.previewItem(component);

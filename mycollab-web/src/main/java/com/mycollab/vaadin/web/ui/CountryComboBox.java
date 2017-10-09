@@ -4,6 +4,7 @@ import com.mycollab.common.CountryValueFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.ComboBox;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -16,10 +17,10 @@ public class CountryComboBox extends ComboBox {
     public CountryComboBox() {
         String[] countryList = CountryValueFactory.countryList;
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-        for (String country : countryList) {
+        Arrays.stream(countryList).forEach(country -> {
             Locale obj = new Locale("", country);
             this.addItem(country);
             this.setItemCaption(country, obj.getDisplayCountry(UserUIContext.getUserLocale()));
-        }
+        });
     }
 }

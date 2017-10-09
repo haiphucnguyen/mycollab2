@@ -25,8 +25,6 @@
 
     <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
 
-    <inherits name="com.vaadin.breadcrumb.gwt.BreadcrumbWidgetset" />
-
     <inherits name="org.vaadin.tepi.listbuilder.widgetset.ListBuilderWidgetset" />
 
     <inherits name="org.vaadin.easyuploads.Widgetset" />

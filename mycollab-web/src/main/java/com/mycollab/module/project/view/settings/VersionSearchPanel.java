@@ -3,7 +3,6 @@ package com.mycollab.module.project.view.settings;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -11,6 +10,7 @@ import com.mycollab.module.project.event.BugVersionEvent;
 import com.mycollab.module.project.i18n.VersionI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
@@ -45,11 +45,10 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
 
     @Override
     protected Component buildExtraControls() {
-        MButton createBtn = new MButton(UserUIContext.getMessage(VersionI18nEnum.NEW),
+        return new MButton(UserUIContext.getMessage(VersionI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoAdd(this, null)))
                 .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
-        return createBtn;
     }
 
     private class VersionBasicSearchLayout extends BasicSearchLayout<VersionSearchCriteria> {

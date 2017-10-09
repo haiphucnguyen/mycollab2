@@ -14,11 +14,11 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ComponentPresenter extends AbstractPresenter<ComponentContainer> {
+public class ComponentPresenter extends AbstractPresenter<ProjectComponentContainer> {
     private static final long serialVersionUID = 1L;
 
     public ComponentPresenter() {
-        super(ComponentContainer.class);
+        super(ProjectComponentContainer.class);
     }
 
     @Override

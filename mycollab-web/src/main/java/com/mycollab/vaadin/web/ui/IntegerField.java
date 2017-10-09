@@ -10,7 +10,7 @@ public class IntegerField extends AbstractNumberField<Integer> {
     @Override
     protected void userInputToValue(String str) {
         try {
-            this.setValue(Integer.valueOf(Integer.parseInt(str)));
+            this.setValue(Integer.parseInt(str));
         } catch (Exception e) {
             this.setValue(0);
         }

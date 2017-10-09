@@ -1,22 +1,18 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.vaadin.ui.Button;
+import org.vaadin.viritin.button.MButton;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
 public class CommonUIFactory {
-    public static Button createButtonTooltip(String caption, String description) {
-        Button btn = new Button(caption);
-        btn.setDescription(description);
-        return btn;
+    public static MButton createButtonTooltip(String caption, String description) {
+        return new MButton(caption).withDescription(description);
     }
 
-    public static Button createButtonTooltip(String caption, String description, Button.ClickListener listener) {
-        Button btn = new Button(caption);
-        btn.setDescription(description);
-        btn.addClickListener(listener);
-        return btn;
+    public static MButton createButtonTooltip(String caption, String description, Button.ClickListener listener) {
+        return new MButton(caption).withDescription(description).withListener(listener);
     }
 }
