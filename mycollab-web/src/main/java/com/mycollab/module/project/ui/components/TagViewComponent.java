@@ -52,8 +52,8 @@ public class TagViewComponent extends CssLayout {
         this.typeId = typeId;
 
         List<Tag> tags = tagService.findTags(type, typeId + "", AppUI.getAccountId());
-        for (Tag tag : tags) {
-            this.addComponent(new TagBlock(tag));
+        if (tags != null) {
+            tags.stream().map(TagBlock::new).forEach(this::addComponent);
         }
 
         if (canAddNewTag) {

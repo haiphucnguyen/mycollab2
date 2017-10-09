@@ -13,7 +13,6 @@ public class SortButton extends Button {
     private boolean isDesc = true;
 
     public SortButton() {
-        super();
         this.setIcon(FontAwesome.CARET_DOWN);
         this.addClickListener(clickEvent -> toggleSortOrder());
     }

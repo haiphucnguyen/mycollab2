@@ -10,7 +10,6 @@ public class KeyCaptionComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public KeyCaptionComboBox(boolean nullSelectionAllowed) {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         this.setNullSelectionAllowed(nullSelectionAllowed);
     }

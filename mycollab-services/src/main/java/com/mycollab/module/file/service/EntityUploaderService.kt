@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage
  */
 interface EntityUploaderService {
     /**
-     * @param logo
+     * @param image
      * @param basePath
      * @param oldId
      * @param uploadedUser
@@ -16,6 +16,6 @@ interface EntityUploaderService {
      * @param preferSizes
      * @return
      */
-    fun upload(logo: BufferedImage, basePath: String, oldId: String, uploadedUser: String,
+    fun upload(image: BufferedImage, basePath: String, oldId: String?, uploadedUser: String,
                sAccountId: Int?, preferSizes: Array<Int>): String
 }

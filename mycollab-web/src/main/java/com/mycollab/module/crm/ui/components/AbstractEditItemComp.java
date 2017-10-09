@@ -25,7 +25,6 @@ public abstract class AbstractEditItemComp<B> extends AbstractVerticalPageView i
     protected AdvancedEditBeanForm<B> editForm;
 
     public AbstractEditItemComp() {
-        super();
         setMargin(new MarginInfo(false, true, true, true));
         editForm = new AdvancedEditBeanForm<>();
         addComponent(editForm);

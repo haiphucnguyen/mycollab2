@@ -11,7 +11,6 @@ public class SectionSelectList extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public SectionSelectList(DynaSection[] sections) {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         for (DynaSection section : sections) {

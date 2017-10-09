@@ -40,7 +40,6 @@ class EmailTokenField extends CssLayout implements SuggestField.NewItemsHandler,
     private boolean isFocusing = false;
 
     EmailTokenField() {
-        super();
         inviteEmails = new HashSet<>();
         this.setWidth("100%");
         this.addStyleName("member-token");

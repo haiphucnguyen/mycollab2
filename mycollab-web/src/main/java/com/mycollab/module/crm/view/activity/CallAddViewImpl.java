@@ -139,7 +139,6 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         private static final long serialVersionUID = 1L;
 
         CallPurposeComboBox() {
-            super();
             setCaption(null);
             this.loadData(Arrays.asList(CallPurpose.Administrative, CallPurpose.Negotiation, CallPurpose.Project,
                     CallPurpose.Prospecting, CallPurpose.Support));
@@ -213,7 +212,6 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
     private class CallTypeComboBox extends I18nValueComboBox {
 
         CallTypeComboBox() {
-            super();
             setCaption(null);
             this.setWidth("80px");
             this.loadData(Arrays.asList(CallType.Inbound, CallType.Outbound));
@@ -224,7 +222,6 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
     private class CallStatusComboBox extends I18nValueComboBox {
 
         CallStatusComboBox() {
-            super();
             setCaption(null);
             this.setWidth("100px");
             this.loadData(Arrays.asList(CallStatus.Planned, CallStatus.Held, CallStatus.Not_Held));

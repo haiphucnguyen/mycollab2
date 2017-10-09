@@ -21,7 +21,7 @@ object TimeTableFieldDef {
     val logUser = TableViewField(UserI18nEnum.SINGLE, "logUserFullName", WebUIConstants.TABLE_X_LABEL_WIDTH)
 
     @JvmField
-    val logValue = TableViewField(TimeTrackingI18nEnum.LOG_VALUE, "log@JvmField val ue", WebUIConstants.TABLE_S_LABEL_WIDTH)
+    val logValue = TableViewField(TimeTrackingI18nEnum.LOG_VALUE, "logvalue", WebUIConstants.TABLE_S_LABEL_WIDTH)
 
     @JvmField
     val billable = TableViewField(TimeTrackingI18nEnum.FORM_IS_BILLABLE, "isbillable", WebUIConstants.TABLE_S_LABEL_WIDTH)

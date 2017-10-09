@@ -26,10 +26,10 @@ interface UserAvatarService : IService {
      * stream to avoid overlap or caching old avatar of system.
      * @return
      */
-    fun uploadAvatar(image: BufferedImage, username: String, avatarId: String): String
+    fun uploadAvatar(image: BufferedImage, username: String, avatarId: String?): String
 
     /**
      * @param avatarId
      */
-    fun removeAvatar(avatarId: String)
+    fun removeAvatar(avatarId: String?)
 }

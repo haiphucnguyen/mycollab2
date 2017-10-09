@@ -65,7 +65,6 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             };
 
     public StandupListViewImpl() {
-        super();
         this.setMargin(new MarginInfo(false, false, true, false));
         standupCalendar.addValueChangeListener(valueChangeEvent -> {
             onDate = standupCalendar.getValue();

@@ -124,7 +124,6 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         private final CssLayout bodyWrapper;
 
         ContactOpportunityList() {
-            super();
             this.setStyleName("contactopp-list");
 
             MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))

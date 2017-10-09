@@ -70,8 +70,6 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
     private final StyleCalendarExp datePicker = new StyleCalendarExp();
 
     public ActivityCalendarViewImpl() {
-        super();
-
         this.addStyleName("activityCalendar");
         calendarActionBtn = new PopupButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CREATE));
         calendarActionBtn.setStyleName(WebThemes.BUTTON_ACTION);

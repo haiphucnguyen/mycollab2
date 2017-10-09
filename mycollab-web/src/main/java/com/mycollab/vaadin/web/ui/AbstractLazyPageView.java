@@ -55,7 +55,6 @@ public abstract class AbstractLazyPageView extends AbstractVerticalPageView impl
         private static final long serialVersionUID = -6157950150738214354L;
 
         ProgressIndicator() {
-            super();
             this.withDraggable(false).withClosable(false).withModal(true).withCenter().withStyleName("lazyload-progress");
 
             Div div = new Div().appendChild(new Div().setCSSClass("sk-cube sk-cube1"))

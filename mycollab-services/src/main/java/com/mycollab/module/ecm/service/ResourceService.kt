@@ -99,5 +99,5 @@ interface ResourceService : IService {
      * @param path
      * @return
      */
-    fun getParentFolder(path: String): Folder
+    fun getParentFolder(path: String): Folder?
 }

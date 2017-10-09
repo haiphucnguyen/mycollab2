@@ -12,7 +12,6 @@ public class ValueComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public ValueComboBox() {
-        super();
         this.setPageLength(20);
     }
 

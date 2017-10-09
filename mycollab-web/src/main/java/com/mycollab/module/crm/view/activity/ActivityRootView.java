@@ -29,7 +29,6 @@ public class ActivityRootView extends AbstractVerticalPageView {
     private ActivityPresenter eventPresenter;
 
     public ActivityRootView() {
-        super();
         this.setSizeFull();
 
         final CssLayout contentWrapper = new CssLayout();

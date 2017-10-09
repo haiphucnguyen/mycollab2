@@ -19,7 +19,6 @@ import com.mycollab.module.tracker.service.BugService
 import com.mycollab.module.tracker.service.ComponentService
 import com.mycollab.module.tracker.service.VersionService
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -28,46 +27,21 @@ import java.util.*
  * @since 5.2.8
  */
 @Service
-class ProjectTemplateServiceImpl : ProjectTemplateService {
+class ProjectTemplateServiceImpl(private val projectService: ProjectService,
+                                 private val projectRoleService: ProjectRoleService,
+                                 private val projectMemberService: ProjectMemberService,
+                                 private val projectTaskService: ProjectTaskService,
+                                 private val bugService: BugService,
+                                 private val bugRelatedItemMapper: BugRelatedItemMapper,
+                                 private val milestoneService: MilestoneService,
+                                 private val componentService: ComponentService,
+                                 private val versionService: VersionService,
+                                 private val riskService: RiskService,
+                                 private val messageService: MessageService,
+                                 private val optionValMapper: OptionValMapper) : ProjectTemplateService {
 
-    @Autowired
-    private val projectService: ProjectService? = null
-
-    @Autowired
-    private val projectRoleService: ProjectRoleService? = null
-
-    @Autowired
-    private val projectMemberService: ProjectMemberService? = null
-
-    @Autowired
-    private val projectTaskService: ProjectTaskService? = null
-
-    @Autowired
-    private val bugService: BugService? = null
-
-    @Autowired
-    private val bugRelatedItemMapper: BugRelatedItemMapper? = null
-
-    @Autowired
-    private val milestoneService: MilestoneService? = null
-
-    @Autowired
-    private val componentService: ComponentService? = null
-
-    @Autowired
-    private val versionService: VersionService? = null
-
-    @Autowired
-    private val riskService: RiskService? = null
-
-    @Autowired
-    private val messageService: MessageService? = null
-
-    @Autowired
-    private val optionValMapper: OptionValMapper? = null
-
-    override fun cloneProject(projectId: Int, newPrjName: String, newPrjKey: String, sAccountId: Int?, username: String): Int? {
-        val project = projectService!!.findById(projectId, sAccountId)
+    override fun cloneProject(projectId: Int, newPrjName: String, newPrjKey: String, sAccountId: Int, username: String): Int? {
+        val project = projectService.findById(projectId, sAccountId)
         if (project != null) {
             LOG.info("Clone project info")
             project.id = null
@@ -87,14 +61,14 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
 
             return newProjectId
         } else {
-            throw MyCollabException("Can not find project with id " + projectId!!)
+            throw MyCollabException("Can not find project with id " + projectId)
         }
     }
 
     private fun cloneProjectOptions(projectId: Int?, newProjectId: Int?, sAccountId: Int?) {
         val ex = OptionValExample()
         ex.createCriteria().andIsdefaultEqualTo(false).andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId)
-        val optionVals = optionValMapper!!.selectByExample(ex)
+        val optionVals = optionValMapper.selectByExample(ex)
         for (optionVal in optionVals) {
             optionVal.id = null
             optionVal.extraid = newProjectId
@@ -102,18 +76,18 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         }
     }
 
-    private fun cloneProjectRoles(projectId: Int, newProjectId: Int?, username: String, sAccountId: Int?): Map<Int, Int> {
+    private fun cloneProjectRoles(projectId: Int, newProjectId: Int?, username: String, sAccountId: Int): Map<Int, Int> {
         LOG.info("Clone project roles")
-        val mapRoleIds = HashMap<Int, Int>()
+        val mapRoleIds = mutableMapOf<Int, Int>()
         val searchCriteria = ProjectRoleSearchCriteria()
         searchCriteria.projectId = NumberSearchField(projectId)
-        val roles = projectRoleService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectRole>
-        for (role in roles) {
-            role.id = null
-            role.projectid = newProjectId
-            val newRoleId = projectRoleService.saveWithSession(role, username)
-            projectRoleService.savePermission(projectId, newRoleId, role.getPermissionMap(), sAccountId)
-            mapRoleIds.put(role.getId(), newRoleId)
+        val roles = projectRoleService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectRole>
+        roles.forEach {
+            it.id = null
+            it.projectid = newProjectId
+            val newRoleId = projectRoleService.saveWithSession(it, username)
+            projectRoleService.savePermission(projectId, newRoleId, it.permissionMap, sAccountId)
+            mapRoleIds.put(it.id, newRoleId)
         }
         return mapRoleIds
     }
@@ -123,7 +97,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         val taskMapIds = HashMap<Int, Int>()
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.projectId = NumberSearchField.equal(projectId)
-        val tasks = projectTaskService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleTask>
+        val tasks = projectTaskService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleTask>
         cloneProjectTasks(newProjectId, milestoneMapIds, taskMapIds, tasks, username)
     }
 
@@ -137,7 +111,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
                 task.id = null
                 task.milestoneid = milestoneMapIds[task.milestoneid]
                 task.projectid = newProjectId
-                val newTaskId = projectTaskService!!.saveWithSession(task, username)
+                val newTaskId = projectTaskService.saveWithSession(task, username)
                 taskMapIds.put(taskId, newTaskId)
             } else {
                 val candidateParentTaskId = taskMapIds[parentTaskId]
@@ -146,7 +120,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
                     task.projectid = newProjectId
                     task.milestoneid = milestoneMapIds[task.milestoneid]
                     task.parenttaskid = candidateParentTaskId
-                    val newTaskId = projectTaskService!!.saveWithSession(task, username)
+                    val newTaskId = projectTaskService.saveWithSession(task, username)
                     taskMapIds.put(taskId, newTaskId)
                 } else {
                     pendingTasks.add(task)
@@ -163,12 +137,12 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         val versionMapIds = HashMap<Int, Int>()
         val searchCriteria = VersionSearchCriteria()
         searchCriteria.projectId = NumberSearchField.equal(projectId)
-        val versions = versionService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleVersion>
-        versions.forEach { version ->
-            val versionId = version.id
-            version.id = null
-            version.projectid = newProjectId
-            val newVersionId = versionService.saveWithSession(version, username)
+        val versions = versionService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleVersion>
+        versions.forEach {
+            val versionId = it.id
+            it.id = null
+            it.projectid = newProjectId
+            val newVersionId = versionService.saveWithSession(it, username)
             versionMapIds.put(versionId, newVersionId)
         }
         return versionMapIds
@@ -179,12 +153,12 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         val componentMapIds = HashMap<Int, Int>()
         val searchCriteria = ComponentSearchCriteria()
         searchCriteria.projectId = NumberSearchField.equal(projectId)
-        val components = componentService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleComponent>
-        components.forEach { component ->
-            val componentId = component.id
-            component.id = null
-            component.projectid = newProjectId
-            val newComponentId = componentService.saveWithSession(component, username)
+        val components = componentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleComponent>
+        components.forEach {
+            val componentId = it.id
+            it.id = null
+            it.projectid = newProjectId
+            val newComponentId = componentService.saveWithSession(it, username)
             componentMapIds.put(componentId, newComponentId)
         }
         return componentMapIds
@@ -196,38 +170,38 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         LOG.info("Clone project bugs")
         val searchCriteria = BugSearchCriteria()
         searchCriteria.projectId = NumberSearchField.equal(projectId)
-        val bugs = bugService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleBug>
-        bugs.forEach { bug ->
-            bug.id = null
-            bug.projectid = newProjectId
-            bug.milestoneid = milestoneMapIds[bug.getMilestoneid()]
-            val newBugId = bugService.saveWithSession(bug, username)
+        val bugs = bugService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleBug>
+        bugs.forEach {
+            it.id = null
+            it.projectid = newProjectId
+            it.milestoneid = milestoneMapIds[it.milestoneid]
+            val newBugId = bugService.saveWithSession(it, username)
 
-            val affectedVersions = bug.getAffectedVersions()
+            val affectedVersions = it.affectedVersions
             affectedVersions.forEach { version ->
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.AFFVERSION
-                bugRelatedItem.typeid = versionMapIds[version.getId()]
-                bugRelatedItemMapper!!.insert(bugRelatedItem)
+                bugRelatedItem.typeid = versionMapIds[version.id]
+                bugRelatedItemMapper.insert(bugRelatedItem)
             }
 
-            val fixedVersions = bug.getFixedVersions()
+            val fixedVersions = it.fixedVersions
             fixedVersions.forEach { version ->
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.FIXVERSION
-                bugRelatedItem.typeid = versionMapIds[version.getId()]
-                bugRelatedItemMapper!!.insert(bugRelatedItem)
+                bugRelatedItem.typeid = versionMapIds[version.id]
+                bugRelatedItemMapper.insert(bugRelatedItem)
             }
 
-            val components = bug.getComponents()
+            val components = it.components
             components.forEach { component ->
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.COMPONENT
-                bugRelatedItem.typeid = componentMapIds[component.getId()]
-                bugRelatedItemMapper!!.insert(bugRelatedItem)
+                bugRelatedItem.typeid = componentMapIds[component.id]
+                bugRelatedItemMapper.insert(bugRelatedItem)
             }
         }
     }
@@ -238,7 +212,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         searchCriteria.projectId = NumberSearchField(projectId)
         searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE,
                 ProjectMemberStatusConstants.NOT_ACCESS_YET)
-        val members = projectMemberService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectMember>
+        val members = projectMemberService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectMember>
         members.forEach { member ->
             member.id = null
             member.projectid = newProjectId
@@ -254,7 +228,7 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         LOG.info("Clone project messages")
         val searchCriteria = MessageSearchCriteria()
         searchCriteria.projectids = SetSearchField(projectId)
-        val messages = messageService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, Integer.MAX_VALUE)) as List<SimpleMessage>
+        val messages = messageService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, Integer.MAX_VALUE)) as List<SimpleMessage>
         messages.forEach { message ->
             message.id = null
             message.projectid = newProjectId
@@ -266,11 +240,11 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         LOG.info("Clone project risks")
         val searchCriteria = RiskSearchCriteria()
         searchCriteria.projectId = NumberSearchField.equal(projectId)
-        val risks = riskService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleRisk>
-        risks.forEach { risk ->
-            risk.id = null
-            risk.projectid = newProjectId
-            riskService.saveWithSession(risk, username)
+        val risks = riskService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleRisk>
+        risks.forEach {
+            it.id = null
+            it.projectid = newProjectId
+            riskService.saveWithSession(it, username)
         }
     }
 
@@ -279,12 +253,12 @@ class ProjectTemplateServiceImpl : ProjectTemplateService {
         val milestoneMapIds = HashMap<Int, Int>()
         val searchCriteria = MilestoneSearchCriteria()
         searchCriteria.projectIds = SetSearchField(projectId)
-        val milestones = milestoneService!!.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleMilestone>
-        milestones.forEach { milestone ->
-            val milestoneId = milestone.id
-            milestone.id = null
-            milestone.projectid = newProjectId
-            val newMilestoneId = milestoneService.saveWithSession(milestone, username)
+        val milestones = milestoneService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleMilestone>
+        milestones.forEach {
+            val milestoneId = it.id
+            it.id = null
+            it.projectid = newProjectId
+            val newMilestoneId = milestoneService.saveWithSession(it, username)
             milestoneMapIds.put(milestoneId, newMilestoneId)
         }
         return milestoneMapIds

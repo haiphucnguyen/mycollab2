@@ -107,7 +107,6 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
     private static class MeetingStatusComboBox extends I18nValueComboBox {
 
         MeetingStatusComboBox() {
-            super();
             setCaption(null);
             this.loadData(Arrays.asList(CallStatus.Planned, CallStatus.Held, CallStatus.Not_Held));
         }

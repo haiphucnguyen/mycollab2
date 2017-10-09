@@ -38,7 +38,6 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
     private ButtonGroup extraControlsLayout;
 
     public AbstractListItemComp() {
-        super();
         this.withMargin(new MarginInfo(false, true, true, true));
 
         searchPanel = createSearchPanel();

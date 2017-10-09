@@ -9,5 +9,5 @@ import java.awt.image.BufferedImage
  * @since 4.1.2
  */
 interface AccountLogoService : IService {
-    fun upload(uploadedUser: String, logo: BufferedImage, sAccountId: Int?): String
+    fun upload(uploadedUser: String, logo: BufferedImage, sAccountId: Int): String
 }

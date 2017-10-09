@@ -8,7 +8,6 @@ public class TabSheetLazyLoadComponent extends TabSheetDecorator {
     private static final long serialVersionUID = 1L;
 
     public TabSheetLazyLoadComponent() {
-        super();
         this.setWidth("100%");
     }
 }
