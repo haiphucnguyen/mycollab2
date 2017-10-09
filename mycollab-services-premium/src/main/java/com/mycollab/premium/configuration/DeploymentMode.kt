@@ -27,7 +27,7 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override val isPremiumEdition: Boolean
         get() = true
 
-    override fun getSiteUrl(subDomain: String): String =
+    override fun getSiteUrl(subDomain: String?): String =
             "${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/"
 
     override fun getResourceDownloadUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/file/"

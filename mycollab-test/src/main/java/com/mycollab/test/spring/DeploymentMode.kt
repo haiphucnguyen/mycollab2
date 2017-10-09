@@ -22,7 +22,7 @@ class DeploymentMode : IDeploymentMode {
     override val isPremiumEdition: Boolean
         get() = false
 
-    override fun getSiteUrl(subDomain: String): String = ""
+    override fun getSiteUrl(subDomain: String?): String = ""
 
     override fun getResourceDownloadUrl(): String  = ""
 

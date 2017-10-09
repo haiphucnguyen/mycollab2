@@ -11,7 +11,7 @@ interface IDeploymentMode {
 
     val isPremiumEdition: Boolean
 
-    fun getSiteUrl(subDomain: String): String
+    fun getSiteUrl(subDomain: String?): String
 
     fun getResourceDownloadUrl(): String
 

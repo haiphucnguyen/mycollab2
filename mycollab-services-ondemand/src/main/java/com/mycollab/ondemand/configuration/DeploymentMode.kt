@@ -24,7 +24,7 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override val isPremiumEdition: Boolean
         get() = false
 
-    override fun getSiteUrl(subDomain: String): String = "serverConfiguration.appUrl, subDomain"
+    override fun getSiteUrl(subDomain: String?): String = "serverConfiguration.appUrl, subDomain"
 
     override fun getResourceDownloadUrl(): String {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

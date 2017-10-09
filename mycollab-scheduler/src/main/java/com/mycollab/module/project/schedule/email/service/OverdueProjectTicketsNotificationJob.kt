@@ -100,7 +100,7 @@ class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
                             val projectFooter = LocalizationHelper.getMessage(userLocale, MailI18nEnum.Project_Footer, projectName, projectSettingUrl)
                             contentGenerator.putVariable("Project_Footer", projectFooter)
                             val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
-                            val overdueAssignments = LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS) + "(" + assignments.size + ")"
+                            val overdueAssignments = "${LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS)}(${assignments.size})"
                             contentGenerator.putVariable("overdueAssignments", overdueAssignments)
                             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                                     "[%s] %s".format(projectName, overdueAssignments), content)
