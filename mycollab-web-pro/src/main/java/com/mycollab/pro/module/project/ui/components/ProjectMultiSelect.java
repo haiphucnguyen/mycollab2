@@ -15,10 +15,10 @@ public class ProjectMultiSelect extends ComboBoxMultiselect {
     public ProjectMultiSelect(List<SimpleProject> projects) {
         this.setWidth("200px");
         this.setTextInputAllowed(false);
-        for (SimpleProject project : projects) {
+        projects.forEach(project -> {
             this.addItem(project);
             this.setItemCaption(project, project.getName());
-        }
+        });
 
         this.setItemStyleGenerator(((comboBoxMultiselect, o) -> UIConstants.TEXT_ELLIPSIS));
     }

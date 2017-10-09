@@ -1,5 +1,6 @@
 package com.mycollab.module.project.view
 
+import com.mycollab.core.utils.StringUtils
 import com.mycollab.db.arguments.DateSearchField
 import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria
@@ -34,8 +35,12 @@ class StandupUrlResolver : ProjectUrlResolver() {
          * @param dateVal
          * @return
          */
-        private fun parseDate(dateVal: String): Date {
-            return simpleDateFormat.parseDateTime(dateVal).toDate() ?: GregorianCalendar().time
+        private fun parseDate(dateVal: String?): Date {
+            return if (StringUtils.isBlank(dateVal)) {
+                GregorianCalendar().time
+            } else {
+                simpleDateFormat.parseDateTime(dateVal).toDate()
+            }
         }
     }
 

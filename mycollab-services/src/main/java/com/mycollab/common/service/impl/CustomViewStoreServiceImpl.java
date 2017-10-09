@@ -51,5 +51,4 @@ public class CustomViewStoreServiceImpl extends DefaultCrudService<Integer, Cust
             saveWithSession(viewStore, viewStore.getCreateduser());
         }
     }
-
 }

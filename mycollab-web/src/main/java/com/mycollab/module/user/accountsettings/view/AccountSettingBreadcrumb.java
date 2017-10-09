@@ -18,10 +18,12 @@ import com.mycollab.vaadin.mvp.CacheableComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CommonUIFactory;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.utils.LabelStringGenerator;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -40,49 +42,49 @@ public class AccountSettingBreadcrumb extends MHorizontalLayout implements Cache
 
     public void gotoProfile() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(UserI18nEnum.OPT_PROFILE)));
+        this.addComponent(new MButton(UserUIContext.getMessage(UserI18nEnum.OPT_PROFILE)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/preview", UserUIContext.getMessage(UserI18nEnum.OPT_PROFILE));
     }
 
     public void gotoSetup() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/setup", UserUIContext.getMessage(AdminI18nEnum.VIEW_SETUP));
     }
 
     public void gotoBillingPage() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/billing", UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING));
     }
 
     public void gotoBillingHistory() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING),
-                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING),
+                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/billing/history", UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING_HISTORY));
     }
 
     public void gotoCancelAccountPage() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING),
-                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_BILLING),
+                clickEvent -> EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(this, null))).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/billing/cancel", UserUIContext.getMessage(AdminI18nEnum.ACTION_CANCEL_ACCOUNT));
     }
 
     public void gotoUserList() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(UserI18nEnum.LIST)));
+        this.addComponent(new MButton(UserUIContext.getMessage(UserI18nEnum.LIST)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/user/list", UserUIContext.getMessage(UserI18nEnum.LIST));
     }
 
     public void gotoUserRead(SimpleUser user) {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
         this.addComponent(generateBreadcrumbLink(user.getDisplayName()));
 
@@ -92,33 +94,33 @@ public class AccountSettingBreadcrumb extends MHorizontalLayout implements Cache
 
     public void gotoUserAdd() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        this.addComponent(new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
         AppUI.addFragment("account/user/add", UserUIContext.getMessage(AdminI18nEnum.ACTION_INVITE_NEW_USER));
     }
 
     public void gotoUserEdit(final SimpleUser user) {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(UserI18nEnum.LIST), new GotoUserListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
         this.addComponent(generateBreadcrumbLink(user.getDisplayName(),
                 clickEvent -> EventBusFactory.getInstance().post(new UserEvent.GotoRead(this, user.getUsername()))));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        this.addComponent(new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/user/edit/" + UrlEncodeDecoder.encode(user.getUsername()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, UserUIContext.getMessage(UserI18nEnum.SINGLE), user.getDisplayName()));
     }
 
     public void gotoGeneralSetting() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/setting/general", UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING));
     }
 
     public void gotoMakeTheme() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING)));
+        this.addComponent(new MButton(UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/setting/theme", UserUIContext.getMessage(AdminI18nEnum.VIEW_SETTING));
     }
 
@@ -133,21 +135,21 @@ public class AccountSettingBreadcrumb extends MHorizontalLayout implements Cache
 
     public void gotoRoleList() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(RoleI18nEnum.LIST)));
+        this.addComponent(new MButton(UserUIContext.getMessage(RoleI18nEnum.LIST)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/role/list", UserUIContext.getMessage(RoleI18nEnum.LIST));
     }
 
     public void gotoRoleAdd() {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)));
+        this.addComponent(new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/role/add", UserUIContext.getMessage(RoleI18nEnum.NEW));
     }
 
     public void gotoRoleRead(SimpleRole role) {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
         this.addComponent(generateBreadcrumbLink(role.getRolename()));
         AppUI.addFragment("account/role/preview/" + UrlEncodeDecoder.encode(role.getId()),
@@ -156,12 +158,12 @@ public class AccountSettingBreadcrumb extends MHorizontalLayout implements Cache
 
     public void gotoRoleEdit(final Role role) {
         removeAllComponents();
-        this.addComponent(new Button(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()));
+        this.addComponent(new MButton(UserUIContext.getMessage(RoleI18nEnum.LIST), new GotoRoleListListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
         this.addComponent(generateBreadcrumbLink(role.getRolename(),
                 clickEvent -> EventBusFactory.getInstance().post(new RoleEvent.GotoRead(this, role.getId()))));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
+        this.addComponent(new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT)).withStyleName(WebThemes.BUTTON_LINK));
         AppUI.addFragment("account/role/edit/" + UrlEncodeDecoder.encode(role.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, UserUIContext.getMessage(RoleI18nEnum.SINGLE), role.getRolename()));
     }
@@ -175,11 +177,11 @@ public class AccountSettingBreadcrumb extends MHorizontalLayout implements Cache
         }
     }
 
-    private static Button generateBreadcrumbLink(String linkName) {
-        return CommonUIFactory.createButtonTooltip(menuLinkGenerator.handleText(linkName), linkName);
+    private static MButton generateBreadcrumbLink(String linkName) {
+        return CommonUIFactory.createButtonTooltip(menuLinkGenerator.handleText(linkName), linkName).withStyleName(WebThemes.BUTTON_LINK);
     }
 
-    private static Button generateBreadcrumbLink(String linkName, Button.ClickListener listener) {
+    private static MButton generateBreadcrumbLink(String linkName, Button.ClickListener listener) {
         return CommonUIFactory.createButtonTooltip(menuLinkGenerator.handleText(linkName), linkName, listener);
     }
 

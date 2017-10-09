@@ -54,16 +54,14 @@ public class WatchersMultiSelection extends MVerticalLayout {
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> projectMembers = (List<SimpleProjectMember>) projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
-        for (SimpleProjectMember member : projectMembers) {
-            this.addComponent(new FollowerRow(member));
-        }
+        projectMembers.stream().map(FollowerRow::new).forEach(this::addComponent);
 
         this.setWidth("100%");
     }
 
     public List<MonitorItem> getUnsavedItems() {
         List<MonitorItem> items = new ArrayList<>(unsavedMembers.size());
-        for (SimpleProjectMember member : unsavedMembers) {
+        unsavedMembers.forEach(member -> {
             MonitorItem item = new MonitorItem();
             item.setExtratypeid(CurrentProjectVariables.getProjectId());
             item.setMonitorDate(new GregorianCalendar().getTime());
@@ -72,7 +70,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
             item.setTypeid(typeId);
             item.setUser(member.getUsername());
             items.add(item);
-        }
+        });
         return items;
     }
 

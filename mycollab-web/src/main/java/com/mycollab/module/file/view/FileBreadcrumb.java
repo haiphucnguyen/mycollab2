@@ -52,7 +52,7 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
             criteria.setRootFolder(rootFolderPath);
             notifySearchHandler(criteria);
         });
-        this.with(new ELabel("/"), documentBtnLink);
+        this.with(documentBtnLink);
     }
 
     void gotoFolder(final Folder folder) {
