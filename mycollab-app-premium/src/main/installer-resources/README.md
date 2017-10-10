@@ -43,8 +43,6 @@ Last changelog
 Version 6.0.0
 -------------
 
-**Library Upgrades**
-
 **Improvements & New Features**
 
 * The new module loader which uses Spring Boot
