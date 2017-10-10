@@ -158,11 +158,8 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         this.resources = resources;
         pagesLayout.removeAllComponents();
         if (resources != null) {
-            for (PageResource resource : resources) {
-                Layout resourceBlock = resource instanceof Page ? displayPageBlock((Page) resource)
-                        : displayFolderBlock((Folder) resource);
-                pagesLayout.addComponent(resourceBlock);
-            }
+            resources.stream().map(resource -> resource instanceof Page ? displayPageBlock((Page) resource)
+                    : displayFolderBlock((Folder) resource)).forEach(resourceBlock -> pagesLayout.addComponent(resourceBlock));
         }
     }
 

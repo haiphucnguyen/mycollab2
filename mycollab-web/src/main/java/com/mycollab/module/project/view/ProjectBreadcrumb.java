@@ -92,13 +92,6 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
                         UserUIContext.getMessage(MessageI18nEnum.SINGLE), message.getTitle()));
     }
 
-    public void gotoRiskList() {
-        addSummaryLink();
-        addLink(new Button(UserUIContext.getMessage(RiskI18nEnum.LIST)));
-        AppUI.addFragment(ProjectLinkGenerator.generateRisksLink(project.getId()),
-                UserUIContext.getMessage(RiskI18nEnum.LIST));
-    }
-
     public void gotoRiskRead(Risk risk) {
         addSummaryLink();
         addEnabledLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
@@ -199,14 +192,14 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
             extraPath = extraPath.substring(1);
         }
         if (!extraPath.equals("")) {
-            PageService wikiService = AppContextUtil.getSpringBean(PageService.class);
+            PageService pageService = AppContextUtil.getSpringBean(PageService.class);
 
             String[] subPath = extraPath.split("/");
             StringBuilder tempPath = new StringBuilder();
             for (String var : subPath) {
                 tempPath.append("/").append(var);
                 String folderPath = basePath + tempPath.toString();
-                Folder folder = wikiService.getFolder(folderPath);
+                Folder folder = pageService.getFolder(folderPath);
                 if (folder != null) {
                     addLink(new Button(folder.getName(), new GotoPageListListener(folderPath)));
                 } else {

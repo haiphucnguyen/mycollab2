@@ -28,7 +28,7 @@ interface PageService : IService {
      * @param path
      * @return
      */
-    fun getFolder(path: String): Folder
+    fun getFolder(path: String): Folder?
 
     /**
      * @param path
