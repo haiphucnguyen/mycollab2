@@ -40,6 +40,40 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 6.0.4
+-------------
+
+* [Premium] Public API for the external access
+* [Premium] Business monitoring
+* [Premium] Support project add-ons: sample calendar add-on
+
+Version 6.0.3
+-------------
+
+* [Premium] Customize project fields
+* [Premium] Support project group
+
+Version 6.0.2
+-------------
+
+**Improvements & New Features**
+
+* [Premium] Support Oauth2 for SSO
+* [Premium] Enhance search features
+* [Premium] Customize project dashboard page
+
+Version 6.0.1
+-------------
+
+**Improvements & New Features**
+
+* Support marking color for project items
+* [Premium] Support SAML for SSO
+* [Premium] Add permission settings for project pages
+* [Premium] Add permission settings for files
+* [Premium] Add workflow support for timesheet
+* [Premium] Add more notification for invoices, timesheet
+
 Version 6.0.0
 -------------
 
@@ -47,9 +81,14 @@ Version 6.0.0
 
 * The new module loader which uses Spring Boot
 * Support configuring SSL easier
+* Improve the overall performance
+* [Premium] Clean and comprehensive notifications
+* [Premium] Reports in project
+* [Premium] Resource allocation
 
 **Bug Fixes**
 
+* Can not start windows service in some cases
 
 Version 5.4.10
 --------------
