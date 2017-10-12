@@ -22,7 +22,7 @@ class BillingPlanCheckerServiceImpl(private val licenseResolver: LicenseResolver
     @Throws(UsageExceedBillingPlanException::class)
     override fun validateAccountCanCreateNewUser(sAccountId: Int) {
         val licenseInfo = licenseResolver.licenseInfo
-        val numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId!!)
+        val numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId)
         if (licenseInfo != null) {
             if (numOfUsers >= licenseInfo.maxUsers) {
                 throw UsageExceedBillingPlanException()

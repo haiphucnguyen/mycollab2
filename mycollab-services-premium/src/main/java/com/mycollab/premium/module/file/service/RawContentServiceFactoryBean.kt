@@ -19,11 +19,7 @@ import org.springframework.stereotype.Service
 class RawContentServiceFactoryBean : AbstractFactoryBean<RawContentService>(), IService {
 
     @Throws(Exception::class)
-    override fun createInstance(): RawContentService {
-        return FileRawContentServiceImpl()
-    }
+    override fun createInstance(): RawContentService = FileRawContentServiceImpl()
 
-    override fun getObjectType(): Class<RawContentService> {
-        return RawContentService::class.java
-    }
+    override fun getObjectType(): Class<RawContentService> = RawContentService::class.java
 }

@@ -73,7 +73,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
 
     @Override
     public void massUpdatePredecessors(Integer taskSourceId, final List<TaskPredecessor> predecessors, Integer sAccountId) {
-        Lock lock = DistributionLockUtil.INSTANCE.getLock("task-service" + sAccountId);
+        Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
         try {
             PredecessorMapper predecessorMapper = AppContextUtil.getSpringBean(PredecessorMapper.class);
             PredecessorExample ex = new PredecessorExample();
@@ -106,14 +106,14 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
         } catch (Exception e) {
             throw new MyCollabException(e);
         } finally {
-            DistributionLockUtil.INSTANCE.removeLock("task-service" + sAccountId);
+            DistributionLockUtil.removeLock("task-service" + sAccountId);
             lock.unlock();
         }
     }
 
     @Override
     public void massDeletePredecessors(List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId) {
-        Lock lock = DistributionLockUtil.INSTANCE.getLock("gantt-predecessor-service" + sAccountId);
+        Lock lock = DistributionLockUtil.getLock("gantt-predecessor-service" + sAccountId);
         try {
             if (lock.tryLock(30, TimeUnit.SECONDS)) {
                 try (Connection connection = dataSource.getConnection()) {
@@ -135,14 +135,14 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
         } catch (Exception e) {
             throw new MyCollabException(e);
         } finally {
-            DistributionLockUtil.INSTANCE.removeLock("gantt-predecessor-service" + sAccountId);
+            DistributionLockUtil.removeLock("gantt-predecessor-service" + sAccountId);
             lock.unlock();
         }
     }
 
     private void massUpdateMilestoneGanttItems(final List<MilestoneGanttItem> milestoneGanttItems, Integer sAccountId) {
         if (CollectionUtils.isNotEmpty(milestoneGanttItems)) {
-            Lock lock = DistributionLockUtil.INSTANCE.getLock("gantt-milestone-service" + sAccountId);
+            Lock lock = DistributionLockUtil.getLock("gantt-milestone-service" + sAccountId);
             try {
                 final long now = new GregorianCalendar().getTimeInMillis();
                 if (lock.tryLock(30, TimeUnit.SECONDS)) {
@@ -169,7 +169,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             } catch (Exception e) {
                 throw new MyCollabException(e);
             } finally {
-                DistributionLockUtil.INSTANCE.removeLock("gantt-milestone-service" + sAccountId);
+                DistributionLockUtil.removeLock("gantt-milestone-service" + sAccountId);
                 lock.unlock();
             }
         }
@@ -177,7 +177,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
 
     private void massUpdateTaskGanttItems(final List<TaskGanttItem> taskGanttItems, Integer sAccountId) {
         if (CollectionUtils.isNotEmpty(taskGanttItems)) {
-            Lock lock = DistributionLockUtil.INSTANCE.getLock("gantt-task-service" + sAccountId);
+            Lock lock = DistributionLockUtil.getLock("gantt-task-service" + sAccountId);
             try {
                 final long now = new GregorianCalendar().getTimeInMillis();
                 if (lock.tryLock(30, TimeUnit.SECONDS)) {
@@ -210,7 +210,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             } catch (Exception e) {
                 throw new MyCollabException(e);
             } finally {
-                DistributionLockUtil.INSTANCE.removeLock("gantt-task-service" + sAccountId);
+                DistributionLockUtil.removeLock("gantt-task-service" + sAccountId);
                 lock.unlock();
             }
         }
@@ -218,7 +218,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
 
     private void massUpdateBugGanttItems(final List<TaskGanttItem> taskGanttItems, Integer sAccountId) {
         if (CollectionUtils.isNotEmpty(taskGanttItems)) {
-            Lock lock = DistributionLockUtil.INSTANCE.getLock("gantt-bug-service" + sAccountId);
+            Lock lock = DistributionLockUtil.getLock("gantt-bug-service" + sAccountId);
             try {
                 final long now = new GregorianCalendar().getTimeInMillis();
                 if (lock.tryLock(30, TimeUnit.SECONDS)) {
@@ -250,7 +250,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             } catch (Exception e) {
                 throw new MyCollabException(e);
             } finally {
-                DistributionLockUtil.INSTANCE.removeLock("gantt-bug-service" + sAccountId);
+                DistributionLockUtil.removeLock("gantt-bug-service" + sAccountId);
                 lock.unlock();
             }
         }
