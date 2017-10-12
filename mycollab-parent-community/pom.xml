@@ -354,10 +354,9 @@
                 <inherited>true</inherited>
                 <version>3.1-SNAPSHOT</version>
                 <configuration>
-                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
+                    <header>com/mycila/maven/plugin/license/templates/AGPL-3.txt</header>
                     <properties>
                         <owner>MyCollab</owner>
-                        <project.inceptionYear>2017</project.inceptionYear>
                         <email>support@mycollab.com</email>
                     </properties>
                     <includes>
@@ -370,8 +369,8 @@
                 <executions>
                     <execution>
                         <goals>
-                           <goal>remove</goal>
-                           <!-- <goal>format</goal>-->
+                           <!--<goal>remove</goal>-->
+                           <goal>format</goal>
                         </goals>
                         <phase>compile</phase>
                     </execution>
