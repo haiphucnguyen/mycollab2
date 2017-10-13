@@ -55,13 +55,13 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
                 projectTicketMapper.getTotalCountFromMilestone(criteria)
     }
 
-    override fun getTotalTicketsCount(@CacheKey criteria: ProjectTicketSearchCriteria): Int? {
+    override fun getTotalTicketsCount(@CacheKey criteria: ProjectTicketSearchCriteria): Int {
         return projectTicketMapper.getTotalCountFromRisk(criteria) +
                 projectTicketMapper.getTotalCountFromBug(criteria)!! +
                 projectTicketMapper.getTotalCountFromTask(criteria)!!
     }
 
-    override fun isTicketIdSatisfyCriteria(type: String, typeId: Int?, criteria: ProjectTicketSearchCriteria): Boolean {
+    override fun isTicketIdSatisfyCriteria(type: String, typeId: Int, criteria: ProjectTicketSearchCriteria): Boolean {
         val newCriteria = BeanUtility.deepClone(criteria)
         newCriteria.typeIds = SetSearchField(typeId)
         newCriteria.types = SetSearchField(type)
@@ -81,7 +81,7 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
         return projectTicketMapper.getProjectsHasOverdueAssignments(searchCriteria)
     }
 
-    override fun findTicket(type: String, typeId: Int?): ProjectTicket? {
+    override fun findTicket(type: String, typeId: Int): ProjectTicket? {
         val searchCriteria = ProjectTicketSearchCriteria()
         searchCriteria.types = SetSearchField(type)
         searchCriteria.typeIds = SetSearchField(typeId)
@@ -121,7 +121,6 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
     }
 
     override fun updateMilestoneId(ticket: ProjectTicket) {
-
     }
 
     override fun removeTicket(ticket: ProjectTicket, username: String) {

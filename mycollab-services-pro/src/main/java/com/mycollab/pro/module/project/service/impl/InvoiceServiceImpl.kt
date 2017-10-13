@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional
 class InvoiceServiceImpl(private val invoiceMapper: InvoiceMapper,
                          private val invoiceMapperExt: InvoiceMapperExt) : DefaultService<Int, Invoice, InvoiceSearchCriteria>(), InvoiceService {
 
-
     override val searchMapper: ISearchableDAO<InvoiceSearchCriteria>
         get() = invoiceMapperExt
 
