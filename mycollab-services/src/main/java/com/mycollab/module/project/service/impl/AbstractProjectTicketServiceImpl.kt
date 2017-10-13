@@ -73,13 +73,11 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
         }
     }
 
-    override fun getAccountsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<BillingAccount> {
-        return projectTicketMapper.getAccountsHasOverdueAssignments(searchCriteria)
-    }
+    override fun getAccountsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<BillingAccount> =
+            projectTicketMapper.getAccountsHasOverdueAssignments(searchCriteria)
 
-    override fun getProjectsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<Int> {
-        return projectTicketMapper.getProjectsHasOverdueAssignments(searchCriteria)
-    }
+    override fun getProjectsHasOverdueAssignments(searchCriteria: ProjectTicketSearchCriteria): List<Int> =
+            projectTicketMapper.getProjectsHasOverdueAssignments(searchCriteria)
 
     override fun findTicket(type: String, typeId: Int): ProjectTicket? {
         val searchCriteria = ProjectTicketSearchCriteria()
@@ -89,19 +87,16 @@ abstract class AbstractProjectTicketServiceImpl : DefaultSearchService<ProjectTi
         return if (assignments.isNotEmpty()) assignments[0] else null
     }
 
-    override fun getAssigneeSummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> {
-        return projectTicketMapper.getAssigneeSummary(criteria)
-    }
+    override fun getAssigneeSummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> =
+            projectTicketMapper.getAssigneeSummary(criteria)
 
-    override fun getPrioritySummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> {
-        return projectTicketMapper.getPrioritySummary(criteria)
-    }
+    override fun getPrioritySummary(@CacheKey criteria: ProjectTicketSearchCriteria): List<GroupItem> =
+            projectTicketMapper.getPrioritySummary(criteria)
 
-    override fun findTicketsByCriteria(@CacheKey searchRequest: BasicSearchRequest<ProjectTicketSearchCriteria>): List<*> {
-        return projectTicketMapper.findTicketsByCriteria(searchRequest.searchCriteria,
-                RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
-                        searchRequest.numberOfItems))
-    }
+    override fun findTicketsByCriteria(@CacheKey searchRequest: BasicSearchRequest<ProjectTicketSearchCriteria>): List<*> =
+            projectTicketMapper.findTicketsByCriteria(searchRequest.searchCriteria,
+                    RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
+                            searchRequest.numberOfItems))
 
     override fun updateTicket(ticket: ProjectTicket, username: String) {
         when {

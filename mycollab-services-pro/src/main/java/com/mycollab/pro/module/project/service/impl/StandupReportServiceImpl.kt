@@ -78,7 +78,7 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
 
     override fun massRemoveWithSession(reports: List<StandupReportWithBLOBs>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(reports, username, sAccountId)
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectActivityStreamService::class.java)))
     }
 
     override fun findUsersNotDoReportYet(projectId: Int?, onDate: Date, @CacheKey sAccountId: Int?): List<SimpleUser> {

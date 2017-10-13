@@ -25,6 +25,7 @@ import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.AuditLogService
 import com.mycollab.common.service.CommentService
 import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.StringSearchField
@@ -170,13 +171,17 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
         projectId = notification.projectId
         siteUrl = MailUtils.getSiteUrl(notification.saccountid)
         val relatedProject = projectService.findById(notification.projectId, notification.saccountid)
-        val projectHyperLink = WebItem(relatedProject.name, ProjectLinkGenerator.generateProjectFullLink(siteUrl, relatedProject.id))
-        contentGenerator.putVariable("projectHyperLink", projectHyperLink)
-        projectMember = projectMemberService.findMemberByUsername(notification.changeby, notification.projectId,
-                notification.saccountid)
+        if (relatedProject != null) {
+            val projectHyperLink = WebItem(relatedProject.name, ProjectLinkGenerator.generateProjectFullLink(siteUrl, relatedProject.id))
+            contentGenerator.putVariable("projectHyperLink", projectHyperLink)
+            projectMember = projectMemberService.findMemberByUsername(notification.changeby, notification.projectId,
+                    notification.saccountid)
+        } else {
+         throw ResourceNotFoundException("Can not find project ${notification.projectId} in account ${notification.saccountid}")
+        }
     }
 
-    abstract protected fun getBeanInContext(notification: ProjectRelayEmailNotification): B
+    abstract protected fun getBeanInContext(notification: ProjectRelayEmailNotification): B?
 
     abstract protected fun getItemName(): String
 

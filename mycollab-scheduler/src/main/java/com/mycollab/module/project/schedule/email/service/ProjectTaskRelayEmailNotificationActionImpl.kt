@@ -122,7 +122,7 @@ class ProjectTaskRelayEmailNotificationActionImpl : SendMailToFollowersAction<Si
                     if (findResult == null) {
                         val task = projectTaskService.findById(notification.typeid.toInt(), notification.saccountid)
                         if (notificationSetting.username == task.assignuser) {
-                            val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
+                            val prjMember = projectMemberService.getActiveUserOfProject(notificationSetting.username,
                                     notificationSetting.projectid, notificationSetting.saccountid)
                             if (prjMember != null) {
                                 notifyUsers += prjMember
@@ -130,7 +130,7 @@ class ProjectTaskRelayEmailNotificationActionImpl : SendMailToFollowersAction<Si
                         }
                     }
                 } else if (NotificationType.Full.name == notificationSetting.level) {
-                    val prjMember = projectMemberService!!.getActiveUserOfProject(notificationSetting.username,
+                    val prjMember = projectMemberService.getActiveUserOfProject(notificationSetting.username,
                             notificationSetting.projectid, notificationSetting.saccountid)
                     if (prjMember != null) {
                         notifyUsers += prjMember

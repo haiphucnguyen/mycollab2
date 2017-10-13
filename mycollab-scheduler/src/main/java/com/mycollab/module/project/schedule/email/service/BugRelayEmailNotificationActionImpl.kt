@@ -93,7 +93,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleBug =
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleBug? =
             bugService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getItemName(): String = StringUtils.trim(bean!!.name, 100)
@@ -122,7 +122,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
                 val findResult = notifyUsers.find { notifyUser -> notifyUser.username == it.username }
                 if (findResult != null) {
                     val bug = bugService.findById(notification.typeid.toInt(), notification.saccountid)
-                    if (it.username == bug.assignuser) {
+                    if (it.username == bug!!.assignuser) {
                         val prjMember = projectMemberService.getActiveUserOfProject(it.username,
                                 it.projectid, it.saccountid)
                         if (prjMember != null) {

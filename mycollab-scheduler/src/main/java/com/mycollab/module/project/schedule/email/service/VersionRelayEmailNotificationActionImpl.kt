@@ -87,7 +87,7 @@ class VersionRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion =
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion? =
             versionService.findById(notification.typeid.toInt(), notification.saccountid)
 
     class VersionFieldNameMapper : ItemFieldMapper() {

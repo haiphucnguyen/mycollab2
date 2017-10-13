@@ -72,7 +72,7 @@ class ProjectMilestoneRelayEmailNotificationActionImpl : SendMailToAllMembersAct
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMilestone =
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMilestone? =
             milestoneService.findById(notification.typeid.toInt(), notification.saccountid)
 
     class MilestoneFieldNameMapper() : ItemFieldMapper() {

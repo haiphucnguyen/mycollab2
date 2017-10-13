@@ -81,7 +81,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
     override fun getUpdateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleComponent =
+    override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleComponent? =
             componentService.findById(notification.typeid.toInt(), notification.saccountid)
 
     override fun getItemName(): String = StringUtils.trim(bean!!.description, 100)
