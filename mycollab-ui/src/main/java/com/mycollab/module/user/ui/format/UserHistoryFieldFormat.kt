@@ -37,7 +37,7 @@ class UserHistoryFieldFormat : HistoryFieldFormat {
         return toString(value, true, UserUIContext.getMessage(GenericI18Enum.FORM_EMPTY))
     }
 
-    override fun toString(value: String, displayAsHtml: Boolean?, msgIfBlank: String): String {
+    override fun toString(value: String, displayAsHtml: Boolean, msgIfBlank: String): String {
         if (isBlank(value)) {
             return msgIfBlank
         }
@@ -45,7 +45,7 @@ class UserHistoryFieldFormat : HistoryFieldFormat {
         val userService = AppContextUtil.getSpringBean(UserService::class.java)
         val user = userService.findUserByUserNameInAccount(value, AppUI.accountId)
         if (user != null) {
-            return if (displayAsHtml!!) {
+            return if (displayAsHtml) {
                 val userAvatarLink = MailUtils.getAvatarLink(user.avatarid, 16)
                 val img = FormatUtils.newImg("avatar", userAvatarLink)
 

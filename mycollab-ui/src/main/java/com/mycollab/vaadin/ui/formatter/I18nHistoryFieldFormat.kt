@@ -12,23 +12,22 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.event;
+package com.mycollab.vaadin.ui.formatter
 
-import java.io.Serializable;
+import com.mycollab.core.utils.StringUtils
+import com.mycollab.vaadin.UserUIContext
 
 /**
- * Page handler of view list or table.
- *
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.3.4
  */
-public interface PageableHandler extends Serializable {
-    /**
-     * Move current view to new page
-     *
-     * @param newPageNumber
-     */
-    void move(int newPageNumber);
+class I18nHistoryFieldFormat(private val enumCls: Class<out Enum<*>>) : HistoryFieldFormat {
+
+    override fun toString(value: String): String =
+            toString(value, true, "")
+
+    override fun toString(value: String, displayAsHtml: Boolean, msgIfBlank: String): String =
+            if (StringUtils.isNotBlank(value)) UserUIContext.getMessage(enumCls, value) else msgIfBlank
 }

@@ -14,17 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.common.ui.components.notification;
+package com.mycollab.common.ui.components.notification
 
-import com.mycollab.core.AbstractNotification;
+import com.mycollab.core.AbstractNotification
 
 /**
  * @author MyCollab Ltd
  * @since 5.0.4
  */
-public class SmtpSetupNotification extends AbstractNotification {
-
-    public SmtpSetupNotification() {
-        super(SCOPE_GLOBAL, WARNING);
-    }
-}
+class SmtpSetupNotification : AbstractNotification(AbstractNotification.SCOPE_GLOBAL, AbstractNotification.WARNING)

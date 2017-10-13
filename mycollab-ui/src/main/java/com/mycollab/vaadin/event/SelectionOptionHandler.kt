@@ -12,20 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.event;
+package com.mycollab.vaadin.event
 
-import java.io.Serializable;
+import java.io.Serializable
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface SelectionOptionHandler extends Serializable {
-    void onSelectCurrentPage();
+interface SelectionOptionHandler : Serializable {
+    fun onSelectCurrentPage()
 
-    void onSelectAll();
+    fun onSelectAll()
 
-    void onDeSelect();
+    fun onDeSelect()
 }

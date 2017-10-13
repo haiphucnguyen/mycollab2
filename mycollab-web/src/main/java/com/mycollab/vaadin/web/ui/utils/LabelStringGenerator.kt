@@ -14,29 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui.formatter;
-
-import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.UserUIContext;
+package com.mycollab.vaadin.web.ui.utils
 
 /**
- * @author MyCollab Ltd
- * @since 5.3.4
+ * @author MyCollab
+ * @since 1.0
  */
-public class I18nHistoryFieldFormat implements HistoryFieldFormat {
-    private Class<? extends Enum> enumCls;
+interface LabelStringGenerator {
 
-    public I18nHistoryFieldFormat(Class<? extends Enum> enumCls) {
-        this.enumCls = enumCls;
-    }
+    fun handleText(value: String): String
 
-    @Override
-    public String toString(String value) {
-        return toString(value, true, "");
-    }
-
-    @Override
-    public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
-        return (StringUtils.isNotBlank(value)) ? UserUIContext.getMessage(enumCls, value) : msgIfBlank;
-    }
 }

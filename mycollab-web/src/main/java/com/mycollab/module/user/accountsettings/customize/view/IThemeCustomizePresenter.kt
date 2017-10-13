@@ -14,30 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui.formatter;
+package com.mycollab.module.user.accountsettings.customize.view
 
-import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.UserUIContext;
-
-import java.util.Locale;
+import com.mycollab.vaadin.mvp.IPresenter
 
 /**
  * @author MyCollab Ltd
- * @since 5.4.2
+ * @since 5.3.1
  */
-public class CountryHistoryFieldFormat implements HistoryFieldFormat {
-    @Override
-    public String toString(String countryCode) {
-        if (StringUtils.isNotBlank(countryCode)) {
-            Locale obj = new Locale("", countryCode);
-            return obj.getDisplayCountry(UserUIContext.getUserLocale());
-        } else {
-            return "";
-        }
-    }
-
-    @Override
-    public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
-        return toString(value);
-    }
-}
+interface IThemeCustomizePresenter : IPresenter<IThemeCustomizeView>

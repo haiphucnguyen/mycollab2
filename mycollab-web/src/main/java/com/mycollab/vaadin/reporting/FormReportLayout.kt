@@ -14,13 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.accountsettings.customize.view;
+package com.mycollab.vaadin.reporting
 
-import com.mycollab.vaadin.mvp.IPresenter;
+import com.mycollab.form.view.builder.type.DynaForm
+
+import java.util.Arrays
+import java.util.HashSet
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.1
+ * @since 5.2.11
  */
-public interface IThemeCustomizePresenter extends IPresenter<IThemeCustomizeView> {
+class FormReportLayout(val moduleName: String, val titleField: String, val dynaForm: DynaForm, vararg excludeFieldArr: String) {
+    var excludeFields: Set<String>? = null
+        private set
+
+    init {
+        if (excludeFieldArr.isNotEmpty()) {
+            this.excludeFields = HashSet(Arrays.asList(*excludeFieldArr))
+        } else {
+            this.excludeFields = HashSet()
+        }
+    }
 }

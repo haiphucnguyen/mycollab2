@@ -12,16 +12,23 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.web.ui.utils;
+package com.mycollab.vaadin.event
+
+import java.io.Serializable
 
 /**
- * @author MyCollab
+ * Page handler of view list or table.
+ *
+ * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface LabelStringGenerator {
-
-    String handleText(String value);
-
+interface PageableHandler : Serializable {
+    /**
+     * Move current view to new page
+     *
+     * @param newPageNumber
+     */
+    fun move(newPageNumber: Int)
 }

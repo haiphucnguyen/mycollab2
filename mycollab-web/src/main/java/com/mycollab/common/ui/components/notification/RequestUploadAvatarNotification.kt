@@ -14,17 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.common.ui.components.notification;
+package com.mycollab.common.ui.components.notification
 
-import com.mycollab.core.AbstractNotification;
+import com.mycollab.core.AbstractNotification
 
 /**
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class RequestUploadAvatarNotification extends AbstractNotification {
-
-    public RequestUploadAvatarNotification() {
-        super(SCOPE_USER, WARNING);
-    }
-}
+class RequestUploadAvatarNotification : AbstractNotification(AbstractNotification.SCOPE_USER, AbstractNotification.WARNING)
