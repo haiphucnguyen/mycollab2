@@ -48,11 +48,10 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
     override val searchMapper: ISearchableDAO<StandupReportSearchCriteria>
         get() = standupReportMapperExt
 
-    override fun findById(standupId: Int?, sAccountId: Int?): SimpleStandupReport {
-        return standupReportMapperExt.findReportById(standupId)
-    }
+    override fun findById(standupId: Int, sAccountId: Int): SimpleStandupReport =
+            standupReportMapperExt.findReportById(standupId)
 
-    override fun findStandupReportByDateUser(projectId: Int?, username: String, onDate: Date, sAccountId: Int?): SimpleStandupReport? {
+    override fun findStandupReportByDateUser(projectId: Int, username: String, onDate: Date, sAccountId: Int): SimpleStandupReport? {
         val criteria = StandupReportSearchCriteria()
         criteria.projectIds = SetSearchField(projectId)
         criteria.logBy = StringSearchField.and(username)
@@ -67,30 +66,27 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
 
     override fun saveWithSession(record: StandupReportWithBLOBs, username: String?): Int {
         val result = super.saveWithSession(record, username)
-        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectActivityStreamService::class.java)))
         return result
     }
 
     override fun updateWithSession(record: StandupReportWithBLOBs, username: String?): Int {
-        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectActivityStreamService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectActivityStreamService::class.java)))
         return super.updateWithSession(record, username)
     }
 
-    override fun massRemoveWithSession(reports: List<StandupReportWithBLOBs>, username: String?, sAccountId: Int) {
-        super.massRemoveWithSession(reports, username, sAccountId)
+    override fun massRemoveWithSession(items: List<StandupReportWithBLOBs>, username: String?, sAccountId: Int) {
+        super.massRemoveWithSession(items, username, sAccountId)
         asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectActivityStreamService::class.java)))
     }
 
-    override fun findUsersNotDoReportYet(projectId: Int?, onDate: Date, @CacheKey sAccountId: Int?): List<SimpleUser> {
-        val dateOnly = LocalDate(onDate)
-        return standupReportMapperExt.findUsersNotDoReportYet(projectId, dateOnly.toDate())
-    }
+    override fun findUsersNotDoReportYet(projectId: Int, onDate: Date, @CacheKey sAccountId: Int): List<SimpleUser> =
+            standupReportMapperExt.findUsersNotDoReportYet(projectId, LocalDate(onDate).toDate())
 
-    override fun getProjectReportsStatistic(projectIds: List<Int>, onDate: Date, searchRequest: SearchRequest): List<StandupReportStatistic> {
-        val dateOnly = LocalDate(onDate)
-        return standupReportMapperExt.getProjectReportsStatistic(projectIds, dateOnly.toDate(), RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
-                searchRequest.numberOfItems))
-    }
+    override fun getProjectReportsStatistic(projectIds: List<Int>, onDate: Date, searchRequest: SearchRequest): List<StandupReportStatistic> =
+            standupReportMapperExt.getProjectReportsStatistic(projectIds, LocalDate(onDate).toDate(),
+                    RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
+                    searchRequest.numberOfItems))
 
     companion object {
         init {
