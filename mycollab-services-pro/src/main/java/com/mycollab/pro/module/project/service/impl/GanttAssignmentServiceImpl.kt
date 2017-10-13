@@ -15,26 +15,23 @@ import com.mycollab.module.tracker.domain.BugExample
 import com.mycollab.spring.AppContextUtil
 import com.google.common.base.MoreObjects
 import org.apache.commons.collections.CollectionUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 
 import javax.sql.DataSource
-import java.sql.Connection
 import java.sql.Date
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.util.ArrayList
 import java.util.GregorianCalendar
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.locks.Lock
 
 @Service
 class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                  private val dataSource: DataSource ) : GanttAssignmentService {
 
-    override fun getTaskWithPredecessors(projectIds: List<Int>, @CacheKey sAccountId: Int?): List<AssignWithPredecessors> {
+    override fun getTaskWithPredecessors(projectIds: List<Int>, @CacheKey sAccountId: Int): List<AssignWithPredecessors> {
         return ganttMapperExt.getTaskWithPredecessors(projectIds, sAccountId)
     }
 
@@ -61,8 +58,8 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
         }
     }
 
-    override fun massUpdatePredecessors(taskSourceId: Int?, predecessors: List<TaskPredecessor>, sAccountId: Int?) {
-        val lock = DistributionLockUtil.getLock("task-service" + sAccountId!!)
+    override fun massUpdatePredecessors(taskSourceId: Int, predecessors: List<TaskPredecessor>, sAccountId: Int) {
+        val lock = DistributionLockUtil.getLock("task-service$sAccountId")
         try {
             val predecessorMapper = AppContextUtil.getSpringBean(PredecessorMapper::class.java)
             val ex = PredecessorExample()
@@ -93,13 +90,13 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
         } catch (e: Exception) {
             throw MyCollabException(e)
         } finally {
-            DistributionLockUtil.removeLock("task-service" + sAccountId)
+            DistributionLockUtil.removeLock("task-service$sAccountId")
             lock.unlock()
         }
     }
 
-    override fun massDeletePredecessors(predecessors: List<TaskPredecessor>, @CacheKey sAccountId: Int?) {
-        val lock = DistributionLockUtil.getLock("gantt-predecessor-service" + sAccountId!!)
+    override fun massDeletePredecessors(predecessors: List<TaskPredecessor>, @CacheKey sAccountId: Int) {
+        val lock = DistributionLockUtil.getLock("gantt-predecessor-service$sAccountId")
         try {
             if (lock.tryLock(30, TimeUnit.SECONDS)) {
                 dataSource.connection.use { connection ->
@@ -241,23 +238,23 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
         }
     }
 
-    override fun massDeleteGanttItems(ganttItems: List<AssignWithPredecessors>, sAccountId: Int?) {
+    override fun massDeleteGanttItems(ganttItems: List<AssignWithPredecessors>, sAccountId: Int) {
         if (CollectionUtils.isNotEmpty(ganttItems)) {
             val milestoneIds = ArrayList<Int>()
             val taskIds = ArrayList<Int>()
             val bugIds = ArrayList<Int>()
 
-            ganttItems.forEach { ganttItem ->
-                when (ganttItem) {
-                    is MilestoneGanttItem -> if (ganttItem.getId() != null) {
-                        milestoneIds.add(ganttItem.getId())
+            ganttItems.forEach {
+                when (it) {
+                    is MilestoneGanttItem -> if (it.getId() != null) {
+                        milestoneIds.add(it.getId())
                     }
-                    is TaskGanttItem -> if (ProjectTypeConstants.TASK == ganttItem.getType() && ganttItem.getId() != null) {
-                        taskIds.add(ganttItem.getId())
-                    } else if (ProjectTypeConstants.BUG == ganttItem.getType() && ganttItem.getId() != null) {
-                        bugIds.add(ganttItem.getId())
+                    is TaskGanttItem -> if (ProjectTypeConstants.TASK == it.getType() && it.getId() != null) {
+                        taskIds.add(it.getId())
+                    } else if (ProjectTypeConstants.BUG == it.getType() && it.getId() != null) {
+                        bugIds.add(it.getId())
                     }
-                    else -> throw MyCollabException("Do not support delete gantt item " + ganttItem)
+                    else -> throw MyCollabException("Do not support delete gantt item $it")
                 }
             }
             massDeleteMilestoneGanttItems(milestoneIds)

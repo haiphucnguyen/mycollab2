@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.service.impl
 
+import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.cache.CleanCacheEvent
-import com.mycollab.common.service.ActivityStreamService
 import com.mycollab.core.cache.CacheKey
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
@@ -18,18 +18,15 @@ import com.mycollab.module.tracker.service.VersionService
 import com.mycollab.pro.module.project.dao.ItemTimeLoggingMapper
 import com.mycollab.pro.module.project.dao.ItemTimeLoggingMapperExt
 import com.mycollab.spring.AppContextUtil
-import com.google.common.eventbus.AsyncEventBus
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.BatchPreparedStatementSetter
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
-
-import javax.sql.DataSource
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Timestamp
 import java.sql.Types
-import java.util.GregorianCalendar
+import java.util.*
+import javax.sql.DataSource
 
 /**
  * @author MyCollab Ltd.
@@ -61,17 +58,17 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
         return result
     }
 
-    override fun massRemoveWithSession(items: List<ItemTimeLogging>, username: String?, accountId: Int) {
-        super.massRemoveWithSession(items, username, accountId)
-        cleanCache(accountId)
+    override fun massRemoveWithSession(items: List<ItemTimeLogging>, username: String?, sAccountId: Int) {
+        super.massRemoveWithSession(items, username, sAccountId)
+        cleanCache(sAccountId)
     }
 
-    override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double? {
+    override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double {
         val value = itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria)
         return value ?: 0.0
     }
 
-    override fun batchSaveTimeLogging(timeLoggings: List<ItemTimeLogging>, @CacheKey sAccountId: Int?) {
+    override fun batchSaveTimeLogging(timeLoggings: List<ItemTimeLogging>, @CacheKey sAccountId: Int) {
         val dataSource = AppContextUtil.getSpringBean(DataSource::class.java)
         val jdbcTemplate = JdbcTemplate(dataSource)
         jdbcTemplate.batchUpdate(
@@ -108,43 +105,37 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
         cleanCache(sAccountId)
     }
 
-    private fun cleanCache(sAccountId: Int?) {
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, MilestoneService::class.java, ProjectTaskService::class.java, BugService::class.java, ComponentService::class.java, VersionService::class.java, RiskService::class.java, ItemTimeLoggingService::class.java, ProjectMemberService::class.java)))
+    private fun cleanCache(sAccountId: Int) {
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectService::class.java,
+                MilestoneService::class.java, ProjectTaskService::class.java, BugService::class.java,
+                ComponentService::class.java, VersionService::class.java, RiskService::class.java,
+                ItemTimeLoggingService::class.java, ProjectMemberService::class.java)))
     }
 
-    override fun getTotalBillableHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt.getTotalBillableHours(milestoneId!!)
-    }
+    override fun getTotalBillableHoursByMilestone(milestoneId: Int, sAccountId: Int): Double =
+            milestoneMapperExt.getTotalBillableHours(milestoneId)
 
-    override fun getTotalNonBillableHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt.getTotalNonBillableHours(milestoneId!!)
-    }
+    override fun getTotalNonBillableHoursByMilestone(milestoneId: Int, sAccountId: Int): Double =
+            milestoneMapperExt.getTotalNonBillableHours(milestoneId)
 
-    override fun getRemainHoursByMilestone(milestoneId: Int?, sAccountId: Int?): Double? {
-        return milestoneMapperExt.getRemainHours(milestoneId!!)
-    }
+    override fun getRemainHoursByMilestone(milestoneId: Int, sAccountId: Int): Double =
+            milestoneMapperExt.getRemainHours(milestoneId)
 
-    override fun getTotalBillableHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt.getTotalBillableHours(componentId!!)
-    }
+    override fun getTotalBillableHoursByComponent(componentId: Int, @CacheKey sAccountId: Int): Double =
+            componentMapperExt.getTotalBillableHours(componentId)
 
-    override fun getTotalNonBillableHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt.getTotalNonBillableHours(componentId!!)
-    }
+    override fun getTotalNonBillableHoursByComponent(componentId: Int, @CacheKey sAccountId: Int): Double =
+            componentMapperExt.getTotalNonBillableHours(componentId)
 
-    override fun getRemainHoursByComponent(componentId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return componentMapperExt.getRemainHours(componentId!!)
-    }
+    override fun getRemainHoursByComponent(componentId: Int, @CacheKey sAccountId: Int): Double =
+            componentMapperExt.getRemainHours(componentId)
 
-    override fun getTotalBillableHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt.getTotalBillableHours(versionId!!)
-    }
+    override fun getTotalBillableHoursByVersion(versionId: Int, @CacheKey sAccountId: Int): Double =
+            versionMapperExt.getTotalBillableHours(versionId)
 
-    override fun getTotalNonBillableHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt.getTotalNonBillableHours(versionId!!)
-    }
+    override fun getTotalNonBillableHoursByVersion(versionId: Int, @CacheKey sAccountId: Int): Double =
+            versionMapperExt.getTotalNonBillableHours(versionId)
 
-    override fun getRemainHoursByVersion(versionId: Int?, @CacheKey sAccountId: Int?): Double? {
-        return versionMapperExt.getRemainHours(versionId!!)
-    }
+    override fun getRemainHoursByVersion(versionId: Int, @CacheKey sAccountId: Int): Double =
+            versionMapperExt.getRemainHours(versionId)
 }

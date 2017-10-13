@@ -12,16 +12,16 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.service;
+package com.mycollab.module.project.service
 
-import com.mycollab.db.persistence.service.IService;
+import com.mycollab.db.persistence.service.IService
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.6
  */
-public interface ProjectTemplateService extends IService {
-    Integer cloneProject(Integer projectId, String newPrjName, String newPrjKey, Integer sAccountId, String username);
+interface ProjectTemplateService : IService {
+    fun cloneProject(projectId: Int, newPrjName: String, newPrjKey: String, sAccountId: Int, username: String): Int?
 }

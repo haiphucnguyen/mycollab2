@@ -12,26 +12,24 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.service;
+package com.mycollab.module.project.service
 
-import com.mycollab.core.cache.CacheKey;
-import com.mycollab.core.cache.Cacheable;
-import com.mycollab.db.persistence.service.ICrudService;
-import com.mycollab.module.project.domain.ProjectNotificationSetting;
-
-import java.util.List;
+import com.mycollab.core.cache.CacheKey
+import com.mycollab.core.cache.Cacheable
+import com.mycollab.db.persistence.service.ICrudService
+import com.mycollab.module.project.domain.ProjectNotificationSetting
 
 /**
  * @author MyCollab Ltd
  * @since 4.0.0
  */
-public interface ProjectNotificationSettingService extends ICrudService<Integer, ProjectNotificationSetting> {
+interface ProjectNotificationSettingService : ICrudService<Int, ProjectNotificationSetting> {
 
     @Cacheable
-    ProjectNotificationSetting findNotification(String username, Integer projectId, @CacheKey Integer sAccountId);
+    fun findNotification(username: String, projectId: Int, @CacheKey sAccountId: Int): ProjectNotificationSetting
 
     @Cacheable
-    List<ProjectNotificationSetting> findNotifications(Integer projectId, @CacheKey Integer sAccountId);
+    fun findNotifications(projectId: Int, @CacheKey sAccountId: Int): List<ProjectNotificationSetting>
 }

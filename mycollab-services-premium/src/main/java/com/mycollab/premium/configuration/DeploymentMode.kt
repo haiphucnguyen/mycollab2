@@ -28,7 +28,7 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
         get() = true
 
     override fun getSiteUrl(subDomain: String?): String =
-            "${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/"
+            "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/"
 
     override fun getResourceDownloadUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/file/"
 
