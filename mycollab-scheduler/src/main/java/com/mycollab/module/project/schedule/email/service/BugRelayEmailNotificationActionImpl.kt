@@ -122,7 +122,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
                 val findResult = notifyUsers.find { notifyUser -> notifyUser.username == it.username }
                 if (findResult != null) {
                     val bug = bugService.findById(notification.typeid.toInt(), notification.saccountid)
-                    if (it.username == bug!!.assignuser) {
+                    if (bug != null && it.username == bug.assignuser) {
                         val prjMember = projectMemberService.getActiveUserOfProject(it.username,
                                 it.projectid, it.saccountid)
                         if (prjMember != null) {

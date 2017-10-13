@@ -55,9 +55,8 @@ class TaskServiceImpl(private val taskMapper: CrmTaskMapper,
     override val searchMapper: ISearchableDAO<CrmTaskSearchCriteria>
         get() = taskMapperExt
 
-    override fun findById(taskId: Int?, sAccountId: Int?): SimpleCrmTask {
-        return taskMapperExt.findById(taskId)
-    }
+    override fun findById(taskId: Int, sAccountId: Int): SimpleCrmTask? =
+            taskMapperExt.findById(taskId)
 
     override fun saveWithSession(record: CrmTask, username: String?): Int {
         val result = super.saveWithSession(record, username)
