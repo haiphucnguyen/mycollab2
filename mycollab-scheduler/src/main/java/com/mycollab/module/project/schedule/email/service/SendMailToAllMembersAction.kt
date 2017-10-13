@@ -72,9 +72,9 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
         val notificationSettings = projectNotificationService.findNotifications(notification.projectId,
                 notification.saccountid)
         if (notificationSettings.isNotEmpty()) {
-            notificationSettings.forEach { setting ->
-                if ((NotificationType.None.name == setting.level) || (NotificationType.Minimal.name == setting.level)) {
-                    notifyUsers = notifyUsers.filter { notifyUser -> !(notifyUser.username == setting.username) }
+            notificationSettings.forEach {
+                if ((NotificationType.None.name == it.level) || (NotificationType.Minimal.name == it.level)) {
+                    notifyUsers = notifyUsers.filter { notifyUser -> !(notifyUser.username == it.username) }
                 }
             }
         }
@@ -127,8 +127,8 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                 val comments = commentService.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
 
-                notifiers.forEach { user ->
-                    val context = MailContext<B>(notification, user, siteUrl)
+                notifiers.forEach {
+                    val context = MailContext<B>(notification, it, siteUrl)
                     if (comments.isNotEmpty()) {
                         contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Last_Comments_Value, "" + comments.size))
                     }
@@ -142,7 +142,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     contentGenerator.putVariable("context", context)
                     context.wrappedBean = bean
                     buildExtraTemplateVariables(context)
-                    val userMail = MailRecipientField(user.email, user.username)
+                    val userMail = MailRecipientField(it.email, it.username)
                     val recipients = listOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
@@ -166,15 +166,15 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                 contentGenerator.putVariable("lastComments", comments)
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
-                notifiers.forEach { user ->
-                    val context = MailContext<B>(notification, user, siteUrl)
+                notifiers.forEach {
+                    val context = MailContext<B>(notification, it, siteUrl)
                     buildExtraTemplateVariables(context)
                     contentGenerator.putVariable("comment", context.emailNotification)
                     contentGenerator.putVariable("lastCommentsValue", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Last_Comments_Value, "" + comments.size))
                     contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(context.locale, MailI18nEnum.Copyright,
                             DateTimeUtils.getCurrentYear()))
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
-                    val userMail = MailRecipientField(user.email, user.username)
+                    val userMail = MailRecipientField(it.email, it.username)
                     val recipients = listOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))

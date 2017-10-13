@@ -70,13 +70,13 @@ class ProjectTaskRelayEmailNotificationActionImpl : SendMailToFollowersAction<Si
     override fun buildExtraTemplateVariables(context: MailContext<SimpleTask>) {
         val emailNotification = context.emailNotification
 
-        val summary = "#" + bean!!.taskkey + " - " + bean!!.name
+        val summary = "#${bean!!.taskkey} - ${bean!!.name}"
         val summaryLink = ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, bean!!.taskkey, bean!!.projectShortname)
 
         val avatarId = if (projectMember != null) projectMember!!.memberAvatarId else ""
         val userAvatar = LinkUtils.newAvatar(avatarId)
 
-        val makeChangeUser = userAvatar.write() + " " + emailNotification.changeByUserFullName
+        val makeChangeUser = "${userAvatar.write()} ${emailNotification.changeByUserFullName}"
         val actionEnum = when (emailNotification.action) {
             MonitorTypeConstants.CREATE_ACTION -> TaskI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> TaskI18nEnum.MAIL_UPDATE_ITEM_HEADING

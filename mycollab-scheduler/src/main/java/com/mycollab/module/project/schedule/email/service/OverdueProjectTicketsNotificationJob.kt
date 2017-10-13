@@ -132,11 +132,10 @@ class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
         var notifyUsers = projectMemberService.getActiveUsersInProject(projectId, accountId)
         val notificationSettings = projectNotificationService.findNotifications(projectId, accountId)
         if (notificationSettings.isNotEmpty()) {
-            for (setting in notificationSettings) {
-                if ((NotificationType.None.name == setting.level) || (NotificationType.Minimal.name == setting.level)) {
-                    notifyUsers = notifyUsers.filter { !(it.username == setting.username) }
-                }
-            }
+            notificationSettings
+                    .asSequence()
+                    .filter { (NotificationType.None.name == it.level) || (NotificationType.Minimal.name == it.level) }
+                    .forEach { setting -> notifyUsers = notifyUsers.filter { !(it.username == setting.username) } }
         }
         return notifyUsers.toSet()
     }

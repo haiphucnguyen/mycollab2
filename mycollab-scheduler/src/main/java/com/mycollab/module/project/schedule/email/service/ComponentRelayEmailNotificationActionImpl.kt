@@ -63,7 +63,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
         val avatarId = if (projectMember != null) projectMember!!.memberAvatarId else ""
         val userAvatar = LinkUtils.newAvatar(avatarId)
 
-        val makeChangeUser = userAvatar.write() + " " + emailNotification.changeByUserFullName
+        val makeChangeUser = "${userAvatar.write()} ${emailNotification.changeByUserFullName}"
         val actionEnum = when (emailNotification.action) {
             MonitorTypeConstants.CREATE_ACTION -> ComponentI18nEnum.MAIL_CREATE_ITEM_HEADING
             MonitorTypeConstants.UPDATE_ACTION -> ComponentI18nEnum.MAIL_UPDATE_ITEM_HEADING

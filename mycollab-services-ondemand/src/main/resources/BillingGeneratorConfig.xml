@@ -6,7 +6,7 @@
     <context id="MySQL" targetRuntime="MyBatis3">
         <plugin type="com.mycollab.mybatis.plugin.MyCollabModelFilePlugin" />
 
-        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab_base"
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab"
                         driverClass="com.mysql.jdbc.Driver" password="esofthead321"
                         userId="root" />
 
@@ -16,8 +16,7 @@
             <property name="rootClass" value="com.mycollab.core.arguments.ValuedBean" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="."
-                         targetProject="src/main/resources/sqlMap/billing" />
+        <sqlMapGenerator targetPackage="." targetProject="src/main/resources/sqlMap/billing" />
 
         <javaClientGenerator targetPackage="com.mycollab.ondemand.module.billing.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
@@ -25,9 +24,9 @@
             <property name="rootInterface" value="com.mycollab.db.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
-        <table domainObjectName="ProEditionInfo" schema="mycollab_base" tableName="s_pro_edition_info" />
-        <table domainObjectName="BillingSubscription" schema="mycollab_base" tableName="s_billing_subscription" />
-        <table domainObjectName="BillingSubscriptionHistory" schema="mycollab_base" tableName="s_billing_subscription_history" />
+        <table domainObjectName="ProEditionInfo" schema="mycollab" tableName="s_pro_edition_info" />
+        <table domainObjectName="BillingSubscription" schema="mycollab" tableName="s_billing_subscription" />
+        <table domainObjectName="BillingSubscriptionHistory" schema="mycollab" tableName="s_billing_subscription_history" />
     </context>
 
 </generatorConfiguration>
