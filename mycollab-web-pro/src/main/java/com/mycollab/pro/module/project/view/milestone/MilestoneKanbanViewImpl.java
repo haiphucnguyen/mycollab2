@@ -235,7 +235,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         setProjectNavigatorVisibility(false);
         MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
         ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+        AsyncInvoker.INSTANCE.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
                 MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
