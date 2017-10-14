@@ -69,10 +69,10 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         val ex = OptionValExample()
         ex.createCriteria().andIsdefaultEqualTo(false).andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId)
         val optionVals = optionValMapper.selectByExample(ex)
-        for (optionVal in optionVals) {
-            optionVal.id = null
-            optionVal.extraid = newProjectId
-            optionValMapper.insert(optionVal)
+        optionVals.forEach {
+            it.id = null
+            it.extraid = newProjectId
+            optionValMapper.insert(it)
         }
     }
 
@@ -104,26 +104,26 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
     private fun cloneProjectTasks(newProjectId: Int?, milestoneMapIds: Map<Int, Int>,
                                   taskMapIds: MutableMap<Int, Int>, tasks: List<SimpleTask>, username: String) {
         val pendingTasks = ArrayList<SimpleTask>()
-        for (task in tasks) {
-            val taskId = task.id
-            val parentTaskId = task.parenttaskid
+        tasks.forEach {
+            val taskId = it.id
+            val parentTaskId = it.parenttaskid
             if (parentTaskId == null) {
-                task.id = null
-                task.milestoneid = milestoneMapIds[task.milestoneid]
-                task.projectid = newProjectId
-                val newTaskId = projectTaskService.saveWithSession(task, username)
+                it.id = null
+                it.milestoneid = milestoneMapIds[it.milestoneid]
+                it.projectid = newProjectId
+                val newTaskId = projectTaskService.saveWithSession(it, username)
                 taskMapIds.put(taskId, newTaskId)
             } else {
                 val candidateParentTaskId = taskMapIds[parentTaskId]
                 if (candidateParentTaskId != null) {
-                    task.id = null
-                    task.projectid = newProjectId
-                    task.milestoneid = milestoneMapIds[task.milestoneid]
-                    task.parenttaskid = candidateParentTaskId
-                    val newTaskId = projectTaskService.saveWithSession(task, username)
+                    it.id = null
+                    it.projectid = newProjectId
+                    it.milestoneid = milestoneMapIds[it.milestoneid]
+                    it.parenttaskid = candidateParentTaskId
+                    val newTaskId = projectTaskService.saveWithSession(it, username)
                     taskMapIds.put(taskId, newTaskId)
                 } else {
-                    pendingTasks.add(task)
+                    pendingTasks.add(it)
                 }
             }
         }
@@ -178,29 +178,29 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             val newBugId = bugService.saveWithSession(it, username)
 
             val affectedVersions = it.affectedVersions
-            affectedVersions.forEach { version ->
+            affectedVersions.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.AFFVERSION
-                bugRelatedItem.typeid = versionMapIds[version.id]
+                bugRelatedItem.typeid = versionMapIds[it.id]
                 bugRelatedItemMapper.insert(bugRelatedItem)
             }
 
             val fixedVersions = it.fixedVersions
-            fixedVersions.forEach { version ->
+            fixedVersions.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.FIXVERSION
-                bugRelatedItem.typeid = versionMapIds[version.id]
+                bugRelatedItem.typeid = versionMapIds[it.id]
                 bugRelatedItemMapper.insert(bugRelatedItem)
             }
 
             val components = it.components
-            components.forEach { component ->
+            components.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.COMPONENT
-                bugRelatedItem.typeid = componentMapIds[component.id]
+                bugRelatedItem.typeid = componentMapIds[it.id]
                 bugRelatedItemMapper.insert(bugRelatedItem)
             }
         }
@@ -213,26 +213,26 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE,
                 ProjectMemberStatusConstants.NOT_ACCESS_YET)
         val members = projectMemberService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectMember>
-        members.forEach { member ->
-            member.id = null
-            member.projectid = newProjectId
-            if (java.lang.Boolean.FALSE == member.isadmin) {
-                val newRoleId = mapRoleIds[member.projectroleid]
-                member.projectroleid = newRoleId
+        members.forEach {
+            it.id = null
+            it.projectid = newProjectId
+            if (java.lang.Boolean.FALSE == it.isadmin) {
+                val newRoleId = mapRoleIds[it.projectroleid]
+                it.projectroleid = newRoleId
             }
-            projectMemberService.saveWithSession(member, username)
+            projectMemberService.saveWithSession(it, username)
         }
     }
 
-    private fun cloneProjectMessages(projectId: Int?, newProjectId: Int?, username: String) {
+    private fun cloneProjectMessages(projectId: Int, newProjectId: Int, username: String) {
         LOG.info("Clone project messages")
         val searchCriteria = MessageSearchCriteria()
         searchCriteria.projectids = SetSearchField(projectId)
         val messages = messageService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, Integer.MAX_VALUE)) as List<SimpleMessage>
-        messages.forEach { message ->
-            message.id = null
-            message.projectid = newProjectId
-            messageService.saveWithSession(message, username)
+        messages.forEach {
+            it.id = null
+            it.projectid = newProjectId
+            messageService.saveWithSession(it, username)
         }
     }
 

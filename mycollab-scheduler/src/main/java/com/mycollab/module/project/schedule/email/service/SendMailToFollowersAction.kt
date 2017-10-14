@@ -191,7 +191,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             MailI18nEnum.Project_Footer, getProjectName(), getProjectNotificationSettingLink(context))
 
     private fun getProjectNotificationSettingLink(context: MailContext<B>): String {
-        return A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId)).
+        return A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId!!)).
                 appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
     }
 
