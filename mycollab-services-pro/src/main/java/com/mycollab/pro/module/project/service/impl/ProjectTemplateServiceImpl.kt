@@ -61,7 +61,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
 
             return newProjectId
         } else {
-            throw MyCollabException("Can not find project with id " + projectId)
+            throw MyCollabException("Can not find project with id $projectId")
         }
     }
 
@@ -248,7 +248,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         }
     }
 
-    private fun cloneProjectMilestone(projectId: Int?, newProjectId: Int?, username: String): Map<Int, Int> {
+    private fun cloneProjectMilestone(projectId: Int, newProjectId: Int, username: String): Map<Int, Int> {
         LOG.info("Clone project milestones")
         val milestoneMapIds = HashMap<Int, Int>()
         val searchCriteria = MilestoneSearchCriteria()

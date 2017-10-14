@@ -667,7 +667,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.setType(StringSearchField.and(ticket.getType()));
                     searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));

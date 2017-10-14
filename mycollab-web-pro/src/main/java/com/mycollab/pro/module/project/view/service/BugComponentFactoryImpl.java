@@ -458,7 +458,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));

@@ -128,6 +128,9 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     val recipients = arrayListOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
+                    if (it.username != notification.changeby) {
+
+                    }
                 }
             }
         }

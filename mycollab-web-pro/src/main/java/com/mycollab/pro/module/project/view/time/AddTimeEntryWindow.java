@@ -267,10 +267,10 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private void updateProjectTimeLogging() {
         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setIsBillable(new BooleanSearchField(true));
+        searchCriteria.setBillable(new BooleanSearchField(true));
         Double totalBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        searchCriteria.setIsBillable(new BooleanSearchField(false));
+        searchCriteria.setBillable(new BooleanSearchField(false));
         Double totalNonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
         CurrentProjectVariables.getProject().setTotalBillableHours(totalBillableHours);
         CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);

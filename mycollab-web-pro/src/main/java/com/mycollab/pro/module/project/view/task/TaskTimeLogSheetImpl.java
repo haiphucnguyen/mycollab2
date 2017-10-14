@@ -69,7 +69,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(true));
+        criteria.setBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
@@ -78,7 +78,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(false));
+        criteria.setBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 

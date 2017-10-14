@@ -159,13 +159,13 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         final String fromDate = UserUIContext.formatDate(searchPanel.getFromDate());
         final String toDate = UserUIContext.formatDate(searchPanel.getToDate());
 
-        searchCriteria.setIsBillable(new BooleanSearchField(true));
+        searchCriteria.setBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        searchCriteria.setIsBillable(new BooleanSearchField(false));
+        searchCriteria.setBillable(new BooleanSearchField(false));
         Double nonBillableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        searchCriteria.setIsBillable(null);
+        searchCriteria.setBillable(null);
         final Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         if (totalHour > 0) {

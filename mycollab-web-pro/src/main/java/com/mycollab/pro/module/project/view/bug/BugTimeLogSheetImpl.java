@@ -88,7 +88,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(true));
+        criteria.setBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
@@ -97,7 +97,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(false));
+        criteria.setBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
@@ -110,7 +110,6 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         BugTimeLogEditWindow(final SimpleBug bean) {
             super(bean);
             this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
-            this.setModal(true);
             this.setModal(true);
             this.addCloseListener((CloseListener) e -> BugTimeLogSheetImpl.this.displayTime(bean));
         }

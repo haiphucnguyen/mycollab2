@@ -66,7 +66,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(true));
+        criteria.setBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
@@ -75,7 +75,7 @@ public class RiskTimeLogSheetImpl extends RiskTimeLogSheet {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(StringSearchField.and(ProjectTypeConstants.RISK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
-        criteria.setIsBillable(new BooleanSearchField(false));
+        criteria.setBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 

@@ -171,13 +171,13 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
         }
 
         override fun formatField(context: MailContext<*>, value: String): String {
-            if (StringUtils.isBlank(value)) {
-                return Span().write()
+            return if (StringUtils.isBlank(value)) {
+                Span().write()
             } else {
                 val milestoneId = value.toInt()
                 val milestoneService = AppContextUtil.getSpringBean(MilestoneService::class.java)
                 val milestone = milestoneService.findById(milestoneId, context.user.accountId)
-                return if (milestone != null) {
+                if (milestone != null) {
                     val img = Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
                     val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
                             milestone.projectid, milestone.id)

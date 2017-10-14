@@ -270,13 +270,13 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             searchCriteria.setProjectIds(new SetSearchField<>(getProjectIds()));
         }
 
-        searchCriteria.setIsBillable(new BooleanSearchField(true));
+        searchCriteria.setBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        searchCriteria.setIsBillable(new BooleanSearchField(false));
+        searchCriteria.setBillable(new BooleanSearchField(false));
         Double nonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        searchCriteria.setIsBillable(null);
+        searchCriteria.setBillable(null);
         Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         if (totalHour > 0) {

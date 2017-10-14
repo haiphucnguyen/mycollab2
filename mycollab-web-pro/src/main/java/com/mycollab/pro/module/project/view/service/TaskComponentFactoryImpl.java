@@ -428,7 +428,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
                     searchCriteria.setTypeId(new NumberSearchField(task.getId()));
