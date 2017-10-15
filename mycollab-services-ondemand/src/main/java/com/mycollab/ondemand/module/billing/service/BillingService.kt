@@ -26,7 +26,7 @@ interface BillingService : IService {
                         password: String, email: String, timezoneId: String,
                         isEmailVerified: Boolean)
 
-    fun cancelAccount(accountId: Int, feedback: CustomerFeedbackWithBLOBs)
+    fun cancelAccount(accountId: Int, feedback: CustomerFeedbackWithBLOBs?)
 
     @CacheEvict
     fun updateBillingPlan(@CacheKey accountId: Int, oldPlan: BillingPlan, newPlan: BillingPlan)

@@ -28,7 +28,7 @@ class DeleteObsoleteAccountJob(private val billingService: BillingService) : Gen
         searchCriteria.statuses = SetSearchField(AccountStatusConstants.TRIAL)
         searchCriteria.lastAccessTime = DateSearchField(LocalDate().minusDays(30).toDate())
 
-        val obsoleteAccounts = billingService.findPageableListByCriteria(BasicSearchRequest(searchCriteria))
-        obsoleteAccounts.forEach { billingService.cancelAccount(it.id, null) }
+//        val obsoleteAccounts = billingService.findPageableListByCriteria(BasicSearchRequest(searchCriteria))
+//        obsoleteAccounts.forEach { billingService.cancelAccount(it.id, null) }
     }
 }
