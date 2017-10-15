@@ -12,26 +12,21 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.aspect
+package com.mycollab.module.user.domain.criteria
 
-import java.util.HashMap
+import com.mycollab.db.arguments.SearchCriteria
+import com.mycollab.db.arguments.StringSearchField
 
 /**
+ *
  * @author MyCollab Ltd.
- * @since 5.0.1
+ * @since 1.0
  */
-object ClassInfoMap {
-    private val mapWrapper = mutableMapOf<Class<*>, ClassInfo>()
+class RoleSearchCriteria : SearchCriteria() {
 
-    @JvmStatic fun put(cls: Class<*>, classInfo: ClassInfo) {
-        mapWrapper.put(cls, classInfo)
-    }
+    var username: StringSearchField? = null
+    var roleName: StringSearchField? = null
 
-    @JvmStatic fun getClassInfo(cls: Class<*>): ClassInfo? = mapWrapper[cls]
-
-    @JvmStatic fun getModule(cls: Class<*>): String = mapWrapper[cls]!!.module
-
-    @JvmStatic fun getType(cls: Class<*>): String = mapWrapper[cls]!!.type
 }

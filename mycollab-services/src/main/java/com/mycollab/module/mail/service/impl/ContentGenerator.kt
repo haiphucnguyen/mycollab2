@@ -22,7 +22,6 @@ import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.schedule.email.MailStyles
-import com.mycollab.spring.AppContextUtil
 import freemarker.template.Configuration
 import org.joda.time.LocalDate
 import org.springframework.beans.factory.InitializingBean
@@ -38,9 +37,10 @@ import java.util.*
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class ContentGenerator(private val applicationConfiguration: ApplicationConfiguration,
+open class ContentGenerator(private val applicationConfiguration: ApplicationConfiguration,
                        private val deploymentMode: IDeploymentMode,
-                       private val templateEngine: Configuration) : IContentGenerator, InitializingBean {
+                       private val templateEngine: Configuration,
+                       private val storageFactory: AbstractStorageService) : IContentGenerator, InitializingBean {
     private val templateContext: MutableMap<String, Any> = mutableMapOf()
 
     @Throws(Exception::class)
@@ -56,7 +56,6 @@ class ContentGenerator(private val applicationConfiguration: ApplicationConfigur
         putVariable("siteName", SiteConfiguration.getDefaultSiteName())
         putVariable("styles", MailStyles.instance())
 
-        val storageFactory = AppContextUtil.getSpringBean(AbstractStorageService::class.java)
         putVariable("storageFactory", storageFactory)
     }
 
