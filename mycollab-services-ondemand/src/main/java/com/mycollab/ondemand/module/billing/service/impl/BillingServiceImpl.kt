@@ -99,7 +99,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
                 isEmailVerified, true, accountId)
     }
 
-    override fun cancelAccount(accountId: Int, feedback: CustomerFeedbackWithBLOBs) {
+    override fun cancelAccount(accountId: Int, feedback: CustomerFeedbackWithBLOBs?) {
         val subscriptionExample = BillingSubscriptionExample()
         subscriptionExample.createCriteria().andAccountidEqualTo(accountId)
         val billingSubscriptions = billingSubscriptionMapper.selectByExample(subscriptionExample)
