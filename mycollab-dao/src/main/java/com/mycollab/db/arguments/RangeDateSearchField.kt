@@ -36,8 +36,4 @@ class RangeDateSearchField : SearchField {
         this.from = from
         this.to = to
     }
-
-    companion object {
-        private val serialVersionUID = 1L
-    }
 }

@@ -1,6 +1,5 @@
 package com.mycollab.premium.configuration
 
-import com.mycollab.configuration.ApplicationProperties
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.configuration.SiteConfiguration
@@ -27,10 +26,9 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override val isPremiumEdition: Boolean
         get() = true
 
-    override fun getSiteUrl(subDomain: String?): String =
-            "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/"
+    override fun getSiteUrl(subDomain: String?): String = String.format(serverConfiguration.siteUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
 
-    override fun getResourceDownloadUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/file/"
+    override fun getResourceDownloadUrl(): String = String.format(serverConfiguration.resourceDownloadUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
 
-    override fun getCdnUrl(): String = "http://${SiteConfiguration.getServerAddress()}:${serverConfiguration.port}/assets/"
+    override fun getCdnUrl(): String = String.format(serverConfiguration.cdnUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
 }

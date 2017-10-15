@@ -18,7 +18,6 @@ package com.mycollab.module.mail.service.impl
 
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.module.mail.service.IContentGenerator
@@ -67,9 +66,9 @@ class ContentGenerator(private val applicationConfiguration: ApplicationConfigur
 
     override fun parseFile(templateFilePath: String): String = parseFile(templateFilePath, null)
 
-    override fun parseFile(templateFilePath: String, locale: Locale?): String {
+    override fun parseFile(templateFilePath: String, currentLocale: Locale?): String {
         val writer = StringWriter()
-        val template = templateEngine.getTemplate(templateFilePath, locale)
+        val template = templateEngine.getTemplate(templateFilePath, currentLocale)
         template.process(templateContext, writer)
         return writer.toString()
     }

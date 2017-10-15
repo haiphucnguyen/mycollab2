@@ -32,20 +32,15 @@ import java.util.zip.ZipFile
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CheckUpdateJob : GenericQuartzJobBean() {
-
-    @Autowired
-    private val serverConfiguration: ServerConfiguration? = null
-
-    @Autowired
-    private val licenseResolver: LicenseResolver? = null
+class CheckUpdateJob(private val serverConfiguration: ServerConfiguration,
+                     private val licenseResolver: LicenseResolver ) : GenericQuartzJobBean() {
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val restTemplate = RestTemplate()
-        val licenseInfo = licenseResolver!!.licenseInfo
+        val licenseInfo = licenseResolver.licenseInfo
         val customerId = EnDecryptHelper.encryptText(licenseInfo!!.customerId!!)
-        val result = restTemplate.getForObject(serverConfiguration!!.getApiUrl("checkpremiumupdate?version=" +
+        val result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkpremiumupdate?version=" +
                 Version.getVersion() + "&customerId=" + customerId), String::class.java)
         val props = JsonDeSerializer.fromJson(result, Properties::class.java)
         val version = props.getProperty("version")

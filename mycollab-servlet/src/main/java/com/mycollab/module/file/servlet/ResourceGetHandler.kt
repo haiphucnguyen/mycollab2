@@ -59,7 +59,7 @@ class ResourceGetHandler : GenericHttpServlet() {
                 }
             }
         } else {
-            LOG.error("Can not find resource has path {}", path)
+            LOG.error("Can not find resource has path $path")
         }
     }
 

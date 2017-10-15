@@ -10,6 +10,9 @@ server:
   apiUrl: https://api.mycollab.com/api/
   port: 8080
   storageSystem: s3
+  siteUrl:  https://%s.mycollab.com/
+  resourceDownloadUrl: https://d6qwzhqavnbce.cloudfront.net/
+  cdnUrl: https://%s.mycollab.com/assets/
 
 endpoints:
   sensitive: false
