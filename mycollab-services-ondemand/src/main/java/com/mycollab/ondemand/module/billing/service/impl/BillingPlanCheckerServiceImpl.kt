@@ -24,7 +24,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
         val billingPlan = billingService.findBillingPlan(sAccountId)
         val numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(sAccountId)
 
-        if (numOfActiveProjects >= billingPlan.numprojects) {
+        if (numOfActiveProjects >= billingPlan!!.numprojects) {
             throw UsageExceedBillingPlanException()
         }
     }
@@ -33,7 +33,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
     override fun validateAccountCanCreateNewUser(sAccountId: Int) {
         val billingPlan = billingService.findBillingPlan(sAccountId)
         val numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId)
-        if (numOfUsers >= billingPlan.numusers) {
+        if (numOfUsers >= billingPlan!!.numusers) {
             throw UsageExceedBillingPlanException()
         }
     }
