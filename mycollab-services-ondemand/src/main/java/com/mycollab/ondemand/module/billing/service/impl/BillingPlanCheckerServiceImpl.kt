@@ -42,7 +42,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
     override fun validateAccountCanUploadMoreFiles(sAccountId: Int, extraBytes: Long) {
         val billingPlan = billingService.findBillingPlan(sAccountId)
         if (billingPlan == null) {
-            LOG.error("Can not define the billing plan for account ", sAccountId)
+            LOG.error("Can not define the billing plan for account $sAccountId")
             return
         }
 

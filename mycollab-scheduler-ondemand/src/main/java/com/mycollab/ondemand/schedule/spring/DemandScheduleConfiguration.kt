@@ -1,14 +1,11 @@
 package com.mycollab.ondemand.schedule.spring
 
 import com.mycollab.ondemand.schedule.jobs.*
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean
 import org.springframework.scheduling.quartz.JobDetailFactoryBean
-
-import javax.sql.DataSource
 
 /**
  * @author MyCollab Ltd.
@@ -16,10 +13,7 @@ import javax.sql.DataSource
  */
 @Configuration
 @Profile("production")
-class DemandScheduleConfiguration {
-
-    @Autowired
-    private val dataSource: DataSource? = null
+open class DemandScheduleConfiguration {
 
     @Bean
     fun sendCountUserLoginByDateJob(): JobDetailFactoryBean {
