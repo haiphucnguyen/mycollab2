@@ -16,7 +16,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
 open class PremiumScheduleConfiguration {
 
     @Bean
-    fun checkUpdateJobBean(): JobDetailFactoryBean {
+    open fun checkUpdateJobBean(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(CheckUpdateJob::class.java)
@@ -24,7 +24,7 @@ open class PremiumScheduleConfiguration {
     }
 
     @Bean
-    fun checkUpdateJobTrigger(): CronTriggerFactoryBean {
+    open fun checkUpdateJobTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
         bean.setJobDetail(checkUpdateJobBean().`object`)
         bean.setCronExpression("0 0 8 * * ?")
