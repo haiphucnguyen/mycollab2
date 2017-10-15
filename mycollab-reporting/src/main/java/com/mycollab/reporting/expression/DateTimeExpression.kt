@@ -12,39 +12,28 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.db.arguments
+package com.mycollab.reporting.expression
 
-import com.mycollab.core.utils.BeanUtility
+import com.mycollab.core.utils.DateTimeUtils
+import net.sf.dynamicreports.report.definition.ReportParameters
 
-import java.io.Serializable
+import java.util.Date
+import java.util.Locale
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.1.2
  */
-open class SearchField : Serializable {
+class DateTimeExpression(field: String) : SimpleFieldExpression<String>(field) {
 
-    var operation = AND
-
-    constructor()
-
-    constructor(operation: String) {
-        this.operation = operation
-    }
-
-    override fun toString(): String {
-        return BeanUtility.printBeanObj(this)
+    override fun evaluate(reportParameters: ReportParameters): String {
+        val date = reportParameters.getFieldValue<Date>(field)
+        return DateTimeUtils.formatDate(date, "DD/mm/yyyy", Locale.US)
     }
 
     companion object {
-        private const val serialVersionUID = 1L
-
-        @JvmField
-        val OR = "OR"
-
-        @JvmField
-        val AND = "AND"
+        private val serialVersionUID = 1L
     }
 }

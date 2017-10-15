@@ -24,7 +24,7 @@ class AccountThemeServiceImpl(private val accountThemeMapper: AccountThemeMapper
         val ex = AccountThemeExample()
         ex.createCriteria().andSaccountidEqualTo(sAccountId)
         val accountThemes = accountThemeMapper.selectByExample(ex)
-        return if (accountThemes != null && accountThemes.size > 0) {
+        return if (accountThemes.isNotEmpty()) {
             accountThemes[0]
         } else null
 

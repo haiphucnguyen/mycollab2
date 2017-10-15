@@ -12,20 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.db.query
+package com.mycollab.reporting.expression
 
-import com.mycollab.db.arguments.NoValueSearchField
-import com.mycollab.db.arguments.SearchCriteria
+import net.sf.dynamicreports.report.definition.ReportParameters
 
 /**
- * @author MyCollab Ltd
- * @since 5.4.3
+ * @author MyCollab Ltd.
+ * @since 4.1.2
  */
-abstract class SearchCriteriaBridgeParam<S : SearchCriteria>(id: String) : Param(id) {
+class MailExpression(field: String) : SimpleFieldExpression<String>(field) {
 
-    abstract fun injectCriteriaInList(searchCriteria: S, oper: String, value: Collection<String>): S
-
-    abstract fun injectCriteriaNotInList(searchCriteria: S, oper: String, value: Collection<String>): S
+    override fun evaluate(reportParameters: ReportParameters): String {
+        val stringValue = reportParameters.getFieldValue<Any>(field).toString()
+        return "mailto:$stringValue"
+    }
 }

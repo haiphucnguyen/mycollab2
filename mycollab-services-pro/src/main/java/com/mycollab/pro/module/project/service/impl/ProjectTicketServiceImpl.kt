@@ -67,21 +67,21 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
         bug.status = BugStatus.Resolved.name
         val bugSearchCriteria = BugSearchCriteria()
         bugSearchCriteria.addExtraField(BugSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
-                setOf<Int>(milestoneId)))
+                setOf(milestoneId)))
         bugService.updateBySearchCriteria(bug, bugSearchCriteria)
 
         val risk = Risk()
         risk.status = StatusI18nEnum.Closed.name
         val riskSearchCriteria = RiskSearchCriteria()
         riskSearchCriteria.addExtraField(RiskSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
-                setOf<Int>(milestoneId)))
+                setOf(milestoneId)))
         riskService.updateBySearchCriteria(risk, riskSearchCriteria)
 
         val task = Task()
         task.status = StatusI18nEnum.Closed.name
         val taskSearchCriteria = TaskSearchCriteria()
         taskSearchCriteria.addExtraField(TaskSearchCriteria.p_milestoneId.buildPropertyParamInList(SearchField.AND,
-                setOf<Int>(milestoneId)))
+                setOf(milestoneId)))
         taskService.updateBySearchCriteria(task, taskSearchCriteria)
 
     }

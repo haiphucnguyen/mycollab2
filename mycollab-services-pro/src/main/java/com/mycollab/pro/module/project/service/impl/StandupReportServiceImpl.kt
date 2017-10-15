@@ -48,7 +48,7 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
     override val searchMapper: ISearchableDAO<StandupReportSearchCriteria>
         get() = standupReportMapperExt
 
-    override fun findById(standupId: Int, sAccountId: Int): SimpleStandupReport =
+    override fun findById(standupId: Int, sAccountId: Int): SimpleStandupReport? =
             standupReportMapperExt.findReportById(standupId)
 
     override fun findStandupReportByDateUser(projectId: Int, username: String, onDate: Date, sAccountId: Int): SimpleStandupReport? {

@@ -41,15 +41,15 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
             val taskGanttItems = ArrayList<TaskGanttItem>()
             val bugGanttItems = ArrayList<TaskGanttItem>()
 
-            ganttItems.forEach { ganttItem ->
-                when (ganttItem) {
-                    is MilestoneGanttItem -> milestoneGanttItems.add(ganttItem)
-                    is TaskGanttItem -> if (ProjectTypeConstants.BUG == ganttItem.getType()) {
-                        bugGanttItems.add(ganttItem)
-                    } else if (ProjectTypeConstants.TASK == ganttItem.getType()) {
-                        taskGanttItems.add(ganttItem)
+            ganttItems.forEach {
+                when (it) {
+                    is MilestoneGanttItem -> milestoneGanttItems.add(it)
+                    is TaskGanttItem -> if (ProjectTypeConstants.BUG == it.getType()) {
+                        bugGanttItems.add(it)
+                    } else if (ProjectTypeConstants.TASK == it.getType()) {
+                        taskGanttItems.add(it)
                     }
-                    else -> throw MyCollabException("Do not support save gantt item $ganttItem")
+                    else -> throw MyCollabException("Do not support save gantt item $it")
                 }
             }
             massUpdateMilestoneGanttItems(milestoneGanttItems, sAccountId)
@@ -169,21 +169,20 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                 "name = ?, `startdate` = ?, `enddate` = ?, " +
                                 "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=?, `ganttindex`=?, " +
                                 "`milestoneId`=?, `parentTaskId`=? WHERE `id` = ?")
-                        for (ganttItem in taskGanttItems) {
-                            if (ProjectTypeConstants.TASK == ganttItem.type) {
-                                batchTasksStatement.setString(1, ganttItem.name)
-                                batchTasksStatement.setDate(2, getDateWithNullValue(ganttItem.startDate))
-                                batchTasksStatement.setDate(3, getDateWithNullValue(ganttItem.endDate))
+                        taskGanttItems.forEach {
+                            if (ProjectTypeConstants.TASK == it.type) {
+                                batchTasksStatement.setString(1, it.name)
+                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
+                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
-                                batchTasksStatement.setDouble(5, ganttItem.progress!!)
-                                batchTasksStatement.setString(6, ganttItem.assignUser)
-                                batchTasksStatement.setInt(7, ganttItem.ganttIndex!!)
-                                batchTasksStatement.setObject(8, ganttItem.milestoneId)
-                                batchTasksStatement.setObject(9, ganttItem.parentTaskId)
-                                batchTasksStatement.setInt(10, ganttItem.id!!)
+                                batchTasksStatement.setDouble(5, it.progress!!)
+                                batchTasksStatement.setString(6, it.assignUser)
+                                batchTasksStatement.setInt(7, it.ganttIndex!!)
+                                batchTasksStatement.setObject(8, it.milestoneId)
+                                batchTasksStatement.setObject(9, it.parentTaskId)
+                                batchTasksStatement.setInt(10, it.id!!)
                                 batchTasksStatement.addBatch()
                             }
-
                         }
                         batchTasksStatement.executeBatch()
                         connection.commit()
@@ -210,20 +209,19 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                 "name = ?, `startdate` = ?, `enddate` = ?, " +
                                 "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignuser`=?, `ganttindex`=?, " +
                                 "`milestoneId`=? WHERE `id` = ?")
-                        for (ganttItem in taskGanttItems) {
-                            if (ProjectTypeConstants.BUG == ganttItem.type) {
-                                batchTasksStatement.setString(1, ganttItem.name)
-                                batchTasksStatement.setDate(2, getDateWithNullValue(ganttItem.startDate))
-                                batchTasksStatement.setDate(3, getDateWithNullValue(ganttItem.endDate))
+                        taskGanttItems.forEach {
+                            if (ProjectTypeConstants.BUG == it.type) {
+                                batchTasksStatement.setString(1, it.name)
+                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
+                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
-                                batchTasksStatement.setDouble(5, MoreObjects.firstNonNull(ganttItem.progress, 0.0))
-                                batchTasksStatement.setString(6, ganttItem.assignUser)
-                                batchTasksStatement.setInt(7, ganttItem.ganttIndex!!)
-                                batchTasksStatement.setObject(8, ganttItem.milestoneId)
-                                batchTasksStatement.setInt(9, ganttItem.id!!)
+                                batchTasksStatement.setDouble(5, MoreObjects.firstNonNull(it.progress, 0.0))
+                                batchTasksStatement.setString(6, it.assignUser)
+                                batchTasksStatement.setInt(7, it.ganttIndex!!)
+                                batchTasksStatement.setObject(8, it.milestoneId)
+                                batchTasksStatement.setInt(9, it.id!!)
                                 batchTasksStatement.addBatch()
                             }
-
                         }
                         batchTasksStatement.executeBatch()
                         connection.commit()

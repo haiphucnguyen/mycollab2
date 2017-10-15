@@ -12,20 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.db.query
+package com.mycollab.reporting.generator
 
-import com.mycollab.db.arguments.NoValueSearchField
-import com.mycollab.db.arguments.SearchCriteria
+import com.mycollab.reporting.ReportStyles
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder
 
 /**
  * @author MyCollab Ltd
- * @since 5.4.3
+ * @since 5.2.12
  */
-abstract class SearchCriteriaBridgeParam<S : SearchCriteria>(id: String) : Param(id) {
-
-    abstract fun injectCriteriaInList(searchCriteria: S, oper: String, value: Collection<String>): S
-
-    abstract fun injectCriteriaNotInList(searchCriteria: S, oper: String, value: Collection<String>): S
+interface ComponentBuilderGenerator {
+    fun getCompBuilder(reportStyles: ReportStyles): ComponentBuilder<*, *>
 }

@@ -12,39 +12,25 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.db.arguments
+package com.mycollab.reporting
 
-import com.mycollab.core.utils.BeanUtility
-
-import java.io.Serializable
+import com.mycollab.reporting.generator.ComponentBuilderGenerator
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.1.2
  */
-open class SearchField : Serializable {
+object ColumnBuilderClassMapper {
+    private val mapInjection = mutableMapOf<Class<*>, Map<String, ComponentBuilderGenerator>>()
 
-    var operation = AND
-
-    constructor()
-
-    constructor(operation: String) {
-        this.operation = operation
+    @JvmStatic
+    fun put(cls: Class<*>, columns: Map<String, ComponentBuilderGenerator>) {
+        mapInjection.put(cls, columns)
     }
 
-    override fun toString(): String {
-        return BeanUtility.printBeanObj(this)
-    }
-
-    companion object {
-        private const val serialVersionUID = 1L
-
-        @JvmField
-        val OR = "OR"
-
-        @JvmField
-        val AND = "AND"
-    }
+    @JvmStatic
+    fun getListFieldBuilder(cls: Class<*>): Map<String, ComponentBuilderGenerator>? = mapInjection[cls]
 }
