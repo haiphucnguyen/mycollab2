@@ -12,32 +12,16 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.resources;
+package com.mycollab.module.user.accountsettings.team.view
 
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.StreamResource.StreamSource;
-
-import java.io.InputStream;
+import com.mycollab.module.user.domain.SimpleRole
+import com.mycollab.module.user.domain.criteria.RoleSearchCriteria
+import com.mycollab.vaadin.web.ui.IListView
 
 /**
  * @author MyCollab Ltd.
- * @since 3.0
+ * @since 1.0
  */
-public abstract class LazyStreamSource implements StreamResource.StreamSource {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    public InputStream getStream() {
-        StreamSource streamSource = buildStreamSource();
-        return streamSource.getStream();
-    }
-
-    public String getFilename() {
-        return null;
-    }
-
-    abstract protected StreamSource buildStreamSource();
-
-}
+interface RoleListView : IListView<RoleSearchCriteria, SimpleRole>

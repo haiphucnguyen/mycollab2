@@ -12,17 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.accountsettings.team.view;
-
-import com.mycollab.vaadin.mvp.PageView;
-import com.vaadin.ui.Component;
+package com.mycollab.core
 
 /**
- * @author MyCollab Ltd.
- * @since 2.0
+ * @author MyCollab Ltd
+ * @since 5.3.5
  */
-public interface UserPermissionManagementView extends PageView {
-    Component gotoSubView(String name);
+class BroadcastMessage(private val sAccountId: Int?, val clientId: String?, val wrapObj: Any) {
+
+    constructor(wrapObj: Any) : this(null, null, wrapObj) {}
+
+    fun getsAccountId(): Int? = sAccountId
 }

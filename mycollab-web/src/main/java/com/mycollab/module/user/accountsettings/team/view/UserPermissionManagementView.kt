@@ -12,20 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.assignments;
+package com.mycollab.module.user.accountsettings.team.view
 
-import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.vaadin.event.HasSearchHandlers;
-import com.mycollab.vaadin.mvp.LazyPageView;
+import com.mycollab.vaadin.mvp.PageView
+import com.vaadin.ui.Component
 
 /**
- * @author MyCollab Ltd
- * @since 5.2.0
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
-public interface CalendarView extends LazyPageView {
-    void queryAssignments(ProjectTicketSearchCriteria criteria);
-
-    HasSearchHandlers<ProjectTicketSearchCriteria> getSearchHandlers();
+interface UserPermissionManagementView : PageView {
+    fun gotoSubView(name: String): Component
 }

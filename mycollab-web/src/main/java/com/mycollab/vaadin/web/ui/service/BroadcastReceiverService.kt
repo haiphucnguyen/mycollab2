@@ -12,27 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.event;
+package com.mycollab.vaadin.web.ui.service
+
+import com.mycollab.core.BroadcastListener
+import com.mycollab.web.DesktopApplication
 
 /**
  * @author MyCollab Ltd
- * @since 5.2.5
+ * @since 5.3.5
  */
-public class DefaultEditFormHandler<T> implements IEditFormHandler<T> {
-    @Override
-    public void onSave(T bean) {
-
-    }
-
-    @Override
-    public void onSaveAndNew(T bean) {
-
-    }
-
-    @Override
-    public void onCancel() {
-
-    }
+interface BroadcastReceiverService : BroadcastListener {
+    fun registerApp(myCollabApp: DesktopApplication)
 }

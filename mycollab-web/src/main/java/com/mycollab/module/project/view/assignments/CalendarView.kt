@@ -12,17 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.web.ui.service;
+package com.mycollab.module.project.view.assignments
 
-import com.mycollab.core.BroadcastListener;
-import com.mycollab.web.DesktopApplication;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
+import com.mycollab.vaadin.event.HasSearchHandlers
+import com.mycollab.vaadin.mvp.LazyPageView
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.5
+ * @since 5.2.0
  */
-public interface BroadcastReceiverService extends BroadcastListener {
-    void registerApp(DesktopApplication myCollabApp);
+interface CalendarView : LazyPageView {
+
+    val searchHandlers: HasSearchHandlers<ProjectTicketSearchCriteria>
+    fun queryAssignments(criteria: ProjectTicketSearchCriteria)
 }

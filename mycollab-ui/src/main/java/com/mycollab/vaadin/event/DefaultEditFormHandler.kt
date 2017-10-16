@@ -12,17 +12,21 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.accountsettings.team.view;
-
-import com.mycollab.module.user.domain.SimpleRole;
-import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
-import com.mycollab.vaadin.web.ui.IListView;
+package com.mycollab.vaadin.event
 
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.2.5
  */
-public interface RoleListView extends IListView<RoleSearchCriteria, SimpleRole> {
+open class DefaultEditFormHandler<T> : IEditFormHandler<T> {
+    override fun onSave(bean: T) {
+    }
+
+    override fun onSaveAndNew(bean: T) {
+    }
+
+    override fun onCancel() {
+    }
 }
