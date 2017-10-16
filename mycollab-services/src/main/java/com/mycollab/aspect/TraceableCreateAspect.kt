@@ -26,7 +26,6 @@ import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Aspect
 import org.slf4j.LoggerFactory
 import org.springframework.aop.framework.Advised
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.lang.reflect.InvocationTargetException
 import java.util.*
@@ -37,10 +36,7 @@ import java.util.*
  */
 @Aspect
 @Component
-class TraceableCreateAspect {
-
-    @Autowired
-    private lateinit var activityStreamService: ActivityStreamService
+class TraceableCreateAspect(private var activityStreamService: ActivityStreamService) {
 
     @AfterReturning("execution(public * com.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
     fun traceSaveActivity(joinPoint: JoinPoint, bean: Any, username: String) {
@@ -56,7 +52,6 @@ class TraceableCreateAspect {
             } catch (e: Exception) {
                 LOG.error("Error when save activity for save action of service ${cls.name}", e)
             }
-
         }
     }
 
@@ -103,7 +98,7 @@ class TraceableCreateAspect {
             if ("" != traceableAnnotation.extraFieldName) {
                 val extraTypeId = PropertyUtils.getProperty(bean, traceableAnnotation.extraFieldName) as Int
                 activity.extratypeid = extraTypeId
-        }
+            }
             return activity
         }
     }

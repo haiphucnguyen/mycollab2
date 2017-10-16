@@ -1,9 +1,13 @@
 package com.mycollab.ondemand.module.billing.service.impl
 
+import com.mycollab.common.i18n.OptionI18nEnum
+import com.mycollab.db.arguments.NumberSearchField
+import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.module.billing.UsageExceedBillingPlanException
 import com.mycollab.module.billing.service.BillingPlanCheckerService
 import com.mycollab.module.ecm.service.DriveInfoService
-import com.mycollab.module.project.service.ProjectService
+import com.mycollab.module.project.dao.ProjectMapperExt
+import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria
 import com.mycollab.module.user.service.UserService
 import com.mycollab.ondemand.module.billing.service.BillingService
 import org.slf4j.LoggerFactory
@@ -15,14 +19,17 @@ import org.springframework.stereotype.Service
  */
 @Service
 class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
-                                    private val projectService: ProjectService,
+                                    private val projectMapperExt: ProjectMapperExt,
                                     private val userService: UserService,
                                     private val driveInfoService: DriveInfoService) : BillingPlanCheckerService {
 
     @Throws(UsageExceedBillingPlanException::class)
     override fun validateAccountCanCreateMoreProject(sAccountId: Int) {
         val billingPlan = billingService.findBillingPlan(sAccountId)
-        val numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(sAccountId)
+        val criteria = ProjectSearchCriteria()
+        criteria.saccountid = NumberSearchField(sAccountId)
+        criteria.projectStatuses = SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name)
+        val numOfActiveProjects = projectMapperExt.getTotalCount(criteria)
 
         if (numOfActiveProjects >= billingPlan!!.numprojects) {
             throw UsageExceedBillingPlanException()

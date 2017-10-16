@@ -27,7 +27,6 @@ import org.aspectj.lang.annotation.AfterReturning
 import org.aspectj.lang.annotation.Aspect
 import org.slf4j.LoggerFactory
 import org.springframework.aop.framework.Advised
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Configurable
 import org.springframework.stereotype.Component
 import java.util.*
@@ -39,13 +38,8 @@ import java.util.*
 @Aspect
 @Component
 @Configurable
-class MonitorItemAspect {
-
-    @Autowired
-    private lateinit var monitorItemService: MonitorItemService
-
-    @Autowired
-    private lateinit var relayEmailNotificationService: RelayEmailNotificationService
+class MonitorItemAspect(private var monitorItemService: MonitorItemService,
+                        private var relayEmailNotificationService: RelayEmailNotificationService) {
 
     @AfterReturning("execution(public * com.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
     fun traceSaveActivity(joinPoint: JoinPoint, bean: Any, username: String) {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class S3StorageServiceImpl : AbstractStorageService() {
+open class S3StorageServiceImpl : AbstractStorageService() {
 
     val bucket: String?
         get() = AmazonServiceConfiguration.instance.bucket

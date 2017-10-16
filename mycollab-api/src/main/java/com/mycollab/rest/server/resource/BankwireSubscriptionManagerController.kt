@@ -79,13 +79,14 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
 
             return "Ok"
         } catch (e: Exception) {
-            val errorMsg = StringBuilder()
-            errorMsg.append("customerCompany: ").append(customerCompany).append("\n")
-            errorMsg.append("customerEmail: ").append(customerEmail).append("\n")
-            errorMsg.append("customerName: ").append(customerName).append("\n")
-            errorMsg.append("orderId: ").append(orderId).append("\n")
-            errorMsg.append("orderReferrer: ").append(orderReferrer).append("\n")
-            LOG.error("Error white completing the order " + errorMsg, e)
+            val errorMsg = StringBuilder().apply {
+                append("customerCompany: ").append(customerCompany).append("\n")
+                append("customerEmail: ").append(customerEmail).append("\n")
+                append("customerName: ").append(customerName).append("\n")
+                append("orderId: ").append(orderId).append("\n")
+                append("orderReferrer: ").append(orderReferrer).append("\n")
+            }
+            LOG.error("Error white completing the order $errorMsg", e)
             throw MyCollabException(e)
         }
 

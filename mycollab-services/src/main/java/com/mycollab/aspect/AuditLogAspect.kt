@@ -34,7 +34,6 @@ import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.slf4j.LoggerFactory
 import org.springframework.aop.framework.Advised
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Configurable
 import org.springframework.stereotype.Component
 import java.io.Serializable
@@ -48,22 +47,11 @@ import java.util.*
 @Aspect
 @Component
 @Configurable
-class AuditLogAspect {
-
-    @Autowired
-    private lateinit var cacheService: CacheService
-
-    @Autowired
-    private lateinit var auditLogService: AuditLogService
-
-    @Autowired
-    private lateinit var activityStreamService: ActivityStreamService
-
-    @Autowired
-    private lateinit var monitorItemService: MonitorItemService
-
-    @Autowired
-    private lateinit var relayEmailNotificationService: RelayEmailNotificationService
+class AuditLogAspect(private var cacheService: CacheService,
+                     private var auditLogService: AuditLogService,
+                     private var activityStreamService: ActivityStreamService,
+                     private var monitorItemService: MonitorItemService,
+                     private var relayEmailNotificationService: RelayEmailNotificationService) {
 
     @Before("(execution(public * com.mycollab..service..*.updateWithSession(..)) || (execution(public * com.mycollab..service..*.updateSelectiveWithSession(..)))) && args(bean, username)")
     fun traceBeforeUpdateActivity(joinPoint: JoinPoint, bean: Any, username: String) {
@@ -91,9 +79,9 @@ class AuditLogAspect {
                 oldValue = findMethod.invoke(service, typeId, sAccountId)
                 val key = bean.toString() + ClassInfoMap.getType(cls) + typeId
 
-                cacheService!!.putValue(AUDIT_TEMP_CACHE, key, oldValue)
+                cacheService.putValue(AUDIT_TEMP_CACHE, key, oldValue)
             } catch (e: Exception) {
-                LOG.error("Error when save audit for save action of service " + cls.name, e)
+                LOG.error("Error when save audit for save action of service ${cls.name}", e)
             }
 
         }

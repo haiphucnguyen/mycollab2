@@ -131,9 +131,10 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
 
     override fun findBillingPlan(@CacheKey sAccountId: Int): BillingPlan {
         val billingAccount = billingAccountService.getBillingAccountById(sAccountId)
-        return when {
-            billingAccount != null -> billingAccount.billingPlan
-            else -> throw MyCollabException("Can not find the billing plan for account $sAccountId")
+        return if (billingAccount != null) {
+            billingAccount.billingPlan
+        } else {
+            throw MyCollabException("Can not find the billing plan for account $sAccountId")
         }
     }
 

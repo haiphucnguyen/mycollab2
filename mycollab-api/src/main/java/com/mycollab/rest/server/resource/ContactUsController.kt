@@ -33,15 +33,15 @@ class ContactUsController(private val extMailService: ExtMailService) {
                   @RequestParam("subject") subject: String,
                   @RequestParam("message") message: String): String {
         val bodyContent = Div().appendChild(Ul().appendChild(
-                Li().appendText(String.format("Name: %s", name)),
-                Li().appendText(String.format("Email: %s", email)),
-                Li().appendText(String.format("Company: %s", company)),
-                Li().appendText(String.format("Role: %s", role)),
-                Li().appendText(String.format("Industry: %s", industry)),
-                Li().appendText(String.format("Budget: %s", budget)),
-                Li().appendText(String.format("Subject: %s", subject)),
-                Li().appendText(String.format("Message: %s", message))))
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", listOf(MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write())
+                Li().appendText("Name: $name"),
+                Li().appendText("Email: $email"),
+                Li().appendText("Company: $company"),
+                Li().appendText("Role: $role"),
+                Li().appendText("Industry: $industry"),
+                Li().appendText("Budget: $budget"),
+                Li().appendText("Subject: $subject"),
+                Li().appendText("Message: $message")))
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write())
         return "Ok"
     }
 }

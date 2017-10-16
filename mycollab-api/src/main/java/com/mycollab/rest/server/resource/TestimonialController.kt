@@ -24,14 +24,14 @@ class TestimonialController(private val extMailService: ExtMailService) {
                @RequestParam("jobrole") jobrole: String, @RequestParam("email") email: String,
                @RequestParam("website") website: String, @RequestParam("testimonial") testimonial: String) {
         val bodyContent = Div().appendChild(Ul().appendChild(
-                Li().appendText(String.format("Display name: %s", displayname)),
-                Li().appendText(String.format("Company: %s", company)),
-                Li().appendText(String.format("Role: %s", jobrole)),
-                Li().appendText(String.format("Email: %s", email)),
-                Li().appendText(String.format("Website: %s", website)),
-                Li().appendText(String.format("Testimonial: %s", testimonial))))
+                Li().appendText("Display name: $displayname"),
+                Li().appendText("Company: $company"),
+                Li().appendText("Role: $jobrole"),
+                Li().appendText("Email: $email"),
+                Li().appendText("Website: $website"),
+                Li().appendText("Testimonial: $testimonial")))
         extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab",
-                listOf(MailRecipientField("hainguyen@mycollab.com", "Hai Nguyen")),
+                listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write())
     }
 }

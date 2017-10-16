@@ -25,7 +25,7 @@ class UserController(private val billingService: BillingService) {
                 LOG.debug("There are subdomains for user $username $result")
             }
             else -> {
-                LOG.debug("There is no subDomain for user {}", username)
+                LOG.debug("There is no subDomain for user $username")
                 result = emptyArray()
             }
         }
