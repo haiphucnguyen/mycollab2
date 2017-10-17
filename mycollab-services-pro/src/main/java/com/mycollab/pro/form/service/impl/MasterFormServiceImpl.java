@@ -1,20 +1,20 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.form.service.impl;
+package com.mycollab.pro.form.service.impl;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.cache.CacheKey;
@@ -32,6 +32,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import org.apache.commons.collections.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,8 @@ public class MasterFormServiceImpl implements MasterFormService {
     @Autowired
     private FormSectionFieldMapper formSectionFieldMapper;
 
-    @SuppressWarnings({"unchecked"})
     @Override
-    public DynaForm findCustomForm(@CacheKey Integer sAccountId, String moduleName) {
+    public DynaForm findCustomForm(int sAccountId, @NotNull String moduleName) {
         List<SimpleFormSection> sections = formSectionMapperExt.findSections(sAccountId, moduleName);
 
         if (CollectionUtils.isEmpty(sections)) {
@@ -102,7 +102,7 @@ public class MasterFormServiceImpl implements MasterFormService {
     }
 
     @Override
-    public void saveCustomForm(@CacheKey Integer sAccountId, String moduleName, DynaForm form) {
+    public void saveCustomForm(@CacheKey int sAccountId, String moduleName, DynaForm form) {
         LOG.debug("Save form section");
 
         int sectionCount = form.getSectionCount();

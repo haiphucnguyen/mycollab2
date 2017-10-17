@@ -51,6 +51,7 @@ class VaadinResourceFactory private constructor() {
 
         private val _instance = VaadinResourceFactory()
 
+        @JvmStatic
         val instance: VaadinResource?
             get() = _instance.vaadinResource
 
