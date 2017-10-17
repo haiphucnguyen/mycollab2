@@ -40,7 +40,7 @@ public class L2CacheEvictAspect {
         Advised advised = (Advised) pjp.getThis();
         Class<?> cls = advised.getTargetSource().getTargetClass();
 
-        if (CacheUtils.isInBlackList(CacheUtils.getEnclosingServiceInterface(cls))) {
+        if (CacheUtils.INSTANCE.isInBlackList(CacheUtils.INSTANCE.getEnclosingServiceInterface(cls))) {
             return;
         }
 
@@ -73,7 +73,7 @@ public class L2CacheEvictAspect {
                             }
                         }
 
-                        String prefixKey = CacheUtils.getEnclosingServiceInterfaceName(cls);
+                        String prefixKey = CacheUtils.INSTANCE.getEnclosingServiceInterfaceName(cls);
 
                         if (sAccountId != null) {
                             cacheService.removeCacheItem(sAccountId.toString(), prefixKey);

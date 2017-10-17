@@ -12,26 +12,24 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.configuration.logging;
+package com.mycollab.configuration.logging
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.filter.Filter;
-import ch.qos.logback.core.spi.FilterReply;
+import ch.qos.logback.classic.spi.ILoggingEvent
+import ch.qos.logback.core.filter.Filter
+import ch.qos.logback.core.spi.FilterReply
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-public class LogFilter extends Filter<ILoggingEvent> {
+class LogFilter : Filter<ILoggingEvent>() {
 
-    @Override
-    public FilterReply decide(ILoggingEvent event) {
-        if (event.getMessage().contains("Failed to execute SQL (stacktrace on DEBUG log level)")) {
-            return FilterReply.DENY;
-        } else {
-            return FilterReply.NEUTRAL;
-        }
-    }
+    override fun decide(event: ILoggingEvent): FilterReply =
+            if (event.message.contains("Failed to execute SQL (stacktrace on DEBUG log level)")) {
+                FilterReply.DENY
+            } else {
+                FilterReply.NEUTRAL
+            }
 }

@@ -26,7 +26,7 @@ class TranslationController {
         val base64Creds = String(base64CredsBytes)
 
         val headers = HttpHeaders()
-        headers.add("Authorization", "Basic " + base64Creds)
+        headers.add("Authorization", "Basic $base64Creds")
         headers.accept = Arrays.asList(MediaType.APPLICATION_OCTET_STREAM)
 
         val request = HttpEntity<String>(headers)

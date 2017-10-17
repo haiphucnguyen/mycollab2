@@ -16,7 +16,7 @@
  */
 package com.mycollab.core.cache
 
-import java.lang.annotation.*
+import java.lang.annotation.Inherited
 import kotlin.reflect.KClass
 
 /**

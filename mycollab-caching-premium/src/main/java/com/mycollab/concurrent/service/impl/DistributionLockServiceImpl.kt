@@ -15,9 +15,9 @@ class DistributionLockServiceImpl : DistributionLockService {
     override fun getLock(lockName: String): Lock? {
         return try {
             val ch = JChannel(DistributionLockServiceImpl::class.java.classLoader.getResourceAsStream("jgroups.xml")) // locking.xml needs to have a locking protocol towards the top
-            val lock_service = LockService(ch)
+            val lockService = LockService(ch)
             ch.connect("lock-cluster")
-            lock_service.getLock(lockName)
+            lockService.getLock(lockName)
         } catch (e: Exception) {
             LOG.error("Error while creating a lock instance", e)
             null

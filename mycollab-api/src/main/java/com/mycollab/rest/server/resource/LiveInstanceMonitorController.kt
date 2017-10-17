@@ -29,7 +29,7 @@ class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstance
             }
             else -> {
                 val liveInstances = liveInstanceMapper.selectByExample(ex)
-                if (liveInstances.size > 0) {
+                if (liveInstances.isNotEmpty()) {
                     val oldInstance = liveInstances[0]
                     instance.id = oldInstance.id
                     instance.installeddate = oldInstance.installeddate
