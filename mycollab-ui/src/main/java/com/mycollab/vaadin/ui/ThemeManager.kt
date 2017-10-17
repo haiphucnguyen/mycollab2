@@ -45,8 +45,8 @@ object ThemeManager {
 
         val extraStyles = StringBuilder()
 
-        extraStyles.append(".v-touchkit-navbar-caption { width: ").append(UIUtils.getBrowserWidth() - 144).append("px !important; }")
-        extraStyles.append(".v-touchkit-navbar-caption span { width: ").append(UIUtils.getBrowserWidth() - 144).append("px !important; }")
+        extraStyles.append(".v-touchkit-navbar-caption { width: ${UIUtils.getBrowserWidth() - 144}px !important; }")
+        extraStyles.append(".v-touchkit-navbar-caption span { width: ${UIUtils.getBrowserWidth() - 144}px !important; }")
 
         if (accountTheme.vtabsheetbg != null) {
             extraStyles.append(".section { background-color: #").append(accountTheme.vtabsheetbg).append("; }")
@@ -257,6 +257,7 @@ object ThemeManager {
 
     }
 
+    @JvmStatic
     fun loadDemoTheme(accountTheme: AccountTheme) {
         val demoExtraStyles = StringBuilder()
         /* Top Menu */

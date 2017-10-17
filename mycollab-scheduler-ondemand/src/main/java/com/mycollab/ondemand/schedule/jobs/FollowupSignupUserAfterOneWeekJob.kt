@@ -40,7 +40,7 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
         val accounts = billingService.findPageableListByCriteria(BasicSearchRequest(searchCriteria))
         accounts.forEach { account ->
             val accountOwners = account.accountOwners
-            accountOwners.forEach {
+            accountOwners?.forEach {
                 if (it.canSendEmail) {
                     val leadName = it.firstname + " " + it.lastname
                     contentGenerator.putVariable("lead", leadName)

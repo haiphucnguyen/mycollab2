@@ -72,7 +72,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                 }
 
                 contentGenerator.putVariable("lastname", lastname)
-                contentGenerator.putVariable("version", info.version)
+                contentGenerator.putVariable("version", info.version!!)
                 if ("Ultimate" == edition) {
                     contentGenerator.putVariable("downloadLink", String.format("https://api.mycollab.com/download/verify?email=%s&&edition=Ultimate", email))
                 } else {
