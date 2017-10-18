@@ -8,5 +8,5 @@ import com.mycollab.db.persistence.service.ICrudService
  * @since 6.0.0
  */
 interface NotificationItemService : ICrudService<Int, NotificationItem> {
-    fun batchInsertItems(notificationUsers: List<String>, module:String, type: String, typeId: String, message: String, sAccountId: Int)
+    fun batchInsertItems(notificationUsers: List<String>, module:String, type: String, typeId: String, messages: List<String>, sAccountId: Int)
 }

@@ -65,11 +65,23 @@ class ProjectMilestoneRelayEmailNotificationActionImpl : SendMailToAllMembersAct
     override fun getCreateSubject(context: MailContext<SimpleMilestone>): String = context.getMessage(
             MilestoneI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getCreateSubjectNotification(context: MailContext<SimpleMilestone>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getUpdateSubject(context: MailContext<SimpleMilestone>): String = context.getMessage(
             MilestoneI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleMilestone>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCommentSubject(context: MailContext<SimpleMilestone>): String = context.getMessage(
             MilestoneI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
+
+    override fun getCommentSubjectNotification(context: MailContext<SimpleMilestone>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 

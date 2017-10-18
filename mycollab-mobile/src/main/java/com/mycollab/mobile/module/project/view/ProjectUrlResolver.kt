@@ -44,7 +44,7 @@ open class ProjectUrlResolver : UrlResolver() {
     fun build(): UrlResolver {
         this.addSubResolver("dashboard", DashboardUrlResolver())
         this.addSubResolver("activities", ActivityUrlResolver())
-        this.addSubResolver("message", MessageUrlResolver())
+        this.addSubResolver("messages", MessageUrlResolver())
         this.addSubResolver("milestone", MilestoneUrlResolver())
         this.addSubResolver("ticket", TicketUrlResolver())
         this.addSubResolver("task", TaskUrlResolver())

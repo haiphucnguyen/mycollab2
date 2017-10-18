@@ -248,7 +248,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             }
 
 //            myProjectTab.addTab(constructProjectReportComponent(), ProjectTypeConstants.REPORTS, 12,
-//                    UserUIContext.getMessage(PageI18nEnum.LIST),
+//                    UserUIContext.getMessages(PageI18nEnum.LIST),
 //                    GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProjectLink(prjId),
 //                    ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
 

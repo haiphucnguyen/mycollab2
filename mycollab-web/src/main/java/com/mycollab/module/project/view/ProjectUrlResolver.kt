@@ -53,7 +53,7 @@ open class ProjectUrlResolver : UrlResolver() {
         this.addSubResolver("favorite", ProjectFavoriteUrlResolver())
         this.addSubResolver("gantt", GanttUrlResolver())
         this.addSubResolver("reports", ReportUrlResolver())
-        this.addSubResolver("message", MessageUrlResolver())
+        this.addSubResolver("messages", MessageUrlResolver())
         this.addSubResolver("milestone", MilestoneUrlResolver())
         this.addSubResolver("ticket", TicketUrlResolver())
         this.addSubResolver("task", TaskUrlResolver())

@@ -49,9 +49,15 @@ class ProjectPageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<P
 
     override fun getCreateSubject(context: MailContext<Page>): String = ""
 
+    override fun getCreateSubjectNotification(context: MailContext<Page>): String = ""
+
     override fun getUpdateSubject(context: MailContext<Page>): String = ""
 
+    override fun getUpdateSubjectNotification(context: MailContext<Page>): String = ""
+
     override fun getCommentSubject(context: MailContext<Page>): String = ""
+
+    override fun getCommentSubjectNotification(context: MailContext<Page>): String = ""
 
     override fun getItemFieldMapper(): ItemFieldMapper = ItemFieldMapper()
 

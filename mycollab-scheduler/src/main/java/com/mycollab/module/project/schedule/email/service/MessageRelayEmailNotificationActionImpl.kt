@@ -50,11 +50,23 @@ class MessageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
     override fun getCreateSubject(context: MailContext<SimpleMessage>): String = context.getMessage(
             MessageI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getCreateSubjectNotification(context: MailContext<SimpleMessage>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getUpdateSubject(context: MailContext<SimpleMessage>): String = context.getMessage(
             MessageI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleMessage>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCommentSubject(context: MailContext<SimpleMessage>): String = context.getMessage(
             MessageI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
+
+    override fun getCommentSubjectNotification(context: MailContext<SimpleMessage>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun getItemFieldMapper(): ItemFieldMapper = ItemFieldMapper()
 
@@ -87,6 +99,6 @@ class MessageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
-        contentGenerator.putVariable("message", bean!!.message)
+        contentGenerator.putVariable("messages", bean!!.message)
     }
 }

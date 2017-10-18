@@ -598,72 +598,72 @@ public class NotificationItemExample {
         }
 
         public Criteria andMessageIsNull() {
-            addCriterion("message is null");
+            addCriterion("messages is null");
             return (Criteria) this;
         }
 
         public Criteria andMessageIsNotNull() {
-            addCriterion("message is not null");
+            addCriterion("messages is not null");
             return (Criteria) this;
         }
 
         public Criteria andMessageEqualTo(String value) {
-            addCriterion("message =", value, "message");
+            addCriterion("messages =", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageNotEqualTo(String value) {
-            addCriterion("message <>", value, "message");
+            addCriterion("messages <>", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageGreaterThan(String value) {
-            addCriterion("message >", value, "message");
+            addCriterion("messages >", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageGreaterThanOrEqualTo(String value) {
-            addCriterion("message >=", value, "message");
+            addCriterion("messages >=", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageLessThan(String value) {
-            addCriterion("message <", value, "message");
+            addCriterion("messages <", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageLessThanOrEqualTo(String value) {
-            addCriterion("message <=", value, "message");
+            addCriterion("messages <=", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageLike(String value) {
-            addCriterion("message like", value, "message");
+            addCriterion("messages like", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageNotLike(String value) {
-            addCriterion("message not like", value, "message");
+            addCriterion("messages not like", value, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageIn(List<String> values) {
-            addCriterion("message in", values, "message");
+            addCriterion("messages in", values, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageNotIn(List<String> values) {
-            addCriterion("message not in", values, "message");
+            addCriterion("messages not in", values, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageBetween(String value1, String value2) {
-            addCriterion("message between", value1, value2, "message");
+            addCriterion("messages between", value1, value2, "messages");
             return (Criteria) this;
         }
 
         public Criteria andMessageNotBetween(String value1, String value2) {
-            addCriterion("message not between", value1, value2, "message");
+            addCriterion("messages not between", value1, value2, "messages");
             return (Criteria) this;
         }
 

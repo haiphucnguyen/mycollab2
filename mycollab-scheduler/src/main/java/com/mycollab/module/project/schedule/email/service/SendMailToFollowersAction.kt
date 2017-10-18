@@ -75,6 +75,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
                 val notifyUsersForCreateAction = mutableListOf<String>()
+                val notificationMessages = mutableListOf<String>()
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -92,9 +93,11 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForCreateAction.add(it.username)
+                        notificationMessages.add(getCommentSubjectNotification(context))
                     }
                 }
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCreateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCreateAction, ModuleNameConstants.PRJ,
+                        getType(), getTypeId(), notificationMessages, notification.saccountid))
             }
         }
     }
@@ -118,6 +121,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
                 val notifyUsersForUpdateAction = mutableListOf<String>()
+                val notificationMessages = mutableListOf<String>()
 
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -140,10 +144,12 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForUpdateAction.add(it.username)
+                        notificationMessages.add(getUpdateSubjectNotification(context))
                     }
                 }
 
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ,
+                        getType(), getTypeId(), notificationMessages, notification.saccountid))
             }
         }
     }
@@ -163,6 +169,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
                 val notifyUsersForCommentAction = mutableListOf<String>()
+                val notificationMessages = mutableListOf<String>()
 
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -180,9 +187,11 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForCommentAction.add(it.username)
+                        notificationMessages.add(getCommentSubjectNotification(context))
                     }
                 }
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCommentAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCommentAction, ModuleNameConstants.PRJ,
+                        getType(), getTypeId(), notificationMessages, notification.saccountid))
             }
         }
     }
@@ -220,9 +229,15 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
 
     abstract protected fun getCreateSubject(context: MailContext<B>): String
 
+    abstract protected fun getCreateSubjectNotification(context: MailContext<B>): String
+
     abstract protected fun getUpdateSubject(context: MailContext<B>): String
 
+    abstract protected fun getUpdateSubjectNotification(context: MailContext<B>): String
+
     abstract protected fun getCommentSubject(context: MailContext<B>): String
+
+    abstract protected fun getCommentSubjectNotification(context: MailContext<B>): String
 
     abstract fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser>
 

@@ -79,9 +79,6 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
         contentGenerator.putVariable("summaryLink", summaryLink)
     }
 
-    override fun getUpdateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
-            ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
-
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleComponent? =
             componentService.findById(notification.typeid.toInt(), notification.saccountid)
 
@@ -92,8 +89,23 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
     override fun getCreateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getCreateSubjectNotification(context: MailContext<SimpleComponent>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getUpdateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
+            ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
+
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleComponent>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCommentSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
+
+    override fun getCommentSubjectNotification(context: MailContext<SimpleComponent>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 

@@ -31,7 +31,7 @@ class ContactUsController(private val extMailService: ExtMailService) {
                   @RequestParam("industry") industry: String,
                   @RequestParam("budget") budget: String,
                   @RequestParam("subject") subject: String,
-                  @RequestParam("message") message: String): String {
+                  @RequestParam("messages") message: String): String {
         val bodyContent = Div().appendChild(Ul().appendChild(
                 Li().appendText("Name: $name"),
                 Li().appendText("Email: $email"),

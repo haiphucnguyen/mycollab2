@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project.schedule.email.service
 
+import com.hp.gagawa.java.elements.A
 import com.hp.gagawa.java.elements.Span
 import com.hp.gagawa.java.elements.Text
 import com.mycollab.common.MonitorTypeConstants
@@ -60,6 +61,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<SimpleRisk>(), ProjectRiskRelayEmailNotificationAction {
     @Autowired private lateinit var riskService: RiskService
+
     private val mapper = ProjectFieldNameMapper()
 
     override fun getItemName(): String = StringUtils.trim(bean!!.name, 100)
@@ -69,11 +71,25 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
     override fun getCreateSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getCreateSubjectNotification(context: MailContext<SimpleRisk>): String {
+        val projectLink = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectName)
+        val userLink = A(AccountLinkGenerator.generateUserLink(context.user.username)).appendText(context.changeByUserFullName)
+        return context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink.write(), userLink.write(), getItemName())
+    }
+
     override fun getUpdateSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleRisk>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getCommentSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
+
+    override fun getCommentSubjectNotification(context: MailContext<SimpleRisk>): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
@@ -109,8 +125,8 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
 
     class ProjectFieldNameMapper : ItemFieldMapper() {
         init {
-            put(Risk.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
-            put(Risk.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
+            put(Risk.Field.name, GenericI18Enum.FORM_NAME, true)
+            put(Risk.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
             put(Risk.Field.probalitity, I18nFieldFormat(Risk.Field.probalitity.name, RiskI18nEnum.FORM_PROBABILITY,
                     RiskProbability::class.java))
             put(Risk.Field.consequence, I18nFieldFormat(Risk.Field.consequence.name, RiskI18nEnum.FORM_CONSEQUENCE, RiskConsequence::class.java))
@@ -122,7 +138,7 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
             put(Risk.Field.milestoneid, MilestoneFieldFormat(Risk.Field.milestoneid.name, MilestoneI18nEnum.SINGLE))
             put(Risk.Field.assignuser, AssigneeFieldFormat(Risk.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
             put(Risk.Field.createduser, RaisedByFieldFormat(Risk.Field.createduser.name, RiskI18nEnum.FORM_RAISED_BY))
-            put(Risk.Field.response, RiskI18nEnum.FORM_RESPONSE, isColSpan = true)
+            put(Risk.Field.response, RiskI18nEnum.FORM_RESPONSE, true)
         }
     }
 

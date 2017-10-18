@@ -132,7 +132,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             final MHorizontalLayout messageLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false,
                     true, false)).withFullWidth();
             if (Boolean.TRUE.equals(message.getIsstick())) {
-                messageLayout.addStyleName("important-message");
+                messageLayout.addStyleName("important-messages");
             }
 
             ProjectMemberBlock userBlock = new ProjectMemberBlock(message.getPosteduser(), message.getPostedUserAvatarId(),

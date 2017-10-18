@@ -21,7 +21,7 @@ class BatchInsertProjectNotificationItemsCommand(private val notificationItemsSe
     @Subscribe
     fun insertItems(event: BatchInsertNotificationItemsEvent) {
         if (event.notifyUsers.isNotEmpty()) {
-            notificationItemsService.batchInsertItems(event.notifyUsers, event.module, event.type, event.typeId, event.message, event.sAccountId);
+            notificationItemsService.batchInsertItems(event.notifyUsers, event.module, event.type, event.typeId, event.messages, event.sAccountId);
             event.notifyUsers.forEach { Broadcaster.broadcast(BroadcastMessage(event.sAccountId, it, ProjectEntryUpdateNotification("aaa"))) }
         }
     }

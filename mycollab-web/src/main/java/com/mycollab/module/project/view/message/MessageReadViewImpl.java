@@ -141,7 +141,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
             MHorizontalLayout messageLayout = new MHorizontalLayout().withFullWidth();
 
             if (Boolean.TRUE.equals(message.getIsstick())) {
-                messageLayout.addStyleName("important-message");
+                messageLayout.addStyleName("important-messages");
             }
 
             ProjectMemberBlock userBlock = new ProjectMemberBlock(message.getPosteduser(), message.getPostedUserAvatarId(),

@@ -117,14 +117,14 @@ object ProjectLinkGenerator {
             "project/risk/add/${UrlEncodeDecoder.encode(projectId)}"
 
     @JvmStatic
-    fun generateMessageAddLink(projectId: Int): String = """project/message/add/${UrlEncodeDecoder.encode(projectId)}"""
+    fun generateMessageAddLink(projectId: Int): String = """project/messages/add/${UrlEncodeDecoder.encode(projectId)}"""
 
     @JvmStatic
-    fun generateMessagesLink(projectId: Int): String = """project/message/list/${UrlEncodeDecoder.encode(projectId)}"""
+    fun generateMessagesLink(projectId: Int): String = """project/messages/list/${UrlEncodeDecoder.encode(projectId)}"""
 
     @JvmStatic
     fun generateMessagePreviewLink(projectId: Int, messageId: Int): String =
-            """project/message/preview/${GenericLinkUtils.encodeParam(projectId, messageId)}"""
+            """project/messages/preview/${GenericLinkUtils.encodeParam(projectId, messageId)}"""
 
     @JvmStatic
     fun generateMessagePreviewFullLink(siteUrl: String, projectId: Int, messageId: Int): String =
