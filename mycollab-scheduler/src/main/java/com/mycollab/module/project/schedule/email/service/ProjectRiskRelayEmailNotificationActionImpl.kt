@@ -80,6 +80,10 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleRisk? =
             riskService.findById(notification.typeid.toInt(), notification.saccountid)
 
+    override fun getType(): String = ProjectTypeConstants.RISK
+
+    override fun getTypeId(): String = "${bean!!.id}"
+
     override fun buildExtraTemplateVariables(context: MailContext<SimpleRisk>) {
         val emailNotification = context.emailNotification
         val summary = bean!!.name

@@ -26,6 +26,7 @@ import com.mycollab.html.FormatUtils
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.project.ProjectLinkGenerator
+import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.i18n.ComponentI18nEnum
 import com.mycollab.module.tracker.domain.Component.Field
@@ -95,6 +96,10 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
             ComponentI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
+
+    override fun getType(): String  = ProjectTypeConstants.BUG_COMPONENT
+
+    override fun getTypeId(): String = "${bean!!.id}"
 
     class ComponentFieldNameMapper : ItemFieldMapper() {
         init {

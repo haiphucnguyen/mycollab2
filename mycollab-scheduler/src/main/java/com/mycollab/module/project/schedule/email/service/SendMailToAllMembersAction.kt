@@ -113,7 +113,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                         notifyUsersForCreateAction.add(it.username)
                     }
                 }
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCreateAction, ModuleNameConstants.PRJ, "1", "1", "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCreateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -162,7 +162,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     }
                 }
 
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ, "1", "1", "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -182,7 +182,7 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                 contentGenerator.putVariable("lastComments", comments)
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
 
-                val notifyUsersForUpdateAction = mutableListOf<String>()
+                val notifyUsersForCommentAction = mutableListOf<String>()
 
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -197,10 +197,10 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
-                        notifyUsersForUpdateAction.add(it.username)
+                        notifyUsersForCommentAction.add(it.username)
                     }
                 }
-                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ, "1", "1", "ABC", notification.saccountid))
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCommentAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -232,6 +232,10 @@ abstract class SendMailToAllMembersAction<B> : SendingRelayEmailNotificationActi
 
 
     abstract protected fun getItemName(): String
+
+    abstract protected fun getType(): String
+
+    abstract protected fun getTypeId(): String
 
     abstract protected fun getProjectName(): String
 

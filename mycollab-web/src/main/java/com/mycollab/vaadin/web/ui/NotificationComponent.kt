@@ -100,11 +100,11 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
     }
 
     private fun updateCaption() {
-        if (notificationItems.size > 0) {
+        if (notificationItems.isNotEmpty()) {
             val ui = ui
             AsyncInvoker.access(ui, object : AsyncInvoker.PageCommand() {
                 override fun run() {
-                    this@NotificationComponent.caption = "$notificationItems.size"
+                    this@NotificationComponent.caption = "${notificationItems.size}"
                 }
             })
         } else {
@@ -121,14 +121,12 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
 
     private fun displayTrayNotification(item: AbstractNotification) {
         if (item is NewUpdateAvailableNotification) {
-            val no: Notification
-            if (UserUIContext.isAdmin()) {
-                no = Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), UserUIContext.getMessage(ShellI18nEnum.OPT_HAVING_NEW_VERSION, item.version) + " "
+            val no: Notification = when {
+                UserUIContext.isAdmin() -> Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), UserUIContext.getMessage(ShellI18nEnum.OPT_HAVING_NEW_VERSION, item.version) + " "
                         + A("javascript:com.mycollab.scripts.upgrade('${item.version}','${item.autoDownloadLink}','${item.manualDownloadLink}')")
                         .appendText(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPGRADE)),
                         Notification.Type.TRAY_NOTIFICATION)
-            } else {
-                no = Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), UserUIContext.getMessage(ShellI18nEnum.OPT_HAVING_NEW_VERSION,
+                else -> Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), UserUIContext.getMessage(ShellI18nEnum.OPT_HAVING_NEW_VERSION,
                         item.version), Notification.Type.TRAY_NOTIFICATION)
             }
 
@@ -180,7 +178,7 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
             val lblWrapper = MCssLayout(lbl)
             wrapper.with(lblWrapper, smtpBtn).expand(lblWrapper)
         } else if (item is ProjectEntryUpdateNotification) {
-            wrapper.with(ELabel.html("aaaa"))
+            wrapper.with(ELabel.html(item.message))
         } else {
             LOG.error("Do not render notification $item")
         }

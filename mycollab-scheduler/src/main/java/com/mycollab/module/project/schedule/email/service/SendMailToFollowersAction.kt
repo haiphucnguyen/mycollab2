@@ -16,7 +16,9 @@
  */
 package com.mycollab.module.project.schedule.email.service
 
+import com.google.common.eventbus.AsyncEventBus
 import com.hp.gagawa.java.elements.A
+import com.mycollab.common.ModuleNameConstants
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.domain.SimpleAuditLog
 import com.mycollab.common.domain.SimpleRelayEmailNotification
@@ -37,6 +39,7 @@ import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.module.project.ProjectLinkGenerator
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.domain.SimpleProjectMember
+import com.mycollab.module.project.event.BatchInsertNotificationItemsEvent
 import com.mycollab.module.project.service.ProjectMemberService
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.user.domain.SimpleUser
@@ -57,6 +60,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
     @Autowired private lateinit var commentService: CommentService
     @Autowired protected lateinit var contentGenerator: IContentGenerator
     @Autowired private lateinit var auditLogService: AuditLogService
+    @Autowired private lateinit var eventBus: AsyncEventBus
 
     protected var bean: B? = null
     protected var projectMember: SimpleProjectMember? = null
@@ -70,6 +74,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
             onInitAction(projectRelayEmailNotification)
             bean = getBeanInContext(projectRelayEmailNotification)
             if (bean != null) {
+                val notifyUsersForCreateAction = mutableListOf<String>()
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(notification.saccountid, notification.accountLogo))
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -85,7 +90,11 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     val recipients = arrayListOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.locale))
+                    if (it.username != notification.changeby) {
+                        notifyUsersForCreateAction.add(it.username)
+                    }
                 }
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCreateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -108,6 +117,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 searchCriteria.saccountid = null
                 val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
+                val notifyUsersForUpdateAction = mutableListOf<String>()
 
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -128,7 +138,12 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     val recipients = arrayListOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
+                    if (it.username != notification.changeby) {
+                        notifyUsersForUpdateAction.add(it.username)
+                    }
                 }
+
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForUpdateAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -147,6 +162,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 searchCriteria.saccountid = null
                 val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
+                val notifyUsersForCommentAction = mutableListOf<String>()
 
                 notifiers.forEach {
                     val context = MailContext<B>(notification, it, siteUrl)
@@ -162,7 +178,11 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     val toRecipients = arrayListOf(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), toRecipients,
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))
+                    if (it.username != notification.changeby) {
+                        notifyUsersForCommentAction.add(it.username)
+                    }
                 }
+                eventBus.post(BatchInsertNotificationItemsEvent(notifyUsersForCommentAction, ModuleNameConstants.PRJ, getType(), getTypeId(), "ABC", notification.saccountid))
             }
         }
     }
@@ -190,10 +210,9 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
     private fun getProjectFooter(context: MailContext<B>): String = LocalizationHelper.getMessage(context.locale,
             MailI18nEnum.Project_Footer, getProjectName(), getProjectNotificationSettingLink(context))
 
-    private fun getProjectNotificationSettingLink(context: MailContext<B>): String {
-        return A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId!!)).
-                appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
-    }
+    private fun getProjectNotificationSettingLink(context: MailContext<B>): String =
+            A(ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, projectId!!)).
+                    appendText(LocalizationHelper.getMessage(context.locale, MailI18nEnum.Project_Notification_Setting)).write()
 
     abstract protected fun buildExtraTemplateVariables(context: MailContext<B>)
 
@@ -206,4 +225,8 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
     abstract protected fun getCommentSubject(context: MailContext<B>): String
 
     abstract fun getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List<SimpleUser>
+
+    abstract protected fun getType(): String
+
+    abstract protected fun getTypeId(): String
 }

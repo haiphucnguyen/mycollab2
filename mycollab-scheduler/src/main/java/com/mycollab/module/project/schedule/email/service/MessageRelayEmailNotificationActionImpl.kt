@@ -21,6 +21,7 @@ import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.project.ProjectLinkGenerator
+import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.domain.SimpleMessage
 import com.mycollab.module.project.i18n.MessageI18nEnum
@@ -59,6 +60,10 @@ class MessageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMessage? =
             messageService.findById(notification.typeid.toInt(), notification.saccountid)
+
+    override fun getType(): String = ProjectTypeConstants.MESSAGE
+
+    override fun getTypeId(): String = "${bean!!.id}"
 
     override fun buildExtraTemplateVariables(context: MailContext<SimpleMessage>) {
         val emailNotification = context.emailNotification

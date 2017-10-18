@@ -23,6 +23,7 @@ import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.project.ProjectLinkGenerator
+import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.i18n.VersionI18nEnum
 import com.mycollab.module.tracker.domain.SimpleVersion
@@ -89,6 +90,10 @@ class VersionRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
 
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion? =
             versionService.findById(notification.typeid.toInt(), notification.saccountid)
+
+    override fun getType(): String = ProjectTypeConstants.BUG_VERSION
+
+    override fun getTypeId(): String = "${bean!!.id}"
 
     class VersionFieldNameMapper : ItemFieldMapper() {
         init {

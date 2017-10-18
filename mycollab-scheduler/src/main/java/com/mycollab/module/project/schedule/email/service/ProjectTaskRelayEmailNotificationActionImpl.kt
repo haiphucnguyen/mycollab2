@@ -140,6 +140,10 @@ class ProjectTaskRelayEmailNotificationActionImpl : SendMailToFollowersAction<Si
         return notifyUsers
     }
 
+    override fun getType(): String = ProjectTypeConstants.TASK
+
+    override fun getTypeId(): String = "${bean!!.id}"
+
     class TaskFieldNameMapper : ItemFieldMapper() {
         init {
             put(Task.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)

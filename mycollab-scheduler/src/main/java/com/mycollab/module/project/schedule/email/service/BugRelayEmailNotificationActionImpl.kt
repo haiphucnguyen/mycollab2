@@ -138,6 +138,10 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
         return notifyUsers
     }
 
+    override fun getType(): String = ProjectTypeConstants.BUG
+
+    override fun getTypeId(): String = "${bean!!.id}"
+
     class BugFieldNameMapper : ItemFieldMapper() {
         init {
             put(BugWithBLOBs.Field.name, BugI18nEnum.FORM_SUMMARY, isColSpan = true)

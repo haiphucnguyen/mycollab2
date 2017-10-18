@@ -25,6 +25,7 @@ import com.mycollab.html.FormatUtils
 import com.mycollab.html.LinkUtils
 import com.mycollab.module.mail.MailUtils
 import com.mycollab.module.project.ProjectLinkGenerator
+import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.Milestone
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.domain.SimpleMilestone
@@ -75,7 +76,11 @@ class ProjectMilestoneRelayEmailNotificationActionImpl : SendMailToAllMembersAct
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleMilestone? =
             milestoneService.findById(notification.typeid.toInt(), notification.saccountid)
 
-    class MilestoneFieldNameMapper() : ItemFieldMapper() {
+    override fun getType(): String = ProjectTypeConstants.MILESTONE
+
+    override fun getTypeId(): String = "${bean!!.id}"
+
+    class MilestoneFieldNameMapper : ItemFieldMapper() {
         init {
             put(Milestone.Field.name, GenericI18Enum.FORM_NAME, true)
             put(Milestone.Field.status, I18nFieldFormat(Milestone.Field.status.name, GenericI18Enum.FORM_STATUS,
