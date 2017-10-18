@@ -98,7 +98,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
 
     class ComponentFieldNameMapper : ItemFieldMapper() {
         init {
-            put(Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
+            put(Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
             put(Field.status, I18nFieldFormat(Field.status.name, GenericI18Enum.FORM_STATUS,
                     OptionI18nEnum.StatusI18nEnum::class.java))
             put(Field.userlead, LeadFieldFormat(Field.userlead.name, ComponentI18nEnum.FORM_LEAD))

@@ -67,7 +67,6 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
     private SimpleUser user;
 
     public UserReadViewImpl() {
-        super();
         this.setMargin(new MarginInfo(false, true, true, true));
         header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false)).withFullWidth();
         addComponent(header);

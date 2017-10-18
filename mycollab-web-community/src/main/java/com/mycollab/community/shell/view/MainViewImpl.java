@@ -82,7 +82,6 @@ public class MainViewImpl extends AbstractMainView {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestUploadAvatarNotification()));
         }
 
-
         ExtMailService mailService = AppContextUtil.getSpringBean(ExtMailService.class);
         if (!mailService.isMailSetupValid()) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new SmtpSetupNotification()));

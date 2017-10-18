@@ -106,7 +106,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
                 searchCriteria.saccountid = null
-                val comments = commentService.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
+                val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
 
                 notifiers.forEach {
@@ -145,7 +145,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                 searchCriteria.type = StringSearchField.and(notification.type)
                 searchCriteria.typeId = StringSearchField.and(notification.typeid)
                 searchCriteria.saccountid = null
-                val comments = commentService.findPageableListByCriteria(BasicSearchRequest<CommentSearchCriteria>(searchCriteria, 0, 5))
+                val comments = commentService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, 5))
                 contentGenerator.putVariable("lastComments", comments)
 
                 notifiers.forEach {

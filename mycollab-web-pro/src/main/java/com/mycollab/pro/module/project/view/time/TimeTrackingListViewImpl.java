@@ -204,7 +204,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
         timeTrackingWrapper.addComponent(timeDisplayComp);
 
-        AsyncInvoker.INSTANCE.access(getUI(), new AsyncInvoker.PageCommand() {
+        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
                 ItemTimeLoggingService itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);

@@ -1,9 +1,7 @@
-package com.mycollab.premium.vaadin.ui.service
+package com.mycollab.ondemand.vaadin.ui.service.impl
 
 import com.mycollab.core.BroadcastMessage
 import com.mycollab.vaadin.web.ui.service.AbstractBroadcastReceiverService
-import org.springframework.beans.factory.config.ConfigurableBeanFactory
-import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Service
 
 /**
@@ -11,9 +9,13 @@ import org.springframework.stereotype.Service
  * @since 5.3.5
  */
 @Service
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class BroadcastReceiverServiceImpl : AbstractBroadcastReceiverService() {
     override fun onBroadcast(message: BroadcastMessage) {
-        System.out.println("A: " + message.wrapObj)
+        if (message.sAccountId != null) {
+            val context = myCollabApp.associateContext
+            if (context.isMatchAccount(message.sAccountId)) {
+                myCollabApp.reloadPage()
+            }
+        }
     }
 }

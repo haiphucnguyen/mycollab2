@@ -69,7 +69,7 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
             val jdbcTemplate = JdbcTemplate(dataSource)
             val now = GregorianCalendar().timeInMillis
             if (lock.tryLock(30, TimeUnit.SECONDS)) {
-                jdbcTemplate.batchUpdate("INSERT INTO `m_prj_predecessor`(`sourceType`, `descType`, `predestype`,`lagDay`, " + "`sourceId`,`descId`, `createdTime`) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO `m_prj_predecessor`(`sourceType`, `descType`, `predestype`,`lagDay`, `sourceId`,`descId`, `createdTime`) VALUES (?, ?, ?, ?, ?, ?, ?)",
                         object : BatchPreparedStatementSetter {
                             @Throws(SQLException::class)
                             override fun setValues(preparedStatement: PreparedStatement, i: Int) {

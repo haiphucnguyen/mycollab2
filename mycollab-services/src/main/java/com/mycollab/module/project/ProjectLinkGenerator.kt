@@ -215,8 +215,7 @@ object ProjectLinkGenerator {
 
         try {
             when (type) {
-                ProjectTypeConstants.PROJECT -> {
-                }
+                ProjectTypeConstants.PROJECT -> {}
                 ProjectTypeConstants.MESSAGE -> result = generateMessagePreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.MILESTONE -> result = generateMilestonePreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.RISK -> result = generateRiskPreviewLink(projectId, Integer.parseInt(typeId))

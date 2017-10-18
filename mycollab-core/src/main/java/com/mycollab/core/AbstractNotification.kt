@@ -18,9 +18,19 @@ package com.mycollab.core
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.5
+ * @since 5.1.3
  */
-class BroadcastMessage(val sAccountId: Int?, val targetUser: String?, val wrapObj: Any) {
+abstract class AbstractNotification(val scope: String, val type: String) {
 
-    constructor(wrapObj: Any) : this(null, null, wrapObj)
+    val isGlobalScope: Boolean
+        get() = SCOPE_GLOBAL == scope
+
+    companion object {
+
+        val WARNING = "warning"
+        val NEWS = "news"
+
+        val SCOPE_GLOBAL = "global"
+        val SCOPE_USER = "user"
+    }
 }

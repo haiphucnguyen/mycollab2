@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,7 +24,10 @@ import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.TimezoneVal;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.user.dao.UserAccountMapper;
-import com.mycollab.module.user.domain.*;
+import com.mycollab.module.user.domain.SimpleBillingAccount;
+import com.mycollab.module.user.domain.SimpleUser;
+import com.mycollab.module.user.domain.UserAccount;
+import com.mycollab.module.user.domain.UserAccountExample;
 import com.mycollab.security.PermissionFlag;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
@@ -41,8 +44,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import static com.mycollab.vaadin.ui.MyCollabSession.*;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -62,7 +63,7 @@ public class UserUIContext implements Serializable {
     /**
      * Current user LOG in to MyCollab
      */
-    private SimpleUser session;
+    SimpleUser session;
 
     /**
      * Billing information of account of current user

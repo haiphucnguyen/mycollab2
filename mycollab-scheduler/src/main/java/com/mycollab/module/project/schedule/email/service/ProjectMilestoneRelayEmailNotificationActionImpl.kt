@@ -77,13 +77,13 @@ class ProjectMilestoneRelayEmailNotificationActionImpl : SendMailToAllMembersAct
 
     class MilestoneFieldNameMapper() : ItemFieldMapper() {
         init {
-            put(Milestone.Field.name, GenericI18Enum.FORM_NAME, isColSpan = true)
+            put(Milestone.Field.name, GenericI18Enum.FORM_NAME, true)
             put(Milestone.Field.status, I18nFieldFormat(Milestone.Field.status.name, GenericI18Enum.FORM_STATUS,
                     OptionI18nEnum.MilestoneStatus::class.java))
             put(Milestone.Field.assignuser, AssigneeFieldFormat(Milestone.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
             put(Milestone.Field.startdate, DateFieldFormat(Milestone.Field.startdate.name, GenericI18Enum.FORM_START_DATE))
             put(Milestone.Field.enddate, DateFieldFormat(Milestone.Field.enddate.name, GenericI18Enum.FORM_END_DATE))
-            put(Milestone.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
+            put(Milestone.Field.description, GenericI18Enum.FORM_DESCRIPTION, true)
         }
     }
 

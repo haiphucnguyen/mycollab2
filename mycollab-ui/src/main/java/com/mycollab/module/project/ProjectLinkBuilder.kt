@@ -59,19 +59,21 @@ object ProjectLinkBuilder {
             """$URL_PREFIX_PARAM${ProjectLinkGenerator.generateProjectMemberLink(projectId, memberName)}"""
 
     @JvmStatic
-    fun generateProjectMemberHtmlLink(projectId: Int, username: String, displayName: String, avatarId: String,
+    fun generateProjectMemberHtmlLink(projectId: Int, username: String?, displayName: String?, avatarId: String?,
                                       isDisplayTooltip: Boolean): String {
-        val userAvatar = Img("", AppContextUtil.getSpringBean(AbstractStorageService::class.java)
-                .getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX)
-        val link = A().setId("tag" + TOOLTIP_ID).setHref(generateProjectMemberFullLink(projectId,
-                username)).appendText(StringUtils.trim(displayName, 30, true))
-        return if (isDisplayTooltip) {
-            link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username))
-            link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())
-            DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, link).write()
-        } else {
-            DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, link).write()
-        }
+        return if (username != null) {
+            val userAvatar = Img("", AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+                    .getAvatarPath(avatarId, 16)).setCSSClass(UIConstants.CIRCLE_BOX)
+            val link = A().setId("tag$TOOLTIP_ID").setHref(generateProjectMemberFullLink(projectId,
+                    username)).appendText(StringUtils.trim(displayName, 30, true))
+            if (isDisplayTooltip) {
+                link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username))
+                link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction())
+                DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, link).write()
+            } else {
+                DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, link).write()
+            }
+        } else ""
     }
 
     @JvmStatic

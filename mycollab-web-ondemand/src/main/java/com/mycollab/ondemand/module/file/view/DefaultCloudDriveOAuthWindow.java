@@ -62,7 +62,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
             public void handle(CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo event) {
                 cloudDriveInfo = event.getData();
                 LOG.debug("Receive cloud drive info: " + BeanUtility.printBeanObj(cloudDriveInfo));
-                AsyncInvoker.INSTANCE.access(getUI(), new AsyncInvoker.PageCommand() {
+                AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
                     @Override
                     public void run() {
                         DefaultCloudDriveOAuthWindow.this.setHeight("210px");

@@ -1,6 +1,5 @@
 package com.mycollab.rest.server.resource
 
-import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.configuration.EnDecryptHelper
 import com.mycollab.core.BroadcastMessage
 import com.mycollab.core.Broadcaster
@@ -36,8 +35,7 @@ import java.util.*
 class SubscriptionManagerController(private val subscriptionMapper: BillingSubscriptionMapper,
                                     private val subscriptionMapperExt: BillingSubscriptionMapperExt,
                                     private val subscriptionHistoryMapper: BillingSubscriptionHistoryMapper,
-                                    private val billingAccountMapper: BillingAccountMapper,
-                                    private val asyncEventBus: AsyncEventBus) {
+                                    private val billingAccountMapper: BillingAccountMapper) {
 
     @ApiOperation(value = "Register the subscription", response = String::class)
     @RequestMapping(path = arrayOf("/register"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
@@ -72,13 +70,14 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
             errorMsg.append("name: ").append(name).append("\n")
             errorMsg.append("referrer: ").append(referrer).append("\n")
             errorMsg.append("subscriptionReference: ").append(subscriptionReference).append("\n")
-            LOG.error("Error in subscribe account " + errorMsg)
+            LOG.error("Error in subscribe account $errorMsg")
             throw MyCollabException(e)
         }
 
     }
 
-    @RequestMapping(path = arrayOf("/activated"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = arrayOf("/activated"), method = arrayOf(RequestMethod.POST),
+            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
     @Throws(Exception::class)
     fun activateSubscription(@RequestParam("SubscriptionReference") subscriptionReference: String,
                              @RequestParam("SubscriptionReferrer") subscriptionReferrer: String,
@@ -121,7 +120,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                 subscription.subscriptioncustomerurl = subscriptionCustomerUrl
 
                 subscriptionMapper.updateByPrimaryKey(subscription)
-                Broadcaster.broadcast(BroadcastMessage(subscription.accountid, null, ""))
+                Broadcaster.broadcast(BroadcastMessage(subscription.accountid, null,""))
 
                 val accountEx = BillingAccountExample()
                 accountEx.createCriteria().andIdEqualTo(sAccountId)
@@ -146,7 +145,8 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     }
 
-    @RequestMapping(path = arrayOf("/rebill-completed"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = arrayOf("/rebill-completed"), method = arrayOf(RequestMethod.POST),
+            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
     @Throws(Exception::class)
     fun reBillSubscription(@RequestParam("OrderId") orderId: String,
                            @RequestParam("OrderProductName") orderProductName: String,
@@ -185,7 +185,8 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
         return "Ok"
     }
 
-    @RequestMapping(path = arrayOf("/subscription-failed"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = arrayOf("/subscription-failed"), method = arrayOf(RequestMethod.POST),
+            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
     fun subscriptionFailedNotification(@RequestParam("SubscriptionReference") subscriptionReference: String,
                                        @RequestParam("SubscriptionEndDate") subscriptionEndDate: String): String {
         val ex = BillingSubscriptionExample()
