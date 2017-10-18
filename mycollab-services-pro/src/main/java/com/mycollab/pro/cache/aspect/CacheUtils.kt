@@ -10,11 +10,14 @@ import com.mycollab.db.persistence.service.IService
  */
 internal object CacheUtils {
 
+    @JvmStatic
     fun getEnclosingServiceInterface(serviceClass: Class<*>): Class<*>? =
             ClassUtils.getInterfaceInstanceOf(serviceClass, IService::class.java)
 
+    @JvmStatic
     fun getEnclosingServiceInterfaceName(serviceClass: Class<*>): String =
             getEnclosingServiceInterface(serviceClass)!!.name
 
+    @JvmStatic
     fun isInBlackList(cls: Class<*>?): Boolean = cls?.getAnnotation(IgnoreCacheClass::class.java) != null
 }
