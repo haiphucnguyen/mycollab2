@@ -25,15 +25,15 @@ import java.util.UUID
 @Service
 class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
 
-    private var properties: Properties? = null
+    private lateinit var properties: Properties
 
     override val sysId: String
-        get() = properties!!.getProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+        get() = properties.getProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
 
     override val startDate: Date
         get() {
             try {
-                val dateValue = properties!!.getProperty("startdate")
+                val dateValue = properties.getProperty("startdate")
                 return DateTimeUtils.convertDateByString(dateValue, "yyyy-MM-dd'T'HH:mm:ss")
             } catch (e: Exception) {
                 return GregorianCalendar().time
@@ -51,21 +51,20 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
             val sysFile = File(homeFolder, ".app.properties")
             properties = Properties()
             if (sysFile.isFile && sysFile.exists()) {
-                properties!!.load(FileInputStream(sysFile))
-                val startDate = properties!!.getProperty("startdate")
+                properties.load(FileInputStream(sysFile))
+                val startDate = properties.getProperty("startdate")
                 if (startDate == null) {
-                    properties!!.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
-                    properties!!.store(FileOutputStream(sysFile), "")
+                    properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
+                    properties.store(FileOutputStream(sysFile), "")
                 }
             } else {
-                properties!!.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
-                properties!!.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
-                properties!!.store(FileOutputStream(sysFile), "")
+                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+                properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
+                properties.store(FileOutputStream(sysFile), "")
             }
         } catch (e: IOException) {
             LOG.error("Error", e)
         }
-
     }
 
     companion object {

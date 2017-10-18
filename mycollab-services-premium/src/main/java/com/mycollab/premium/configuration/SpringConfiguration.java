@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Profile;
         "com.mycollab.premium.vaadin.ui.service",
         "com.mycollab.pro.cache.aspect",
         "com.mycollab.pro.common.service",
+        "com.mycollab.pro.form.service",
         "com.mycollab.pro.module.project.service",
         "com.mycollab.pro.module.user.service",
         "com.mycollab.pro.module.project.view.service"
