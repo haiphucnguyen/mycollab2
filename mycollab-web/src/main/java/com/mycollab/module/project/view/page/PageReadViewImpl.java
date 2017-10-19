@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,20 +26,19 @@ import com.mycollab.module.page.domain.Page;
 import com.mycollab.module.page.domain.PageVersion;
 import com.mycollab.module.page.service.PageService;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.i18n.PageI18nEnum;
 import com.mycollab.module.project.service.ProjectMemberService;
-import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGenerator;
-import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
+import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGenerator;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.resources.LazyStreamSource;
@@ -47,6 +46,10 @@ import com.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
+import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.ReadViewLayout;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -177,8 +180,10 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             if (member != null) {
                 Img userAvatar = new Img("", StorageUtils.getAvatarPath(member.getMemberAvatarId(), 16))
                         .setCSSClass(UIConstants.CIRCLE_BOX);
-                A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
-                        .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
+                A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).
+                        setHref(ProjectLinkGenerator.generateProjectMemberLink(member.getProjectid(),
+                                member.getUsername())).
+                        appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
                 userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(member.getUsername()));
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
                 footer.appendChild(lastUpdatedTimeTxt, new Text("&nbsp;-&nbsp;" + UserUIContext.getMessage

@@ -6,14 +6,14 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.i18n.StandupI18nEnum;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -26,8 +26,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -65,8 +63,8 @@ public class StandupMissingComp extends MVerticalLayout {
     private String buildMemberLink(Integer projectId, SimpleUser user) {
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16)).setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                projectId, user.getUsername()));
+        A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).
+                setHref(ProjectLinkGenerator.generateProjectMemberLink(projectId, user.getUsername()));
 
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.getUsername()));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

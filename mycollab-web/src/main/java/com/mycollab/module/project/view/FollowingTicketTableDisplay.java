@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,8 +19,7 @@ package com.mycollab.module.project.view;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.FollowingTicket;
 import com.mycollab.module.project.domain.criteria.FollowingTicketSearchCriteria;
@@ -33,6 +32,7 @@ import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.module.project.view.parameters.RiskScreenData;
 import com.mycollab.module.project.view.parameters.TaskScreenData;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -131,7 +131,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
         this.addGeneratedColumn("projectName", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);
             Div projectLinkDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ")
-                    .appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(ticket.getProjectId()))
+                    .appendChild(new A(ProjectLinkGenerator.generateProjectLink(ticket.getProjectId()))
                             .appendText(ticket.getProjectName()));
             return new ELabel(projectLinkDiv.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_WORD_WRAP);
         });

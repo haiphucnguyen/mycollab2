@@ -6,7 +6,6 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.form.view.DynaFormLayout;
 import com.mycollab.mobile.module.project.event.RiskEvent;
@@ -28,6 +27,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -220,7 +220,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 }
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                    A milestoneLink = new A(ProjectLinkGenerator.generateMilestonePreviewLink
                             (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
                     Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE, milestoneLink);
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);

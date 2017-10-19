@@ -7,7 +7,6 @@ import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.html.DivLessFormatter;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -34,8 +33,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -117,7 +114,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                     SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 
                     LabelLink b = new LabelLink(itemLogging.getProjectName(),
-                            ProjectLinkBuilder.generateProjectFullLink(itemLogging.getProjectid()));
+                            ProjectLinkGenerator.generateProjectLink(itemLogging.getProjectid()));
                     b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
                     return b;
                 }

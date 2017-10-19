@@ -75,9 +75,11 @@ abstract class AbstractNotificationComponent : PopupButton(), PopupButton.PopupV
         if (notificationItems.isNotEmpty()) {
             notificationItems.forEach {
                 val comp = buildComponentFromNotification(it)
-                comp.styleName = "notification-type"
-                comp.addStyleName("notification-type-${it.kind}")
-                notificationContainer.addComponent(comp)
+                if (comp != null) {
+                    comp.styleName = "notification-type"
+                    comp.addStyleName("notification-type-${it.kind}")
+                    notificationContainer.addComponent(comp)
+                }
             }
         } else {
             val noItemLbl = Label(UserUIContext.getMessage(ShellI18nEnum.OPT_NO_NOTIFICATION))
@@ -139,33 +141,30 @@ abstract class AbstractNotificationComponent : PopupButton(), PopupButton.PopupV
         }
     }
 
-    private fun buildComponentFromNotification(item: AbstractNotification): Component {
-        val wrapper = MHorizontalLayout()
-        wrapper.data = item
-        wrapper.defaultComponentAlignment = Alignment.TOP_LEFT
-
+    private fun buildComponentFromNotification(item: AbstractNotification): Component? {
         if (item is NewUpdateAvailableNotification) {
             val spanEl = Span()
             spanEl.appendText(UserUIContext.getMessage(ShellI18nEnum.OPT_HAVING_NEW_VERSION, item.version))
             val lbl = ELabel.html("${FontAwesome.INFO_CIRCLE.html} ${spanEl.write()}").withFullWidth()
             val lblWrapper = CssLayout()
             lblWrapper.addComponent(lbl)
-            wrapper.addComponent(lblWrapper)
-            wrapper.expand(lblWrapper)
-            if (UserUIContext.isAdmin()) {
-                val upgradeBtn = MButton(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPGRADE)) { _ ->
-                    UI.getCurrent().addWindow(UpgradeConfirmWindow(item.version, item.manualDownloadLink, item.installerFile))
-                    this@AbstractNotificationComponent.isPopupVisible = false
-                }.withStyleName(UIConstants.BLOCK)
-                wrapper.addComponent(upgradeBtn)
+            return when {
+                UserUIContext.isAdmin() -> {
+                    val upgradeBtn = MButton(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPGRADE)) { _ ->
+                        UI.getCurrent().addWindow(UpgradeConfirmWindow(item.version, item.manualDownloadLink, item.installerFile))
+                        this@AbstractNotificationComponent.isPopupVisible = false
+                    }.withStyleName(UIConstants.BLOCK)
+                    MHorizontalLayout(lblWrapper, upgradeBtn).expand(lblWrapper).withDefaultComponentAlignment(Alignment.TOP_LEFT)
+                }
+                else -> lblWrapper
             }
         } else if (item is RequestUploadAvatarNotification) {
-            wrapper.addComponent(ELabel.html("${FontAwesome.EXCLAMATION_TRIANGLE.html} ${UserUIContext.getMessage(ShellI18nEnum.OPT_REQUEST_UPLOAD_AVATAR)}"))
+            val avatarUploadLbl = ELabel.html("${FontAwesome.EXCLAMATION_TRIANGLE.html} ${UserUIContext.getMessage(ShellI18nEnum.OPT_REQUEST_UPLOAD_AVATAR)}")
             val uploadAvatarBtn = MButton(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPLOAD_AVATAR)) { _ ->
                 EventBusFactory.getInstance().post(ShellEvent.GotoUserAccountModule(this, arrayOf("preview")))
                 this@AbstractNotificationComponent.isPopupVisible = false
             }.withStyleName(UIConstants.BLOCK)
-            wrapper.add(uploadAvatarBtn)
+            return MHorizontalLayout(avatarUploadLbl, uploadAvatarBtn).expand(avatarUploadLbl).withDefaultComponentAlignment(Alignment.TOP_LEFT)
         } else if (item is SmtpSetupNotification) {
             val smtpBtn = MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_SETUP)) { _ ->
                 EventBusFactory.getInstance().post(ShellEvent.GotoUserAccountModule(this, arrayOf("setup")))
@@ -173,14 +172,10 @@ abstract class AbstractNotificationComponent : PopupButton(), PopupButton.PopupV
             }.withStyleName(UIConstants.BLOCK)
             val lbl = ELabel.html("${FontAwesome.EXCLAMATION_TRIANGLE.html} ${UserUIContext.getMessage(ShellI18nEnum.ERROR_NO_SMTP_SETTING)}")
             val lblWrapper = MCssLayout(lbl)
-            wrapper.with(lblWrapper, smtpBtn).expand(lblWrapper)
+            return MHorizontalLayout(lblWrapper, smtpBtn).expand(lblWrapper).withDefaultComponentAlignment(Alignment.TOP_LEFT)
         } else {
-            val com = buildComponentFromNotificationExclusive(item)
-            if (com != null) {
-                wrapper.add(com)
-            }
+            return buildComponentFromNotificationExclusive(item)
         }
-        return wrapper
     }
 
     abstract protected fun buildComponentFromNotificationExclusive(item: AbstractNotification): Component?

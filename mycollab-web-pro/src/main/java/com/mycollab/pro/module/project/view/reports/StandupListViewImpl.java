@@ -5,9 +5,7 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.DateSearchField;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.StandupReportStatistic;
@@ -18,6 +16,8 @@ import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -222,7 +222,6 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     }
 
     private static class StandupReportRowDisplay implements IBeanList.RowDisplayHandler<SimpleStandupReport> {
-        private static final long serialVersionUID = 1L;
 
         @Override
         public Component generateRow(IBeanList<SimpleStandupReport> host, SimpleStandupReport report, int rowIndex) {
@@ -269,7 +268,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
-            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(1, report.getLogby()))
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkGenerator.generateProjectMemberLink(report.getProjectid(), report.getLogby()))
                     .appendText(StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

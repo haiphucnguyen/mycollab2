@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
@@ -49,8 +49,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd
@@ -141,14 +139,14 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
             }
             li.appendChild(timestampDiv);
 
-            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(milestone.getProjectid())).appendText
+            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(milestone.getProjectid())).appendText
                     (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true))
                     .setId("tag" + TooltipHelper.TOOLTIP_ID);
             projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     milestone.getProjectid() + ""));
             projectDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+            A milestoneDiv = new A(ProjectLinkGenerator.generateMilestonePreviewLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
                     .setId("tag" + TooltipHelper.TOOLTIP_ID);

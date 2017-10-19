@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,6 @@ import com.mycollab.html.DivLessFormatter;
 import com.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.mycollab.mobile.ui.FormSectionBuilder;
 import com.mycollab.module.file.service.AbstractStorageService;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectActivityStream;
@@ -131,7 +130,7 @@ class ProjectActivitiesStreamListDisplay extends AbstractPagedBeanList<ActivityS
         Img userAvatar = new Img("", AppContextUtil.getSpringBean(AbstractStorageService.class)
                 .getAvatarPath(activity.getCreatedUserAvatarId(), 16))
                 .setCSSClass(UIConstants.CIRCLE_BOX);
-        A userLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(activity.getExtratypeid(), activity
+        A userLink = new A(ProjectLinkGenerator.generateProjectMemberLink(activity.getExtratypeid(), activity
                 .getCreateduser())).appendText(StringUtils.trim(activity.getCreatedUserFullName(), 30, true));
         return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE, userLink).write();
     }

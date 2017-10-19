@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,6 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -40,6 +39,7 @@ import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -194,7 +194,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         blockTop.addComponent(buttonControls);
         blockTop.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
-        A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
+        A memberLink = new A(ProjectLinkGenerator.generateProjectMemberLink(member.getProjectid(), member
                 .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
         ELabel memberNameLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 

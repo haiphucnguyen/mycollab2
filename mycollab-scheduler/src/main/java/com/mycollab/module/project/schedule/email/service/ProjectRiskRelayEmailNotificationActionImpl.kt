@@ -74,7 +74,8 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
     override fun getCreateSubjectNotification(context: MailContext<SimpleRisk>): String {
         val projectLink = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectName)
         val userLink = A(AccountLinkGenerator.generateUserLink(context.user.username)).appendText(context.changeByUserFullName)
-        return context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink.write(), userLink.write(), getItemName())
+        val riskLink = A(ProjectLinkGenerator.generateRiskPreviewLink(bean!!.projectid, bean!!.id)).appendText(getItemName())
+        return context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink.write(), userLink.write(), riskLink.write())
     }
 
     override fun getUpdateSubject(context: MailContext<SimpleRisk>): String = context.getMessage(

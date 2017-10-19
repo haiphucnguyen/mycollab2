@@ -17,6 +17,7 @@
 package com.mycollab.vaadin
 
 import com.google.common.base.MoreObjects
+import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.SessionIdGenerator
 import com.mycollab.common.i18n.ErrorI18nEnum
 import com.mycollab.configuration.IDeploymentMode
@@ -180,7 +181,13 @@ abstract class AppUI : UI() {
          */
         @JvmStatic
         fun addFragment(fragment: String, windowTitle: String) {
-            Page.getCurrent().setUriFragment(fragment, false)
+            if (fragment.startsWith(GenericLinkUtils.URL_PREFIX_PARAM)) {
+                val newFragment = fragment.substring(1)
+                Page.getCurrent().setUriFragment(newFragment, false)
+            } else {
+                Page.getCurrent().setUriFragment(fragment, false)
+            }
+
             Page.getCurrent().setTitle("${StringUtils.trim(windowTitle, 150)} [$siteName]")
         }
     }

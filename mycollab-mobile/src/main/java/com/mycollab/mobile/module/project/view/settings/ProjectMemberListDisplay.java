@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -68,7 +68,7 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
             MVerticalLayout memberInfoLayout = new MVerticalLayout().withMargin(false);
             mainLayout.with(memberAvatar, memberInfoLayout).expand(memberInfoLayout);
 
-            A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables
+            A memberLink = new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables
                     .getProjectId(), member.getUsername())).appendText(member.getDisplayName());
             Label memberLbl = ELabel.html(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
             memberInfoLayout.addComponent(memberLbl);

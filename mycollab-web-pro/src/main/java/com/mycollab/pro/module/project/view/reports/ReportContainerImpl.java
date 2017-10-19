@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view.reports;
 
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.hp.gagawa.java.elements.A;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.mycollab.module.project.view.reports.IReportContainer;
@@ -12,7 +13,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -44,7 +44,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         standupConsole.addComponent(ELabel.fontIcon(FontAwesome.LEGAL).withStyleName("icon-38px"));
-        A standupReportLink = new A(ProjectLinkBuilder.generateStandupDashboardLink())
+        A standupReportLink = new A(ProjectLinkGenerator.generateStandupDashboardLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
         standupConsole.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
@@ -53,7 +53,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.BALANCE_SCALE).withStyleName("icon-38px"));
-        A hoursWeeklyReportLink = new A(ProjectLinkBuilder.generateHoursWeeklyReportLink())
+        A hoursWeeklyReportLink = new A(ProjectLinkGenerator.generateHoursWeeklyReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
         hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
@@ -63,7 +63,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
-        A userWorkloadReportLink = new A(ProjectLinkBuilder.generateUsersWorkloadReportLink())
+        A userWorkloadReportLink = new A(ProjectLinkGenerator.generateUsersWorkloadReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
         userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
@@ -72,7 +72,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         timesheetReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
-        A timesheetReportLink = new A(ProjectLinkBuilder.generateTimesheetReportLink())
+        A timesheetReportLink = new A(ProjectLinkGenerator.generateTimesheetReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
         timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
         timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))

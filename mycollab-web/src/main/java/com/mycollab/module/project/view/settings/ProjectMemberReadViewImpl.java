@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -237,16 +237,17 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
+            SimpleProjectMember projectMember = attachForm.getBean();
             if (propertyId.equals("projectroleid")) {
                 if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
-                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkBuilder.generateRolePreviewFullLink(
-                            attachForm.getBean().getProjectid(), attachForm.getBean().getProjectroleid()), null);
+                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkGenerator.generateRolePreviewLink(
+                            projectMember.getProjectid(), projectMember.getProjectroleid()), null);
                 } else {
                     return new DefaultViewField(UserUIContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY));
                 }
             } else if (propertyId.equals("username")) {
-                return new UserLinkViewField(attachForm.getBean().getUsername(),
-                        attachForm.getBean().getMemberAvatarId(), attachForm.getBean().getMemberFullName());
+                return new UserLinkViewField(projectMember.getUsername(),
+                        projectMember.getMemberAvatarId(), projectMember.getMemberFullName());
             }
             return null;
         }

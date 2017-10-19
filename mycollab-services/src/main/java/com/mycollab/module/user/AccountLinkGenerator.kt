@@ -28,11 +28,11 @@ object AccountLinkGenerator {
 
     @JvmStatic
     fun generateFullProfileLink(siteUrl: String): String =
-            siteUrl + URL_PREFIX_PARAM + "account/preview"
+            "$siteUrl${URL_PREFIX_PARAM}account/preview"
 
     @JvmStatic
     fun generateRoleLink(userRoleId: Int?): String =
-            "account/role/preview/" + UrlEncodeDecoder.encode(userRoleId)
+            "account/role/preview/${UrlEncodeDecoder.encode(userRoleId)}"
 
     @JvmStatic
     fun generatePreviewFullRoleLink(siteUrl: String, userRoleId: Int?): String =

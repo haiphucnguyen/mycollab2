@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,17 +24,14 @@ import com.mycollab.common.GenericLinkUtils;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.MilestoneEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
-import com.mycollab.mobile.ui.SearchInputView;
-import com.mycollab.mobile.ui.SearchNavigationButton;
-import com.mycollab.mobile.ui.AbstractPagedBeanList;
-import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.mobile.ui.MobileUIConstants;
-import com.mycollab.mobile.ui.SearchInputField;
+import com.mycollab.mobile.ui.*;
 import com.mycollab.module.file.service.AbstractStorageService;
-import com.mycollab.module.project.*;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
@@ -44,6 +41,7 @@ import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -155,7 +153,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         public Component generateRow(IBeanList<SimpleMilestone> host, final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
-            A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
+            A milestoneLink = new A(ProjectLinkGenerator.generateMilestonePreviewLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
             if (milestone.isCompleted()) {
                 milestoneLink.setCSSClass(MobileUIConstants.LINK_COMPLETED);

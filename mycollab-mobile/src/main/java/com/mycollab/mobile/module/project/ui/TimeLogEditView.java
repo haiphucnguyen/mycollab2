@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +28,7 @@ import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -169,7 +169,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private double getTotalInvest() {
         double total = 0;
         final ItemTimeLoggingSearchCriteria searchCriteria = this.getItemSearchCriteria();
-        final List<SimpleItemTimeLogging> listTime = (List<SimpleItemTimeLogging>)itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        final List<SimpleItemTimeLogging> listTime = (List<SimpleItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         for (final SimpleItemTimeLogging simpleItemTimeLogging : listTime) {
             total += simpleItemTimeLogging.getLogvalue();
         }
@@ -206,7 +206,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
                     .getAvatarPath(itemLogging.getLogUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
             Div memberLink = new DivLessFormatter().appendChild(avatar, DivLessFormatter.EMPTY_SPACE,
-                    new A(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
+                    new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(),
                             itemLogging.getLoguser())).appendText(itemLogging.getLogUserFullName()));
             MCssLayout memberLbl = new MCssLayout(ELabel.html(memberLink.write()).withStyleName(UIConstants
                     .TEXT_ELLIPSIS).withFullWidth());

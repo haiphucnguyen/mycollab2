@@ -6,13 +6,12 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
@@ -20,6 +19,7 @@ import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -105,7 +105,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         Component clientAvatar = ProjectAssetsUtil.clientLogoComp(client, 100);
         blockTop.addComponent(clientAvatar);
 
-        A clientLink = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client
+        A clientLink = new A(ProjectLinkGenerator.generateClientPreviewLink(client.getId())).appendText(client
                 .getAccountname()).setTitle(client.getAccountname());
         ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 

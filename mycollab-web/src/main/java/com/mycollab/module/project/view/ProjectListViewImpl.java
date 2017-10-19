@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,6 +25,7 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -51,13 +52,7 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-
+import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -110,7 +105,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
         tableItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
-            A projectLink = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName());
+            A projectLink = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
             projectLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     project.getId() + ""));
             projectLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
@@ -137,8 +132,8 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
         tableItem.addGeneratedColumn(Project.Field.accountid.name(), (source, itemId, columnId) -> {
             SimpleProject project = tableItem.getBeanByIndex(itemId);
             if (project.getAccountid() != null) {
-                LabelLink b = new LabelLink(project.getClientName(), ProjectLinkBuilder.generateClientPreviewFullLink
-                        (project.getAccountid()));
+                LabelLink b = new LabelLink(project.getClientName(),
+                        ProjectLinkGenerator.generateClientPreviewLink(project.getAccountid()));
                 b.setIconLink(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
                 return b;
             } else {

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,7 +29,6 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.page.domain.Page;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectActivityStream;
@@ -39,8 +38,8 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.ProjectLocalizationTypeMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.TooltipHelper;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -54,8 +53,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import static com.mycollab.vaadin.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -207,8 +204,9 @@ public class ActivityStreamComponent extends CssLayout {
             DivLessFormatter div = new DivLessFormatter();
             Img userAvatar = new Img("", StorageUtils.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    activityStream.getExtratypeid(), activityStream.getCreateduser()));
+            A userLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID).
+                    setHref(ProjectLinkGenerator.generateProjectMemberLink(
+                            activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
@@ -244,7 +242,7 @@ public class ActivityStreamComponent extends CssLayout {
         private String buildProjectValue(ProjectActivityStream activityStream) {
             DivLessFormatter div = new DivLessFormatter();
             Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
-            A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + TooltipHelper.TOOLTIP_ID);
+            A prjLink = new A(ProjectLinkGenerator.generateProjectLink(activityStream.getProjectId())).setId("tag" + TooltipHelper.TOOLTIP_ID);
             prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
                     activityStream.getProjectId() + ""));
             prjLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

@@ -15,7 +15,7 @@ import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.ui.components.CrmFollowersComp;
 import com.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -203,7 +203,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
         ProjectBlock(SimpleProject project) {
             this.setWidth("400px");
             this.addStyleName("entityblock");
-            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(FontAwesome
+            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(FontAwesome
                     .BUILDING_O.getHtml() + " " + project.getName()).setTitle(project.getName());
             ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
@@ -221,7 +221,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE);
             if (project.getLead() != null) {
                 Div leadDiv = new Div().appendChild(new Img("", StorageUtils.getAvatarPath(project
-                        .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
+                        .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateProjectMemberLink(project
                         .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                         .setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);

@@ -2,6 +2,7 @@ package com.mycollab.pro.module.project.ui.components;
 
 import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.ProjectLinkBuilder;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -29,8 +30,8 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
         if (timeLoggingEntries.size() > 0) {
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
 
-            Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml
-                    () + " ").appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
+            Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ").
+                    appendChild(new A(ProjectLinkGenerator.generateProjectLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
             ELabel link = ELabel.h3(projectDiv.write());
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
