@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,7 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.crm.CrmDataTypeFactory;
-import com.mycollab.module.crm.CrmLinkBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
@@ -156,7 +156,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
             blockContent.addComponent(btnDelete);
             blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-            A opportunityLink = new A(CrmLinkBuilder.generateOpportunityPreviewLinkFull(opportunity.getId()))
+            A opportunityLink = new A(CrmLinkGenerator.generateOpportunityPreviewLink(opportunity.getId()))
                     .appendText(opportunity.getOpportunityname());
             opportunityInfo.addComponent(ELabel.h3(opportunityLink.write()));
 

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,7 +18,7 @@ package com.mycollab.mobile.module.crm.view.account;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.module.crm.CrmLinkBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -48,7 +48,8 @@ public class AccountListDisplay extends DefaultPagedBeanList<AccountService, Acc
         @Override
         public Component generateRow(IBeanList<SimpleAccount> host, final SimpleAccount account, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
+            A accountLink = new A(CrmLinkGenerator.generateAccountPreviewLink(account.getId())).
+                    appendText(account.getAccountname());
             MCssLayout accountWrap = new MCssLayout(ELabel.html(accountLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.ACCOUNT)), accountWrap).expand(accountWrap).withFullWidth());

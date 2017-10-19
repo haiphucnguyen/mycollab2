@@ -1,24 +1,24 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.cases;
 
 import com.mycollab.common.TableViewField;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTooltipGenerator;
-import com.mycollab.module.crm.CrmLinkBuilder;
 import com.mycollab.module.crm.domain.SimpleCase;
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.*;
@@ -27,7 +27,10 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.CheckBoxDecor;
+import com.mycollab.vaadin.web.ui.LabelLink;
+import com.mycollab.vaadin.web.ui.UserLink;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 
 import java.util.List;
@@ -60,7 +63,7 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
 
         this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
             SimpleCase cases = getBeanByIndex(itemId);
-            LabelLink b = new LabelLink(cases.getSubject(), CrmLinkBuilder.generateCasePreviewLinkFull(cases.getId()));
+            LabelLink b = new LabelLink(cases.getSubject(), CrmLinkGenerator.generateCasePreviewLink(cases.getId()));
 
             if (cases.isCompleted()) {
                 b.addStyleName(WebThemes.LINK_COMPLETED);
@@ -72,7 +75,7 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
 
         this.addGeneratedColumn("accountName", (source, itemId, columnId) -> {
             SimpleCase cases = getBeanByIndex(itemId);
-            return new LabelLink(cases.getAccountName(), CrmLinkBuilder.generateAccountPreviewLinkFull(cases.getAccountid()));
+            return new LabelLink(cases.getAccountName(), CrmLinkGenerator.generateAccountPreviewLink(cases.getAccountid()));
         });
 
         this.addGeneratedColumn("assignUserFullName", (source, itemId, columnId) -> {

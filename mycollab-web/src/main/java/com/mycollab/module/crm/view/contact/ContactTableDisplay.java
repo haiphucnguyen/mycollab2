@@ -1,24 +1,24 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.contact;
 
 import com.mycollab.common.TableViewField;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTooltipGenerator;
-import com.mycollab.module.crm.CrmLinkBuilder;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunityLeadSource;
@@ -68,7 +68,7 @@ public class ContactTableDisplay extends DefaultPagedBeanTable<ContactService, C
         addGeneratedColumn("contactName", (source, itemId, columnId) -> {
             final SimpleContact contact = getBeanByIndex(itemId);
 
-            LabelLink b = new LabelLink(contact.getContactName(), CrmLinkBuilder.generateContactPreviewLinkFull(contact.getId()));
+            LabelLink b = new LabelLink(contact.getContactName(), CrmLinkGenerator.generateContactPreviewLink(contact.getId()));
             b.setDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     contact, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
             return b;
@@ -92,7 +92,7 @@ public class ContactTableDisplay extends DefaultPagedBeanTable<ContactService, C
         addGeneratedColumn("accountName", (source, itemId, columnId) -> {
             final SimpleContact contact = getBeanByIndex(itemId);
             if (contact.getAccountName() != null) {
-                return new LabelLink(contact.getAccountName(), CrmLinkBuilder.generateAccountPreviewLinkFull(contact.getAccountid()));
+                return new LabelLink(contact.getAccountName(), CrmLinkGenerator.generateAccountPreviewLink(contact.getAccountid()));
             } else {
                 return new Label();
             }

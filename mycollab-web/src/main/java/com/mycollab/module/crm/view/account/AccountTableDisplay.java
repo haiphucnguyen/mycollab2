@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,9 +20,8 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Br;
 import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.TableViewField;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.module.crm.CrmLinkBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -32,7 +31,6 @@ import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.ui.components.CrmAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
@@ -82,7 +80,7 @@ public class AccountTableDisplay extends DefaultPagedBeanTable<AccountService, A
 
         addGeneratedColumn("accountname", (source, itemId, columnId) -> {
             SimpleAccount account = getBeanByIndex(itemId);
-            A accountLink = new A(CrmLinkBuilder.generateAccountPreviewLinkFull(account.getId())).appendText(account.getAccountname());
+            A accountLink = new A(CrmLinkGenerator.generateAccountPreviewLink(account.getId())).appendText(account.getAccountname());
             accountLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(CrmTypeConstants.ACCOUNT,
                     account.getId() + ""));
             accountLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());

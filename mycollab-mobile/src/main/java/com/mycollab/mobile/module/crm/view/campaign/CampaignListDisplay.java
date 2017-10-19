@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,7 +18,7 @@ package com.mycollab.mobile.module.crm.view.campaign;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.module.crm.CrmLinkBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -48,7 +48,7 @@ public class CampaignListDisplay extends DefaultPagedBeanList<CampaignService, C
         @Override
         public Component generateRow(IBeanList<SimpleCampaign> host, final SimpleCampaign campaign, int rowIndex) {
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(false).withSpacing(false).withFullWidth();
-            A itemLink = new A(CrmLinkBuilder.generateCampaignPreviewLinkFull(campaign.getId())).appendText(campaign.getCampaignname());
+            A itemLink = new A(CrmLinkGenerator.generateCampaignPreviewLink(campaign.getId())).appendText(campaign.getCampaignname());
             MCssLayout itemWrap = new MCssLayout(ELabel.html(itemLink.write()));
             rowLayout.addComponent(new MHorizontalLayout(ELabel.fontIcon(CrmAssetsManager.getAsset
                     (CrmTypeConstants.CAMPAIGN)), itemWrap).expand(itemWrap).withFullWidth());

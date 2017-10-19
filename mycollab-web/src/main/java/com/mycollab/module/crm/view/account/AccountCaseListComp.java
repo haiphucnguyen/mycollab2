@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.module.crm.CrmDataTypeFactory;
-import com.mycollab.module.crm.CrmLinkBuilder;
+import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.Account;
 import com.mycollab.module.crm.domain.SimpleCase;
@@ -157,7 +157,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
             blockContent.addComponent(deleteBtn);
             blockContent.setComponentAlignment(deleteBtn, Alignment.TOP_RIGHT);
 
-            A caseLink = new A(CrmLinkBuilder.generateCasePreviewLinkFull(oneCase.getId())).appendText(oneCase.getSubject());
+            A caseLink = new A(CrmLinkGenerator.generateCasePreviewLink(oneCase.getId())).appendText(oneCase.getSubject());
             ELabel caseSubject = ELabel.h3(caseLink.write());
             caseInfo.addComponent(caseSubject);
 

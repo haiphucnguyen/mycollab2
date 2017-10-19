@@ -19,7 +19,6 @@ package com.mycollab.schedule.spring
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.module.project.schedule.email.service.OverdueProjectTicketsNotificationJob
 import com.mycollab.schedule.AutowiringSpringBeanJobFactory
-import com.mycollab.schedule.QuartzScheduleProperties
 import com.mycollab.schedule.jobs.CleanupTimeTrackingCacheDataJob
 import com.mycollab.schedule.jobs.CrmSendingRelayEmailNotificationJob
 import com.mycollab.schedule.jobs.LiveInstanceMonitorJob
