@@ -20,17 +20,23 @@ package com.mycollab.core
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-abstract class AbstractNotification(val scope: String, val type: String) {
+abstract class AbstractNotification(val scope: String, val kind: String) {
 
     val isGlobalScope: Boolean
         get() = SCOPE_GLOBAL == scope
 
     companion object {
 
+        @JvmField
         val WARNING = "warning"
+
+        @JvmField
         val NEWS = "news"
 
+        @JvmField
         val SCOPE_GLOBAL = "global"
+
+        @JvmField
         val SCOPE_USER = "user"
     }
 }

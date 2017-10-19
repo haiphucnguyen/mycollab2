@@ -27,7 +27,7 @@ public class NewUpdateAvailableNotification extends AbstractNotification {
     private String installerFile;
 
     public NewUpdateAvailableNotification(String version, String autoDownloadLink, String manualDownloadLink, String installerFile) {
-        super(Companion.getSCOPE_GLOBAL(), Companion.getNEWS());
+        super(AbstractNotification.SCOPE_GLOBAL, AbstractNotification.NEWS);
         this.version = version;
         this.autoDownloadLink = autoDownloadLink;
         this.manualDownloadLink = manualDownloadLink;

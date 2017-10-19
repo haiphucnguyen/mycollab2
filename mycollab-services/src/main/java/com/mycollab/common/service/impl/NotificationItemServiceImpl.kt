@@ -27,16 +27,16 @@ class NotificationItemServiceImpl(private val notificationItemMapper: Notificati
     override fun batchInsertItems(notificationUsers: List<String>, module: String, type: String, typeId: String, messages: List<String>, sAccountId: Int) {
         val jdbcTemplate = JdbcTemplate(dataSource)
         val now = DateTimeUtils.convertDateTimeToUTC(DateTime.now().toDate())
-        jdbcTemplate.batchUpdate("INSERT INTO `m_notification_item`(`notificationUser`, `module`, `type`, `typeId`, `messages`, `createdTime`, `isRead`, `sAccountId`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.batchUpdate("INSERT INTO `m_notification_item`(`notificationUser`, `module`, `type`, `typeId`, `message`, `createdTime`, `isRead`, `sAccountId`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 object : BatchPreparedStatementSetter {
                     override fun setValues(preparedStatement: PreparedStatement, i: Int) {
                         preparedStatement.setString(1, notificationUsers.get(i))
                         preparedStatement.setString(2, module)
                         preparedStatement.setString(3, type)
                         preparedStatement.setString(4, typeId)
-                        preparedStatement.setString(5, messages.get(i))
+                        preparedStatement.setString(5, messages[i])
                         preparedStatement.setDate(6, Date(now.time))
-                        preparedStatement.setBoolean(7, true)
+                        preparedStatement.setBoolean(7, false)
                         preparedStatement.setInt(8, sAccountId)
                     }
 

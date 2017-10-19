@@ -21,7 +21,6 @@ import com.hp.gagawa.java.elements.A
 import com.hp.gagawa.java.elements.Span
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.common.i18n.ShellI18nEnum
-import com.mycollab.module.project.ProjectEntryUpdateNotification
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification
 import com.mycollab.core.AbstractNotification
@@ -35,7 +34,6 @@ import com.mycollab.vaadin.ui.ELabel
 import com.mycollab.vaadin.ui.UIConstants
 import com.vaadin.server.FontAwesome
 import com.vaadin.ui.*
-import org.slf4j.LoggerFactory
 import org.vaadin.hene.popupbutton.PopupButton
 import org.vaadin.jouni.restrain.Restrain
 import org.vaadin.viritin.button.MButton
@@ -47,7 +45,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout
  * @author MyCollab Ltd.
  * @since 4.1
  */
-class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener, ApplicationEventListener<ShellEvent.NewNotification> {
+abstract class AbstractNotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener, ApplicationEventListener<ShellEvent.NewNotification> {
 
     private val notificationItems = mutableSetOf<AbstractNotification>()
     private val notificationContainer = MVerticalLayout().withSpacing(false).withMargin(false)
@@ -75,16 +73,15 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
         notificationContainer.removeAllComponents()
 
         if (notificationItems.isNotEmpty()) {
-            for (item in notificationItems) {
-                val comp = buildComponentFromNotification(item)
+            notificationItems.forEach {
+                val comp = buildComponentFromNotification(it)
                 comp.styleName = "notification-type"
-                comp.addStyleName("notification-type-${item.type}")
+                comp.addStyleName("notification-type-${it.kind}")
                 notificationContainer.addComponent(comp)
             }
         } else {
             val noItemLbl = Label(UserUIContext.getMessage(ShellI18nEnum.OPT_NO_NOTIFICATION))
-            notificationContainer.addComponent(noItemLbl)
-            notificationContainer.setComponentAlignment(noItemLbl, Alignment.MIDDLE_CENTER)
+            notificationContainer.with(noItemLbl).withAlign(noItemLbl, Alignment.MIDDLE_CENTER)
         }
     }
 
@@ -104,7 +101,7 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
             val ui = ui
             AsyncInvoker.access(ui, object : AsyncInvoker.PageCommand() {
                 override fun run() {
-                    this@NotificationComponent.caption = "${notificationItems.size}"
+                    this@AbstractNotificationComponent.caption = "${notificationItems.size}"
                 }
             })
         } else {
@@ -158,7 +155,7 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
             if (UserUIContext.isAdmin()) {
                 val upgradeBtn = MButton(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPGRADE)) { _ ->
                     UI.getCurrent().addWindow(UpgradeConfirmWindow(item.version, item.manualDownloadLink, item.installerFile))
-                    this@NotificationComponent.isPopupVisible = false
+                    this@AbstractNotificationComponent.isPopupVisible = false
                 }.withStyleName(UIConstants.BLOCK)
                 wrapper.addComponent(upgradeBtn)
             }
@@ -166,26 +163,25 @@ class NotificationComponent : PopupButton(), PopupButton.PopupVisibilityListener
             wrapper.addComponent(ELabel.html("${FontAwesome.EXCLAMATION_TRIANGLE.html} ${UserUIContext.getMessage(ShellI18nEnum.OPT_REQUEST_UPLOAD_AVATAR)}"))
             val uploadAvatarBtn = MButton(UserUIContext.getMessage(ShellI18nEnum.ACTION_UPLOAD_AVATAR)) { _ ->
                 EventBusFactory.getInstance().post(ShellEvent.GotoUserAccountModule(this, arrayOf("preview")))
-                this@NotificationComponent.isPopupVisible = false
+                this@AbstractNotificationComponent.isPopupVisible = false
             }.withStyleName(UIConstants.BLOCK)
             wrapper.add(uploadAvatarBtn)
         } else if (item is SmtpSetupNotification) {
             val smtpBtn = MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_SETUP)) { _ ->
                 EventBusFactory.getInstance().post(ShellEvent.GotoUserAccountModule(this, arrayOf("setup")))
-                this@NotificationComponent.isPopupVisible = false
+                this@AbstractNotificationComponent.isPopupVisible = false
             }.withStyleName(UIConstants.BLOCK)
             val lbl = ELabel.html("${FontAwesome.EXCLAMATION_TRIANGLE.html} ${UserUIContext.getMessage(ShellI18nEnum.ERROR_NO_SMTP_SETTING)}")
             val lblWrapper = MCssLayout(lbl)
             wrapper.with(lblWrapper, smtpBtn).expand(lblWrapper)
-        } else if (item is ProjectEntryUpdateNotification) {
-            wrapper.with(ELabel.html(item.message))
         } else {
-            LOG.error("Do not render notification $item")
+            val com = buildComponentFromNotificationExclusive(item)
+            if (com != null) {
+                wrapper.add(com)
+            }
         }
         return wrapper
     }
 
-    companion object {
-        private val LOG = LoggerFactory.getLogger(NotificationComponent::class.java)
-    }
+    abstract protected fun buildComponentFromNotificationExclusive(item: AbstractNotification): Component?
 }
