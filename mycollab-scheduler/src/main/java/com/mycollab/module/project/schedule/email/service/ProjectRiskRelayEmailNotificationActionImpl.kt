@@ -71,26 +71,26 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
     override fun getCreateSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getCreateSubjectNotification(context: MailContext<SimpleRisk>): String {
-        val projectLink = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectName)
-        val userLink = A(AccountLinkGenerator.generateUserLink(context.user.username)).appendText(context.changeByUserFullName)
-        val riskLink = A(ProjectLinkGenerator.generateRiskPreviewLink(bean!!.projectid, bean!!.id)).appendText(getItemName())
-        return context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink.write(), userLink.write(), riskLink.write())
-    }
+    override fun getCreateSubjectNotification(context: MailContext<SimpleRisk>): String =
+            context.getMessage(RiskI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink(), userLink(context), riskLink())
 
     override fun getUpdateSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getUpdateSubjectNotification(context: MailContext<SimpleRisk>): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleRisk>): String =
+            context.getMessage(RiskI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, projectLink(), userLink(context), riskLink())
 
     override fun getCommentSubject(context: MailContext<SimpleRisk>): String = context.getMessage(
             RiskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getCommentSubjectNotification(context: MailContext<SimpleRisk>): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getCommentSubjectNotification(context: MailContext<SimpleRisk>): String =
+            context.getMessage(RiskI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, projectLink(), userLink(context), riskLink())
+
+    private fun projectLink() = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectName).write()
+
+    private fun userLink(context: MailContext<SimpleRisk>) = A(AccountLinkGenerator.generateUserLink(context.user.username)).appendText(context.changeByUserFullName).write()
+
+    private fun riskLink() = A(ProjectLinkGenerator.generateRiskPreviewLink(bean!!.projectid, bean!!.id)).appendText(getItemName()).write()
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 

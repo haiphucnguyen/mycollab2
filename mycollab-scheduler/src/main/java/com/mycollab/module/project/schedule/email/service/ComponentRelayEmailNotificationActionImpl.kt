@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project.schedule.email.service
 
+import com.hp.gagawa.java.elements.A
 import com.hp.gagawa.java.elements.Span
 import com.mycollab.common.MonitorTypeConstants
 import com.mycollab.common.i18n.GenericI18Enum
@@ -89,27 +90,30 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
     override fun getCreateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getCreateSubjectNotification(context: MailContext<SimpleComponent>): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getCreateSubjectNotification(context: MailContext<SimpleComponent>): String = context.getMessage(
+            ComponentI18nEnum.MAIL_CREATE_ITEM_SUBJECT, projectLink(), userLink(context), componentLink())
 
     override fun getUpdateSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getUpdateSubjectNotification(context: MailContext<SimpleComponent>): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getUpdateSubjectNotification(context: MailContext<SimpleComponent>): String = context.getMessage(
+            ComponentI18nEnum.MAIL_UPDATE_ITEM_SUBJECT, projectLink(), userLink(context), componentLink())
 
     override fun getCommentSubject(context: MailContext<SimpleComponent>): String = context.getMessage(
             ComponentI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, bean!!.projectName, context.changeByUserFullName, getItemName())
 
-    override fun getCommentSubjectNotification(context: MailContext<SimpleComponent>): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getCommentSubjectNotification(context: MailContext<SimpleComponent>): String = context.getMessage(
+            ComponentI18nEnum.MAIL_COMMENT_ITEM_SUBJECT, projectLink(), userLink(context), componentLink())
+
+    private fun projectLink() = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectName).write()
+
+    private fun userLink(context: MailContext<SimpleComponent>) = A(AccountLinkGenerator.generateUserLink(context.user.username)).appendText(context.changeByUserFullName).write()
+
+    private fun componentLink() = A(ProjectLinkGenerator.generateBugComponentPreviewLink(bean!!.projectid, bean!!.id)).appendText(getItemName()).write()
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getType(): String  = ProjectTypeConstants.BUG_COMPONENT
+    override fun getType(): String = ProjectTypeConstants.BUG_COMPONENT
 
     override fun getTypeId(): String = "${bean!!.id}"
 
