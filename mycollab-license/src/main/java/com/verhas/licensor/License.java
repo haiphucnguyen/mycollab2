@@ -60,7 +60,7 @@ import org.bouncycastle.openpgp.operator.jcajce.JcePBESecretKeyDecryptorBuilder;
  * A License object is (key,value) pair set that can be interpreted arbitrary.
  * There is no special meaning how to handle these. The License object however
  * can be electronically signed and saved into a file and loaded and verified.
- * <p>
+ *
  * You can use a License object for two purposes:
  *
  * <ul>
@@ -232,12 +232,12 @@ public class License {
 	/**
 	 * Set the hash algorithm to use to sign the license. The default value is
 	 * SHA512.
-	 * <p>
+	 *
 	 * Call to this method is needed only when encoding license and only when
 	 * the default algorithm is not appropriate for some reason or if the caller
 	 * wants to ensure that the default algorithm is used even when a later
 	 * version of this library is used.
-	 * <p>
+	 *
 	 * The default algorithm may change in future versions of this class. Note
 	 * that the default algorithm was SHA1 prior to version 1.0.4
 	 *
@@ -693,10 +693,10 @@ public class License {
 	 * store different keys in different location. For example the key to
 	 * generate expiring demo licenses may be stored on the public server to let
 	 * it automatically generate demo keys.
-	 * <p>
+	 *
 	 * The key used to generate commercial licenses is stored in a bunker, deep
 	 * down under the ground between steel walls.
-	 * <p>
+	 *
 	 * In such a situation the protected program will not accept a commercial
 	 * non expiring license (that could have been stolen) signed by the demo
 	 * license key.
@@ -717,7 +717,7 @@ public class License {
 	 * Open an encoded license from input stream, decode and load it. If the
 	 * file can not be loaded or is not signed properly then the method
 	 * {@link #isVerified()} will return false.
-	 * <p>
+	 *
 	 * Otherwise the license is loaded and can be used.
 	 *
 	 * @param inputStream

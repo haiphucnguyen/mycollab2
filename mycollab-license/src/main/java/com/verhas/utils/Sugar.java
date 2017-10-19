@@ -49,7 +49,7 @@ public class Sugar {
      * encode(licensePlain, using(signatureGenerator), to(outputStream));
      * </pre> (actual code was copied from License.java).
      * {@link #to(java.lang.Object)} is also a similar method.
-     * <p>
+     *
      * Note that these methods increase the size of the VM code, but any modern
      * Java implementation will optimize them off in the JIT phase.
      *

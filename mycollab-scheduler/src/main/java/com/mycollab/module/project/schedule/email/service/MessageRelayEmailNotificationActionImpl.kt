@@ -99,6 +99,6 @@ class MessageRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
         contentGenerator.putVariable("summaryLink", summaryLink)
-        contentGenerator.putVariable("messages", bean!!.message)
+        contentGenerator.putVariable("message", bean!!.message)
     }
 }

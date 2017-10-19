@@ -22,7 +22,7 @@ public class CommandLineProcessor {
 	/**
 	 * Decides if a command line option was specified on the command line or
 	 * not.
-	 * <p>
+	 *
 	 * Should only be called after the method {@code process()} was invoked.
 	 * 
 	 * @param name
@@ -36,7 +36,7 @@ public class CommandLineProcessor {
 
 	/**
 	 * Get a command line option value.
-	 * <p>
+	 *
 	 * Should only be called after the method {@code process()} was invoked.
 	 * 
 	 * @param name
@@ -72,7 +72,7 @@ public class CommandLineProcessor {
 	 * formatted argument. The value and the name of the option are separated
 	 * using an {@code =} equal sign and thus present in the same command line
 	 * argument.
-	 * <P>
+	 *
 	 * When the argument starts with single dash {@code -} (and not double dash
 	 * {@code --}) then it is a
 	 * 
@@ -83,14 +83,14 @@ public class CommandLineProcessor {
 	 * type argument. The difference is that in this case the argument value is
 	 * the next command line argument separated by space on the command line
 	 * from the name of the options.
-	 * <p>
+	 *
 	 * When an argument does not start with dash then this is a 'file' parameter
 	 * and it gets into the {@code files} collection.
-	 * <p>
+	 *
 	 * When a 'file' argument starts with a dash '-' then it has to be preceded
 	 * with two dashes. For example {@code -specialFile} has to be written as
 	 * {@code ---specialFile}.
-	 * <p>
+	 *
 	 * The order of the parameters and the way they are specified ( -- or - ) is
 	 * not preserved. The order of 'file' arguments is reserved in the array.
 	 * 

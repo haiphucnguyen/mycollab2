@@ -19,12 +19,12 @@ import org.bouncycastle.crypto.digests.MD5Digest;
  * feature is optional. Calling methods from this class the license manager can
  * check that the license is deployed on the machine it was destined and may
  * decide NOT to work on other machines than it was destined to.
- * <p>
+ *
  * It is recommended that such a checking is used only with warning purposes and
  * not treated as a strict license violation. It may happen that the ethernet
  * card of a server is replaced due to some failure and there is no time to
  * request a new license.
- * <p>
+ *
  * Therefore it is a recommended practice to note the disalignment of the
  * license and send it to the log, but do not deter the operation of the
  * software.
@@ -67,7 +67,7 @@ public class HardwareBinder {
 	 * When calculating the uuid of a machine the network interfaces are
 	 * enumerated and their parameters are taken into account. The names and the
 	 * hardware addresses are used.
-	 * <p>
+	 *
 	 * If you want to ignore the network when generating the uuid then call this
 	 * method before any uuid calculating methods.
 	 */
@@ -109,19 +109,19 @@ public class HardwareBinder {
 	 * of the regular expressions are matched against the display name then the
 	 * interface is allowed taken into account during the calculation of the
 	 * machine id.
-	 * <p>
+	 *
 	 * Note that there is also a denied set of regular expressions. A network
 	 * interface card is used during the calculation of the machine uuid if any
 	 * of the allowing regular expressions match and none of the denying regular
 	 * expressions match.
-	 * <p>
+	 *
 	 * Note that if there is no any allowing regular expressions, then this is
 	 * treated that all the interface cards are allowed unless explicitly denied
 	 * by any of the denying regular expressions. This way the functionality of
 	 * the hardware binder class is compatible with previous versions. If you
 	 * define nor allowed set, neither denied set then the interface cards are
 	 * treated the same as with the old version.
-	 * <p>
+	 *
 	 * This functionality is needed only when you have problem with some virtual
 	 * network interface cards that are erroneously reported by the Java run
 	 * time system as physical cards. This is a well known bug that is low
@@ -141,7 +141,7 @@ public class HardwareBinder {
 	 * of the regular expressions are matched against the display name then the
 	 * interface is denied taken into account during the calculation of the
 	 * machine id.
-	 * <p>
+	 *
 	 * See also the documentation of the method
 	 * {@link #interfaceAllowed(String)}.
 	 * 
@@ -158,14 +158,14 @@ public class HardwareBinder {
 	 * is denied. If there is no denied set then the processing is not affected
 	 * by the non existence. In other word not specifying any denied interface
 	 * name means that no interface is denied explicitly.
-	 * <p>
+	 *
 	 * If there is a set of permitted names then if any of the regular
 	 * expressions matches the name of the interface then the interface is
 	 * permitted. If there is no set then the interface is permitted. In other
 	 * words it is not possible to deny all interfaces specifying an empty set.
 	 * Although this would mathematically logical, but there is no valuable use
 	 * case that would require this feature.
-	 * <p>
+	 *
 	 * Note that the name, which is checked is not the basic name (e.g.
 	 * <tt>eth0</tt>) but the display name, which is more human readable.
 	 * 
@@ -270,9 +270,9 @@ public class HardwareBinder {
 	 * takes each interface name (as a string) and hardware address into a MD5
 	 * digest one after the other and finally converts the resulting 128bit
 	 * digest into a UUID.
-	 * <p>
+	 *
 	 * The method also feeds the local machine name into the digest.
-	 * <p>
+	 *
 	 * This method relies on Java 6 methods, but also works with Java 5. However
 	 * the result will not be the same on Java 5 as on Java 6.
 	 * 
@@ -356,7 +356,7 @@ public class HardwareBinder {
 	/**
 	 * A very simple main that prints out the machine UUID to the standard
 	 * output.
-	 * <p>
+	 *
 	 * This code takes into account the hardware address (Ethernet MAC) when
 	 * calculating the hardware UUID.
 	 * 

@@ -31,16 +31,16 @@ public class ExtendedLicense extends License {
 	/**
 	 * Checks the expiration date of the license and returns true if the license
 	 * has expired.
-	 * <p>
+	 *
 	 * The expiration date is encoded in the license with the key
 	 * {@code expiryDate} in the format {@code yyyy-MM-dd}. A license is expired
 	 * if the current date is after the specified expiryDate. At the given date
 	 * the license is still valid.
-	 * <p>
+	 *
 	 * Note that this method does not ensure license validity. You separately
 	 * have to call {@link License#isVerified()} to ensure that the license was
 	 * successfully verified.
-	 * <p>
+	 *
 	 * The time is calculated using the default locale, thus licenses expire
 	 * first in Australia, later in Europe and latest in USA.
 	 *
@@ -76,11 +76,11 @@ public class ExtendedLicense extends License {
 
 	/**
 	 * Generates a new license id.
-	 * <p>
+	 *
 	 * Note that this ID is also stored in the license thus there is no need to
 	 * call {@link #setFeature(String, UUID)} separately after the UUID was
 	 * generated.
-	 * <p>
+	 *
 	 * Generating UUID can be handy when you want to identify each license
 	 * individually. For example you want to store revocation information about
 	 * each license. The url to check the revocation may contain the
@@ -195,7 +195,7 @@ public class ExtendedLicense extends License {
 	 * license under the name {@code revocationUrl}. This URL may contain the
 	 * string <code>${licenseId}</code> which is replaced by the actual license
 	 * ID. Thus there is no need to wire into the revocation URL the license ID.
-	 * <p>
+	 *
 	 * If there is no license id defined in the license then the place holder
 	 * will not be replaced.
 	 *
@@ -267,20 +267,20 @@ public class ExtendedLicense extends License {
 	 * the method tries to issue a http connection (GET) to the url specified in
 	 * the license feature {@code revocationUrl}. If the URL returns anything
 	 * with http status code {@code 200} then the license is not revoked.
-	 * <p>
+	 *
 	 * The url string in the feature {@code revocationUrl} may contain the place
 	 * holder <code>${licenseId}</code>, which is replaced by the feature value
 	 * {@code licenseId}. This feature makes it possible to setup a revocation
 	 * service and use a constant string in the different licenses.
-	 * <p>
+	 *
 	 * The method can work in two different ways. One way is to ensure that the
 	 * license is not revoked and return {@code true} only if it is sure that
 	 * the license is revoked or revocation information is not available.
-	 * <p>
+	 *
 	 * The other way is to ensure that the license is revoked and return
 	 * {@code false} if the license was not revoked or the revocation
 	 * information is not available.
-	 * <p>
+	 *
 	 * The difference is whether to treat the license revoked when the
 	 * revocation service is not reachable.
 	 *
