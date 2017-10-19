@@ -233,5 +233,4 @@ class ProjectRiskRelayEmailNotificationActionImpl : SendMailToAllMembersAction<S
             } else value
         }
     }
-
 }
