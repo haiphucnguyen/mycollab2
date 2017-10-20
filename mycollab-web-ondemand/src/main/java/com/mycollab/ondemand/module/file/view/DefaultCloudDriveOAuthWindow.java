@@ -55,7 +55,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
 
     private void registerListeners() {
         listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
-            private static final long serialVersionUID = 1L;
 
             @Subscribe
             @Override

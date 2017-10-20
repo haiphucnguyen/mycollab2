@@ -17,8 +17,12 @@
 package com.mycollab.mobile.module.project.view.milestone;
 
 import com.mycollab.common.GenericLinkUtils;
+import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
+import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.MilestoneEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
@@ -92,6 +96,9 @@ public class MilestoneReadPresenter extends AbstractProjectPresenter<MilestoneRe
 
                     AppUI.addFragment(String.format("project/milestone/preview/%s", GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(), milestone.getId())),
                             milestone.getName());
+
+                    AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
+                            ModuleNameConstants.PRJ, ProjectTypeConstants.MILESTONE, milestone.getId().toString()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }

@@ -1,18 +1,22 @@
 package com.mycollab.premium.mobile.module.project.view.risk;
 
+import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.RiskEvent;
 import com.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.mycollab.mobile.shell.event.ShellEvent;
 import com.mycollab.mobile.ui.ConfirmDialog;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.SimpleRisk;
+import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -67,6 +71,9 @@ public class RiskReadPresenter extends AbstractProjectPresenter<RiskReadView> {
                 if (risk != null) {
                     this.getView().previewItem(risk);
                     super.onGo(container, data);
+
+                    AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
+                            ModuleNameConstants.PRJ, ProjectTypeConstants.RISK, risk.getId().toString()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }

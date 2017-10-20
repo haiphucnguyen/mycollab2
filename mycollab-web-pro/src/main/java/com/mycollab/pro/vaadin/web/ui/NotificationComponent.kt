@@ -1,10 +1,10 @@
 package com.mycollab.pro.vaadin.web.ui
 
+import com.mycollab.common.EntryUpdateNotification
 import com.mycollab.common.ModuleNameConstants
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.common.service.NotificationItemService
 import com.mycollab.core.AbstractNotification
-import com.mycollab.module.project.ProjectEntryUpdateNotification
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.AsyncInvoker
@@ -28,12 +28,8 @@ class NotificationComponent : AbstractNotificationComponent() {
                 val notificationItemService = AppContextUtil.getSpringBean(NotificationItemService::class.java)
                 val notifications = notificationItemService.findUnreadNotificationItemsByUser(UserUIContext.getUsername(), AppUI.accountId)
                 notifications.forEach {
-                    when {
-                        it.module == ModuleNameConstants.PRJ -> {
-                            val projectNotification = ProjectEntryUpdateNotification(it.notificationuser, it.type, it.typeid, it.message)
-                            addNotification(projectNotification)
-                        }
-                    }
+                    val notification = EntryUpdateNotification(it.notificationuser, it.module, it.type, it.typeid, it.message)
+                    addNotification(notification)
                 }
             }
         })
@@ -41,7 +37,7 @@ class NotificationComponent : AbstractNotificationComponent() {
 
     override fun buildComponentFromNotificationExclusive(item: AbstractNotification): Component? {
         return when (item) {
-            is ProjectEntryUpdateNotification -> ProjectNotificationComponent(item)
+            is EntryUpdateNotification -> ProjectNotificationComponent(item)
             else -> {
                 LOG.error("Do not support notification type $item")
                 null
@@ -50,10 +46,11 @@ class NotificationComponent : AbstractNotificationComponent() {
     }
 
     override fun displayTrayNotificationExclusive(item: AbstractNotification) {
-        if (item is ProjectEntryUpdateNotification) {
-            val no = Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), item.message, Notification.Type.TRAY_NOTIFICATION)
+        if (item is EntryUpdateNotification) {
+            val no = Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), item.message,
+                    Notification.Type.TRAY_NOTIFICATION)
             no.isHtmlContentAllowed = true
-            no.delayMsec = 3000
+            no.delayMsec = 3000000
 
             AsyncInvoker.access(ui, object : AsyncInvoker.PageCommand() {
                 override fun run() {
@@ -63,14 +60,10 @@ class NotificationComponent : AbstractNotificationComponent() {
         }
     }
 
-    class ProjectNotificationComponent(notification: ProjectEntryUpdateNotification) : CssLayout() {
+    inner class ProjectNotificationComponent(notification: EntryUpdateNotification) : CssLayout() {
         init {
             val noLabel = ELabel.html(notification.message)
             addComponent(noLabel)
-            addLayoutClickListener { _ ->
-                val notificationItemService = AppContextUtil.getSpringBean(NotificationItemService::class.java)
-                notificationItemService.markNotificationRead(notification.targetUser, ModuleNameConstants.PRJ, notification.type, notification.typeId)
-            }
         }
     }
 

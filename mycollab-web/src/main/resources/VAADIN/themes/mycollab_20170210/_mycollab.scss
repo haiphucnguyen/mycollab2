@@ -1121,12 +1121,6 @@ $v-line-height--header:1.5em;
       border: none;
       font-size: $font-x-large;
       padding: 7px 10px;
-      color: $my-white-color;
-    }
-    &.v-Notification-warning {
-      h1, p {
-        color: rgb(45, 45, 45);
-      }
     }
     p {
       padding: 5px 10px;
@@ -1137,10 +1131,8 @@ $v-line-height--header:1.5em;
       width: 100%;
     }
     &.tray {
-      background-color: #d9a437;
-      .v-Notification-description {
-        color: $my-white-color;
-      }
+      background-color: gray;
+      border: 1px solid $my-separator-color;
     }
   }
 

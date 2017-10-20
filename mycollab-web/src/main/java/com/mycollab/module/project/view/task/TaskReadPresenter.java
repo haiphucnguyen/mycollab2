@@ -16,10 +16,13 @@
  */
 package com.mycollab.module.project.view.task;
 
+import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.QueryI18nEnum.NumberI18nEnum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchField;
+import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
+import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -162,6 +165,9 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
                     view.previewItem(task);
                     ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadCrumb.gotoTaskRead(task);
+
+                    AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
+                            ModuleNameConstants.PRJ, ProjectTypeConstants.TASK, task.getId().toString()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }

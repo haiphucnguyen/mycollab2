@@ -16,7 +16,11 @@
  */
 package com.mycollab.mobile.module.project.view.bug;
 
+import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
+import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.BugEvent;
 import com.mycollab.mobile.module.project.event.TicketEvent;
@@ -88,6 +92,9 @@ public class BugReadPresenter extends AbstractProjectPresenter<BugReadView> {
                 if (bug != null) {
                     getView().previewItem(bug);
                     super.onGo(container, data);
+
+                    AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
+                            ModuleNameConstants.PRJ, ProjectTypeConstants.BUG, bug.getId().toString()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }
