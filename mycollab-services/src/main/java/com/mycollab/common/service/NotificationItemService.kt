@@ -11,5 +11,7 @@ interface NotificationItemService : ICrudService<Int, NotificationItem> {
     fun batchInsertItems(notificationUsers: List<String>, module:String, type: String, typeId: String,
                          messages: List<String>, sAccountId: Int)
 
-    fun findNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem>
+    fun markNotificationRead(targetUser: String, module: String, type: String, typeId: String)
+
+    fun findUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem>
 }

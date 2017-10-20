@@ -45,9 +45,17 @@ class NotificationItemServiceImpl(private val notificationItemMapper: Notificati
                 })
     }
 
-    override fun findNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem> {
+    override fun markNotificationRead(targetUser: String, module: String, type: String, typeId: String) {
         val example = NotificationItemExample()
-        example.createCriteria().andNotificationuserEqualTo(targetUser)
+        example.createCriteria().andNotificationuserEqualTo(targetUser).andModuleEqualTo(module).andTypeEqualTo(type).andTypeidEqualTo(typeId)
+        val notificationItem = NotificationItem()
+        notificationItem.isread = true
+        notificationItemMapper.updateByExampleSelective(notificationItem, example)
+    }
+
+    override fun findUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem> {
+        val example = NotificationItemExample()
+        example.createCriteria().andNotificationuserEqualTo(targetUser).andIsreadEqualTo(false)
         return notificationItemMapper.selectByExample(example)
     }
 }

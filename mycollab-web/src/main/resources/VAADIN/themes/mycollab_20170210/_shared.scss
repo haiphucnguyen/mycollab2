@@ -854,6 +854,17 @@
     background-image: none !important;
     box-shadow: none !important;
     background-color: #fff;
+  }
 
+  .milestone-box {
+    background-color: $my-white-color;
+    border-color: $my-separator-color;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    padding: 12px 20px;
+    &:hover {
+      background-color: $my-hover-background-color;
+      box-shadow: inset 5px 0px 0px 0px $my-link-color;
+    }
   }
 }

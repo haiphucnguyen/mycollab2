@@ -279,6 +279,10 @@ $v-line-height--header:1.5em;
     .v-label span {
       word-wrap: break-word;
     }
+    &:hover {
+      background-color: $my-hover-background-color;
+      box-shadow: inset 5px 0px 0px 0px $my-link-color;
+    }
   }
 
   /* End Top Menu */
