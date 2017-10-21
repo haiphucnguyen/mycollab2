@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view;
 
 import com.google.common.eventbus.Subscribe;
+import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.FavoriteItem;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -8,8 +9,6 @@ import com.mycollab.common.service.FavoriteItemService;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -41,19 +40,24 @@ import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.pro.module.project.view.risk.RiskDefaultFormLayoutFactory;
 import com.mycollab.pro.module.project.view.risk.RiskPreviewForm;
-import com.mycollab.vaadin.reporting.FormReportLayout;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.reporting.FormReportLayout;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
+import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
+import com.mycollab.vaadin.web.ui.SearchTextField;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -114,7 +118,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         header.with(headerLbl);
 
         isSortAsc = true;
-        final Button sortBtn = new Button("");
+        final MButton sortBtn = new MButton("");
         sortBtn.addClickListener(clickEvent -> {
             isSortAsc = !isSortAsc;
             if (searchCriteria != null) {
@@ -126,9 +130,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 displayFavoriteList();
             }
         });
-        sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-        sortBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
-        sortBtn.setWidthUndefined();
+        sortBtn.withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY).withWidth("-1px");
 
         final SearchTextField searchTextField = new SearchTextField() {
             @Override
@@ -446,6 +448,9 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
+
+                AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
+                        ModuleNameConstants.PRJ, assignment.getType(), assignment.getTypeId()));
             }
         }
     }

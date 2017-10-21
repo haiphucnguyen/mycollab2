@@ -83,6 +83,7 @@ Version 6.0.0
 * Support configuring SSL easier
 * Improve the overall performance
 * [Premium] Clean and comprehensive notifications
+* [Premium] Approve timesheet permission
 * [Premium] Reports in project
 * [Premium] Resource allocation
 
