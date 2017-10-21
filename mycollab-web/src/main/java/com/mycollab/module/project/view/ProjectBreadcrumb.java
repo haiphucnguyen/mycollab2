@@ -341,22 +341,6 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         }
     }
 
-    public void gotoBugKanbanView() {
-        addSummaryLink();
-        addEnabledLink(new Button(UserUIContext.getMessage(TicketI18nEnum.LIST), new GotoTicketDashboard()));
-        addLink(new Button(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)));
-        AppUI.addFragment("project/bug/kanban/" + UrlEncodeDecoder.encode(project.getId()),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN));
-    }
-
-    public void gotoBugList(String query) {
-        addSummaryLink();
-        addLink(new Button(UserUIContext.getMessage(BugI18nEnum.LIST)));
-        String fragment = (StringUtils.isNotBlank(query)) ? ProjectLinkGenerator.generateBugsLink(project.getId()) + "?" +
-                query : ProjectLinkGenerator.generateBugsLink(project.getId());
-        AppUI.addFragment(fragment, UserUIContext.getMessage(BugI18nEnum.LIST));
-    }
-
     public void gotoBugAdd() {
         addSummaryLink();
 
