@@ -180,7 +180,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             notification.setSizeUndefined();
             if (message.getCommentsCount() > 0) {
                 MHorizontalLayout commentNotification = new MHorizontalLayout();
-                Label commentCountLbl = ELabel.html(Integer.toString(message.getCommentsCount()) + " " + FontAwesome.COMMENTS.getHtml());
+                Label commentCountLbl = ELabel.html(String.format("%s %s", Integer.toString(message.getCommentsCount()), FontAwesome.COMMENTS.getHtml()));
                 commentCountLbl.setSizeUndefined();
                 commentNotification.addComponent(commentCountLbl);
                 notification.addComponent(commentNotification);

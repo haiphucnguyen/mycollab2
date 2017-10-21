@@ -50,7 +50,7 @@ class NotificationComponent : AbstractNotificationComponent() {
             val no = Notification(UserUIContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), item.message,
                     Notification.Type.TRAY_NOTIFICATION)
             no.isHtmlContentAllowed = true
-            no.delayMsec = 3000000
+            no.delayMsec = 3000
 
             AsyncInvoker.access(ui, object : AsyncInvoker.PageCommand() {
                 override fun run() {
