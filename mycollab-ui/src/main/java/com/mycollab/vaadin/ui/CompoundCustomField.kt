@@ -12,25 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui;
+package com.mycollab.vaadin.ui
 
-import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
-
-import java.util.Set;
+import com.vaadin.ui.CustomField
 
 /**
- * @author MyCollab Ltd
- * @since 5.3.2
- */
-public interface IFormLayoutFactory {
-    AbstractComponent getLayout();
-
-    Component attachField(Object propertyId, Field<?> field);
-
-    Set<String> bindFields();
-}
+ *
+ * @author MyCollab Ltd.
+ * @since 3.0
+ *
+ * @param <T>
+</T> */
+abstract class CompoundCustomField<T> : CustomField<T>()

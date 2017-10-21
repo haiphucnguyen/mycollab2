@@ -63,9 +63,8 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     private ItemTimeLoggingService itemTimeLoggingService;
     private ItemTimeLoggingSearchCriteria searchCriteria;
 
-    private ItemTimeLoggingSearchPanel searchPanel;
     private VerticalLayout timeTrackingWrapper;
-    private final ELabel lbTimeRange;
+    private ELabel lbTimeRange;
 
     private String groupByState;
     private String sortDirection;
@@ -84,8 +83,8 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-        searchPanel = new ItemTimeLoggingSearchPanel();
-        searchPanel.addSearchHandler(criteria -> setSearchCriteria(criteria));
+        ItemTimeLoggingSearchPanel searchPanel = new ItemTimeLoggingSearchPanel();
+        searchPanel.addSearchHandler(this::setSearchCriteria);
 
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -156,8 +155,8 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     }
 
     private void setTimeRange() {
-        final String fromDate = UserUIContext.formatDate(searchPanel.getFromDate());
-        final String toDate = UserUIContext.formatDate(searchPanel.getToDate());
+        final String fromDate = "";
+        final String toDate = "";
 
         searchCriteria.setBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);

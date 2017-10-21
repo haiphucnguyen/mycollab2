@@ -12,20 +12,15 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui;
-
-import com.vaadin.ui.CustomField;
+package com.mycollab.vaadin.ui
 
 /**
- *
+ * @param <B>
  * @author MyCollab Ltd.
- * @since 3.0
- *
- * @param <T>
- */
-public abstract class CompoundCustomField<T> extends CustomField<T> {
-    private static final long serialVersionUID = 1L;
-
+ * @since 1.0
+</B> */
+interface FieldSelection<B> {
+    fun fireValueChange(data: B)
 }

@@ -12,15 +12,23 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui;
+package com.mycollab.vaadin.ui
+
+import com.vaadin.ui.AbstractComponent
+import com.vaadin.ui.Component
+import com.vaadin.ui.ComponentContainer
+import com.vaadin.ui.Field
 
 /**
- * @param <B>
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.3.2
  */
-public interface FieldSelection<B> {
-    void fireValueChange(B data);
+interface IFormLayoutFactory {
+    val layout: AbstractComponent
+
+    fun attachField(propertyId: Any, field: Field<*>): Component
+
+    fun bindFields(): Set<String>
 }

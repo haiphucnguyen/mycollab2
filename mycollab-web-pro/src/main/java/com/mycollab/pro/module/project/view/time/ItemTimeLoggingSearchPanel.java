@@ -6,6 +6,7 @@ import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
+import com.mycollab.db.query.Param;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -36,25 +37,19 @@ import java.util.Date;
 class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggingSearchCriteria> {
     private static final long serialVersionUID = 1L;
 
-    private TimeLoggingBasicSearchLayout layout;
+    private static Param[] paramFields = new Param[]{ItemTimeLoggingSearchCriteria.p_logDates,
+            ItemTimeLoggingSearchCriteria.p_logUsers, ItemTimeLoggingSearchCriteria.p_isBillable,
+            ItemTimeLoggingSearchCriteria.p_isOvertime,
+            ItemTimeLoggingSearchCriteria.p_isApproved};
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
-        layout = new TimeLoggingBasicSearchLayout();
-        return layout;
-    }
-
-    Date getFromDate() {
-        return layout.startDateField.getValue();
-    }
-
-    Date getToDate() {
-        return layout.endDateField.getValue();
+        return new TimeLoggingBasicSearchLayout();
     }
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createAdvancedSearchLayout() {
-        return null;
+        return new TimeLoggingAdvancedSearchLayout();
     }
 
     @Override
@@ -62,8 +57,29 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         return ComponentUtils.headerH2(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
     }
 
-    public void addComponent(Component c, int index) {
-        layout.bodyWrap.addComponent(c, index);
+    private class TimeLoggingAdvancedSearchLayout extends DynamicQueryParamLayout<ItemTimeLoggingSearchCriteria> {
+
+        TimeLoggingAdvancedSearchLayout() {
+            super(ItemTimeLoggingSearchPanel.this, ProjectTypeConstants.TIME);
+        }
+
+        @Override
+        public Param[] getParamFields() {
+            return paramFields;
+        }
+
+        @Override
+        protected Class<ItemTimeLoggingSearchCriteria> getType() {
+            return ItemTimeLoggingSearchCriteria.class;
+        }
+
+        @Override
+        protected Component buildSelectionComp(String fieldId) {
+            if ("loguser".equals(fieldId)) {
+                return new ProjectMemberListSelect();
+            }
+            return null;
+        }
     }
 
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
@@ -114,7 +130,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             MButton clearBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> userField.setValue(null))
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout(searchBtn, clearBtn);
+            MButton advancedSearchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+                    clickEvent -> moveToAdvancedSearchLayout()).withStyleName(WebThemes.BUTTON_LINK);
+
+            MHorizontalLayout buttonControls = new MHorizontalLayout(searchBtn, clearBtn, advancedSearchBtn);
             bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
 
             return bodyWrap;
