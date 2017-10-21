@@ -45,5 +45,9 @@ class ItemTimeLoggingSearchCriteria : SearchCriteria() {
         @JvmField
         val p_logUsers = CacheParamMapper.register(ProjectTypeConstants.TIME,
                 UserI18nEnum.LIST, PropertyListParam<String>("loguser", "m_prj_time_logging", "loguser"))
+
+        @JvmField
+        val p_isApproved = CacheParamMapper.register(ProjectTypeConstants.TIME,
+                TimeTrackingI18nEnum.FORM_IS_APPROVED, PropertyListParam<String>("loguser", "m_prj_time_logging", "loguser"))
     }
 }

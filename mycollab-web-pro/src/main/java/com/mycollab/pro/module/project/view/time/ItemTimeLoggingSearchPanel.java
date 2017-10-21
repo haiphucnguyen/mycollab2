@@ -37,7 +37,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     private static final long serialVersionUID = 1L;
 
     private TimeLoggingBasicSearchLayout layout;
-    private ComboBox groupField, orderField;
 
     @Override
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
