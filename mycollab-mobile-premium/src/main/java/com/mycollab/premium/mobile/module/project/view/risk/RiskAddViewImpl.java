@@ -84,7 +84,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
         @Override
         protected Field<?> onCreateField(Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId) || Risk.Field.createduser.equalTo(propertyId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Risk.Field.description.equalTo(propertyId) || Risk.Field.response.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
                 textArea.setNullRepresentation("");

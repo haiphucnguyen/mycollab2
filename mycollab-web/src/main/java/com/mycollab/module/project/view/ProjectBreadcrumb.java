@@ -585,7 +585,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
 
         @Override
         public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
+            EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, CurrentProjectVariables.getProjectId()));
         }
     }
 

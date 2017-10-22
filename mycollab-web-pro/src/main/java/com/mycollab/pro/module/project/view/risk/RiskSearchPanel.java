@@ -24,6 +24,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.util.Arrays;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -128,9 +130,9 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
         @Override
         protected Component buildSelectionComp(String fieldId) {
             if ("assignuser".equals(fieldId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
             } else if ("raiseduser".equals(fieldId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
             } else if ("milestones".equals(fieldId)) {
                 return new MilestoneListSelect();
             }

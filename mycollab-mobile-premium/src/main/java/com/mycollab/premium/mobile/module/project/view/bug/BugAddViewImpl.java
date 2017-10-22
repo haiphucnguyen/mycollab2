@@ -100,7 +100,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 }
                 return new PriorityListSelect();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {
                 if (beanItem.getSeverity() == null) {
                     beanItem.setSeverity(BugSeverity.Major.name());

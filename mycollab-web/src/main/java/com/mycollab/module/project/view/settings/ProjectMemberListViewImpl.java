@@ -183,7 +183,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
                         if (confirmDialog.isConfirmed()) {
                             ProjectMemberService prjMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
                             prjMemberService.removeWithSession(member, UserUIContext.getUsername(), AppUI.getAccountId());
-                            EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, null));
+                            EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, CurrentProjectVariables.getProjectId()));
                         }
                     });
         }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK)

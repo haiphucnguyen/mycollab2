@@ -27,6 +27,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -76,7 +77,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @Override
         protected Component buildSelectionComp(String fieldId) {
             if ("loguser".equals(fieldId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
             }
             return null;
         }
@@ -120,7 +121,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR,
                     WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
 
-            userField = new ProjectMemberListSelect();
+            userField = new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
             userField.setWidth("250px");
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 

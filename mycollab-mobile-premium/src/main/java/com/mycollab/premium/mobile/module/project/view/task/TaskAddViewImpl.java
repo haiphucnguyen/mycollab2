@@ -88,7 +88,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         @Override
         protected Field<?> onCreateField(Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectMemberListSelect();
+                return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Task.Field.description.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
                 textArea.setNullRepresentation("");
