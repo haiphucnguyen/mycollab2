@@ -142,7 +142,7 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
             }
         } else if (param instanceof BooleanParam) {
             BooleanParam wrapParam = (BooleanParam) param;
-            return wrapParam.buildSearchField(prefixOper, compareOper, (Boolean) this.eval());
+            return wrapParam.buildSearchField(prefixOper, compareOper, (String) this.eval());
         } else if (param instanceof NumberParam) {
             NumberParam wrapParam = (NumberParam) param;
             String value = (String) this.eval();

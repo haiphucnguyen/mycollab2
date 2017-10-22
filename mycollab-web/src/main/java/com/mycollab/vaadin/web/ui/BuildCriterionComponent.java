@@ -254,7 +254,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 valueField.setWidth(width);
                 valueBox.addComponent(valueField);
             } else if (param instanceof BooleanParam) {
-                ValueComboBox valueField = new ValueComboBox();
+                I18nValueComboBox valueField = new I18nValueComboBox(false, GenericI18Enum.ACTION_YES, GenericI18Enum.ACTION_NO);
                 valueField.setValue(String.valueOf(searchFieldInfo.eval()));
                 valueField.setWidth(width);
                 valueBox.addComponent(valueField);
@@ -372,7 +372,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 tempTextField.setWidth(width);
                 valueBox.addComponent(tempTextField);
             } else if (field instanceof BooleanParam) {
-                ValueComboBox yesNoBox = new ValueComboBox();
+                I18nValueComboBox yesNoBox = new I18nValueComboBox(false, GenericI18Enum.ACTION_YES, GenericI18Enum.ACTION_NO);
                 yesNoBox.setWidth(width);
                 valueBox.addComponent(yesNoBox);
             } else if (field instanceof DateParam) {

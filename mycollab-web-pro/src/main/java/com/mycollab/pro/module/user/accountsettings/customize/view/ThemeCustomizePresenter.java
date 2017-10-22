@@ -63,7 +63,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             public void handle(ResetTheme event) {
                 ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(AdminI18nEnum.ACTION_RESET_DEFAULT_THEME),
                         UserUIContext.getMessage(AdminI18nEnum.OPT_CONFIRM_RESET_DEFAULT_THEME),
-                        UserUIContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        UserUIContext.getMessage(GenericI18Enum.ACTION_YES),
                         UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
