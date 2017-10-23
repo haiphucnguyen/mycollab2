@@ -115,10 +115,9 @@ object CurrentProjectVariables {
     }
 
     @JvmStatic
-    fun canReadAssignments(): Boolean {
-        return canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
-                canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES)
-    }
+    fun canReadAssignments(): Boolean =
+            canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
+                    canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES)
 
     @JvmStatic
     fun canWrite(permissionItem: String): Boolean {
@@ -178,44 +177,28 @@ object CurrentProjectVariables {
         }
 
     @JvmStatic
-    fun hasMessageFeature(): Boolean {
-        return features.displaymessage!!
-    }
+    fun hasMessageFeature(): Boolean = features.displaymessage!!
 
     @JvmStatic
-    fun hasPhaseFeature(): Boolean {
-        return features.displaymilestone!!
-    }
+    fun hasPhaseFeature(): Boolean = features.displaymilestone!!
 
     @JvmStatic
-    fun hasTicketFeature(): Boolean {
-        return MoreObjects.firstNonNull(features.displayticket, true)
-    }
+    fun hasTicketFeature(): Boolean = MoreObjects.firstNonNull(features.displayticket, true)
 
     @JvmStatic
-    fun hasPageFeature(): Boolean {
-        return features.displaypage!!
-    }
+    fun hasPageFeature(): Boolean = features.displaypage!!
 
     @JvmStatic
-    fun hasFileFeature(): Boolean {
-        return features.displayfile!!
-    }
+    fun hasFileFeature(): Boolean = features.displayfile!!
 
     @JvmStatic
-    fun hasTimeFeature(): Boolean {
-        return features.displaytimelogging!!
-    }
+    fun hasTimeFeature(): Boolean = features.displaytimelogging!!
 
     @JvmStatic
-    fun hasInvoiceFeature(): Boolean {
-        return java.lang.Boolean.TRUE == features.displayinvoice
-    }
+    fun hasInvoiceFeature(): Boolean = java.lang.Boolean.TRUE == features.displayinvoice
 
     @JvmStatic
-    fun hasStandupFeature(): Boolean {
-        return features.displaystandup!!
-    }
+    fun hasStandupFeature(): Boolean = features.displaystandup!!
 
     @JvmStatic
     var currentPagePath: String
@@ -245,26 +228,22 @@ object CurrentProjectVariables {
         }
 
     @JvmStatic
-    fun canWriteTicket(ticket: ProjectTicket): Boolean {
-        return when {
-            ticket.isTask -> canWrite(ProjectRolePermissionCollections.TASKS)
-            ticket.isBug -> canWrite(ProjectRolePermissionCollections.BUGS)
-            ticket.isRisk -> canWrite(ProjectRolePermissionCollections.RISKS)
-            else -> false
-        }
+    fun canWriteTicket(ticket: ProjectTicket): Boolean = when {
+        ticket.isTask -> canWrite(ProjectRolePermissionCollections.TASKS)
+        ticket.isBug -> canWrite(ProjectRolePermissionCollections.BUGS)
+        ticket.isRisk -> canWrite(ProjectRolePermissionCollections.RISKS)
+        else -> false
     }
 
     @JvmStatic
-    fun canReadTicket(): Boolean {
-        return canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS)
-                || canRead(ProjectRolePermissionCollections.RISKS)
-    }
+    fun canReadTicket(): Boolean =
+            (canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS)
+                    || canRead(ProjectRolePermissionCollections.RISKS))
 
     @JvmStatic
-    fun canWriteTicket(): Boolean {
-        return canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS)
-                || canWrite(ProjectRolePermissionCollections.RISKS)
-    }
+    fun canWriteTicket(): Boolean =
+            (canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS)
+                    || canWrite(ProjectRolePermissionCollections.RISKS))
 
     @JvmStatic
     val restrictedItemTypes: SetSearchField<String>
