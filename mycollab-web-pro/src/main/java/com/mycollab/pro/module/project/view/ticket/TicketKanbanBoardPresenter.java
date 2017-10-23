@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.ticket;
+package com.mycollab.pro.module.project.view.ticket;
 
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -23,6 +23,9 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
+import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
+import com.mycollab.module.project.view.ticket.TicketContainer;
+import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
 import com.mycollab.vaadin.mvp.LoadPolicy;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
@@ -34,7 +37,7 @@ import com.vaadin.ui.HasComponents;
  * @since 5.1.1
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TicketKanbanBoardPresenter extends ProjectGenericPresenter<TicketKanbanBoardView> {
+public class TicketKanbanBoardPresenter extends ProjectGenericPresenter<TicketKanbanBoardView> implements ITicketKanbanPresenter {
 
     public TicketKanbanBoardPresenter() {
         super(TicketKanbanBoardView.class);

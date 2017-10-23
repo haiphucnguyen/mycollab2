@@ -1,20 +1,20 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.ticket;
+package com.mycollab.pro.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.OptionVal;
@@ -25,8 +25,6 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -46,10 +44,9 @@ import com.mycollab.module.project.view.service.TaskComponentFactory;
 import com.mycollab.module.project.view.task.TaskSavedFilterComboBox;
 import com.mycollab.module.project.view.task.TaskSearchPanel;
 import com.mycollab.module.project.view.task.ToggleTaskSummaryField;
+import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -112,12 +109,10 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 @Override
                 @Subscribe
                 public void handle(TaskEvent.SearchRequest event) {
-                    TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
-                    if (criteria != null) {
-                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
-                        queryTask(criteria);
-                    }
+                    TaskSearchCriteria criteria = event.getData();
+                    criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                    criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
+                    queryTask(criteria);
                 }
             };
 

@@ -20,6 +20,7 @@ import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.UrlEncodeDecoder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.json.QueryAnalyzer;
+import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.StringUtils;
@@ -29,8 +30,6 @@ import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.db.query.SearchFieldInfo;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
@@ -45,6 +44,8 @@ import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasMassItemActionHandler;
 import com.mycollab.vaadin.event.HasSearchHandlers;
@@ -101,9 +102,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                 @Subscribe
                 public void handle(TicketEvent.SearchRequest event) {
                     ProjectTicketSearchCriteria criteria = event.getSearchCriteria();
-                    if (criteria != null) {
-                        queryTickets(criteria);
-                    }
+                    queryTickets(criteria);
                 }
             };
 
@@ -181,17 +180,19 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                 .withVisible(CurrentProjectVariables.canWriteTicket());
         groupWrapLayout.addComponent(newTicketBtn);
 
-        MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST))
-                .withIcon(FontAwesome.NAVICON).withWidth("100px");
+        if (!SiteConfiguration.isCommunityEdition()) {
+            MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST))
+                    .withIcon(FontAwesome.NAVICON).withWidth("100px");
 
-        MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), clickEvent ->
-                displayKanbanView()).withWidth("100px").withIcon(FontAwesome.TH);
+            MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), clickEvent ->
+                    displayKanbanView()).withWidth("100px").withIcon(FontAwesome.TH);
 
-        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        viewButtons.addButton(advanceDisplayBtn);
-        viewButtons.addButton(kanbanBtn);
-        viewButtons.withDefaultButton(advanceDisplayBtn);
-        groupWrapLayout.addComponent(viewButtons);
+            ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+            viewButtons.addButton(advanceDisplayBtn);
+            viewButtons.addButton(kanbanBtn);
+            viewButtons.withDefaultButton(advanceDisplayBtn);
+            groupWrapLayout.addComponent(viewButtons);
+        }
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
@@ -307,7 +308,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                 int newTotalTickets = projectTicketService.getTotalTicketsCount(baseCriteria);
                 int newNumPages = newTotalTickets / 100;
                 currentPage++;
-                List<ProjectTicket> otherTickets = (List<ProjectTicket>)projectTicketService.findTicketsByCriteria(new
+                List<ProjectTicket> otherTickets = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new
                         BasicSearchRequest<>(baseCriteria, currentPage + 1, 100));
                 ticketGroupOrderComponent.insertTickets(otherTickets);
                 if (currentPage >= newNumPages) {
@@ -316,7 +317,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.ANGLE_DOUBLE_DOWN);
             wrapBody.addComponent(moreBtn);
         }
-        List<ProjectTicket> tickets = (List<ProjectTicket>)projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>
+        List<ProjectTicket> tickets = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 100));
         ticketGroupOrderComponent.insertTickets(tickets);
     }

@@ -53,6 +53,9 @@ object ProjectRolePermissionCollections {
     val RISKS = "Risk"
 
     @JvmField
+    val SPIKE = "Spike"
+
+    @JvmField
     val USERS = "User"
 
     @JvmField

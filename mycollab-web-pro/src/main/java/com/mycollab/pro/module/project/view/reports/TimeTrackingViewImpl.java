@@ -8,7 +8,6 @@ import com.mycollab.db.arguments.*;
 import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -29,8 +28,9 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.pro.module.project.ui.components.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.AsyncInvoker;
+import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -279,12 +279,8 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         searchCriteria.setBillable(null);
         Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        if (totalHour > 0) {
-            totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-                    fromDate, toDate, totalHour, billableHour, nonBillableHours));
-        } else {
-            totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
-        }
+        totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+                fromDate, toDate, totalHour, billableHour, nonBillableHours));
 
         timeTrackingWrapper.removeAllComponents();
 
@@ -297,7 +293,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>)itemTimeLoggingService.findPageableListByCriteria(new
+                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new
                             BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);

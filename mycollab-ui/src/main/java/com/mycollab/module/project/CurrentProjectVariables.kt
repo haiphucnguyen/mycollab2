@@ -203,7 +203,7 @@ object CurrentProjectVariables {
     @JvmStatic
     var currentPagePath: String
         get() {
-            var path: String? = MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR) as String
+            var path = MyCollabSession.getCurrentUIVariable(CURRENT_PAGE_VAR) as? String
             if (path == null) {
                 path = PathUtils.getProjectDocumentPath(AppUI.accountId, projectId)
                 currentPagePath = path
@@ -237,13 +237,13 @@ object CurrentProjectVariables {
 
     @JvmStatic
     fun canReadTicket(): Boolean =
-            (canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS)
-                    || canRead(ProjectRolePermissionCollections.RISKS))
+            (canRead(ProjectRolePermissionCollections.TASKS) || canRead(ProjectRolePermissionCollections.BUGS) ||
+                    canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.SPIKE))
 
     @JvmStatic
     fun canWriteTicket(): Boolean =
-            (canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS)
-                    || canWrite(ProjectRolePermissionCollections.RISKS))
+            (canWrite(ProjectRolePermissionCollections.TASKS) || canWrite(ProjectRolePermissionCollections.BUGS) ||
+                    canWrite(ProjectRolePermissionCollections.RISKS) || canWrite(ProjectRolePermissionCollections.SPIKE))
 
     @JvmStatic
     val restrictedItemTypes: SetSearchField<String>

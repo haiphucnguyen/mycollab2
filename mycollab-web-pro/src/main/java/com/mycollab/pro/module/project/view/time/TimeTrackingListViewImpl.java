@@ -8,8 +8,6 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -28,9 +26,7 @@ import com.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderCompon
 import com.mycollab.pro.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.mycollab.pro.module.project.view.reports.TimesheetCustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -155,8 +151,6 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     }
 
     private void setTimeRange() {
-        final String fromDate = "";
-        final String toDate = "";
 
         searchCriteria.setBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
@@ -167,12 +161,8 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         searchCriteria.setBillable(null);
         final Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        if (totalHour > 0) {
-            lbTimeRange.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-                    fromDate, toDate, totalHour, billableHour, nonBillableHour));
-        } else {
-            lbTimeRange.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
-        }
+        lbTimeRange.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+                totalHour, billableHour, nonBillableHour));
     }
 
     @Override
@@ -210,7 +200,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>)itemTimeLoggingService.findPageableListByCriteria(new
+                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new
                             BasicSearchRequest<>(searchCriteria, page + 1, 20));
                     for (SimpleItemTimeLogging item : itemTimeLoggings) {
                         timeDisplayComp.insertItem(item);
