@@ -52,7 +52,7 @@ class MasterFormServiceImpl(private val formSectionMapper: FormSectionMapper,
 
             for (section in sections) {
                 val dySection = DynaSection()
-                dySection.layoutType = LayoutType.from(section.layouttype)
+                dySection.layoutType = LayoutType.fromVal(section.layouttype)
 
                 //                dySection.setHeader(section.getName());
                 dySection.orderIndex = section.layoutindex!!
@@ -61,10 +61,10 @@ class MasterFormServiceImpl(private val formSectionMapper: FormSectionMapper,
                 val fields = section.fields
                 if (CollectionUtils.isNotEmpty(fields)) {
                     for (field in fields) {
-                        val fieldtype = TYPE_PACKAGE + field.fieldtype
+                        val fieldType = "$TYPE_PACKAGE${field.fieldtype}"
                         val clsType: Class<*>
                         try {
-                            clsType = Class.forName(fieldtype)
+                            clsType = Class.forName(fieldType)
                         } catch (e: ClassNotFoundException) {
                             throw MyCollabException(e)
                         }
@@ -106,7 +106,7 @@ class MasterFormServiceImpl(private val formSectionMapper: FormSectionMapper,
             val formSection = FormSection()
             formSection.module = moduleName
             formSection.layoutindex = section.orderIndex
-            formSection.layouttype = LayoutType.to(section.layoutType)
+            formSection.layouttype = LayoutType.toVal(section.layoutType)
             //            formSection.setName(section.getHeader());
             formSection.isdeletesection = section.isDeletedSection
             formSection.saccountid = sAccountId
