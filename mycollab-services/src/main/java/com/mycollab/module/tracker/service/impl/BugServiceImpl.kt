@@ -40,7 +40,6 @@ import com.mycollab.module.project.i18n.OptionI18nEnum
 import com.mycollab.module.project.service.*
 import com.mycollab.module.tracker.dao.BugMapper
 import com.mycollab.module.tracker.dao.BugMapperExt
-import com.mycollab.module.tracker.domain.BugStatusGroupItem
 import com.mycollab.module.tracker.domain.BugWithBLOBs
 import com.mycollab.module.tracker.domain.SimpleBug
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
@@ -155,9 +154,6 @@ class BugServiceImpl(private val bugMapper: BugMapper,
 
     override fun findById(bugId: Int, sAccountId: Int): SimpleBug =
             bugMapperExt.getBugById(bugId)
-
-    override fun getBugStatusGroupItemBaseComponent(criteria: BugSearchCriteria): List<BugStatusGroupItem> =
-            bugMapperExt.getBugStatusGroupItemBaseComponent(criteria)
 
     override fun findByProjectAndBugKey(bugKey: Int, projectShortName: String, sAccountId: Int): SimpleBug? =
             bugMapperExt.findByProjectAndBugKey(bugKey, projectShortName, sAccountId)

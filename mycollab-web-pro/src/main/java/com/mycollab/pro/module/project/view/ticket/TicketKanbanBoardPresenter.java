@@ -4,7 +4,7 @@ import com.mycollab.core.SecureAccessException;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
@@ -47,7 +47,7 @@ public class TicketKanbanBoardPresenter extends ProjectGenericPresenter<TicketKa
         }
     }
 
-    private void doSearch(TaskSearchCriteria searchCriteria) {
-        view.queryTask(searchCriteria);
+    private void doSearch(ProjectTicketSearchCriteria searchCriteria) {
+        view.queryTickets(searchCriteria);
     }
 }

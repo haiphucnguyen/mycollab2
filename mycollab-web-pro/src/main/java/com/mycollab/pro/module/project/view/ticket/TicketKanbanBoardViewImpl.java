@@ -2,58 +2,43 @@ package com.mycollab.pro.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.OptionVal;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.OptionValService;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.mycollab.module.project.event.TaskEvent;
+import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.query.TicketQueryInfo;
+import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.view.ProjectView;
-import com.mycollab.module.project.view.kanban.AddNewColumnWindow;
-import com.mycollab.module.project.view.kanban.DeleteColumnWindow;
-import com.mycollab.module.project.view.service.TaskComponentFactory;
-import com.mycollab.module.project.view.task.TaskSavedFilterComboBox;
-import com.mycollab.module.project.view.task.TaskSearchPanel;
-import com.mycollab.module.project.view.task.ToggleTaskSummaryField;
+import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
+import com.mycollab.module.project.view.ticket.TicketSearchPanel;
+import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.colorpicker.Color;
 import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.*;
-import com.vaadin.ui.components.colorpicker.ColorPickerPopup;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -65,7 +50,6 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -77,56 +61,32 @@ import java.util.concurrent.ConcurrentHashMap;
 @ViewComponent
 public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implements TicketKanbanBoardView {
 
-    private ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+    private ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
     private OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
 
-    private TaskSearchPanel searchPanel;
+    private TicketSearchPanel searchPanel;
     private DDHorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
-    private ComponentContainer newTaskComp = null;
-    private MButton toggleShowColumnsBtn;
-    private boolean displayHiddenColumns = false;
-    private TaskSearchCriteria baseCriteria;
+    private ProjectTicketSearchCriteria baseCriteria;
 
-    private ApplicationEventListener<TaskEvent.SearchRequest> searchHandler = new
-            ApplicationEventListener<TaskEvent.SearchRequest>() {
+    private ApplicationEventListener<TicketEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<TicketEvent.SearchRequest>() {
                 @Override
                 @Subscribe
-                public void handle(TaskEvent.SearchRequest event) {
-                    TaskSearchCriteria criteria = event.getData();
-                    criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                    criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
-                    queryTask(criteria);
+                public void handle(TicketEvent.SearchRequest event) {
+                    ProjectTicketSearchCriteria criteria = event.getSearchCriteria();
+                    criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    queryTickets(criteria);
                 }
             };
 
     public TicketKanbanBoardViewImpl() {
         this.setSizeFull();
         this.withSpacing(true).withMargin(new MarginInfo(false, true, true, true));
-        searchPanel = new TaskSearchPanel();
+        searchPanel = new TicketSearchPanel();
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
-
-        toggleShowColumnsBtn = new MButton("", clickEvent -> {
-            displayHiddenColumns = !displayHiddenColumns;
-            reload();
-            toggleShowButton();
-        }).withStyleName(WebThemes.BUTTON_LINK);
-        groupWrapLayout.addComponent(toggleShowColumnsBtn);
-        toggleShowButton();
-
-        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
-            MButton addNewColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_NEW_COLUMN),
-                    clickEvent -> UI.getCurrent().addWindow(new AddNewColumnWindow(this, ProjectTypeConstants.TASK, "status")))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-            groupWrapLayout.addComponent(addNewColumnBtn);
-        }
-
-        MButton deleteColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_DELETE_COLUMNS),
-                clickEvent -> UI.getCurrent().addWindow(new DeleteColumnWindow(this, ProjectTypeConstants.TASK)))
-                .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
-        deleteColumnBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)))
@@ -193,16 +153,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
     }
 
-    private void toggleShowButton() {
-        if (displayHiddenColumns) {
-            toggleShowColumnsBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_HIDE_COLUMNS));
-        } else {
-            toggleShowColumnsBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMNS));
-        }
-    }
-
     @Override
-    public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers() {
+    public HasSearchHandlers<ProjectTicketSearchCriteria> getSearchHandlers() {
         return searchPanel;
     }
 
@@ -228,19 +180,19 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
     @Override
     public void display() {
-        searchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
+        searchPanel.selectQueryInfo(TicketQueryInfo.OPEN_TICKETS);
     }
 
     private void reload() {
         if (baseCriteria == null) {
             display();
         } else {
-            queryTask(baseCriteria);
+            queryTickets(baseCriteria);
         }
     }
 
     @Override
-    public void queryTask(final TaskSearchCriteria searchCriteria) {
+    public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
         kanbanBlocks = new ConcurrentHashMap<>();
@@ -249,29 +201,19 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                        CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
-                for (OptionVal optionVal : optionVals) {
-                    if (!displayHiddenColumns && Boolean.FALSE.equals(optionVal.getIsshow())) {
-                        continue;
-                    }
-                    KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
-                    kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
-                    kanbanLayout.addComponent(kanbanBlock);
-                }
-                this.push();
 
-                int totalTasks = taskService.getTotalCount(searchCriteria);
-                searchPanel.setTotalCountNumber(totalTasks);
-                int pages = totalTasks / 50;
+
+                int totalTickets = ticketService.getTotalCount(searchCriteria);
+                searchPanel.setTotalCountNumber(totalTickets);
+                int pages = totalTickets / 50;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleTask> tasks = (List<SimpleTask>) taskService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
-                    if (CollectionUtils.isNotEmpty(tasks)) {
-                        for (SimpleTask task : tasks) {
-                            String status = task.getStatus();
+                    List<ProjectTicket> tickets = (List<ProjectTicket>) ticketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    if (CollectionUtils.isNotEmpty(tickets)) {
+                        for (ProjectTicket ticket : tickets) {
+                            String status = ticket.getStatus();
                             KanbanBlock kanbanBlock = kanbanBlocks.get(status);
                             if (kanbanBlock != null) {
-                                kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                                kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
                             }
                         }
                         this.push();
@@ -293,31 +235,31 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         });
     }
 
-    private static class KanbanTaskBlockItem extends BlockRowRender {
-        private SimpleTask task;
+    private static class KanbanBlockItem extends BlockRowRender {
+        private ProjectTicket projectTicket;
 
-        private KanbanTaskBlockItem(final SimpleTask task) {
-            this.task = task;
+        private KanbanBlockItem(final ProjectTicket ticket) {
+            this.projectTicket = ticket;
             this.addStyleName("kanban-item");
 
-            TaskComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TaskComponentFactory.class);
+            TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
 
             MHorizontalLayout headerLayout = new MHorizontalLayout();
 
-            ToggleTaskSummaryField toggleTaskSummaryField = new ToggleTaskSummaryField(task, 70, false, true);
-            AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(task);
-            headerLayout.with(priorityField, toggleTaskSummaryField).expand(toggleTaskSummaryField);
+            ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(projectTicket);
+            AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(projectTicket);
+            headerLayout.with(priorityField, toggleTicketSummaryField).expand(toggleTicketSummaryField);
 
             this.with(headerLayout);
 
             CssLayout footer = new CssLayout();
 
-            footer.addComponent(popupFieldFactory.createCommentsPopupField(task));
-            footer.addComponent(popupFieldFactory.createFollowersPopupField(task));
-            footer.addComponent(popupFieldFactory.createStartDatePopupField(task));
-            footer.addComponent(popupFieldFactory.createEndDatePopupField(task));
-            footer.addComponent(popupFieldFactory.createDeadlinePopupField(task));
-            footer.addComponent(popupFieldFactory.createAssigneePopupField(task));
+            footer.addComponent(popupFieldFactory.createCommentsPopupField(projectTicket));
+            footer.addComponent(popupFieldFactory.createFollowersPopupField(projectTicket));
+            footer.addComponent(popupFieldFactory.createStartDatePopupField(projectTicket));
+            footer.addComponent(popupFieldFactory.createEndDatePopupField(projectTicket));
+            footer.addComponent(popupFieldFactory.createDueDatePopupField(projectTicket));
+            footer.addComponent(popupFieldFactory.createAssigneePopupField(projectTicket));
 
             this.addComponent(footer);
         }
@@ -326,8 +268,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     private class KanbanBlock extends MVerticalLayout implements IBlockContainer {
         private OptionVal optionVal;
         private DDVerticalLayout dragLayoutContainer;
-        private MHorizontalLayout buttonControls;
-        private Button hideColumnBtn;
         private Label header;
 
         KanbanBlock(final OptionVal stage) {
@@ -350,8 +290,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                             .getTargetDetails();
 
                     Component dragComponent = transferable.getComponent();
-                    if (dragComponent instanceof KanbanTaskBlockItem) {
-                        KanbanTaskBlockItem kanbanItem = (KanbanTaskBlockItem) dragComponent;
+                    if (dragComponent instanceof KanbanBlockItem) {
+                        KanbanBlockItem kanbanItem = (KanbanBlockItem) dragComponent;
                         int newIndex = details.getOverIndex();
                         if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
                             dragLayoutContainer.addComponent(kanbanItem);
@@ -360,10 +300,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);
                         }
-                        SimpleTask task = kanbanItem.task;
-                        task.setStatus(optionVal.getTypeval());
-                        ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
+                        ProjectTicket ticket = kanbanItem.projectTicket;
                         refresh();
 
                         Component sourceComponent = transferable.getSourceComponent();
@@ -376,16 +313,16 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         List<Map<String, Integer>> indexMap = new ArrayList<>();
                         for (int i = 0; i < dragLayoutContainer.getComponentCount(); i++) {
                             Component subComponent = dragLayoutContainer.getComponent(i);
-                            if (subComponent instanceof KanbanTaskBlockItem) {
-                                KanbanTaskBlockItem blockItem = (KanbanTaskBlockItem) dragLayoutContainer.getComponent(i);
+                            if (subComponent instanceof KanbanBlockItem) {
+                                KanbanBlockItem blockItem = (KanbanBlockItem) dragLayoutContainer.getComponent(i);
                                 Map<String, Integer> map = new HashMap<>(2);
-                                map.put("id", blockItem.task.getId());
+                                map.put("id", blockItem.projectTicket.getTypeId());
                                 map.put("index", i);
                                 indexMap.add(map);
                             }
                         }
                         if (indexMap.size() > 0) {
-                            taskService.massUpdateTaskIndexes(indexMap, AppUI.getAccountId());
+//                            ticketService.massUpdateTaskIndexes(indexMap, AppUI.getAccountId());
                         }
                     }
                 }
@@ -406,125 +343,19 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
             headerLayout.with(controlsBtn);
 
-            String typeVal = optionVal.getTypeval();
-            boolean canRename = !typeVal.equals(StatusI18nEnum.Closed.name()) && !typeVal.equals(StatusI18nEnum.Open.name());
-            boolean canExecute = CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
-
             OptionPopupContent popupContent = new OptionPopupContent();
 
-            if (canExecute && canRename) {
-                MButton renameColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_RENAME_COLUMN), clickEvent -> {
-                    controlsBtn.setPopupVisible(false);
-                    UI.getCurrent().addWindow(new RenameColumnWindow());
-                }).withIcon(FontAwesome.EDIT);
-                popupContent.addOption(renameColumnBtn);
-            }
-
-            if (canExecute) {
-                hideColumnBtn = new Button("", clickEvent -> {
-                    controlsBtn.setPopupVisible(false);
-                    if (Boolean.FALSE.equals(optionVal.getIsshow())) {
-                        optionVal.setIsshow(Boolean.TRUE);
-                    } else {
-                        optionVal.setIsshow(Boolean.FALSE);
-                    }
-                    optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
-                    toggleShowButton();
-                    if (!displayHiddenColumns && Boolean.FALSE.equals(optionVal.getIsshow())) {
-                        ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
-                    }
-                });
-                popupContent.addOption(hideColumnBtn);
-            }
-
-            if (canExecute) {
-                MButton changeColorBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE_COLOR), clickEvent -> {
-                    ColumnColorPickerWindow popup = new ColumnColorPickerWindow(Color.CYAN);
-                    UI.getCurrent().addWindow(popup);
-                    popup.addColorChangeListener(colorChangeEvent -> {
-                        Color color = colorChangeEvent.getColor();
-                        String colorStr = color.getCSS().substring(1);
-                        OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                        optionVal.setColor(colorStr);
-                        optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
-                        JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#" + colorStr + "'});");
-                    });
-                    controlsBtn.setPopupVisible(false);
-                }).withIcon(FontAwesome.PENCIL);
-                popupContent.addOption(changeColorBtn);
-            }
-
-            if (canExecute && canRename) {
-                MButton deleteColumnBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.ACTION_DELETE_COLUMN), clickEvent -> {
-                    if (getTaskComponentCount() > 0) {
-                        NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_DELETE_COLUMN_HAS_TASK));
-                    } else {
-                        ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                AppUI.getSiteName()),
-                                UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
-                                UserUIContext.getMessage(GenericI18Enum.ACTION_YES),
-                                UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
-                                confirmDialog -> {
-                                    if (confirmDialog.isConfirmed()) {
-                                        optionValService.removeWithSession(stage, UserUIContext.getUsername(), AppUI.getAccountId());
-                                        ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
-                                    }
-                                });
-                    }
-                    controlsBtn.setPopupVisible(false);
-                }).withIcon(FontAwesome.TRASH_O);
-                popupContent.addDangerOption(deleteColumnBtn);
-            }
-
             popupContent.addSeparator();
-
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                MButton addBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> {
-                    controlsBtn.setPopupVisible(false);
-                    addNewTaskComp();
-                }).withIcon(FontAwesome.PLUS);
-                popupContent.addOption(addBtn);
-            }
-            controlsBtn.setContent(popupContent);
-
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                MButton addNewBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> addNewTaskComp())
-                        .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-                buttonControls = new MHorizontalLayout(addNewBtn).withAlign(addNewBtn, Alignment.MIDDLE_RIGHT).withFullWidth();
-                this.with(headerLayout, dragLayoutContainer, buttonControls);
-            } else {
-                this.with(headerLayout, dragLayoutContainer);
-            }
-            toggleShowButton();
         }
 
-        void toggleShowButton() {
-            if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS)) {
-                if (Boolean.FALSE.equals(optionVal.getIsshow())) {
-                    hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_SHOW_COLUMN));
-                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_UP);
-                    ELabel invisibleLbl = new ELabel("Inv").withWidthUndefined().withStyleName(UIConstants.FIELD_NOTE)
-                            .withDescription(UserUIContext.getMessage(TaskI18nEnum.OPT_INVISIBLE_COLUMN_DESCRIPTION));
-                    buttonControls.addComponent(invisibleLbl, 0);
-                    buttonControls.withAlign(invisibleLbl, Alignment.MIDDLE_LEFT);
-                } else {
-                    hideColumnBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.ACTION_HIDE_COLUMN));
-                    hideColumnBtn.setIcon(FontAwesome.TOGGLE_DOWN);
-                    if (buttonControls.getComponentCount() > 1) {
-                        buttonControls.removeComponent(buttonControls.getComponent(0));
-                    }
-                }
-            }
-        }
-
-        void addBlockItem(KanbanTaskBlockItem comp) {
+        void addBlockItem(KanbanBlockItem comp) {
             dragLayoutContainer.addComponent(comp);
             refresh();
         }
 
-        private int getTaskComponentCount() {
+        private int getTicketComponentCount() {
             Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
-            if (testComp instanceof KanbanTaskBlockItem || testComp == null) {
+            if (testComp instanceof KanbanBlockItem || testComp == null) {
                 return dragLayoutContainer.getComponentCount();
             } else {
                 return (dragLayoutContainer.getComponentCount() - 1);
@@ -533,102 +364,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
         @Override
         public void refresh() {
-            header.setValue(String.format("%s (%d)", optionVal.getTypeval(), getTaskComponentCount()));
-        }
-
-        void addNewTaskComp() {
-            Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
-            if (testComp instanceof KanbanTaskBlockItem || testComp == null) {
-                final SimpleTask task = new SimpleTask();
-                task.setSaccountid(AppUI.getAccountId());
-                task.setProjectid(CurrentProjectVariables.getProjectId());
-                task.setPercentagecomplete(0d);
-                task.setStatus(optionVal.getTypeval());
-                task.setProjectShortname(CurrentProjectVariables.getShortName());
-                final MVerticalLayout layout = new MVerticalLayout();
-                layout.addStyleName("kanban-item");
-                final TextField taskNameField = new TextField();
-                taskNameField.focus();
-                taskNameField.setWidth("100%");
-                layout.with(taskNameField);
-
-                MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
-                    String taskName = taskNameField.getValue();
-                    if (StringUtils.isNotBlank(taskName)) {
-                        task.setName(taskName);
-                        ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
-                        taskService.saveWithSession(task, UserUIContext.getUsername());
-                        dragLayoutContainer.removeComponent(layout);
-                        KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
-                        dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
-                        refresh();
-                    }
-                }).withStyleName(WebThemes.BUTTON_ACTION);
-
-                MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> {
-                    dragLayoutContainer.removeComponent(layout);
-                    newTaskComp = null;
-                }).withStyleName(WebThemes.BUTTON_OPTION);
-
-                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, saveBtn);
-                layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
-                if (newTaskComp != null && newTaskComp.getParent() != null) {
-                    ((ComponentContainer) newTaskComp.getParent()).removeComponent(newTaskComp);
-                }
-                newTaskComp = layout;
-                dragLayoutContainer.addComponent(layout, 0);
-                dragLayoutContainer.markAsDirty();
-            }
-        }
-
-        private class RenameColumnWindow extends MWindow {
-            RenameColumnWindow() {
-                super(UserUIContext.getMessage(TaskI18nEnum.ACTION_RENAME_COLUMN));
-                withWidth("500px").withModal(true).withResizable(false);
-                this.center();
-
-                MVerticalLayout content = new MVerticalLayout().withMargin(false);
-                this.setContent(content);
-
-                final TextField columnNameField = new TextField();
-                columnNameField.setValue(optionVal.getTypeval());
-                GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
-                gridFormLayoutHelper.addComponent(columnNameField, "Column name", 0, 0);
-
-                MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
-                        .withStyleName(WebThemes.BUTTON_OPTION);
-
-                MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
-                    if (StringUtils.isNotBlank(columnNameField.getValue())) {
-                        OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
-                        if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField
-                                .getValue(), "status", optionVal.getExtraid(), AppUI.getAccountId())) {
-                            NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_THERE_IS_ALREADY_COLUMN_NAME, columnNameField.getValue()));
-                        } else {
-                            taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
-                                    AppUI.getAccountId());
-                            optionVal.setTypeval(columnNameField.getValue());
-                            optionValService.updateWithSession(optionVal, UserUIContext.getUsername());
-                            KanbanBlock.this.refresh();
-                        }
-                    } else {
-                        NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_COLUMN_NAME_NOT_NULL));
-                    }
-
-                    close();
-                }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
-
-                MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
-                        .with(cancelBtn, saveBtn);
-                content.with(gridFormLayoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
-            }
-        }
-    }
-
-    private static class ColumnColorPickerWindow extends ColorPickerPopup {
-        ColumnColorPickerWindow(Color initialColor) {
-            super(initialColor);
-            this.center();
+            header.setValue(String.format("%s (%d)", optionVal.getTypeval(), getTicketComponentCount()));
         }
     }
 }

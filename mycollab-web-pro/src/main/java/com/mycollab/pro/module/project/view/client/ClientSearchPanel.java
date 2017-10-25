@@ -4,7 +4,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.Param;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.ui.components.ComponentUtils;
@@ -13,6 +12,7 @@ import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
@@ -44,11 +44,11 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
     @Override
     protected Component buildExtraControls() {
-        MButton createBtn = new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
-                clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        createBtn.setVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-        return createBtn;
+        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
+            return new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
+                    clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
+                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        } else return null;
     }
 
     @Override
