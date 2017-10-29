@@ -12,33 +12,16 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.domain;
+package com.mycollab.module.project.domain
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class SimpleStandupReport extends StandupReportWithBLOBs {
-    private static final long serialVersionUID = 1L;
+class SimpleStandupReport : StandupReportWithBLOBs() {
 
-    private String logByAvatarId;
-    private String logByFullName;
-
-    public String getLogByAvatarId() {
-        return logByAvatarId;
-    }
-
-    public void setLogByAvatarId(String logByAvatarId) {
-        this.logByAvatarId = logByAvatarId;
-    }
-
-    public String getLogByFullName() {
-        return logByFullName;
-    }
-
-    public void setLogByFullName(String logByFullName) {
-        this.logByFullName = logByFullName;
-    }
+    var logByAvatarId: String? = null
+    var logByFullName: String? = null
 }
