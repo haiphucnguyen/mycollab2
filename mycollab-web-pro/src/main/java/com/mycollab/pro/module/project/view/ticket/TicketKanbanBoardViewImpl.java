@@ -5,7 +5,6 @@ import com.mycollab.common.domain.OptionVal;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.OptionValService;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectTicket;
@@ -201,8 +200,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-
-
                 int totalTickets = ticketService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTickets);
                 int pages = totalTickets / 50;

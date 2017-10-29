@@ -19,12 +19,12 @@ package com.mycollab.module.tracker.domain;
 import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import static com.mycollab.core.utils.StringUtils.isBlank;
 
 /**
@@ -172,7 +172,7 @@ public class SimpleBug extends BugWithBLOBs {
     }
 
     public static boolean isCompleted(BugWithBLOBs bug) {
-        return BugStatus.Verified.name().equals(bug.getStatus());
+        return StatusI18nEnum.Verified.name().equals(bug.getStatus());
     }
 
     public Double getBillableHours() {
@@ -196,7 +196,7 @@ public class SimpleBug extends BugWithBLOBs {
     }
 
     public static boolean isOverdue(BugWithBLOBs bug) {
-        if (BugStatus.Verified.name().equals(bug.getStatus())) {
+        if (StatusI18nEnum.Verified.name().equals(bug.getStatus())) {
             return false;
         }
 

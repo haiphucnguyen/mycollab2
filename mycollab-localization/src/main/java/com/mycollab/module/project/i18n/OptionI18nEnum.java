@@ -51,12 +51,6 @@ public class OptionI18nEnum {
         Urgent, High, Medium, Low, None
     }
 
-    @BaseName("project-bug-status")
-    @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
-    public enum BugStatus {
-        Open, Verified, Resolved, ReOpen
-    }
-
     @BaseName("project-bug-severity")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum BugSeverity {

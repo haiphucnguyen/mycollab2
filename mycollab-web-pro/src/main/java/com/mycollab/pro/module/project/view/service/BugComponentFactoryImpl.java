@@ -17,7 +17,6 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -27,7 +26,6 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -46,6 +44,7 @@ import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -65,6 +64,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 
 /**
  * @author MyCollab Ltd
@@ -228,7 +229,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
-            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(BugStatus.class, bug.getStatus()));
+            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
@@ -238,22 +239,22 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
             boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
-            if (BugStatus.Open.name().equals(beanItem.getStatus()) ||
-                    BugStatus.ReOpen.name().equals(beanItem.getStatus())) {
+            if (StatusI18nEnum.Open.name().equals(beanItem.getStatus()) ||
+                    StatusI18nEnum.ReOpen.name().equals(beanItem.getStatus())) {
                 MButton resolveBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ResolvedInputWindow(beanItem)));
                 }).withStyleName(WebThemes.BUTTON_ACTION);
                 resolveBtn.setVisible(hasPermission);
                 content.with(resolveBtn);
-            } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
+            } else if (StatusI18nEnum.Verified.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
                 }).withStyleName(WebThemes.BUTTON_ACTION);
                 reopenBtn.setVisible(hasPermission);
                 content.with(reopenBtn);
-            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+            } else if (StatusI18nEnum.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN), clickEvent -> {
                     setPopupVisible(false);
                     UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem)));
@@ -266,7 +267,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 }).withStyleName(WebThemes.BUTTON_ACTION);
                 approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
-            } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+            } else if (StatusI18nEnum.Resolved.name().equals(beanItem.getStatus())) {
                 MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
                         clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
                         .withStyleName(WebThemes.BUTTON_ACTION);
@@ -281,7 +282,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         @Override
         protected void doHide() {
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
-                    UserUIContext.getMessage(BugStatus.class, beanItem.getStatus()));
+                    UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
         }
 
         private Window bindCloseWindow(Window window) {
@@ -291,7 +292,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
         private void refresh() {
             setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
-                    UserUIContext.getMessage(BugStatus.class, beanItem.getStatus()));
+                    UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
             markAsDirty();
         }
     }

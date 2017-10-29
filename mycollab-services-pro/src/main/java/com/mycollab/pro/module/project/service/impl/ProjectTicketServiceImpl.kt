@@ -10,7 +10,6 @@ import com.mycollab.module.project.domain.Risk
 import com.mycollab.module.project.domain.Task
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus
 import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.module.project.service.RiskService
@@ -18,10 +17,7 @@ import com.mycollab.module.project.service.impl.AbstractProjectTicketServiceImpl
 import com.mycollab.module.tracker.domain.BugWithBLOBs
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
 import com.mycollab.module.tracker.service.BugService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import java.util.Collections
 
 /**
  * @author MyCollab Ltd
@@ -31,7 +27,7 @@ import java.util.Collections
 class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
                                private val bugService: BugService,
                                private val riskService: RiskService,
-                               private val asyncEventBus: AsyncEventBus ) : AbstractProjectTicketServiceImpl() {
+                               private val asyncEventBus: AsyncEventBus) : AbstractProjectTicketServiceImpl() {
 
     override fun updateAssignmentValue(assignment: ProjectTicket, username: String) {
         if (assignment.isTask) {
@@ -64,7 +60,7 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
 
     override fun closeSubAssignmentOfMilestone(milestoneId: Int) {
         val bug = BugWithBLOBs()
-        bug.status = BugStatus.Resolved.name
+        bug.status = StatusI18nEnum.Resolved.name
         val bugSearchCriteria = BugSearchCriteria()
         bugSearchCriteria.addExtraField(BugSearchCriteria.p_milestones.buildPropertyParamInList(SearchField.AND,
                 setOf(milestoneId)))
@@ -83,6 +79,5 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
         taskSearchCriteria.addExtraField(TaskSearchCriteria.p_milestoneId.buildPropertyParamInList(SearchField.AND,
                 setOf(milestoneId)))
         taskService.updateBySearchCriteria(task, taskSearchCriteria)
-
     }
 }

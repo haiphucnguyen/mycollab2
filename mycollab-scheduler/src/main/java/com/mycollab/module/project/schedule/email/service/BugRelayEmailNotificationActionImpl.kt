@@ -22,6 +22,7 @@ import com.hp.gagawa.java.elements.Text
 import com.mycollab.common.MonitorTypeConstants
 import com.mycollab.common.NotificationType
 import com.mycollab.common.i18n.GenericI18Enum
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.html.FormatUtils
@@ -36,7 +37,7 @@ import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.mycollab.module.project.i18n.BugI18nEnum
 import com.mycollab.module.project.i18n.MilestoneI18nEnum
-import com.mycollab.module.project.i18n.OptionI18nEnum
+import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import com.mycollab.module.project.service.MilestoneService
 import com.mycollab.module.project.service.ProjectNotificationSettingService
 import com.mycollab.module.tracker.domain.BugWithBLOBs
@@ -116,7 +117,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
     override fun getCommentSubject(context: MailContext<SimpleBug>): String = context.getMessage(BugI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
             bean!!.projectname, context.changeByUserFullName, getItemName())
 
-    override fun getCommentSubjectNotification(context: MailContext<SimpleBug>): String  = context.getMessage(BugI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
+    override fun getCommentSubjectNotification(context: MailContext<SimpleBug>): String = context.getMessage(BugI18nEnum.MAIL_COMMENT_ITEM_SUBJECT,
             projectLink(), userLink(context), bugLink())
 
     private fun projectLink() = A(ProjectLinkGenerator.generateProjectLink(bean!!.projectid)).appendText(bean!!.projectname).write()
@@ -165,11 +166,11 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
             put(BugWithBLOBs.Field.description, GenericI18Enum.FORM_DESCRIPTION, isColSpan = true)
             put(BugWithBLOBs.Field.assignuser, AssigneeFieldFormat(BugWithBLOBs.Field.assignuser.name, GenericI18Enum.FORM_ASSIGNEE))
             put(BugWithBLOBs.Field.milestoneid, MilestoneFieldFormat(BugWithBLOBs.Field.milestoneid.name, MilestoneI18nEnum.SINGLE))
-            put(BugWithBLOBs.Field.status, I18nFieldFormat(BugWithBLOBs.Field.status.name, GenericI18Enum.FORM_STATUS, OptionI18nEnum.BugStatus::class.java))
-            put(BugWithBLOBs.Field.resolution, I18nFieldFormat(BugWithBLOBs.Field.resolution.name, BugI18nEnum.FORM_RESOLUTION, OptionI18nEnum.BugResolution::class.java))
-            put(BugWithBLOBs.Field.severity, I18nFieldFormat(BugWithBLOBs.Field.severity.name, BugI18nEnum.FORM_SEVERITY, OptionI18nEnum.BugSeverity::class.java))
+            put(BugWithBLOBs.Field.status, I18nFieldFormat(BugWithBLOBs.Field.status.name, GenericI18Enum.FORM_STATUS, StatusI18nEnum::class.java))
+            put(BugWithBLOBs.Field.resolution, I18nFieldFormat(BugWithBLOBs.Field.resolution.name, BugI18nEnum.FORM_RESOLUTION, BugResolution::class.java))
+            put(BugWithBLOBs.Field.severity, I18nFieldFormat(BugWithBLOBs.Field.severity.name, BugI18nEnum.FORM_SEVERITY, BugSeverity::class.java))
             put(BugWithBLOBs.Field.priority, I18nFieldFormat(BugWithBLOBs.Field.priority.name, GenericI18Enum.FORM_PRIORITY,
-                    OptionI18nEnum.Priority::class.java))
+                    Priority::class.java))
             put(BugWithBLOBs.Field.duedate, DateFieldFormat(BugWithBLOBs.Field.duedate.name, GenericI18Enum.FORM_DUE_DATE))
             put(BugWithBLOBs.Field.createduser, LogUserFieldFormat(BugWithBLOBs.Field.createduser.name, BugI18nEnum.FORM_LOG_BY))
         }

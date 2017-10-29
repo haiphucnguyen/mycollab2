@@ -25,6 +25,7 @@ import com.mycollab.cache.CleanCacheEvent
 import com.mycollab.common.ModuleNameConstants
 import com.mycollab.common.domain.GroupItem
 import com.mycollab.common.event.TimelineTrackingUpdateEvent
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.mycollab.common.service.TagService
 import com.mycollab.common.service.TimelineTrackingService
 import com.mycollab.concurrent.DistributionLockUtil
@@ -36,7 +37,7 @@ import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.esb.DeleteProjectBugEvent
-import com.mycollab.module.project.i18n.OptionI18nEnum
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.service.*
 import com.mycollab.module.tracker.dao.BugMapper
 import com.mycollab.module.tracker.dao.BugMapperExt
@@ -81,10 +82,10 @@ class BugServiceImpl(private val bugMapper: BugMapper,
                 val maxKey = bugMapperExt.getMaxKey(record.projectid!!)
                 record.bugkey = if (maxKey == null) 1 else maxKey + 1
                 if (record.priority == null) {
-                    record.priority = OptionI18nEnum.Priority.Medium.name
+                    record.priority = Priority.Medium.name
                 }
                 if (record.status == null) {
-                    record.status = OptionI18nEnum.BugStatus.Open.name
+                    record.status = StatusI18nEnum.Open.name
                 }
                 val bugId = super.saveWithSession(record, username)
 
@@ -125,29 +126,23 @@ class BugServiceImpl(private val bugMapper: BugMapper,
         asyncEventBus.post(event)
     }
 
-    override fun getStatusSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getStatusSummary(criteria)
-    }
+    override fun getStatusSummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getStatusSummary(criteria)
 
-    override fun getPrioritySummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getPrioritySummary(criteria)
-    }
+    override fun getPrioritySummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getPrioritySummary(criteria)
 
-    override fun getAssignedDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getAssignedDefectsSummary(criteria)
-    }
+    override fun getAssignedDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getAssignedDefectsSummary(criteria)
 
-    override fun getReporterDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getReporterDefectsSummary(criteria)
-    }
+    override fun getReporterDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getReporterDefectsSummary(criteria)
 
-    override fun getResolutionDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getResolutionDefectsSummary(criteria)
-    }
+    override fun getResolutionDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getResolutionDefectsSummary(criteria)
 
-    override fun getComponentDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> {
-        return bugMapperExt.getComponentDefectsSummary(criteria)
-    }
+    override fun getComponentDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> =
+            bugMapperExt.getComponentDefectsSummary(criteria)
 
     override fun getVersionDefectsSummary(criteria: BugSearchCriteria): List<GroupItem> =
             bugMapperExt.getVersionDefectsSummary(criteria)
@@ -167,9 +162,7 @@ class BugServiceImpl(private val bugMapper: BugMapper,
                 preparedStatement.setInt(2, mapIndexes[i]["id"]!!)
             }
 
-            override fun getBatchSize(): Int {
-                return mapIndexes.size
-            }
+            override fun getBatchSize(): Int = mapIndexes.size
         })
     }
 

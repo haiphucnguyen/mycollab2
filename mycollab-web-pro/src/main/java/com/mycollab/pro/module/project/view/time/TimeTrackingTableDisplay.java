@@ -3,7 +3,6 @@ package com.mycollab.pro.module.project.view.time;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.TableViewField;
-import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.html.DivLessFormatter;
@@ -11,7 +10,6 @@ import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
@@ -33,6 +31,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
+
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 
 /**
  * @author MyCollab Ltd.
@@ -67,7 +67,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                                     (UIConstants.LABEL_WORD_WRAP).withFullWidth();
 
                             if (ProjectTypeConstants.BUG.equals(type)) {
-                                if (BugStatus.Verified.name().equals(itemLogging.getStatus())) {
+                                if (StatusI18nEnum.Verified.name().equals(itemLogging.getStatus())) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else if (itemLogging.getDueDate() != null && (itemLogging.getDueDate()
                                         .before(DateTimeUtils.getCurrentDateWithoutMS()))) {
@@ -78,7 +78,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                                         && 100d == itemLogging.getPercentageComplete()) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else {
-                                    if (OptionI18nEnum.StatusI18nEnum.Pending.name().equals(itemLogging.getStatus())) {
+                                    if (StatusI18nEnum.Pending.name().equals(itemLogging.getStatus())) {
                                         timeTrackingLink.addStyleName(WebThemes.LINK_PENDING);
                                     } else if (itemLogging.getDueDate() != null
                                             && (itemLogging.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS()))) {
@@ -86,7 +86,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                                     }
                                 }
                             } else {
-                                if (OptionI18nEnum.StatusI18nEnum.Closed.name().equals(itemLogging.getStatus())) {
+                                if (StatusI18nEnum.Closed.name().equals(itemLogging.getStatus())) {
                                     timeTrackingLink.addStyleName(WebThemes.LINK_COMPLETED);
                                 } else if (itemLogging.getDueDate() != null &&
                                         (itemLogging.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS()))) {

@@ -3,18 +3,17 @@ package com.mycollab.pro.module.project.view.assignments.gantt;
 import com.google.common.base.MoreObjects;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
-import com.mycollab.html.TooltipBuilder;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.BusinessDayTimeUtils;
 import com.mycollab.core.utils.DateTimeUtils;
-import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.html.TooltipBuilder;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.i18n.GanttI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.mycollab.pro.module.project.event.GanttEvent;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import static com.mycollab.html.TooltipBuilder.buildCellName;
 import static com.mycollab.html.TooltipBuilder.buildCellValue;
 
@@ -253,7 +253,7 @@ public class GanttItemWrapper {
         if (isTask() || isMilestone()) {
             return MoreObjects.firstNonNull(task.getProgress(), 0d);
         } else if (isBug()) {
-            if (BugStatus.Resolved.name().equals(task.getStatus()) || BugStatus.Verified.name().equals(task.getStatus())) {
+            if (StatusI18nEnum.Resolved.name().equals(task.getStatus()) || StatusI18nEnum.Verified.name().equals(task.getStatus())) {
                 return 100d;
             } else {
                 return MoreObjects.firstNonNull(task.getProgress(), 0d);
