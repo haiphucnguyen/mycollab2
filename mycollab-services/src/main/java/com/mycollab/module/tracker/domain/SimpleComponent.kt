@@ -12,29 +12,33 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.domain;
+package com.mycollab.module.tracker.domain
 
-public class SimpleTarget extends Target {
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
+class SimpleComponent : Component() {
 
-	private String targetName;
+    var userLeadAvatarId: String? = null
 
-	private String assignUserFullName;
+    lateinit var userLeadFullName: String
 
-	public String getTargetName() {
-		return targetName;
-	}
+    var createdUserAvatarId: String? = null
 
-	public void setTargetName(String targetName) {
-		this.targetName = targetName;
-	}
+    var createdUserFullName: String? = null
 
-	public String getAssignUserFullName() {
-		return assignUserFullName;
-	}
+    var numOpenBugs: Int? = null
 
-	public void setAssignUserFullName(String assignUserFullName) {
-		this.assignUserFullName = assignUserFullName;
-	}
+    var numBugs: Int? = null
+
+    lateinit var projectName: String
+
+    enum class Field {
+        numOpenBugs, numBugs;
+
+        fun equalTo(value: Any): Boolean = name == value
+    }
 }

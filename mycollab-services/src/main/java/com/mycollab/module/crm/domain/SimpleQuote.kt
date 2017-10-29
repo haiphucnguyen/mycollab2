@@ -12,26 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.domain;
+package com.mycollab.module.crm.domain
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 3.0
- * 
- */
-public class SimpleContactOpportunityRel extends SimpleContact {
-	private static final long serialVersionUID = 1L;
+class SimpleQuote : Quote() {
+    var assignUserFullName: String? = null
 
-	private String decisionRole;
+    var opportunityName: String? = null
 
-	public String getDecisionRole() {
-		return decisionRole;
-	}
+    var billingAccountName: String? = null
 
-	public void setDecisionRole(String decisionRole) {
-		this.decisionRole = decisionRole;
-	}
+    var billingContactName: String? = null
+
+    var shippingAccountName: String? = null
+
+    var shippingContactName: String? = null
 }

@@ -88,7 +88,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
             else -> throw MyCollabException("Not support action ${emailNotification.action}")
         }
 
-        contentGenerator.putVariable("projectName", bean!!.projectname)
+        contentGenerator.putVariable("projectName", bean!!.projectname!!)
         contentGenerator.putVariable("projectNotificationUrl", ProjectLinkGenerator.generateProjectSettingFullLink(siteUrl, bean!!.projectid))
         contentGenerator.putVariable("actionHeading", context.getMessage(actionEnum, makeChangeUser))
         contentGenerator.putVariable("name", summary)
@@ -186,7 +186,7 @@ class BugRelayEmailNotificationActionImpl : SendMailToFollowersAction<SimpleBug>
                 val img = Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE))
                 val milestoneLink = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
                         bug.projectid, bug.milestoneid)
-                val link = newA(milestoneLink, bug.milestoneName)
+                val link = newA(milestoneLink, bug.milestoneName!!)
                 FormatUtils.newLink(img, link).write()
             }
         }

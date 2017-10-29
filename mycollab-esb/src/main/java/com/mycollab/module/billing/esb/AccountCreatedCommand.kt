@@ -197,7 +197,7 @@ class AccountCreatedCommand(private val optionValService: OptionValService,
         val page = Page()
         page.subject = "Welcome to sample workspace"
         page.content = "I hope you enjoy MyCollab!"
-        page.path = PathUtils.getProjectDocumentPath(accountId, projectId) + "/" + StringUtils.generateSoftUniqueId()
+        page.path = "${PathUtils.getProjectDocumentPath(accountId, projectId)}/${StringUtils.generateSoftUniqueId()}"
         page.status = WikiI18nEnum.status_public.name
         pageService.savePage(page, initialUser)
 

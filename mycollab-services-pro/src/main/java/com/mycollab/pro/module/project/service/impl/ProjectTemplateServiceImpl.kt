@@ -178,7 +178,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             val newBugId = bugService.saveWithSession(it, username)
 
             val affectedVersions = it.affectedVersions
-            affectedVersions.forEach {
+            affectedVersions?.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.AFFVERSION
@@ -187,7 +187,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             }
 
             val fixedVersions = it.fixedVersions
-            fixedVersions.forEach {
+            fixedVersions?.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.FIXVERSION
@@ -196,7 +196,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             }
 
             val components = it.components
-            components.forEach {
+            components?.forEach {
                 val bugRelatedItem = BugRelatedItem()
                 bugRelatedItem.bugid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.COMPONENT

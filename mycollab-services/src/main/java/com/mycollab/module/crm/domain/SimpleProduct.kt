@@ -12,18 +12,12 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.domain;
+package com.mycollab.module.crm.domain
 
-public class SimpleTargetGroup extends TargetGroup {
-    private String assignUserFullName;
+class SimpleProduct : Product() {
+    var accountname: String? = null
 
-	public String getAssignUserFullName() {
-		return assignUserFullName;
-	}
-
-	public void setAssignUserFullName(String assignUserFullName) {
-		this.assignUserFullName = assignUserFullName;
-	}
+    var contactname: String? = null
 }

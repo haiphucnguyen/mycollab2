@@ -12,22 +12,21 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.service
+package com.mycollab.module.crm.domain
 
-import com.mycollab.db.persistence.service.IDefaultService
-import com.mycollab.module.crm.domain.Quote
-import com.mycollab.module.crm.domain.SimpleQuoteGroupProduct
-import com.mycollab.module.crm.domain.criteria.QuoteSearchCriteria
+import com.mycollab.core.utils.StringUtils
 
 /**
+ *
  * @author MyCollab Ltd.
  * @since 1.0
  */
-interface QuoteService : IDefaultService<Int, Quote, QuoteSearchCriteria> {
-
-    fun saveSimpleQuoteGroupProducts(accountid: Int, quoteId: Int, entities: List<SimpleQuoteGroupProduct>)
-
-    fun getListSimpleQuoteGroupProducts(quoteId: Int): List<SimpleQuoteGroupProduct>
+class SimpleCall : CallWithBLOBs() {
+    var assignUserFullName: String = ""
+        get() = if (StringUtils.isBlank(field)) {
+            StringUtils.extractNameFromEmail(assignuser)
+        } else field
+    var assignUserAvatarId: String? = null
 }

@@ -12,28 +12,21 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.domain;
+package com.mycollab.module.tracker.domain
 
-public class SimpleProduct extends Product {
-    private String accountname;
+class SimpleVersion : Version() {
 
-    private String contactname;
+    var numOpenBugs: Int? = null
 
-    public String getAccountname() {
-        return accountname;
-    }
+    var numBugs: Int? = null
 
-    public void setAccountname(String accountname) {
-        this.accountname = accountname;
-    }
+    lateinit var projectName: String
 
-    public String getContactname() {
-        return contactname;
-    }
+    enum class Field {
+        numOpenBugs, numBugs;
 
-    public void setContactname(String contactname) {
-        this.contactname = contactname;
+        fun equalTo(value: Any): Boolean = name == value
     }
 }
