@@ -20,7 +20,7 @@ class DeleteObsoleteUsersJob(private val billingAccountMapperExt2: BillingAccoun
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
-        val users = billingAccountMapperExt2.getUsersNotBelongToAnyAccount()
+        val users = billingAccountMapperExt2.findUsersNotBelongToAnyAccount()
         users.forEach { userAvatarService.removeAvatar(it.username) }
         billingAccountMapperExt2.removeUsersNotBelongToAnyAccount()
     }

@@ -60,7 +60,7 @@ class MasterFormServiceImpl(private val formSectionMapper: FormSectionMapper,
 
                 val fields = section.fields
                 if (CollectionUtils.isNotEmpty(fields)) {
-                    for (field in fields) {
+                    for (field in fields!!) {
                         val fieldType = "$TYPE_PACKAGE${field.fieldtype}"
                         val clsType: Class<*>
                         try {

@@ -32,8 +32,4 @@ class DateTimeExpression(field: String) : SimpleFieldExpression<String>(field) {
         val date = reportParameters.getFieldValue<Date>(field)
         return DateTimeUtils.formatDate(date, "DD/mm/yyyy", Locale.US)
     }
-
-    companion object {
-        private val serialVersionUID = 1L
-    }
 }

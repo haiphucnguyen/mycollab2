@@ -77,7 +77,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
             LOG.info("Send mail after 32 days for username ${it.username} , mail ${it.email}")
             contentGenerator.putVariable("account", account)
             contentGenerator.putVariable("userName", it.lastname)
-            val link = deploymentMode.getSiteUrl(account.subdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+            val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
             contentGenerator.putVariable("link", link)
             extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
                     listOf(MailRecipientField(it.email, it.displayName)),
@@ -91,7 +91,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
         account.owners.forEach {
             LOG.info("Send mail after " + afterDay + " days for username ${it.username} , mail ${it.email}")
             contentGenerator.putVariable("account", account)
-            val link = deploymentMode.getSiteUrl(account.subdomain) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
+            val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
             val accountTrialFrom = DateTime(MoreObjects.firstNonNull(account.trialfrom, account.createdtime))
             val accountTrialTo = DateTime(MoreObjects.firstNonNull(account.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL)))
             contentGenerator.putVariable("expireDay", df.print(accountTrialTo))

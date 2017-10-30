@@ -1,22 +1,18 @@
 package com.mycollab.ondemand.module.project.service
 
+import com.mycollab.db.arguments.*
 import com.mycollab.module.project.domain.SimpleStandupReport
 import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria
 import com.mycollab.module.project.service.StandupReportService
-import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
-import com.mycollab.db.arguments.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.tuple
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
-import java.util.Date
-import java.util.GregorianCalendar
-
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.tuple
+import java.util.*
 
 @RunWith(SpringJUnit4ClassRunner::class)
 class StandupReportServiceTest : IntegrationServiceTest() {

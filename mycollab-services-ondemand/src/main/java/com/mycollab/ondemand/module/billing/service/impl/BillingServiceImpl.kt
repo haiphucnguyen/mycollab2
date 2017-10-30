@@ -50,7 +50,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         }
 
     override val trialAccountsWithOwners: List<BillingAccountWithOwners>
-        get() = billingAccountMapperExt2.trialAccountsWithOwners
+        get() = billingAccountMapperExt2.findTrialAccountsWithOwners()
 
     @Transactional
     override fun registerAccount(subDomain: String, billingPlanId: Int, username: String, password: String, email: String, timezoneId: String,
@@ -111,11 +111,10 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         asyncEventBus.post(event)
     }
 
-    override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<BillingAccountSearchCriteria>): List<SimpleBillingAccount2> {
-        return billingAccountMapperExt2.findPageableListByCriteria(searchRequest.searchCriteria,
-                RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
-                        searchRequest.numberOfItems))
-    }
+    override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<BillingAccountSearchCriteria>): List<SimpleBillingAccount2> =
+            billingAccountMapperExt2.findPageableListByCriteria(searchRequest.searchCriteria,
+                    RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
+                            searchRequest.numberOfItems))
 
     override fun updateBillingPlan(@CacheKey accountId: Int, oldPlan: BillingPlan, newPlan: BillingPlan) {
         val record = BillingAccount()
@@ -127,7 +126,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
     }
 
     override fun getSubDomainsOfUser(username: String): List<String> =
-            this.billingAccountMapperExt2.getSubDomainsOfUser(username)
+            this.billingAccountMapperExt2.findSubDomainsOfUser(username)
 
     override fun findBillingPlan(@CacheKey sAccountId: Int): BillingPlan? {
         val billingAccount = billingAccountService.getBillingAccountById(sAccountId)

@@ -1,19 +1,16 @@
 package com.mycollab.ondemand.module.billing.service
 
 import com.mycollab.core.UserInvalidInputException
-import com.mycollab.module.user.domain.BillingAccountWithOwners
-import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.ondemand.module.billing.ExistedSubDomainException
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
-import org.assertj.core.api.Assertions.assertThat
 
 @RunWith(SpringJUnit4ClassRunner::class)
 class BillingServiceTest : IntegrationServiceTest() {

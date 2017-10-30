@@ -69,7 +69,7 @@
         <include refid="orderStatement" />
     </select>
 
-    <select id="getSubDomainsOfUser" resultType="java.lang.String" parameterType="java.lang.String">
+    <select id="findSubDomainsOfUser" resultType="java.lang.String" parameterType="java.lang.String">
         <![CDATA[
         SELECT DISTINCT s_account.subdomain
             FROM s_account, s_user_account
@@ -86,7 +86,7 @@
                     resultMap="com.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" />
     </resultMap>
 
-    <select id="getTrialAccountsWithOwners" resultMap="BillingAccountWithOwnersResult">
+    <select id="findTrialAccountsWithOwners" resultMap="BillingAccountWithOwnersResult">
         <![CDATA[
         SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,s_account.subdomain,
             s_account.accountName, s_account.status,
@@ -109,7 +109,7 @@
         ]]>
     </select>
 
-    <select id="getUsersNotBelongToAnyAccount" resultMap="com.mycollab.module.user.dao.UserMapper.BaseResultMap"
+    <select id="findUsersNotBelongToAnyAccount" resultMap="com.mycollab.module.user.dao.UserMapper.BaseResultMap"
             lang="velocity">
         SELECT username, avatarId FROM s_user
         WHERE (SELECT COUNT(*) FROM s_user_account WHERE s_user.username = s_user_account.username) = 0

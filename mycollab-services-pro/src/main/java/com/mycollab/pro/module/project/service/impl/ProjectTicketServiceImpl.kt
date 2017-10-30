@@ -30,32 +30,35 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
                                private val asyncEventBus: AsyncEventBus) : AbstractProjectTicketServiceImpl() {
 
     override fun updateAssignmentValue(assignment: ProjectTicket, username: String) {
-        if (assignment.isTask) {
-            val task = Task()
-            task.name = assignment.name
-            task.id = assignment.typeId
-            task.milestoneid = assignment.milestoneId
-            task.saccountid = assignment.getsAccountId()
-            taskService.updateSelectiveWithSession(task, username)
-        } else if (assignment.isBug) {
-            val bug = BugWithBLOBs()
-            bug.name = assignment.name
-            bug.id = assignment.typeId
-            bug.milestoneid = assignment.milestoneId
-            bug.saccountid = assignment.getsAccountId()
-            bugService.updateSelectiveWithSession(bug, username)
-        } else if (assignment.isRisk) {
-            val risk = Risk()
-            risk.name = assignment.name
-            risk.id = assignment.typeId
-            risk.milestoneid = assignment.milestoneId
-            risk.saccountid = assignment.getsAccountId()
-            riskService.updateSelectiveWithSession(risk, username)
-        } else {
-            throw MyCollabException("Not support")
+        when {
+            assignment.isTask -> {
+                val task = Task()
+                task.name = assignment.name
+                task.id = assignment.typeId
+                task.milestoneid = assignment.milestoneId
+                task.saccountid = assignment.sAccountId
+                taskService.updateSelectiveWithSession(task, username)
+            }
+            assignment.isBug -> {
+                val bug = BugWithBLOBs()
+                bug.name = assignment.name
+                bug.id = assignment.typeId
+                bug.milestoneid = assignment.milestoneId
+                bug.saccountid = assignment.sAccountId
+                bugService.updateSelectiveWithSession(bug, username)
+            }
+            assignment.isRisk -> {
+                val risk = Risk()
+                risk.name = assignment.name
+                risk.id = assignment.typeId
+                risk.milestoneid = assignment.milestoneId
+                risk.saccountid = assignment.sAccountId
+                riskService.updateSelectiveWithSession(risk, username)
+            }
+            else -> throw MyCollabException("Not support")
         }
 
-        asyncEventBus.post(CleanCacheEvent(assignment.getsAccountId(), arrayOf(ProjectService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(assignment.sAccountId, arrayOf(ProjectService::class.java)))
     }
 
     override fun closeSubAssignmentOfMilestone(milestoneId: Int) {
