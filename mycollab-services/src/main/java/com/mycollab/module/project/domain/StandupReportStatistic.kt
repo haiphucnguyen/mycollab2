@@ -12,19 +12,26 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.crm.dao
+package com.mycollab.module.project.domain
 
-import com.mycollab.db.persistence.ISearchableDAO
-import com.mycollab.module.crm.domain.SimpleMeeting
-import com.mycollab.module.crm.domain.criteria.MeetingSearchCriteria
+import com.mycollab.core.arguments.ValuedBean
 
 /**
  * @author MyCollab Ltd
- * @since 1.0.0
+ * @since 5.3.0
  */
-interface MeetingMapperExt : ISearchableDAO<MeetingSearchCriteria> {
+class StandupReportStatistic : ValuedBean() {
+    var projectId: Int? = null
 
-    fun findById(meetingId: Int): SimpleMeeting?
+    var projectKey: String? = null
+
+    var projectName: String? = null
+
+    var projectAvatarId: String? = null
+
+    var totalWrittenReports: Int? = null
+
+    var totalReports: Int? = null
 }
