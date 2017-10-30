@@ -38,7 +38,7 @@ open class Resource : Comparable<Resource> {
     var description: String? = null
 
     // length is Kilobyte value
-    var size: Long? = 0L
+    var size: Long = 0L
     var createdUser: String? = null
     var name: String? = null
         get() {

@@ -12,21 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.dao;
-
-import com.mycollab.db.persistence.ISearchableDAO;
-import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
-
-import java.util.List;
+package com.mycollab.module.page.domain
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 4.4.0
  */
-public interface UserMapperExt extends ISearchableDAO<UserSearchCriteria> {
+class Folder : PageResource() {
 
-    void removeKeysWithSession(List<String> primaryKeys);
+    lateinit var name: String
 
+    var description: String? = null
 }

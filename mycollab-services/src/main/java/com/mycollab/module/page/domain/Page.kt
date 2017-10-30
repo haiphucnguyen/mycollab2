@@ -12,33 +12,39 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.page.domain;
+package com.mycollab.module.page.domain
+
+import com.mycollab.core.arguments.NotBindable
+
+import javax.validation.constraints.NotNull
+import java.util.Calendar
 
 /**
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class Folder extends PageResource {
+class Page : PageResource() {
 
-    private String name;
+    @NotNull(message = "Subject must be not null")
+    lateinit var subject: String
 
-    private String description;
+    @NotNull(message = "Content must be not null")
+    lateinit var content: String
 
-    public String getName() {
-        return name;
-    }
+    @NotBindable
+    var isLock = false
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @NotBindable
+    var isNew = true
 
-    public String getDescription() {
-        return description;
-    }
+    var category: String? = null
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    var status: String? = null
+
+    var lastUpdatedUser: String? = null
+
+    @NotBindable
+    var lastUpdatedTime: Calendar? = null
 }

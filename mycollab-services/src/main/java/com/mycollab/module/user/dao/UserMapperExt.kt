@@ -12,15 +12,19 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.form.dao;
+package com.mycollab.module.user.dao
 
-import com.mycollab.form.domain.SimpleFormSection;
-import org.apache.ibatis.annotations.Param;
+import com.mycollab.db.persistence.ISearchableDAO
+import com.mycollab.module.user.domain.criteria.UserSearchCriteria
 
-import java.util.List;
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
+interface UserMapperExt : ISearchableDAO<UserSearchCriteria> {
 
-public interface FormSectionMapperExt {
-    List<SimpleFormSection> findSections(@Param("accountId") Integer sAccountId, @Param("moduleName") String moduleName);
+    fun removeKeysWithSession(primaryKeys: List<String>)
+
 }

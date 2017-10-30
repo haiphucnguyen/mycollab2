@@ -12,22 +12,22 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.form.domain;
+package com.mycollab.module.page.domain
 
-import java.util.List;
+import java.io.Serializable
+import java.util.Calendar
 
-public class SimpleFormSection extends FormSection {
-	private static final long serialVersionUID = 1L;
-	
-	private List<FormSectionField> fields;
+/**
+ * @author MyCollab Ltd.
+ * @since 4.4.0
+ */
+class PageVersion : Serializable {
 
-	public List<FormSectionField> getFields() {
-		return fields;
-	}
+    lateinit var name: String
 
-	public void setFields(List<FormSectionField> fields) {
-		this.fields = fields;
-	}
+    var index: Int = 0
+
+    var createdTime: Calendar? = null
 }

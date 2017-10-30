@@ -12,14 +12,14 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.dao;
+package com.mycollab.module.user.dao
 
-import com.mycollab.db.persistence.ISearchableDAO;
-import com.mycollab.module.user.domain.SimpleRole;
-import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
+import com.mycollab.db.persistence.ISearchableDAO
+import com.mycollab.module.user.domain.SimpleRole
+import com.mycollab.module.user.domain.criteria.RoleSearchCriteria
 
-public interface RoleMapperExt extends ISearchableDAO<RoleSearchCriteria> {
-    SimpleRole findById(Integer roleId);
+interface RoleMapperExt : ISearchableDAO<RoleSearchCriteria> {
+    fun findById(roleId: Int): SimpleRole?
 }
