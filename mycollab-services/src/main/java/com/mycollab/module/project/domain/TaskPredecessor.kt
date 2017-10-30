@@ -12,21 +12,29 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.core.utils
-
-import java.util.Currency
-import java.util.Locale
+package com.mycollab.module.project.domain
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.1
+ * @since 5.1.3
  */
-object CurrencyUtils {
-    @JvmStatic fun getInstance(currencyCode: String?): Currency = try {
-        Currency.getInstance(currencyCode)
-    } catch (e: Exception) {
-        Currency.getInstance(Locale.US)
+class TaskPredecessor : Predecessor() {
+
+    var ganttIndex: Int? = null
+
+    companion object {
+        @JvmField
+        val SS = "SS"
+
+        @JvmField
+        val FS = "FS"
+
+        @JvmField
+        val FF = "FF"
+
+        @JvmField
+        val SF = "SF"
     }
 }

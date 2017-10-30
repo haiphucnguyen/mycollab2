@@ -44,9 +44,9 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
             ganttItems.forEach {
                 when (it) {
                     is MilestoneGanttItem -> milestoneGanttItems.add(it)
-                    is TaskGanttItem -> if (ProjectTypeConstants.BUG == it.getType()) {
+                    is TaskGanttItem -> if (ProjectTypeConstants.BUG == it.type) {
                         bugGanttItems.add(it)
-                    } else if (ProjectTypeConstants.TASK == it.getType()) {
+                    } else if (ProjectTypeConstants.TASK == it.type) {
                         taskGanttItems.add(it)
                     }
                     else -> throw MyCollabException("Do not support save gantt item $it")
@@ -244,13 +244,13 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
 
             ganttItems.forEach {
                 when (it) {
-                    is MilestoneGanttItem -> if (it.getId() != null) {
-                        milestoneIds.add(it.getId())
+                    is MilestoneGanttItem -> if (it.id != null) {
+                        milestoneIds.add(it.id!!)
                     }
-                    is TaskGanttItem -> if (ProjectTypeConstants.TASK == it.getType() && it.getId() != null) {
-                        taskIds.add(it.getId())
-                    } else if (ProjectTypeConstants.BUG == it.getType() && it.getId() != null) {
-                        bugIds.add(it.getId())
+                    is TaskGanttItem -> if (ProjectTypeConstants.TASK == it.type && it.id != null) {
+                        taskIds.add(it.id!!)
+                    } else if (ProjectTypeConstants.BUG == it.type && it.id != null) {
+                        bugIds.add(it.id!!)
                     }
                     else -> throw MyCollabException("Do not support delete gantt item $it")
                 }

@@ -12,21 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.core.utils
+package com.mycollab.module.project.domain
 
-import java.util.Currency
-import java.util.Locale
+import org.apache.commons.collections.CollectionUtils
 
-/**
- * @author MyCollab Ltd
- * @since 5.3.1
- */
-object CurrencyUtils {
-    @JvmStatic fun getInstance(currencyCode: String?): Currency = try {
-        Currency.getInstance(currencyCode)
-    } catch (e: Exception) {
-        Currency.getInstance(Locale.US)
-    }
+class ProjectGanttItem : AssignWithPredecessors() {
+    var milestones: List<MilestoneGanttItem>? = null
+
+    var tasksWithNoMilestones: List<TaskGanttItem>? = null
+
+    override fun hasSubAssignments(): Boolean =
+            CollectionUtils.isNotEmpty(milestones) || CollectionUtils.isNotEmpty(tasksWithNoMilestones)
 }

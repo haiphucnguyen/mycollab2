@@ -12,27 +12,12 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.domain;
+package com.mycollab.module.project.domain
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.3
+ * @since 5.2.7
  */
-public class TaskPredecessor extends Predecessor {
-    public static final String SS = "SS";
-    public static final String FS = "FS";
-    public static final String FF = "FF";
-    public static final String SF = "SF";
-
-    private Integer ganttIndex;
-
-    public Integer getGanttIndex() {
-        return ganttIndex;
-    }
-
-    public void setGanttIndex(Integer ganttIndex) {
-        this.ganttIndex = ganttIndex;
-    }
-}
+class BugGanttItem : AssignWithPredecessors()

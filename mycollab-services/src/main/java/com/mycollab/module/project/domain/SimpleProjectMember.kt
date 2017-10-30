@@ -59,11 +59,11 @@ class SimpleProjectMember : ProjectMember() {
     val isProjectOwner: Boolean
         get() = java.lang.Boolean.TRUE == isadmin
 
-    fun canRead(permissionItem: String): Boolean? = permissionMaps != null && permissionMaps!!.canRead(permissionItem)
+    fun canRead(permissionItem: String): Boolean = permissionMaps != null && permissionMaps!!.canRead(permissionItem)
 
-    fun canWrite(permissionItem: String): Boolean? = permissionMaps != null && permissionMaps!!.canWrite(permissionItem)
+    fun canWrite(permissionItem: String): Boolean = permissionMaps != null && permissionMaps!!.canWrite(permissionItem)
 
-    fun canAccess(permissionItem: String): Boolean? =
+    fun canAccess(permissionItem: String): Boolean =
             permissionMaps != null && permissionMaps!!.canAccess(permissionItem)
 
     enum class Field {

@@ -86,7 +86,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.id = null
             it.projectid = newProjectId
             val newRoleId = projectRoleService.saveWithSession(it, username)
-            projectRoleService.savePermission(projectId, newRoleId, it.permissionMap, sAccountId)
+            projectRoleService.savePermission(projectId, newRoleId, it.permissionMap!!, sAccountId)
             mapRoleIds.put(it.id, newRoleId)
         }
         return mapRoleIds

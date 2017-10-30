@@ -62,7 +62,7 @@ public class GanttTreeTable extends TreeTable {
                 @Subscribe
                 @Override
                 public void handle(GanttEvent.UpdateGanttItem event) {
-                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
+                    GanttItemWrapper item = event.getData();
                     updateTaskTree(item);
                 }
             };
@@ -233,16 +233,21 @@ public class GanttTreeTable extends TreeTable {
             if (assignments.size() == 1) {
                 ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
                 List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
-                for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
-                    GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
-                    this.addRootAssignments(itemWrapper);
+                if (milestoneGanttItems != null) {
+                    for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
+                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
+                        this.addRootAssignments(itemWrapper);
+                    }
                 }
 
                 List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
-                for (TaskGanttItem taskGanttItem : taskGanttItems) {
-                    GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
-                    this.addRootAssignments(itemWrapper);
+                if (taskGanttItems != null) {
+                    for (TaskGanttItem taskGanttItem : taskGanttItems) {
+                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
+                        this.addRootAssignments(itemWrapper);
+                    }
                 }
+
                 this.updateWholeGanttIndexes();
             } else {
                 LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
@@ -336,7 +341,7 @@ public class GanttTreeTable extends TreeTable {
         }
     }
 
-    public void updateWholeGanttIndexes() {
+    private void updateWholeGanttIndexes() {
         if (ganttIndexIsChanged) {
             Collection items = beanContainer.getItemIds();
             for (Object item : items) {
@@ -492,7 +497,7 @@ public class GanttTreeTable extends TreeTable {
                         newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                         newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                         newTask.setProgress(0d);
-                        newTask.setsAccountId(AppUI.getAccountId());
+                        newTask.setSAccountId(AppUI.getAccountId());
                         GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                         newGanttItem.setGanttIndex(index + 1);
                         GanttItemWrapper prevItem = beanContainer.prevItemId(ganttItemWrapper);
@@ -522,7 +527,7 @@ public class GanttTreeTable extends TreeTable {
                 newTask.setPrjId(ganttItemWrapper.getTask().getPrjId());
                 newTask.setName(UserUIContext.getMessage(TaskI18nEnum.NEW));
                 newTask.setProgress(0d);
-                newTask.setsAccountId(AppUI.getAccountId());
+                newTask.setSAccountId(AppUI.getAccountId());
                 GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                 newGanttItem.setGanttIndex(index);
                 gantt.addTask(index, newGanttItem);
@@ -606,7 +611,7 @@ public class GanttTreeTable extends TreeTable {
                             builder.append(predecessor.getGanttIndex() + predecessor.getPredestype());
                         }
                     } else {
-                        builder.append(predecessor.getGanttIndex() + predecessor.getPredestype());
+                        builder.append(predecessor.getGanttIndex()).append(predecessor.getPredestype());
                         if (predecessor.getLagday() > 0) {
                             builder.append("+" + predecessor.getLagday() + "d");
                         } else {

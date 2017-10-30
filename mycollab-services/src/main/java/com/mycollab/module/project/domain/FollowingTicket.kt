@@ -12,13 +12,38 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.domain;
+package com.mycollab.module.project.domain
+
+import java.io.Serializable
+import java.util.Date
 
 /**
- * @author MyCollab Ltd
- * @since 5.2.7
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class BugGanttItem extends AssignWithPredecessors {
+class FollowingTicket : Serializable {
+
+    var projectId: Int? = null
+
+    lateinit var projectName: String
+
+    var type: String? = null
+
+    var typeId: Int? = null
+
+    var name: String? = null
+
+    var status: String? = null
+
+    var dueDate: Date? = null
+
+    var assignUser: String? = null
+
+    var assignUserAvatarId: String? = null
+
+    var assignUserFullName: String? = null
+
+    var monitorDate: Date? = null
 }

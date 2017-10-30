@@ -47,11 +47,11 @@ class GanttTaskServiceTest : IntegrationServiceTest() {
         val task = taskFilterResult.iterator().next()
         assertThat(task.subTasks).hasSize(1)
 
-        val task5 = task.subTasks[0]
+        val task5 = task.subTasks!![0]
         assertThat(task5.name).isEqualTo("Task 5")
         assertThat(task5.progress).isEqualTo(10.0)
         assertThat(task5.predecessors).hasSize(1)
-        val predecessor = task5.predecessors[0]
+        val predecessor = task5.predecessors!![0]
         assertThat(predecessor.descid).isEqualTo(2)
 
         val milestone1 = Collections2.filter(subMilestones) { "Milestone 1" == it!!.name }.iterator().next()

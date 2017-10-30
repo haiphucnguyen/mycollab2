@@ -12,21 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.core.utils
+package com.mycollab.module.project.domain
 
-import java.util.Currency
-import java.util.Locale
+import com.mycollab.module.crm.domain.Account
 
 /**
  * @author MyCollab Ltd
- * @since 5.3.1
+ * @since 5.2.10
  */
-object CurrencyUtils {
-    @JvmStatic fun getInstance(currencyCode: String?): Currency = try {
-        Currency.getInstance(currencyCode)
-    } catch (e: Exception) {
-        Currency.getInstance(Locale.US)
-    }
+class SimpleInvoice : Invoice() {
+    var createUserFullName: String? = null
+    var createUserAvatarId: String? = null
+    var assignUserFullName: String? = null
+    var assignUserAvatarId: String? = null
+    lateinit var client: Account
 }

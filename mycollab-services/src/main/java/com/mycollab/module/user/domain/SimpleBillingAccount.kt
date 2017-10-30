@@ -16,14 +16,12 @@
  */
 package com.mycollab.module.user.domain
 
+import com.google.common.base.MoreObjects
 import com.mycollab.core.arguments.NotBindable
 import com.mycollab.core.utils.CurrencyUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.billing.AccountStatusConstants
-import com.google.common.base.MoreObjects
-
-import java.util.Currency
-import java.util.Locale
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -35,10 +33,16 @@ open class SimpleBillingAccount : BillingAccount() {
     lateinit var billingPlan: BillingPlan
 
     @NotBindable
-    private var currencyInstance: Currency? = null
+    var currencyInstance: Currency? = null
+        get() = if (field == null) {
+            CurrencyUtils.getInstance(defaultcurrencyid)
+        } else field
 
     @NotBindable
-    private var localeInstance: Locale? = null
+    var localeInstance: Locale? = null
+        get() = if (field == null) {
+            LocalizationHelper.getLocaleInstance(defaultlanguagetag)
+        } else field
 
     val dateFormatInstance: String
         get() = MoreObjects.firstNonNull(defaultyymmddformat, DEFAULT_DATE_FORMAT)
@@ -59,25 +63,14 @@ open class SimpleBillingAccount : BillingAccount() {
         super.setDefaultlanguagetag(defaultlanguagetag)
     }
 
-    fun getLocaleInstance(): Locale {
-        if (localeInstance == null) {
-            localeInstance = LocalizationHelper.getLocaleInstance(defaultlanguagetag)
-        }
-        return localeInstance!!
-    }
-
-    fun getCurrencyInstance(): Currency {
-        if (currencyInstance == null) {
-            currencyInstance = CurrencyUtils.getInstance(defaultcurrencyid)
-        }
-        return currencyInstance!!
-    }
-
     companion object {
         private val serialVersionUID = 1L
 
-        @JvmField val DEFAULT_DATE_FORMAT = "MM/dd/yyyy"
-        @JvmField val DEFAULT_SHORT_DATE_FORMAT = "MM/dd"
-        @JvmField val DEFAULT_LONG_DATE_FORMAT = "E, dd MMM yyyy"
+        @JvmField
+        val DEFAULT_DATE_FORMAT = "MM/dd/yyyy"
+        @JvmField
+        val DEFAULT_SHORT_DATE_FORMAT = "MM/dd"
+        @JvmField
+        val DEFAULT_LONG_DATE_FORMAT = "E, dd MMM yyyy"
     }
 }
