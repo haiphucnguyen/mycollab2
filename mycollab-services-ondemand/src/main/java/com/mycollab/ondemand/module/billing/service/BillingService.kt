@@ -20,6 +20,7 @@ interface BillingService : IService {
     val availablePlans: List<BillingPlan>
 
     val trialAccountsWithOwners: List<BillingAccountWithOwners>
+
     fun findPageableListByCriteria(searchRequest: BasicSearchRequest<BillingAccountSearchCriteria>): List<SimpleBillingAccount2>
 
     fun registerAccount(subDomain: String, billingPlanId: Int, username: String,

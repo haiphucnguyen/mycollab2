@@ -129,7 +129,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
     override fun getSubDomainsOfUser(username: String): List<String> =
             this.billingAccountMapperExt2.getSubDomainsOfUser(username)
 
-    override fun findBillingPlan(@CacheKey sAccountId: Int): BillingPlan {
+    override fun findBillingPlan(@CacheKey sAccountId: Int): BillingPlan? {
         val billingAccount = billingAccountService.getBillingAccountById(sAccountId)
         return if (billingAccount != null) {
             billingAccount.billingPlan
@@ -139,7 +139,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
     }
 
     companion object {
-        private val ACCOUNT_BLACK_LIST = Arrays.asList("api", "esofthead", "blog", "forum", "wiki",
+        private val ACCOUNT_BLACK_LIST = Arrays.asList("api", "blog", "forum", "wiki",
                 "support", "community", "www")
     }
 }

@@ -26,7 +26,7 @@ class CountLiveInstancesJob(private val liveInstanceMapper: LiveInstanceMapper,
         contentGenerator.putVariable("instances", liveInstances)
         contentGenerator.putVariable("count", liveInstances.size)
         extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getNotifyEmail(),
-                listOf(MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
+                listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "Today live instances count", contentGenerator.parseFile("mailCountLiveInstances.ftl"))
     }
 }

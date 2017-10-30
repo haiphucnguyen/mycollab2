@@ -41,8 +41,8 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
         accounts.forEach { account ->
             val accountOwners = account.accountOwners
             accountOwners?.forEach {
-                if (it.canSendEmail) {
-                    val leadName = it.firstname + " " + it.lastname
+                if (it.canSendEmail!!) {
+                    val leadName = "${it.firstname} ${it.lastname}"
                     contentGenerator.putVariable("lead", leadName)
                     contentGenerator.putVariable("unsubscribeUrl",
                             SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"),

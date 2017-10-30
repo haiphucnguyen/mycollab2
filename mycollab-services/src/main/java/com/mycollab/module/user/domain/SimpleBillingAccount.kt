@@ -30,7 +30,7 @@ import java.util.*
 open class SimpleBillingAccount : BillingAccount() {
 
     @NotBindable
-    lateinit var billingPlan: BillingPlan
+    var billingPlan: BillingPlan? = null
 
     @NotBindable
     var currencyInstance: Currency? = null

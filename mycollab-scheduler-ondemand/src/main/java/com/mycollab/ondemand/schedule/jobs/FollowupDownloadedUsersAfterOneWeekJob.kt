@@ -33,7 +33,7 @@ class FollowupDownloadedUsersAfterOneWeekJob(private val communityLeadMapper: Co
         ex.createCriteria().andRegisterdateEqualTo(sevenDaysAgo.toDate()).andValidEqualTo(true)
         val leads = communityLeadMapper.selectByExample(ex)
         leads.forEach {
-            val leadName = it.firstname + " " + it.lastname
+            val leadName = "${it.firstname} ${it.lastname}"
             contentGenerator.putVariable("lead", leadName)
             contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"), it.email))
             extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
