@@ -12,16 +12,11 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.common.dao;
+package com.mycollab.common.dao
 
-import com.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
-import com.mycollab.db.persistence.ISearchableDAO;
+import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria
+import com.mycollab.db.persistence.ISearchableDAO
 
-/**
- * @author MyCollab Ltd
- * @since 1.0.0
- */
-public interface RelayEmailNotificationMapperExt extends ISearchableDAO<RelayEmailNotificationSearchCriteria> {
-}
+interface ActivityStreamMapperExt : ISearchableDAO<ActivityStreamSearchCriteria>

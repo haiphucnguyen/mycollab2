@@ -12,12 +12,20 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.ecm.esb
+package com.mycollab.module.ecm.domain
 
 /**
- * @author MyCollab Ltd
- * @since 6.0.0
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-class DeleteResourcesEvent(val paths: Array<String?>, val userDelete: String, val isUpdateDriveInfo: Boolean, val sAccountId: Int?)
+class ExternalFolder : Folder {
+    var storageName: String? = null
+
+    var externalDrive: ExternalDrive? = null
+
+    constructor() : super()
+
+    constructor(path: String) : super(path)
+}

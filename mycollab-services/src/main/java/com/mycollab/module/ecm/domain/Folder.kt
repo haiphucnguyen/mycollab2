@@ -12,31 +12,29 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.common.domain;
+package com.mycollab.module.ecm.domain
+
+import java.util.ArrayList
 
 /**
- * @author MyCollab Ltd
- * @since 5.2.9
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class AggregateTag {
-    private String name;
-    private Integer count;
+open class Folder : Resource {
+    var childs = mutableListOf<Folder>()
 
-    public Integer getCount() {
-        return count;
+    val isHiddenFolder: Boolean
+        get() = name!!.startsWith(".")
+
+    constructor() : super() {}
+
+    constructor(path: String) {
+        this.path = path
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    fun addChild(child: Folder) {
+        childs.add(child)
     }
 }

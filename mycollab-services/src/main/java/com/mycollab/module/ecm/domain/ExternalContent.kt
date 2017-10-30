@@ -12,20 +12,22 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.tracker.dao;
-
-import com.mycollab.module.tracker.domain.SimpleRelatedBug;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+package com.mycollab.module.ecm.domain
 
 /**
- * @author MyCollab Ltd
- * @since 1.0.0
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public interface RelatedBugMapperExt {
+class ExternalContent : Content {
+    var storageName: String? = null
 
-    List<SimpleRelatedBug> findRelatedBugs(@Param("bugId") Integer bugId);
+    var externalDrive: ExternalDrive? = null
+
+    var thumbnailBytes: ByteArray? = null
+
+    constructor() : super()
+
+    constructor(path: String) : super(path)
 }

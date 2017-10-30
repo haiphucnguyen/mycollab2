@@ -12,12 +12,15 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.ecm.esb
+package com.mycollab.common.dao
+
+import com.mycollab.common.domain.criteria.SaveSearchResultCriteria
+import com.mycollab.db.persistence.ISearchableDAO
 
 /**
  * @author MyCollab Ltd
- * @since 6.0.0
+ * @since 1.0.0
  */
-class DeleteResourcesEvent(val paths: Array<String?>, val userDelete: String, val isUpdateDriveInfo: Boolean, val sAccountId: Int?)
+interface SaveSearchResultMapperExt : ISearchableDAO<SaveSearchResultCriteria>

@@ -12,21 +12,10 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.domain;
+package com.mycollab.module.user.domain
 
-import java.util.List;
-
-public class BillingAccountWithOwners extends SimpleBillingAccount {
-	private static final long serialVersionUID = 1L;
-	private List<SimpleUser> owners;
-
-	public List<SimpleUser> getOwners() {
-		return owners;
-	}
-
-	public void setOwners(List<SimpleUser> owners) {
-		this.owners = owners;
-	}
+class BillingAccountWithOwners : SimpleBillingAccount() {
+    var owners: List<SimpleUser>? = null
 }

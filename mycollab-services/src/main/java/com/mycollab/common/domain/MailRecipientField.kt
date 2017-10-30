@@ -12,12 +12,19 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.ecm.esb
+package com.mycollab.common.domain
+
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.mycollab.core.arguments.ValuedBean
+import org.apache.commons.lang.StringUtils
 
 /**
- * @author MyCollab Ltd
- * @since 6.0.0
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-class DeleteResourcesEvent(val paths: Array<String?>, val userDelete: String, val isUpdateDriveInfo: Boolean, val sAccountId: Int?)
+class MailRecipientField @JsonCreator
+constructor(var email: String, name: String?) : ValuedBean() {
+    var name = if (StringUtils.isNotBlank(name)) name else email
+}

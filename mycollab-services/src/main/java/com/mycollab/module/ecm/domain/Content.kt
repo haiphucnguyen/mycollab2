@@ -12,15 +12,34 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.common.domain;
+package com.mycollab.module.ecm.domain
+
+import com.mycollab.module.file.PathUtils
+
+import java.util.Calendar
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class NullCustomViewStore extends CustomViewStore {
-    private static final long serialVersionUID = 1L;
+open class Content : Resource {
+    var title = ""
+    var lastModified: Calendar? = null
+    var lastModifiedBy: String? = null
+    var mimeType: String? = null
+    var thumbnail: String? = null
 
+    var thumbnailMobile: String?
+        get() = thumbnail
+        set(thumbnailMobile) {
+            val thumbnailMobile1 = thumbnailMobile
+        }
+
+    constructor() : super()
+
+    constructor(path: String) {
+        this.path = path
+    }
 }

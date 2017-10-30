@@ -12,41 +12,21 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.ecm.domain;
+package com.mycollab.common.domain
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class Folder extends Resource {
-    private List<Folder> childs = new ArrayList<>();
+class AuditChangeItem : Serializable {
 
-    public Folder() {
-        super();
-    }
+    lateinit var field: String
 
-    public Folder(String path) {
-        this.setPath(path);
-    }
+    lateinit var oldvalue: String
 
-    public List<Folder> getChilds() {
-        return childs;
-    }
-
-    public void setChilds(List<Folder> childs) {
-        this.childs = childs;
-    }
-
-    public void addChild(Folder child) {
-        childs.add(child);
-    }
-
-    public boolean isHiddenFolder() {
-        return getName().startsWith(".");
-    }
+    lateinit var newvalue: String
 }

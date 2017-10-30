@@ -12,17 +12,26 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.common.dao;
-
-import com.mycollab.common.domain.criteria.CommentSearchCriteria;
-import com.mycollab.db.persistence.ISearchableDAO;
+package com.mycollab.common.domain
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface CommentMapperExt extends ISearchableDAO<CommentSearchCriteria> {
+class SimpleMonitorItem : MonitorItem() {
 
+    var userAvatarId: String? = null
+    var userFullname: String? = null
+        get() {
+            if (field == null || field!!.trim { it <= ' ' } == "") {
+                val displayName = user
+                val index = displayName?.indexOf("@") ?: 0
+                if (index > 0) {
+                    return displayName!!.substring(0, index)
+                }
+            }
+            return field
+        }
 }

@@ -12,23 +12,15 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.common.dao;
-
-import com.mycollab.common.domain.GroupItem;
-import com.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.Date;
-import java.util.List;
+package com.mycollab.common.domain
 
 /**
  * @author MyCollab Ltd
- * @since 5.2.2
+ * @since 5.2.9
  */
-public interface TimelineTrackingCachingMapperExt {
-    List<GroupItem> findTimelineItems(@Param("groupVals") List<String> groupVals,
-                                      @Param("dates") List<Date> dates,
-                                      @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
+class AggregateTag {
+    var name: String? = null
+    var count: Int? = null
 }
