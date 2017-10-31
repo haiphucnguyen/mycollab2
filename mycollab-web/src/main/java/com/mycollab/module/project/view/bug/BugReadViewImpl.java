@@ -113,7 +113,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private void displayWorkflowControl() {
-        if (StatusI18nEnum.Open.name().equals(beanItem.getStatus()) || StatusI18nEnum.ReOpen.name().equals(beanItem.getStatus())) {
+        if (StatusI18nEnum.Open.name().equals(beanItem.getStatus()) ||
+                StatusI18nEnum.ReOpen.name().equals(beanItem.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
 

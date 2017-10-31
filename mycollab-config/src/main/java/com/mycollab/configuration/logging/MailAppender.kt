@@ -31,12 +31,12 @@ import com.mycollab.core.utils.StringUtils
 class MailAppender : SMTPAppender() {
 
     override fun makeSubjectLayout(subjectStr: String?): Layout<ILoggingEvent> {
-        var subjectStr = subjectStr
+        var subject = subjectStr
         if (subjectStr == null) {
-            subjectStr = "MyCollab ${Version.getVersion()} - Error: %logger{20} - %m"
+            subject = "MyCollab ${Version.getVersion()} - Error: %logger{20} - %m"
         }
 
-        return super.makeSubjectLayout(subjectStr)
+        return super.makeSubjectLayout(subject)
     }
 
 
@@ -47,7 +47,7 @@ class MailAppender : SMTPAppender() {
         }
 
         this.setSMTPHost(conf.host)
-        this.setSMTPPort(conf.port!!)
+        this.setSMTPPort(conf.port)
         this.username = conf.user
         this.password = conf.password
         this.isSTARTTLS = conf.isStartTls

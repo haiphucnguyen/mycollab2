@@ -200,6 +200,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
+
+
                 int totalTickets = ticketService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTickets);
                 int pages = totalTickets / 50;
@@ -267,7 +269,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         private DDVerticalLayout dragLayoutContainer;
         private Label header;
 
-        KanbanBlock(final OptionVal stage) {
+        KanbanBlock(OptionVal stage) {
             this.withFullHeight().withWidth("350px").withStyleName("kanban-block").withMargin(false);
             this.optionVal = stage;
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
