@@ -50,7 +50,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                    @RequestParam("security_request_hash") security_request_hash: String): String {
         try {
             val decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(referrer)
-            val arr = decryptReferrer!!.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val arr = decryptReferrer.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val subscription = BillingSubscription()
             subscription.email = email
             subscription.accountid = Integer.parseInt(arr[0])
@@ -91,7 +91,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                              @RequestParam("SubscriptionCustomerUrl") subscriptionCustomerUrl: String): String {
         try {
             val decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(subscriptionReferrer)
-            val arr = decryptReferrer!!.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val arr = decryptReferrer.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val sAccountId = Integer.parseInt(arr[0])
             val ex = BillingSubscriptionExample()
             ex.createCriteria().andSubreferenceEqualTo(subscriptionReference).andAccountidEqualTo(sAccountId)

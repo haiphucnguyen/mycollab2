@@ -20,5 +20,5 @@ open class S3StorageServiceImpl : AbstractStorageService() {
 
     fun newS3Client(): AmazonS3 = AmazonS3ClientBuilder.defaultClient()
 
-    override fun generateAssetRelativeLink(resourceId: String): String = """${deploymentMode.getCdnUrl()}$resourceId"""
+    override fun generateAssetRelativeLink(resourceId: String): String = "${deploymentMode.getCdnUrl()}$resourceId"
 }

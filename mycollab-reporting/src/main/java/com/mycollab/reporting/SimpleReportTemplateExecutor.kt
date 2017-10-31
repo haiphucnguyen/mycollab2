@@ -74,6 +74,7 @@ abstract class SimpleReportTemplateExecutor<T>(timeZone: TimeZone, locale: Local
     }
 
     companion object {
+        @JvmField
         val CRITERIA = "criteria"
         private val LOG = LoggerFactory.getLogger(SimpleReportTemplateExecutor::class.java)
     }

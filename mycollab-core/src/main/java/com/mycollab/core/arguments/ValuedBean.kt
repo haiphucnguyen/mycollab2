@@ -12,17 +12,31 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.user.dao;
+package com.mycollab.core.arguments
 
-import com.mycollab.module.user.domain.SimpleBillingAccount;
+import com.fasterxml.jackson.annotation.JsonIgnore
 
-public interface BillingAccountMapperExt {
+import java.io.Serializable
 
-    SimpleBillingAccount getBillingAccountById(Integer accountId);
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
+open class ValuedBean : Cloneable, Serializable {
 
-    SimpleBillingAccount getAccountByDomain(String domainName);
+    @JsonIgnore
+    @NotBindable
+    var isSelected = false
 
-    SimpleBillingAccount getDefaultAccountByDomain();
+    @JsonIgnore
+    @NotBindable
+    var extraData: Any? = null
+
+    fun copy(): Any? = try {
+        super.clone()
+    } catch (e: CloneNotSupportedException) {
+        null
+    }
 }

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param
  * @since 5.3.5
  */
 interface BillingSubscriptionMapperExt {
-    fun findSubscription(sAccountId: Int?): SimpleBillingSubscription?
+    fun findSubscription(sAccountId: Int): SimpleBillingSubscription?
 
-    fun getTheLastBillingSuccess(@Param("sAccountId") sAccountId: Int?): BillingSubscriptionHistory?
+    fun getTheLastBillingSuccess(@Param("sAccountId") sAccountId: Int): BillingSubscriptionHistory?
 }

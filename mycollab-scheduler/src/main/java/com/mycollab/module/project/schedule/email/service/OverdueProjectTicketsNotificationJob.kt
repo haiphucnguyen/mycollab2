@@ -173,7 +173,7 @@ class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
                             A(AccountLinkGenerator.generatePreviewFullUserLink(subDomain, assignment.assignUser)).
                                     appendText(assignment.assignUserFullName)).write()
 
-            fun storageService() = AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+            private fun storageService() = AppContextUtil.getSpringBean(AbstractStorageService::class.java)
         }
     }
 }
