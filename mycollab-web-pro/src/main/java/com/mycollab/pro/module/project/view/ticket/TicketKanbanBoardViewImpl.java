@@ -1,10 +1,8 @@
 package com.mycollab.pro.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
-import com.mycollab.common.domain.OptionVal;
 import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.common.service.OptionValService;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -14,6 +12,7 @@ import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.view.ProjectView;
@@ -22,14 +21,17 @@ import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
 import com.mycollab.module.project.view.ticket.TicketSearchPanel;
 import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.*;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.AsyncInvoker;
+import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
-import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -45,13 +47,15 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
-import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -104,7 +108,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         kanbanLayout.setHeight("100%");
         kanbanLayout.addStyleName("kanban-layout");
         kanbanLayout.setSpacing(true);
-        kanbanLayout.setMargin(new MarginInfo(true, false, true, false));
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
         kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
 
@@ -220,15 +223,22 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
         private KanbanBlockItem(final ProjectTicket ticket) {
             this.projectTicket = ticket;
-            this.addStyleName("kanban-item");
+            this.addStyleName("kanban-item list-row");
+            if (ticket.isBug()) {
+                this.addStyleName("bug");
+            } else if (ticket.isRisk()) {
+                this.addStyleName("risk");
+            } else if (ticket.isTask()) {
+                this.addStyleName("task");
+            }
 
             TicketComponentFactory popupFieldFactory = AppContextUtil.getSpringBean(TicketComponentFactory.class);
 
             MHorizontalLayout headerLayout = new MHorizontalLayout();
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(projectTicket);
-            AbstractComponent priorityField = popupFieldFactory.createPriorityPopupField(projectTicket);
-            headerLayout.with(priorityField, toggleTicketSummaryField).expand(toggleTicketSummaryField);
+            ELabel iconLbl = ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml()).withWidthUndefined();
+            headerLayout.with(iconLbl, toggleTicketSummaryField).expand(toggleTicketSummaryField);
 
             this.with(headerLayout);
 
@@ -272,37 +282,32 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     Component dragComponent = transferable.getComponent();
                     if (dragComponent instanceof KanbanBlockItem) {
                         KanbanBlockItem kanbanItem = (KanbanBlockItem) dragComponent;
-                        int newIndex = details.getOverIndex();
-                        if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
-                            dragLayoutContainer.addComponent(kanbanItem);
-                        } else if (newIndex == -1) {
-                            dragLayoutContainer.addComponent(kanbanItem, 0);
-                        } else {
-                            dragLayoutContainer.addComponent(kanbanItem, newIndex);
-                        }
                         ProjectTicket ticket = kanbanItem.projectTicket;
-                        refresh();
 
-                        Component sourceComponent = transferable.getSourceComponent();
-                        KanbanBlock sourceKanban = UIUtils.getRoot(sourceComponent, KanbanBlock.class);
-                        if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
-                            sourceKanban.refresh();
-                        }
-
-                        //Update task index
-                        List<Map<String, Integer>> indexMap = new ArrayList<>();
-                        for (int i = 0; i < dragLayoutContainer.getComponentCount(); i++) {
-                            Component subComponent = dragLayoutContainer.getComponent(i);
-                            if (subComponent instanceof KanbanBlockItem) {
-                                KanbanBlockItem blockItem = (KanbanBlockItem) dragLayoutContainer.getComponent(i);
-                                Map<String, Integer> map = new HashMap<>(2);
-                                map.put("id", blockItem.projectTicket.getTypeId());
-                                map.put("index", i);
-                                indexMap.add(map);
+                        if (ticket.isBug() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.ReOpen.name()) || !stage.equals(StatusI18nEnum.Verified.name())
+                                || !stage.equals(StatusI18nEnum.Resolved.name()))) {
+                            NotificationUtil.showErrorNotification("AAA");
+                        } else if (ticket.isRisk() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.Closed.name()))) {
+                            NotificationUtil.showErrorNotification("BBB");
+                        } else if (ticket.isTask() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.Closed.name()))) {
+                            NotificationUtil.showErrorNotification("CCC");
+                        } else {
+                            int newIndex = details.getOverIndex();
+                            if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
+                                dragLayoutContainer.addComponent(kanbanItem);
+                            } else if (newIndex == -1) {
+                                dragLayoutContainer.addComponent(kanbanItem, 0);
+                            } else {
+                                dragLayoutContainer.addComponent(kanbanItem, newIndex);
                             }
-                        }
-                        if (indexMap.size() > 0) {
-//                            ticketService.massUpdateTaskIndexes(indexMap, AppUI.getAccountId());
+
+                            refresh();
+
+                            Component sourceComponent = transferable.getSourceComponent();
+                            KanbanBlock sourceKanban = UIUtils.getRoot(sourceComponent, KanbanBlock.class);
+                            if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
+                                sourceKanban.refresh();
+                            }
                         }
                     }
                 }
@@ -317,14 +322,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
             header = new Label(UserUIContext.getMessage(StatusI18nEnum.class, stage));
             headerLayout.with(header).expand(header);
-
-            final PopupButton controlsBtn = new PopupButton();
-            controlsBtn.addStyleName(WebThemes.BUTTON_LINK);
-            headerLayout.with(controlsBtn);
-
-            OptionPopupContent popupContent = new OptionPopupContent();
-
-            popupContent.addSeparator();
+            with(headerLayout, dragLayoutContainer);
         }
 
         void addBlockItem(KanbanBlockItem comp) {
