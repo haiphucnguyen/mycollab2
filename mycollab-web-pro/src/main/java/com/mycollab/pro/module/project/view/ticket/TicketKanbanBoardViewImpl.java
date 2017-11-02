@@ -2,6 +2,7 @@ package com.mycollab.pro.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.domain.OptionVal;
+import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.OptionValService;
 import com.mycollab.db.arguments.BasicSearchRequest;
@@ -61,7 +62,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implements TicketKanbanBoardView {
 
     private ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
-    private OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
 
     private TicketSearchPanel searchPanel;
     private DDHorizontalLayout kanbanLayout;
@@ -127,19 +127,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     } else {
                         kanbanLayout.addComponent(kanbanItem, newIndex);
                     }
-
-                    //Update options index for this project
-                    List<Map<String, Integer>> indexMap = new ArrayList<>();
-                    for (int i = 0; i < kanbanLayout.getComponentCount(); i++) {
-                        KanbanBlock blockItem = (KanbanBlock) kanbanLayout.getComponent(i);
-                        Map<String, Integer> map = new HashMap<>(2);
-                        map.put("id", blockItem.optionVal.getId());
-                        map.put("index", i);
-                        indexMap.add(map);
-                    }
-                    if (indexMap.size() > 0) {
-                        optionValService.massUpdateOptionIndexes(indexMap, AppUI.getAccountId());
-                    }
                 }
             }
 
@@ -200,7 +187,13 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-
+                StatusI18nEnum[] statuses = OptionI18nEnum.statuses;
+                Arrays.stream(statuses).forEach(status -> {
+                    KanbanBlock block = new KanbanBlock(status.name());
+                    kanbanBlocks.put(status.name(), block);
+                    kanbanLayout.addComponent(block);
+                });
+                push();
 
                 int totalTickets = ticketService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTickets);
@@ -218,18 +211,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         this.push();
                     }
                 }
-            }
-        });
-    }
-
-    @Override
-    public void addColumn(final OptionVal option) {
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
-            @Override
-            public void run() {
-                KanbanBlock kanbanBlock = new KanbanBlock(option);
-                kanbanBlocks.put(option.getTypeval(), kanbanBlock);
-                kanbanLayout.addComponent(kanbanBlock);
             }
         });
     }
@@ -265,16 +246,16 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     }
 
     private class KanbanBlock extends MVerticalLayout implements IBlockContainer {
-        private OptionVal optionVal;
+        private String status;
         private DDVerticalLayout dragLayoutContainer;
         private Label header;
 
-        KanbanBlock(OptionVal stage) {
+        KanbanBlock(String stage) {
             this.withFullHeight().withWidth("350px").withStyleName("kanban-block").withMargin(false);
-            this.optionVal = stage;
+            this.status = stage;
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
-            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#" + stage.getColor() + "'});");
+            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'red'});");
 
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
@@ -331,11 +312,10 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     return new Not(VerticalLocationIs.MIDDLE);
                 }
             });
-            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) +
-                    "px");
+            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) + "px");
 
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
-            header = new Label(UserUIContext.getMessage(StatusI18nEnum.class, optionVal.getTypeval()));
+            header = new Label(UserUIContext.getMessage(StatusI18nEnum.class, stage));
             headerLayout.with(header).expand(header);
 
             final PopupButton controlsBtn = new PopupButton();
@@ -363,7 +343,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
         @Override
         public void refresh() {
-            header.setValue(String.format("%s (%d)", optionVal.getTypeval(), getTicketComponentCount()));
+            header.setValue(String.format("%s (%d)", status, getTicketComponentCount()));
         }
     }
 }

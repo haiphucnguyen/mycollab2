@@ -58,7 +58,7 @@ public class TicketSearchPanel extends DefaultGenericSearchPanel<ProjectTicketSe
     private TicketSavedFilterComboBox savedFilterComboBox;
 
     private static Param[] paramFields = new Param[]{
-            ProjectTicketSearchCriteria.p_type,
+            ProjectTicketSearchCriteria.p_types,
             ProjectTicketSearchCriteria.p_name, ProjectTicketSearchCriteria.p_priority,
             ProjectTicketSearchCriteria.p_milestones, ProjectTicketSearchCriteria.p_startDate,
             ProjectTicketSearchCriteria.p_endDate, ProjectTicketSearchCriteria.p_dueDate,
