@@ -25,7 +25,7 @@
         <junit.version>4.12</junit.version>
         <jackson.version>2.9.2</jackson.version>
 
-        <kotlin.version>1.1.51</kotlin.version>
+        <kotlin.version>1.2.0</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->
@@ -207,7 +207,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>2.7.2</version>
+            <version>2.7.4</version>
         </dependency>
 
     </dependencies>
