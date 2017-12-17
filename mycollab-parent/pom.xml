@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
     <prerequisites>
         <maven>3.3.0</maven>
@@ -19,10 +19,10 @@
     <properties>
         <java.version>1.8</java.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <vaadin.version>7.7.11</vaadin.version>
+        <vaadin.version>7.7.12</vaadin.version>
         <mysql.version>5.1.44</mysql.version>
         <junit.version>4.12</junit.version>
-        <jackson.version>2.9.2</jackson.version>
+        <jackson.version>2.9.3</jackson.version>
 
         <kotlin.version>1.2.0</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
