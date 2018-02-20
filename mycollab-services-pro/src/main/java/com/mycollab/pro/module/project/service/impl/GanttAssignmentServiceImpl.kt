@@ -215,7 +215,7 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                 batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
                                 batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
-                                batchTasksStatement.setDouble(5, MoreObjects.firstNonNull(it.progress, 0.0))
+                                batchTasksStatement.setDouble(5, MoreObjects.firstNonNull(it.progress, 0.0)!!)
                                 batchTasksStatement.setString(6, it.assignUser)
                                 batchTasksStatement.setInt(7, it.ganttIndex!!)
                                 batchTasksStatement.setObject(8, it.milestoneId)
@@ -288,7 +288,5 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
         }
     }
 
-    private fun getDateWithNullValue(date: java.util.Date?): Date? {
-        return if (date != null) Date(date.time) else null
-    }
+    private fun getDateWithNullValue(date: java.util.Date?): Date? = if (date != null) Date(date.time) else null
 }

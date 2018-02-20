@@ -24,9 +24,10 @@ class AccountThemeServiceImpl(private val accountThemeMapper: AccountThemeMapper
         val ex = AccountThemeExample()
         ex.createCriteria().andSaccountidEqualTo(sAccountId)
         val accountThemes = accountThemeMapper.selectByExample(ex)
-        return if (accountThemes.isNotEmpty()) {
-            accountThemes[0]
-        } else null
+        return when {
+            accountThemes.isNotEmpty() -> accountThemes[0]
+            else -> null
+        }
 
     }
 
@@ -34,9 +35,10 @@ class AccountThemeServiceImpl(private val accountThemeMapper: AccountThemeMapper
         val ex = AccountThemeExample()
         ex.createCriteria().andIsdefaultEqualTo(java.lang.Boolean.TRUE)
         val accountThemes = accountThemeMapper.selectByExample(ex)
-        return if (accountThemes.isNotEmpty()) {
-            accountThemes[0]
-        } else null
+        return when {
+            accountThemes.isNotEmpty() -> accountThemes[0]
+            else -> null
+        }
 
     }
 
