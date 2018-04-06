@@ -16,8 +16,8 @@
  */
 package com.mycollab.vaadin.ui;
 
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
 
 import java.util.Set;
 
@@ -33,7 +33,7 @@ public abstract class WrappedFormLayoutFactory implements IFormLayoutFactory {
     }
 
     @Override
-    public final Component attachField(Object propertyId, Field<?> field) {
+    public final Component attachField(Object propertyId, AbstractField<?> field) {
         return wrappedLayoutFactory.attachField(propertyId, field);
     }
 

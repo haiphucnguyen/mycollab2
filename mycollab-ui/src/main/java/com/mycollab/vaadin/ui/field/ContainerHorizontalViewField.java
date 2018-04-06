@@ -25,7 +25,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
-public class ContainerHorizontalViewField extends CustomField {
+public class ContainerHorizontalViewField extends CustomField<Object> {
     private static final long serialVersionUID = 1L;
 
     private MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
@@ -39,12 +39,17 @@ public class ContainerHorizontalViewField extends CustomField {
     }
 
     @Override
-    public Class<?> getType() {
-        return Object.class;
+    protected Component initContent() {
+        return layout;
     }
 
     @Override
-    protected Component initContent() {
-        return layout;
+    protected void doSetValue(Object o) {
+
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 }

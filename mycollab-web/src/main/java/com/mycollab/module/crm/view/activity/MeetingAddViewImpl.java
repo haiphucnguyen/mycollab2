@@ -33,7 +33,7 @@ import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -87,7 +87,7 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (propertyId.equals("subject")) {
                 MTextField tf = new MTextField();
                 if (isValidateForm) {

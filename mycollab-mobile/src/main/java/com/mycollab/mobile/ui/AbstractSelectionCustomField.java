@@ -20,7 +20,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 

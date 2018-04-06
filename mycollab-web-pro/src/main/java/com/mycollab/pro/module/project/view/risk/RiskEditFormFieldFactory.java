@@ -18,7 +18,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -36,7 +36,7 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         Risk risk = attachForm.getBean();
         if (Risk.Field.description.equalTo(propertyId)) {
             final RichTextArea desc = new RichTextArea();

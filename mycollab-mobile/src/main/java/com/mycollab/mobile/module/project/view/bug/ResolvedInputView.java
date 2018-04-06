@@ -139,7 +139,7 @@ class ResolvedInputView extends AbstractMobilePageView {
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                     bug.setResolution(BugResolution.Fixed.name());
                     return BugResolutionListSelect.getInstanceForResolvedBugWindow();

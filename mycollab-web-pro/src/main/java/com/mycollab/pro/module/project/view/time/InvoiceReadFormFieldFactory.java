@@ -14,7 +14,7 @@ import com.mycollab.vaadin.ui.field.CurrencyViewField;
 import com.mycollab.vaadin.ui.field.DateViewField;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd
@@ -26,7 +26,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         SimpleInvoice invoice = attachForm.getBean();
         if (Invoice.Field.currentid.equalTo(propertyId)) {
             return new CurrencyViewField(invoice.getCurrentid());

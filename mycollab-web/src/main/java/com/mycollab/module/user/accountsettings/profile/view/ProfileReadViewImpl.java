@@ -38,7 +38,7 @@ import com.mycollab.vaadin.ui.field.UrlLinkViewField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -200,7 +200,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 User user = formItem.getBean();
                 if (propertyId.equals("website")) {
                     return new UrlLinkViewField(user.getWebsite());

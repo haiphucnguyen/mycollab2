@@ -50,7 +50,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (propertyId.equals("subject")) {
                 TextField tf = new TextField();
                 if (isValidateForm) {
@@ -113,8 +113,8 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
                 statusField.select(beanItem.getStatus());
 
                 // binding field group
-                fieldGroup.bind(typeField, "calltype");
-                fieldGroup.bind(statusField, "status");
+                binder.bind(typeField, "calltype");
+                binder.bind(statusField, "status");
                 return layout;
             }
         }

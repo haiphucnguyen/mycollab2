@@ -12,15 +12,14 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui;
+package com.mycollab.vaadin.ui
 
-import com.mycollab.vaadin.event.IEditFormHandler;
-import com.mycollab.vaadin.event.HasEditFormHandlers;
+import com.mycollab.vaadin.event.IEditFormHandler
+import com.mycollab.vaadin.event.HasEditFormHandlers
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList
 
 /**
  * Generic attachForm with java bean as datasource. It includes validation
@@ -29,11 +28,10 @@ import java.util.List;
  * @param <B> java bean as datasource map with attachForm fields
  * @author MyCollab Ltd.
  * @since 2.0
- */
-public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements HasEditFormHandlers<B> {
-    private static final long serialVersionUID = 1L;
+</B> */
+open class AdvancedEditBeanForm<B> : GenericBeanForm<B>(), HasEditFormHandlers<B> {
 
-    private List<IEditFormHandler<B>> editFormHandlers;
+    private var editFormHandlers: MutableList<IEditFormHandler<B>>? = null
 
     /**
      * Validate attachForm against data
@@ -41,40 +39,39 @@ public class AdvancedEditBeanForm<B> extends GenericBeanForm<B> implements HasEd
      * @return true if data is valid, otherwise return false and show result to
      * attachForm
      */
-    public boolean validateForm() {
-        fieldFactory.commit();
-        return isValid();
+    fun validateForm(): Boolean {
+        fieldFactory.commit()
+        return isValid
     }
 
-    @Override
-    public void addFormHandler(IEditFormHandler<B> editFormHandler) {
+    override fun addFormHandler(editFormHandler: IEditFormHandler<B>) {
         if (editFormHandlers == null) {
-            editFormHandlers = new ArrayList<>();
+            editFormHandlers = ArrayList()
         }
 
-        editFormHandlers.add(editFormHandler);
+        editFormHandlers!!.add(editFormHandler)
     }
 
-    public void fireSaveForm() {
+    fun fireSaveForm() {
         if (editFormHandlers != null) {
-            for (IEditFormHandler<B> editFormHandler : editFormHandlers) {
-                editFormHandler.onSave(this.getBean());
+            for (editFormHandler in editFormHandlers!!) {
+                editFormHandler.onSave(this.getBean())
             }
         }
     }
 
-    public void fireSaveAndNewForm() {
+    fun fireSaveAndNewForm() {
         if (editFormHandlers != null) {
-            for (IEditFormHandler<B> editFormHandler : editFormHandlers) {
-                editFormHandler.onSaveAndNew(this.getBean());
+            for (editFormHandler in editFormHandlers!!) {
+                editFormHandler.onSaveAndNew(this.getBean())
             }
         }
     }
 
-    public void fireCancelForm() {
+    fun fireCancelForm() {
         if (editFormHandlers != null) {
-            for (IEditFormHandler<B> editFormHandler : editFormHandlers) {
-                editFormHandler.onCancel();
+            for (editFormHandler in editFormHandlers!!) {
+                editFormHandler.onCancel()
             }
         }
     }

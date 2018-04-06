@@ -22,7 +22,6 @@ import com.mycollab.vaadin.resources.VaadinResourceFactory
 import com.vaadin.server.ExternalResource
 import com.vaadin.server.Resource
 import com.vaadin.ui.Button
-import com.vaadin.ui.themes.BaseTheme
 import org.vaadin.viritin.button.MButton
 
 /**
@@ -32,7 +31,7 @@ import org.vaadin.viritin.button.MButton
 object AccountAssetsResolver {
     @JvmStatic
     fun createAccountLogoImageComponent(logoId: String, size: Int): Button = MButton().
-            withStyleName(BaseTheme.BUTTON_LINK).withIcon(createLogoResource(logoId, size))
+            withStyleName("link").withIcon(createLogoResource(logoId, size))
 
     @JvmStatic
     fun createLogoResource(logoId: String?, size: Int): Resource = if (logoId == null) {

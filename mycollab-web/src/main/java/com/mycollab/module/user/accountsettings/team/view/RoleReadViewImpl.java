@@ -87,7 +87,7 @@ public class RoleReadViewImpl extends AbstractVerticalPageView implements RoleRe
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 if (Role.Field.isdefault.equalTo(propertyId)) {
                     Enum localizeYesNo = LocalizationHelper.localizeYesNo(role.getIsdefault());
                     return new DefaultViewField(UserUIContext.getMessage(localizeYesNo));

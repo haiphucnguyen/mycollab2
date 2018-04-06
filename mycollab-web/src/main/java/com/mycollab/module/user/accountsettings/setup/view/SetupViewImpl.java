@@ -187,7 +187,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (propertyId.equals("isStartTls")) {
                 return new CheckBox("", false);
             } else if (propertyId.equals("isSsl")) {

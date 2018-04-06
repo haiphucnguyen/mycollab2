@@ -29,7 +29,7 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -123,7 +123,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getUsername(), beanItem.getDisplayName(), beanItem

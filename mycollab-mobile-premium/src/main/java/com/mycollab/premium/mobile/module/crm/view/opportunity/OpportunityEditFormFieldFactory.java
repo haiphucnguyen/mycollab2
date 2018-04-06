@@ -8,7 +8,7 @@ import com.mycollab.module.crm.domain.Opportunity;
 import com.mycollab.premium.mobile.module.crm.view.lead.LeadSourceListSelect;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.fields.MTextArea;
 
@@ -25,7 +25,7 @@ class OpportunityEditFormFieldFactory<B extends Opportunity> extends AbstractBea
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
 
         if (propertyId.equals("campaignid")) {
             return new CampaignSelectionField();

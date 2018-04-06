@@ -36,7 +36,7 @@ import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -91,7 +91,7 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 if (propertyId.equals("description")) {
                     final TextArea textArea = new TextArea();
                     textArea.setNullRepresentation("");

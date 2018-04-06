@@ -83,7 +83,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
 
         commentInput = new TextArea();
         commentInput.setWidth("100%");
-        commentInput.setInputPrompt("---");
+        commentInput.setDescription("---");
 
         MButton postBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             final CommentWithBLOBs comment = new CommentWithBLOBs();
@@ -118,7 +118,6 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
 
         uploadField = new MultiUpload();
         uploadField.setButtonCaption(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPLOAD));
-        uploadField.setImmediate(true);
         uploadField.setHandler(new MobileUploadHandler());
     }
 

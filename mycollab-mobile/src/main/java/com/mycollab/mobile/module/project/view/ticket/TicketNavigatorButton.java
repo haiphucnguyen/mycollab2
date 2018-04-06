@@ -23,7 +23,7 @@ import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 
 /**
  * @author MyCollab Ltd

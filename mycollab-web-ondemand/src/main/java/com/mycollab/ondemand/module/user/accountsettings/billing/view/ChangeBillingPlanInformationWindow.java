@@ -96,7 +96,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             }
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 return null;
             }
         }

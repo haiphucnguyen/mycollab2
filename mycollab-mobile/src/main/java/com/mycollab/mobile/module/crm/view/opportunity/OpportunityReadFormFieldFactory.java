@@ -38,8 +38,8 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Field;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.AbstractField;
 
 class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleOpportunity> {
     private static final long serialVersionUID = 1L;
@@ -49,8 +49,8 @@ class OpportunityReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFac
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
-        Field<?> field = null;
+    protected AbstractField<?> onCreateField(Object propertyId) {
+        AbstractField<?> field = null;
         final SimpleOpportunity opportunity = attachForm.getBean();
 
         if (propertyId.equals("accountid")) {

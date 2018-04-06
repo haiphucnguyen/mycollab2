@@ -17,7 +17,7 @@
 package com.mycollab.mobile.ui;
 
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 import com.vaadin.server.FontAwesome;
 
 /**

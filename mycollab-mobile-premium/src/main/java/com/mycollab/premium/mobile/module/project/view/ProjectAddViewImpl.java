@@ -49,7 +49,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (Project.Field.name.equalTo(propertyId)) {
                 final TextField tf = new TextField();
                 tf.setRequired(true);

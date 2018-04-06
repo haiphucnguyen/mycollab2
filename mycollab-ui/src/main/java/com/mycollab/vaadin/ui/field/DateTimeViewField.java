@@ -37,13 +37,18 @@ public class DateTimeViewField extends CustomField<String> {
     }
 
     @Override
-    public Class<String> getType() {
-        return String.class;
-    }
-
-    @Override
     protected Component initContent() {
         String dateValue = (date == null) ? "" : UserUIContext.formatDateTime(date);
         return new Label(dateValue);
+    }
+
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

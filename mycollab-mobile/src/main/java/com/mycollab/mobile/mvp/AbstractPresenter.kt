@@ -23,10 +23,10 @@ import com.mycollab.security.PermissionChecker
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.mvp.*
 import com.mycollab.vaadin.ui.NotificationUtil
-import com.vaadin.addon.touchkit.ui.NavigationManager
 import com.vaadin.ui.HasComponents
 import com.vaadin.ui.UI
 import org.slf4j.LoggerFactory
+import org.vaadin.touchkit.ui.NavigationManager
 
 /**
  * @param <V>

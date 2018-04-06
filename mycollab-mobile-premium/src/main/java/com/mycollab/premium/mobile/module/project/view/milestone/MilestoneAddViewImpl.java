@@ -17,7 +17,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -54,7 +54,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (Milestone.Field.assignuser.equalTo(propertyId)) {
                 final ProjectMemberListSelect userbox = new ProjectMemberListSelect(beanItem.getProjectid());
                 userbox.setRequired(true);

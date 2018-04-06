@@ -49,7 +49,12 @@ public class CurrencyViewField extends CustomField<String> {
     }
 
     @Override
-    public Class<? extends String> getType() {
-        return String.class;
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

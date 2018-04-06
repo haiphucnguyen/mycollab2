@@ -18,7 +18,7 @@ package com.mycollab.mobile.ui;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;

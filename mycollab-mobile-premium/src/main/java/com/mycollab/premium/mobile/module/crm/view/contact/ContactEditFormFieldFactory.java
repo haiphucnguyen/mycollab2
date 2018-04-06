@@ -12,7 +12,7 @@ import com.mycollab.vaadin.ui.CompoundCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -32,7 +32,7 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefix")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("leadsource")) {
@@ -90,8 +90,8 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
             // binding field group
-            fieldGroup.bind(prefixSelect, "prefix");
-            fieldGroup.bind(firstnameTxtField, "firstname");
+            binder.bind(prefixSelect, "prefix");
+            binder.bind(firstnameTxtField, "firstname");
 
             return layout;
         }

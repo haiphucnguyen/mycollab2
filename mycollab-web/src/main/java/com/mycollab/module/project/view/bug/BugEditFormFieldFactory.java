@@ -37,7 +37,7 @@ import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.data.Property;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -64,7 +64,7 @@ class BugEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Sim
     }
 
     @Override
-    protected Field<?> onCreateField(final Object propertyId) {
+    protected AbstractField<?> onCreateField(final Object propertyId) {
         final SimpleBug beanItem = attachForm.getBean();
         if (propertyId.equals("environment")) {
             return new RichTextArea();

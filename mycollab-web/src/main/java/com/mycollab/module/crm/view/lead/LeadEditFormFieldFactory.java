@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.crm.domain.Lead;
 import com.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.LeadStatus;
 import com.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.mycollab.module.user.ui.components.ActiveUserComboBox;
@@ -31,7 +30,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.CountryComboBox;
 import com.mycollab.vaadin.web.ui.PrefixNameComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -56,7 +55,7 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefixname")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("primcountry") || propertyId.equals("othercountry")) {
@@ -117,8 +116,8 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
             // binding field group
-            fieldGroup.bind(prefixSelect, "prefixname");
-            fieldGroup.bind(firstnameTxtField, "firstname");
+            binder.bind(prefixSelect, "prefixname");
+            binder.bind(firstnameTxtField, "firstname");
 
             return layout;
         }

@@ -47,7 +47,7 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -146,7 +146,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (Milestone.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getStartdate());
             } else if (Milestone.Field.enddate.equalTo(propertyId)) {

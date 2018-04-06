@@ -18,7 +18,7 @@ package com.mycollab.vaadin.ui.field;
 
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 
@@ -53,12 +53,12 @@ public final class DefaultViewField extends CustomField<String> {
     }
 
     @Override
-    public Class<String> getType() {
-        return String.class;
+    protected Component initContent() {
+        return label;
     }
 
     @Override
-    protected Component initContent() {
-        return label;
+    protected void doSetValue(String s) {
+
     }
 }

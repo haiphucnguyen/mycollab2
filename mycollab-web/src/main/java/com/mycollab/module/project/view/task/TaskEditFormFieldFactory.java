@@ -43,7 +43,7 @@ import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.MethodProperty;
 import com.vaadin.data.util.TransactionalPropertyWrapper;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import org.joda.time.DateTime;
@@ -68,7 +68,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     @Override
-    protected Field<?> onCreateField(final Object propertyId) {
+    protected AbstractField<?> onCreateField(final Object propertyId) {
         if (Task.Field.assignuser.equalTo(propertyId)) {
             ProjectMemberSelectionField field = new ProjectMemberSelectionField();
             field.addValueChangeListener(valueChangeEvent -> {
@@ -107,7 +107,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             field.addBlurListener(blurEvent -> {
                 HumanTime humanTime = HumanTime.eval(field.getValue());
                 long duration = Long.valueOf(humanTime.getDelta() + "");
-                DateTimeOptionField startDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.startdate.name());
+                DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
                 Date startDateVal = startDateField.getValue();
                 if (duration > 0 && startDateVal != null) {
                     int daysDuration = (int) (duration / DateTimeUtils.MILLISECONDS_IN_A_DAY);
@@ -115,7 +115,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                         DateTime startDateJoda = new DateTime(startDateVal);
                         LocalDate calculatedDate = BusinessDayTimeUtils.plusDays(startDateJoda.toLocalDate(), daysDuration);
                         DateTime endDateJoda = new DateTime(calculatedDate.toDate());
-                        DateTimeOptionField endDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.enddate.name());
+                        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
                         beanItem.setEnddate(endDateJoda.toDate());
                         endDateField.setPropertyDataSource(new TransactionalPropertyWrapper<>(new MethodProperty(beanItem, "enddate")));
                     }
@@ -151,9 +151,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     private void calculateDurationBaseOnStartAndEndDates() {
-        DateTimeOptionField startDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.startdate.name());
-        DateTimeOptionField endDateField = (DateTimeOptionField) fieldGroup.getField(Task.Field.enddate.name());
-        TextField durationField = (TextField) fieldGroup.getField(Task.Field.duration.name());
+        DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
+        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
+        TextField durationField = (TextField) binder.getField(Task.Field.duration.name());
         Date startDate = null, endDate = null;
         if (startDateField != null) {
             startDate = startDateField.getValue();

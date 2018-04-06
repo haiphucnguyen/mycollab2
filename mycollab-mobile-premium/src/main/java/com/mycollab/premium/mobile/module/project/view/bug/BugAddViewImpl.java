@@ -27,7 +27,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.addon.touchkit.ui.NumberField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -86,7 +86,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (BugWithBLOBs.Field.environment.equalTo(propertyId) || BugWithBLOBs.Field.description.equalTo(propertyId)) {
                 final TextArea field = new TextArea("", "");
                 field.setNullRepresentation("");

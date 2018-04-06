@@ -121,7 +121,7 @@ class ReOpenView extends AbstractMobilePageView {
             }
 
             @Override
-            public Component onAttachField(Object propertyId, final Field<?> field) {
+            public Component onAttachField(Object propertyId, final AbstractField<?> field) {
                 if (propertyId.equals("resolution")) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
                 } else if (propertyId.equals("assignuser")) {
@@ -141,7 +141,7 @@ class ReOpenView extends AbstractMobilePageView {
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                     return new ProjectMemberListSelect(bean.getProjectid());
                 } else if (propertyId.equals("comment")) {

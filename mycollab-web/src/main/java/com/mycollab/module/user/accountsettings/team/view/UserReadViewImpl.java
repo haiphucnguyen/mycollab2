@@ -170,7 +170,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                protected Field<?> onCreateField(Object propertyId) {
+                protected AbstractField<?> onCreateField(Object propertyId) {
                     if (propertyId.equals("email")) {
                         return new EmailViewField(user.getEmail());
                     } else if (propertyId.equals("roleid")) {

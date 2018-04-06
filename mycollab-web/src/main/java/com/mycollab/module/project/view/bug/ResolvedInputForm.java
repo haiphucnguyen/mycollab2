@@ -179,7 +179,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("resolution")) {
                 if (StringUtils.isBlank(bean.getResolution()) || UserUIContext.getMessage(BugResolution.None).equals(bug.getResolution())) {
                     bean.setResolution(BugResolution.Fixed.name());
@@ -214,7 +214,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             @Override
             protected Component initContent() {
                 layout = new MHorizontalLayout(resolutionComboBox);
-                fieldGroup.bind(resolutionComboBox, BugWithBLOBs.Field.resolution.name());
+                binder.bind(resolutionComboBox, BugWithBLOBs.Field.resolution.name());
                 resolutionComboBox.addValueChangeListener(valueChangeEvent -> {
                     String value = (String) resolutionComboBox.getValue();
                     if (BugResolution.Duplicate.name().equals(value)) {

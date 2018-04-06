@@ -132,7 +132,7 @@ public class QuickEditGanttItemWindow extends MWindow {
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 if ("assignUser".equals(propertyId)) {
                     return new ProjectMemberSelectionField();
                 }

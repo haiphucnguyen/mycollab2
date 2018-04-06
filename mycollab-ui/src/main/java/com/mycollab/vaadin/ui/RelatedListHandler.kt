@@ -12,25 +12,17 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin.ui;
-
-import java.util.EventObject;
+package com.mycollab.vaadin.ui
 
 /**
- * @author MyCollab Ltd
- * @since 5.4.3
+ * @author MyCollab Ltd.
+ * @since 1.0
  */
-public class PropertyChangedEvent  extends EventObject {
-    private String bindProperty;
+interface RelatedListHandler<T> {
 
-    public PropertyChangedEvent(Object source, String bindProperty) {
-        super(source);
-        this.bindProperty = bindProperty;
-    }
+    fun createNewRelatedItem(itemId: String)
 
-    public String getBindProperty() {
-        return bindProperty;
-    }
+    fun selectAssociateItems(items: Set<T>)
 }

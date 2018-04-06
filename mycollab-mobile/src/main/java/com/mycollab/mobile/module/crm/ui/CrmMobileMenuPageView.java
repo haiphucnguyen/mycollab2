@@ -37,7 +37,7 @@ import org.vaadin.viritin.button.MButton;
 public class CrmMobileMenuPageView extends AbstractMobileMenuPageView {
     @Override
     protected void buildNavigateMenu() {
-        getMenu().setWidth("80%");
+//        getMenu().setWidth("80%");
         addSection("Views");
 
         MButton accountBtn = new MButton(UserUIContext.getMessage(AccountI18nEnum.LIST), clickEvent -> {

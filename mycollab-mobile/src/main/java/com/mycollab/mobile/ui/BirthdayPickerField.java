@@ -16,7 +16,7 @@
  */
 package com.mycollab.mobile.ui;
 
-import com.vaadin.addon.touchkit.ui.DatePicker;
+import org.vaadin.touchkit.ui.DatePicker;
 
 import java.util.Calendar;
 

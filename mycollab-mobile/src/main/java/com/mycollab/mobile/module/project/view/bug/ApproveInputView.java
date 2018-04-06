@@ -134,7 +134,7 @@ class ApproveInputView extends AbstractMobilePageView {
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                     return new ProjectMemberListSelect(bean.getProjectid());
                 } else if (propertyId.equals("comment")) {

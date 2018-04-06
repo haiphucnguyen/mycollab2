@@ -4,7 +4,7 @@ import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.spring.AppContextUtil;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import org.springframework.web.client.RestTemplate;

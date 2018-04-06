@@ -56,12 +56,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>slidemenu</artifactId>
-            <version>0.2</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.vaadin</groupId>
             <artifactId>resetbuttonfortextfield</artifactId>
             <version>1.2.1</version>
@@ -70,19 +64,7 @@
         <dependency>
             <groupId>org.vaadin.addon</groupId>
             <artifactId>easyuploads</artifactId>
-            <version>7.4.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin.addon</groupId>
-            <artifactId>vaadin-touchkit-agpl</artifactId>
-            <version>4.1.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-themes</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>8.0.0</version>
         </dependency>
 
     </dependencies>

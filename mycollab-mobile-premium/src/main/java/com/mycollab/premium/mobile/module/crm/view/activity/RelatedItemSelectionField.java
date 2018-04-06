@@ -6,7 +6,7 @@ import com.mycollab.module.crm.service.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;

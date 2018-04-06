@@ -100,7 +100,7 @@ class AccountInfoChangeWindow extends MWindow {
 
         editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<SimpleBillingAccount>(editForm) {
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 if (BillingAccount.Field.subdomain.equalTo(propertyId)) {
                     return new SubDomainField();
                 } else if (BillingAccount.Field.defaulttimezone.equalTo(propertyId)) {

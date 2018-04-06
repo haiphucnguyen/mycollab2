@@ -23,7 +23,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;

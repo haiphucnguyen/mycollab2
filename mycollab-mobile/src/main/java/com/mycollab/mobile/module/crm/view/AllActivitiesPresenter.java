@@ -25,7 +25,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import org.vaadin.touchkit.ui.NavigationManager;
 import com.vaadin.ui.HasComponents;
 
 /**

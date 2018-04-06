@@ -207,7 +207,7 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected AbstractField<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("description")) {
                     return new RichTextArea();
                 } else if (propertyId.equals("rolename")) {

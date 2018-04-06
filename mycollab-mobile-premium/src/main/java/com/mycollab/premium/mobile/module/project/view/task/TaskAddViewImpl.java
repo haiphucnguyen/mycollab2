@@ -26,7 +26,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -86,7 +86,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Task.Field.description.equalTo(propertyId)) {

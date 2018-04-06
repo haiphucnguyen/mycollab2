@@ -689,7 +689,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
                 }
 
                 @Override
-                protected Field<?> onCreateField(Object propertyId) {
+                protected AbstractField<?> onCreateField(Object propertyId) {
                     if (propertyId.equals("subject")) {
                         TextField tf = new TextField();
 

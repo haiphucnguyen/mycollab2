@@ -14,7 +14,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd
@@ -94,7 +94,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
             } else if (Project.Field.accountid.equalTo(propertyId)) {

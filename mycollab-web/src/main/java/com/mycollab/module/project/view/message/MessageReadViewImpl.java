@@ -90,7 +90,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 return null;
             }
         });

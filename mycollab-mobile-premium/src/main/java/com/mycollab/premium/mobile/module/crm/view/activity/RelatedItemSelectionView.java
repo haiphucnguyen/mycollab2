@@ -12,7 +12,7 @@ import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.module.crm.i18n.*;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import org.vaadin.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
 
 /**

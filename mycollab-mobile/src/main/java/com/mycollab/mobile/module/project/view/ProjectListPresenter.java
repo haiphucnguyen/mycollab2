@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.mobile.mvp.AbstractPresenter;
 import com.mycollab.mobile.ui.IListView;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import org.vaadin.touchkit.ui.NavigationManager;
 import com.vaadin.ui.HasComponents;
 
 /**

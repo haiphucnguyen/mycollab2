@@ -24,7 +24,6 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.OptionValComboBox;
-import com.vaadin.data.Property;
 
 import java.util.List;
 
@@ -39,15 +38,8 @@ public class TaskStatusComboBox extends OptionValComboBox {
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                 CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
-        options.forEach(this::addEntry);
+        setItems(options);
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value == null) {
-            newDataSource.setValue(StatusI18nEnum.Open.name());
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+    // TODO: test bind status in form
 }

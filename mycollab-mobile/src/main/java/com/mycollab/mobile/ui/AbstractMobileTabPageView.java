@@ -17,11 +17,11 @@
 package com.mycollab.mobile.ui;
 
 import com.mycollab.vaadin.mvp.PageView;
-import com.vaadin.addon.touchkit.ui.TabBarView;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet.Tab;
+import org.vaadin.touchkit.ui.TabBarView;
 
 /**
  * @author MyCollab Ltd.

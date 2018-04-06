@@ -40,8 +40,15 @@ public class DateTimeOptionViewField extends CustomField<String> {
         return new Label(dateValue);
     }
 
+    // TODO: override set value
     @Override
-    public Class<? extends String> getType() {
-        return String.class;
+    protected void doSetValue(String s) {
+
+    }
+
+    // TODO: override get value
+    @Override
+    public String getValue() {
+        return null;
     }
 }

@@ -24,7 +24,7 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -67,7 +67,7 @@ public class PagePreviewForm extends AdvancedPreviewBeanForm<Page> {
         }
 
         @Override
-        protected Field<?> onCreateField(java.lang.Object propertyId) {
+        protected AbstractField<?> onCreateField(java.lang.Object propertyId) {
             if (propertyId.equals("content")) {
                 return new RichTextViewField(attachForm.getBean().getContent());
             }

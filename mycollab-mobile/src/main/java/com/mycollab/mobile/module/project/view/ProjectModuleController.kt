@@ -46,7 +46,7 @@ import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PageActionChain
 import com.mycollab.vaadin.mvp.PresenterResolver
 import com.mycollab.vaadin.mvp.ScreenData
-import com.vaadin.addon.touchkit.ui.NavigationManager
+import org.vaadin.touchkit.ui.NavigationManager
 
 /**
  * @author MyCollab Ltd

@@ -111,7 +111,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
     }
 
     @Override
-    public Component attachField(Object propertyId, Field<?> field) {
+    public Component attachField(Object propertyId, AbstractField<?> field) {
         AbstractDynaField dynaField = fieldMappings.get(propertyId);
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();

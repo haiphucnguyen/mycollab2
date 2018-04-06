@@ -25,7 +25,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.CountryComboBox;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -46,7 +46,7 @@ public class AccountEditFormFieldFactory<B extends Account> extends AbstractBean
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (Account.Field.type.equalTo(propertyId)) {
             return new AccountTypeComboBox();
         } else if (Account.Field.industry.equalTo(propertyId)) {

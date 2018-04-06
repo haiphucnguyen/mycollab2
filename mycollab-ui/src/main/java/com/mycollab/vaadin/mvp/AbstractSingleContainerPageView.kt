@@ -17,6 +17,7 @@
 package com.mycollab.vaadin.mvp
 
 import com.mycollab.vaadin.event.ViewEvent
+import com.vaadin.shared.Registration
 import com.vaadin.ui.*
 import com.vaadin.ui.HasComponents.ComponentAttachListener
 import com.vaadin.ui.HasComponents.ComponentDetachListener
@@ -26,6 +27,13 @@ import com.vaadin.ui.HasComponents.ComponentDetachListener
  * @since 5.4.5
  */
 open class AbstractSingleContainerPageView : CustomComponent(), PageView, SingleComponentContainer {
+    override fun removeComponentDetachListener(p0: ComponentDetachListener?) {
+
+    }
+
+    override fun removeComponentAttachListener(p0: ComponentAttachListener?) {
+
+    }
 
     private val contentLayout: CssLayout = CssLayout()
 
@@ -42,21 +50,10 @@ open class AbstractSingleContainerPageView : CustomComponent(), PageView, Single
         contentLayout.addComponent(component)
     }
 
-    override fun addComponentAttachListener(componentAttachListener: ComponentAttachListener) {
+    override fun addComponentAttachListener(componentAttachListener: ComponentAttachListener): Registration =
         contentLayout.addComponentAttachListener(componentAttachListener)
-    }
 
-    override fun removeComponentAttachListener(componentAttachListener: ComponentAttachListener) {
-
-    }
-
-    override fun addComponentDetachListener(componentDetachListener: ComponentDetachListener) {
-
-    }
-
-    override fun removeComponentDetachListener(componentDetachListener: ComponentDetachListener) {
-
-    }
+    override fun addComponentDetachListener(componentDetachListener: ComponentDetachListener): Registration?  = null
 
     override fun <E> addViewListener(listener: PageView.ViewListener<E>) {
         addListener(ViewEvent.VIEW_IDENTIFIER, ViewEvent::class.java, listener, PageView.ViewListener.viewInitMethod)

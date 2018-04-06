@@ -183,7 +183,7 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             Project project = attachForm.getBean();
             if (Project.Field.description.equalTo(propertyId)) {
                 final RichTextArea field = new RichTextArea();

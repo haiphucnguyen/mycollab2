@@ -17,10 +17,8 @@
 package com.mycollab.vaadin.ui;
 
 import com.mycollab.core.MyCollabException;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Field;
-
-import static com.mycollab.core.utils.BeanUtility.deepClone;
 
 /**
  * @param <B>
@@ -37,7 +35,6 @@ public class GenericBeanForm<B> extends CssLayout {
     protected B bean;
 
     public GenericBeanForm() {
-        super();
         this.setWidth("100%");
     }
 
@@ -90,7 +87,7 @@ public class GenericBeanForm<B> extends CssLayout {
         fieldFactory.commit();
     }
 
-    public void attachField(Object propertyId, Field<?> field) {
+    public void attachField(Object propertyId, AbstractField<?> field) {
         layoutFactory.attachField(propertyId, field);
     }
 

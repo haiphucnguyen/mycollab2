@@ -31,23 +31,24 @@ import java.util.List;
  * @author Mycollab Ltd
  * @since 5.2.5
  */
+// TODO: revise this component
 public abstract class SearchInputField<S extends SearchCriteria> extends TextField implements HasSearchHandlers<S> {
     private List<SearchHandler<S>> searchHandlers;
 
     public SearchInputField() {
-        this.setImmediate(true);
-        this.setStyleName("searchinputfield");
-        Dom dom = new Dom(this);
-        dom.setAttribute("placeholder", "Search");
-        this.setTextChangeEventMode(TextChangeEventMode.TIMEOUT);
-        this.setTextChangeTimeout(3000);
-        this.addValueChangeListener(valueChangeEvent -> {
-            String value = getValue();
-            if (StringUtils.isNotBlank(value)) {
-                final S searchCriteria = fillUpSearchCriteria(value);
-                notifySearchHandler(searchCriteria);
-            }
-        });
+//        this.setImmediate(true);
+//        this.setStyleName("searchinputfield");
+//        Dom dom = new Dom(this);
+//        dom.setAttribute("placeholder", "Search");
+//        this.setTextChangeEventMode(TextChangeEventMode.TIMEOUT);
+//        this.setTextChangeTimeout(3000);
+//        this.addValueChangeListener(valueChangeEvent -> {
+//            String value = getValue();
+//            if (StringUtils.isNotBlank(value)) {
+//                final S searchCriteria = fillUpSearchCriteria(value);
+//                notifySearchHandler(searchCriteria);
+//            }
+//        });
         ResetButtonForTextField resetBtn = ResetButtonForTextField.extend(this);
         resetBtn.addResetButtonClickedListener(() -> {
             final S searchCriteria = fillUpSearchCriteria(null);

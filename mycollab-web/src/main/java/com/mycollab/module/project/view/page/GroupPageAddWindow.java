@@ -135,7 +135,7 @@ class GroupPageAddWindow extends MWindow {
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected AbstractField<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("description")) {
                 return new RichTextArea();
             }

@@ -20,10 +20,8 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.Label;
 
 /**
  * @author MyCollab Ltd.
@@ -45,11 +43,6 @@ public class UrlLinkViewField extends CustomField<String> {
     }
 
     @Override
-    public Class<String> getType() {
-        return String.class;
-    }
-
-    @Override
     protected Component initContent() {
         if (StringUtils.isBlank(url) || StringUtils.isBlank(caption)) {
             return ELabel.html("&nbsp;");
@@ -57,5 +50,15 @@ public class UrlLinkViewField extends CustomField<String> {
             final A link = new A(url).appendText(caption).setTarget("_blank");
             return ELabel.html(link.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         }
+    }
+
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

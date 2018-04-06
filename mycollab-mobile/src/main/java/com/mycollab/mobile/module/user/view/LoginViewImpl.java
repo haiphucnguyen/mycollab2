@@ -28,9 +28,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
-import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.ui.*;
 import org.vaadin.jouni.dom.Dom;
+import org.vaadin.touchkit.ui.EmailField;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 

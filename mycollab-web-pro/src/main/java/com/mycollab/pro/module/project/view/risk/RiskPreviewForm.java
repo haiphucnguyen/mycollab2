@@ -22,8 +22,8 @@ import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Field;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.AbstractField;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -48,7 +48,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             SimpleRisk risk = attachForm.getBean();
             if (Risk.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getDescription());

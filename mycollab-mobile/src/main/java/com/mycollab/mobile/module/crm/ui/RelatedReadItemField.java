@@ -120,8 +120,12 @@ public class RelatedReadItemField extends CustomField {
     }
 
     @Override
-    public Class<?> getType() {
-        return Object.class;
+    protected void doSetValue(Object o) {
+
     }
 
+    @Override
+    public Object getValue() {
+        return null;
+    }
 }

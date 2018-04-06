@@ -123,7 +123,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 return null;
             }
         };

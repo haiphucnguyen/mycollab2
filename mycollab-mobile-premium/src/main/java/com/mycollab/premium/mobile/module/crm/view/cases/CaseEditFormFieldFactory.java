@@ -5,7 +5,7 @@ import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -25,7 +25,7 @@ class CaseEditFormFieldFactory<B extends CaseWithBLOBs> extends
 	}
 
 	@Override
-	protected Field<?> onCreateField(Object propertyId) {
+	protected AbstractField<?> onCreateField(Object propertyId) {
 		if (propertyId.equals("priority")) {
 			return new CasePriorityListSelect();
 		} else if (propertyId.equals("status")) {

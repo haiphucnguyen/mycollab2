@@ -30,7 +30,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.CountryComboBox;
 import com.mycollab.vaadin.web.ui.PrefixNameComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.fields.MTextField;
@@ -57,7 +57,7 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefix")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("leadsource")) {
@@ -106,8 +106,8 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
             layout.with(firstNameField).expand(firstNameField);
 
             // binding field group
-            fieldGroup.bind(prefixSelect, "prefix");
-            fieldGroup.bind(firstNameField, "firstname");
+            binder.bind(prefixSelect, "prefix");
+            binder.bind(firstNameField, "firstname");
 
             return layout;
         }

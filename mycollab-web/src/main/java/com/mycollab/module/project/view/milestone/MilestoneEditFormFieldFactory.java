@@ -29,7 +29,7 @@ import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -49,7 +49,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (Milestone.Field.assignuser.equalTo(propertyId)) {
             ProjectMemberSelectionField memberSelectionField = new ProjectMemberSelectionField();
             memberSelectionField.setRequired(true);

@@ -24,7 +24,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -40,7 +40,7 @@ public class VersionEditFormFieldFactory extends AbstractBeanFieldGroupEditField
     }
 
     @Override
-    protected Field<?> onCreateField(final Object propertyId) {
+    protected AbstractField<?> onCreateField(final Object propertyId) {
         if (Version.Field.name.equalTo(propertyId)) {
             final TextField tf = new TextField();
             if (isValidateForm) {

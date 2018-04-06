@@ -5,7 +5,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.DummyCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -21,7 +21,7 @@ public class MeetingEditFormFieldFactory extends AbstractBeanFieldGroupEditField
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("subject")) {
             TextField tf = new TextField();
             if (isValidateForm) {

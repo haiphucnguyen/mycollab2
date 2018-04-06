@@ -21,7 +21,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.IListView;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import org.vaadin.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.button.MButton;
 

@@ -23,7 +23,7 @@ import com.mycollab.module.tracker.domain.Component;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -39,7 +39,7 @@ public class ComponentEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
     }
 
     @Override
-    protected Field<?> onCreateField(final Object propertyId) {
+    protected AbstractField<?> onCreateField(final Object propertyId) {
         if (Component.Field.name.equalTo(propertyId)) {
             final TextField tf = new TextField();
             if (isValidateForm) {

@@ -5,7 +5,7 @@ import com.mycollab.mobile.ui.CurrencyComboBoxField;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -22,7 +22,7 @@ class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends Abstract
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
 
         if ("type".equals(propertyId)) {
             CampaignTypeListSelect typeCombo = new CampaignTypeListSelect();

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -38,17 +38,16 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
-import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.addon.touchkit.ui.NumberField;
-import com.vaadin.addon.touchkit.ui.Switch;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.time.DateUtils;
+import org.vaadin.touchkit.ui.DatePicker;
+import org.vaadin.touchkit.ui.Switch;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.DoubleField;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -220,7 +219,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private class NewTimeLogEntryWindow extends MWindow {
         private static final long serialVersionUID = 1285267216691339362L;
 
-        private NumberField newTimeInputField;
+        private DoubleField newTimeInputField;
         private Switch isBillableField;
         private DatePicker forDate;
 
@@ -238,7 +237,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             VerticalComponentGroup inputWrapper = new VerticalComponentGroup();
             inputWrapper.setWidth("100%");
 
-            this.newTimeInputField = new NumberField();
+            this.newTimeInputField = new DoubleField();
             this.newTimeInputField.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.M_FORM_SPENT_HOURS));
             this.newTimeInputField.setWidth("100%");
             inputWrapper.addComponent(this.newTimeInputField);
@@ -253,15 +252,9 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             addLayout.addComponent(inputWrapper);
 
             MButton createBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CREATE), clickEvent -> {
-                double d = 0;
-                try {
-                    d = Double.parseDouble(newTimeInputField.getValue());
-                } catch (NumberFormatException e) {
-                    close();
-                    NotificationUtil.showWarningNotification("You must enter a positive number value");
-                }
+                double d = newTimeInputField.getValue();
                 if (d > 0) {
-                    saveTimeInvest(Double.parseDouble(newTimeInputField.getValue()),
+                    saveTimeInvest(newTimeInputField.getValue(),
                             isBillableField.getValue(), forDate.getValue());
                     loadTimeValue();
                     close();
@@ -278,7 +271,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
     private class UpdateRemainTimeWindow extends MWindow {
         private static final long serialVersionUID = -8992497645142044633L;
 
-        private NumberField remainTimeInputField;
+        private DoubleField remainTimeInputField;
 
         UpdateRemainTimeWindow() {
             super(UserUIContext.getMessage(TimeTrackingI18nEnum.M_DIALOG_UPDATE_REMAIN_HOURS));
@@ -294,27 +287,21 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
             CssLayout inputWrapper = new CssLayout();
             inputWrapper.setWidth("100%");
 
-            this.remainTimeInputField = new NumberField();
+            this.remainTimeInputField = new DoubleField();
             this.remainTimeInputField.setWidth("100%");
             inputWrapper.addComponent(this.remainTimeInputField);
             addLayout.addComponent(inputWrapper);
 
             MButton createBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent -> {
                 try {
-                    double d = 0;
-                    try {
-                        d = Double.parseDouble(remainTimeInputField.getValue());
-                    } catch (Exception e) {
-                        UpdateRemainTimeWindow.this.close();
-                        NotificationUtil.showWarningNotification("You must enter a positive number value");
-                    }
+                    double d = remainTimeInputField.getValue();
                     if (d >= 0) {
                         updateTimeRemain(d);
-                        remainTimeLbl.setValue(remainTimeInputField.getValue());
-                        remainTimeInputField.setValue("0.0");
+                        remainTimeLbl.setValue("" + remainTimeInputField.getValue());
+                        remainTimeInputField.setValue(0.0);
                     }
                 } catch (final Exception e) {
-                    remainTimeInputField.setValue("0.0");
+                    remainTimeInputField.setValue(0.0);
                 } finally {
                     close();
                 }

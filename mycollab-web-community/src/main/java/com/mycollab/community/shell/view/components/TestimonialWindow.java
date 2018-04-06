@@ -83,7 +83,7 @@ class TestimonialWindow extends MWindow {
         });
         editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<TestimonialForm>(editForm) {
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected AbstractField<?> onCreateField(Object propertyId) {
                 if ("testimonial".equals(propertyId)) {
                     return new TextArea();
                 }

@@ -37,7 +37,7 @@ import org.vaadin.viritin.button.MButton;
 public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
     @Override
     protected void buildNavigateMenu() {
-        getMenu().setWidth("80%");
+//        getMenu().setWidth("80%");
         addSection("Views");
 
         MButton prjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.LIST), clickEvent -> {

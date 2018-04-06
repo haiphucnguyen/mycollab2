@@ -26,7 +26,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd.
@@ -40,7 +40,7 @@ class CampaignReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactor
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         SimpleCampaign campaign = attachForm.getBean();
 
         if (propertyId.equals("assignuser")) {

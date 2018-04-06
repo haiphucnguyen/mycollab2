@@ -26,7 +26,7 @@ import com.mycollab.module.crm.service.EventService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.addon.touchkit.ui.NavigationButton;
+import org.vaadin.touchkit.ui.NavigationButton;
 
 /**
  * @author MyCollab Ltd

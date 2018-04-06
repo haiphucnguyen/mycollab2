@@ -33,7 +33,7 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
@@ -173,7 +173,7 @@ public class LeadConvertInfoWindow extends MWindow {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                protected Field<?> onCreateField(Object propertyId) {
+                protected AbstractField<?> onCreateField(Object propertyId) {
                     if (propertyId.equals("campaignid")) {
                         return new CampaignSelectionField();
                     } else if (propertyId.equals("opportunityname")) {

@@ -24,6 +24,7 @@ import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.ListSelect;
 
 import java.util.List;
@@ -32,11 +33,9 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-public class ProjectMemberListSelect extends ListSelect {
+public class ProjectMemberListSelect extends ListSelect<SimpleProjectMember> {
 
     public ProjectMemberListSelect(Integer projectId) {
-        this.setImmediate(true);
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
         this.setRows(1);
         ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
         searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
@@ -44,9 +43,7 @@ public class ProjectMemberListSelect extends ListSelect {
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> projectMembers = (List<SimpleProjectMember>) projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-        projectMembers.forEach(projectMember -> {
-            addItem(projectMember.getUsername());
-            setItemCaption(projectMember.getUsername(), projectMember.getDisplayName());
-        });
+        setItems(projectMembers);
+        setItemCaptionGenerator((ItemCaptionGenerator<SimpleProjectMember>) SimpleProjectMember::getDisplayName);
     }
 }

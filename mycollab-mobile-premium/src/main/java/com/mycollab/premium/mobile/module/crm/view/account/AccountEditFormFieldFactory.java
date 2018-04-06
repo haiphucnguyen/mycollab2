@@ -9,7 +9,7 @@ import com.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -27,7 +27,7 @@ class AccountEditFormFieldFactory<B extends Account> extends AbstractBeanFieldGr
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if ("type".equals(propertyId)) {
             return new AccountTypeListSelect();
         } else if ("industry".equals(propertyId)) {

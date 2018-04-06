@@ -25,7 +25,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 
 /**
@@ -82,7 +82,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId) || Risk.Field.createduser.equalTo(propertyId)) {
                 return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Risk.Field.description.equalTo(propertyId) || Risk.Field.response.equalTo(propertyId)) {

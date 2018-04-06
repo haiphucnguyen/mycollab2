@@ -17,7 +17,7 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -36,7 +36,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (Invoice.Field.currentid.equalTo(propertyId)) {
             return new CurrencyComboBoxField();
         } else if (Invoice.Field.status.equalTo(propertyId)) {

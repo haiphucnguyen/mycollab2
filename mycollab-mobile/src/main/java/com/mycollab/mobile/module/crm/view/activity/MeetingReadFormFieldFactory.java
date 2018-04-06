@@ -21,7 +21,7 @@ import com.mycollab.module.crm.domain.SimpleMeeting;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.field.DateTimeViewField;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd.
@@ -35,7 +35,7 @@ class MeetingReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("typeid")) {
             return new RelatedReadItemField(attachForm.getBean());
         } else if (propertyId.equals("startdate")) {

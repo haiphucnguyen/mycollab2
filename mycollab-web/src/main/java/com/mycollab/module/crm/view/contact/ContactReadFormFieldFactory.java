@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,11 +34,11 @@ import com.mycollab.vaadin.ui.field.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewField
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         SimpleContact contact = attachForm.getBean();
 
         if (propertyId.equals("accountid")) {
@@ -92,7 +92,7 @@ public class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewField
             OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(streamSource);
             downloaderExt.extend(vcardDownloadBtn);
 
-            vcardDownloadBtn.setIcon(FontAwesome.CREDIT_CARD);
+            vcardDownloadBtn.setIcon(VaadinIcons.CREDIT_CARD);
             vcardDownloadBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY);
             containerField.addComponentField(vcardDownloadBtn);
             containerField.getLayout().setComponentAlignment(vcardDownloadBtn, Alignment.TOP_RIGHT);

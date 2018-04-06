@@ -44,9 +44,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.EmailViewField;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -176,7 +176,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
         }
 
         @Override
-        public Component onAttachField(Object propertyId, Field<?> field) {
+        public Component onAttachField(Object propertyId, AbstractField<?> field) {
             if (propertyId.equals("email")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 0);
             } else if (propertyId.equals("roleName")) {
@@ -194,7 +194,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
         }
 
         @Override
-        protected Field<?> onCreateField(Object propertyId) {
+        protected AbstractField<?> onCreateField(Object propertyId) {
             if (propertyId.equals("roleName")) {
                 String memberRole;
                 if (Boolean.TRUE.equals(beanItem.getIsadmin())) {

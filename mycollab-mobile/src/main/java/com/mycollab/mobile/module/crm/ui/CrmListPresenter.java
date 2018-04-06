@@ -22,7 +22,7 @@ import com.mycollab.mobile.ui.AbstractListPresenter;
 import com.mycollab.mobile.ui.AbstractMobileTabPageView;
 import com.mycollab.mobile.ui.IListView;
 import com.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
+import org.vaadin.touchkit.ui.NavigationManager;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 

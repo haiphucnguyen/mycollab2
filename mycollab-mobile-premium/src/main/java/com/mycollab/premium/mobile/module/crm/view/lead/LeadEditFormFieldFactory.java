@@ -13,7 +13,7 @@ import com.mycollab.vaadin.ui.CompoundCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.fields.MTextField;
@@ -35,7 +35,7 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected AbstractField<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefixname")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("primcountry") || propertyId.equals("othercountry")) {
@@ -101,8 +101,8 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
             // binding field group
-            fieldGroup.bind(prefixSelect, "prefixname");
-            fieldGroup.bind(firstnameTxtField, "firstname");
+            binder.bind(prefixSelect, "prefixname");
+            binder.bind(firstnameTxtField, "firstname");
 
             return layout;
         }

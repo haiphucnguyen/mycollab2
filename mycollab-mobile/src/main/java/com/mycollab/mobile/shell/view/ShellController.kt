@@ -28,7 +28,7 @@ import com.mycollab.mobile.shell.event.ShellEvent
 import com.mycollab.mobile.ui.IMobileView
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver
-import com.vaadin.addon.touchkit.ui.NavigationManager
+import org.vaadin.touchkit.ui.NavigationManager
 import com.vaadin.ui.Component
 import com.vaadin.ui.UI
 

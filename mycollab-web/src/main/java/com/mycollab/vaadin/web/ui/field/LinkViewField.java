@@ -17,7 +17,7 @@
 package com.mycollab.vaadin.web.ui.field;
 
 import com.mycollab.vaadin.web.ui.LabelLink;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
