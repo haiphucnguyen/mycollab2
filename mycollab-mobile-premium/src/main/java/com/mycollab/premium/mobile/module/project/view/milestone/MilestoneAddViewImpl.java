@@ -16,10 +16,10 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import org.vaadin.touchkit.ui.DatePicker;
 
 import java.util.Arrays;
 
@@ -27,6 +27,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
+// TODO: revise this class
 @ViewComponent
 public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> implements MilestoneAddView {
     private static final long serialVersionUID = 5003180627691878220L;
@@ -54,11 +55,11 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (Milestone.Field.assignuser.equalTo(propertyId)) {
                 final ProjectMemberListSelect userbox = new ProjectMemberListSelect(beanItem.getProjectid());
-                userbox.setRequired(true);
-                userbox.setRequiredError("Please select an assignee");
+//                userbox.setRequired(true);
+//                userbox.setRequiredError("Please select an assignee");
                 return userbox;
             } else if (Milestone.Field.status.equalTo(propertyId)) {
                 if (attachForm.getBean().getStatus() == null) {
@@ -68,16 +69,16 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
             } else if (Milestone.Field.name.equalTo(propertyId)) {
                 final TextField tf = new TextField();
                 if (isValidateForm) {
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Please enter name");
+//                    tf.setNullRepresentation("");
+//                    tf.setRequired(true);
+//                    tf.setRequiredError("Please enter name");
                 }
                 return tf;
             } else if (Milestone.Field.startdate.equalTo(propertyId) || Milestone.Field.enddate.equalTo(propertyId)) {
                 return new DatePicker();
             } else if (Milestone.Field.description.equalTo(propertyId)) {
                 final TextArea descArea = new TextArea();
-                descArea.setNullRepresentation("");
+//                descArea.setNullRepresentation("");
                 return descArea;
             }
 
@@ -90,7 +91,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
 
         private ProgressStatusListSelect() {
             setCaption(null);
-            this.setNullSelectionAllowed(false);
+//            this.setNullSelectionAllowed(false);
             this.loadData(Arrays.asList(OptionI18nEnum.MilestoneStatus.InProgress, OptionI18nEnum.MilestoneStatus.Future, OptionI18nEnum.MilestoneStatus.Closed));
         }
     }

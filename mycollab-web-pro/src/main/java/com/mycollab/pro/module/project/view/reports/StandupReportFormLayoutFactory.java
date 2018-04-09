@@ -78,7 +78,7 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
     }
 
     @Override
-    protected Component onAttachField(Object propertyId, final Field<?> field) {
+    protected Component onAttachField(Object propertyId, final Component field) {
         if (propertyId.equals("whatlastday")) {
             whatYesterdayField.setContentComp(field);
         } else if (propertyId.equals("whattoday")) {

@@ -16,14 +16,15 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.addon.touchkit.ui.UrlField;
+import com.vaadin.data.HasValue;
+import org.vaadin.touchkit.ui.DatePicker;
 import com.vaadin.ui.*;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.5
  */
+// TODO: revise this class
 @ViewComponent
 public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> implements ProjectAddView {
     @Override
@@ -49,24 +50,25 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (Project.Field.name.equalTo(propertyId)) {
                 final TextField tf = new TextField();
-                tf.setRequired(true);
+//                tf.setRequired(true);
                 return tf;
             } else if (Project.Field.shortname.equalTo(propertyId)) {
                 final TextField tf = new TextField();
-                tf.setRequired(true);
+//                tf.setRequired(true);
                 return tf;
             } else if (Project.Field.homepage.equalTo(propertyId)) {
-                return new UrlField();
+//                return new UrlField();
+                return new TextField();
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                 return new ProjectStatusListSelect();
             } else if (Project.Field.planstartdate.equalTo(propertyId) || Project.Field.planenddate.equalTo(propertyId)) {
                 return new DatePicker();
             } else if (Project.Field.description.equalTo(propertyId)) {
                 final TextArea field = new TextArea("", "");
-                field.setNullRepresentation("");
+//                field.setNullRepresentation("");
                 return field;
             }
             return null;
@@ -91,7 +93,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             if (Project.Field.name.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (Project.Field.shortname.equalTo(propertyId)) {

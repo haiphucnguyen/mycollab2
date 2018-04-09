@@ -68,7 +68,7 @@ public class MassUpdateCaseWindow extends MassUpdateWindow<CaseWithBLOBs> {
 
         // priority, status, account name, origin, type, reason, assignuser
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("priority")) {
                 return informationLayout.addComponent(field, "Priority", 0, 0);
             } else if (propertyId.equals("status")) {

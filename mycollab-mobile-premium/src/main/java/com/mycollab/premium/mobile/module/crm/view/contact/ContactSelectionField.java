@@ -5,12 +5,12 @@ import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.vaadin.data.Property;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.1
  */
+//TODO: revise this class
 public class ContactSelectionField extends AbstractSelectionCustomField<Integer, SimpleContact> {
     private static final long serialVersionUID = 1L;
 
@@ -21,22 +21,32 @@ public class ContactSelectionField extends AbstractSelectionCustomField<Integer,
     @Override
     public void fireValueChange(SimpleContact data) {
         setInternalContact(data);
-        setInternalValue(beanItem.getId());
+//        setInternalValue(beanItem.getId());
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        final Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setContactByVal((Integer) value);
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        final Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setContactByVal((Integer) value);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 
     @Override
     public void setValue(Integer value) {
         this.setContactByVal(value);
         super.setValue(value);
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
+    }
+
+    @Override
+    protected void doSetValue(Integer integer) {
+
     }
 
     private void setContactByVal(Integer contactId) {
@@ -54,10 +64,5 @@ public class ContactSelectionField extends AbstractSelectionCustomField<Integer,
 
     public SimpleContact getContact() {
         return this.beanItem;
-    }
-
-    @Override
-    public Class<Integer> getType() {
-        return Integer.class;
     }
 }

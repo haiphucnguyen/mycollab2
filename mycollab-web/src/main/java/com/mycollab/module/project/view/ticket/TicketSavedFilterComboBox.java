@@ -42,9 +42,19 @@ public class TicketSavedFilterComboBox extends SavedFilterComboBox {
         this.addSharedSearchQueryInfo(updateTasksLastWeekQuery);
     }
 
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
     public void setTotalCountNumber(Integer countNumber) {
         componentsText.setReadOnly(false);
         componentsText.setValue(String.format("%s (%d)", selectedQueryName, countNumber));
         componentsText.setReadOnly(true);
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

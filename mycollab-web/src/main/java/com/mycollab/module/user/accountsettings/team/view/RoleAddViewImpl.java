@@ -38,6 +38,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -207,7 +208,7 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
             }
 
             @Override
-            protected AbstractField<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("description")) {
                     return new RichTextArea();
                 } else if (propertyId.equals("rolename")) {

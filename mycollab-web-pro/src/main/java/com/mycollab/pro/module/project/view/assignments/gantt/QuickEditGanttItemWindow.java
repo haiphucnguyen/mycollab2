@@ -24,6 +24,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -108,7 +109,7 @@ public class QuickEditGanttItemWindow extends MWindow {
             }
 
             @Override
-            protected Component onAttachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Component field) {
                 if ("name".equals(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0, 2, "100%");
                 } else if ("startDate".equals(propertyId)) {
@@ -132,7 +133,7 @@ public class QuickEditGanttItemWindow extends MWindow {
             }
 
             @Override
-            protected AbstractField<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 if ("assignUser".equals(propertyId)) {
                     return new ProjectMemberSelectionField();
                 }

@@ -26,6 +26,8 @@ import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.ui.IconGenerator;
+import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.ListSelect;
 
 import java.util.List;
@@ -34,11 +36,10 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ActiveUserComboBox extends ListSelect {
+public class ActiveUserComboBox extends ListSelect<SimpleUser> {
     private static final long serialVersionUID = 1L;
 
     public ActiveUserComboBox() {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         this.setRows(1);
 
         UserSearchCriteria criteria = new UserSearchCriteria();
@@ -46,15 +47,9 @@ public class ActiveUserComboBox extends ListSelect {
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userList = (List<SimpleUser>)userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
-        loadUserList(userList);
-    }
-
-    private void loadUserList(List<SimpleUser> userList) {
-        for (SimpleUser user : userList) {
-            this.addItem(user.getUsername());
-            this.setItemCaption(user.getUsername(), user.getDisplayName());
-            this.setItemIcon(user.getUsername(), UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));
-        }
+        List<SimpleUser> users = (List<SimpleUser>)userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        setItems(users);
+        setItemCaptionGenerator((ItemCaptionGenerator<SimpleUser>) SimpleUser::getDisplayName);
+        setItemIconGenerator((IconGenerator<SimpleUser>) user -> UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));
     }
 }

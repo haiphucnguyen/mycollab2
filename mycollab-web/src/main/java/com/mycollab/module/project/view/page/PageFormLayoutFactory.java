@@ -42,7 +42,7 @@ public class PageFormLayoutFactory extends AbstractFormLayoutFactory {
     }
 
     @Override
-    protected Component onAttachField(Object propertyId, Field<?> field) {
+    protected Component onAttachField(Object propertyId, Component field) {
         if (propertyId.equals("subject")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(PageI18nEnum.FORM_SUBJECT), 0, 0, 2, "100%");
         } else if (propertyId.equals("content")) {

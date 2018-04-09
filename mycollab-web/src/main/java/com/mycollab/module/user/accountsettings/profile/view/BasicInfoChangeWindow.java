@@ -46,6 +46,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise this class
 class BasicInfoChangeWindow extends MWindow {
     private TextField txtFirstName = new TextField();
     private TextField txtLastName = new TextField();
@@ -72,7 +73,7 @@ class BasicInfoChangeWindow extends MWindow {
         passInfo.addComponent(txtLastName, UserUIContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
         passInfo.addComponent(txtEmail, UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 2);
         passInfo.addComponent(birthdayField, UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 3);
-        birthdayField.setDate(user.getDateofbirth());
+//        birthdayField.setDate(user.getDateofbirth());
 
         passInfo.addComponent(timeZoneField, UserUIContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 4);
         timeZoneField.setValue(user.getTimezone());
@@ -121,7 +122,7 @@ class BasicInfoChangeWindow extends MWindow {
         user.setFirstname(txtFirstName.getValue());
         user.setLastname(txtLastName.getValue());
         user.setEmail(txtEmail.getValue());
-        user.setDateofbirth(birthdayField.getDate());
+//        user.setDateofbirth(birthdayField.getDate());
         user.setLanguage(languageBox.getValue());
         user.setTimezone(timeZoneField.getValue());
 

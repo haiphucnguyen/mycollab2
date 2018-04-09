@@ -16,23 +16,17 @@
  */
 package com.mycollab.module.project.view.task;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.core.utils.BusinessDayTimeUtils;
-import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
-import com.mycollab.module.project.ui.components.HumanTimeConverter;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
-import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -40,22 +34,16 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.MethodProperty;
-import com.vaadin.data.util.TransactionalPropertyWrapper;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.vaadin.viritin.fields.MTextField;
-
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
+// TODO: revise this class
 class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
     private static final long serialVersionUID = 1L;
 
@@ -68,26 +56,27 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     @Override
-    protected AbstractField<?> onCreateField(final Object propertyId) {
+    protected HasValue<?> onCreateField(final Object propertyId) {
         if (Task.Field.assignuser.equalTo(propertyId)) {
             ProjectMemberSelectionField field = new ProjectMemberSelectionField();
-            field.addValueChangeListener(valueChangeEvent -> {
-                Property property = valueChangeEvent.getProperty();
-                SimpleProjectMember member = (SimpleProjectMember) property.getValue();
-                if (member != null) {
-                    subscribersComp.addFollower(member.getUsername());
-                }
-            });
+//            field.addValueChangeListener(valueChangeEvent -> {
+//                Property property = valueChangeEvent.getProperty();
+//                SimpleProjectMember member = (SimpleProjectMember) property.getValue();
+//                if (member != null) {
+//                    subscribersComp.addFollower(member.getUsername());
+//                }
+//            });
             return field;
         } else if (Task.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
         } else if (Task.Field.description.equalTo(propertyId)) {
             final RichTextArea richTextArea = new RichTextArea();
-            richTextArea.setNullRepresentation("");
+//            richTextArea.setNullRepresentation("");
             return richTextArea;
         } else if (Task.Field.name.equalTo(propertyId)) {
-            return new MTextField().withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext
-                    .getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+//            return new MTextField().withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext
+//                    .getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+            return new MTextField();
         } else if (Task.Field.status.equalTo(propertyId)) {
             return new TaskStatusComboBox();
         } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
@@ -96,7 +85,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new PriorityComboBox();
         } else if (Task.Field.duration.equalTo(propertyId)) {
             final TextField field = new TextField();
-            field.setConverter(new HumanTimeConverter());
+//            field.setConverter(new HumanTimeConverter());
             final SimpleTask beanItem = attachForm.getBean();
             if (beanItem.getNumSubTasks() != null && beanItem.getNumSubTasks() > 0) {
                 field.setEnabled(false);
@@ -107,19 +96,19 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             field.addBlurListener(blurEvent -> {
                 HumanTime humanTime = HumanTime.eval(field.getValue());
                 long duration = Long.valueOf(humanTime.getDelta() + "");
-                DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
-                Date startDateVal = startDateField.getValue();
-                if (duration > 0 && startDateVal != null) {
-                    int daysDuration = (int) (duration / DateTimeUtils.MILLISECONDS_IN_A_DAY);
-                    if (daysDuration > 0) {
-                        DateTime startDateJoda = new DateTime(startDateVal);
-                        LocalDate calculatedDate = BusinessDayTimeUtils.plusDays(startDateJoda.toLocalDate(), daysDuration);
-                        DateTime endDateJoda = new DateTime(calculatedDate.toDate());
-                        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
-                        beanItem.setEnddate(endDateJoda.toDate());
-                        endDateField.setPropertyDataSource(new TransactionalPropertyWrapper<>(new MethodProperty(beanItem, "enddate")));
-                    }
-                }
+//                DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
+//                Date startDateVal = startDateField.getValue();
+//                if (duration > 0 && startDateVal != null) {
+//                    int daysDuration = (int) (duration / DateTimeUtils.MILLISECONDS_IN_A_DAY);
+//                    if (daysDuration > 0) {
+//                        DateTime startDateJoda = new DateTime(startDateVal);
+//                        LocalDate calculatedDate = BusinessDayTimeUtils.plusDays(startDateJoda.toLocalDate(), daysDuration);
+//                        DateTime endDateJoda = new DateTime(calculatedDate.toDate());
+//                        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
+//                        beanItem.setEnddate(endDateJoda.toDate());
+//                        endDateField.setPropertyDataSource(new TransactionalPropertyWrapper<>(new MethodProperty(beanItem, "enddate")));
+//                    }
+//                }
             });
             return field;
         } else if (Task.Field.originalestimate.equalTo(propertyId) || Task.Field.remainestimate.equalTo(propertyId)) {
@@ -151,22 +140,22 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     private void calculateDurationBaseOnStartAndEndDates() {
-        DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
-        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
-        TextField durationField = (TextField) binder.getField(Task.Field.duration.name());
-        Date startDate = null, endDate = null;
-        if (startDateField != null) {
-            startDate = startDateField.getValue();
-        }
-        if (endDateField != null) {
-            endDate = endDateField.getValue();
-        }
-        if (startDate != null && endDate != null && startDate.before(endDate) && durationField != null) {
-            LocalDate jodaStartDate = new LocalDate(startDate);
-            LocalDate jodaEndDate = new LocalDate(endDate);
-            int durationInDays = BusinessDayTimeUtils.duration(jodaStartDate, jodaEndDate);
-            durationField.setValue(durationInDays + " d");
-        }
+//        DateTimeOptionField startDateField = (DateTimeOptionField) binder.getField(Task.Field.startdate.name());
+//        DateTimeOptionField endDateField = (DateTimeOptionField) binder.getField(Task.Field.enddate.name());
+//        TextField durationField = (TextField) binder.getField(Task.Field.duration.name());
+//        Date startDate = null, endDate = null;
+//        if (startDateField != null) {
+//            startDate = startDateField.getValue();
+//        }
+//        if (endDateField != null) {
+//            endDate = endDateField.getValue();
+//        }
+//        if (startDate != null && endDate != null && startDate.before(endDate) && durationField != null) {
+//            LocalDate jodaStartDate = new LocalDate(startDate);
+//            LocalDate jodaEndDate = new LocalDate(endDate);
+//            int durationInDays = BusinessDayTimeUtils.duration(jodaStartDate, jodaEndDate);
+//            durationField.setValue(durationInDays + " d");
+//        }
     }
 
     public AttachmentUploadField getAttachmentUploadField() {

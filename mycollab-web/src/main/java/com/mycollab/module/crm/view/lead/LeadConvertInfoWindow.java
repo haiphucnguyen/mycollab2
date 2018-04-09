@@ -31,6 +31,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -151,7 +152,7 @@ public class LeadConvertInfoWindow extends MWindow {
                 }
 
                 @Override
-                public Component onAttachField(Object propertyId, Field<?> field) {
+                public Component onAttachField(Object propertyId, Component field) {
                     if (propertyId.equals("opportunityname")) {
                         return informationLayout.addComponent(field, "Opportunity", 0, 0);
                     } else if (propertyId.equals("expectedcloseddate")) {
@@ -173,7 +174,7 @@ public class LeadConvertInfoWindow extends MWindow {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                protected AbstractField<?> onCreateField(Object propertyId) {
+                protected HasValue<?> onCreateField(Object propertyId) {
                     if (propertyId.equals("campaignid")) {
                         return new CampaignSelectionField();
                     } else if (propertyId.equals("opportunityname")) {

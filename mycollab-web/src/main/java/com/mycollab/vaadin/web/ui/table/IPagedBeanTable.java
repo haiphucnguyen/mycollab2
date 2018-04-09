@@ -22,8 +22,8 @@ import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
 import com.mycollab.vaadin.event.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Table;
 import com.vaadin.util.ReflectTools;
+import com.vaadin.v7.ui.Table;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;

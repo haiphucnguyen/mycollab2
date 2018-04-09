@@ -51,6 +51,7 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -87,7 +88,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             SimpleTask beanItem = attachForm.getBean();
             if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getAssignuser(),

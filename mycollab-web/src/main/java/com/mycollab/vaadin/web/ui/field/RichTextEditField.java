@@ -16,10 +16,8 @@
  */
 package com.mycollab.vaadin.web.ui.field;
 
-import com.mycollab.core.utils.StringUtils;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.shared.Registration;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
@@ -29,6 +27,7 @@ import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
+// TODO: revise this class
 public class RichTextEditField extends CustomField<String> implements FieldEvents.BlurNotifier {
     private static final long serialVersionUID = 1L;
 
@@ -49,22 +48,27 @@ public class RichTextEditField extends CustomField<String> implements FieldEvent
     }
 
     @Override
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
     protected Component initContent() {
         textArea.setWidth("100%");
         return textArea;
     }
 
-    @SuppressWarnings("rawtypes")
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        String value = (String) newDataSource.getValue();
-        if (value != null) {
-            textArea.setValue(value);
-        } else {
-            textArea.setValue("");
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+//    @SuppressWarnings("rawtypes")
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        String value = (String) newDataSource.getValue();
+//        if (value != null) {
+//            textArea.setValue(value);
+//        } else {
+//            textArea.setValue("");
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 
     @Override
     public String getValue() {
@@ -72,35 +76,35 @@ public class RichTextEditField extends CustomField<String> implements FieldEvent
     }
 
     @Override
-    public void commit() throws SourceException, InvalidValueException {
-        String value = textArea.getValue();
-        value = StringUtils.formatRichText(value);
-        this.setInternalValue(value);
-        super.commit();
+    public Registration addBlurListener(FieldEvents.BlurListener blurListener) {
+        return null;
     }
 
-    @Override
-    public Class<? extends String> getType() {
-        return String.class;
-    }
+//    @Override
+//    public void commit() throws SourceException, InvalidValueException {
+//        String value = textArea.getValue();
+//        value = StringUtils.formatRichText(value);
+//        this.setInternalValue(value);
+//        super.commit();
+//    }
 
-    @Override
-    public void addBlurListener(FieldEvents.BlurListener listener) {
-        textArea.addBlurListener(listener);
-    }
-
-    @Override
-    public void addListener(FieldEvents.BlurListener listener) {
-        textArea.addListener(listener);
-    }
-
-    @Override
-    public void removeBlurListener(FieldEvents.BlurListener listener) {
-        textArea.removeBlurListener(listener);
-    }
-
-    @Override
-    public void removeListener(FieldEvents.BlurListener listener) {
-        textArea.removeListener(listener);
-    }
+//    @Override
+//    public void addBlurListener(FieldEvents.BlurListener listener) {
+//        textArea.addBlurListener(listener);
+//    }
+//
+//    @Override
+//    public void addListener(FieldEvents.BlurListener listener) {
+//        textArea.addListener(listener);
+//    }
+//
+//    @Override
+//    public void removeBlurListener(FieldEvents.BlurListener listener) {
+//        textArea.removeBlurListener(listener);
+//    }
+//
+//    @Override
+//    public void removeListener(FieldEvents.BlurListener listener) {
+//        textArea.removeListener(listener);
+//    }
 }

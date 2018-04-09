@@ -31,9 +31,9 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -87,7 +87,7 @@ public class AssignmentAddViewImpl extends AbstractEditItemComp<CrmTask> impleme
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (CrmTask.Field.startdate.equalTo(propertyId)) {
                 return new DateTimeOptionField();
             } else if (CrmTask.Field.duedate.equalTo(propertyId)) {

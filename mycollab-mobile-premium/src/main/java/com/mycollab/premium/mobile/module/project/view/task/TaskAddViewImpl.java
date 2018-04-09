@@ -25,8 +25,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
+import com.vaadin.ui.TextField;
+import org.vaadin.touchkit.ui.DatePicker;
 import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -34,6 +35,7 @@ import org.vaadin.viritin.fields.MTextField;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
+// TODO: revise this class
 @ViewComponent
 public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements TaskAddView {
     private static final long serialVersionUID = 6835605062072536907L;
@@ -86,17 +88,18 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Task.Field.description.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
-                textArea.setNullRepresentation("");
+//                textArea.setNullRepresentation("");
                 return textArea;
             } else if (Task.Field.name.equalTo(propertyId)) {
-                return new MTextField().withNullRepresentation("").withRequired(true)
-                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+//                return new MTextField().withNullRepresentation("").withRequired(true)
+//                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+                return new TextField();
             } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
                 return new TaskPercentageCompleteListSelect();
             } else if (Task.Field.priority.equalTo(propertyId)) {
@@ -112,8 +115,8 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
                 final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
-                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
-                    beanItem.setMilestoneName(milestoneName);
+//                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
+//                    beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
             }

@@ -42,6 +42,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -155,7 +156,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             if (propertyId.equals("resolution")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_RESOLUTION),
                         UserUIContext.getMessage(BugI18nEnum.FORM_RESOLUTION_HELP), 0, 0);
@@ -179,7 +180,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("resolution")) {
                 if (StringUtils.isBlank(bean.getResolution()) || UserUIContext.getMessage(BugResolution.None).equals(bug.getResolution())) {
                     bean.setResolution(BugResolution.Fixed.name());
@@ -196,19 +197,24 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                 return fixedVersionSelect;
             } else if (propertyId.equals("comment")) {
                 commentArea = new RichTextArea();
-                commentArea.setNullRepresentation("");
                 return commentArea;
             }
 
             return null;
         }
 
+        // TODO: revise this class
         private class ResolutionField extends CompoundCustomField<BugWithBLOBs> {
             private MHorizontalLayout layout;
             private BugResolutionComboBox resolutionComboBox;
 
             ResolutionField() {
                 resolutionComboBox = BugResolutionComboBox.getInstanceForResolvedBugWindow();
+            }
+
+            @Override
+            protected void doSetValue(BugWithBLOBs bugWithBLOBs) {
+
             }
 
             @Override
@@ -231,8 +237,8 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             }
 
             @Override
-            public Class<? extends BugWithBLOBs> getType() {
-                return BugWithBLOBs.class;
+            public BugWithBLOBs getValue() {
+                return null;
             }
         }
     }

@@ -36,6 +36,7 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.ui.field.UrlLinkViewField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -170,7 +171,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
             }
 
             @Override
-            protected Component onAttachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Component field) {
                 if (propertyId.equals("website")) {
                     return advancedInfoLayout.addComponent(field, UserUIContext.getMessage(UserI18nEnum.FORM_WEBSITE), 0, 0);
                 } else if (propertyId.equals("company")) {
@@ -200,7 +201,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
             }
 
             @Override
-            protected AbstractField<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 User user = formItem.getBean();
                 if (propertyId.equals("website")) {
                     return new UrlLinkViewField(user.getWebsite());

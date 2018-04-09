@@ -8,7 +8,6 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.OptionValListSelect;
-import com.vaadin.data.Property;
 
 import java.util.List;
 
@@ -16,6 +15,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
+// TODO: revise this class
 public class TaskStatusListSelect extends OptionValListSelect {
 
     public TaskStatusListSelect() {
@@ -23,15 +23,15 @@ public class TaskStatusListSelect extends OptionValListSelect {
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
                 AppUI.getAccountId());
-        options.forEach(this::addEntry);
+//        options.forEach(this::addEntry);
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value == null) {
-            newDataSource.setValue(StatusI18nEnum.Open.name());
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value == null) {
+//            newDataSource.setValue(StatusI18nEnum.Open.name());
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 }

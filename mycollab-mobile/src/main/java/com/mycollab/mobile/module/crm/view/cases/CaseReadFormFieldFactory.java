@@ -32,8 +32,8 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.EmailViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd.
@@ -47,7 +47,7 @@ class CaseReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         final SimpleCase cases = attachForm.getBean();
 
         if (propertyId.equals("accountid")) {

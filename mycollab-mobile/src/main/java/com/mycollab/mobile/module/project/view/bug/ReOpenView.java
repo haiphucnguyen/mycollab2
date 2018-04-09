@@ -38,6 +38,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
 
 import java.util.GregorianCalendar;
@@ -121,7 +122,7 @@ class ReOpenView extends AbstractMobilePageView {
             }
 
             @Override
-            public Component onAttachField(Object propertyId, final AbstractField<?> field) {
+            public Component onAttachField(Object propertyId, final Component field) {
                 if (propertyId.equals("resolution")) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
                 } else if (propertyId.equals("assignuser")) {
@@ -141,12 +142,11 @@ class ReOpenView extends AbstractMobilePageView {
             }
 
             @Override
-            protected AbstractField<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                     return new ProjectMemberListSelect(bean.getProjectid());
                 } else if (propertyId.equals("comment")) {
                     commentArea = new TextArea();
-                    commentArea.setNullRepresentation("");
                     return commentArea;
                 }
 

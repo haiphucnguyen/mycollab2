@@ -19,21 +19,16 @@ package com.mycollab.module.crm.ui.components;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.*;
 import com.mycollab.module.crm.i18n.*;
-import com.mycollab.module.crm.service.*;
 import com.mycollab.module.crm.view.account.AccountSelectionWindow;
 import com.mycollab.module.crm.view.campaign.CampaignSelectionWindow;
 import com.mycollab.module.crm.view.cases.CaseSelectionWindow;
 import com.mycollab.module.crm.view.contact.ContactSelectionWindow;
 import com.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
-import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -46,6 +41,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+
+// TODO: revise
 public class RelatedEditItemField extends CustomField<String> implements FieldSelection {
     private static final long serialVersionUID = 1L;
 
@@ -112,76 +109,71 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
         return new MHorizontalLayout(relatedItemComboBox, itemField, browseBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
     }
 
-    @Override
-    public Class<String> getType() {
-        return String.class;
-    }
-
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof String) {
-            setType((String) value);
-            super.setPropertyDataSource(newDataSource);
-        } else {
-            super.setPropertyDataSource(newDataSource);
-        }
-    }
-
-    @Override
-    public void commit() throws SourceException, InvalidValueException {
-        String value = (String) relatedItemComboBox.getValue();
-        this.setInternalValue(value);
-        super.commit();
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof String) {
+//            setType((String) value);
+//            super.setPropertyDataSource(newDataSource);
+//        } else {
+//            super.setPropertyDataSource(newDataSource);
+//        }
+//    }
+//
+//    @Override
+//    public void commit() throws SourceException, InvalidValueException {
+//        String value = (String) relatedItemComboBox.getValue();
+//        this.setInternalValue(value);
+//        super.commit();
+//    }
 
     public void setType(String type) {
-        relatedItemComboBox.select(type);
-        try {
-            Integer typeId = (Integer) PropertyUtils.getProperty(bean, "typeid");
-            if (typeId != null) {
-                if (CrmTypeConstants.ACCOUNT.equals(type)) {
-                    AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                    SimpleAccount account = accountService.findById(typeId, AppUI.getAccountId());
-                    if (account != null) {
-                        itemField.setValue(account.getAccountname());
-                    }
-                } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
-                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    SimpleCampaign campaign = campaignService.findById(typeId, AppUI.getAccountId());
-                    if (campaign != null) {
-                        itemField.setValue(campaign.getCampaignname());
-                    }
-                } else if (CrmTypeConstants.CONTACT.equals(type)) {
-                    ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                    SimpleContact contact = contactService.findById(typeId, AppUI.getAccountId());
-                    if (contact != null) {
-                        itemField.setValue(contact.getContactName());
-                    }
-                } else if (CrmTypeConstants.LEAD.equals(type)) {
-                    LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
-                    SimpleLead lead = leadService.findById(typeId, AppUI.getAccountId());
-                    if (lead != null) {
-                        itemField.setValue(lead.getLeadName());
-                    }
-                } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
-                    OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
-                    SimpleOpportunity opportunity = opportunityService.findById(typeId, AppUI.getAccountId());
-                    if (opportunity != null) {
-                        itemField.setValue(opportunity.getOpportunityname());
-                    }
-                } else if (CrmTypeConstants.CASE.equals(type)) {
-                    CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
-                    SimpleCase cases = caseService.findById(typeId, AppUI.getAccountId());
-                    if (cases != null) {
-                        itemField.setValue(cases.getSubject());
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            LOG.error("Error when set type", e);
-        }
+//        relatedItemComboBox.select(type);
+//        try {
+//            Integer typeId = (Integer) PropertyUtils.getProperty(bean, "typeid");
+//            if (typeId != null) {
+//                if (CrmTypeConstants.ACCOUNT.equals(type)) {
+//                    AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
+//                    SimpleAccount account = accountService.findById(typeId, AppUI.getAccountId());
+//                    if (account != null) {
+//                        itemField.setValue(account.getAccountname());
+//                    }
+//                } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
+//                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
+//                    SimpleCampaign campaign = campaignService.findById(typeId, AppUI.getAccountId());
+//                    if (campaign != null) {
+//                        itemField.setValue(campaign.getCampaignname());
+//                    }
+//                } else if (CrmTypeConstants.CONTACT.equals(type)) {
+//                    ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
+//                    SimpleContact contact = contactService.findById(typeId, AppUI.getAccountId());
+//                    if (contact != null) {
+//                        itemField.setValue(contact.getContactName());
+//                    }
+//                } else if (CrmTypeConstants.LEAD.equals(type)) {
+//                    LeadService leadService = AppContextUtil.getSpringBean(LeadService.class);
+//                    SimpleLead lead = leadService.findById(typeId, AppUI.getAccountId());
+//                    if (lead != null) {
+//                        itemField.setValue(lead.getLeadName());
+//                    }
+//                } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
+//                    OpportunityService opportunityService = AppContextUtil.getSpringBean(OpportunityService.class);
+//                    SimpleOpportunity opportunity = opportunityService.findById(typeId, AppUI.getAccountId());
+//                    if (opportunity != null) {
+//                        itemField.setValue(opportunity.getOpportunityname());
+//                    }
+//                } else if (CrmTypeConstants.CASE.equals(type)) {
+//                    CaseService caseService = AppContextUtil.getSpringBean(CaseService.class);
+//                    SimpleCase cases = caseService.findById(typeId, AppUI.getAccountId());
+//                    if (cases != null) {
+//                        itemField.setValue(cases.getSubject());
+//                    }
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            LOG.error("Error when set type", e);
+//        }
     }
 
     @Override
@@ -211,6 +203,16 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
         }
     }
 
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
     private static class RelatedItemComboBox extends KeyCaptionComboBox {
         private static final long serialVersionUID = 1L;
 
@@ -224,7 +226,7 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
             this.addItem(CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.SINGLE));
             this.addItem(CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.SINGLE));
             this.addItem(CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.SINGLE));
-            this.select(getNullSelectionItemId());
+//            this.select(getNullSelectionItemId());
         }
     }
 }

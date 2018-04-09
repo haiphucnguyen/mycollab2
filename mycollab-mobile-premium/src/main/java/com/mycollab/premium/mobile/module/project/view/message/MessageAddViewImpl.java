@@ -16,8 +16,8 @@ import com.mycollab.vaadin.event.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.addon.touchkit.ui.Switch;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
+import org.vaadin.touchkit.ui.Switch;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -29,6 +29,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
+//TODO: revise this class
 @ViewComponent
 public class MessageAddViewImpl extends AbstractMobilePageView implements MessageAddView, HasEditFormHandlers<SimpleMessage> {
     private static final long serialVersionUID = -5665807255892654312L;
@@ -48,14 +49,14 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
         subjectField = new TextField();
         subjectField.setWidth("100%");
-        subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
+//        subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
         contentLayout.addComponent(subjectField);
 
         contentLayout.addComponent(ELabel.hr());
 
         contentField = new TextArea();
         contentField.setWidth("100%");
-        contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
+//        contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
         contentLayout.addComponent(contentField);
 
         VerticalComponentGroup bottomRow = new VerticalComponentGroup();

@@ -6,13 +6,12 @@ import com.mycollab.module.crm.service.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
-import org.vaadin.touchkit.ui.NavigationButton;
-import com.vaadin.data.Property;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.touchkit.ui.NavigationButton;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -20,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author MyCollab Ltd.
  * @since 4.2
  */
+// TODO: revise this class
 public class RelatedItemSelectionField extends CustomField<Integer> implements FieldSelection {
     private static final long serialVersionUID = -3572873867793792681L;
 
@@ -32,16 +32,16 @@ public class RelatedItemSelectionField extends CustomField<Integer> implements F
         this.bean = bean;
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setValue((Integer) value);
-            super.setPropertyDataSource(newDataSource);
-        } else {
-            super.setPropertyDataSource(newDataSource);
-        }
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setValue((Integer) value);
+//            super.setPropertyDataSource(newDataSource);
+//        } else {
+//            super.setPropertyDataSource(newDataSource);
+//        }
+//    }
 
     @Override
     public void setValue(Integer typeid) {
@@ -92,6 +92,16 @@ public class RelatedItemSelectionField extends CustomField<Integer> implements F
     }
 
     @Override
+    public Integer getValue() {
+        return null;
+    }
+
+    @Override
+    protected void doSetValue(Integer integer) {
+
+    }
+
+    @Override
     public void fireValueChange(Object data) {
         try {
             Object dataId = PropertyUtils.getProperty(data, "id");
@@ -100,7 +110,7 @@ public class RelatedItemSelectionField extends CustomField<Integer> implements F
                 return;
             }
 
-            setInternalValue((Integer) dataId);
+//            setInternalValue((Integer) dataId);
 
             if (data instanceof SimpleAccount) {
                 PropertyUtils.setProperty(bean, "type", CrmTypeConstants.ACCOUNT);
@@ -139,11 +149,6 @@ public class RelatedItemSelectionField extends CustomField<Integer> implements F
             }
         });
         return navButton;
-    }
-
-    @Override
-    public Class<? extends Integer> getType() {
-        return Integer.class;
     }
 
 }

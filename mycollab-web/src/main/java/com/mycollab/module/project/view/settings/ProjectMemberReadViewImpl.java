@@ -55,6 +55,7 @@ import com.mycollab.vaadin.web.ui.Depot;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -222,7 +223,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             return null;
         }
 
@@ -236,7 +237,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             SimpleProjectMember projectMember = attachForm.getBean();
             if (propertyId.equals("projectroleid")) {
                 if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {

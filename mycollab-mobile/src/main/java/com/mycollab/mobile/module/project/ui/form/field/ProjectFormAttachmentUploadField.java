@@ -129,14 +129,15 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
             displayFileName(file, fileName);
         }
     }
-
+//TODO: revise upload
     private class MultiFileUploadExt extends MultiFileUpload {
         private static final long serialVersionUID = 1L;
 
         protected FileBuffer createReceiver() {
-            FileBuffer receiver = super.createReceiver();
-            receiver.setDeleteFiles(false);
-            return receiver;
+//            FileBuffer receiver = super.createReceiver();
+//            receiver.setDeleteFiles(false);
+//            return receiver;
+            return null;
         }
 
         @Override

@@ -25,6 +25,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.3.0
  */
+// TODO: revise this class
 public class I18nValueComboBox extends ValueComboBox {
     private static final long serialVersionUID = 1L;
 
@@ -34,22 +35,22 @@ public class I18nValueComboBox extends ValueComboBox {
 
     public I18nValueComboBox(boolean nullIsAllowable, Enum<?>... keys) {
         this();
-        setNullSelectionAllowed(nullIsAllowable);
+//        setNullSelectionAllowed(nullIsAllowable);
         loadData(Arrays.asList(keys));
     }
 
     public final void loadData(List<? extends Enum<?>> values) {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 
-        if (values.size() > 0) {
-            for (Enum<?> entry : values) {
-                this.addItem(entry.name());
-                this.setItemCaption(entry.name(), UserUIContext.getMessage(entry));
-            }
-
-            if (!this.isNullSelectionAllowed()) {
-                this.select(this.getItemIds().iterator().next());
-            }
-        }
+//        if (values.size() > 0) {
+//            for (Enum<?> entry : values) {
+//                this.addItem(entry.name());
+//                this.setItemCaption(entry.name(), UserUIContext.getMessage(entry));
+//            }
+//
+//            if (!this.isNullSelectionAllowed()) {
+//                this.select(this.getItemIds().iterator().next());
+//            }
+//        }
     }
 }

@@ -11,9 +11,8 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CompoundCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.data.Property;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.fields.MTextField;
@@ -35,7 +34,7 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefixname")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("primcountry") || propertyId.equals("othercountry")) {
@@ -49,24 +48,17 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
         } else if (propertyId.equals("source")) {
             return new LeadSourceListSelect();
         } else if (propertyId.equals("lastname")) {
-            TextField tf = new TextField();
-            if (isValidateForm) {
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Last name must not be null");
-            }
-
-            return tf;
+            return new TextField();
         } else if (propertyId.equals("description")) {
-            TextArea descArea = new TextArea();
-            descArea.setNullRepresentation("");
-            return descArea;
+            return new TextArea();
         } else if (propertyId.equals("accountname")) {
             MTextField txtField = new MTextField();
-            if (isValidateForm) {
-                txtField.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
-                        (ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME)));
-            }
+
+            // TODO: revise validation
+//            if (isValidateForm) {
+//                txtField.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
+//                        (ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(AccountI18nEnum.FORM_ACCOUNT_NAME)));
+//            }
 
             return txtField;
         }
@@ -82,21 +74,23 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
             MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
 
             final PrefixNameListSelect prefixSelect = new PrefixNameListSelect();
-            prefixSelect.setValue(attachForm.getBean().getPrefixname());
-            layout.addComponent(prefixSelect);
 
-            prefixSelect.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    attachForm.getBean().setPrefixname((String) prefixSelect.getValue());
-                }
-            });
+            //TODO: revise this code
+//            prefixSelect.setValue(attachForm.getBean().getPrefixname());
+//            layout.addComponent(prefixSelect);
+//
+//            prefixSelect.addValueChangeListener(new Property.ValueChangeListener() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void valueChange(Property.ValueChangeEvent event) {
+//                    attachForm.getBean().setPrefixname((String) prefixSelect.getValue());
+//                }
+//            });
 
             TextField firstnameTxtField = new TextField();
             firstnameTxtField.setWidth("100%");
-            firstnameTxtField.setNullRepresentation("");
+//            firstnameTxtField.setNullRepresentation("");
             layout.addComponent(firstnameTxtField);
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
@@ -108,9 +102,13 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
         }
 
         @Override
-        public Class<? extends Lead> getType() {
-            return Lead.class;
+        protected void doSetValue(Lead lead) {
+
         }
 
+        @Override
+        public Lead getValue() {
+            return null;
+        }
     }
 }

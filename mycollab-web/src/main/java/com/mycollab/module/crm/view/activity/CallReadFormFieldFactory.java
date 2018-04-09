@@ -18,7 +18,6 @@ package com.mycollab.module.crm.view.activity;
 
 import com.mycollab.module.crm.domain.CallWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCall;
-import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.CallStatus;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.CallType;
 import com.mycollab.module.crm.ui.components.RelatedReadItemField;
@@ -30,7 +29,7 @@ import com.mycollab.vaadin.ui.field.DateTimeViewField;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
@@ -47,7 +46,7 @@ class CallReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleCall call = attachForm.getBean();
 
         if (propertyId.equals("assignuser")) {

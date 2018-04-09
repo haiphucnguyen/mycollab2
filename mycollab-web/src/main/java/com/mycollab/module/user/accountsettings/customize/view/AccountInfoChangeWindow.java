@@ -34,8 +34,7 @@ import com.mycollab.vaadin.ui.field.DateFormatField;
 import com.mycollab.vaadin.web.ui.TimeZoneSelectionField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator;
+import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -70,7 +69,7 @@ class AccountInfoChangeWindow extends MWindow {
             }
 
             @Override
-            public Component onAttachField(Object propertyId, Field<?> field) {
+            public Component onAttachField(Object propertyId, Component field) {
                 if (BillingAccount.Field.sitename.equalTo(propertyId)) {
                     return gridFormLayoutHelper.addComponent(field, UserUIContext.getMessage(AdminI18nEnum.FORM_SITE_NAME), 0, 0);
                 } else if (BillingAccount.Field.subdomain.equalTo(propertyId)) {
@@ -100,7 +99,7 @@ class AccountInfoChangeWindow extends MWindow {
 
         editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<SimpleBillingAccount>(editForm) {
             @Override
-            protected AbstractField<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 if (BillingAccount.Field.subdomain.equalTo(propertyId)) {
                     return new SubDomainField();
                 } else if (BillingAccount.Field.defaulttimezone.equalTo(propertyId)) {
@@ -142,6 +141,7 @@ class AccountInfoChangeWindow extends MWindow {
         content.with(editForm, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
     }
 
+    // TODO: revise this class
     private static class SubDomainField extends CustomField<String> {
         private TextField subDomainField = new TextField();
 
@@ -156,23 +156,29 @@ class AccountInfoChangeWindow extends MWindow {
         }
 
         @Override
-        public void setPropertyDataSource(Property newDataSource) {
-            String value = (String) newDataSource.getValue();
-            if (value != null) {
-                subDomainField.setValue(value);
-            }
-            super.setPropertyDataSource(newDataSource);
+        protected void doSetValue(String s) {
+
         }
 
         @Override
-        public void commit() throws SourceException, Validator.InvalidValueException {
-            setInternalValue(subDomainField.getValue());
-            super.commit();
+        public String getValue() {
+            return null;
         }
 
-        @Override
-        public Class<? extends String> getType() {
-            return String.class;
-        }
+//        @Override
+//        public void setPropertyDataSource(Property newDataSource) {
+//            String value = (String) newDataSource.getValue();
+//            if (value != null) {
+//                subDomainField.setValue(value);
+//            }
+//            super.setPropertyDataSource(newDataSource);
+//        }
+//
+//        @Override
+//        public void commit() throws SourceException, Validator.InvalidValueException {
+//            setInternalValue(subDomainField.getValue());
+//            super.commit();
+//        }
+
     }
 }

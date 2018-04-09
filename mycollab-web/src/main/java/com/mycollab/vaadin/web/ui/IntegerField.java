@@ -16,24 +16,29 @@
  */
 package com.mycollab.vaadin.web.ui;
 
+
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
 import org.vaadin.viritin.fields.AbstractNumberField;
 
 /**
  * @author MyCollab Ltd
  * @since 5.3.1
  */
-public class IntegerField extends AbstractNumberField<Integer> {
+// TODO: fix this class
+public class IntegerField extends CustomField<Integer> {
     @Override
-    protected void userInputToValue(String str) {
-        try {
-            this.setValue(Integer.parseInt(str));
-        } catch (Exception e) {
-            this.setValue(0);
-        }
+    protected Component initContent() {
+        return null;
     }
 
     @Override
-    public Class<? extends Integer> getType() {
-        return Integer.class;
+    protected void doSetValue(Integer integer) {
+
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
     }
 }

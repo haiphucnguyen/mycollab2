@@ -8,8 +8,8 @@ import com.mycollab.module.crm.domain.CrmTask;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.DummyCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
+import org.vaadin.touchkit.ui.DatePicker;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -19,6 +19,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.1
  */
+// TODO: revise this class
 public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<CrmTask> {
     private static final long serialVersionUID = 1L;
 
@@ -27,7 +28,7 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("startdate")) {
             return new DatePicker();
         } else if (propertyId.equals("duedate")) {
@@ -38,7 +39,7 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
             return new TaskPriorityListSelect();
         } else if (propertyId.equals("description")) {
             TextArea descArea = new TextArea();
-            descArea.setNullRepresentation("");
+//            descArea.setNullRepresentation("");
             return descArea;
         } else if (propertyId.equals("contactid")) {
             return new ContactSelectionField();
@@ -46,9 +47,9 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
             TextField tf = new TextField();
 
             if (isValidateForm) {
-                tf.setRequired(true);
-                tf.setRequiredError("Subject must not be null");
-                tf.setNullRepresentation("");
+//                tf.setRequired(true);
+//                tf.setRequiredError("Subject must not be null");
+//                tf.setNullRepresentation("");
             }
 
             return tf;
@@ -58,7 +59,7 @@ public class AssignmentEditFormFieldFactory extends AbstractBeanFieldGroupEditFi
             return new DummyCustomField<String>();
         } else if (propertyId.equals("assignuser")) {
             ActiveUserComboBox userBox = new ActiveUserComboBox();
-            userBox.select(attachForm.getBean().getAssignuser());
+//            userBox.select(attachForm.getBean().getAssignuser());
             return userBox;
         }
         return null;

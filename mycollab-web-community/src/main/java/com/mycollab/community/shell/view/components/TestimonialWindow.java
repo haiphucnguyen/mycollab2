@@ -18,7 +18,6 @@ package com.mycollab.community.shell.view.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.ServerConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.support.domain.TestimonialForm;
@@ -29,6 +28,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -64,7 +64,7 @@ class TestimonialWindow extends MWindow {
             }
 
             @Override
-            public Component onAttachField(Object propertyId, Field<?> field) {
+            public Component onAttachField(Object propertyId, Component field) {
                 if ("displayname".equals(propertyId)) {
                     return gridFormLayoutHelper.addComponent(field, "Name", 0, 0, 2, "100%");
                 } else if ("company".equals(propertyId)) {
@@ -83,7 +83,7 @@ class TestimonialWindow extends MWindow {
         });
         editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<TestimonialForm>(editForm) {
             @Override
-            protected AbstractField<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 if ("testimonial".equals(propertyId)) {
                     return new TextArea();
                 }

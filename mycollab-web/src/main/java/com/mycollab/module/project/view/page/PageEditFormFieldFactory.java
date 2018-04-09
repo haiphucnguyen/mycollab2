@@ -25,7 +25,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextField;
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
@@ -34,6 +34,8 @@ import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
+
+// TODO: revise this class
 class PageEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Page> {
     private static final long serialVersionUID = 1L;
 
@@ -42,7 +44,7 @@ class PageEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Pa
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         Page page = attachForm.getBean();
         if (propertyId.equals("content")) {
             CKEditorConfig config = new CKEditorConfig();
@@ -65,8 +67,8 @@ class PageEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Pa
 
             CKEditorTextField ckEditorTextField = new CKEditorTextField(config);
             ckEditorTextField.setHeight("450px");
-            ckEditorTextField.setRequired(true);
-            ckEditorTextField.setRequiredError("Content must be not null");
+//            ckEditorTextField.setRequired(true);
+//            ckEditorTextField.setRequiredError("Content must be not null");
             return ckEditorTextField;
         } else if (propertyId.equals("status")) {
             page.setStatus(WikiI18nEnum.status_public.name());
@@ -74,9 +76,9 @@ class PageEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Pa
                     WikiI18nEnum.status_private, WikiI18nEnum.status_archieved);
         } else if (propertyId.equals("subject")) {
             TextField subjectField = new TextField();
-            subjectField.setRequired(true);
-            subjectField.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                    UserUIContext.getMessage(PageI18nEnum.FORM_SUBJECT)));
+//            subjectField.setRequired(true);
+//            subjectField.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                    UserUIContext.getMessage(PageI18nEnum.FORM_SUBJECT)));
             return subjectField;
         }
 

@@ -44,7 +44,7 @@ public class ProjectMemberFormLayoutFactory extends AbstractFormLayoutFactory {
     }
 
     @Override
-    protected Component onAttachField(Object propertyId, final Field<?> field) {
+    protected Component onAttachField(Object propertyId, final Component field) {
         if (propertyId.equals("memberFullName")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0, 2, "100%");
         } else if (propertyId.equals("projectroleid")) {

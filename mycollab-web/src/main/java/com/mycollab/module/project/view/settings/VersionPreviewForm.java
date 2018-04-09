@@ -38,10 +38,10 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.field.ContainerViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -67,7 +67,7 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             Version beanItem = attachForm.getBean();
             if (Version.Field.duedate.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getDuedate());

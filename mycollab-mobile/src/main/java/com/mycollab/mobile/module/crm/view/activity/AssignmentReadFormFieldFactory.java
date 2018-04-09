@@ -22,7 +22,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.field.DateTimeViewField;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 
 /**
  * @author MyCollab Ltd.
@@ -36,7 +36,7 @@ class AssignmentReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFact
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("assignuser")) {
             return new DefaultViewField(attachForm.getBean().getAssignUserFullName());
         } else if (propertyId.equals("startdate")) {

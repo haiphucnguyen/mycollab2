@@ -31,7 +31,7 @@ import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 
 /**
  * @author MyCollab Ltd.
@@ -45,7 +45,7 @@ class AssignmentReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFact
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleCrmTask task = attachForm.getBean();
 
         if (propertyId.equals("assignuser")) {

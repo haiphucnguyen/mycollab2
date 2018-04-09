@@ -23,7 +23,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 
 /**
  * @author MyCollab Ltd.
@@ -37,7 +37,7 @@ class AccountReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleAccount account = attachForm.getBean();
 
         if (propertyId.equals("email")) {

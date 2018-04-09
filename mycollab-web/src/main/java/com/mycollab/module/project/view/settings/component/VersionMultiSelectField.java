@@ -19,7 +19,6 @@ package com.mycollab.module.project.view.settings.component;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.tracker.domain.Version;
@@ -27,7 +26,6 @@ import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
-import com.vaadin.data.Property;
 import com.vaadin.ui.UI;
 
 import java.util.List;
@@ -36,11 +34,17 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: fix this class
 public class VersionMultiSelectField extends MultiSelectComp {
     private static final long serialVersionUID = 1L;
 
     public VersionMultiSelectField() {
         super("name", true);
+    }
+
+    @Override
+    protected void doSetValue(Object o) {
+
     }
 
     @Override
@@ -58,16 +62,17 @@ public class VersionMultiSelectField extends MultiSelectComp {
     }
 
     @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        List<Version> versions = (List<Version>) newDataSource.getValue();
-        if (versions != null) {
-            this.setSelectedItems(versions);
-        }
-        super.setPropertyDataSource(newDataSource);
+    public Object getValue() {
+        return null;
     }
 
-    @Override
-    public Class<?> getType() {
-        return Object.class;
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        List<Version> versions = (List<Version>) newDataSource.getValue();
+//        if (versions != null) {
+//            this.setSelectedItems(versions);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
+
 }

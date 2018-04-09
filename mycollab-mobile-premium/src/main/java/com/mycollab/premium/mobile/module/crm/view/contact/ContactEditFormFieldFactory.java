@@ -1,18 +1,17 @@
 package com.mycollab.premium.mobile.module.crm.view.contact;
 
-import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionField;
-import com.mycollab.premium.mobile.module.crm.view.lead.LeadSourceListSelect;
 import com.mycollab.mobile.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.mobile.ui.BirthdayPickerField;
 import com.mycollab.mobile.ui.CountryListSelect;
 import com.mycollab.mobile.ui.PrefixNameListSelect;
 import com.mycollab.module.crm.domain.Contact;
+import com.mycollab.premium.mobile.module.crm.view.account.AccountSelectionField;
+import com.mycollab.premium.mobile.module.crm.view.lead.LeadSourceListSelect;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CompoundCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.data.Property;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -21,6 +20,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 4.0
  */
+// TODO: revise this class
 class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGroupEditFieldFactory<B> {
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("firstname") || propertyId.equals("prefix")) {
             return firstNamePrefixField;
         } else if (propertyId.equals("leadsource")) {
@@ -42,18 +42,18 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
         } else if (propertyId.equals("lastname")) {
             TextField tf = new TextField();
             if (isValidateForm) {
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Last name must not be null");
+//                tf.setNullRepresentation("");
+//                tf.setRequired(true);
+//                tf.setRequiredError("Last name must not be null");
             }
             return tf;
         } else if (propertyId.equals("description")) {
             TextArea descArea = new TextArea();
-            descArea.setNullRepresentation("");
+//            descArea.setNullRepresentation("");
             return descArea;
         } else if (propertyId.equals("assignuser")) {
             ActiveUserComboBox userBox = new ActiveUserComboBox();
-            userBox.select(attachForm.getBean().getAssignuser());
+//            userBox.select(attachForm.getBean().getAssignuser());
             return userBox;
         } else if (propertyId.equals("primcountry") || propertyId.equals("othercountry")) {
             return new CountryListSelect();
@@ -71,21 +71,21 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
             MHorizontalLayout layout = new MHorizontalLayout().withFullWidth();
 
             final PrefixNameListSelect prefixSelect = new PrefixNameListSelect();
-            prefixSelect.setValue(attachForm.getBean().getPrefix());
+//            prefixSelect.setValue(attachForm.getBean().getPrefix());
             layout.addComponent(prefixSelect);
 
-            prefixSelect.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(Property.ValueChangeEvent event) {
-                    attachForm.getBean().setPrefix((String) prefixSelect.getValue());
-                }
-            });
+//            prefixSelect.addValueChangeListener(new Property.ValueChangeListener() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void valueChange(Property.ValueChangeEvent event) {
+//                    attachForm.getBean().setPrefix((String) prefixSelect.getValue());
+//                }
+//            });
 
             TextField firstnameTxtField = new TextField();
             firstnameTxtField.setWidth("100%");
-            firstnameTxtField.setNullRepresentation("");
+//            firstnameTxtField.setNullRepresentation("");
             layout.addComponent(firstnameTxtField);
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
@@ -97,8 +97,13 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
         }
 
         @Override
-        public Class<? extends Contact> getType() {
-            return Contact.class;
+        protected void doSetValue(Contact contact) {
+
+        }
+
+        @Override
+        public Contact getValue() {
+            return null;
         }
     }
 }

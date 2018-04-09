@@ -33,6 +33,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
+// TODO: revise this class
 public class AttachmentUploadField extends CustomField {
     private static final long serialVersionUID = 1L;
 
@@ -44,14 +45,14 @@ public class AttachmentUploadField extends CustomField {
         this(null);
     }
 
+    @Override
+    protected void doSetValue(Object o) {
+
+    }
+
     public AttachmentUploadField(String attachmentPath) {
         this.attachmentPath = attachmentPath;
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
-    }
-
-    @Override
-    public Class<?> getType() {
-        return Object.class;
     }
 
     public void saveContentsToRepo(String attachmentPath) {
@@ -72,5 +73,10 @@ public class AttachmentUploadField extends CustomField {
         } else {
             return attachmentPanel;
         }
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 }

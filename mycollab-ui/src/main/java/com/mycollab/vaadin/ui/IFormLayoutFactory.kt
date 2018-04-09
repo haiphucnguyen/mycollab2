@@ -16,7 +16,8 @@
  */
 package com.mycollab.vaadin.ui
 
-import com.vaadin.ui.*
+import com.vaadin.ui.AbstractComponent
+import com.vaadin.ui.Component
 
 /**
  * @author MyCollab Ltd
@@ -25,7 +26,7 @@ import com.vaadin.ui.*
 interface IFormLayoutFactory {
     val layout: AbstractComponent
 
-    fun attachField(propertyId: Any, field: AbstractField<*>): Component
+    fun attachField(propertyId: Any, field: Component): Component?
 
     fun bindFields(): Set<String>
 }

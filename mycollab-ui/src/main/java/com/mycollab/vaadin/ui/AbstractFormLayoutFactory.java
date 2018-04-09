@@ -32,9 +32,10 @@ public abstract class AbstractFormLayoutFactory implements IFormLayoutFactory {
 
     public abstract AbstractComponent getLayout();
 
-    protected abstract Component onAttachField(Object propertyId, AbstractField<?> field);
+    protected abstract Component onAttachField(Object propertyId, Component field);
 
-    public Component attachField(Object propertyId, AbstractField<?> field) {
+    @Override
+    public Component attachField(Object propertyId, Component field) {
         Component component = onAttachField(propertyId, field);
         if (component != null) {
             fields.add((String) propertyId);

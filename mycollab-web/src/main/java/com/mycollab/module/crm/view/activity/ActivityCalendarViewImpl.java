@@ -45,6 +45,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -689,7 +690,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
                 }
 
                 @Override
-                protected AbstractField<?> onCreateField(Object propertyId) {
+                protected HasValue<?> onCreateField(Object propertyId) {
                     if (propertyId.equals("subject")) {
                         TextField tf = new TextField();
 

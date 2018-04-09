@@ -34,8 +34,8 @@ import com.mycollab.vaadin.ui.field.CountryViewField;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.EmailViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.AbstractField;
 
 /**
  * @author MyCollab Ltd.
@@ -49,7 +49,7 @@ class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleContact contact = attachForm.getBean();
         if (Contact.Field.accountid.equalTo(propertyId)) {
             if (contact.getAccountid() != null) {

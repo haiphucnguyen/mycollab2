@@ -36,6 +36,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.IntegerField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -155,7 +156,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             if (propertyId.equals("host")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ShellI18nEnum.FORM_HOST),
                         UserUIContext.getMessage(ShellI18nEnum.FORM_HOST_HELP), 0, 0);
@@ -187,7 +188,7 @@ public class SetupViewImpl extends AbstractVerticalPageView implements SetupView
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (propertyId.equals("isStartTls")) {
                 return new CheckBox("", false);
             } else if (propertyId.equals("isSsl")) {

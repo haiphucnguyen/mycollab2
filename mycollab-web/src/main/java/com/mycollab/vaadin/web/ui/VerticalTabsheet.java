@@ -24,6 +24,7 @@ import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
@@ -122,7 +123,7 @@ public class VerticalTabsheet extends CustomComponent {
                         selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
                         selectedComp = compMap.get(button.getTabId());
                     }
-                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this));
+                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this, true));
                 } else {
                     Page.getCurrent().open(button.link, "_blank", false);
                 }
@@ -416,6 +417,11 @@ public class VerticalTabsheet extends CustomComponent {
         @Override
         public void setDescription(String description) {
             throw new MyCollabException("Do not support");
+        }
+
+        @Override
+        public void setDescription(String s, ContentMode contentMode) {
+
         }
 
         @Override

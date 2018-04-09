@@ -45,6 +45,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
+// TODO: revise this class
 public class BugSelectionField extends CustomField<SimpleBug> implements FieldSelection<SimpleBug> {
     private SimpleBug selectedBug;
     private SuggestField suggestField;
@@ -57,10 +58,15 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
         suggestField.setPopupWidth(600);
         suggestField.setWidth("400px");
         suggestField.setInputPrompt("Enter related bug's name");
-        suggestField.setInvalidAllowed(false);
+//        suggestField.setInvalidAllowed(false);
         suggestField.setSuggestionHandler(this::handleSearchQuery);
 
         suggestField.setSuggestionConverter(new BugSuggestionConverter());
+    }
+
+    @Override
+    protected void doSetValue(SimpleBug simpleBug) {
+
     }
 
     public SimpleBug getSelectedBug() {
@@ -77,10 +83,6 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
         return layout;
     }
 
-    @Override
-    public Class<? extends SimpleBug> getType() {
-        return SimpleBug.class;
-    }
 
     @Override
     public void fireValueChange(SimpleBug data) {
@@ -97,6 +99,11 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
         searchCriteria.setName(StringSearchField.and(query));
         items = (List<SimpleBug>) bugService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         return new ArrayList<>(items);
+    }
+
+    @Override
+    public SimpleBug getValue() {
+        return null;
     }
 
     private class BugSuggestionConverter extends BeanSuggestionConverter {

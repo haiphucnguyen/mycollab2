@@ -25,16 +25,17 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.addon.touchkit.ui.NumberField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
+import org.vaadin.touchkit.ui.DatePicker;
 import org.vaadin.viritin.fields.MTextField;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
+// TODO: revise this class
 @ViewComponent
 public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements BugAddView {
     private static final long serialVersionUID = -688386159095055595L;
@@ -86,10 +87,10 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (BugWithBLOBs.Field.environment.equalTo(propertyId) || BugWithBLOBs.Field.description.equalTo(propertyId)) {
                 final TextArea field = new TextArea("", "");
-                field.setNullRepresentation("");
+//                field.setNullRepresentation("");
                 return field;
             } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId) || BugWithBLOBs.Field.enddate.equalTo(propertyId)
                     || BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
@@ -109,21 +110,22 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             } else if (BugWithBLOBs.Field.name.equalTo(propertyId)) {
                 final MTextField tf = new MTextField();
                 if (isValidateForm) {
-                    tf.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
-                            (ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY)));
+//                    tf.withNullRepresentation("").withRequired(true).withRequiredError(UserUIContext.getMessage
+//                            (ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(BugI18nEnum.FORM_SUMMARY)));
                 }
 
                 return tf;
             } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
-                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
-                    beanItem.setMilestoneName(milestoneName);
+//                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
+//                    beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
             } else if (BugWithBLOBs.Field.originalestimate.equalTo(propertyId) ||
                     BugWithBLOBs.Field.remainestimate.equalTo(propertyId)) {
-                return new NumberField();
+//                return new NumberField();
+                return new TextField();
             }
 
             return null;

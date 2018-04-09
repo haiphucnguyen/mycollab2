@@ -136,7 +136,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             return formLayoutFactory.attachField(propertyId, field);
         }
     }

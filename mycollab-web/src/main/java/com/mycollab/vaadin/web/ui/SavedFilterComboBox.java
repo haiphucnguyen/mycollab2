@@ -107,7 +107,6 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
     @Override
     protected Component initContent() {
         componentsText = new TextField();
-        componentsText.setNullRepresentation("");
         componentsText.setReadOnly(true);
         componentsText.addStyleName("noBorderRight");
         componentsText.setWidth("100%");
@@ -162,11 +161,6 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         }
     }
 
-
-    @Override
-    public Class<? extends String> getType() {
-        return String.class;
-    }
 
     public void addQuerySelectListener(QuerySelectListener listener) {
         addListener(QuerySelectEvent.class, listener, QUERY_SELECT);

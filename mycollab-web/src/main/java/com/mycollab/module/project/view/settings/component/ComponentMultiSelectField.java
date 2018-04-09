@@ -26,7 +26,6 @@ import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
-import com.vaadin.data.Property;
 import com.vaadin.ui.UI;
 
 import java.util.List;
@@ -35,11 +34,17 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO : fix this class
 public class ComponentMultiSelectField extends MultiSelectComp {
     private static final long serialVersionUID = 1L;
 
     public ComponentMultiSelectField() {
         super("name", true);
+    }
+
+    @Override
+    protected void doSetValue(Object o) {
+
     }
 
     @Override
@@ -58,16 +63,16 @@ public class ComponentMultiSelectField extends MultiSelectComp {
     }
 
     @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        List<Component> components = (List<Component>) newDataSource.getValue();
-        if (components != null) {
-            this.setSelectedItems(components);
-        }
-        super.setPropertyDataSource(newDataSource);
+    public Object getValue() {
+        return null;
     }
 
-    @Override
-    public Class<?> getType() {
-        return Object.class;
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        List<Component> components = (List<Component>) newDataSource.getValue();
+//        if (components != null) {
+//            this.setSelectedItems(components);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 }

@@ -74,7 +74,7 @@ public abstract class RoleFormLayoutFactory extends WrappedFormLayoutFactory {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("rolename")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (Role.Field.isdefault.equalTo(propertyId)) {

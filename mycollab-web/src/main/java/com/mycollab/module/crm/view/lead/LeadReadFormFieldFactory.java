@@ -27,7 +27,7 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.field.*;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 
 /**
  * @author MyCollab Ltd.
@@ -41,7 +41,7 @@ class LeadReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleLead lead = attachForm.getBean();
 
         if (propertyId.equals("firstname")) {

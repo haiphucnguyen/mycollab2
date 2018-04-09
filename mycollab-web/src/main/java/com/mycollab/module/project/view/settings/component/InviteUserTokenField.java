@@ -63,7 +63,6 @@ public class InviteUserTokenField extends CssLayout implements SuggestField.NewI
         suggestField.setNewItemsAllowed(true);
         suggestField.setNewItemsHandler(this);
         suggestField.focus();
-        suggestField.setImmediate(true);
         suggestField.setTokenMode(true);
         suggestField.setSuggestionHandler(this);
         suggestField.setSuggestionConverter(new UserSuggestionConverter());

@@ -23,8 +23,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -34,6 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class AccountSelectionField extends CustomField<Integer> implements FieldSelection<Account> {
     private static final long serialVersionUID = 1L;
 
@@ -45,26 +44,26 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
         this.account = null;
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setAccountByVal((Integer) value);
-            super.setPropertyDataSource(newDataSource);
-        } else {
-            super.setPropertyDataSource(newDataSource);
-        }
-    }
-
-    @Override
-    public void commit() throws SourceException, Validator.InvalidValueException {
-        if (account != null) {
-            setInternalValue(account.getId());
-        } else {
-            setInternalValue(null);
-        }
-        super.commit();
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setAccountByVal((Integer) value);
+//            super.setPropertyDataSource(newDataSource);
+//        } else {
+//            super.setPropertyDataSource(newDataSource);
+//        }
+//    }
+//
+//    @Override
+//    public void commit() throws SourceException, Validator.InvalidValueException {
+//        if (account != null) {
+//            setInternalValue(account.getId());
+//        } else {
+//            setInternalValue(null);
+//        }
+//        super.commit();
+//    }
 
     private void setAccountByVal(Integer accountId) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
@@ -79,21 +78,19 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
         return account;
     }
 
-    @Override
-    public void fireValueChange(Account data) {
-        account = data;
-        if (account != null) {
-            accountName.setValue(account.getAccountname());
-            setInternalValue(account.getId());
-        }
-    }
+//    @Override
+//    public void fireValueChange(Account data) {
+//        account = data;
+//        if (account != null) {
+//            accountName.setValue(account.getAccountname());
+//            setInternalValue(account.getId());
+//        }
+//    }
 
     @Override
     protected Component initContent() {
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth()
                 .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-
-        accountName.setNullRepresentation("");
         accountName.setEnabled(true);
         accountName.setWidth("100%");
 
@@ -111,7 +108,17 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
     }
 
     @Override
-    public Class<Integer> getType() {
-        return Integer.class;
+    public void fireValueChange(Account data) {
+
+    }
+
+    @Override
+    protected void doSetValue(Integer integer) {
+
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
     }
 }

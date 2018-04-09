@@ -183,27 +183,29 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
         }
     }
 
+    //TODO: revise upload
     private FileBuffer createReceiver() {
-        FileBuffer receiver = new FileBuffer(UploadField.FieldType.FILE) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public FileFactory getFileFactory() {
-                return new TempFileFactory();
-            }
-
-            @Override
-            public void setLastMimeType(String mimeType) {
-
-            }
-
-            @Override
-            public void setLastFileName(String fileName) {
-
-            }
-        };
-        receiver.setDeleteFiles(false);
-        return receiver;
+//        FileBuffer receiver = new FileBuffer(UploadField.FieldType.FILE) {
+//            private static final long serialVersionUID = 1L;
+//
+//            @Override
+//            public FileFactory getFileFactory() {
+//                return new TempFileFactory();
+//            }
+//
+//            @Override
+//            public void setLastMimeType(String mimeType) {
+//
+//            }
+//
+//            @Override
+//            public void setLastFileName(String fileName) {
+//
+//            }
+//        };
+//        receiver.setDeleteFiles(false);
+//        return receiver;
+        return null;
     }
 
     private void receiveFile(File file, String fileName, String mimeType, long length) {
@@ -217,6 +219,8 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
         }
     }
 
+
+    //TODO: revise upload
     private class MobileUploadHandler implements MultiUploadHandler {
         private LinkedList<ProgressBar> indicators;
 
@@ -226,20 +230,20 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
 
         @Override
         public void streamingFinished(StreamVariable.StreamingEndEvent event) {
-            String fileName = event.getFileName();
-            int index = fileName.lastIndexOf(".");
-            if (index > 0) {
-                String fileExt = fileName.substring(index + 1, fileName.length());
-                fileName = MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX + System.currentTimeMillis() + "." + fileExt;
-            }
-
-            if (!indicators.isEmpty()) {
-                statusWrapper.replaceComponent(indicators.remove(0), createAttachmentRow(fileName));
-            }
-
-            File file = receiver.getFile();
-            receiveFile(file, fileName, event.getMimeType(), event.getBytesReceived());
-            receiver.setValue(null);
+//            String fileName = event.getFileName();
+//            int index = fileName.lastIndexOf(".");
+//            if (index > 0) {
+//                String fileExt = fileName.substring(index + 1, fileName.length());
+//                fileName = MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX + System.currentTimeMillis() + "." + fileExt;
+//            }
+//
+//            if (!indicators.isEmpty()) {
+//                statusWrapper.replaceComponent(indicators.remove(0), createAttachmentRow(fileName));
+//            }
+//
+//            File file = receiver.getFile();
+//            receiveFile(file, fileName, event.getMimeType(), event.getBytesReceived());
+//            receiver.setValue(null);
         }
 
         @Override
@@ -261,8 +265,9 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
 
         @Override
         public OutputStream getOutputStream() {
-            MultiUpload.FileDetail next = uploadField.getPendingFileNames().iterator().next();
-            return receiver.receiveUpload(next.getFileName(), next.getMimeType());
+//            MultiUpload.FileDetail next = uploadField.getPendingFileNames().iterator().next();
+//            return receiver.receiveUpload(next.getFileName(), next.getMimeType());
+            return null;
         }
 
         @Override

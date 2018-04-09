@@ -39,6 +39,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
 
 import java.util.GregorianCalendar;
@@ -119,7 +120,7 @@ class ResolvedInputView extends AbstractMobilePageView {
             }
 
             @Override
-            public Component onAttachField(Object propertyId, final Field<?> field) {
+            public Component onAttachField(Object propertyId, final Component field) {
                 if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
                 } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
@@ -139,7 +140,7 @@ class ResolvedInputView extends AbstractMobilePageView {
             }
 
             @Override
-            protected AbstractField<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                     bug.setResolution(BugResolution.Fixed.name());
                     return BugResolutionListSelect.getInstanceForResolvedBugWindow();
@@ -148,7 +149,6 @@ class ResolvedInputView extends AbstractMobilePageView {
                     return new ProjectMemberListSelect(bean.getProjectid());
                 } else if (propertyId.equals("comment")) {
                     commentArea = new TextArea();
-                    commentArea.setNullRepresentation("");
                     return commentArea;
                 }
 

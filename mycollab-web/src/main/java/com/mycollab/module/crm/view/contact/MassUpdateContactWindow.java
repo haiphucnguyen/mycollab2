@@ -72,7 +72,7 @@ public class MassUpdateContactWindow extends MassUpdateWindow<Contact> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("accountid")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ContactI18nEnum.FORM_ACCOUNTS), 0, 0);
             } else if (propertyId.equals("title")) {

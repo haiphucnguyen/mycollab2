@@ -73,7 +73,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("industry")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0, 0);
             } else if (propertyId.equals("type")) {

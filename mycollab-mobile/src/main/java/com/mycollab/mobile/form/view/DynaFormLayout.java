@@ -27,6 +27,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,8 +111,9 @@ public class DynaFormLayout implements IFormLayoutFactory {
         return layout;
     }
 
+    @NotNull
     @Override
-    public Component attachField(Object propertyId, AbstractField<?> field) {
+    public Component attachField(@NotNull Object propertyId, @NotNull Component field) {
         AbstractDynaField dynaField = fieldMappings.get(propertyId);
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();

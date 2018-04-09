@@ -43,12 +43,12 @@ public class SplitButton extends CustomComponent {
     }
 
     public SplitButton(Button parentButton) {
-        this.setImmediate(true);
+//        this.setImmediate(true);
         HorizontalLayout contentLayout = new HorizontalLayout();
         contentLayout.setStyleName("splitbutton");
         this.parentButton = parentButton;
         parentButton.addStyleName("parent-button");
-        parentButton.setImmediate(true);
+//        parentButton.setImmediate(true);
         parentButton.addClickListener(clickEvent -> fireEvent(new SplitButtonClickEvent(SplitButton.this)));
 
         popupButton = new PopupButton();

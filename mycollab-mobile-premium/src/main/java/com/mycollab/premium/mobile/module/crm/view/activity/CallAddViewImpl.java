@@ -12,14 +12,15 @@ import com.mycollab.module.crm.i18n.CallI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.data.Property;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.vaadin.touchkit.ui.DatePicker;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.1
  */
+// TODO: revise this class
 @ViewComponent
 public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> implements CallAddView {
     private static final long serialVersionUID = -7038760697823160315L;
@@ -50,13 +51,13 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (propertyId.equals("subject")) {
                 TextField tf = new TextField();
                 if (isValidateForm) {
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Subject must not be null");
+//                    tf.setNullRepresentation("");
+//                    tf.setRequired(true);
+//                    tf.setRequiredError("Subject must not be null");
                 }
 
                 return tf;
@@ -64,11 +65,11 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
                 return new ActiveUserComboBox();
             } else if (propertyId.equals("description")) {
                 TextArea descArea = new TextArea();
-                descArea.setNullRepresentation("");
+//                descArea.setNullRepresentation("");
                 return descArea;
             } else if (propertyId.equals("result")) {
                 TextArea resultArea = new TextArea();
-                resultArea.setNullRepresentation("");
+//                resultArea.setNullRepresentation("");
                 return resultArea;
             } else if (propertyId.equals("durationinseconds")) {
                 return new CallDurationField();
@@ -92,11 +93,6 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Class<?> getType() {
-                return Object.class;
-            }
-
-            @Override
             protected Component initContent() {
                 VerticalLayout layout = new VerticalLayout();
                 layout.setSpacing(true);
@@ -116,6 +112,16 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
                 binder.bind(typeField, "calltype");
                 binder.bind(statusField, "status");
                 return layout;
+            }
+
+            @Override
+            protected void doSetValue(Object o) {
+
+            }
+
+            @Override
+            public Object getValue() {
+                return null;
             }
         }
     }
@@ -146,15 +152,21 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        public void commit() {
-            Integer durationInSeconds = calculateDurationInSeconds();
-            this.setInternalValue(durationInSeconds);
-            super.commit();
+        protected void doSetValue(Integer integer) {
+
         }
+
+//        @Override
+//        public void commit() {
+//            Integer durationInSeconds = calculateDurationInSeconds();
+//            this.setInternalValue(durationInSeconds);
+//            super.commit();
+//        }
 
         private Integer calculateDurationInSeconds() {
             String hourValue = hourField.getValue();
-            String minuteValue = (String) minutesField.getValue();
+//            String minuteValue = (String) minutesField.getValue();
+            String minuteValue = "";
             int hourVal = 0, minutesVal = 0;
             try {
                 hourVal = Integer.parseInt(hourValue);
@@ -177,21 +189,21 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             return 0;
         }
 
-        @SuppressWarnings("rawtypes")
-        @Override
-        public void setPropertyDataSource(Property newDataSource) {
-            Object value = newDataSource.getValue();
-            if (value instanceof Integer) {
-                Integer duration = (Integer) value;
-                if (duration != 0) {
-                    int hours = duration / 3600;
-                    int minutes = duration % 3600 / 60;
-                    hourField.setValue("" + hours);
-                    minutesField.select("" + minutes);
-                }
-            }
-            super.setPropertyDataSource(newDataSource);
-        }
+//        @SuppressWarnings("rawtypes")
+//        @Override
+//        public void setPropertyDataSource(Property newDataSource) {
+//            Object value = newDataSource.getValue();
+//            if (value instanceof Integer) {
+//                Integer duration = (Integer) value;
+//                if (duration != 0) {
+//                    int hours = duration / 3600;
+//                    int minutes = duration % 3600 / 60;
+//                    hourField.setValue("" + hours);
+//                    minutesField.select("" + minutes);
+//                }
+//            }
+//            super.setPropertyDataSource(newDataSource);
+//        }
 
         @Override
         protected Component initContent() {
@@ -215,8 +227,8 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        public Class<Integer> getType() {
-            return Integer.class;
+        public Integer getValue() {
+            return null;
         }
     }
 
@@ -229,35 +241,35 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             setCaption(null);
             this.setWidth("80px");
             this.loadData("Inbound", "Outbound");
-            this.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(
-                        com.vaadin.data.Property.ValueChangeEvent event) {
-                    beanItem.setCalltype((String) CallTypeListSelect.this.getValue());
-                }
-            });
+//            this.addValueChangeListener(new Property.ValueChangeListener() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void valueChange(
+//                        com.vaadin.data.Property.ValueChangeEvent event) {
+//                    beanItem.setCalltype((String) CallTypeListSelect.this.getValue());
+//                }
+//            });
         }
     }
 
     private class CallStatusListSelect extends ValueListSelect {
         private static final long serialVersionUID = 1L;
 
-        public CallStatusListSelect() {
+        CallStatusListSelect() {
             super();
             setCaption(null);
             this.setWidth("100px");
             this.loadData("Planned", "Held", "Not Held");
-            this.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(
-                        com.vaadin.data.Property.ValueChangeEvent event) {
-                    beanItem.setStatus((String) CallStatusListSelect.this.getValue());
-                }
-            });
+//            this.addValueChangeListener(new Property.ValueChangeListener() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void valueChange(
+//                        com.vaadin.data.Property.ValueChangeEvent event) {
+//                    beanItem.setStatus((String) CallStatusListSelect.this.getValue());
+//                }
+//            });
         }
     }
 

@@ -28,7 +28,7 @@ import com.mycollab.vaadin.ui.field.DateViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 
 /**
  * @author MyCollab Ltd.
@@ -42,7 +42,7 @@ class CampaignReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactor
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleCampaign campaign = attachForm.getBean();
 
         if (propertyId.equals("assignuser")) {

@@ -77,7 +77,7 @@ public class MassUpdateLeadWindow extends MassUpdateWindow<Lead> {
         // primary/other city, primary/other state, primary/other postal
         // code, primary/other country
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("title")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(LeadI18nEnum.FORM_TITLE), 0, 0);
             } else if (propertyId.equals("accountname")) {

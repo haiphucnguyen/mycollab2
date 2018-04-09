@@ -67,7 +67,7 @@ public class MassUpdateOpportunityWindow extends MassUpdateWindow<Opportunity> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("opportunityname")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("currencyid")) {

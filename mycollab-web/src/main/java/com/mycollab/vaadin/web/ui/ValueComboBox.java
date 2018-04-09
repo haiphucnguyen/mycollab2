@@ -24,6 +24,7 @@ import java.util.stream.Stream;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise this class
 public class ValueComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
@@ -37,19 +38,19 @@ public class ValueComboBox extends ComboBox {
      */
     public ValueComboBox(boolean nullIsAllowable, String... values) {
         this();
-        this.setNullSelectionAllowed(nullIsAllowable);
-        this.setImmediate(true);
+//        this.setNullSelectionAllowed(nullIsAllowable);
+//        this.setImmediate(true);
         this.loadData(values);
 
-        this.select(this.getItemIds().iterator().next());
+//        this.select(this.getItemIds().iterator().next());
     }
 
     public final void loadData(String... values) {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-        Stream.of(values).forEach(value -> addItem(value));
-
-        if (!this.isNullSelectionAllowed()) {
-            this.select(this.getItemIds().iterator().next());
-        }
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+//        Stream.of(values).forEach(value -> addItem(value));
+//
+//        if (!this.isNullSelectionAllowed()) {
+//            this.select(this.getItemIds().iterator().next());
+//        }
     }
 }

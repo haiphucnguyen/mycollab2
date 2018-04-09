@@ -23,8 +23,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -34,6 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class ContactSelectionField extends CustomField<Integer> implements FieldSelection<Contact> {
     private static final long serialVersionUID = 1L;
 
@@ -44,7 +43,6 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
 
     public ContactSelectionField() {
         contactName = new TextField();
-        contactName.setNullRepresentation("");
         contactName.setWidth("100%");
         browseBtn = new MButton("", clickEvent -> {
             ContactSelectionWindow contactWindow = new ContactSelectionWindow(ContactSelectionField.this);
@@ -59,6 +57,11 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
     }
 
     @Override
+    protected void doSetValue(Integer integer) {
+
+    }
+
+    @Override
     public void fireValueChange(Contact data) {
         contact = (SimpleContact) data;
         if (contact != null) {
@@ -66,24 +69,24 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
         }
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        final Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setContactByVal((Integer) value);
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
-
-    @Override
-    public void commit() throws SourceException, Validator.InvalidValueException {
-        if (contact != null) {
-            setInternalValue(contact.getId());
-        } else {
-            setInternalValue(null);
-        }
-        super.commit();
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        final Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setContactByVal((Integer) value);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
+//
+//    @Override
+//    public void commit() throws SourceException, Validator.InvalidValueException {
+//        if (contact != null) {
+//            setInternalValue(contact.getId());
+//        } else {
+//            setInternalValue(null);
+//        }
+//        super.commit();
+//    }
 
     private void setContactByVal(Integer contactId) {
         ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
@@ -105,7 +108,7 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
     }
 
     @Override
-    public Class<Integer> getType() {
-        return Integer.class;
+    public Integer getValue() {
+        return null;
     }
 }

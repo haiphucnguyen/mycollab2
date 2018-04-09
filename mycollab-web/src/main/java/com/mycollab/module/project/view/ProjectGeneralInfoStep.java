@@ -33,8 +33,8 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IDynaFormLayout;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -120,7 +120,7 @@ public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWiza
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (Project.Field.description.equalTo(propertyId)) {
                 return new RichTextArea();
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {

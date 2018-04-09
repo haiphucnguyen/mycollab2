@@ -74,7 +74,7 @@ public class MassUpdateCampaignWindow extends MassUpdateWindow<CampaignWithBLOBs
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, final Field<?> field) {
+        protected Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("assignuser")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 0);
             } else if (propertyId.equals("status")) {

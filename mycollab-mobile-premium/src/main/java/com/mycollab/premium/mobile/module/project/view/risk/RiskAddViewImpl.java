@@ -24,14 +24,15 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
+import org.vaadin.touchkit.ui.DatePicker;
 import com.vaadin.ui.TextArea;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.3
  */
+// TODO: revise this class
 @ViewComponent
 public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements RiskAddView {
     private static final long serialVersionUID = 6835605062072536907L;
@@ -82,12 +83,12 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (Risk.Field.assignuser.equalTo(propertyId) || Risk.Field.createduser.equalTo(propertyId)) {
                 return new ProjectMemberListSelect(beanItem.getProjectid());
             } else if (Risk.Field.description.equalTo(propertyId) || Risk.Field.response.equalTo(propertyId)) {
                 final TextArea textArea = new TextArea();
-                textArea.setNullRepresentation("");
+//                textArea.setNullRepresentation("");
                 return textArea;
             } else if (Risk.Field.startdate.equalTo(propertyId) || Risk.Field.enddate.equalTo(propertyId) ||
                     Risk.Field.duedate.equalTo(propertyId)) {
@@ -95,8 +96,8 @@ public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 final MilestoneListSelect milestoneBox = new MilestoneListSelect();
                 milestoneBox.addValueChangeListener(valueChangeEvent -> {
-                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
-                    beanItem.setMilestoneName(milestoneName);
+//                    String milestoneName = milestoneBox.getItemCaption(milestoneBox.getValue());
+//                    beanItem.setMilestoneName(milestoneName);
                 });
                 return milestoneBox;
             } else if (Risk.Field.consequence.equalTo(propertyId)) {

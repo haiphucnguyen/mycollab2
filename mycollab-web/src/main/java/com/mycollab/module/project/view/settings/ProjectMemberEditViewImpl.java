@@ -17,8 +17,6 @@
 package com.mycollab.module.project.view.settings;
 
 import com.mycollab.common.i18n.SecurityI18nEnum;
-import com.mycollab.core.UserInvalidInputException;
-import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectMember;
@@ -41,8 +39,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 
@@ -102,7 +99,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("memberFullName")) {
                 return new DefaultViewField(beanItem.getMemberFullName());
             } else if (propertyId.equals("projectroleid")) {
@@ -119,7 +116,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
     }
 
     private class DecorFormLayoutFactory extends WrappedFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
 
         DecorFormLayoutFactory(AbstractFormLayoutFactory formLayoutFactory) {
             this.wrappedLayoutFactory = formLayoutFactory;
@@ -177,46 +173,52 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        public void commit() throws SourceException, InvalidValueException {
-            Integer roleId = (Integer) roleComboBox.getValue();
-            if (roleId == -1) {
-                if (CurrentProjectVariables.isAdmin()) {
-                    beanItem.setIsadmin(Boolean.TRUE);
-                    this.setInternalValue(null);
-                } else {
-                    throw new UserInvalidInputException(UserUIContext.getMessage(ProjectRoleI18nEnum.ERROR_ONLY_OWNER_ASSIGN_ROLE_OWNER));
-                }
-            } else {
-                beanItem.setIsadmin(Boolean.FALSE);
-                this.setInternalValue((Integer) this.roleComboBox.getValue());
-            }
+        protected void doSetValue(Integer integer) {
 
-            super.commit();
         }
 
-        @Override
-        public void setPropertyDataSource(Property newDataSource) {
-            Object value = newDataSource.getValue();
-            if (value instanceof Integer) {
-                roleComboBox.setValue(value);
-                displayRolePermission((Integer) roleComboBox.getValue());
-            } else if (value == null) {
-                if (Boolean.TRUE.equals(beanItem.getIsadmin())) {
-                    roleComboBox.setValue(-1);
-                    displayRolePermission(null);
-                }
-            }
-            super.setPropertyDataSource(newDataSource);
-        }
+//        @Override
+//        public void commit() throws SourceException, InvalidValueException {
+//            Integer roleId = (Integer) roleComboBox.getValue();
+//            if (roleId == -1) {
+//                if (CurrentProjectVariables.isAdmin()) {
+//                    beanItem.setIsadmin(Boolean.TRUE);
+//                    this.setInternalValue(null);
+//                } else {
+//                    throw new UserInvalidInputException(UserUIContext.getMessage(ProjectRoleI18nEnum.ERROR_ONLY_OWNER_ASSIGN_ROLE_OWNER));
+//                }
+//            } else {
+//                beanItem.setIsadmin(Boolean.FALSE);
+//                this.setInternalValue((Integer) this.roleComboBox.getValue());
+//            }
+//
+//            super.commit();
+//        }
 
-        @Override
-        public Class<Integer> getType() {
-            return Integer.class;
-        }
+//        @Override
+//        public void setPropertyDataSource(Property newDataSource) {
+//            Object value = newDataSource.getValue();
+//            if (value instanceof Integer) {
+//                roleComboBox.setValue(value);
+//                displayRolePermission((Integer) roleComboBox.getValue());
+//            } else if (value == null) {
+//                if (Boolean.TRUE.equals(beanItem.getIsadmin())) {
+//                    roleComboBox.setValue(-1);
+//                    displayRolePermission(null);
+//                }
+//            }
+//            super.setPropertyDataSource(newDataSource);
+//        }
+
 
         @Override
         protected Component initContent() {
             return roleComboBox;
+        }
+
+        @Override
+        public Integer getValue() {
+            return null;
         }
     }
 }

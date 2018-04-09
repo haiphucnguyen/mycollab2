@@ -85,7 +85,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             return formLayoutFactory.attachField(propertyId, field);
         }
     }

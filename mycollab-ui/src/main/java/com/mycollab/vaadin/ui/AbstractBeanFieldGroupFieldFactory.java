@@ -23,7 +23,8 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.vaadin.data.Binder;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
             IDynaFormLayout dynaFormLayout = (IDynaFormLayout) layoutFactory;
             Set<String> bindFields = dynaFormLayout.bindFields();
             for (String bindField : bindFields) {
-                AbstractField<?> formField = onCreateField(bindField);
+                HasValue<?> formField = onCreateField(bindField);
                 if (formField == null) {
                     if (isReadOnlyGroup) {
                         try {
@@ -95,13 +96,13 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
                 postCreateField(bindField, formField);
-                attachForm.attachField(bindField, formField);
+                attachForm.attachField(bindField, (Component) formField);
             }
         } else {
             Class<?> beanClass = bean.getClass();
             java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
             for (java.lang.reflect.Field field : fields) {
-                AbstractField<?> formField = onCreateField(field.getName());
+                HasValue<?> formField = onCreateField(field.getName());
                 if (formField == null) {
                     if (field.getAnnotation(NotBindable.class) != null) {
                         continue;
@@ -135,10 +136,10 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 } else if (formField instanceof DatePicker) {
                     ((DatePicker) formField).setResolution(DatePickerState.Resolution.DAY);
-                    formField.setWidth("100px");
+                    ((DatePicker) formField).setWidth("100px");
                 }
                 postCreateField(field.getName(), formField);
-                attachForm.attachField(field.getName(), formField);
+                attachForm.attachField(field.getName(), (Component) formField);
             }
         }
     }
@@ -229,8 +230,8 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
 //        }
     }
 
-    abstract protected AbstractField<?> onCreateField(Object propertyId);
+    abstract protected HasValue<?> onCreateField(Object propertyId);
 
-    protected void postCreateField(Object propertyId, AbstractField<?> field) {
+    protected void postCreateField(Object propertyId, HasValue<?> field) {
     }
 }

@@ -51,6 +51,7 @@ import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.ContainerViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -79,7 +80,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             SimpleMilestone milestone = attachForm.getBean();
             if (Milestone.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(milestone.getStartdate());

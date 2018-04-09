@@ -24,7 +24,7 @@ import com.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -45,7 +45,7 @@ class CaseEditFormFieldFactory<B extends CaseWithBLOBs> extends AbstractBeanFiel
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("priority")) {
             return new CasePriorityComboBox();
         } else if (propertyId.equals("status")) {

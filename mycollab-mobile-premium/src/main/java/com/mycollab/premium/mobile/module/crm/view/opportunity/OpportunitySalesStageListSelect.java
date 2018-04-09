@@ -9,10 +9,11 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.1
  */
+// TODO: Revise this class
 class OpportunitySalesStageListSelect extends I18NValueListSelect {
 
     OpportunitySalesStageListSelect() {
         this.loadData(Arrays.asList(CrmDataTypeFactory.opportunitySalesStageList));
-        this.setNullSelectionAllowed(false);
+//        this.setNullSelectionAllowed(false);
     }
 }

@@ -40,6 +40,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -90,7 +91,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected AbstractField<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 return null;
             }
         });
@@ -207,7 +208,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             return null;
         }
     }

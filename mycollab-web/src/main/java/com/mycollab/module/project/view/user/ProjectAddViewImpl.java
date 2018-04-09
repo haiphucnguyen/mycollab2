@@ -32,6 +32,7 @@ import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -108,7 +109,7 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
         }
 
         @Override
-        public Component onAttachField(Object propertyId, final Field<?> field) {
+        public Component onAttachField(Object propertyId, final Component field) {
             return projectInformationLayout.onAttachField(propertyId, field);
         }
     }
@@ -134,7 +135,7 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
         }
 
         @Override
-        public Component onAttachField(Object propertyId, final Field<?> field) {
+        public Component onAttachField(Object propertyId, final Component field) {
             if (propertyId.equals("name")) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("homepage")) {
@@ -183,7 +184,7 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
         }
 
         @Override
-        protected AbstractField<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             Project project = attachForm.getBean();
             if (Project.Field.description.equalTo(propertyId)) {
                 final RichTextArea field = new RichTextArea();

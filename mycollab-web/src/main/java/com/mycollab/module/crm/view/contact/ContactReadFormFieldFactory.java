@@ -34,9 +34,9 @@ import com.mycollab.vaadin.ui.field.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -56,7 +56,7 @@ public class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewField
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         SimpleContact contact = attachForm.getBean();
 
         if (propertyId.equals("accountid")) {

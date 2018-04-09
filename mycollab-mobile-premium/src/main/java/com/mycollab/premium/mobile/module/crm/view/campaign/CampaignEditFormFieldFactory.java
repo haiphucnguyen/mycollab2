@@ -5,7 +5,7 @@ import com.mycollab.mobile.ui.CurrencyComboBoxField;
 import com.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -22,7 +22,7 @@ class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends Abstract
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
 
         if ("type".equals(propertyId)) {
             CampaignTypeListSelect typeCombo = new CampaignTypeListSelect();
@@ -33,20 +33,14 @@ class CampaignEditFormFieldFactory<B extends CampaignWithBLOBs> extends Abstract
             statusCombo.setWidth("100%");
             return statusCombo;
         } else if ("campaignname".equals(propertyId)) {
-            TextField tf = new TextField();
-            if (isValidateForm) {
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Name must not be null");
-            }
-            return tf;
+            return new TextField();
         } else if ("description".equals(propertyId)) {
             TextArea descArea = new TextArea();
-            descArea.setNullRepresentation("");
             return descArea;
         } else if ("assignuser".equals(propertyId)) {
             ActiveUserComboBox userBox = new ActiveUserComboBox();
-            userBox.select(attachForm.getBean().getAssignuser());
+            // TODO: solve select item
+//            userBox.select(attachForm.getBean().getAssignuser());
             return userBox;
         } else if (propertyId.equals("currencyid")) {
             return new CurrencyComboBoxField();

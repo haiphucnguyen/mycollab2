@@ -6,31 +6,42 @@ import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.vaadin.data.Property;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.1
  */
+
+// TODO: revise this class
 public class CampaignSelectionField extends AbstractSelectionCustomField<Integer, CampaignWithBLOBs> {
 
     public CampaignSelectionField() {
         super(CampaignSelectionView.class);
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setCampaignByVal((Integer) value);
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setCampaignByVal((Integer) value);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 
     @Override
     public void setValue(Integer value) {
         this.setCampaignByVal(value);
         super.setValue(value);
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
+    }
+
+    @Override
+    protected void doSetValue(Integer integer) {
+
     }
 
     private void setCampaignByVal(Integer campaignId) {
@@ -49,12 +60,7 @@ public class CampaignSelectionField extends AbstractSelectionCustomField<Integer
     @Override
     public void fireValueChange(CampaignWithBLOBs data) {
         setInternalCampaign(data);
-        setInternalValue(data.getId());
-    }
-
-    @Override
-    public Class<? extends Integer> getType() {
-        return Integer.class;
+//        setInternalValue(data.getId());
     }
 
 }

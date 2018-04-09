@@ -46,6 +46,7 @@ import java.io.IOException;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
+// TODO: revise this class
 public class ImagePreviewCropWindow extends MWindow {
     private static final Logger LOG = LoggerFactory.getLogger(ImagePreviewCropWindow.class);
 
@@ -103,25 +104,25 @@ public class ImagePreviewCropWindow extends MWindow {
         VerticalLayout currentPhotoBox = new VerticalLayout();
         Resource resource = new ByteArrayImageResource(ImageUtil.convertImageToByteArray(originalImage), "image/png");
         CropField cropField = new CropField(resource);
-        cropField.setImmediate(true);
+//        cropField.setImmediate(true);
         cropField.setSelectionAspectRatio(1.0f);
         cropField.addValueChangeListener(valueChangeEvent -> {
-            VCropSelection newSelection = (VCropSelection) valueChangeEvent.getProperty().getValue();
-            int x1 = newSelection.getXTopLeft();
-            int y1 = newSelection.getYTopLeft();
-            int x2 = newSelection.getXBottomRight();
-            int y2 = newSelection.getYBottomRight();
-            if (x2 > x1 && y2 > y1) {
-                BufferedImage subImage = originalImage.getSubimage(x1, y1, (x2 - x1), (y2 - y1));
-                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-                try {
-                    ImageIO.write(subImage, "png", outStream);
-                    scaleImageData = outStream.toByteArray();
-                    displayPreviewImage();
-                } catch (IOException e) {
-                    LOG.error("Error while scale image: ", e);
-                }
-            }
+//            VCropSelection newSelection = (VCropSelection) valueChangeEvent.getProperty().getValue();
+//            int x1 = newSelection.getXTopLeft();
+//            int y1 = newSelection.getYTopLeft();
+//            int x2 = newSelection.getXBottomRight();
+//            int y2 = newSelection.getYBottomRight();
+//            if (x2 > x1 && y2 > y1) {
+//                BufferedImage subImage = originalImage.getSubimage(x1, y1, (x2 - x1), (y2 - y1));
+//                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+//                try {
+//                    ImageIO.write(subImage, "png", outStream);
+//                    scaleImageData = outStream.toByteArray();
+//                    displayPreviewImage();
+//                } catch (IOException e) {
+//                    LOG.error("Error while scale image: ", e);
+//                }
+//            }
         });
         currentPhotoBox.setWidth("520px");
         currentPhotoBox.setHeight("470px");

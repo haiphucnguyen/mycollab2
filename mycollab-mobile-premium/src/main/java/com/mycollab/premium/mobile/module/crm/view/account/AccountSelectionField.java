@@ -7,12 +7,12 @@ import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
-import com.vaadin.data.Property;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.0
  */
+//TODO: revise this class
 public class AccountSelectionField extends AbstractSelectionCustomField<Integer, Account> implements
         FieldSelection<Account> {
     private static final long serialVersionUID = 1L;
@@ -21,19 +21,29 @@ public class AccountSelectionField extends AbstractSelectionCustomField<Integer,
         super(AccountSelectionView.class);
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setAccountByVal((Integer) value);
-        }
-        super.setPropertyDataSource(newDataSource);
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setAccountByVal((Integer) value);
+//        }
+//        super.setPropertyDataSource(newDataSource);
+//    }
 
     @Override
     public void setValue(Integer value) {
         this.setAccountByVal(value);
         super.setValue(value);
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
+    }
+
+    @Override
+    protected void doSetValue(Integer integer) {
+
     }
 
     private void setAccountByVal(Integer accountId) {
@@ -56,11 +66,6 @@ public class AccountSelectionField extends AbstractSelectionCustomField<Integer,
     @Override
     public void fireValueChange(Account data) {
         setInternalAccount(data);
-        setInternalValue(beanItem.getId());
-    }
-
-    @Override
-    public Class<Integer> getType() {
-        return Integer.class;
+//        setInternalValue(beanItem.getId());
     }
 }

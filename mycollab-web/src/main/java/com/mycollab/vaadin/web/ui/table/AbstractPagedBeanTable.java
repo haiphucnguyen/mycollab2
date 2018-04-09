@@ -28,13 +28,13 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
-import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.util.BeanItem;
+import com.vaadin.v7.data.util.BeanItemContainer;
+import com.vaadin.v7.ui.Table;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +80,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     private List<TableViewField> displayColumns;
     private List<TableViewField> defaultSelectedColumns;
 
-    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
+    private final Map<Object, Table.ColumnGenerator> columnGenerators = new HashMap<>();
 
     public AbstractPagedBeanTable(Class<B> type, List<TableViewField> displayColumns) {
         this(type, null, displayColumns);
@@ -199,7 +199,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     }
 
     @Override
-    public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
+    public void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn) {
         this.columnGenerators.put(id, generatedColumn);
     }
 
@@ -343,7 +343,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         tableItem.setSortEnabled(false);
 
         // set column generator
-        for (Map.Entry<Object, ColumnGenerator> entry : columnGenerators.entrySet()) {
+        for (Map.Entry<Object, Table.ColumnGenerator> entry : columnGenerators.entrySet()) {
             tableItem.addGeneratedColumn(entry.getKey(), entry.getValue());
         }
 

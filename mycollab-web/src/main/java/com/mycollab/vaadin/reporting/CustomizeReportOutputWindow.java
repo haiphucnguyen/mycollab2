@@ -19,7 +19,6 @@ package com.mycollab.vaadin.reporting;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
-import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.json.FieldDefAnalyzer;
 import com.mycollab.common.service.CustomViewStoreService;
@@ -35,14 +34,12 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
-import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.MailFormWindow;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.UI;
 import org.vaadin.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -58,12 +55,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author MyCollab Ltd
  * @since 5.3.4
  */
+// TODO: Revise this class
 public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B extends ValuedBean> extends MWindow {
 
     private ListBuilder listBuilder;
     private String viewId;
-    private OptionGroup optionGroup;
-    private Table sampleTableDisplay;
+//    private OptionGroup optionGroup;
+//    private Table sampleTableDisplay;
 
     public CustomizeReportOutputWindow(String viewId, String reportTitle, Class<B> beanCls,
                                        ISearchableService<S> searchableService, VariableInjector<S> variableInjector) {
@@ -72,45 +70,45 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         this.withModal(true).withResizable(false).withWidth("1000px").withCenter().withContent(contentLayout);
         this.viewId = viewId;
 
-        optionGroup = new OptionGroup();
-        optionGroup.addStyleName("sortDirection");
-        optionGroup.addItems(UserUIContext.getMessage(FileI18nEnum.CSV), UserUIContext.getMessage(FileI18nEnum.PDF),
-                UserUIContext.getMessage(FileI18nEnum.EXCEL));
-        optionGroup.setValue(UserUIContext.getMessage(FileI18nEnum.CSV));
-        contentLayout.with(new MHorizontalLayout(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT)),
-                optionGroup).alignAll(Alignment.MIDDLE_LEFT));
-
-        contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_COLUMNS)));
-        listBuilder = new ListBuilder();
-        listBuilder.setImmediate(true);
-        listBuilder.setColumns(0);
-        listBuilder.setLeftColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_AVAILABLE_COLUMNS));
-        listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
-        listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
-        listBuilder.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class,
-                this.getAvailableColumns());
-        listBuilder.setContainerDataSource(container);
-        getAvailableColumns().forEach(field -> listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey())));
-
-        final Collection<TableViewField> viewColumnIds = this.getViewColumns();
-        listBuilder.setValue(viewColumnIds);
-        contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
-
-        contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_PREVIEW)));
-        sampleTableDisplay = new Table();
-        for (TableViewField field : getAvailableColumns()) {
-            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "",
-                    UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
-            sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
-        }
-        sampleTableDisplay.setWidth("100%");
-        sampleTableDisplay.addItem(buildSampleData(), 1);
-        sampleTableDisplay.setPageLength(1);
-        contentLayout.with(sampleTableDisplay);
-        filterColumns();
-
-        listBuilder.addValueChangeListener(valueChangeEvent -> filterColumns());
+//        optionGroup = new OptionGroup();
+//        optionGroup.addStyleName("sortDirection");
+//        optionGroup.addItems(UserUIContext.getMessage(FileI18nEnum.CSV), UserUIContext.getMessage(FileI18nEnum.PDF),
+//                UserUIContext.getMessage(FileI18nEnum.EXCEL));
+//        optionGroup.setValue(UserUIContext.getMessage(FileI18nEnum.CSV));
+//        contentLayout.with(new MHorizontalLayout(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT)),
+//                optionGroup).alignAll(Alignment.MIDDLE_LEFT));
+//
+//        contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_COLUMNS)));
+//        listBuilder = new ListBuilder();
+//        listBuilder.setImmediate(true);
+//        listBuilder.setColumns(0);
+//        listBuilder.setLeftColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_AVAILABLE_COLUMNS));
+//        listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
+//        listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
+//        listBuilder.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
+//        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class,
+//                this.getAvailableColumns());
+//        listBuilder.setContainerDataSource(container);
+//        getAvailableColumns().forEach(field -> listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey())));
+//
+//        final Collection<TableViewField> viewColumnIds = this.getViewColumns();
+//        listBuilder.setValue(viewColumnIds);
+//        contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
+//
+//        contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_PREVIEW)));
+//        sampleTableDisplay = new Table();
+//        for (TableViewField field : getAvailableColumns()) {
+//            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "",
+//                    UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
+//            sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
+//        }
+//        sampleTableDisplay.setWidth("100%");
+//        sampleTableDisplay.addItem(buildSampleData(), 1);
+//        sampleTableDisplay.setPageLength(1);
+//        contentLayout.with(sampleTableDisplay);
+//        filterColumns();
+//
+//        listBuilder.addValueChangeListener(valueChangeEvent -> filterColumns());
 
         MButton resetBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
             listBuilder.setValue(getDefaultColumns());
@@ -179,14 +177,15 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     }
 
     private ReportExportType getExportType() {
-        String exportTypeVal = (String) optionGroup.getValue();
-        if (UserUIContext.getMessage(FileI18nEnum.CSV).equals(exportTypeVal)) {
-            return ReportExportType.CSV;
-        } else if (UserUIContext.getMessage(FileI18nEnum.EXCEL).equals(exportTypeVal)) {
-            return ReportExportType.EXCEL;
-        } else {
-            return ReportExportType.PDF;
-        }
+//        String exportTypeVal = (String) optionGroup.getValue();
+//        if (UserUIContext.getMessage(FileI18nEnum.CSV).equals(exportTypeVal)) {
+//            return ReportExportType.CSV;
+//        } else if (UserUIContext.getMessage(FileI18nEnum.EXCEL).equals(exportTypeVal)) {
+//            return ReportExportType.EXCEL;
+//        } else {
+//            return ReportExportType.PDF;
+//        }
+        return ReportExportType.PDF;
     }
 
     private void filterColumns() {
@@ -195,7 +194,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         for (TableViewField column : columns) {
             visibleColumns.add(column.getField());
         }
-        sampleTableDisplay.setVisibleColumns(visibleColumns.toArray(new String[visibleColumns.size()]));
+//        sampleTableDisplay.setVisibleColumns(visibleColumns.toArray(new String[visibleColumns.size()]));
     }
 
     private Collection<TableViewField> getViewColumns() {

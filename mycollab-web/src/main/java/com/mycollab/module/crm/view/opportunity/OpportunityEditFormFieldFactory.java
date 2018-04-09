@@ -29,7 +29,7 @@ import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.IntegerField;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -50,7 +50,7 @@ class OpportunityEditFormFieldFactory<B extends Opportunity> extends AbstractBea
     }
 
     @Override
-    protected AbstractField<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         if (propertyId.equals("campaignid")) {
             return new CampaignSelectionField();
         } else if (propertyId.equals("accountid")) {

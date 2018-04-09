@@ -29,10 +29,9 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
-import com.vaadin.data.util.BeanContainer;
+import com.vaadin.v7.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -48,6 +47,7 @@ import java.util.*;
  * @author MyCollab Ltd.
  * @since 4.0
  */
+//TODO: revise this class
 public class BuildCriterionComponent<S extends SearchCriteria> extends MVerticalLayout implements CriteriaBuilderComponent<S> {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(BuildCriterionComponent.class);
@@ -232,13 +232,13 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             }
 
             Param param = searchFieldInfo.getParam();
-            Collection<?> itemIds = fieldSelectionBox.getItemIds();
-            for (Object item : itemIds) {
-                if (param.equals(item)) {
-                    fieldSelectionBox.setValue(item);
-                    break;
-                }
-            }
+//            Collection<?> itemIds = fieldSelectionBox.getItemIds();
+//            for (Object item : itemIds) {
+//                if (param.equals(item)) {
+//                    fieldSelectionBox.setValue(item);
+//                    break;
+//                }
+//            }
 
             compareSelectionBox.setValue(searchFieldInfo.getCompareOper());
             valueBox.removeAllComponents();
@@ -262,15 +262,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 String compareItem = (String) compareSelectionBox.getValue();
                 if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
                     PopupDateFieldExt field1 = new PopupDateFieldExt();
-                    field1.setValue((Date) Array.get(searchFieldInfo.eval(), 0));
+//                    field1.setValue((Date) Array.get(searchFieldInfo.eval(), 0));
                     field1.setWidth(width);
                     PopupDateFieldExt field2 = new PopupDateFieldExt();
-                    field2.setValue((Date) Array.get(searchFieldInfo.eval(), 1));
+//                    field2.setValue((Date) Array.get(searchFieldInfo.eval(), 1));
                     field2.setWidth(width);
                     valueBox.with(field1, field2);
                 } else {
                     PopupDateFieldExt field = new PopupDateFieldExt();
-                    field.setValue((Date) searchFieldInfo.eval());
+//                    field.setValue((Date) searchFieldInfo.eval());
                     field.setWidth(width);
                     valueBox.addComponent(field);
                 }
@@ -280,17 +280,17 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 if (comp != null) {
                     comp.setWidth(width);
                     valueBox.addComponent(comp);
-                    if (comp instanceof CustomField<?> && (((CustomField) comp).getType() == Integer.class)) {
-                        ((Field) comp).setValue(Integer.parseInt(searchFieldInfo.eval() + ""));
-                    } else {
-                        ((Field) comp).setValue(searchFieldInfo.eval());
-                    }
+//                    if (comp instanceof CustomField<?> && (((CustomField) comp).getType() == Integer.class)) {
+//                        ((Field) comp).setValue(Integer.parseInt(searchFieldInfo.eval() + ""));
+//                    } else {
+//                        ((Field) comp).setValue(searchFieldInfo.eval());
+//                    }
                 }
             } else if (param instanceof StringListParam) {
                 ValueListSelect listSelect = new ValueListSelect();
                 listSelect.setCaption(null);
                 listSelect.loadData(((StringListParam) param).getValues().toArray(new String[0]));
-                listSelect.setValue(searchFieldInfo.eval());
+//                listSelect.setValue(searchFieldInfo.eval());
                 listSelect.setWidth(width);
                 valueBox.addComponent(listSelect);
 
@@ -300,7 +300,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                     I18nValueListSelect listSelect = new I18nValueListSelect();
                     listSelect.setCaption(null);
                     listSelect.loadData(((I18nStringListParam) param).getValues());
-                    listSelect.setValue(searchFieldInfo.eval());
+//                    listSelect.setValue(searchFieldInfo.eval());
                     listSelect.setWidth(width);
                     valueBox.addComponent(listSelect);
                 }
@@ -314,17 +314,17 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
         private void buildFieldSelectionBox() {
             fieldSelectionBox = new ComboBox();
-            fieldSelectionBox.setImmediate(true);
+//            fieldSelectionBox.setImmediate(true);
             fieldSelectionBox.setWidth("200px");
-            fieldSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//            fieldSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             for (Param field : paramFields) {
-                fieldSelectionBox.addItem(field);
+//                fieldSelectionBox.addItem(field);
                 CacheParamMapper.ValueParam valueParam = CacheParamMapper.getValueParam(searchCategory, field.getId());
-                fieldSelectionBox.setItemCaption(field, UserUIContext.getMessage(valueParam.getDisplayName()));
+//                fieldSelectionBox.setItemCaption(field, UserUIContext.getMessage(valueParam.getDisplayName()));
             }
 
             fieldSelectionBox.addValueChangeListener(valueChangeEvent -> {
-                compareSelectionBox.removeAllItems();
+//                compareSelectionBox.removeAllItems();
 
                 Param field = (Param) fieldSelectionBox.getValue();
                 if (field != null) {
@@ -354,7 +354,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
             compareSelectionBox = new I18nValueComboBox(false);
             compareSelectionBox.setWidth("150px");
-            compareSelectionBox.setImmediate(true);
+//            compareSelectionBox.setImmediate(true);
             compareSelectionBox.addValueChangeListener(valueChangeEvent -> displayAssociateInputField((Param) fieldSelectionBox.getValue()));
         }
 
@@ -414,19 +414,19 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             String prefixOper = (operatorSelectionBox != null) ? (String) operatorSelectionBox.getValue() : "AND";
             Param param = (Param) fieldSelectionBox.getValue();
             String compareOper = (String) compareSelectionBox.getValue();
-            Object value;
+            Object value = null;
             int componentCount = valueBox.getComponentCount();
-            if (componentCount == 1) {
-                Field<?> component = (Field<?>) valueBox.getComponent(0);
-                value = component.getValue();
-            } else if (componentCount > 1) {
-                value = new Object[componentCount];
-                for (int i = 0; i < componentCount; i++) {
-                    Array.set(value, i, ((Field<?>) valueBox.getComponent(i)).getValue());
-                }
-            } else {
-                return null;
-            }
+//            if (componentCount == 1) {
+//                Field<?> component = (Field<?>) valueBox.getComponent(0);
+//                value = component.getValue();
+//            } else if (componentCount > 1) {
+//                value = new Object[componentCount];
+//                for (int i = 0; i < componentCount; i++) {
+//                    Array.set(value, i, ((Field<?>) valueBox.getComponent(i)).getValue());
+//                }
+//            } else {
+//                return null;
+//            }
 
             if (value != null) {
                 if (value.getClass().isArray()) {
@@ -447,18 +447,18 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
     private class SavedSearchResultComboBox extends ComboBox {
         private static final long serialVersionUID = 1L;
-        private BeanContainer<String, SaveSearchResult> beanItem;
+//        private BeanContainer<String, SaveSearchResult> beanItem;
 
         SavedSearchResultComboBox() {
-            this.setImmediate(true);
-            this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+//            this.setImmediate(true);
+//            this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
             buildQuerySelectComponent();
 
             this.addValueChangeListener(valueChangeEvent -> {
                 Object itemId = SavedSearchResultComboBox.this.getValue();
                 if (itemId != null) {
-                    final SaveSearchResult data = beanItem.getItem(itemId).getBean();
-
+//                    final SaveSearchResult data = beanItem.getItem(itemId).getBean();
+                    final SaveSearchResult data = null;
                     String queryText = data.getQuerytext();
                     try {
                         List<SearchFieldInfo<S>> fieldInfos = QueryAnalyzer.toSearchFieldInfos(queryText, searchCategory);
@@ -511,14 +511,14 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
             SaveSearchResultService saveSearchResultService = AppContextUtil.getSpringBean(SaveSearchResultService.class);
             List<SaveSearchResult> result = (List<SaveSearchResult>) saveSearchResultService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-            beanItem = new BeanContainer<>(SaveSearchResult.class);
-            beanItem.setBeanIdProperty("id");
-
-            for (SaveSearchResult searchResult : result) {
-                beanItem.addBean(searchResult);
-            }
-            this.setContainerDataSource(beanItem);
-            this.setItemCaptionPropertyId("queryname");
+//            beanItem = new BeanContainer<>(SaveSearchResult.class);
+//            beanItem.setBeanIdProperty("id");
+//
+//            for (SaveSearchResult searchResult : result) {
+//                beanItem.addBean(searchResult);
+//            }
+//            this.setContainerDataSource(beanItem);
+//            this.setItemCaptionPropertyId("queryname");
         }
     }
 }

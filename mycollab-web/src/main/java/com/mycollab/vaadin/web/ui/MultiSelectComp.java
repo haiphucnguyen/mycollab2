@@ -58,7 +58,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         this.canAddNew = canAddNew;
         propertyDisplayField = displayName;
 
-        componentsText = new MTextField().withNullRepresentation("").withReadOnly(true)
+        componentsText = new MTextField().withReadOnly(true)
                 .withStyleName("noBorderRight").withFullWidth();
 
         componentPopupSelection = new PopupButton();
@@ -108,7 +108,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
             if (selectedItems != null) {
                 for (T selectedItem : selectedItems) {
                     if (compareVal(item, selectedItem)) {
-                        chkItem.setInternalVal(true);
+//                        chkItem.setInternalVal(true);
                     }
                 }
             }
@@ -132,7 +132,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         }
 
         final ItemSelectionComp<T> chkItem = new ItemSelectionComp<>(item, itemName);
-        chkItem.setImmediate(true);
 
         chkItem.addValueChangeListener(valueChangeEvent -> {
             final Boolean value = chkItem.getValue();
@@ -190,6 +189,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         return this.selectedItems;
     }
 
+    // TODO: revise this class
     public static class ItemSelectionComp<T> extends CheckBox {
         private static final long serialVersionUID = 1L;
 
@@ -201,8 +201,8 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
             this.setCaption(StringUtils.trim(caption, 25, true));
         }
 
-        void setInternalVal(Boolean val) {
-            this.setInternalValue(val);
-        }
+//        void setInternalVal(Boolean val) {
+//            this.setInternalValue(val);
+//        }
     }
 }

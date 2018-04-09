@@ -26,17 +26,20 @@ import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
+import com.vaadin.ui.Label;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
+// TODO: revise this class
 @ViewComponent
 public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjectMember> implements ProjectMemberEditView {
     private static final long serialVersionUID = 1483479851089277052L;
@@ -88,7 +91,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
     }
 
     private class ProjectMemberEditFormLayoutFactory extends AbstractFormLayoutFactory {
-        private static final long serialVersionUID = -6204799792781581979L;
         private GridFormLayoutHelper informationLayout;
 
         @Override
@@ -105,7 +107,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected Component onAttachField(Object propertyId, Component field) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
             } else if (ProjectMember.Field.projectroleid.equalTo(propertyId)) {
@@ -123,7 +125,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         }
 
         @Override
-        protected AbstractField<?> onCreateField(Object propertyId) {
+        protected HasValue<?> onCreateField(Object propertyId) {
             if (ProjectMember.Field.username.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getUsername(), beanItem.getDisplayName(), beanItem
@@ -142,54 +144,59 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
         public ProjectRoleSelectionField() {
             roleComboBox = new ProjectRoleListSelect();
-            roleComboBox.addValueChangeListener(new Property.ValueChangeListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void valueChange(final Property.ValueChangeEvent event) {
-                    displayRolePermission((Integer) roleComboBox.getValue());
-                }
-            });
+//            roleComboBox.addValueChangeListener(new Property.ValueChangeListener() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public void valueChange(final Property.ValueChangeEvent event) {
+//                    displayRolePermission((Integer) roleComboBox.getValue());
+//                }
+//            });
             roleComboBox.setWidth("100%");
         }
 
         @Override
-        public void commit() throws SourceException, InvalidValueException {
-            Integer roleId = (Integer) roleComboBox.getValue();
-            if (roleId == -1) {
-                beanItem.setIsadmin(Boolean.TRUE);
-                this.setInternalValue(null);
-            } else {
-                this.setInternalValue((Integer) roleComboBox.getValue());
-                beanItem.setIsadmin(Boolean.FALSE);
-            }
+        protected void doSetValue(Integer integer) {
 
-            super.commit();
         }
 
-        @Override
-        public void setPropertyDataSource(@SuppressWarnings("rawtypes") Property newDataSource) {
-            Object value = newDataSource.getValue();
-            if (value instanceof Integer) {
-                roleComboBox.setValue(value);
-                displayRolePermission((Integer) roleComboBox.getValue());
-            } else if (value == null) {
-                if (Boolean.TRUE == beanItem.getIsadmin()) {
-                    roleComboBox.setValue(-1);
-                    displayRolePermission(null);
-                }
-            }
-            super.setPropertyDataSource(newDataSource);
-        }
+//        @Override
+//        public void commit() throws SourceException, InvalidValueException {
+//            Integer roleId = (Integer) roleComboBox.getValue();
+//            if (roleId == -1) {
+//                beanItem.setIsadmin(Boolean.TRUE);
+//                this.setInternalValue(null);
+//            } else {
+//                this.setInternalValue((Integer) roleComboBox.getValue());
+//                beanItem.setIsadmin(Boolean.FALSE);
+//            }
+//
+//            super.commit();
+//        }
 
-        @Override
-        public Class<Integer> getType() {
-            return Integer.class;
-        }
+//        @Override
+//        public void setPropertyDataSource(@SuppressWarnings("rawtypes") Property newDataSource) {
+//            Object value = newDataSource.getValue();
+//            if (value instanceof Integer) {
+//                roleComboBox.setValue(value);
+//                displayRolePermission((Integer) roleComboBox.getValue());
+//            } else if (value == null) {
+//                if (Boolean.TRUE == beanItem.getIsadmin()) {
+//                    roleComboBox.setValue(-1);
+//                    displayRolePermission(null);
+//                }
+//            }
+//            super.setPropertyDataSource(newDataSource);
+//        }
 
         @Override
         protected Component initContent() {
             return roleComboBox;
+        }
+
+        @Override
+        public Integer getValue() {
+            return null;
         }
     }
 }

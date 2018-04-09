@@ -17,16 +17,14 @@ import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.event.ViewEvent;
-import com.vaadin.addon.touchkit.ui.EmailField;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.touchkit.ui.EmailField;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 
 import java.util.Collections;
 
@@ -34,6 +32,7 @@ import java.util.Collections;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
+// TODO: revise this class
 @ViewComponent
 public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implements ProjectMemberInviteView {
     private static final long serialVersionUID = 6319585054784302576L;
@@ -52,15 +51,15 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
 
     private void constructUI() {
         this.roleComboBox = new ProjectRoleListSelect();
-        this.roleComboBox.addValueChangeListener(new ValueChangeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                Integer roleId = (Integer) roleComboBox.getValue();
-                displayRolePermission(roleId);
-            }
-        });
+//        this.roleComboBox.addValueChangeListener(new ValueChangeListener() {
+//            private static final long serialVersionUID = 1L;
+//
+//            @Override
+//            public void valueChange(ValueChangeEvent event) {
+//                Integer roleId = (Integer) roleComboBox.getValue();
+//                displayRolePermission(roleId);
+//            }
+//        });
         roleComboBox.setCaption(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE));
 
         final VerticalLayout mainLayout = new VerticalLayout();
@@ -90,7 +89,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
             if ("".equals(inviteEmailField.getValue())) {
                 return;
             }
-            roleId = (Integer) roleComboBox.getValue();
+//            roleId = (Integer) roleComboBox.getValue();
             fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
                     new ProjectMemberEvent.InviteProjectMembers(Collections.singletonList(inviteEmailField.getValue()),
                             ProjectMemberInviteViewImpl.this.roleId, messageArea.getValue())));

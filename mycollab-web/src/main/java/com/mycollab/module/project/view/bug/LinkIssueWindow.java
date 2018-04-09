@@ -32,6 +32,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -112,7 +113,7 @@ public class LinkIssueWindow extends MWindow {
             }
 
             @Override
-            protected Component onAttachField(Object propertyId, Field<?> field) {
+            protected Component onAttachField(Object propertyId, Component field) {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, "This bug", 0, 0);
                 } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
@@ -130,7 +131,7 @@ public class LinkIssueWindow extends MWindow {
             }
 
             @Override
-            protected AbstractField<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     return new BugRelationComboBox();
                 } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
