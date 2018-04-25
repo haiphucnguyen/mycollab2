@@ -41,6 +41,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGroupEditFieldFactory<B> {
     private static final long serialVersionUID = 1L;
 
@@ -67,9 +68,9 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
         } else if (propertyId.equals("lastname")) {
             MTextField tf = new MTextField();
             if (isValidateForm) {
-                tf.withNullRepresentation("").withRequired(true)
-                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                UserUIContext.getMessage(GenericI18Enum.FORM_LASTNAME)));
+//                tf.withNullRepresentation("").withRequired(true)
+//                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                UserUIContext.getMessage(GenericI18Enum.FORM_LASTNAME)));
             }
 
             return tf;
@@ -77,7 +78,7 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
             return new RichTextArea();
         } else if (propertyId.equals("assignuser")) {
             ActiveUserComboBox userBox = new ActiveUserComboBox();
-            userBox.select(attachForm.getBean().getAssignuser());
+//            userBox.select(attachForm.getBean().getAssignuser());
             return userBox;
         } else if (propertyId.equals("primcountry") || propertyId.equals("othercountry")) {
             return new CountryComboBox();
@@ -102,7 +103,6 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
 
             TextField firstNameField = new TextField();
             firstNameField.setWidth("100%");
-            firstNameField.setNullRepresentation("");
             layout.with(firstNameField).expand(firstNameField);
 
             // binding field group
@@ -113,8 +113,13 @@ class ContactEditFormFieldFactory<B extends Contact> extends AbstractBeanFieldGr
         }
 
         @Override
-        public Class<? extends Contact> getType() {
-            return Contact.class;
+        protected void doSetValue(Contact contact) {
+
+        }
+
+        @Override
+        public Contact getValue() {
+            return null;
         }
     }
 }

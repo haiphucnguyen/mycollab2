@@ -45,6 +45,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class MailFormWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
@@ -131,7 +132,8 @@ public class MailFormWindow extends MWindow {
             });
         }
 
-        final MTextField subject = new MTextField().withRequired(true).withFullWidth();
+//        final MTextField subject = new MTextField().withRequired(true).withFullWidth();
+        final MTextField subject = new MTextField();
         subjectField = createTextFieldMail("Subject:", subject);
         inputLayout.addComponent(subjectField, 0, 1);
 

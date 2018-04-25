@@ -62,6 +62,7 @@ import java.util.List;
  * @since 3.0
  */
 @ViewComponent
+// TODO: revise
 public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements ContactRoleEditView {
     private static final long serialVersionUID = 1L;
 
@@ -214,20 +215,20 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
             contactField = new ContactSelectionField();
             this.addComponent(contactField);
-            contactField.setPropertyDataSource(new AbstractField<SimpleContactOpportunityRel>() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public SimpleContactOpportunityRel getValue() {
-                    return contactOpp;
-                }
-
-                @Override
-                public Class<? extends SimpleContactOpportunityRel> getType() {
-                    return SimpleContactOpportunityRel.class;
-                }
-
-            });
+//            contactField.setPropertyDataSource(new AbstractField<SimpleContactOpportunityRel>() {
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                public SimpleContactOpportunityRel getValue() {
+//                    return contactOpp;
+//                }
+//
+//                @Override
+//                public Class<? extends SimpleContactOpportunityRel> getType() {
+//                    return SimpleContactOpportunityRel.class;
+//                }
+//
+//            });
             contactField.setWidth("250px");
 
             MButton accountLink = new MButton(contactOpp.getAccountName(),
@@ -277,7 +278,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         private static final long serialVersionUID = 1L;
 
         RoleDecisionComboBox() {
-            this.setNullSelectionAllowed(false);
+//            this.setNullSelectionAllowed(false);
             this.loadData(Arrays.asList(CrmDataTypeFactory.opportunityContactRoleList));
         }
     }

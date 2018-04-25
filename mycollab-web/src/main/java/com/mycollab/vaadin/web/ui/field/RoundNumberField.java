@@ -24,6 +24,7 @@ import com.vaadin.ui.Label;
  * @author MyCollab Ltd.
  * @since 5.0.0
  */
+// TODO: revise
 public class RoundNumberField extends CustomField<Number> {
     private static final long serialVersionUID = 1L;
 
@@ -31,11 +32,6 @@ public class RoundNumberField extends CustomField<Number> {
 
     public RoundNumberField(final Number value) {
         this.value = value;
-    }
-
-    @Override
-    public Class<Number> getType() {
-        return Number.class;
     }
 
     @Override
@@ -53,5 +49,15 @@ public class RoundNumberField extends CustomField<Number> {
         }
 
         return label;
+    }
+
+    @Override
+    protected void doSetValue(Number number) {
+
+    }
+
+    @Override
+    public Number getValue() {
+        return null;
     }
 }

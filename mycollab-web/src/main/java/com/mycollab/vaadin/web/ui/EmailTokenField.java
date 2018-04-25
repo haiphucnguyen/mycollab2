@@ -66,7 +66,6 @@ class EmailTokenField extends CssLayout implements SuggestField.NewItemsHandler,
         suggestField.setNewItemsAllowed(true);
         suggestField.setNewItemsHandler(this);
         suggestField.focus();
-        suggestField.setImmediate(true);
         suggestField.setTokenMode(true);
         suggestField.setSuggestionHandler(this);
         suggestField.setSuggestionConverter(new UserSuggestionConverter());

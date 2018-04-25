@@ -130,6 +130,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
         }
     }
 
+    // TODO: revise
     private static class SubTasksComp extends CustomField {
         private static final long serialVersionUID = 1L;
 
@@ -207,11 +208,6 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
             return contentLayout;
         }
 
-        @Override
-        public Class getType() {
-            return Object.class;
-        }
-
         private HorizontalLayout generateSubTaskContent(final SimpleTask subTask) {
             MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX);
             layout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
@@ -258,6 +254,16 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 toggleTaskSummaryField.updateLabel();
             });
             return layout;
+        }
+
+        @Override
+        protected void doSetValue(Object o) {
+
+        }
+
+        @Override
+        public Object getValue() {
+            return null;
         }
     }
 

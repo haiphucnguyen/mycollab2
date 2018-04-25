@@ -63,7 +63,6 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
         this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleActivity simpleEvent = getBeanByIndex(itemId);
             final CheckBoxDecor cb = new CheckBoxDecor("", simpleEvent.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> fireSelectItemEvent(simpleEvent));
             simpleEvent.setExtraData(cb);
             return cb;

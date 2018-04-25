@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
+// TODO: revise
 public class LinkViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
@@ -45,11 +46,6 @@ public class LinkViewField extends CustomField<String> {
     }
 
     @Override
-    public Class<String> getType() {
-        return String.class;
-    }
-
-    @Override
     protected Component initContent() {
         if (StringUtils.isNotBlank(value)) {
             final LabelLink l = new LabelLink(value, href);
@@ -63,5 +59,15 @@ public class LinkViewField extends CustomField<String> {
             l.setWidth("100%");
             return l;
         }
+    }
+
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

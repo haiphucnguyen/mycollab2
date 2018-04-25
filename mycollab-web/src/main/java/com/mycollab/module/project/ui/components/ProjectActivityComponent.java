@@ -66,6 +66,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
+// TODO: revise
 public class ProjectActivityComponent extends MVerticalLayout implements ReloadableComponent {
     private static Logger LOG = LoggerFactory.getLogger(ProjectActivityComponent.class);
     private String type;
@@ -97,25 +98,25 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         this.groupFormatter = AuditLogRegistry.getFieldGroupFormatterOfType(type);
         headerLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, 0));
 
-        final OptionGroup sortDirection = new OptionGroup();
-        sortDirection.addStyleName("sortDirection");
-        String oldestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_OLDEST_FIRST);
-        final String newestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
-        sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
-        sortDirection.setValue(newestFirstDirection);
-        sortDirection.addValueChangeListener(valueChangeEvent -> {
-            Object value = sortDirection.getValue();
-            isAscending = newestFirstDirection.equals(value);
-            displayActivities();
-        });
+//        final OptionGroup sortDirection = new OptionGroup();
+//        sortDirection.addStyleName("sortDirection");
+//        String oldestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_OLDEST_FIRST);
+//        final String newestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
+//        sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
+//        sortDirection.setValue(newestFirstDirection);
+//        sortDirection.addValueChangeListener(valueChangeEvent -> {
+//            Object value = sortDirection.getValue();
+//            isAscending = newestFirstDirection.equals(value);
+//            displayActivities();
+//        });
 
-        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
-                .withFullWidth().with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
-                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
-
-        commentBox = new ProjectCommentInput(this, type, extraTypeId);
-        activityBox = new MVerticalLayout().withMargin(new MMarginInfo(true, true, true, false));
-        this.with(headerPanel, commentBox, activityBox);
+//        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
+//                .withFullWidth().with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
+//                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
+//
+//        commentBox = new ProjectCommentInput(this, type, extraTypeId);
+//        activityBox = new MVerticalLayout().withMargin(new MMarginInfo(true, true, true, false));
+//        this.with(headerPanel, commentBox, activityBox);
 
         commentService = AppContextUtil.getSpringBean(CommentService.class);
         auditLogService = AppContextUtil.getSpringBean(AuditLogService.class);

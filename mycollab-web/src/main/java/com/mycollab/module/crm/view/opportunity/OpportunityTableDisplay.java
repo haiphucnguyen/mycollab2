@@ -59,7 +59,6 @@ public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunitySe
         this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleOpportunity opportunity = getBeanByIndex(itemId);
             final CheckBoxDecor cb = new CheckBoxDecor("", opportunity.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> {
                 fireSelectItemEvent(opportunity);
                 fireTableEvent(new TableClickEvent(OpportunityTableDisplay.this, opportunity, "selected"));

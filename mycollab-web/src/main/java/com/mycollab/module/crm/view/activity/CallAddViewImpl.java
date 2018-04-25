@@ -1,22 +1,21 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.CallWithBLOBs;
 import com.mycollab.module.crm.i18n.CallI18nEnum;
@@ -36,7 +35,6 @@ import com.mycollab.vaadin.web.ui.IntegerField;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.data.HasValue;
-import com.vaadin.data.Property;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.fields.MTextField;
@@ -50,6 +48,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO: revise
 @ViewComponent
 public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> implements CallAddView {
     private static final long serialVersionUID = 1L;
@@ -99,9 +98,9 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             if (propertyId.equals("subject")) {
                 MTextField tf = new MTextField();
                 if (isValidateForm) {
-                    tf.withNullRepresentation("").withRequired(true)
-                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                    UserUIContext.getMessage(CallI18nEnum.FORM_SUBJECT)));
+//                    tf.withNullRepresentation("").withRequired(true)
+//                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                    UserUIContext.getMessage(CallI18nEnum.FORM_SUBJECT)));
                 }
                 return tf;
             } else if (propertyId.equals("assignuser")) {
@@ -112,7 +111,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
                 return new RichTextArea();
             } else if (propertyId.equals("durationinseconds")) {
                 CallDurationField callDurationField = new CallDurationField();
-                callDurationField.setRequired(true);
+//                callDurationField.setRequired(true);
                 return callDurationField;
             } else if (propertyId.equals("purpose")) {
                 return new CallPurposeComboBox();
@@ -132,22 +131,27 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Class<?> getType() {
-                return Object.class;
-            }
-
-            @Override
             protected Component initContent() {
                 CallTypeComboBox typeField = new CallTypeComboBox();
-                typeField.select(beanItem.getCalltype());
+//                typeField.select(beanItem.getCalltype());
 
                 CallStatusComboBox statusField = new CallStatusComboBox();
-                statusField.select(beanItem.getStatus());
+//                statusField.select(beanItem.getStatus());
 
                 // binding field group
                 binder.bind(typeField, "calltype");
                 binder.bind(statusField, "status");
                 return new MHorizontalLayout(typeField, statusField);
+            }
+
+            @Override
+            protected void doSetValue(Object o) {
+
+            }
+
+            @Override
+            public Object getValue() {
+                return null;
             }
         }
     }
@@ -177,11 +181,16 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        public void commit() {
-            Integer durationInSeconds = calculateDurationInSeconds();
-            this.setInternalValue(durationInSeconds);
-            super.commit();
+        protected void doSetValue(Integer integer) {
+
         }
+
+//        @Override
+//        public void commit() {
+//            Integer durationInSeconds = calculateDurationInSeconds();
+//            this.setInternalValue(durationInSeconds);
+//            super.commit();
+//        }
 
         private Integer calculateDurationInSeconds() {
             Integer hourValue = hourField.getValue();
@@ -191,7 +200,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             try {
                 minutesVal = Integer.parseInt(minuteValue);
             } catch (NumberFormatException e) {
-                minutesField.select(null);
+//                minutesField.select(null);
                 minutesVal = 0;
             }
 
@@ -202,18 +211,18 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             return 0;
         }
 
-        @Override
-        public void setPropertyDataSource(Property newDataSource) {
-            Object value = newDataSource.getValue();
-            if (value instanceof Integer) {
-                Integer duration = (Integer) value;
-                int hours = duration / 3600;
-                int minutes = (duration % 3600) / 60;
-                hourField.setValue(hours);
-                minutesField.select("" + minutes);
-            }
-            super.setPropertyDataSource(newDataSource);
-        }
+//        @Override
+//        public void setPropertyDataSource(Property newDataSource) {
+//            Object value = newDataSource.getValue();
+//            if (value instanceof Integer) {
+//                Integer duration = (Integer) value;
+//                int hours = duration / 3600;
+//                int minutes = (duration % 3600) / 60;
+//                hourField.setValue(hours);
+//                minutesField.select("" + minutes);
+//            }
+//            super.setPropertyDataSource(newDataSource);
+//        }
 
         @Override
         protected Component initContent() {
@@ -221,8 +230,8 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
         }
 
         @Override
-        public Class<Integer> getType() {
-            return Integer.class;
+        public Integer getValue() {
+            return null;
         }
     }
 

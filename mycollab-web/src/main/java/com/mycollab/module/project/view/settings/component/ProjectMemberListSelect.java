@@ -32,6 +32,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.0
  */
+// TODO: Revise
 public class ProjectMemberListSelect extends ListSelect {
     private static final long serialVersionUID = 1L;
 
@@ -40,9 +41,9 @@ public class ProjectMemberListSelect extends ListSelect {
     }
 
     public ProjectMemberListSelect(boolean listActiveMembersOnly, List<Integer> projectIds) {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-        this.setNullSelectionAllowed(false);
-        this.setMultiSelect(true);
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//        this.setNullSelectionAllowed(false);
+//        this.setMultiSelect(true);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(projectIds));
@@ -53,11 +54,11 @@ public class ProjectMemberListSelect extends ListSelect {
 
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleProjectMember> memberList = (List<SimpleProjectMember>) projectMemberService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
-        for (SimpleProjectMember member : memberList) {
-            this.addItem(member.getUsername());
-            this.setItemCaption(member.getUsername(), member.getDisplayName());
-            this.setItemIcon(member.getUsername(), UserAvatarControlFactory.createAvatarResource(member.getMemberAvatarId(), 16));
-        }
+//        for (SimpleProjectMember member : memberList) {
+//            this.addItem(member.getUsername());
+//            this.setItemCaption(member.getUsername(), member.getDisplayName());
+//            this.setItemIcon(member.getUsername(), UserAvatarControlFactory.createAvatarResource(member.getMemberAvatarId(), 16));
+//        }
         this.setRows(4);
     }
 }

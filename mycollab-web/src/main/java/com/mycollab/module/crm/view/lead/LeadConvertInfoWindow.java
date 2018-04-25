@@ -1,24 +1,22 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.lead;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.domain.Opportunity;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.event.LeadEvent;
@@ -27,14 +25,15 @@ import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.mycollab.module.crm.view.opportunity.OpportunitySalesStageComboBox;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
@@ -46,6 +45,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO: revise
 public class LeadConvertInfoWindow extends MWindow {
     private static final long serialVersionUID = -4005327071240226216L;
 
@@ -180,9 +180,9 @@ public class LeadConvertInfoWindow extends MWindow {
                     } else if (propertyId.equals("opportunityname")) {
                         MTextField tf = new MTextField();
                         if (isValidateForm) {
-                            tf.withNullRepresentation("").withRequired(true)
-                                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                            UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+//                            tf.withNullRepresentation("").withRequired(true)
+//                                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                            UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
                         }
                         return tf;
                     } else if (propertyId.equals("currencyid")) {

@@ -56,6 +56,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
     private static final long serialVersionUID = 1L;
 
@@ -142,54 +143,54 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
             }
         });
 
-        view.getRelatedActivityHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleActivity>() {
-            @Override
-            public void createNewRelatedItem(String itemId) {
-                if (itemId.equals("task")) {
-                    SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.CASE);
-                    task.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CaseReadPresenter.this, task));
-                } else if (itemId.equals("meeting")) {
-                    SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.CASE);
-                    meeting.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(CaseReadPresenter.this, meeting));
-                } else if (itemId.equals("call")) {
-                    SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.CASE);
-                    call.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CaseReadPresenter.this, call));
-                }
-            }
-        });
-
-        view.getRelatedContactHandlers().addRelatedListHandler(
-                new AbstractRelatedListHandler<SimpleContact>() {
-                    @Override
-                    public void createNewRelatedItem(String itemId) {
-                        SimpleContact contact = new SimpleContact();
-                        contact.setExtraData(view.getItem());
-                        EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(CaseReadPresenter.this, contact));
-                    }
-
-                    @Override
-                    public void selectAssociateItems(Set<SimpleContact> items) {
-                        List<ContactCase> associateContacts = new ArrayList<>();
-                        SimpleCase cases = view.getItem();
-                        for (SimpleContact contact : items) {
-                            ContactCase associateContact = new ContactCase();
-                            associateContact.setCaseid(cases.getId());
-                            associateContact.setContactid(contact.getId());
-                            associateContact.setCreatedtime(new GregorianCalendar().getTime());
-                            associateContacts.add(associateContact);
-                        }
-
-                        ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
-                        contactService.saveContactCaseRelationship(associateContacts, AppUI.getAccountId());
-                        view.getRelatedContactHandlers().refresh();
-                    }
-                });
+//        view.getRelatedActivityHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleActivity>() {
+//            @Override
+//            public void createNewRelatedItem(String itemId) {
+//                if (itemId.equals("task")) {
+//                    SimpleCrmTask task = new SimpleCrmTask();
+//                    task.setType(CrmTypeConstants.CASE);
+//                    task.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CaseReadPresenter.this, task));
+//                } else if (itemId.equals("meeting")) {
+//                    SimpleMeeting meeting = new SimpleMeeting();
+//                    meeting.setType(CrmTypeConstants.CASE);
+//                    meeting.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(CaseReadPresenter.this, meeting));
+//                } else if (itemId.equals("call")) {
+//                    SimpleCall call = new SimpleCall();
+//                    call.setType(CrmTypeConstants.CASE);
+//                    call.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CaseReadPresenter.this, call));
+//                }
+//            }
+//        });
+//
+//        view.getRelatedContactHandlers().addRelatedListHandler(
+//                new AbstractRelatedListHandler<SimpleContact>() {
+//                    @Override
+//                    public void createNewRelatedItem(String itemId) {
+//                        SimpleContact contact = new SimpleContact();
+//                        contact.setExtraData(view.getItem());
+//                        EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(CaseReadPresenter.this, contact));
+//                    }
+//
+//                    @Override
+//                    public void selectAssociateItems(Set<SimpleContact> items) {
+//                        List<ContactCase> associateContacts = new ArrayList<>();
+//                        SimpleCase cases = view.getItem();
+//                        for (SimpleContact contact : items) {
+//                            ContactCase associateContact = new ContactCase();
+//                            associateContact.setCaseid(cases.getId());
+//                            associateContact.setContactid(contact.getId());
+//                            associateContact.setCreatedtime(new GregorianCalendar().getTime());
+//                            associateContacts.add(associateContact);
+//                        }
+//
+//                        ContactService contactService = AppContextUtil.getSpringBean(ContactService.class);
+//                        contactService.saveContactCaseRelationship(associateContacts, AppUI.getAccountId());
+//                        view.getRelatedContactHandlers().refresh();
+//                    }
+//                });
     }
 
     @Override

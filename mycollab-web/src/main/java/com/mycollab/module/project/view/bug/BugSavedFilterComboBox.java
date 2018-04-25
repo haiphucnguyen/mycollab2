@@ -37,6 +37,7 @@ import static com.mycollab.common.i18n.QueryI18nEnum.StringI18nEnum;
  * @author MyCollab Ltd
  * @since 5.2.1
  */
+// TODO: revise
 public class BugSavedFilterComboBox extends SavedFilterComboBox {
     public static final String ALL_BUGS = "ALL_BUGS";
     public static final String OPEN_BUGS = "OPEN_BUGS";
@@ -123,9 +124,19 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
         this.addSharedSearchQueryInfo(waitForApproveQuery);
     }
 
+    @Override
+    protected void doSetValue(String s) {
+
+    }
+
     public void setTotalCountNumber(int countNumber) {
         componentsText.setReadOnly(false);
         componentsText.setValue(selectedQueryName + " (" + countNumber + ")");
         componentsText.setReadOnly(true);
+    }
+
+    @Override
+    public String getValue() {
+        return null;
     }
 }

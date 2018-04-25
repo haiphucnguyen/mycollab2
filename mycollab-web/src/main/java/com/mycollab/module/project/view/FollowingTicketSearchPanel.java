@@ -34,7 +34,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +49,7 @@ import java.util.stream.Collectors;
  * @author MyCollab Ltd.
  * @since 4.0.0
  */
+// TODO: revise
 public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<FollowingTicketSearchCriteria> {
     private static final long serialVersionUID = 1L;
 
@@ -104,7 +104,7 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
             summaryField = new TextField();
             summaryField.setWidth("100%");
-            summaryField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
+//            summaryField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
             selectionLayout.addComponent(summaryField, 1, 0);
 
             Label typeLb = new Label("Type:");
@@ -132,9 +132,9 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
             projectField = new UserInvolvedProjectsListSelect();
             projectField.setWidth("300px");
-            projectField.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-            projectField.setNullSelectionAllowed(false);
-            projectField.setMultiSelect(true);
+//            projectField.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//            projectField.setNullSelectionAllowed(false);
+//            projectField.setMultiSelect(true);
             projectField.setRows(4);
             selectionLayout.addComponent(projectField, 3, 0, 3, 1);
 
@@ -191,10 +191,10 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             FollowingTicketSearchPanel.this.projects = AppContextUtil.getSpringBean(ProjectService.class)
                     .getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
 
-            for (SimpleProject project : projects) {
-                this.addItem(project.getId());
-                this.setItemCaption(project.getId(), project.getName());
-            }
+//            for (SimpleProject project : projects) {
+//                this.addItem(project.getId());
+//                this.setItemCaption(project.getId(), project.getName());
+//            }
         }
     }
 }

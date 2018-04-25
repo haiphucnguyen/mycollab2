@@ -20,7 +20,7 @@ package com.mycollab.vaadin.ui
  * @author MyCollab Ltd.
  * @since 1.0
  */
-interface RelatedListHandler<in T> {
+interface RelatedListHandler<T> {
 
     fun createNewRelatedItem(itemId: String)
 

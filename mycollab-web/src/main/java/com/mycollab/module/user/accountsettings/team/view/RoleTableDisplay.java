@@ -45,7 +45,6 @@ public class RoleTableDisplay extends DefaultPagedBeanTable<RoleService, RoleSea
         this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleRole role = getBeanByIndex(itemId);
             CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> RoleTableDisplay.this.fireSelectItemEvent(role));
             role.setExtraData(cb);
             return cb;

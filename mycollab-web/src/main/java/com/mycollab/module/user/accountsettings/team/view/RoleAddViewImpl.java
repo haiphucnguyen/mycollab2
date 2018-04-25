@@ -212,9 +212,10 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
                 if (propertyId.equals("description")) {
                     return new RichTextArea();
                 } else if (propertyId.equals("rolename")) {
-                    return new MTextField().withNullRepresentation("").withRequired(true)
-                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                    UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+                    // TODO: revise
+//                    return new MTextField().withNullRepresentation("").withRequired(true)
+//                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                    UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
 
                 }
                 return null;

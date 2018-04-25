@@ -81,7 +81,6 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleVersion version = tableItem.getBeanByIndex(itemId);
             final CheckBoxDecor cb = new CheckBoxDecor("", version.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(version));
             version.setExtraData(cb);
             return cb;

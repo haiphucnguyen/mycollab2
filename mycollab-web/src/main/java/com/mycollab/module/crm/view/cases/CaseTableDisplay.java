@@ -55,7 +55,6 @@ public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSea
         this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleCase cases = getBeanByIndex(itemId);
             CheckBoxDecor cb = new CheckBoxDecor("", cases.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> fireSelectItemEvent(cases));
             cases.setExtraData(cb);
             return cb;

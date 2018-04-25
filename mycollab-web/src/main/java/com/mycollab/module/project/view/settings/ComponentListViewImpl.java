@@ -85,7 +85,6 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleComponent component = tableItem.getBeanByIndex(itemId);
             CheckBoxDecor cb = new CheckBoxDecor("", component.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(component));
             component.setExtraData(cb);
             return cb;

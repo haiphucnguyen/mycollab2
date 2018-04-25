@@ -32,11 +32,12 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
+// TODO: revise
 public class TaskStatusListSelect extends ListSelect {
     public TaskStatusListSelect() {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-        this.setNullSelectionAllowed(false);
-        this.setMultiSelect(true);
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//        this.setNullSelectionAllowed(false);
+//        this.setMultiSelect(true);
         this.setRows(4);
     }
 
@@ -45,11 +46,11 @@ public class TaskStatusListSelect extends ListSelect {
         OptionValService optionValService = AppContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                 CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
-        for (OptionVal option : options) {
-            this.addItem(option.getTypeval());
-            this.setItemCaption(option.getTypeval(), UserUIContext.getMessage(StatusI18nEnum.class,
-                    option.getTypeval()));
-        }
+//        for (OptionVal option : options) {
+//            this.addItem(option.getTypeval());
+//            this.setItemCaption(option.getTypeval(), UserUIContext.getMessage(StatusI18nEnum.class,
+//                    option.getTypeval()));
+//        }
         super.attach();
     }
 }

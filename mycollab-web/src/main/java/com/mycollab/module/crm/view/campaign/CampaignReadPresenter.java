@@ -139,117 +139,117 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             }
         });
 
-        view.getRelatedActivityHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleActivity>() {
-            @Override
-            public void createNewRelatedItem(String itemId) {
-                if (itemId.equals("task")) {
-                    SimpleCrmTask task = new SimpleCrmTask();
-                    task.setType(CrmTypeConstants.CAMPAIGN);
-                    task.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CampaignReadPresenter.this, task));
-                } else if (itemId.equals("meeting")) {
-                    SimpleMeeting meeting = new SimpleMeeting();
-                    meeting.setType(CrmTypeConstants.CAMPAIGN);
-                    meeting.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(
-                            CampaignReadPresenter.this, meeting));
-                } else if (itemId.equals("call")) {
-                    SimpleCall call = new SimpleCall();
-                    call.setType(CrmTypeConstants.CAMPAIGN);
-                    call.setTypeid(view.getItem().getId());
-                    EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CampaignReadPresenter.this, call));
-                }
-            }
-        });
+//        view.getRelatedActivityHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleActivity>() {
+//            @Override
+//            public void createNewRelatedItem(String itemId) {
+//                if (itemId.equals("task")) {
+//                    SimpleCrmTask task = new SimpleCrmTask();
+//                    task.setType(CrmTypeConstants.CAMPAIGN);
+//                    task.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.TaskEdit(CampaignReadPresenter.this, task));
+//                } else if (itemId.equals("meeting")) {
+//                    SimpleMeeting meeting = new SimpleMeeting();
+//                    meeting.setType(CrmTypeConstants.CAMPAIGN);
+//                    meeting.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.MeetingEdit(
+//                            CampaignReadPresenter.this, meeting));
+//                } else if (itemId.equals("call")) {
+//                    SimpleCall call = new SimpleCall();
+//                    call.setType(CrmTypeConstants.CAMPAIGN);
+//                    call.setTypeid(view.getItem().getId());
+//                    EventBusFactory.getInstance().post(new ActivityEvent.CallEdit(CampaignReadPresenter.this, call));
+//                }
+//            }
+//        });
 
-        view.getRelatedAccountHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleAccount>() {
-            @Override
-            public void createNewRelatedItem(String itemId) {
-                SimpleAccount account = new SimpleAccount();
-                account.setExtraData(view.getItem());
-                EventBusFactory.getInstance().post(new AccountEvent.GotoEdit(CampaignReadPresenter.this, account));
-
-            }
-
-            @Override
-            public void selectAssociateItems(Set<SimpleAccount> items) {
-                if (items.size() > 0) {
-                    SimpleCampaign campaign = view.getItem();
-                    List<CampaignAccount> associateAccounts = new ArrayList<>();
-                    for (SimpleAccount account : items) {
-                        CampaignAccount assoAccount = new CampaignAccount();
-                        assoAccount.setAccountid(account.getId());
-                        assoAccount.setCampaignid(campaign.getId());
-                        assoAccount.setCreatedtime(new GregorianCalendar().getTime());
-                        associateAccounts.add(assoAccount);
-                    }
-
-                    CampaignService accountService = AppContextUtil.getSpringBean(CampaignService.class);
-                    accountService.saveCampaignAccountRelationship(associateAccounts, AppUI.getAccountId());
-
-                    view.getRelatedAccountHandlers().refresh();
-                }
-            }
-        });
-
-        view.getRelatedContactHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleContact>() {
-
-            @Override
-            public void createNewRelatedItem(String itemId) {
-                SimpleContact contact = new SimpleContact();
-                contact.setExtraData(view.getItem());
-                EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(CampaignReadPresenter.this, contact));
-            }
-
-            @Override
-            public void selectAssociateItems(Set<SimpleContact> items) {
-                if (items.size() > 0) {
-                    SimpleCampaign campaign = view.getItem();
-                    List<CampaignContact> associateContacts = new ArrayList<>();
-                    for (SimpleContact contact : items) {
-                        CampaignContact associateContact = new CampaignContact();
-                        associateContact.setCampaignid(campaign.getId());
-                        associateContact.setContactid(contact.getId());
-                        associateContact.setCreatedtime(new GregorianCalendar().getTime());
-                        associateContacts.add(associateContact);
-                    }
-
-                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    campaignService.saveCampaignContactRelationship(associateContacts, AppUI.getAccountId());
-
-                    view.getRelatedContactHandlers().refresh();
-                }
-            }
-        });
-
-        view.getRelatedLeadHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleLead>() {
-            @Override
-            public void createNewRelatedItem(String itemId) {
-                SimpleLead lead = new SimpleLead();
-                lead.setExtraData(view.getItem());
-                EventBusFactory.getInstance().post(new LeadEvent.GotoEdit(CampaignReadPresenter.this, lead));
-            }
-
-            @Override
-            public void selectAssociateItems(Set<SimpleLead> items) {
-                if (items.size() > 0) {
-                    SimpleCampaign campaign = view.getItem();
-                    List<CampaignLead> associateLeads = new ArrayList<>();
-                    for (SimpleLead lead : items) {
-                        CampaignLead associateLead = new CampaignLead();
-                        associateLead.setCampaignid(campaign.getId());
-                        associateLead.setLeadid(lead.getId());
-                        associateLead.setCreatedtime(new GregorianCalendar().getTime());
-                        associateLeads.add(associateLead);
-                    }
-
-                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
-                    campaignService.saveCampaignLeadRelationship(associateLeads, AppUI.getAccountId());
-
-                    view.getRelatedLeadHandlers().refresh();
-                }
-            }
-        });
+//        view.getRelatedAccountHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleAccount>() {
+//            @Override
+//            public void createNewRelatedItem(String itemId) {
+//                SimpleAccount account = new SimpleAccount();
+//                account.setExtraData(view.getItem());
+//                EventBusFactory.getInstance().post(new AccountEvent.GotoEdit(CampaignReadPresenter.this, account));
+//
+//            }
+//
+//            @Override
+//            public void selectAssociateItems(Set<SimpleAccount> items) {
+//                if (items.size() > 0) {
+//                    SimpleCampaign campaign = view.getItem();
+//                    List<CampaignAccount> associateAccounts = new ArrayList<>();
+//                    for (SimpleAccount account : items) {
+//                        CampaignAccount assoAccount = new CampaignAccount();
+//                        assoAccount.setAccountid(account.getId());
+//                        assoAccount.setCampaignid(campaign.getId());
+//                        assoAccount.setCreatedtime(new GregorianCalendar().getTime());
+//                        associateAccounts.add(assoAccount);
+//                    }
+//
+//                    CampaignService accountService = AppContextUtil.getSpringBean(CampaignService.class);
+//                    accountService.saveCampaignAccountRelationship(associateAccounts, AppUI.getAccountId());
+//
+//                    view.getRelatedAccountHandlers().refresh();
+//                }
+//            }
+//        });
+//
+//        view.getRelatedContactHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleContact>() {
+//
+//            @Override
+//            public void createNewRelatedItem(String itemId) {
+//                SimpleContact contact = new SimpleContact();
+//                contact.setExtraData(view.getItem());
+//                EventBusFactory.getInstance().post(new ContactEvent.GotoEdit(CampaignReadPresenter.this, contact));
+//            }
+//
+//            @Override
+//            public void selectAssociateItems(Set<SimpleContact> items) {
+//                if (items.size() > 0) {
+//                    SimpleCampaign campaign = view.getItem();
+//                    List<CampaignContact> associateContacts = new ArrayList<>();
+//                    for (SimpleContact contact : items) {
+//                        CampaignContact associateContact = new CampaignContact();
+//                        associateContact.setCampaignid(campaign.getId());
+//                        associateContact.setContactid(contact.getId());
+//                        associateContact.setCreatedtime(new GregorianCalendar().getTime());
+//                        associateContacts.add(associateContact);
+//                    }
+//
+//                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
+//                    campaignService.saveCampaignContactRelationship(associateContacts, AppUI.getAccountId());
+//
+//                    view.getRelatedContactHandlers().refresh();
+//                }
+//            }
+//        });
+//
+//        view.getRelatedLeadHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleLead>() {
+//            @Override
+//            public void createNewRelatedItem(String itemId) {
+//                SimpleLead lead = new SimpleLead();
+//                lead.setExtraData(view.getItem());
+//                EventBusFactory.getInstance().post(new LeadEvent.GotoEdit(CampaignReadPresenter.this, lead));
+//            }
+//
+//            @Override
+//            public void selectAssociateItems(Set<SimpleLead> items) {
+//                if (items.size() > 0) {
+//                    SimpleCampaign campaign = view.getItem();
+//                    List<CampaignLead> associateLeads = new ArrayList<>();
+//                    for (SimpleLead lead : items) {
+//                        CampaignLead associateLead = new CampaignLead();
+//                        associateLead.setCampaignid(campaign.getId());
+//                        associateLead.setLeadid(lead.getId());
+//                        associateLead.setCreatedtime(new GregorianCalendar().getTime());
+//                        associateLeads.add(associateLead);
+//                    }
+//
+//                    CampaignService campaignService = AppContextUtil.getSpringBean(CampaignService.class);
+//                    campaignService.saveCampaignLeadRelationship(associateLeads, AppUI.getAccountId());
+//
+//                    view.getRelatedLeadHandlers().refresh();
+//                }
+//            }
+//        });
 
     }
 

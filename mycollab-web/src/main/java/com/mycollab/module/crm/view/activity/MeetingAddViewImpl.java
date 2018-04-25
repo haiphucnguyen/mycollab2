@@ -1,22 +1,21 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.MeetingWithBLOBs;
 import com.mycollab.module.crm.i18n.MeetingI18nEnum;
@@ -45,6 +44,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO: revise
 @ViewComponent
 public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> implements MeetingAddView {
     private static final long serialVersionUID = 1L;
@@ -91,9 +91,9 @@ public class MeetingAddViewImpl extends AbstractEditItemComp<MeetingWithBLOBs> i
             if (propertyId.equals("subject")) {
                 MTextField tf = new MTextField();
                 if (isValidateForm) {
-                    tf.withNullRepresentation("").withRequired(true)
-                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                    UserUIContext.getMessage(MeetingI18nEnum.FORM_SUBJECT)));
+//                    tf.withNullRepresentation("").withRequired(true)
+//                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                    UserUIContext.getMessage(MeetingI18nEnum.FORM_SUBJECT)));
                 }
                 return tf;
             } else if (propertyId.equals("status")) {

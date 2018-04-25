@@ -41,6 +41,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> {
 
     public LeadTableDisplay(List<TableViewField> displayColumns) {
@@ -59,7 +60,7 @@ public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSea
         this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleLead lead = getBeanByIndex(itemId);
             final CheckBoxDecor cb = new CheckBoxDecor("", lead.isSelected());
-            cb.setImmediate(true);
+//            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> {
                 fireSelectItemEvent(lead);
                 fireTableEvent(new TableClickEvent(LeadTableDisplay.this, lead, "selected"));

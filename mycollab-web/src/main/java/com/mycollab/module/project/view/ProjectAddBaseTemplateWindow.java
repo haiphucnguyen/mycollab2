@@ -55,6 +55,7 @@ import static com.mycollab.module.project.i18n.ProjectI18nEnum.*;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
+// TODO: revise
 public class ProjectAddBaseTemplateWindow extends MWindow {
     public ProjectAddBaseTemplateWindow() {
         super(UserUIContext.getMessage(OPT_CREATE_PROJECT_FROM_TEMPLATE));
@@ -110,12 +111,12 @@ public class ProjectAddBaseTemplateWindow extends MWindow {
             searchCriteria.addExtraField(ProjectSearchCriteria.p_template.buildParamIsEqual(SearchField.AND, 1));
             searchCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
             List<SimpleProject> projectTemplates = (List<SimpleProject>) projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-            for (SimpleProject prjTemplate : projectTemplates) {
-                this.addItem(prjTemplate);
-                this.setItemCaption(prjTemplate, StringUtils.trim(String.format("[%s] %s", prjTemplate.getShortname(),
-                        prjTemplate.getName()), 50, true));
-            }
+//            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//            for (SimpleProject prjTemplate : projectTemplates) {
+//                this.addItem(prjTemplate);
+//                this.setItemCaption(prjTemplate, StringUtils.trim(String.format("[%s] %s", prjTemplate.getShortname(),
+//                        prjTemplate.getName()), 50, true));
+//            }
         }
     }
 }

@@ -25,10 +25,11 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class OpportunitySalesStageComboBox extends I18nValueComboBox {
 
     public OpportunitySalesStageComboBox() {
         this.loadData(Arrays.asList(CrmDataTypeFactory.opportunitySalesStageList));
-        this.setNullSelectionAllowed(false);
+//        this.setNullSelectionAllowed(false);
     }
 }

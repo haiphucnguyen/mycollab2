@@ -62,6 +62,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
+// TODO: revise
 @ViewComponent
 public class ProjectListViewImpl extends AbstractVerticalPageView implements ProjectListView {
     private ProjectSearchPanel projectSearchPanel;
@@ -97,7 +98,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleProject item = tableItem.getBeanByIndex(itemId);
             final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
-            cb.setImmediate(true);
+//            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(item));
             item.setExtraData(cb);
             return cb;

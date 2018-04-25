@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,20 +26,23 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable;
 import com.vaadin.ui.Alignment;
-import org.vaadin.tepi.listbuilder.ListBuilder;
+import org.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO: revise
 public abstract class CustomizedTableWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
@@ -62,7 +65,7 @@ public abstract class CustomizedTableWindow extends MWindow {
 
         listBuilder = new ListBuilder();
 //        listBuilder.setImmediate(true);
-        listBuilder.setColumns(0);
+//        listBuilder.setColumns(0);
         listBuilder.setLeftColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_AVAILABLE_COLUMNS));
         listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
 //        listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);

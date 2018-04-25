@@ -40,11 +40,11 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: Revise
 public class MilestoneComboBox extends ComboBox {
 
     public MilestoneComboBox() {
-        super();
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
         SimpleProject project = CurrentProjectVariables.getProject();
@@ -54,12 +54,12 @@ public class MilestoneComboBox extends ComboBox {
             List<SimpleMilestone> milestoneList = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
             Collections.sort(milestoneList, new MilestoneComparator());
 
-            for (SimpleMilestone milestone : milestoneList) {
-                this.addItem(milestone.getId());
-                this.setItemCaption(milestone.getId(), StringUtils.trim(milestone.getName(), 25, true));
-                Resource iconRes = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
-                this.setItemIcon(milestone.getId(), iconRes);
-            }
+//            for (SimpleMilestone milestone : milestoneList) {
+//                this.addItem(milestone.getId());
+//                this.setItemCaption(milestone.getId(), StringUtils.trim(milestone.getName(), 25, true));
+//                Resource iconRes = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
+//                this.setItemIcon(milestone.getId(), iconRes);
+//            }
         }
     }
 

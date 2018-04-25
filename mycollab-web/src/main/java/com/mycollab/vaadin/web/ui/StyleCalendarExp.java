@@ -34,6 +34,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO: revise
 public class StyleCalendarExp extends VerticalLayout {
     private List<Date> selectedDateList = new ArrayList<>();
     private StyleCalendar styleCalendar = new StyleCalendar();
@@ -53,7 +54,7 @@ public class StyleCalendarExp extends VerticalLayout {
 
         styleCalendar.setRenderHeader(false);
         styleCalendar.setRenderWeekNumbers(false);
-        styleCalendar.setImmediate(true);
+//        styleCalendar.setImmediate(true);
         styleCalendar.setWidth("100%");
         setDateOptionsGenerator();
 

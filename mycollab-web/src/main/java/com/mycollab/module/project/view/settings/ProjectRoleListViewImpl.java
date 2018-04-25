@@ -76,7 +76,6 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleProjectRole role = tableItem.getBeanByIndex(itemId);
             CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
-            cb.setImmediate(true);
             cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(role));
             role.setExtraData(cb);
             return cb;

@@ -33,12 +33,13 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
+// TODO: revise
 public class ComponentListSelect extends IntegerKeyListSelect {
     private static final long serialVersionUID = 1L;
 
     public ComponentListSelect() {
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-        this.setMultiSelect(true);
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//        this.setMultiSelect(true);
 
         ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
         searchCriteria.setStatus(StringSearchField.and(StatusI18nEnum.Open.name()));
@@ -46,10 +47,10 @@ public class ComponentListSelect extends IntegerKeyListSelect {
 
         ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
         List<Component> components = (List<Component>) componentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-        for (Component component : components) {
-            this.addItem(component.getId());
-            this.setItemCaption(component.getId(), component.getName());
-        }
+//        for (Component component : components) {
+//            this.addItem(component.getId());
+//            this.setItemCaption(component.getId(), component.getName());
+//        }
 
         this.setRows(4);
     }

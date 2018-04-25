@@ -1,29 +1,25 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.module.crm.view.lead;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.crm.domain.Lead;
-import com.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.LeadStatus;
 import com.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.mycollab.module.user.ui.components.ActiveUserComboBox;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CompoundCustomField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
@@ -40,6 +36,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO: revise
 class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEditFieldFactory<B> {
     private static final long serialVersionUID = 1L;
 
@@ -75,9 +72,9 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
         } else if (propertyId.equals("lastname")) {
             TextField tf = new TextField();
             if (isValidateForm) {
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_LASTNAME)));
+//                tf.setNullRepresentation("");
+//                tf.setRequired(true);
+//                tf.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_LASTNAME)));
             }
 
             return tf;
@@ -86,8 +83,8 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
         } else if (propertyId.equals("accountname")) {
             TextField txtField = new TextField();
             if (isValidateForm) {
-                txtField.setRequired(true);
-                txtField.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(LeadI18nEnum.FORM_ACCOUNT_NAME)));
+//                txtField.setRequired(true);
+//                txtField.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(LeadI18nEnum.FORM_ACCOUNT_NAME)));
             }
 
             return txtField;
@@ -111,7 +108,6 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
 
             TextField firstnameTxtField = new TextField();
             firstnameTxtField.setWidth("100%");
-            firstnameTxtField.setNullRepresentation("");
             layout.addComponent(firstnameTxtField);
             layout.setExpandRatio(firstnameTxtField, 1.0f);
 
@@ -123,9 +119,13 @@ class LeadEditFormFieldFactory<B extends Lead> extends AbstractBeanFieldGroupEdi
         }
 
         @Override
-        public Class<? extends Lead> getType() {
-            return Lead.class;
+        protected void doSetValue(Lead lead) {
+
         }
 
+        @Override
+        public Lead getValue() {
+            return null;
+        }
     }
 }

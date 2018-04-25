@@ -23,6 +23,7 @@ import com.vaadin.ui.CustomField;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 public class ProjectUserFormLinkField extends CustomField {
     private static final long serialVersionUID = 1L;
 
@@ -39,12 +40,17 @@ public class ProjectUserFormLinkField extends CustomField {
     }
 
     @Override
-    public Class<?> getType() {
-        return Object.class;
+    protected Component initContent() {
+        return new ProjectUserLink(projectId, username, userAvatarId, displayName);
     }
 
     @Override
-    protected Component initContent() {
-        return new ProjectUserLink(projectId, username, userAvatarId, displayName);
+    protected void doSetValue(Object o) {
+
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 }

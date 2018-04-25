@@ -164,7 +164,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             }).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             final TextField searchField = new TextField();
-            searchField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+//            searchField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchField.setWidth("200px");
             MButton searchBtn = new MButton("", clickEvent -> {
                 searchCriteria.setProjectName(StringSearchField.and(searchField.getValue()));

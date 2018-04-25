@@ -24,6 +24,7 @@ import com.vaadin.ui.CustomField;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
+// TODO: revise
 public class UserLinkViewField extends CustomField {
     private static final long serialVersionUID = 1L;
 
@@ -38,12 +39,17 @@ public class UserLinkViewField extends CustomField {
     }
 
     @Override
-    public Class<?> getType() {
-        return Object.class;
+    protected Component initContent() {
+        return new UserLink(username, userAvatarId, fullName);
     }
 
     @Override
-    protected Component initContent() {
-        return new UserLink(username, userAvatarId, fullName);
+    protected void doSetValue(Object o) {
+
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 }

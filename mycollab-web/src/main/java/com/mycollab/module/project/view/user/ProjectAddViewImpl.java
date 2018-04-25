@@ -44,6 +44,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 @ViewComponent
 public class ProjectAddViewImpl extends AbstractVerticalPageView implements ProjectAddView {
 
@@ -192,25 +193,25 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
                 return field;
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                 final ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
-                projectCombo.setRequired(true);
-                projectCombo.setRequiredError("Please enter a project status");
-                if (project.getProjectstatus() == null) {
-                    project.setProjectstatus(StatusI18nEnum.Open.name());
-                }
+//                projectCombo.setRequired(true);
+//                projectCombo.setRequiredError("Please enter a project status");
+//                if (project.getProjectstatus() == null) {
+//                    project.setProjectstatus(StatusI18nEnum.Open.name());
+//                }
                 return projectCombo;
             } else if (Project.Field.shortname.equalTo(propertyId)) {
                 final TextField tf = new TextField();
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Please enter a project short name");
+//                tf.setNullRepresentation("");
+//                tf.setRequired(true);
+//                tf.setRequiredError("Please enter a project short name");
                 return tf;
             } else if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
             } else if (Project.Field.name.equalTo(propertyId)) {
                 final TextField tf = new TextField();
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("Please enter a Name");
+//                tf.setNullRepresentation("");
+//                tf.setRequired(true);
+//                tf.setRequiredError("Please enter a Name");
                 return tf;
             } else if (Project.Field.accountid.equalTo(propertyId)) {
                 return new AccountSelectionField();

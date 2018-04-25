@@ -49,6 +49,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO: revise
 @ViewComponent
 public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> implements ProjectRoleAddView {
     private static final long serialVersionUID = 1L;
@@ -93,15 +94,13 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
             @Override
             protected HasValue<?> onCreateField(Object propertyId) {
                 if (propertyId.equals("description")) {
-                    final TextArea textArea = new TextArea();
-                    textArea.setNullRepresentation("");
-                    return textArea;
+                    return new TextArea();
                 } else if (propertyId.equals("rolename")) {
                     final TextField tf = new TextField();
                     if (isValidateForm) {
-                        tf.setNullRepresentation("");
-                        tf.setRequired(true);
-                        tf.setRequiredError("Please enter a role name");
+//                        tf.setNullRepresentation("");
+//                        tf.setRequired(true);
+//                        tf.setRequiredError("Please enter a role name");
                     }
                     return tf;
                 }
