@@ -1,5 +1,4 @@
-FROM ubuntu:14.04
-FROM java:8
+FROM openjdk:8-jre-alpine
 MAINTAINER Hai Nguyen <hainguyen@mycollab.com>
 
 ENTRYPOINT ["/usr/bin/java", "-jar", "/usr/share/mycollab/executor.jar", "-noverify"]
@@ -11,3 +10,5 @@ ADD target/staging/i18n             /usr/share/mycollab/i18n
 ADD target/staging/lib              /usr/share/mycollab/lib
 # Add the service itself
 ADD target/staging/executor.jar     /usr/share/mycollab/executor.jar
+
+EXPOSE 8080
