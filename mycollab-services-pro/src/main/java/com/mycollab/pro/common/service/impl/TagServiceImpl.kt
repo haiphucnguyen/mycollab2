@@ -20,7 +20,7 @@ import java.util.*
  * @since 5.0.1
  */
 @Service
-class TagServiceImpl(private val tagMapper: TagMapper,
+open class TagServiceImpl(private val tagMapper: TagMapper,
                      private val tagMapperExt: TagMapperExt) : DefaultCrudService<Int, Tag>(), TagService {
 
     override val crudMapper: ICrudGenericDAO<Int, Tag>

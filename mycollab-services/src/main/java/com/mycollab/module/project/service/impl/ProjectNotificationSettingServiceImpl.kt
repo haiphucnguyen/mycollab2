@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class ProjectNotificationSettingServiceImpl(private val projectNotificationSettingMapper: ProjectNotificationSettingMapper) : DefaultCrudService<Int, ProjectNotificationSetting>(), ProjectNotificationSettingService {
+open class ProjectNotificationSettingServiceImpl(private val projectNotificationSettingMapper: ProjectNotificationSettingMapper) : DefaultCrudService<Int, ProjectNotificationSetting>(), ProjectNotificationSettingService {
 
     override val crudMapper: ICrudGenericDAO<Int, ProjectNotificationSetting>
         get() = projectNotificationSettingMapper as ICrudGenericDAO<Int, ProjectNotificationSetting>

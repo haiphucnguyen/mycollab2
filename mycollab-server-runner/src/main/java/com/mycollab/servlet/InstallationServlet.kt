@@ -57,12 +57,12 @@ class InstallationServlet : HttpServlet() {
 
         val dbUrl = "jdbc:mysql://$databaseServer/$databaseName?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false"
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver")
-        } catch (e: ClassNotFoundException) {
-            LOG.error("Can not load mysql driver", e)
-            return
-        }
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver")
+//        } catch (e: ClassNotFoundException) {
+//            LOG.error("Can not load mysql driver", e)
+//            return
+//        }
 
         try {
             DriverManager.getConnection(dbUrl, dbUserName, dbPassword).use { connection ->
@@ -125,7 +125,7 @@ class InstallationServlet : HttpServlet() {
     }
 
     companion object {
-        private val serialVersionUID = 1L
+        private const val serialVersionUID = 1L
         private val LOG = LoggerFactory.getLogger(InstallationServlet::class.java)
     }
 }

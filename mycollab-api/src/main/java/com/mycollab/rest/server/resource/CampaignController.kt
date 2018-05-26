@@ -31,15 +31,15 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                          private val contentGenerator: IContentGenerator) {
 
     @ApiOperation(value = "Get the html page contains link to buy", response = String::class)
-    @RequestMapping(method = arrayOf(RequestMethod.GET), path = arrayOf("/linktobuy"))
+    @RequestMapping(method = [(RequestMethod.GET)], path = ["/linktobuy"])
     @Throws(IOException::class)
     fun showLinkToBuy(): String = FileUtils.readFileAsPlainString("buying.html")
 
-    @RequestMapping(method = arrayOf(RequestMethod.GET), path = arrayOf("/storeweb"))
+    @RequestMapping(method = [(RequestMethod.GET)], path = ["/storeweb"])
     @Throws(IOException::class)
     fun displayStoreWeb(): String = FileUtils.readFileAsPlainString("pricing.html")
 
-    @RequestMapping(path = arrayOf("/register-ce"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/register-ce"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun registerCE(@RequestParam("firstname") firstname: String,
                    @RequestParam("lastname") lastname: String,
                    @RequestParam("email") email: String,

@@ -15,12 +15,12 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-@Api(value = "Versions", tags = arrayOf("Support"))
+@Api(value = "Versions", tags = ["Support"])
 @RestController
 class CheckVersionController(private val editionInfoResolver: EditionInfoResolver) {
 
     @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information", response = String::class)
-    @RequestMapping(value = "/checkupdate", method = arrayOf(RequestMethod.GET), produces = arrayOf(MediaType.APPLICATION_JSON_VALUE))
+    @RequestMapping(value = "/checkupdate", method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
     fun getLatestVersion(@RequestParam("version") version: String?): Properties {
         val props = Properties()
 
@@ -38,7 +38,7 @@ class CheckVersionController(private val editionInfoResolver: EditionInfoResolve
         return props
     }
 
-    @RequestMapping(value = "/checkpremiumupdate", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/checkpremiumupdate", method = [(RequestMethod.GET)])
     fun getLatestPremiumUpdate(@RequestParam("version") version: String, @RequestParam("customerId") customerId: String): Properties {
         val props = Properties()
         val liveVersion = editionInfoResolver.editionInfo.version
