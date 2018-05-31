@@ -29,7 +29,7 @@
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->
-        <flyway.version>5.0.3</flyway.version>
+        <flyway.version>5.1.1</flyway.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
         <sonar.language>java</sonar.language>
