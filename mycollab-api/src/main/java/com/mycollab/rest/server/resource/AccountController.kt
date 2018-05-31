@@ -5,7 +5,6 @@ import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.ondemand.module.support.service.EmailReferenceService
 import io.swagger.annotations.Api
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
@@ -22,19 +21,19 @@ class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
                         private var deploymentMode: IDeploymentMode) {
 
-    @RequestMapping(value = "signUp", method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded"))
-    fun signUp(@RequestParam("subDomain") subdomain: String, @RequestParam("planId") planId: Int,
+    @RequestMapping(value = "signUp", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
+    fun signUp(@RequestParam("subDomain") subDomain: String, @RequestParam("planId") planId: Int,
                @RequestParam("password") password: String, @RequestParam("email") email: String,
                @RequestParam("timezone") timezoneId: String, @RequestParam("isEmailVerified") isEmailVerified: Boolean?): String {
         var emailVerifiedMutableVal = isEmailVerified
-        LOG.debug("Register account with subDomain $subdomain, username $email")
+        LOG.debug("Register account with subDomain $subDomain, username $email")
         if (emailVerifiedMutableVal == null) {
             emailVerifiedMutableVal = java.lang.Boolean.FALSE
         }
-        billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, emailVerifiedMutableVal!!)
+        billingService.registerAccount(subDomain, planId, email, password, email, timezoneId, emailVerifiedMutableVal!!)
 
         emailReferenceService.save(email)
-        return deploymentMode.getSiteUrl(subdomain)
+        return deploymentMode.getSiteUrl(subDomain)
     }
 
     companion object {

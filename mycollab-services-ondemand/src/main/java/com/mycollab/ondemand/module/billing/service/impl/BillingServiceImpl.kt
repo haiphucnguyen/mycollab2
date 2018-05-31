@@ -58,7 +58,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
 
         // check subDomain is ascii string
         if (!subDomain.matches("\\A[a-zA-Z0-9\\-_]+\\z".toRegex())) {
-            throw UserInvalidInputException("Subdomain is not valid. You can use letters (abc), numbers (123), -. Space is not allowed")
+            throw UserInvalidInputException("SubDomain is not valid. You can use letters (abc), numbers (123), -. Space is not allowed")
         }
 
         // check subDomain belong to keyword list
