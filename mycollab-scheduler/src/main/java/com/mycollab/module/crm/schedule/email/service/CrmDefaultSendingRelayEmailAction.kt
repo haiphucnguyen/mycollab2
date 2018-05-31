@@ -185,9 +185,8 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
         }
     }
 
-    private fun getListNotifyUserWithFilter(notification: SimpleRelayEmailNotification): List<SimpleUser>? {
-        return notification.notifyUsers
-    }
+    private fun getListNotifyUserWithFilter(notification: SimpleRelayEmailNotification): List<SimpleUser>? =
+            notification.notifyUsers
 
     private fun onInitAction(notification: SimpleRelayEmailNotification) {
         siteUrl = MailUtils.getSiteUrl(notification.saccountid)
