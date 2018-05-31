@@ -8,5 +8,5 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: esofthead321
+            MYSQL_ROOT_PASSWORD: mycollab123
             MYSQL_DATABASE: mycollab

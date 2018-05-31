@@ -16,8 +16,6 @@
  */
 package com.mycollab.module.project.domain
 
-import com.mycollab.module.crm.domain.Account
-
 /**
  * @author MyCollab Ltd
  * @since 5.2.10

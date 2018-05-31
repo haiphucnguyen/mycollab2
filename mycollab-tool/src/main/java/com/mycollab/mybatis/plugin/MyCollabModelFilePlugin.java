@@ -316,10 +316,10 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         method.setVisibility(JavaVisibility.PUBLIC);
         context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
         method.setName("insertAndReturnKey");
-        String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+        String parameterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
                 .getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
         method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
-        method.addParameter(new Parameter(new FullyQualifiedJavaType(paramterType), "value"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(parameterType), "value"));
         interfaze.addMethod(method);
     }
 
