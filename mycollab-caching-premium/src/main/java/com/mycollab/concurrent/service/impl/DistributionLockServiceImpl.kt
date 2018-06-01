@@ -12,17 +12,14 @@ import java.util.concurrent.locks.Lock
 @Profile("production")
 class DistributionLockServiceImpl : DistributionLockService {
 
-    override fun getLock(lockName: String): Lock? {
-        return try {
-            val ch = JChannel(DistributionLockServiceImpl::class.java.classLoader.getResourceAsStream("jgroups.xml")) // locking.xml needs to have a locking protocol towards the top
-            val lockService = LockService(ch)
-            ch.connect("lock-cluster")
-            lockService.getLock(lockName)
-        } catch (e: Exception) {
-            LOG.error("Error while creating a lock instance", e)
-            null
-        }
-
+    override fun getLock(lockName: String): Lock? = try {
+        val ch = JChannel(DistributionLockServiceImpl::class.java.classLoader.getResourceAsStream("jgroups.xml")) // locking.xml needs to have a locking protocol towards the top
+        val lockService = LockService(ch)
+        ch.connect("lock-cluster")
+        lockService.getLock(lockName)
+    } catch (e: Exception) {
+        LOG.error("Error while creating a lock instance", e)
+        null
     }
 
     companion object {

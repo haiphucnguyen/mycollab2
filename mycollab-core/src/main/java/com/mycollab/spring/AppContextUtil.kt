@@ -49,7 +49,7 @@ class AppContextUtil : ApplicationContextAware {
             try {
                 return ctx!!.getBean(name, classType)
             } catch (e: Exception) {
-                throw MyCollabException("Can not find service " + name)
+                throw MyCollabException("Can not find service $name")
             }
 
         }
