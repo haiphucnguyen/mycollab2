@@ -494,7 +494,7 @@
         FROM s_relay_email_notification
             LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
             INNER JOIN m_monitor_item ON (m_monitor_item.typeId=s_relay_email_notification.typeId AND s_relay_email_notification.type=m_monitor_item.type)
-            INNER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
+            INNER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username AND s_user.status='EmailVerified')
             INNER JOIN m_tracker_bug ON  (s_relay_email_notification.type="Project-Bug" AND m_tracker_bug.id=s_relay_email_notification.typeId)
             INNER JOIN s_account ON (s_relay_email_notification.sAccountId=s_account.id))
         UNION

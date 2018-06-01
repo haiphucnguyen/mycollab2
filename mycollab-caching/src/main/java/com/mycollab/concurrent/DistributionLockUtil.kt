@@ -40,7 +40,7 @@ object DistributionLockUtil {
         val lock = lockService.getLock(lockName)
         lock ?: getStaticDefaultLock(lockName)
     } catch (e: Exception) {
-        LOG.warn("Can not get lock service", e)
+        LOG.warn("Can not get lock service")
         getStaticDefaultLock(lockName)
     }
 
