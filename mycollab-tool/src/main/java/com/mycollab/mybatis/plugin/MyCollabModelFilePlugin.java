@@ -46,7 +46,10 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             enumOfBlobDomains.put(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(), enumFieldClass);
         }
 
-        enumFieldClass.addEnumConstant(field.getName());
+        if (!enumFieldClass.getEnumConstants().contains(field.getName())) {
+            enumFieldClass.addEnumConstant(field.getName());
+        }
+
 
         if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
                 || "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
