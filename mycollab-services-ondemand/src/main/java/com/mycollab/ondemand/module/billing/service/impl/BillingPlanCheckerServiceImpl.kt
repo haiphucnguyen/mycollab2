@@ -8,7 +8,7 @@ import com.mycollab.module.billing.service.BillingPlanCheckerService
 import com.mycollab.module.ecm.service.DriveInfoService
 import com.mycollab.module.project.dao.ProjectMapperExt
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria
-import com.mycollab.module.user.service.UserService
+import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.ondemand.module.billing.service.BillingService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 @Service
 class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
                                     private val projectMapperExt: ProjectMapperExt,
-                                    private val userService: UserService,
+                                    private val billingAccountService: BillingAccountService,
                                     private val driveInfoService: DriveInfoService) : BillingPlanCheckerService {
 
     @Throws(UsageExceedBillingPlanException::class)
@@ -39,7 +39,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
     @Throws(UsageExceedBillingPlanException::class)
     override fun validateAccountCanCreateNewUser(sAccountId: Int) {
         val billingPlan = billingService.findBillingPlan(sAccountId)
-        val numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId)
+        val numOfUsers = billingAccountService.getTotalActiveUsersInAccount(sAccountId)
         if (numOfUsers >= billingPlan!!.numusers) {
             throw UsageExceedBillingPlanException()
         }
