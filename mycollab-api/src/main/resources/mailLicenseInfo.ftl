@@ -15,7 +15,7 @@
             </p>
             <p>
                 To activate MyCollab, please follow the instruction <a
-                    href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/enter-the-license-for-mycollab-ultimate-edition/">Enter the license for MyCollab Ultimate Edition</a>
+                    href="http://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/enter-the-license-for-mycollab-ultimate-edition/">Enter the license for MyCollab Ultimate Edition</a>
             </p>
             <p>We hope you enjoy MyCollab! If you have any issue, please contact us at <a href="http://support.mycollab.com">Support forum</a></p>
             <p>Check your online invoice <@lib.hyperLink displayName="Online Invoice" webLink="https://sites.fastspring.com/mycollab/order/invoice/${orderId}"/>. We also enclosed the PDF invoice in this email as
