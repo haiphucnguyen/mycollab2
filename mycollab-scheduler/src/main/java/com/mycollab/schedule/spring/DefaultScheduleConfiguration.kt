@@ -25,6 +25,7 @@ import com.mycollab.schedule.jobs.LiveInstanceMonitorJob
 import com.mycollab.schedule.jobs.ProjectSendingRelayEmailNotificationJob
 import org.quartz.CronTrigger
 import org.quartz.Trigger
+import org.quartz.impl.StdSchedulerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
@@ -162,16 +163,16 @@ open class DefaultScheduleConfiguration {
         props.setProperty("org.quartz.threadPool.threadPriority", "5")
         props.setProperty("org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread", "true")
 
-        if (deploymentMode.isCommunityEdition) {
+//        if (deploymentMode.isCommunityEdition) {
             props.setProperty("org.quartz.jobStore.class", "org.quartz.simpl.RAMJobStore")
-        } else {
-            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
-            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
-            props.setProperty("org.quartz.jobStore.useProperties", "true")
-            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
-            props.setProperty("org.quartz.jobStore.isClustered", "true")
-            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
-        }
+//        } else {
+//            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
+//            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
+//            props.setProperty("org.quartz.jobStore.useProperties", "true")
+//            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
+//            props.setProperty("org.quartz.jobStore.isClustered", "true")
+//            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
+//        }
         return props
     }
 }
