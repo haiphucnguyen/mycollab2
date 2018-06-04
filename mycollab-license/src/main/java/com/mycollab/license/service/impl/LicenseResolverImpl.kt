@@ -74,7 +74,7 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
         val edition = appPropertiesService.edition
         val restTemplate = RestTemplate()
         try {
-            val licenseRequest = restTemplate.postForObject(serverConfiguration!!.getApiUrl("order/register-trial"), null, String::class.java)
+            val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
             checkAndSaveLicenseInfo(licenseRequest)
         } catch (e: Exception) {
             LOG.error("Can not retrieve a trial license", e)

@@ -45,14 +45,11 @@ import java.util.Properties
 @Profile("production")
 open class DefaultScheduleConfiguration {
 
-    @Autowired
-    private lateinit var dataSource: DataSource
+    @Autowired private lateinit var dataSource: DataSource
 
-    @Autowired
-    private lateinit var applicationContext: ApplicationContext
+    @Autowired private lateinit var applicationContext: ApplicationContext
 
-    @Autowired
-    private lateinit var deploymentMode: IDeploymentMode
+    @Autowired private lateinit var deploymentMode: IDeploymentMode
 
     @Bean
     open fun cleanTimelineTrackingCacheJob(): JobDetailFactoryBean {
