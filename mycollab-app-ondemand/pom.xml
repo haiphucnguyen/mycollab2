@@ -46,12 +46,6 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-license</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
             <version>${project.version}</version>
         </dependency>

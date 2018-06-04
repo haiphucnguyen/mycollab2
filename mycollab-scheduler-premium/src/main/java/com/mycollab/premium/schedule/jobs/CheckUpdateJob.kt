@@ -44,19 +44,18 @@ class CheckUpdateJob : GenericQuartzJobBean() {
         val restTemplate = RestTemplate()
         val licenseInfo = licenseResolver.licenseInfo
         val customerId = EnDecryptHelper.encryptText(licenseInfo!!.customerId!!)
-        val result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkpremiumupdate?version=" +
-                Version.getVersion() + "&customerId=" + customerId), String::class.java)
+        val result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkpremiumupdate?version=${Version.getVersion()}&customerId=$customerId"), String::class.java)
         val props = JsonDeSerializer.fromJson(result, Properties::class.java)
         val version = props.getProperty("version")
         if (Version.isEditionNewer(version)) {
             if (!isDownloading) {
                 if (latestFileDownloadedPath != null) {
                     val installerFile = File(latestFileDownloadedPath!!)
-                    if (installerFile.exists() && installerFile.name.startsWith("mycollab" + version.replace('.', '_'))) {
+                    if (installerFile.exists() && installerFile.name.startsWith("mycollab${version.replace('.', '_')}")) {
                         return
                     }
                 }
-                LOG.info("There is the new version of MyCollab " + version)
+                LOG.info("There is the new version of MyCollab $version")
                 val autoDownloadLink = props.getProperty("autoDownload")
                 val manualDownloadLink = props.getProperty("downloadLink")
                 if (autoDownloadLink != null) {
@@ -92,7 +91,7 @@ class CheckUpdateJob : GenericQuartzJobBean() {
 
         override fun run() {
             try {
-                tmpFile = File.createTempFile("mycollab" + version.replace('.', '_'), ".zip")
+                tmpFile = File.createTempFile("mycollab${version.replace('.', '_')}", ".zip")
                 val url = URL(downloadLink)
                 LOG.info("Start download the new MyCollab version at $downloadLink")
                 var httpConn = url.openConnection() as HttpURLConnection

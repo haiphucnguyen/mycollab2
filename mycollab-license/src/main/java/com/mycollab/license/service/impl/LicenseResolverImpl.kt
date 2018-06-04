@@ -14,7 +14,6 @@ import com.verhas.licensor.License
 import org.joda.time.DateTime
 import org.joda.time.Duration
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Service
@@ -27,15 +26,14 @@ import java.util.*
  * @since 5.2.6
  */
 @Service
-class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration) : LicenseResolver, AppPropertiesService, InitializingBean {
+class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
+                          private val appPropertiesService: AppPropertiesService) : LicenseResolver, InitializingBean {
 
     private lateinit var properties: Properties
 
     private lateinit var _licenseInfo: LicenseInfo
     override var licenseInfo: LicenseInfo? = null
-        get() {
-            return _licenseInfo
-        }
+        get() = _licenseInfo
 
     private val licenseFile: File
         get() {
@@ -48,43 +46,8 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration) 
             return licenseFile
         }
 
-    override val sysId: String
-        get() = properties.getProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
-
-    override val startDate: Date
-        get() {
-            try {
-                val dateValue = properties.getProperty("startdate")
-                return DateTimeUtils.convertDateByString(dateValue, "yyyy-MM-dd'T'HH:mm:ss")
-            } catch (e: Exception) {
-                return GregorianCalendar().time
-            }
-
-        }
-
-    override val edition: String
-        get() = "Premium"
-
     @Throws(Exception::class)
     override fun afterPropertiesSet() {
-        val homeFolder = FileUtils.homeFolder
-        val sysFile = File(homeFolder, ".app.properties")
-        properties = Properties()
-        try {
-            if (sysFile.isFile && sysFile.exists()) {
-                properties.load(FileInputStream(sysFile))
-                val startDate = properties.getProperty("startdate")
-                if (startDate == null) {
-                    properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
-                }
-            } else {
-                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
-                properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
-            }
-        } catch (e: IOException) {
-            LOG.error("Error", e)
-        }
-
         val licenseFile = licenseFile
         if (licenseFile.isFile && licenseFile.exists()) {
             val licenseBytes = org.apache.commons.io.FileUtils.readFileToByteArray(licenseFile)
@@ -92,8 +55,6 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration) 
         } else {
             acquireALicense()
         }
-
-        properties.store(FileOutputStream(sysFile), "")
     }
 
     override fun checkAndSaveLicenseInfo(licenseInputText: String) {
@@ -107,23 +68,17 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration) 
 
     private fun acquireALicense() {
         LOG.info("Acquire the trial license")
-        val startDate = DateTime(startDate)
+        val startDate = DateTime(appPropertiesService.startDate)
         val now = DateTime()
         val days = Duration(startDate, now).standardDays.toInt()
-        val edition = properties.getProperty("edition", "Community")
-        if (edition != edition) {
-            properties.setProperty("edition", edition)
-            val restTemplate = RestTemplate()
-            try {
-                val licenseRequest = restTemplate.postForObject(serverConfiguration!!.getApiUrl("order/register-trial"), null, String::class.java)
-                checkAndSaveLicenseInfo(licenseRequest)
-            } catch (e: Exception) {
-                LOG.error("Can not retrieve a trial license", e)
-                _licenseInfo = createTempValidLicense(30 - days)
-            }
-
-        } else {
-            _licenseInfo = createInvalidLicense()
+        val edition = appPropertiesService.edition
+        val restTemplate = RestTemplate()
+        try {
+            val licenseRequest = restTemplate.postForObject(serverConfiguration!!.getApiUrl("order/register-trial"), null, String::class.java)
+            checkAndSaveLicenseInfo(licenseRequest)
+        } catch (e: Exception) {
+            LOG.error("Can not retrieve a trial license", e)
+            _licenseInfo = createTempValidLicense(30 - days)
         }
     }
 
