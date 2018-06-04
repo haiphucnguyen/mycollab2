@@ -47,23 +47,17 @@ import org.springframework.beans.factory.annotation.Autowired
  * @since 6.0.0
  */
 abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificationAction {
-    @Autowired
-    lateinit var extMailService: ExtMailService
+    @Autowired protected lateinit var extMailService: ExtMailService
 
-    @Autowired
-    private lateinit var auditLogService: AuditLogService
+    @Autowired private lateinit var auditLogService: AuditLogService
 
-    @Autowired
-    lateinit var userService: UserService
+    @Autowired lateinit var userService: UserService
 
-    @Autowired
-    lateinit var notificationService: CrmNotificationSettingService
+    @Autowired private lateinit var notificationService: CrmNotificationSettingService
 
-    @Autowired
-    private lateinit var commentService: CommentService
+    @Autowired private lateinit var commentService: CommentService
 
-    @Autowired
-    lateinit var contentGenerator: IContentGenerator
+    @Autowired protected lateinit var contentGenerator: IContentGenerator
 
     protected var bean: B? = null
     protected var changeUser: SimpleUser? = null

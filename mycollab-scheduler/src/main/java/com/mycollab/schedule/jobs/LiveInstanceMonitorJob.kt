@@ -42,16 +42,16 @@ import org.springframework.web.client.RestTemplate
 class LiveInstanceMonitorJob  : GenericQuartzJobBean() {
 
     @Autowired
-    lateinit private var projectMapper: ProjectMapper
+    private lateinit var projectMapper: ProjectMapper
 
     @Autowired
-    lateinit private var  userMapper: UserMapper
+    private lateinit var  userMapper: UserMapper
 
     @Autowired
-    lateinit private var  appPropertiesService: AppPropertiesService
+    private lateinit var  appPropertiesService: AppPropertiesService
 
     @Autowired
-    lateinit private var  serverConfiguration: ServerConfiguration
+    private lateinit var  serverConfiguration: ServerConfiguration
 
     override fun executeJob(context: JobExecutionContext) {
         val numProjects = projectMapper.countByExample(ProjectExample()).toInt()
