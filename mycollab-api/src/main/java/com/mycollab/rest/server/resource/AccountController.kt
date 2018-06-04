@@ -5,10 +5,7 @@ import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.ondemand.module.support.service.EmailReferenceService
 import io.swagger.annotations.Api
 import org.slf4j.LoggerFactory
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @author MyCollab Ltd
@@ -21,6 +18,7 @@ class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
                         private var deploymentMode: IDeploymentMode) {
 
+    @CrossOrigin(origins = ["http://mycollab.com", "http://www.mycollab.com"])
     @RequestMapping(value = "signUp", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun signUp(@RequestParam("subDomain") subDomain: String, @RequestParam("planId") planId: Int,
                @RequestParam("password") password: String, @RequestParam("email") email: String,
