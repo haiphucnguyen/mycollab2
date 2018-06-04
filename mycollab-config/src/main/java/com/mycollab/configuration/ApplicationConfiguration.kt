@@ -32,7 +32,7 @@ open class ApplicationConfiguration(var description: String? = "", var facebookU
                                var linkedinUrl: String? = "") {
 
     fun defaultUrls(): MutableMap<String, String> =
-            mutableMapOf<String, String>("facebook_url" to (facebookUrl ?: ""),
+            mutableMapOf("facebook_url" to (facebookUrl ?: ""),
                     "google_url" to (googleUrl ?: ""),
                     "linkedin_url" to (linkedinUrl ?: ""),
                     "twitter_url" to (twitterUrl ?: ""))
