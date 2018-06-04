@@ -48,12 +48,14 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
 
     @Throws(Exception::class)
     override fun afterPropertiesSet() {
-        val licenseFile = licenseFile
-        if (licenseFile.isFile && licenseFile.exists()) {
-            val licenseBytes = org.apache.commons.io.FileUtils.readFileToByteArray(licenseFile)
-            checkLicenseInfo(licenseBytes, false)
-        } else {
-            acquireALicense()
+        if (appPropertiesService.edition != "Cloud") {
+            val licenseFile = licenseFile
+            if (licenseFile.isFile && licenseFile.exists()) {
+                val licenseBytes = org.apache.commons.io.FileUtils.readFileToByteArray(licenseFile)
+                checkLicenseInfo(licenseBytes, false)
+            } else {
+                acquireALicense()
+            }
         }
     }
 
