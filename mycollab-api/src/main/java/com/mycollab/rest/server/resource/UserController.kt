@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(value = "/user")
 class UserController(private val billingService: BillingService) {
 
-    @RequestMapping(value = "/subdomains/{username:.+}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/subdomains/{username:.+}", method = [(RequestMethod.GET)])
     fun retrieveSubdomainsOfUser(@PathVariable("username") username: String): Array<String> {
         val subDomains = billingService.getSubDomainsOfUser(username)
         val result: Array<String>

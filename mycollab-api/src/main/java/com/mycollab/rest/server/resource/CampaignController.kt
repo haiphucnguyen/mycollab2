@@ -23,7 +23,7 @@ import java.io.IOException
  * @author MyCollab Ltd
  * @since 5.2.2
  */
-@Api(value = "Community Campaign API", tags = arrayOf("Community"))
+@Api(value = "Community Campaign API", tags = ["Community"])
 @RestController
 class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                          private val editionInfoResolver: EditionInfoResolver,

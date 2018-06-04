@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 class ContactUsController(private val extMailService: ExtMailService) {
 
     @ApiOperation(value = "Send the inquery request", response = String::class)
-    @RequestMapping(value = "/submit", method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded"))
+    @RequestMapping(value = "/submit", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun doContact(@RequestParam("name") name: String,
                   @RequestParam("email") email: String,
                   @RequestParam("company") company: String,

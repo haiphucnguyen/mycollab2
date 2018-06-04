@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController
  * @since 5.4.2
  */
 @RestController
-@RequestMapping(path = arrayOf("/subscription"))
+@RequestMapping(path = ["/subscription"])
 class BankwireSubscriptionManagerController(private val subscriptionMapper: BillingSubscriptionMapper,
                                             private val subscriptionHistoryMapper: BillingSubscriptionHistoryMapper,
                                             private val billingAccountMapper: BillingAccountMapper) {
 
-    @RequestMapping(path = arrayOf("/bankwireMethod"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/bankwireMethod"], method = [(RequestMethod.POST)], headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
     @Throws(Exception::class)
     fun orderCompletedCallback(@RequestParam("AddressCity") addressCity: String,
                                @RequestParam("AddressCountry") addressCountry: String,

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstanceMapper) {
 
-    @RequestMapping(value = "/checkInstance", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/checkInstance", method = [(RequestMethod.POST)])
     fun checkInstance(@RequestBody instance: LiveInstance): String {
         val sysId = instance.sysid
         val ex = LiveInstanceExample()

@@ -27,14 +27,14 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-@Api(value = "Order", tags = arrayOf("Billing"))
+@Api(value = "Order", tags = ["Billing"])
 @RestController
-@RequestMapping(path = arrayOf("/order"))
+@RequestMapping(path = ["/order"])
 class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper,
                              private val extMailService: ExtMailService,
                              private val contentGenerator: IContentGenerator) {
 
-    @PostMapping(path = arrayOf("/generatelicense"), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @PostMapping(path = ["/generatelicense"], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
     fun generateLicense(@RequestParam("name") name: String,
                         @RequestParam("quantity") quantity: String,

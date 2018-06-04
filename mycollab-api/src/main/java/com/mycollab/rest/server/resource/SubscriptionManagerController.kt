@@ -31,14 +31,14 @@ import java.util.*
  */
 @Api(value = "subscription", tags = arrayOf("Billing"))
 @RestController
-@RequestMapping(path = arrayOf("/subscription"))
+@RequestMapping(path = ["/subscription"])
 class SubscriptionManagerController(private val subscriptionMapper: BillingSubscriptionMapper,
                                     private val subscriptionMapperExt: BillingSubscriptionMapperExt,
                                     private val subscriptionHistoryMapper: BillingSubscriptionHistoryMapper,
                                     private val billingAccountMapper: BillingAccountMapper) {
 
     @ApiOperation(value = "Register the subscription", response = String::class)
-    @RequestMapping(path = arrayOf("/register"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/register"], method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
     fun registerEE(@RequestParam("email") email: String,
                    @RequestParam("internalProductName") internalProductName: String,
                    @RequestParam("name") name: String,

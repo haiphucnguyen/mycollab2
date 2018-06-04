@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(value = "/testimonial")
 class TestimonialController(private val extMailService: ExtMailService) {
 
-    @RequestMapping(method = [(RequestMethod.POST)], headers = arrayOf("Content-Type=application/x-www-form-urlencoded"))
+    @RequestMapping(method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun submit(@RequestParam("company") company: String, @RequestParam("displayname") displayname: String,
                @RequestParam("jobrole") jobrole: String, @RequestParam("email") email: String,
                @RequestParam("website") website: String, @RequestParam("testimonial") testimonial: String) {
