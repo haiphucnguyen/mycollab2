@@ -113,9 +113,9 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
 
             EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
                     new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
-            if (project.getLead() != null && !UserUIContext.getUsername().equals(project.getLead())) {
+            if (project.getMemlead() != null && !UserUIContext.getUsername().equals(project.getMemlead())) {
                 ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-                projectMemberService.inviteProjectMembers(new String[]{project.getLead()}, CurrentProjectVariables.getProjectId(),
+                projectMemberService.inviteProjectMembers(new String[]{project.getMemlead()}, CurrentProjectVariables.getProjectId(),
                         -1, UserUIContext.getUsername(), UserUIContext.getMessage(ProjectMemberI18nEnum
                                 .MSG_DEFAULT_INVITATION_COMMENT), AppUI.getAccountId());
             }

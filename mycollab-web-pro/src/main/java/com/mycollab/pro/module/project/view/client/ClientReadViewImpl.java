@@ -219,10 +219,10 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE, createdTimeDiv,
                     DivLessFormatter.EMPTY_SPACE, billableHoursDiv, DivLessFormatter.EMPTY_SPACE,
                     nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE);
-            if (project.getLead() != null) {
+            if (project.getMemlead() != null) {
                 Div leadDiv = new Div().appendChild(new Img("", StorageUtils.getAvatarPath(project
                         .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE, new A(ProjectLinkGenerator.generateProjectMemberLink(project
-                        .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
+                        .getId(), project.getMemlead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                         .setTitle(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER));
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
