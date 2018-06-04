@@ -4,7 +4,6 @@ import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.utils.FileUtils;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.ecm.service.DriveInfoService;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.project.service.ProjectService;
@@ -13,11 +12,12 @@ import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.view.event.AccountBillingEvent;
 import com.mycollab.module.user.domain.BillingPlan;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
-import com.mycollab.module.user.service.UserService;
+import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
@@ -273,8 +273,8 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
                 .withStyleName(UIConstants.FIELD_NOTE);
 
-        UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppUI.getAccountId());
+        BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
+        numOfActiveUsers = billingAccountService.getTotalActiveUsersInAccount(AppUI.getAccountId());
         ELabel userInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
                 numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
 
