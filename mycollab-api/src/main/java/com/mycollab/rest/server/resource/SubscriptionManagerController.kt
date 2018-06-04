@@ -29,7 +29,7 @@ import java.util.*
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-@Api(value = "subscription", tags = arrayOf("Billing"))
+@Api(value = "subscription", tags = ["Billing"])
 @RestController
 @RequestMapping(path = ["/subscription"])
 class SubscriptionManagerController(private val subscriptionMapper: BillingSubscriptionMapper,
@@ -38,7 +38,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                                     private val billingAccountMapper: BillingAccountMapper) {
 
     @ApiOperation(value = "Register the subscription", response = String::class)
-    @RequestMapping(path = ["/register"], method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/register"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun registerEE(@RequestParam("email") email: String,
                    @RequestParam("internalProductName") internalProductName: String,
                    @RequestParam("name") name: String,

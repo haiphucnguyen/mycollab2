@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-@ControllerAdvice(basePackages = arrayOf("com.mycollab.rest.server.resource"))
+@ControllerAdvice(basePackages = ["com.mycollab.rest.server.resource"])
 class GenericController {
 
     @ExceptionHandler(UserInvalidInputException::class)

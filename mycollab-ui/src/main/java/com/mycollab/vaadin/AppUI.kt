@@ -25,7 +25,6 @@ import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.db.arguments.GroupIdProvider
 import com.mycollab.module.billing.SubDomainNotExistException
-import com.mycollab.module.user.domain.BillingAccount
 import com.mycollab.module.user.domain.SimpleBillingAccount
 import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.spring.AppContextUtil
@@ -66,7 +65,7 @@ abstract class AppUI : UI() {
     }
 
     fun setAttribute(key: String, value: Any?) {
-        attributes.put(key, value)
+        attributes[key] = value
     }
 
     fun getAttribute(key: String): Any? = attributes[key]
@@ -75,7 +74,7 @@ abstract class AppUI : UI() {
         get() = _billingAccount!!
 
     val loggedInUser: String?
-        get() = currentContext?.session?.username;
+        get() = currentContext?.session?.username
 
     override fun close() {
         LOG.debug("Application is closed. Clean all resources")
@@ -85,7 +84,7 @@ abstract class AppUI : UI() {
     }
 
     companion object {
-        private val serialVersionUID = 1L
+        private const val serialVersionUID = 1L
 
         private val LOG = LoggerFactory.getLogger(AppUI::class.java)
 
