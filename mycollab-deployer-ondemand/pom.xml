@@ -33,7 +33,6 @@
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-reporting-premium</module>
-        <module>../mycollab-scheduler</module>
         <module>../mycollab-servlet</module>
         <module>../mycollab-servlet-ondemand</module>
         <module>../mycollab-client-api</module>
@@ -42,8 +41,6 @@
         <module>../mycollab-mobile-premium</module>
         <module>../mycollab-web</module>
         <module>../mycollab-license</module>
-        <module>../mycollab-api</module>
-        <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-pro</module>
         <module>../mycollab-web-ondemand</module>
         <module>../mycollab-app-ondemand</module>

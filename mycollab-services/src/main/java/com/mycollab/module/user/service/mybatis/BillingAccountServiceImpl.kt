@@ -60,13 +60,10 @@ open class BillingAccountServiceImpl(private val billingAccountMapper: BillingAc
     override fun getBillingAccountById(accountId: Int): SimpleBillingAccount? =
             billingAccountMapperExt.getBillingAccountById(accountId)
 
-    override fun updateSelectiveWithSession(record: BillingAccount, username: String?): Int? {
-        try {
-            return super.updateSelectiveWithSession(record, username)
-        } catch (e: DuplicateKeyException) {
-            throw UserInvalidInputException("The domain ${record.subdomain} is already used")
-        }
-
+    override fun updateSelectiveWithSession(record: BillingAccount, username: String?): Int? = try {
+        super.updateSelectiveWithSession(record, username)
+    } catch (e: DuplicateKeyException) {
+        throw UserInvalidInputException("The domain ${record.subdomain} is already used")
     }
 
     override fun getAccountByDomain(domain: String): SimpleBillingAccount? =

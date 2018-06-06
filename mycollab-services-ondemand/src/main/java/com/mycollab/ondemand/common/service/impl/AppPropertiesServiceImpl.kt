@@ -28,7 +28,7 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
     private lateinit var properties: Properties
 
     override val sysId: String
-        get() = properties.getProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+        get() = properties.getProperty("id", "${UUID.randomUUID()}${LocalDateTime().millisOfSecond}")
 
     override val startDate: Date
         get() {
@@ -38,7 +38,6 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
             } catch (e: Exception) {
                 GregorianCalendar().time
             }
-
         }
 
     override val edition: String

@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component
 class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode {
 
     override val isDemandEdition: Boolean
-        get() = true
+        get() = false
 
     override val isCommunityEdition: Boolean
         get() = false
 
     override val isPremiumEdition: Boolean
-        get() = false
+        get() = true
 
     override fun getSiteUrl(subDomain: String?): String = String.format(serverConfiguration.siteUrl, subDomain)
 

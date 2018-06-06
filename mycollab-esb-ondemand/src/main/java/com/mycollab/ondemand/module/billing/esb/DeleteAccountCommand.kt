@@ -36,7 +36,7 @@ class DeleteAccountCommand(private val resourceService: ResourceService,
         val feedback = event.feedback
         val feedbackValue = if (feedback == null) "None" else BeanUtility.printBeanObj(feedback)
         mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
-                listOf(MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
+                listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "User cancelled account", feedbackValue)
     }
 }
