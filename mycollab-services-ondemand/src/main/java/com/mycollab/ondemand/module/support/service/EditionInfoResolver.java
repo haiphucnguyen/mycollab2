@@ -22,7 +22,7 @@ public class EditionInfoResolver implements InitializingBean {
     private EditionInfo editionInfo = new EditionInfo();
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         new Thread(()-> {
             File versionFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "version", "src/main/conf/version");
             if (versionFile == null || !versionFile.exists()) {

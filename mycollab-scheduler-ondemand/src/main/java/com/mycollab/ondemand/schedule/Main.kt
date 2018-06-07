@@ -7,11 +7,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication(exclude = [FlywayAutoConfiguration::class, FreeMarkerAutoConfiguration::class],
-        scanBasePackages = ["com.mycollab.**.spring", "com.mycollab.**.jobs"])
+        scanBasePackages = ["com.mycollab.**.spring", "com.mycollab.**.jobs, com.mycollab.**.configuration"])
 @EnableScheduling
 open class Main
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(Main::class.java).web(false).profiles("product").run(*args)
+    SpringApplicationBuilder(Main::class.java).web(false).profiles("production").run(*args)
 }
 
