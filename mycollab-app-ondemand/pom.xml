@@ -99,12 +99,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-scheduler-ondemand</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
             <scope>provided</scope>

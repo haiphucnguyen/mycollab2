@@ -22,7 +22,7 @@ package com.mycollab.schedule.email
  */
 class MailStyles {
     companion object {
-        private val _instance: MailStyles = MailStyles()
+        private val _instance = MailStyles()
 
         fun instance(): MailStyles = _instance
     }

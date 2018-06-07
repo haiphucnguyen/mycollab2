@@ -47,7 +47,7 @@ public class FreeMarkerConfiguration extends FreeMarkerConfigurationFactoryBean 
     private Configuration configuration;
 
     @Override
-    protected Configuration newConfiguration() throws IOException, TemplateException {
+    protected Configuration newConfiguration() {
         configuration = new Configuration(Configuration.VERSION_2_3_25);
         configuration.setDefaultEncoding("UTF-8");
         try {
