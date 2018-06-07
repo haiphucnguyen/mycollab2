@@ -7,4 +7,3 @@ spring:
     url: jdbc:mysql://localhost/mycollab?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: mycollab123
-    driver-class-name: com.mysql.jdbc.Driver

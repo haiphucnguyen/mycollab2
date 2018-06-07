@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.spring;
+package com.mycollab.module.ecm.spring;
 
-import com.mycollab.module.page.PageSessionFactory;
+import com.mycollab.module.ecm.ContentSessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -33,30 +33,30 @@ import javax.jcr.SimpleCredentials;
  * @since 4.6.0
  */
 @Configuration
+@DependsOn("dbMigration")
 @Profile("production")
-public class PageConfiguration {
+public class EcmConfiguration {
 
     @Bean
-    @DependsOn(value = "dataSource")
-    public RepositoryFactoryBean pageRepository() {
+    public RepositoryFactoryBean repository() {
         RepositoryFactoryBean bean = new RepositoryFactoryBean();
-        bean.setConfiguration(new ClassPathResource("wiki-repo.xml"));
-        bean.setHomeDir(new FileSystemResource("repo2/wiki-workspace"));
+        bean.setConfiguration(new ClassPathResource("jackrabbit-repo.xml"));
+        bean.setHomeDir(new FileSystemResource("repo2/content-workspace"));
         return bean;
     }
 
     @Bean
-    public PageSessionFactory pageJcrSessionFactory() throws Exception {
-        PageSessionFactory bean = new PageSessionFactory();
-        bean.setRepository(pageRepository().getObject());
+    public ContentSessionFactory jcrSessionFactory() throws Exception {
+        ContentSessionFactory bean = new ContentSessionFactory();
+        bean.setRepository(repository().getObject());
         bean.setCredentials(new SimpleCredentials("hainguyen", "esofthead321".toCharArray()));
         return bean;
     }
 
     @Bean
-    public JcrTemplate pageJcrTemplate() throws Exception {
+    public JcrTemplate jcrTemplate() throws Exception {
         JcrTemplate bean = new JcrTemplate();
-        bean.setSessionFactory(pageJcrSessionFactory());
+        bean.setSessionFactory(jcrSessionFactory());
         bean.setAllowCreate(true);
         return bean;
     }

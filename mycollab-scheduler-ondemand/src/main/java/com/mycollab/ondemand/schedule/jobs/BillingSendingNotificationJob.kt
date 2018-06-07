@@ -41,8 +41,8 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
                                     private val deploymentMode: IDeploymentMode) : GenericQuartzJobBean() {
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(BillingSendingNotificationJob::class.java)
-        private val DATE_REMIND_FOR_ENDING_TRIAL_1ST = 26
-        private val NUM_DAY_FREE_TRIAL = 30
+        private const val DATE_REMIND_FOR_ENDING_TRIAL_1ST = 26
+        private const val NUM_DAY_FREE_TRIAL = 30
     }
 
     @Throws(JobExecutionException::class)

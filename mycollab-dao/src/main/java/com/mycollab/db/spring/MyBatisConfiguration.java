@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.spring;
+package com.mycollab.db.spring;
 
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.persistence.VelocityDriverDeclare;
