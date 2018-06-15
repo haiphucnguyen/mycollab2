@@ -9,17 +9,10 @@ app:
 server:
   apiUrl: http://api.mycollab.com/api/
   port: 8080
-  storageSystem: file
-  siteUrl: http://localhost:8080
-  resourceDownloadUrl: http://localhost:8080/file/
-  cdnUrl: http://localhost:8080/assets/
-  tomcat:
-    accesslog.directory: logs
-    accesslog.enabled: true
-    accesslog.pattern: \"%t %a "%r" %s (%D ms)\"
-    accesslog.rotate: true
-
-management.endpoints.web.exposure.include: *
+  storageSystem: s3
+  siteUrl:  http://%s.mycollab.com/
+  resourceDownloadUrl: https://d6qwzhqavnbce.cloudfront.net/
+  cdnUrl: http://%s.mycollab.com/assets/
 
 endpoints:
   sensitive: false

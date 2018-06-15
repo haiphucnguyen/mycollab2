@@ -36,9 +36,9 @@ class AmazonServiceConfiguration {
     }
 
     companion object {
-        private val AWS_KEY = "s3.key"
-        private val AWS_SECRET_KEY = "s3.secretKey"
-        private val BUCKET = "s3.bucket"
+        private const val AWS_KEY = "s3.key"
+        private const val AWS_SECRET_KEY = "s3.secretKey"
+        private const val BUCKET = "s3.bucket"
 
         @JvmStatic val instance = AmazonServiceConfiguration()
     }

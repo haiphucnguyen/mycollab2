@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: MyCollab
+  profiles:
+    active: dev,mysql
