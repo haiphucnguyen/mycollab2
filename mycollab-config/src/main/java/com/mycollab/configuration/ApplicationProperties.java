@@ -45,9 +45,6 @@ public class ApplicationProperties {
     public static final String DB_DRIVER_CLASS = "db.driverClassName";
     public static final String DB_URL = "db.url";
 
-    public static final String CDN_URL = "cdn.url";
-    public static final String APP_URL = "app.url";
-
     public static final String MAIL_SMTPHOST = "mail.smtphost";
     public static final String MAIL_PORT = "mail.port";
     public static final String MAIL_USERNAME = "mail.username";

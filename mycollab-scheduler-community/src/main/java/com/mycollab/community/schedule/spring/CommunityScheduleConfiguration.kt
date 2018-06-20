@@ -28,7 +28,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  * @since 5.1.3
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 open class CommunityScheduleConfiguration {
 
     @Bean

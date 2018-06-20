@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
  */
 @Order(value = 1)
 @Component
-@Profile("production")
+@Profile("program")
 class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode {
 
     override val isDemandEdition: Boolean

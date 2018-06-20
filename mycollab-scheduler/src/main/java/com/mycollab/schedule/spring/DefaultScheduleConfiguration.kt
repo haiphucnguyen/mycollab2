@@ -43,7 +43,7 @@ import java.util.Properties
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 open class DefaultScheduleConfiguration {
 
     @Autowired private lateinit var dataSource: DataSource

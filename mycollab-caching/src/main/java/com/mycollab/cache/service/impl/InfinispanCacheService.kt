@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service
  * @since 5.1.4
  */
 @Service
-@Profile("production")
+@Profile("program")
 class InfinispanCacheService(private val instance: EmbeddedCacheManager) : CacheService {
 
     override fun putValue(group: String, key: String, value: Any) {

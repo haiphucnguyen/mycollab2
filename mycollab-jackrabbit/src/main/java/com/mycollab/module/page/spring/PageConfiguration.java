@@ -33,7 +33,7 @@ import javax.jcr.SimpleCredentials;
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 public class PageConfiguration {
 
     @Bean

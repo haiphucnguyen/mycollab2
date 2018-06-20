@@ -62,7 +62,7 @@ public class DefaultServerRunner {
                 LOG.error("Error when restart server", e);
             }
         } else {
-            application.setAdditionalProfiles("production");
+            application.setAdditionalProfiles("program");
             application.run(args);
         }
     }

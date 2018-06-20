@@ -25,7 +25,7 @@
         <junit.version>4.12</junit.version>
         <jackson.version>2.9.5</jackson.version>
 
-        <kotlin.version>1.2.41</kotlin.version>
+        <kotlin.version>1.2.50</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->

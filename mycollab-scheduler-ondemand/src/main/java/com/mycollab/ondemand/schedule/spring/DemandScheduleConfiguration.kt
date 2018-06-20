@@ -12,7 +12,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 open class DemandScheduleConfiguration {
 
     @Bean

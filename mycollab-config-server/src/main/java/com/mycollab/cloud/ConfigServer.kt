@@ -9,5 +9,5 @@ import org.springframework.cloud.config.server.EnableConfigServer
 open class Main
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(Main::class.java).profiles("production").run(*args)
+    SpringApplicationBuilder(Main::class.java).run(*args)
 }

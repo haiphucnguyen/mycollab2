@@ -35,7 +35,7 @@ import java.io.IOException;
  * @since 6.0.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 public class ContextStartedListener implements ApplicationListener<ContextRefreshedEvent> {
     private static Logger LOG = LoggerFactory.getLogger(ContextStartedListener.class);
 

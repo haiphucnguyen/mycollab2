@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * @since 4.6.0
  */
 @Configuration
-@Profile({"production", "test"})
+@Profile({"program", "test"})
 @MapperScan(basePackages = {"com.mycollab.**.dao"})
 public class MyBatisConfiguration {
     @Autowired

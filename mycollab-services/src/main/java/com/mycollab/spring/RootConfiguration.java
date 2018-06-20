@@ -27,7 +27,7 @@ import org.springframework.stereotype.Controller;
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = {
         "com.mycollab.aspect",

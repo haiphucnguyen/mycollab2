@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-config</artifactId>
             <version>${project.version}</version>

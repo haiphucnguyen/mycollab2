@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.locks.Lock
 
 @Service
-@Profile("production")
+@Profile("program")
 class DistributionLockServiceImpl : DistributionLockService {
 
     override fun getLock(lockName: String): Lock? = try {

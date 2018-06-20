@@ -40,7 +40,7 @@ import java.util.List;
  * @since 5.3.4
  */
 @Component
-@Profile("production")
+@Profile("program")
 public class FreeMarkerConfiguration extends FreeMarkerConfigurationFactoryBean {
     private static Logger LOG = LoggerFactory.getLogger(FreeMarkerConfiguration.class);
 

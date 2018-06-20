@@ -1,0 +1,7 @@
+spring.application.name: mycollab
+spring:
+  cloud:
+    config:
+     uri: http://localhost:8888
+     username: haiphucnguyen@gmail.com
+     password: DtmLinh80mycollab

@@ -33,7 +33,7 @@ import java.util.Properties;
  * @since 4.6.0
  */
 @Configuration
-@Profile("production")
+@Profile("program")
 @EnableTransactionManagement
 public class DataSourceConfiguration {
 

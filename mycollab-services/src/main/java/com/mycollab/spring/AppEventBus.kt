@@ -32,7 +32,7 @@ import java.util.concurrent.Executors
  * @since 5.1.0
  */
 @Configuration
-@Profile("production", "test")
+@Profile("program", "test")
 open class AppEventBus {
 
     @Bean
@@ -45,6 +45,6 @@ open class AppEventBus {
         private val LOG = LoggerFactory.getLogger(AppEventBus::class.java)
 
         @JvmStatic
-        fun getInstance(): AsyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus::class.java)
+        fun getInstance() = AppContextUtil.getSpringBean(AsyncEventBus::class.java)
     }
 }
