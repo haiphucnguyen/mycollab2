@@ -10,5 +10,5 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 open class Main
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(Main::class.java).profiles("production").run(*args)
+    SpringApplicationBuilder(Main::class.java).profiles("program").run(*args)
 }

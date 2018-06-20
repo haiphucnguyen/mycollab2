@@ -76,8 +76,8 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     }
 
-    @RequestMapping(path = arrayOf("/activated"), method = arrayOf(RequestMethod.POST),
-            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/activated"], method = [(RequestMethod.POST)],
+            headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
     fun activateSubscription(@RequestParam("SubscriptionReference") subscriptionReference: String,
                              @RequestParam("SubscriptionReferrer") subscriptionReferrer: String,
@@ -145,8 +145,8 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     }
 
-    @RequestMapping(path = arrayOf("/rebill-completed"), method = arrayOf(RequestMethod.POST),
-            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/rebill-completed"], method = [(RequestMethod.POST)],
+            headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
     fun reBillSubscription(@RequestParam("OrderId") orderId: String,
                            @RequestParam("OrderProductName") orderProductName: String,
@@ -185,8 +185,8 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
         return "Ok"
     }
 
-    @RequestMapping(path = arrayOf("/subscription-failed"), method = arrayOf(RequestMethod.POST),
-            headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/subscription-failed"], method = [(RequestMethod.POST)],
+            headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun subscriptionFailedNotification(@RequestParam("SubscriptionReference") subscriptionReference: String,
                                        @RequestParam("SubscriptionEndDate") subscriptionEndDate: String): String {
         val ex = BillingSubscriptionExample()
@@ -222,7 +222,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
         return "Ok"
     }
 
-    @RequestMapping(path = arrayOf("/deactivated"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/deactivated"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun subscriptionDeactivatedNotification(@RequestParam("SubscriptionCustomerUrl") subscriptionCustomerUrl: String,
                                             @RequestParam("SubscriptionEndDate") subscriptionEndDate: String,
                                             @RequestParam(value = "SubscriptionIsTest", required = false)

@@ -27,7 +27,7 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
                                             private val subscriptionHistoryMapper: BillingSubscriptionHistoryMapper,
                                             private val billingAccountMapper: BillingAccountMapper) {
 
-    @RequestMapping(path = ["/bankwireMethod"], method = [(RequestMethod.POST)], headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/bankwireMethod"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
     fun orderCompletedCallback(@RequestParam("AddressCity") addressCity: String,
                                @RequestParam("AddressCountry") addressCountry: String,

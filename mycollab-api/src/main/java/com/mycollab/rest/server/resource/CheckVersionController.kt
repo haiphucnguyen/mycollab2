@@ -25,14 +25,14 @@ class CheckVersionController(private val editionInfoResolver: EditionInfoResolve
         val props = Properties()
 
         val liveVersion = editionInfoResolver.editionInfo.version
-        props.put("version", liveVersion)
-        props.put("downloadLink", "https://www.mycollab.com/ce-registration/")
-        props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                Version.getVersion().replace('.', '-')))
+        props["version"] = liveVersion
+        props["downloadLink"] = "https://www.mycollab.com/ce-registration/"
+        props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
+                Version.getVersion().replace('.', '-'))
 
         if (version != null && Version.isEditionNewer(liveVersion, version) &&
                 Version.isEditionNewer(version, "5.3.4")) {
-            props.put("autoDownload", editionInfoResolver.editionInfo.communityUpgradeLink)
+            props["autoDownload"] = editionInfoResolver.editionInfo.communityUpgradeLink
         }
 
         return props
@@ -42,11 +42,11 @@ class CheckVersionController(private val editionInfoResolver: EditionInfoResolve
     fun getLatestPremiumUpdate(@RequestParam("version") version: String, @RequestParam("customerId") customerId: String): Properties {
         val props = Properties()
         val liveVersion = editionInfoResolver.editionInfo.version
-        props.put("version", liveVersion)
-        props.put("downloadLink", "https://www.mycollab.com/ee-registration/")
-        props.put("releaseNotes", String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                Version.getVersion().replace('.', '-')))
-        props.put("autoDownload", editionInfoResolver.editionInfo.premiumUpgradeLink)
+        props["version"] = liveVersion
+        props["downloadLink"] = "https://www.mycollab.com/ee-registration/"
+        props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
+                Version.getVersion().replace('.', '-'))
+        props["autoDownload"] = editionInfoResolver.editionInfo.premiumUpgradeLink
         return props
     }
 }
