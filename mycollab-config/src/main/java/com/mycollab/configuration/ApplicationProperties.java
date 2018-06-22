@@ -40,11 +40,6 @@ public class ApplicationProperties {
 
     private static Properties properties;
 
-    public static final String DB_USERNAME = "db.username";
-    public static final String DB_PASSWORD = "db.password";
-    public static final String DB_DRIVER_CLASS = "db.driverClassName";
-    public static final String DB_URL = "db.url";
-
     public static final String MAIL_SMTPHOST = "mail.smtphost";
     public static final String MAIL_PORT = "mail.port";
     public static final String MAIL_USERNAME = "mail.username";

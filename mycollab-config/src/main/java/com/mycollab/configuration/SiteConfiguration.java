@@ -1,19 +1,3 @@
-/**
- * Copyright © MyCollab
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.mycollab.configuration;
 
 import com.mycollab.core.utils.FileUtils;
@@ -47,7 +31,6 @@ public class SiteConfiguration {
     private String sentErrorEmail;
     private Locale defaultLocale;
     private EmailConfiguration emailConfiguration;
-    private DatabaseConfiguration databaseConfiguration;
     private String endecryptPassword;
     private String dropboxCallbackUrl;
 
@@ -78,13 +61,6 @@ public class SiteConfiguration {
         Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_SSL, "false"));
         String noreplyEmail = ApplicationProperties.getString(MAIL_NOTIFY, "");
         instance.emailConfiguration = new EmailConfiguration(host, user, password, port, isTls, isSsl, noreplyEmail);
-
-        // load database configuration
-        String driverClass = ApplicationProperties.getString(DB_DRIVER_CLASS);
-        String dbUrl = ApplicationProperties.getString(DB_URL);
-        String dbUser = ApplicationProperties.getString(DB_USERNAME);
-        String dbPassword = ApplicationProperties.getString(DB_PASSWORD);
-        instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
 
@@ -118,10 +94,6 @@ public class SiteConfiguration {
             loadConfiguration();
         }
         return instance;
-    }
-
-    public static DatabaseConfiguration getDatabaseConfiguration() {
-        return getInstance().databaseConfiguration;
     }
 
     public static EmailConfiguration getEmailConfiguration() {

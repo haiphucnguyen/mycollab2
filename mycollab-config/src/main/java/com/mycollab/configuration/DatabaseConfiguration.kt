@@ -16,9 +16,16 @@
  */
 package com.mycollab.configuration
 
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.context.annotation.Profile
+import org.springframework.stereotype.Component
+
 /**
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class DatabaseConfiguration(var driverClass: String, var url: String,
-                            var user: String, var password: String)
+@Profile("program")
+@Component
+@ConfigurationProperties(prefix = "spring.datasource")
+class DatabaseConfiguration(var driverClassName: String = "", var url: String = "",
+                            var username: String = "", var password: String = "")

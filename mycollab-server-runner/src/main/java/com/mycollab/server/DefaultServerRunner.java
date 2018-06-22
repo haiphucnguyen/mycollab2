@@ -36,7 +36,7 @@ import java.io.FileWriter;
  * @author MyCollab Ltd
  * @since 5.5.0
  */
-@SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class, DataSourceAutoConfiguration.class,
+@SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class,
         FlywayAutoConfiguration.class},
         scanBasePackages = "com.mycollab.**.spring, com.mycollab.**.configuration, com.mycollab.**.servlet")
 public class DefaultServerRunner {
