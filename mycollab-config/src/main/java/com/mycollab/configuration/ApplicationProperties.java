@@ -48,8 +48,6 @@ public class ApplicationProperties {
     public static final String MAIL_IS_SSL = "mail.isSSL";
     public static final String MAIL_NOTIFY = "mail.notify";
 
-    public static final String ERROR_SENDTO = "error.sendTo";
-
     public static final String DROPBOX_AUTH_LINK = "dropbox.callbackUrl";
 
     public static final String BI_ENDECRYPT_PASSWORD = "endecryptPassword";

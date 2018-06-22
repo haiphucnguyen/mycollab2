@@ -28,9 +28,7 @@ public class SiteConfiguration {
 
     private static SiteConfiguration instance;
 
-    private String sentErrorEmail;
     private Locale defaultLocale;
-    private EmailConfiguration emailConfiguration;
     private String endecryptPassword;
     private String dropboxCallbackUrl;
 
@@ -42,7 +40,6 @@ public class SiteConfiguration {
         ApplicationProperties.loadProps();
         instance = new SiteConfiguration();
 
-        instance.sentErrorEmail = ApplicationProperties.getString(ERROR_SENDTO, "support@mycollab.com");
         String propLocale = ApplicationProperties.getString(DEFAULT_LOCALE, "en_US");
         try {
             instance.defaultLocale = Locale.forLanguageTag(propLocale);
@@ -51,16 +48,6 @@ public class SiteConfiguration {
         }
 
         instance.endecryptPassword = ApplicationProperties.getString(BI_ENDECRYPT_PASSWORD, "mycollab123");
-
-        // load email
-        String host = ApplicationProperties.getString(MAIL_SMTPHOST);
-        String user = ApplicationProperties.getString(MAIL_USERNAME);
-        String password = ApplicationProperties.getString(MAIL_PASSWORD);
-        Integer port = Integer.parseInt(ApplicationProperties.getString(MAIL_PORT, "25"));
-        Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_TLS, "false"));
-        Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_SSL, "false"));
-        String noreplyEmail = ApplicationProperties.getString(MAIL_NOTIFY, "");
-        instance.emailConfiguration = new EmailConfiguration(host, user, password, port, isTls, isSsl, noreplyEmail);
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
 
@@ -94,22 +81,6 @@ public class SiteConfiguration {
             loadConfiguration();
         }
         return instance;
-    }
-
-    public static EmailConfiguration getEmailConfiguration() {
-        return getInstance().emailConfiguration;
-    }
-
-    public static void setEmailConfiguration(EmailConfiguration conf) {
-        getInstance().emailConfiguration = conf;
-    }
-
-    public static String getNotifyEmail() {
-        return getInstance().emailConfiguration.getNotifyEmail();
-    }
-
-    public static String getSendErrorEmail() {
-        return getInstance().sentErrorEmail;
     }
 
     public static String getSiteUrl(String subDomain) {

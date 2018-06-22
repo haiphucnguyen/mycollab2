@@ -22,7 +22,6 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.core.utils.RandomPasswordGenerator
 import com.mycollab.html.LinkUtils
@@ -68,7 +67,7 @@ class InviteProjectMembersCommand(private val userService: UserService,
         val user = userService.findUserInAccount(event.inviteUser, event.sAccountId)
         val billingAccount = projectService.getAccountInfoOfProject(event.projectId)
 
-        if (project!= null && user != null) {
+        if (project != null && user != null) {
             contentGenerator.putVariable("inviteUser", user.displayName!!)
             contentGenerator.putVariable("inviteMessage", event.inviteMessage)
             contentGenerator.putVariable("project", project)
@@ -136,7 +135,7 @@ class InviteProjectMembersCommand(private val userService: UserService,
                         project.name, applicationConfiguration.siteName)
                 val content = contentGenerator.parseFile("mailMemberInvitationNotifier.ftl", Locale.US)
                 val toUser = listOf(MailRecipientField(it, it))
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, toUser, subject, content)
+                extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName, toUser, subject, content)
             }
         } else {
             LOG.error("Can not find user ${event.inviteUser} in account ${event.sAccountId}")

@@ -23,7 +23,6 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.arguments.*
 import com.mycollab.html.LinkUtils
@@ -58,8 +57,7 @@ class NewUserJoinCommand(private val billingAccountService: BillingAccountServic
 
         class Formatter {
             fun formatMemberLink(siteUrl: String, newMember: SimpleUser): String {
-                return A(AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, newMember.username)).
-                        appendText(newMember.displayName).write()
+                return A(AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, newMember.username)).appendText(newMember.displayName).write()
             }
 
             fun formatRoleName(siteUrl: String, newMember: SimpleUser): String {
@@ -94,7 +92,7 @@ class NewUserJoinCommand(private val billingAccountService: BillingAccountServic
                 contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
                         DateTimeUtils.getCurrentYear()))
                 contentGenerator.putVariable("logoPath", LinkUtils.accountLogoPath(account.id, account.logopath))
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
+                extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName, recipients,
                         "${newUser.displayName} has just joined on MyCollab workspace",
                         contentGenerator.parseFile("mailNewUserJoinAccountNotifier.ftl", Locale.US))
             } else {

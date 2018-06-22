@@ -90,7 +90,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
                     buildExtraTemplateVariables(context)
                     val userMail = MailRecipientField(it.email, it.username)
                     val recipients = listOf(userMail)
-                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
+                    extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName, recipients,
                             subject, contentGenerator.parseFile("mailCrmItemCreatedNotifier.ftl", context.locale))
                 }
             }
@@ -138,7 +138,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
                     contentGenerator.putVariable("mapper", getItemFieldMapper())
                     val userMail = MailRecipientField(it.email, it.username)
                     val recipients = listOf(userMail)
-                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
+                    extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName, recipients,
                             subject, contentGenerator.parseFile("mailCrmItemUpdatedNotifier.ftl", context.locale))
                 }
             }
@@ -176,7 +176,7 @@ abstract class CrmDefaultSendingRelayEmailAction<B> : SendingRelayEmailNotificat
                 val subject = context.getMessage(getCommentSubjectKey(), context.changeByUserFullName, getItemName())
                 val userMail = MailRecipientField(it.email, it.username)
                 val recipients = listOf(userMail)
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
+                extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName, recipients,
                         subject, contentGenerator.parseFile("mailCrmItemAddNoteNotifier.ftl", context.locale))
             }
         }

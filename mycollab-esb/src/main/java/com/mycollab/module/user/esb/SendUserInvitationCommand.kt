@@ -22,7 +22,6 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -58,7 +57,7 @@ class SendUserInvitationCommand(private val userService: UserService,
             contentGenerator.putVariable("password", event.password)
             contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
                     DateTimeUtils.getCurrentYear()))
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                     Collections.singletonList(MailRecipientField(event.invitee, event.invitee)),
                     LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_INVITE_USER_SUBJECT, applicationConfiguration.siteName),
                     contentGenerator.parseFile("mailUserInvitationNotifier.ftl", Locale.US))

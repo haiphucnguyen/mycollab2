@@ -23,7 +23,6 @@ import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
 import com.mycollab.module.esb.GenericCommand
@@ -64,7 +63,7 @@ class ResetUserPasswordCommand(private val extMailService: ExtMailService,
             val recipient = MailRecipientField(user.email, user.username)
             val recipientFields = listOf(recipient)
 
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                     recipientFields,
                     LocalizationHelper.getMessage(locale, UserI18nEnum.MAIL_RECOVERY_PASSWORD_SUBJECT,
                             applicationConfiguration.siteName),
