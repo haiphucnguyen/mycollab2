@@ -2,7 +2,6 @@ package com.mycollab.premium.configuration
 
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.persistence.service.IService
 import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
@@ -26,9 +25,9 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override val isPremiumEdition: Boolean
         get() = true
 
-    override fun getSiteUrl(subDomain: String?): String = String.format(serverConfiguration.siteUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
+    override fun getSiteUrl(subDomain: String?) = String.format(serverConfiguration.siteUrl, serverConfiguration.address, serverConfiguration.port)
 
-    override fun getResourceDownloadUrl(): String = String.format(serverConfiguration.resourceDownloadUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
+    override fun getResourceDownloadUrl() = String.format(serverConfiguration.resourceDownloadUrl, serverConfiguration.address, serverConfiguration.port)
 
-    override fun getCdnUrl(): String = String.format(serverConfiguration.cdnUrl, SiteConfiguration.getServerAddress(), serverConfiguration.port)
+    override fun getCdnUrl() = String.format(serverConfiguration.cdnUrl, serverConfiguration.address, serverConfiguration.port)
 }

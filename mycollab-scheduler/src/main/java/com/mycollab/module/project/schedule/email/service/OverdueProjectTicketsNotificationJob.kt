@@ -23,6 +23,7 @@ import com.mycollab.common.FontAwesomeUtils
 import com.mycollab.common.NotificationType
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.MyCollabException
@@ -66,6 +67,8 @@ import java.util.*
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
+
+    @Autowired private lateinit var applicationConfiguration: ApplicationConfiguration
 
     @Autowired private lateinit var projectAssignmentService: ProjectTicketService
 
@@ -117,7 +120,7 @@ class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
                         val content = contentGenerator.parseFile("mailProjectOverdueAssignmentsNotifier.ftl", Locale.US)
                         val overdueAssignments = "${LocalizationHelper.getMessage(userLocale, TicketI18nEnum.VAL_OVERDUE_TICKETS)}(${assignments.size})"
                         contentGenerator.putVariable("overdueAssignments", overdueAssignments)
-                        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
                                 "[$projectName] $overdueAssignments", content)
                     }
                 }

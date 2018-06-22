@@ -4,6 +4,7 @@ import com.google.common.eventbus.AllowConcurrentEvents
 import com.google.common.eventbus.Subscribe
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.i18n.LocalizationHelper
@@ -25,7 +26,8 @@ import java.util.*
 @Component
 class SendVerifyUserEmailCommand(private val userService: UserService,
                                  private val extMailService: ExtMailService,
-                                 private val contentGenerator: IContentGenerator) : GenericCommand() {
+                                 private val contentGenerator: IContentGenerator,
+                                 private val applicationConfiguration: ApplicationConfiguration) : GenericCommand() {
 
     @AllowConcurrentEvents
     @Subscribe
@@ -43,7 +45,7 @@ class SendVerifyUserEmailCommand(private val userService: UserService,
         //    contentGenerator.putVariable("linkConfirm", confirmLink)
         contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
                 DateTimeUtils.getCurrentYear()))
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
                 listOf(MailRecipientField(user.email, "${user.firstname} ${user.lastname}")),
                 LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
                 contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US))

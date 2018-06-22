@@ -20,6 +20,7 @@ import com.google.common.eventbus.AllowConcurrentEvents
 import com.google.common.eventbus.Subscribe
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
@@ -54,7 +55,8 @@ class InviteProjectMembersCommand(private val userService: UserService,
                                   private val extMailService: ExtMailService,
                                   private val projectService: ProjectService,
                                   private val projectMemberService: ProjectMemberService,
-                                  private val contentGenerator: IContentGenerator) : GenericCommand() {
+                                  private val contentGenerator: IContentGenerator,
+                                  private val applicationConfiguration: ApplicationConfiguration) : GenericCommand() {
     companion object {
         val LOG = LoggerFactory.getLogger(InviteProjectMembersCommand::class.java)
     }
@@ -131,10 +133,10 @@ class InviteProjectMembersCommand(private val userService: UserService,
                 contentGenerator.putVariable("urlAccept", ProjectLinkGenerator.generateProjectFullLink(deploymentMode.getSiteUrl(billingAccount.getSubdomain()),
                         event.projectId))
                 val subject = LocalizationHelper.getMessage(Locale.US, ProjectMemberI18nEnum.MAIL_INVITE_USERS_SUBJECT,
-                        project.name, SiteConfiguration.getDefaultSiteName())
+                        project.name, applicationConfiguration.siteName)
                 val content = contentGenerator.parseFile("mailMemberInvitationNotifier.ftl", Locale.US)
                 val toUser = listOf(MailRecipientField(it, it))
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), toUser, subject, content)
+                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, toUser, subject, content)
             }
         } else {
             LOG.error("Can not find user ${event.inviteUser} in account ${event.sAccountId}")

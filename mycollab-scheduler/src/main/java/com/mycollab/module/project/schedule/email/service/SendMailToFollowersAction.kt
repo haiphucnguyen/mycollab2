@@ -26,6 +26,7 @@ import com.mycollab.common.domain.criteria.CommentSearchCriteria
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.common.service.AuditLogService
 import com.mycollab.common.service.CommentService
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.core.utils.DateTimeUtils
@@ -54,6 +55,7 @@ import org.springframework.beans.factory.annotation.Autowired
  * @since 6.0.0
  */
 abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationAction {
+    @Autowired private lateinit var applicationConfiguration: ApplicationConfiguration
     @Autowired private lateinit var extMailService: ExtMailService
     @Autowired private lateinit var projectService: ProjectService
     @Autowired protected lateinit var projectMemberService: ProjectMemberService
@@ -89,7 +91,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
                     val userMail = MailRecipientField(it.email, it.username)
                     val recipients = arrayListOf(userMail)
-                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
                             getCreateSubject(context), contentGenerator.parseFile("mailProjectItemCreatedNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForCreateAction.add(it.username)
@@ -140,7 +142,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
                     val userMail = MailRecipientField(it.email, it.username)
                     val recipients = arrayListOf(userMail)
-                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
                             getUpdateSubject(context), contentGenerator.parseFile("mailProjectItemUpdatedNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForUpdateAction.add(it.username)
@@ -183,7 +185,7 @@ abstract class SendMailToFollowersAction<B> : SendingRelayEmailNotificationActio
                     contentGenerator.putVariable("Project_Footer", getProjectFooter(context))
                     val userMail = MailRecipientField(it.email, it.username)
                     val toRecipients = arrayListOf(userMail)
-                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), toRecipients,
+                    extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, toRecipients,
                             getCommentSubject(context), contentGenerator.parseFile("mailProjectItemCommentNotifier.ftl", context.locale))
                     if (it.username != notification.changeby) {
                         notifyUsersForCommentAction.add(it.username)

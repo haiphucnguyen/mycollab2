@@ -3,6 +3,7 @@ package com.mycollab.ondemand.schedule.jobs
 import com.google.common.base.MoreObjects
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.billing.AccountReminderStatusContants
@@ -38,7 +39,8 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
                                     private val billingAccountService: BillingAccountService,
                                     private val extMailService: ExtMailService,
                                     private val contentGenerator: IContentGenerator,
-                                    private val deploymentMode: IDeploymentMode) : GenericQuartzJobBean() {
+                                    private val deploymentMode: IDeploymentMode,
+                                    private val applicationConfiguration: ApplicationConfiguration) : GenericQuartzJobBean() {
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(BillingSendingNotificationJob::class.java)
         private const val DATE_REMIND_FOR_ENDING_TRIAL_1ST = 26
@@ -79,7 +81,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
             contentGenerator.putVariable("userName", it.lastname)
             val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
             contentGenerator.putVariable("link", link)
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
                     listOf(MailRecipientField(it.email, it.displayName)),
                     "Your trial has expired", contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
         }
@@ -97,7 +99,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
             contentGenerator.putVariable("expireDay", df.print(accountTrialTo))
             contentGenerator.putVariable("userName", it.lastname)
             contentGenerator.putVariable("link", link)
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
                     Collections.singletonList(MailRecipientField(it.email, it.displayName)),
                     "Your trial will end soon", contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US))
         }

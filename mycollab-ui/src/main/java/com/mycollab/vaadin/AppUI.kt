@@ -20,8 +20,8 @@ import com.google.common.base.MoreObjects
 import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.SessionIdGenerator
 import com.mycollab.common.i18n.ErrorI18nEnum
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.db.arguments.GroupIdProvider
 import com.mycollab.module.billing.SubDomainNotExistException
@@ -139,10 +139,13 @@ abstract class AppUI : UI() {
 
         @JvmStatic
         val siteName: String
-            get() = try {
-                MoreObjects.firstNonNull(instance._billingAccount!!.sitename, SiteConfiguration.getDefaultSiteName())
-            } catch (e: Exception) {
-                SiteConfiguration.getDefaultSiteName()
+            get() {
+                var appConfig = AppContextUtil.getSpringBean(ApplicationConfiguration::class.java)
+                return try {
+                    MoreObjects.firstNonNull(instance._billingAccount!!.sitename, appConfig.siteName)
+                } catch (e: Exception) {
+                    appConfig.siteName
+                }
             }
 
         @JvmStatic

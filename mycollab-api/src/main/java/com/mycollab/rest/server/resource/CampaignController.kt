@@ -1,6 +1,7 @@
 package com.mycollab.rest.server.resource
 
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.Version
 import com.mycollab.core.utils.FileUtils
@@ -28,7 +29,8 @@ import java.io.IOException
 class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                          private val editionInfoResolver: EditionInfoResolver,
                          private val extMailService: ExtMailService,
-                         private val contentGenerator: IContentGenerator) {
+                         private val contentGenerator: IContentGenerator,
+                         private val applicationConfiguration: ApplicationConfiguration) {
 
     @ApiOperation(value = "Get the html page contains link to buy", response = String::class)
     @RequestMapping(method = [(RequestMethod.GET)], path = ["/linktobuy"])
@@ -79,7 +81,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                     contentGenerator.putVariable("downloadLink", String.format("http://api.mycollab.com/download/verify?email=%s", email))
                 }
 
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(),
+                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
                         listOf(MailRecipientField(email, "$firstname $lastname")),
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"))
             }

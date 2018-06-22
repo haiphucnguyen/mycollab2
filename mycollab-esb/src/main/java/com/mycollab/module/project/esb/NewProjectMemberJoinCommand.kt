@@ -22,6 +22,7 @@ import com.hp.gagawa.java.elements.A
 import com.mycollab.common.FontAwesomeUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.DateTimeUtils
@@ -49,7 +50,8 @@ class NewProjectMemberJoinCommand(private val billingAccountService: BillingAcco
                                   private val projectMemberService: ProjectMemberService,
                                   private val extMailService: ExtMailService,
                                   private val contentGenerator: IContentGenerator,
-                                  private val deploymentMode: IDeploymentMode) : GenericCommand() {
+                                  private val deploymentMode: IDeploymentMode,
+                                  private val applicationConfiguration: ApplicationConfiguration) : GenericCommand() {
 
     @AllowConcurrentEvents
     @Subscribe
@@ -71,7 +73,7 @@ class NewProjectMemberJoinCommand(private val billingAccountService: BillingAcco
                 if (event.username != it.username)
                     recipients.add(MailRecipientField(it.username, it.displayName))
             }
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getDefaultSiteName(), recipients,
+            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName, recipients,
                     "${newMember.displayName} has just joined on project ${newMember.projectName}",
                     contentGenerator.parseFile("mailProjectNewMemberJoinProjectNotifier.ftl", Locale.US))
         } else {
