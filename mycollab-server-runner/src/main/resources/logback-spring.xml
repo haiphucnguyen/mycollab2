@@ -38,7 +38,6 @@
     <logger name="org.jgroups" level="WARN"/>
     <root level="INFO">
         <appender-ref ref="stdout"/>
-        <appender-ref ref="email"/>
         <appender-ref ref="R"/>
     </root>
 </configuration>

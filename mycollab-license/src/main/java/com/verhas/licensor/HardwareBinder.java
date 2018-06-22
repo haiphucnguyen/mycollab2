@@ -53,7 +53,7 @@ public class HardwareBinder {
 	private boolean useHostName = true;
 
 	/**
-	 * When calculating the machine UUID the host name is also taken into
+	 * When calculating the machine UUID the smtphost name is also taken into
 	 * account by default. If you want the method to ignore the machine name
 	 * then call this method before calling any UUID calculation method.
 	 */

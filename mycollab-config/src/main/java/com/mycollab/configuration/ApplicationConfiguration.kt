@@ -31,6 +31,8 @@ open class ApplicationConfiguration(var siteName: String = "MyCollab", var descr
                                var twitterUrl: String? = "", var googleUrl: String? = "",
                                var linkedinUrl: String? = "", var notifyEmail: String) {
 
+    constructor(): this("", "", "", "", "", "", "")
+
     fun defaultUrls() =
             mutableMapOf("facebook_url" to (facebookUrl ?: ""),
                     "google_url" to (googleUrl ?: ""),

@@ -37,7 +37,7 @@ open class ExtMailServiceImpl : ExtMailService {
     private lateinit var emailConfiguration: EmailConfiguration
 
     override val isMailSetupValid: Boolean
-        get() = (StringUtils.isNotBlank(emailConfiguration.host) && StringUtils.isNotBlank(emailConfiguration.user)
+        get() = (StringUtils.isNotBlank(emailConfiguration.smtphost) && StringUtils.isNotBlank(emailConfiguration.username)
                 && emailConfiguration.port > -1)
 
     private val mailer: IMailer
