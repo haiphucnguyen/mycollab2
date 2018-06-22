@@ -4,7 +4,7 @@ import com.hp.gagawa.java.elements.Div
 import com.hp.gagawa.java.elements.Li
 import com.hp.gagawa.java.elements.Ul
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.module.mail.service.ExtMailService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping(value = "/testimonial")
-class TestimonialController(private val extMailService: ExtMailService) {
+class TestimonialController(private val extMailService: ExtMailService,
+                            private val applicationConfiguration: ApplicationConfiguration) {
 
     @RequestMapping(method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun submit(@RequestParam("company") company: String, @RequestParam("displayname") displayname: String,
@@ -30,7 +31,7 @@ class TestimonialController(private val extMailService: ExtMailService) {
                 Li().appendText("Email: $email"),
                 Li().appendText("Website: $website"),
                 Li().appendText("Testimonial: $testimonial")))
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab",
+        extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, "MyCollab",
                 listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "New testimonial for you", bodyContent.write())
     }

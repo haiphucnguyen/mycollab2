@@ -2,7 +2,6 @@ package com.mycollab.rest.server.resource
 
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.ApplicationConfiguration
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.Version
 import com.mycollab.core.utils.FileUtils
 import com.mycollab.module.mail.service.ExtMailService
@@ -81,7 +80,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                     contentGenerator.putVariable("downloadLink", String.format("http://api.mycollab.com/download/verify?email=%s", email))
                 }
 
-                extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+                extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                         listOf(MailRecipientField(email, "$firstname $lastname")),
                         "MyCollab is ready for download", contentGenerator.parseFile("mailDownloadInfo.ftl"))
             }

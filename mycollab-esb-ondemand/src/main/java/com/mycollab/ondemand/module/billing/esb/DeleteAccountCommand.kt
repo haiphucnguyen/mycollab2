@@ -5,7 +5,6 @@ import com.mycollab.common.dao.OptionValMapper
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.domain.OptionValExample
 import com.mycollab.configuration.ApplicationConfiguration
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.utils.BeanUtility
 import com.mycollab.module.ecm.service.ResourceService
 import com.mycollab.module.esb.GenericCommand
@@ -37,7 +36,7 @@ class DeleteAccountCommand(private val resourceService: ResourceService,
 
         val feedback = event.feedback
         val feedbackValue = if (feedback == null) "None" else BeanUtility.printBeanObj(feedback)
-        mailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+        mailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                 listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "User cancelled account", feedbackValue)
     }

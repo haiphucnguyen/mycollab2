@@ -5,7 +5,6 @@ import com.mycollab.common.GenericLinkUtils
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.IDeploymentMode
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.module.billing.AccountReminderStatusContants
 import com.mycollab.module.billing.AccountStatusConstants
 import com.mycollab.module.mail.service.ExtMailService
@@ -81,7 +80,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
             contentGenerator.putVariable("userName", it.lastname)
             val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
             contentGenerator.putVariable("link", link)
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                     listOf(MailRecipientField(it.email, it.displayName)),
                     "Your trial has expired", contentGenerator.parseFile("mailInformAccountIsExpiredNotification.ftl", Locale.US))
         }
@@ -99,7 +98,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
             contentGenerator.putVariable("expireDay", df.print(accountTrialTo))
             contentGenerator.putVariable("userName", it.lastname)
             contentGenerator.putVariable("link", link)
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                     Collections.singletonList(MailRecipientField(it.email, it.displayName)),
                     "Your trial will end soon", contentGenerator.parseFile("mailRemindAccountIsAboutExpiredNotification.ftl", Locale.US))
         }

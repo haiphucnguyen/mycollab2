@@ -1,6 +1,7 @@
 package com.mycollab.ondemand.schedule.jobs
 
 import com.mycollab.common.domain.MailRecipientField
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.SearchCriteria
@@ -25,7 +26,8 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class SendingCountUserLoginByDateJob(private val userService: UserService,
                                      private val extMailService: ExtMailService,
-                                     private val contentGenerator: IContentGenerator) : GenericQuartzJobBean() {
+                                     private val contentGenerator: IContentGenerator,
+                                     private val applicationConfiguration: ApplicationConfiguration) : GenericQuartzJobBean() {
     private val COUNT_USER_LOGIN_TEMPLATE = "mailCountUserLoginByDate.ftl"
 
     @Throws(JobExecutionException::class)
@@ -42,8 +44,8 @@ class SendingCountUserLoginByDateJob(private val userService: UserService,
             contentGenerator.putVariable("lstUser", accessedUsers)
             contentGenerator.putVariable("count", accessedUsers.size)
 
-            extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), SiteConfiguration.getNotifyEmail(),
-                    listOf(MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")),
+            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.notifyEmail,
+                    listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                     "Today system-logins count", contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE))
 
         }

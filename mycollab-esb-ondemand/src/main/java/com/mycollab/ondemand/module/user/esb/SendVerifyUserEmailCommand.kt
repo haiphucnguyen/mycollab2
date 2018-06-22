@@ -45,7 +45,7 @@ class SendVerifyUserEmailCommand(private val userService: UserService,
         //    contentGenerator.putVariable("linkConfirm", confirmLink)
         contentGenerator.putVariable("copyRight", LocalizationHelper.getMessage(Locale.US, MailI18nEnum.Copyright,
                 DateTimeUtils.getCurrentYear()))
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), applicationConfiguration.siteName,
+        extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                 listOf(MailRecipientField(user.email, "${user.firstname} ${user.lastname}")),
                 LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
                 contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US))

@@ -4,7 +4,7 @@ import com.hp.gagawa.java.elements.Div
 import com.hp.gagawa.java.elements.Li
 import com.hp.gagawa.java.elements.Ul
 import com.mycollab.common.domain.MailRecipientField
-import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.module.mail.service.ExtMailService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController
 @Api(value = "contact-us", tags = arrayOf("Support"))
 @RestController
 @RequestMapping(value = "/contact-us")
-class ContactUsController(private val extMailService: ExtMailService) {
+class ContactUsController(private val extMailService: ExtMailService,
+                          private val applicationConfiguration: ApplicationConfiguration) {
 
     @ApiOperation(value = "Send the inquery request", response = String::class)
     @RequestMapping(value = "/submit", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
@@ -41,7 +42,7 @@ class ContactUsController(private val extMailService: ExtMailService) {
                 Li().appendText("Budget: $budget"),
                 Li().appendText("Subject: $subject"),
                 Li().appendText("Message: $message")))
-        extMailService.sendHTMLMail(SiteConfiguration.getNotifyEmail(), "MyCollab", listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write())
+        extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, "MyCollab", listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")), "MyCollab inquiry", bodyContent.write())
         return "Ok"
     }
 }
