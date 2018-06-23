@@ -8,7 +8,7 @@ spring:
           uri: https://hainguyen@bitbucket.org/hainguyen/mycollab-config-repo.git
           username: hainguyen
           password: DtmLinh80
-security:
-  user:
-    name: root
-    password: esofthead321
+  security:
+    user:
+      name: root
+      password: esofthead321

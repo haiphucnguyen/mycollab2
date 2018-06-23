@@ -29,7 +29,7 @@ class GanttTaskServiceTest : IntegrationServiceTest() {
         assertThat(project.name).isEqualTo("Project A")
         assertThat(project.type).isEqualTo(ProjectTypeConstants.PROJECT)
 
-        val subMilestones = project.milestones
+        val subMilestones = project.milestones!!
         assertThat(subMilestones).hasSize(2)
 
         assertThat(subMilestones).extracting("name").contains("Milestone 1", "Milestone 2")
@@ -37,7 +37,7 @@ class GanttTaskServiceTest : IntegrationServiceTest() {
         val milestoneFilterResult = Collections2.filter(subMilestones) { "Milestone 2" == it!!.name }
         assertThat(milestoneFilterResult).hasSize(1)
         val milestone2 = milestoneFilterResult.iterator().next()
-        val subTasks = milestone2.subTasks
+        val subTasks = milestone2.subTasks!!
         assertThat(subTasks).hasSize(2)
         assertThat(subTasks).extracting("name", "id").contains(Tuple.tuple("Task 3", 3), Tuple.tuple("Task 4", 4))
 
@@ -55,7 +55,7 @@ class GanttTaskServiceTest : IntegrationServiceTest() {
         assertThat(predecessor.descid).isEqualTo(2)
 
         val milestone1 = Collections2.filter(subMilestones) { "Milestone 1" == it!!.name }.iterator().next()
-        val task2 = Collections2.filter(milestone1.subTasks) { "Task 2" == it!!.name }.iterator().next()
+        val task2 = Collections2.filter(milestone1.subTasks!!) { "Task 2" == it!!.name }.iterator().next()
         val dependents = task2.dependents
         assertThat(dependents).hasSize(1)
 
