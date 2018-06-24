@@ -30,9 +30,7 @@ import java.util.*
 @Api(value = "Order", tags = ["Billing"])
 @RestController
 @RequestMapping(path = ["/order"])
-class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper,
-                             private val extMailService: ExtMailService,
-                             private val contentGenerator: IContentGenerator) {
+class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper) {
 
     @PostMapping(path = ["/generatelicense"], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
@@ -86,7 +84,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper,
         return result.toString()
     }
 
-    @RequestMapping(path = arrayOf("/completed"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/completed"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @Throws(Exception::class)
     fun orderCompletedCallback(@RequestParam("AddressCity") addressCity: String,
                                @RequestParam("AddressCountry") addressCountry: String,
@@ -121,7 +119,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper,
         return "Ok"
     }
 
-    @RequestMapping(path = arrayOf("/register-trial"), method = arrayOf(RequestMethod.POST), headers = arrayOf("Content-Type=application/x-www-form-urlencoded", "Accept=application/json"))
+    @RequestMapping(path = ["/register-trial"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun registerTrial(): String {
         val info = LicenseInfo()
         info.customerId = "0"

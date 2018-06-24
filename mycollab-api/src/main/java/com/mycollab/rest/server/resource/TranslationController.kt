@@ -37,7 +37,7 @@ class TranslationController {
             response.statusCode == HttpStatus.OK -> {
                 val resultHeader = HttpHeaders()
                 resultHeader.set("Content-Disposition", "attachment; filename=mycollab.zip")
-                resultHeader.contentLength = response.body.size.toLong()
+                resultHeader.contentLength = response.body!!.size.toLong()
                 ResponseEntity(response.body, resultHeader, HttpStatus.OK)
             }
             else -> ResponseEntity("Error", HttpStatus.INTERNAL_SERVER_ERROR)

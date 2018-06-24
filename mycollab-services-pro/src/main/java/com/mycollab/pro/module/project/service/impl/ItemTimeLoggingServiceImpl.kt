@@ -33,7 +33,7 @@ import javax.sql.DataSource
  * @since 1.0
  */
 @Service
-open class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLoggingMapper,
+class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLoggingMapper,
                                  private val itemTimeLoggingMapperExt: ItemTimeLoggingMapperExt,
                                  private val milestoneMapperExt: MilestoneMapperExt,
                                  private val componentMapperExt: ComponentMapperExt,
@@ -65,7 +65,7 @@ open class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTim
 
     override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double {
         val value = itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria)
-        return value ?: 0.0
+        return value
     }
 
     override fun batchSaveTimeLogging(timeLoggings: List<ItemTimeLogging>, @CacheKey sAccountId: Int) {

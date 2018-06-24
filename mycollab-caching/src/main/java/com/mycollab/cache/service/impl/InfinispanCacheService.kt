@@ -35,7 +35,7 @@ class InfinispanCacheService(private val instance: EmbeddedCacheManager) : Cache
 
     override fun putValue(group: String, key: String, value: Any) {
         val cache = getCache(group)
-        cache.put(key, value)
+        cache[key] = value
     }
 
     private fun getCache(group: String): BasicCache<String, Any> {

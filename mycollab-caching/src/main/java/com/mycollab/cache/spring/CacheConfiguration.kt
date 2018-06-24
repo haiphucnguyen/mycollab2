@@ -25,10 +25,10 @@ import org.springframework.context.annotation.Profile
 
 @Configuration
 @Profile("program")
-open class CacheConfiguration {
+class CacheConfiguration {
 
     @Bean
-    open fun cacheConfigurer(): InfinispanCacheConfigurer {
+    fun cacheConfigurer(): InfinispanCacheConfigurer {
         return InfinispanCacheConfigurer {
             val ispnConfig = ConfigurationBuilder()
                     .clustering()

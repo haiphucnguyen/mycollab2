@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Traceable(nameField = "noid", extraFieldName = "projectid")
 @Transactional
-open class InvoiceServiceImpl(private val invoiceMapper: InvoiceMapper,
+class InvoiceServiceImpl(private val invoiceMapper: InvoiceMapper,
                          private val invoiceMapperExt: InvoiceMapperExt) : DefaultService<Int, Invoice, InvoiceSearchCriteria>(), InvoiceService {
 
     override val searchMapper: ISearchableDAO<InvoiceSearchCriteria>
