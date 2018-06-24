@@ -31,9 +31,8 @@ import java.util.concurrent.TimeUnit
 class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                  private val dataSource: DataSource ) : GanttAssignmentService {
 
-    override fun getTaskWithPredecessors(projectIds: List<Int>, @CacheKey sAccountId: Int): List<AssignWithPredecessors> {
-        return ganttMapperExt.getTaskWithPredecessors(projectIds, sAccountId)
-    }
+    override fun getTaskWithPredecessors(projectIds: List<Int>, @CacheKey sAccountId: Int): List<AssignWithPredecessors> =
+            ganttMapperExt.getTaskWithPredecessors(projectIds, sAccountId)
 
     override fun massUpdateGanttItems(ganttItems: List<AssignWithPredecessors>, sAccountId: Int) {
         if (CollectionUtils.isNotEmpty(ganttItems)) {

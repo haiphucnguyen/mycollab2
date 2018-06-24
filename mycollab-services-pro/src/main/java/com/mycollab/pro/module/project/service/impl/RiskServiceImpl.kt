@@ -58,19 +58,19 @@ class RiskServiceImpl(private val riskMapper: RiskMapper,
     }
 
     private fun cleanAfterUpdate(record: Risk) {
-        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
         asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.RISK, record.id, "status",
                 record.status, record.projectid, record.saccountid))
     }
 
     override fun removeByCriteria(criteria: RiskSearchCriteria, sAccountId: Int) {
         super.removeByCriteria(criteria, sAccountId)
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
     }
 
     override fun massRemoveWithSession(items: List<Risk>, username: String?, sAccountId: Int) {
         super.massRemoveWithSession(items, username, sAccountId)
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf<Class<*>>(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
         val event = DeleteProjectRiskEvent(items.toTypedArray(), username, sAccountId)
         asyncEventBus.post(event)
     }

@@ -87,7 +87,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.projectid = newProjectId
             val newRoleId = projectRoleService.saveWithSession(it, username)
             projectRoleService.savePermission(projectId, newRoleId, it.permissionMap!!, sAccountId)
-            mapRoleIds.put(it.id, newRoleId)
+            mapRoleIds[it.id] = newRoleId
         }
         return mapRoleIds
     }
@@ -112,7 +112,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
                 it.milestoneid = milestoneMapIds[it.milestoneid]
                 it.projectid = newProjectId
                 val newTaskId = projectTaskService.saveWithSession(it, username)
-                taskMapIds.put(taskId, newTaskId)
+                taskMapIds[taskId] = newTaskId
             } else {
                 val candidateParentTaskId = taskMapIds[parentTaskId]
                 if (candidateParentTaskId != null) {
@@ -121,7 +121,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
                     it.milestoneid = milestoneMapIds[it.milestoneid]
                     it.parenttaskid = candidateParentTaskId
                     val newTaskId = projectTaskService.saveWithSession(it, username)
-                    taskMapIds.put(taskId, newTaskId)
+                    taskMapIds[taskId] = newTaskId
                 } else {
                     pendingTasks.add(it)
                 }
@@ -143,7 +143,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.id = null
             it.projectid = newProjectId
             val newVersionId = versionService.saveWithSession(it, username)
-            versionMapIds.put(versionId, newVersionId)
+            versionMapIds[versionId] = newVersionId
         }
         return versionMapIds
     }
@@ -159,7 +159,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.id = null
             it.projectid = newProjectId
             val newComponentId = componentService.saveWithSession(it, username)
-            componentMapIds.put(componentId, newComponentId)
+            componentMapIds[componentId] = newComponentId
         }
         return componentMapIds
     }

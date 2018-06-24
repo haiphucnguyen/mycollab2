@@ -77,7 +77,7 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
         val restTemplate = RestTemplate()
         try {
             val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
-            checkAndSaveLicenseInfo(licenseRequest)
+            checkAndSaveLicenseInfo(licenseRequest!!)
         } catch (e: Exception) {
             LOG.error("Can not retrieve a trial license", e)
             _licenseInfo = createTempValidLicense(30 - days)

@@ -30,7 +30,7 @@ class L2CacheAspect(private val cacheService: CacheService) {
     @Throws(Throwable::class)
     fun cacheGet(pjp: ProceedingJoinPoint): Any? {
         val advised = pjp.`this` as Advised
-        val cls = advised.targetSource.targetClass
+        val cls = advised.targetSource.targetClass!!
         val ms = pjp.signature as MethodSignature
         val method = ms.method
         if (method.getAnnotation(Cacheable::class.java) == null) {
@@ -51,14 +51,12 @@ class L2CacheAspect(private val cacheService: CacheService) {
                         val arg = args[i]
                         val groupId: Int?
                         try {
-                            if (arg is Int) {
-                                groupId = arg
-                            } else if (arg is SearchCriteria && arg.saccountid != null) {
-                                groupId = arg.saccountid!!.value
+                            groupId = arg as? Int ?: if (arg is SearchCriteria && arg.saccountid != null) {
+                                arg.saccountid!!.value
                             } else if (arg is BasicSearchRequest<*>) {
                                 val criteria = arg.searchCriteria
                                 if (criteria.saccountid != null) {
-                                    groupId = criteria.saccountid!!.value
+                                    criteria.saccountid!!.value
                                 } else {
                                     return pjp.proceed()
                                 }

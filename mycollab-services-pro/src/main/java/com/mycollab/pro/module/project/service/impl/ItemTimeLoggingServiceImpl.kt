@@ -33,7 +33,7 @@ import javax.sql.DataSource
  * @since 1.0
  */
 @Service
-class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLoggingMapper,
+open class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLoggingMapper,
                                  private val itemTimeLoggingMapperExt: ItemTimeLoggingMapperExt,
                                  private val milestoneMapperExt: MilestoneMapperExt,
                                  private val componentMapperExt: ComponentMapperExt,

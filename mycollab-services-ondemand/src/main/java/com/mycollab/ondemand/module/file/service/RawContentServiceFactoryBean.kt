@@ -7,6 +7,7 @@ import com.mycollab.db.persistence.service.IService
 import com.mycollab.module.file.service.RawContentService
 import com.mycollab.module.file.service.impl.FileRawContentServiceImpl
 import com.mycollab.ondemand.module.file.service.impl.S3RawContentServiceImpl
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.AbstractFactoryBean
 import org.springframework.stereotype.Service
 
@@ -19,7 +20,9 @@ import org.springframework.stereotype.Service
  */
 @Service
 @IgnoreCacheClass
-class RawContentServiceFactoryBean(private val serverConfiguration: ServerConfiguration) : AbstractFactoryBean<RawContentService>(), IService {
+class RawContentServiceFactoryBean : AbstractFactoryBean<RawContentService>(), IService {
+
+    @Autowired private lateinit var serverConfiguration: ServerConfiguration
 
     @Throws(Exception::class)
     override fun createInstance(): RawContentService {
@@ -27,8 +30,8 @@ class RawContentServiceFactoryBean(private val serverConfiguration: ServerConfig
         return if (STORAGE_S3 == storageSystem) S3RawContentServiceImpl() else FileRawContentServiceImpl()
     }
 
-    override fun isSingleton(): Boolean = false
+    override fun isSingleton() = false
 
-    override fun getObjectType(): Class<RawContentService> = RawContentService::class.java
+    override fun getObjectType() = RawContentService::class.java
 
 }
