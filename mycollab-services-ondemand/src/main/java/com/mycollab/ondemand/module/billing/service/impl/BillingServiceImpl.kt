@@ -111,7 +111,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         asyncEventBus.post(event)
     }
 
-    override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<BillingAccountSearchCriteria>): List<SimpleBillingAccount2> =
+    override fun findPageableListByCriteria(searchRequest: BasicSearchRequest<BillingAccountSearchCriteria>) =
             billingAccountMapperExt2.findPageableListByCriteria(searchRequest.searchCriteria,
                     RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
                             searchRequest.numberOfItems))
@@ -125,7 +125,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         asyncEventBus.post(UpdateBillingPlanEvent(accountId, newPlan))
     }
 
-    override fun getSubDomainsOfUser(username: String): List<String> =
+    override fun getSubDomainsOfUser(username: String) =
             this.billingAccountMapperExt2.findSubDomainsOfUser(username)
 
     override fun findBillingPlan(@CacheKey sAccountId: Int): BillingPlan? {
@@ -138,7 +138,7 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
     }
 
     companion object {
-        private val ACCOUNT_BLACK_LIST = Arrays.asList("api", "blog", "forum", "wiki",
+        private val ACCOUNT_BLACK_LIST = Arrays.asList("api", "blog", "forum", "wiki", "config",
                 "support", "community", "www")
     }
 }
