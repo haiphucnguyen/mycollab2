@@ -31,14 +31,14 @@ class ProjectTaskServiceExtTest : IntegrationServiceTest() {
         val executorService = Executors.newFixedThreadPool(100)
 
         for (i in 0..99) {
-            LOG.info("Initialize thread " + i)
+            LOG.info("Initialize thread $i")
             val exeService = {
                 val record = baseRecord.copy() as Task
                 projectTaskService.saveWithSession(record, "hainguyen@esofthead.com")
             }
 
             val result = executorService.submit(exeService)
-            LOG.info("Result:" + result.get())
+            LOG.info("Result:${result.get()}")
         }
     }
 
