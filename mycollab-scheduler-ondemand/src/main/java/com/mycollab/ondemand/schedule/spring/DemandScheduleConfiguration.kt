@@ -13,10 +13,10 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  */
 @Configuration
 @Profile("program")
-open class DemandScheduleConfiguration {
+class DemandScheduleConfiguration {
 
     @Bean
-    open fun sendCountUserLoginByDateJob(): JobDetailFactoryBean {
+    fun sendCountUserLoginByDateJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(SendingCountUserLoginByDateJob::class.java)
@@ -24,7 +24,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun sendCountLiveInstancesByDateJob(): JobDetailFactoryBean {
+    fun sendCountLiveInstancesByDateJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(CountLiveInstancesJob::class.java)
@@ -32,7 +32,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun removeObsoleteAccountsJob(): JobDetailFactoryBean {
+    fun removeObsoleteAccountsJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(DeleteObsoleteAccountJob::class.java)
@@ -40,7 +40,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun removeObsoleteUsersJob(): JobDetailFactoryBean {
+    fun removeObsoleteUsersJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(DeleteObsoleteUsersJob::class.java)
@@ -48,7 +48,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun removeObsoleteLiveInstancesJob(): JobDetailFactoryBean {
+    fun removeObsoleteLiveInstancesJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(DeleteObsoleteLiveInstancesJob::class.java)
@@ -56,7 +56,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun sendOneWeekFollowupDownloadedUsersJob(): JobDetailFactoryBean {
+    fun sendOneWeekFollowupDownloadedUsersJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(FollowupDownloadedUsersAfterOneWeekJob::class.java)
@@ -64,7 +64,7 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun sendOneWeekFollowupSignupUsersJob(): JobDetailFactoryBean {
+    fun sendOneWeekFollowupSignupUsersJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(FollowupSignupUserAfterOneWeekJob::class.java)
@@ -72,63 +72,63 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun sendingCountUserLoginByDateTrigger(): CronTriggerFactoryBean {
+    fun sendingCountUserLoginByDateTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(sendCountUserLoginByDateJob().`object`)
+        bean.setJobDetail(sendCountUserLoginByDateJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun sendingCountLiveInstancesByDateTrigger(): CronTriggerFactoryBean {
+    fun sendingCountLiveInstancesByDateTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(sendCountLiveInstancesByDateJob().`object`)
+        bean.setJobDetail(sendCountLiveInstancesByDateJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun deleteObsoleteAccountsTrigger(): CronTriggerFactoryBean {
+    fun deleteObsoleteAccountsTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(removeObsoleteAccountsJob().`object`)
+        bean.setJobDetail(removeObsoleteAccountsJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun deleteObsoleteUsersTrigger(): CronTriggerFactoryBean {
+    fun deleteObsoleteUsersTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(removeObsoleteUsersJob().`object`)
+        bean.setJobDetail(removeObsoleteUsersJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun deleteObsoleteLiveInstancesTrigger(): CronTriggerFactoryBean {
+    fun deleteObsoleteLiveInstancesTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(removeObsoleteLiveInstancesJob().`object`)
+        bean.setJobDetail(removeObsoleteLiveInstancesJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun sendOneWeekFollowupDownloadedUsersTrigger(): CronTriggerFactoryBean {
+    fun sendOneWeekFollowupDownloadedUsersTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(sendOneWeekFollowupDownloadedUsersJob().`object`)
+        bean.setJobDetail(sendOneWeekFollowupDownloadedUsersJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun sendOneWeekFollowupSignupUsersTrigger(): CronTriggerFactoryBean {
+    fun sendOneWeekFollowupSignupUsersTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(sendOneWeekFollowupSignupUsersJob().`object`)
+        bean.setJobDetail(sendOneWeekFollowupSignupUsersJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }
 
     @Bean
-    open fun sendAccountBillingRequestEmailJob(): JobDetailFactoryBean {
+    fun sendAccountBillingRequestEmailJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(BillingSendingNotificationJob::class.java)
@@ -136,9 +136,9 @@ open class DemandScheduleConfiguration {
     }
 
     @Bean
-    open fun sendAccountBillingEmailTrigger(): CronTriggerFactoryBean {
+    fun sendAccountBillingEmailTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(sendAccountBillingRequestEmailJob().`object`)
+        bean.setJobDetail(sendAccountBillingRequestEmailJob().`object`!!)
         bean.setCronExpression("0 0 0 * * ?")
         return bean
     }

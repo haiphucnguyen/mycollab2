@@ -29,10 +29,10 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  */
 @Configuration
 @Profile("program")
-open class CommunityScheduleConfiguration {
+class CommunityScheduleConfiguration {
 
     @Bean
-    open fun checkUpdateJob(): JobDetailFactoryBean {
+    fun checkUpdateJob(): JobDetailFactoryBean {
         val bean = JobDetailFactoryBean()
         bean.setDurability(true)
         bean.setJobClass(CheckUpdateJob::class.java)
@@ -40,9 +40,9 @@ open class CommunityScheduleConfiguration {
     }
 
     @Bean
-    open fun checkUpdateJobTrigger(): CronTriggerFactoryBean {
+    fun checkUpdateJobTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
-        bean.setJobDetail(checkUpdateJob().`object`)
+        bean.setJobDetail(checkUpdateJob().`object`!!)
         bean.setCronExpression("0 0 8 * * ?")
         return bean
     }
