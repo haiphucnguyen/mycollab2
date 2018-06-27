@@ -9,7 +9,7 @@ import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLead
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
-import com.mycollab.ondemand.module.support.service.EditionInfoResolver
+import com.mycollab.ondemand.module.support.domain.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.joda.time.LocalDate
@@ -26,7 +26,7 @@ import java.io.IOException
 @Api(value = "Community Campaign API", tags = ["Community"])
 @RestController
 class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
-                         private val editionInfoResolver: EditionInfoResolver,
+                         private val editionInfo: EditionInfo,
                          private val extMailService: ExtMailService,
                          private val contentGenerator: IContentGenerator,
                          private val applicationConfiguration: ApplicationConfiguration) {
@@ -34,11 +34,11 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
     @ApiOperation(value = "Get the html page contains link to buy", response = String::class)
     @RequestMapping(method = [(RequestMethod.GET)], path = ["/linktobuy"])
     @Throws(IOException::class)
-    fun showLinkToBuy(): String = FileUtils.readFileAsPlainString("buying.html")
+    fun showLinkToBuy() = FileUtils.readFileAsPlainString("buying.html")
 
     @RequestMapping(method = [(RequestMethod.GET)], path = ["/storeweb"])
     @Throws(IOException::class)
-    fun displayStoreWeb(): String = FileUtils.readFileAsPlainString("pricing.html")
+    fun displayStoreWeb() = FileUtils.readFileAsPlainString("pricing.html")
 
     @RequestMapping(path = ["/register-ce"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun registerCE(@RequestParam("firstname") firstname: String,
@@ -49,7 +49,6 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                    @RequestParam("phone") phone: String,
                    @RequestParam("country") country: String,
                    @RequestParam("edition") edition: String): Map<*, *> {
-        val info = editionInfoResolver.editionInfo
 
         object : Thread() {
             override fun run() {
@@ -73,7 +72,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                 }
 
                 contentGenerator.putVariable("lastname", lastname)
-                contentGenerator.putVariable("version", info.version!!)
+                contentGenerator.putVariable("version", editionInfo.version!!)
                 if ("Ultimate" == edition) {
                     contentGenerator.putVariable("downloadLink", String.format("http://api.mycollab.com/download/verify?email=%s&&edition=Ultimate", email))
                 } else {
@@ -86,9 +85,9 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
             }
         }.start()
 
-        val name = "MyCollab-All-${info.version}.zip"
-        val link = info.communityDownloadLink
-        val altLink = info.altCommunityDownloadLink
+        val name = "MyCollab-All-${editionInfo.version}.zip"
+        val link = editionInfo.communityDownloadLink
+        val altLink = editionInfo.altCommunityDownloadLink
         return mapOf("name" to name, "link" to link, "altlink" to altLink)
     }
 }

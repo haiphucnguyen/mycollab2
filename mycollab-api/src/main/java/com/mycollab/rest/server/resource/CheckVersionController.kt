@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource
 
 import com.mycollab.core.Version
-import com.mycollab.ondemand.module.support.service.EditionInfoResolver
+import com.mycollab.ondemand.module.support.domain.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType
@@ -17,14 +17,14 @@ import java.util.*
  */
 @Api(value = "Versions", tags = ["Support"])
 @RestController
-class CheckVersionController(private val editionInfoResolver: EditionInfoResolver) {
+class CheckVersionController(private val editionInfo: EditionInfo) {
 
     @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information", response = String::class)
     @RequestMapping(value = "/checkupdate", method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
     fun getLatestVersion(@RequestParam("version") version: String?): Properties {
         val props = Properties()
 
-        val liveVersion = editionInfoResolver.editionInfo.version
+        val liveVersion = editionInfo.version
         props["version"] = liveVersion
         props["downloadLink"] = "https://www.mycollab.com/ce-registration/"
         props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
@@ -32,7 +32,7 @@ class CheckVersionController(private val editionInfoResolver: EditionInfoResolve
 
         if (version != null && Version.isEditionNewer(liveVersion, version) &&
                 Version.isEditionNewer(version, "5.3.4")) {
-            props["autoDownload"] = editionInfoResolver.editionInfo.communityUpgradeLink
+            props["autoDownload"] = editionInfo.communityUpgradeLink
         }
 
         return props
@@ -41,12 +41,12 @@ class CheckVersionController(private val editionInfoResolver: EditionInfoResolve
     @RequestMapping(value = "/checkpremiumupdate", method = [(RequestMethod.GET)])
     fun getLatestPremiumUpdate(@RequestParam("version") version: String, @RequestParam("customerId") customerId: String): Properties {
         val props = Properties()
-        val liveVersion = editionInfoResolver.editionInfo.version
+        val liveVersion = editionInfo.version
         props["version"] = liveVersion
         props["downloadLink"] = "https://www.mycollab.com/ee-registration/"
         props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
                 Version.getVersion().replace('.', '-'))
-        props["autoDownload"] = editionInfoResolver.editionInfo.premiumUpgradeLink
+        props["autoDownload"] = editionInfo.premiumUpgradeLink
         return props
     }
 }
