@@ -4,7 +4,7 @@ import com.mycollab.core.ResourceNotFoundException
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLead
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
-import com.mycollab.ondemand.module.support.domain.EditionInfo
+import com.mycollab.ondemand.configuration.EditionInfo
 import com.mycollab.ondemand.module.support.service.EmailReferenceService
 import com.mycollab.servlet.GenericHttpServlet
 import java.io.IOException

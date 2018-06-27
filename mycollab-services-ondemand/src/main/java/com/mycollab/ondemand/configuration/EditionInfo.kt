@@ -1,4 +1,4 @@
-package com.mycollab.ondemand.module.support.domain
+package com.mycollab.ondemand.configuration
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Profile

@@ -9,7 +9,7 @@ import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLead
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
-import com.mycollab.ondemand.module.support.domain.EditionInfo
+import com.mycollab.ondemand.configuration.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.joda.time.LocalDate

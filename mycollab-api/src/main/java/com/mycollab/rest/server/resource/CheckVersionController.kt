@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource
 
 import com.mycollab.core.Version
-import com.mycollab.ondemand.module.support.domain.EditionInfo
+import com.mycollab.ondemand.configuration.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.http.MediaType
