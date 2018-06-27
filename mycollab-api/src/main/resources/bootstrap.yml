@@ -1,7 +1,8 @@
-spring.application.name: mycollab
 spring:
+  application:
+    name: mycollab
   cloud:
     config:
-     uri: http://localhost:8888
-     username: root
-     password: esofthead321
+      uri: http://localhost:8888
+      username: root
+      password: esofthead321
