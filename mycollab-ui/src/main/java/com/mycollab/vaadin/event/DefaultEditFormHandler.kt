@@ -20,7 +20,7 @@ package com.mycollab.vaadin.event
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-class DefaultEditFormHandler<T> : IEditFormHandler<T> {
+open class DefaultEditFormHandler<T> : IEditFormHandler<T> {
     override fun onSave(bean: T) {
     }
 
