@@ -9,7 +9,7 @@ import com.mycollab.module.ecm.service.ExternalDriveService
 import org.springframework.stereotype.Service
 
 @Service
-open class ExternalDriveServiceImpl(private val externalDriveMapper: ExternalDriveMapper) : DefaultCrudService<Int, ExternalDrive>(), ExternalDriveService {
+class ExternalDriveServiceImpl(private val externalDriveMapper: ExternalDriveMapper) : DefaultCrudService<Int, ExternalDrive>(), ExternalDriveService {
 
     override val crudMapper: ICrudGenericDAO<Int, ExternalDrive>
         get() = externalDriveMapper as ICrudGenericDAO<Int, ExternalDrive>

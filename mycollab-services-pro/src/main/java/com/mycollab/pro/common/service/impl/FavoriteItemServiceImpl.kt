@@ -17,7 +17,7 @@ import java.util.*
  * @since 5.0.1
  */
 @Service
-open class FavoriteItemServiceImpl(private val favoriteItemMapper: FavoriteItemMapper,
+class FavoriteItemServiceImpl(private val favoriteItemMapper: FavoriteItemMapper,
                               private val asyncEventBus: AsyncEventBus) : DefaultCrudService<Int, FavoriteItem>(), FavoriteItemService {
 
 

@@ -14,27 +14,27 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.configuration
+package com.mycollab.module.file.servlet
 
-import com.mycollab.core.arguments.ValuedBean
-import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.web.servlet.ServletRegistrationBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.stereotype.Component
 
 /**
- * Email configuration of MyCollab
- *
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.5.0
  */
-@Component
+@Configuration
 @Profile("program")
-@ConfigurationProperties(prefix = "mail")
-class EmailConfiguration(var smtphost: String?, var username: String?,
-                              var password: String?, var port: Int,
-                              var startTls: Boolean = false, var ssl: Boolean = false,
-                              var notifyEmail: String) : ValuedBean() {
-    constructor(): this("", "", "", -1, false, false, "")
+class FileSpringServletRegistrator {
+    @Bean("assetServlet")
+    fun assetServlet() = ServletRegistrationBean(AssetHandler(), "/assets/*")
+
+    @Bean("resourceGetServlet")
+    fun resourceGetServlet() = ServletRegistrationBean(ResourceGetHandler(), "/file/*")
+
+    @Bean("userAvatarServlet")
+    fun userAvatarServlet() =
+            ServletRegistrationBean(UserAvatarHttpServletRequestHandler(), "/file/avatar/*")
 }
-
-

@@ -16,15 +16,13 @@
  */
 package com.mycollab.module.ecm.domain
 
-import com.mycollab.module.file.PathUtils
-
-import java.util.Calendar
+import java.util.*
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-open class Content : Resource {
+class Content : Resource {
     var title = ""
     var lastModified: Calendar? = null
     var lastModifiedBy: String? = null
