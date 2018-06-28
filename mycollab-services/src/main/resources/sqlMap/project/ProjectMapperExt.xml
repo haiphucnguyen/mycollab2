@@ -450,7 +450,7 @@
         createdTime DESC
     </select>
 
-    <select id="getTotalActivityStream" resultType="int" parameterType="com.mycollab.common.domain.criteria.ProjectGenericItemSearchCriteria" lang="velocity">
+    <select id="getTotalActivityStream" resultType="int" parameterType="com.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount
         FROM s_activitystream
         #ifnotnull($_parameter.searchCriteria)

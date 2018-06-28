@@ -128,7 +128,7 @@
 		<include refid="orderStatement" />
 	</select>
 
-	<select id="getTotalCount" resultType="int" parameterType="MonitorSearchCriteria"
+	<select id="getTotalCount" resultType="int" parameterType="com.mycollab.common.domain.criteria.MonitorSearchCriteria"
 		lang="velocity">
 		SELECT count(*) FROM
 		(
