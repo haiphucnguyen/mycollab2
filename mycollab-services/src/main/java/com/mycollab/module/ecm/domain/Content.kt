@@ -22,7 +22,7 @@ import java.util.*
  * @author MyCollab Ltd.
  * @since 1.0
  */
-class Content : Resource {
+open class Content : Resource {
     var title = ""
     var lastModified: Calendar? = null
     var lastModifiedBy: String? = null
