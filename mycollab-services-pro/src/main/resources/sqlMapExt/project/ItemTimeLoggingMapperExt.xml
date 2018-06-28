@@ -144,7 +144,7 @@
         logForDay ASC , createdTime ASC
     </sql>
 
-    <select id="getTotalCount" parameterType="ItemTimeLoggingSearchCriteria" resultType="int" lang="velocity">
+    <select id="getTotalCount" parameterType="com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria" resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_time_logging
 
         #ifnotnull($_parameter.searchCriteria)
@@ -154,7 +154,7 @@
         #end
     </select>
 
-    <select id="getTotalHoursByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
+    <select id="getTotalHoursByCriteria" parameterType="com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria"
         resultType="double" lang="velocity">
         SELECT COALESCE(sum(logValue), 0) as totalHour FROM m_prj_time_logging
 
@@ -165,7 +165,7 @@
         #end
     </select>
 
-    <select id="findPageableListByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
+    <select id="findPageableListByCriteria" parameterType="com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria"
         resultMap="TimeLoggingResult" lang="velocity">
 		(
 		<include refid="selectTask" />

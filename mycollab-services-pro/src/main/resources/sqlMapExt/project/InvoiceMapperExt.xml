@@ -54,7 +54,7 @@
         ]]>
     </sql>
 
-    <select id="getTotalCount" parameterType="InvoiceSearchCriteria" resultType="int" lang="velocity">
+    <select id="getTotalCount" parameterType="com.mycollab.module.project.domain.criteria.InvoiceSearchCriteria" resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_invoice
 
         #ifnotnull($_parameter.searchCriteria)
@@ -64,7 +64,7 @@
         #end
     </select>
 
-    <select id="findPageableListByCriteria" parameterType="InvoiceSearchCriteria" resultMap="InvoiceResult" lang="velocity">
+    <select id="findPageableListByCriteria" parameterType="com.mycollab.module.project.domain.criteria.InvoiceSearchCriteria" resultMap="InvoiceResult" lang="velocity">
         <include refid="selectInvoice" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")

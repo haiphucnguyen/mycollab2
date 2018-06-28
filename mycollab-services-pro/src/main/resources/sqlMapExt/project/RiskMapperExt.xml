@@ -113,7 +113,7 @@
         m_prj_risk.lastUpdatedTime DESC
     </sql>
 
-    <select id="getTotalCount" resultType="int" parameterType="RiskSearchCriteria" lang="velocity">
+    <select id="getTotalCount" resultType="int" parameterType="com.mycollab.module.project.domain.criteria.RiskSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_risk
         #ifnotnull($_parameter.searchCriteria)
           #trimext("WHERE" "AND|OR")
@@ -122,7 +122,7 @@
         #end
     </select>
 
-    <select id="findPageableListByCriteria" resultMap="RiskResult" parameterType="RiskSearchCriteria" lang="velocity">
+    <select id="findPageableListByCriteria" resultMap="RiskResult" parameterType="com.mycollab.module.project.domain.criteria.RiskSearchCriteria" lang="velocity">
         <include refid="selectRisk" />
         #ifnotnull($_parameter.searchCriteria)
           #trimext("WHERE" "AND|OR")

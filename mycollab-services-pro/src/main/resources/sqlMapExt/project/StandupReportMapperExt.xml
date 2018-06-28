@@ -92,7 +92,7 @@
         ]]>
     </sql>
 
-    <select id="getTotalCount" resultType="int" parameterType="StandupReportSearchCriteria" lang="velocity">
+    <select id="getTotalCount" resultType="int" parameterType="com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_standup
          #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
@@ -101,7 +101,7 @@
         #end
     </select>
 
-    <select id="findPageableListByCriteria" resultMap="StandupResult" parameterType="StandupReportSearchCriteria" lang="velocity">
+    <select id="findPageableListByCriteria" resultMap="StandupResult" parameterType="com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria" lang="velocity">
         <include refid="selectStandupReport" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
@@ -129,7 +129,7 @@
         WHERE m_prj_standup.id=@{standupId, jdbcType=NUMERIC}
     </select>
     
-    <select id="findUsersNotDoReportYet" parameterType="StandupReportSearchCriteria"
+    <select id="findUsersNotDoReportYet" parameterType="com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria"
             resultMap="com.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" lang="velocity">
         <![CDATA[
         SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.avatarId

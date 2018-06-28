@@ -59,7 +59,7 @@
         s_account.createdTime DESC
     </sql>
 
-    <select id="findPageableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="BillingAccountSearchCriteria" lang="velocity">
+    <select id="findPageableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria" lang="velocity">
         <include refid="selectBillingAccount" />
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")

@@ -37,11 +37,5 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.flowable</groupId>
-            <artifactId>flowable-engine</artifactId>
-            <version>6.3.0</version>
-        </dependency>
-
     </dependencies>
 </project>

@@ -104,7 +104,7 @@
         </trim>
     </select>
     
-    <delete id="removeByCriteria" parameterType="TargetSearchCriteria">
+    <delete id="removeByCriteria" parameterType="com.mycollab.module.crm.domain.criteria.TargetSearchCriteria">
         DELETE FROM m_crm_target
         <if test="_parameter != null">
             <include refid="com.mycollab.module.crm.dao.TargetMapperExt.queryTotalCountSearchCriteria" />
