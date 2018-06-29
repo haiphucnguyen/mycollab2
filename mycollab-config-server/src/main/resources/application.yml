@@ -6,7 +6,8 @@ spring:
       server:
         git:
           uri: https://hainguyen@bitbucket.org/hainguyen/mycollab-config-repo.git
-          username: hainguyen
+          skipSslValidation: true
+          username: haiphucnguyen@gmail.com
           password: DtmLinh80
   security:
     user:
