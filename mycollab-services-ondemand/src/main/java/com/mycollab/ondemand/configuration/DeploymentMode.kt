@@ -2,7 +2,6 @@ package com.mycollab.ondemand.configuration
 
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
-import org.springframework.context.annotation.Profile
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component
  */
 @Order(value = 1)
 @Component
-@Profile("program")
 class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode {
 
     override val isDemandEdition: Boolean
@@ -24,9 +22,9 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override val isPremiumEdition: Boolean
         get() = true
 
-    override fun getSiteUrl(subDomain: String?): String = String.format(serverConfiguration.siteUrl, subDomain)
+    override fun getSiteUrl(subDomain: String?) = String.format(serverConfiguration.siteUrl, subDomain)
 
-    override fun getResourceDownloadUrl(): String = serverConfiguration.resourceDownloadUrl
+    override fun getResourceDownloadUrl() = serverConfiguration.resourceDownloadUrl
 
-    override fun getCdnUrl(): String = serverConfiguration.cdnUrl
+    override fun getCdnUrl() = serverConfiguration.cdnUrl
 }

@@ -32,7 +32,7 @@ class AppProcess {
         this.initialOptions = initialOptions;
     }
 
-    void start() throws IOException, ExecutionException, InterruptedException {
+    void start() {
         new Thread(() -> {
             try {
                 File workingDir = new File(System.getProperty("MYCOLLAB_APP_HOME"));

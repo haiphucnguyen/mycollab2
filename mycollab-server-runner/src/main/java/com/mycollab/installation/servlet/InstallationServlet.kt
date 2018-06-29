@@ -111,10 +111,10 @@ class InstallationServlet : HttpServlet() {
 
         try {
             val writer = StringWriter()
-            val template = configuration.getTemplate("mycollab.properties.ftl")
+            val template = configuration.getTemplate("application.properties.ftl")
             template.process(templateContext, writer)
 
-            val outStream = FileOutputStream(File(confFolder, "mycollab.properties"))
+            val outStream = FileOutputStream(File(confFolder, "application.properties"))
             outStream.write(writer.toString().toByteArray())
             outStream.flush()
             outStream.close()

@@ -3,7 +3,6 @@ package com.mycollab.premium.schedule.spring
 import com.mycollab.premium.schedule.jobs.CheckUpdateJob
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean
 import org.springframework.scheduling.quartz.JobDetailFactoryBean
 
@@ -12,7 +11,6 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  * @since 5.2.9
  */
 @Configuration
-@Profile("program")
 class PremiumScheduleConfiguration {
 
     @Bean

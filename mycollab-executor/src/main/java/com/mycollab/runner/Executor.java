@@ -89,7 +89,7 @@ public class Executor {
         System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
     }
 
-    private void runServer(String[] args) throws Exception {
+    private void runServer(String[] args) {
         LOG.info("Start MyCollab server process");
         final AppProcess process = new AppProcess(args);
         File pIdFile = new File(getUserDir(), PID_FILE);
@@ -122,7 +122,6 @@ public class Executor {
                         if (StandardWatchEventKinds.ENTRY_MODIFY == kind && PID_FILE.equals(fileName)) {
                             String fileContent = FileUtils.readFileToString(pIdFile);
                             long currentTime = System.currentTimeMillis();
-                            LOG.info("A: " + (currentTime - lastInvokeTime) + "--" + fileContent + "---" + lastFileContent);
                             if ((currentTime - lastInvokeTime > 5000) || !fileContent.equalsIgnoreCase(lastFileContent)) {
                                 lastInvokeTime = currentTime;
                                 lastFileContent = fileContent;
@@ -184,7 +183,7 @@ public class Executor {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {

@@ -3,7 +3,6 @@ package com.mycollab.ondemand.schedule.spring
 import com.mycollab.ondemand.schedule.jobs.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean
 import org.springframework.scheduling.quartz.JobDetailFactoryBean
 
@@ -12,7 +11,6 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  * @since 4.6.0
  */
 @Configuration
-@Profile("program")
 class DemandScheduleConfiguration {
 
     @Bean
