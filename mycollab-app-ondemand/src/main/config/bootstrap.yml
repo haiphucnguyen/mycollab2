@@ -1,5 +1,5 @@
-spring.application.name: mycollab
 spring:
+  application.name: mycollab
   cloud:
     config:
      uri: http://localhost:8888
