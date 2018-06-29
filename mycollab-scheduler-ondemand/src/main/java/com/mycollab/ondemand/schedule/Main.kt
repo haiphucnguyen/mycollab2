@@ -13,6 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class Main
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(Main::class.java).web(WebApplicationType.NONE).profiles("program").run(*args)
+    SpringApplicationBuilder(Main::class.java).web(WebApplicationType.NONE).run(*args)
 }
 
