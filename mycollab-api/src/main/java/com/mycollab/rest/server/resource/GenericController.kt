@@ -19,13 +19,13 @@ class GenericController {
 
     @ExceptionHandler(UserInvalidInputException::class)
     fun rulesForInvalidUserException(req: HttpServletRequest, e: Exception): ResponseEntity<*> {
-        return ResponseEntity<String>(e.message, HttpStatus.BAD_REQUEST)
+        return ResponseEntity(e.message, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
     fun rulesFoException(req: HttpServletRequest, e: Exception): ResponseEntity<*> {
         LOG.error("Error ${req.contextPath}", e)
-        return ResponseEntity<String>(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
     companion object {

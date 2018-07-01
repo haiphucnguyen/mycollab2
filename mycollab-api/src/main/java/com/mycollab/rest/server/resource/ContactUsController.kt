@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-@Api(value = "contact-us", tags = arrayOf("Support"))
+@Api(value = "contact-us", tags = ["Support"])
 @RestController
 @RequestMapping(value = "/contact-us")
 class ContactUsController(private val extMailService: ExtMailService,

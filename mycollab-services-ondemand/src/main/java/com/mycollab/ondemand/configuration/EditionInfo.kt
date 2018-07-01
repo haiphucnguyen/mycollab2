@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component
 @Component
 @ConfigurationProperties(prefix = "app")
 class EditionInfo {
-    var version: String? = null
-    var communityDownloadLink: String? = null
-    var altCommunityDownloadLink: String? = null
-    var communityUpgradeLink: String? = null
-    var premiumDownloadLink: String? = null
-    var premiumUpgradeLink: String? = null
+    var version: String = "0.0"
+    var communityDownloadLink: String = ""
+    var altCommunityDownloadLink: String = ""
+    var communityUpgradeLink: String = ""
+    var premiumDownloadLink: String = ""
+    var premiumUpgradeLink: String = ""
 }
