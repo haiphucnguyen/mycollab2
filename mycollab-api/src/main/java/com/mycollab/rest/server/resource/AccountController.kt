@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping(value = "/account")
+@CrossOrigin(origins = ["http://mycollab.com", "http://www.mycollab.com"])
 @Api
 class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
