@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.nio.file.*;
 import java.security.CodeSource;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -168,7 +169,7 @@ public class Executor {
         try (FileWriter writer = new FileWriter(new File(getUserDir(), PID_FILE), false)) {
             writer.write("STOP");
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error while stopping server", e);
         }
     }
 
@@ -187,6 +188,8 @@ public class Executor {
         if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {
+            System.out.println("Length: " + args.length);
+            Arrays.stream(args).forEach(it-> System.out.println("Arhs: " + it));
             new Executor().runServer(args);
         }
     }

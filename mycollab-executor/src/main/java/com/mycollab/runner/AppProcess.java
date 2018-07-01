@@ -29,6 +29,7 @@ class AppProcess {
     private JavaProcess wrappedJavaProcess;
 
     AppProcess(String[] initialOptions) {
+        Arrays.stream(initialOptions).forEach(option -> System.out.println("Option: " + option));
         this.initialOptions = initialOptions;
     }
 
