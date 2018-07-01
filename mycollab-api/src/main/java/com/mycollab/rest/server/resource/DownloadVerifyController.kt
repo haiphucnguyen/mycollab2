@@ -29,7 +29,7 @@ class DownloadVerifyController(private val communityLeadMapper: CommunityLeadMap
 
     @RequestMapping(value = "/download/verify", method = [RequestMethod.GET])
     fun verifyAndDownload(@RequestParam("email") email: String,
-                          @RequestParam("edition") edition: String): ResponseEntity<Resource> {
+                          @RequestParam("edition", required = false) edition: String): ResponseEntity<Resource> {
 
         val ex = CommunityLeadExample()
         ex.createCriteria().andEmailEqualTo(email)
