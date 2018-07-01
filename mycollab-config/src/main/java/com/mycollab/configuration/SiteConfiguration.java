@@ -99,7 +99,7 @@ public class SiteConfiguration {
     }
 
     public static Locale getDefaultLocale() {
-        return instance.defaultLocale;
+        return Locale.US;
     }
 
     public static String getDropboxCallbackUrl() {
