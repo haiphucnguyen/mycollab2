@@ -21,7 +21,7 @@ class CheckVersionController(private val editionInfo: EditionInfo) {
 
     @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information", response = String::class)
     @RequestMapping(value = "/checkupdate", method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
-    fun getLatestVersion(@RequestParam("version") version: String?): Properties {
+    fun getLatestVersion(@RequestParam("version", required = false) version: String?): Properties {
         val props = Properties()
 
         val liveVersion = editionInfo.version

@@ -43,6 +43,7 @@ class DownloadVerifyController(private val communityLeadMapper: CommunityLeadMap
             headers.add("Cache-Control", "no-cache, no-store, must-revalidate")
             headers.add("Pragma", "no-cache")
             headers.add("Expires", "0")
+            headers.add("Content-Disposition", "attachment; filename=MyCollab-${editionInfo.version}.zip")
             return ResponseEntity.ok()
                     .headers(headers)
                     .contentLength(res.contentLength())
