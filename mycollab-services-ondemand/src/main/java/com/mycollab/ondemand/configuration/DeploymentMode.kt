@@ -2,6 +2,8 @@ package com.mycollab.ondemand.configuration
 
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.configuration.ServerConfiguration
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.InitializingBean
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Component
  */
 @Order(value = 1)
 @Component
-class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode {
+class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDeploymentMode, InitializingBean {
+    override fun afterPropertiesSet() {
+        LOG.info("Mode cloud $isDemandEdition")
+    }
 
     override val isDemandEdition: Boolean
         get() = true
@@ -27,4 +32,8 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     override fun getResourceDownloadUrl() = serverConfiguration.resourceDownloadUrl
 
     override fun getCdnUrl() = serverConfiguration.cdnUrl
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(DeploymentMode::class.java)
+    }
 }
