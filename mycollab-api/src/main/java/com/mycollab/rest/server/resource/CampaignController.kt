@@ -13,10 +13,7 @@ import com.mycollab.ondemand.configuration.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.joda.time.LocalDate
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.io.IOException
 
 /**
@@ -40,6 +37,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
     @Throws(IOException::class)
     fun displayStoreWeb() = FileUtils.readFileAsPlainString("pricing.html")
 
+    @CrossOrigin
     @RequestMapping(path = ["/register-ce"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     fun registerCE(@RequestParam("firstname") firstname: String,
                    @RequestParam("lastname") lastname: String,

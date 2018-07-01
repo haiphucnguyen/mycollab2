@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping(value = "/account")
-@CrossOrigin(origins = ["http://mycollab.com", "http://www.mycollab.com"])
 @Api
 class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
                         private var deploymentMode: IDeploymentMode) {
 
-    @CrossOrigin
+    @CrossOrigin(origins = ["http://www.mycollab.com", "http://mycollab.com"])
     @RequestMapping(value = "signUp", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun signUp(@RequestParam("subDomain") subDomain: String, @RequestParam("planId") planId: Int,
                @RequestParam("password") password: String, @RequestParam("email") email: String,

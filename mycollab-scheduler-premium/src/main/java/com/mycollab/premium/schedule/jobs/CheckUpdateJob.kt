@@ -125,15 +125,15 @@ class CheckUpdateJob : GenericQuartzJobBean() {
                     // opens an output stream to save into file
                     FileOutputStream(tmpFile).use { outputStream ->
                         val buffer = ByteArray(4096)
-                        var bytesRead = inputStream!!.read(buffer)
+                        var bytesRead = inputStream.read(buffer)
                         while (bytesRead != -1) {
                             outputStream.write(buffer, 0, bytesRead)
                             loadedBytes += bytesRead
                             LOG.info("  Progress: ${loadedBytes / 1024}")
-                            bytesRead = inputStream!!.read(buffer)
+                            bytesRead = inputStream.read(buffer)
                         }
                         outputStream.close()
-                        inputStream!!.close()
+                        inputStream.close()
                         httpConn.disconnect()
                         LOG.info("Download MyCollab edition successfully to $tmpFile.absolutePath")
                     }

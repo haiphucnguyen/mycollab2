@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service
 @Service
 class S3StorageServiceImpl : AbstractStorageService() {
 
-    open val bucket: String?
+    val bucket: String?
         get() = AmazonServiceConfiguration.instance.bucket
 
-    open fun newS3Client(): AmazonS3 = AmazonS3ClientBuilder.defaultClient()
+    fun newS3Client(): AmazonS3 = AmazonS3ClientBuilder.defaultClient()
 
     override fun generateAssetRelativeLink(resourceId: String): String = "${deploymentMode.getCdnUrl()}$resourceId"
 }
