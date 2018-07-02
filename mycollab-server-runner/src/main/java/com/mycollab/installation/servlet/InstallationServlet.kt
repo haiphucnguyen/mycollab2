@@ -19,6 +19,7 @@ package com.mycollab.installation.servlet
 import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.UserInvalidInputException
 import com.mycollab.core.utils.FileUtils
+import com.mycollab.template.FreemarkerConfiguration
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
@@ -90,7 +91,6 @@ class InstallationServlet : HttpServlet() {
             LOG.warn("Cannot authenticate mail server successfully. Make sure your inputs are correct.")
         }
 
-        val configuration = SiteConfiguration.freemarkerConfiguration()
         val templateContext = mutableMapOf("sitename" to siteName, "serveraddress" to serverAddress,
                 "dbUrl" to dbUrl, "dbUser" to dbUserName, "dbPassword" to dbPassword,
                 "smtpAddress" to smtpHost, "smtpPort" to mailServerPort, "smtpUserName" to smtpUserName,
@@ -111,7 +111,7 @@ class InstallationServlet : HttpServlet() {
 
         try {
             val writer = StringWriter()
-            val template = configuration.getTemplate("application.properties.ftl")
+            val template = FreemarkerConfiguration.template("application.properties.ftl")
             template.process(templateContext, writer)
 
             val outStream = FileOutputStream(File(confFolder, "application.properties"))

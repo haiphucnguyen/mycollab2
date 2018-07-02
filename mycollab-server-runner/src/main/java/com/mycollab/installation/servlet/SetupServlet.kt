@@ -17,6 +17,7 @@
 package com.mycollab.installation.servlet
 
 import com.mycollab.configuration.SiteConfiguration
+import com.mycollab.template.FreemarkerConfiguration
 import freemarker.template.TemplateException
 import org.joda.time.LocalDate
 import java.io.IOException
@@ -37,8 +38,6 @@ class SetupServlet : HttpServlet() {
         response.contentType = "text/html"
         response.status = HttpServletResponse.SC_OK
 
-        val configuration = SiteConfiguration.freemarkerConfiguration()
-
         val defaultUrls = mutableMapOf("cdn_url" to "/assets/", "app_url" to "/",
                 "facebook_url" to "https://www.facebook.com/mycollab2",
                 "google_url" to "https://plus.google.com/u/0/b/112053350736358775306/+Mycollab/about/p/pub",
@@ -48,7 +47,7 @@ class SetupServlet : HttpServlet() {
                 "current_year" to LocalDate().year)
 
         val writer = StringWriter()
-        val template = configuration.getTemplate("pageSetupFresh.ftl")
+        val template = FreemarkerConfiguration.template("pageSetupFresh.ftl")
         try {
             template.process(context, writer)
         } catch (e: TemplateException) {
