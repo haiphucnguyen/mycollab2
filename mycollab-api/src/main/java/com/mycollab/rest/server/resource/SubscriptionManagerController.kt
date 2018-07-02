@@ -19,10 +19,7 @@ import io.swagger.annotations.ApiOperation
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.slf4j.LoggerFactory
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 /**
@@ -39,6 +36,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     @ApiOperation(value = "Register the subscription", response = String::class)
     @RequestMapping(path = ["/register"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     fun registerEE(@RequestParam("email") email: String,
                    @RequestParam("internalProductName") internalProductName: String,
                    @RequestParam("name") name: String,
@@ -78,6 +76,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     @RequestMapping(path = ["/activated"], method = [(RequestMethod.POST)],
             headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     @Throws(Exception::class)
     fun activateSubscription(@RequestParam("SubscriptionReference") subscriptionReference: String,
                              @RequestParam("SubscriptionReferrer") subscriptionReferrer: String,
@@ -147,6 +146,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     @RequestMapping(path = ["/rebill-completed"], method = [(RequestMethod.POST)],
             headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     @Throws(Exception::class)
     fun reBillSubscription(@RequestParam("OrderId") orderId: String,
                            @RequestParam("OrderProductName") orderProductName: String,
@@ -187,6 +187,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
 
     @RequestMapping(path = ["/subscription-failed"], method = [(RequestMethod.POST)],
             headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     fun subscriptionFailedNotification(@RequestParam("SubscriptionReference") subscriptionReference: String,
                                        @RequestParam("SubscriptionEndDate") subscriptionEndDate: String): String {
         val ex = BillingSubscriptionExample()

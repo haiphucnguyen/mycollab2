@@ -6,10 +6,7 @@ import com.hp.gagawa.java.elements.Ul
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.module.mail.service.ExtMailService
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @author MyCollab Ltd
@@ -21,6 +18,7 @@ class TestimonialController(private val extMailService: ExtMailService,
                             private val applicationConfiguration: ApplicationConfiguration) {
 
     @RequestMapping(method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
+    @CrossOrigin
     fun submit(@RequestParam("company") company: String, @RequestParam("displayname") displayname: String,
                @RequestParam("jobrole") jobrole: String, @RequestParam("email") email: String,
                @RequestParam("website") website: String, @RequestParam("testimonial") testimonial: String) {

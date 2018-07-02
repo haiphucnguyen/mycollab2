@@ -4,10 +4,7 @@ import com.mycollab.common.domain.LiveInstance
 import com.mycollab.common.domain.LiveInstanceExample
 import com.mycollab.pro.common.dao.LiveInstanceMapper
 import org.joda.time.DateTime
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @author MyCollab Ltd
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstanceMapper) {
 
     @RequestMapping(value = "/checkInstance", method = [(RequestMethod.POST)])
+    @CrossOrigin
     fun checkInstance(@RequestBody instance: LiveInstance): String {
         val sysId = instance.sysid
         val ex = LiveInstanceExample()

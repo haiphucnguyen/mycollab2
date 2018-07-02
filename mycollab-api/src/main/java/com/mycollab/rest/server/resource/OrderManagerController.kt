@@ -33,6 +33,7 @@ import java.util.*
 class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper) {
 
     @PostMapping(path = ["/generatelicense"], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     @Throws(Exception::class)
     fun generateLicense(@RequestParam("name") name: String,
                         @RequestParam("quantity") quantity: String,
@@ -85,6 +86,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
     }
 
     @RequestMapping(path = ["/completed"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     @Throws(Exception::class)
     fun orderCompletedCallback(@RequestParam("AddressCity") addressCity: String,
                                @RequestParam("AddressCountry") addressCountry: String,
@@ -120,6 +122,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
     }
 
     @RequestMapping(path = ["/register-trial"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     fun registerTrial(): String {
         val info = LicenseInfo()
         info.customerId = "0"

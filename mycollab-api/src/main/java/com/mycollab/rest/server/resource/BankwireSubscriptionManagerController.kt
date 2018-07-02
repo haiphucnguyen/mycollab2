@@ -12,10 +12,7 @@ import com.mycollab.ondemand.module.billing.domain.BillingSubscription
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory
 import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @author MyCollab Ltd
@@ -28,6 +25,7 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
                                             private val billingAccountMapper: BillingAccountMapper) {
 
     @RequestMapping(path = ["/bankwireMethod"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
+    @CrossOrigin
     @Throws(Exception::class)
     fun orderCompletedCallback(@RequestParam("AddressCity") addressCity: String,
                                @RequestParam("AddressCountry") addressCountry: String,
