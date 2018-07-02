@@ -16,8 +16,7 @@
  */
 package com.mycollab.installation.servlet
 
-import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.template.FreemarkerConfiguration
+import com.mycollab.template.FreemarkerFactory
 import freemarker.template.TemplateException
 import org.joda.time.LocalDate
 import java.io.IOException
@@ -47,7 +46,7 @@ class SetupServlet : HttpServlet() {
                 "current_year" to LocalDate().year)
 
         val writer = StringWriter()
-        val template = FreemarkerConfiguration.template("pageSetupFresh.ftl")
+        val template = FreemarkerFactory.template("pageSetupFresh.ftl")
         try {
             template.process(context, writer)
         } catch (e: TemplateException) {

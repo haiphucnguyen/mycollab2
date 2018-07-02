@@ -7,6 +7,7 @@ import freemarker.cache.FileTemplateLoader
 import freemarker.cache.MultiTemplateLoader
 import freemarker.cache.TemplateLoader
 import freemarker.template.Configuration
+import freemarker.template.Template
 
 import java.io.File
 import java.io.IOException
@@ -16,9 +17,10 @@ import java.util.ArrayList
  * @author MyCollab
  * @since 6.0.0
  */
-object FreemarkerConfiguration {
+object FreemarkerFactory {
 
-    private val configuration = Configuration(Configuration.VERSION_2_3_26)
+    @JvmField
+    val configuration = Configuration(Configuration.VERSION_2_3_26)
 
     init {
         configuration.defaultEncoding = "UTF-8"
@@ -36,7 +38,7 @@ object FreemarkerConfiguration {
             if (confFolder2.exists()) {
                 loaders.add(FileTemplateLoader(confFolder2))
             }
-            loaders.add(ClassTemplateLoader(FreemarkerConfiguration::class.java.classLoader, ""))
+            loaders.add(ClassTemplateLoader(FreemarkerFactory::class.java.classLoader, ""))
             configuration.templateLoader = MultiTemplateLoader(loaders.toTypedArray())
         } catch (e: IOException) {
             throw MyCollabException(e)
@@ -44,5 +46,5 @@ object FreemarkerConfiguration {
     }
 
     @JvmStatic
-    fun template(templatePath: String) = configuration.getTemplate(templatePath)
+    fun template(templatePath: String): Template = configuration.getTemplate(templatePath)
 }

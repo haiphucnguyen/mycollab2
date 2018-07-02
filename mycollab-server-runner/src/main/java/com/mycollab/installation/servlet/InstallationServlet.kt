@@ -16,10 +16,9 @@
  */
 package com.mycollab.installation.servlet
 
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.core.UserInvalidInputException
 import com.mycollab.core.utils.FileUtils
-import com.mycollab.template.FreemarkerConfiguration
+import com.mycollab.template.FreemarkerFactory
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
@@ -111,7 +110,7 @@ class InstallationServlet : HttpServlet() {
 
         try {
             val writer = StringWriter()
-            val template = FreemarkerConfiguration.template("application.properties.ftl")
+            val template = FreemarkerFactory.template("application.properties.ftl")
             template.process(templateContext, writer)
 
             val outStream = FileOutputStream(File(confFolder, "application.properties"))
