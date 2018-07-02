@@ -8,10 +8,7 @@ import com.mycollab.configuration.ApplicationConfiguration
 import com.mycollab.module.mail.service.ExtMailService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @author MyCollab Ltd
@@ -25,6 +22,7 @@ class ContactUsController(private val extMailService: ExtMailService,
 
     @ApiOperation(value = "Send the inquery request", response = String::class)
     @RequestMapping(value = "/submit", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
+    @CrossOrigin(origins = ["http://*.mycollab.com"])
     fun doContact(@RequestParam("name") name: String,
                   @RequestParam("email") email: String,
                   @RequestParam("company") company: String,

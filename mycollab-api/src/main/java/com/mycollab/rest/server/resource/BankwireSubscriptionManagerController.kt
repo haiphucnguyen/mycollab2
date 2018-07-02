@@ -44,7 +44,7 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
                                @RequestParam("OrderSubTotalUSD") orderSubTotalUSD: String): String {
         try {
             val decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(orderReferrer)
-            val arr = decryptReferrer!!.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val arr = decryptReferrer.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val subscription = BillingSubscription()
             subscription.email = customerEmail
             subscription.accountid = Integer.parseInt(arr[0])
