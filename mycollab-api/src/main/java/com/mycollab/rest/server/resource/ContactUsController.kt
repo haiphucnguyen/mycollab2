@@ -22,7 +22,7 @@ class ContactUsController(private val extMailService: ExtMailService,
 
     @ApiOperation(value = "Send the inquery request", response = String::class)
     @RequestMapping(value = "/submit", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
-    @CrossOrigin(origins = ["http://*.mycollab.com", "http://mycollab.com"])
+    @CrossOrigin(origins = ["https://*.mycollab.com", "https://mycollab.com"])
     fun doContact(@RequestParam("name") name: String,
                   @RequestParam("email") email: String,
                   @RequestParam("company") company: String,
