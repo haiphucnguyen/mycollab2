@@ -294,7 +294,7 @@
                                 </copy>
                                 <copy todir="${installer.staging.dir}/config">
                                     <fileset dir="${basedir}/src/main/config">
-                                        <exclude name="mycollab.properties"/>
+                                        <exclude name="application.properties"/>
                                     </fileset>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/logs">
