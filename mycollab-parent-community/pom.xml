@@ -25,7 +25,7 @@
         <junit.version>4.12</junit.version>
         <jackson.version>2.9.6</jackson.version>
 
-        <kotlin.version>1.2.50</kotlin.version>
+        <kotlin.version>1.2.51</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->
@@ -111,6 +111,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- To make it works for Java 9+-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
         </dependency>
 
         <dependency>
