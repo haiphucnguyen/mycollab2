@@ -12,7 +12,7 @@ app.notifyEmail=${mailNotify}
 server.address=${serveraddress}
 server.apiUrl=http://api.mycollab.com/api/
 server.storageSystem=file
-server.siteUrl=http://%s:%d
+server.siteUrl=http://%s:%d/
 server.resourceDownloadUrl=http://%s:%d/file/
 server.cdnUrl=http://%s:%d/assets/
 
