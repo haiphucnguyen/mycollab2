@@ -39,7 +39,7 @@ import javax.sql.DataSource
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-@Configuration
+@Configuration(value = "scheduleConfiguration")
 class DefaultScheduleConfiguration {
 
     @Autowired
@@ -162,16 +162,16 @@ class DefaultScheduleConfiguration {
         props.setProperty("org.quartz.threadPool.threadPriority", "5")
         props.setProperty("org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread", "true")
 
-//        if (deploymentMode.isCommunityEdition) {
-        props.setProperty("org.quartz.jobStore.class", "org.quartz.simpl.RAMJobStore")
-//        } else {
-//            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
-//            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
-//            props.setProperty("org.quartz.jobStore.useProperties", "true")
-//            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
-//            props.setProperty("org.quartz.jobStore.isClustered", "true")
-//            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
-//        }
+        if (deploymentMode.isDemandEdition) {
+            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
+            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
+            props.setProperty("org.quartz.jobStore.useProperties", "true")
+            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
+            props.setProperty("org.quartz.jobStore.isClustered", "true")
+            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
+        } else {
+            props.setProperty("org.quartz.jobStore.class", "org.quartz.simpl.RAMJobStore")
+        }
         return props
     }
 }

@@ -90,7 +90,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
         val df = DateTimeFormat.forPattern("MM/dd/yyyy")
 
         account.owners.forEach {
-            LOG.info("Send mail after " + afterDay + " days for username ${it.username} , mail ${it.email}")
+            LOG.info("Send mail after $afterDay days for username ${it.username} , mail ${it.email}")
             contentGenerator.putVariable("account", account)
             val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
             val accountTrialFrom = DateTime(MoreObjects.firstNonNull(account.trialfrom, account.createdtime))
