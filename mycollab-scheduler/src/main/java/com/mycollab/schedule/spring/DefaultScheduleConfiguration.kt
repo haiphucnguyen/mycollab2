@@ -162,16 +162,16 @@ class DefaultScheduleConfiguration {
         props.setProperty("org.quartz.threadPool.threadPriority", "5")
         props.setProperty("org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread", "true")
 
-        if (deploymentMode.isDemandEdition) {
-            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
-            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
-            props.setProperty("org.quartz.jobStore.useProperties", "true")
-            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
-            props.setProperty("org.quartz.jobStore.isClustered", "true")
-            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
-        } else {
+//        if (deploymentMode.isDemandEdition) {
+//            props.setProperty("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX")
+//            props.setProperty("org.quartz.jobStore.dataSource", "dataSource")
+//            props.setProperty("org.quartz.jobStore.useProperties", "true")
+//            props.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_")
+//            props.setProperty("org.quartz.jobStore.isClustered", "true")
+//            props.setProperty("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.StdJDBCDelegate")
+//        } else {
             props.setProperty("org.quartz.jobStore.class", "org.quartz.simpl.RAMJobStore")
-        }
+//        }
         return props
     }
 }
