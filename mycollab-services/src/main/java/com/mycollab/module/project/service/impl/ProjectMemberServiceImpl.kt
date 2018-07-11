@@ -73,7 +73,7 @@ class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMap
                 userAccountEx.createCriteria().andUsernameNotIn(listOf(record.username)).andProjectidEqualTo(record.projectid)
                         .andIsadminEqualTo(java.lang.Boolean.TRUE).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE)
                 if (projectMemberMapper.countByExample(userAccountEx) == 0L) {
-                    throw UserInvalidInputException(String.format("Can not change role of user %s. The reason is " + "%s is the unique account owner of the current project.", record.username, record.username))
+                    throw UserInvalidInputException(String.format("Can not change role of user %s. The reason is %s is the unique account owner of the current project.", record.username, record.username))
                 }
             }
         }
@@ -102,9 +102,8 @@ class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMap
         }
     }
 
-    override fun getActiveUsersInProject(projectId: Int?, sAccountId: Int?): List<SimpleUser> {
-        return projectMemberMapperExt.getActiveUsersInProject(projectId!!, sAccountId!!)
-    }
+    override fun getActiveUsersInProject(projectId: Int?, sAccountId: Int?): List<SimpleUser> =
+            projectMemberMapperExt.getActiveUsersInProject(projectId!!, sAccountId!!)
 
     override fun inviteProjectMembers(email: Array<String>, projectId: Int, projectRoleId: Int?, inviteUser: String,
                                       inviteMessage: String, sAccountId: Int) {

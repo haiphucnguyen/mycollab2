@@ -39,7 +39,7 @@ import javax.sql.DataSource
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-@Configuration(value = "scheduleConfiguration")
+@Configuration("scheduleConfiguration")
 class DefaultScheduleConfiguration {
 
     @Autowired
