@@ -82,7 +82,7 @@
                 <message>Start date must be less than end date</message>
                 <element name="firstDateField">startdate</element>
                 <element name="lastDateField">enddate</element>
-            </constraint>    
+            </constraint>
         </class>
         <field name="campaignname">
             <constraint annotation="javax.validation.constraints.NotNull">
@@ -169,7 +169,7 @@
                 <message>Start date must be less than due date</message>
                 <element name="firstDateField">startdate</element>
                 <element name="lastDateField">duedate</element>
-            </constraint>    
+            </constraint>
         </class>
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
@@ -193,7 +193,7 @@
                 <message>Start date must be less than end date</message>
                 <element name="firstDateField">startdate</element>
                 <element name="lastDateField">enddate</element>
-            </constraint>    
+            </constraint>
         </class>
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
