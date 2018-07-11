@@ -39,7 +39,7 @@ import javax.sql.DataSource
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-@Configuration("scheduleConfiguration")
+@Configuration
 class DefaultScheduleConfiguration {
 
     @Autowired
@@ -131,10 +131,10 @@ class DefaultScheduleConfiguration {
         return bean
     }
 
-    @Bean
+    @Bean("scheduler")
     fun quartzScheduler(): SchedulerFactoryBean {
         val bean = SchedulerFactoryBean()
-        if (!deploymentMode.isCommunityEdition) {
+        if (deploymentMode.isDemandEdition) {
             bean.setDataSource(dataSource)
         }
 

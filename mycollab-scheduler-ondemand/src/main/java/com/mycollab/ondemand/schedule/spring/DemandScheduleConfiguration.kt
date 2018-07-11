@@ -12,7 +12,7 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean
  * @since 4.6.0
  */
 @Configuration
-@DependsOn("scheduleConfiguration")
+@DependsOn("scheduler")
 class DemandScheduleConfiguration {
 
     @Bean
