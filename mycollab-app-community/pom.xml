@@ -83,6 +83,12 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.validation</groupId>
+                    <artifactId>validation-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

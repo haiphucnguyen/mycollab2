@@ -28,8 +28,7 @@ import org.springframework.stereotype.Component
 class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingService,
                                         private val contentGenerator: IContentGenerator,
                                         private val extMailService: ExtMailService,
-                                        private val deploymentMode: IDeploymentMode
-) : GenericQuartzJobBean() {
+                                        private val deploymentMode: IDeploymentMode) : GenericQuartzJobBean() {
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {

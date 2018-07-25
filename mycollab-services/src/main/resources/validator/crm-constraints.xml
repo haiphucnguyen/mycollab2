@@ -104,8 +104,7 @@
             </constraint>
         </field>
         <field name="mobile">
-            <constraint
-                annotation="com.mycollab.validator.constraints.PhoneNumber">
+            <constraint annotation="com.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
             </constraint>
         </field>

@@ -144,7 +144,7 @@ public class MainViewImpl extends AbstractMainView {
         accountPopupContent.addOption(supportBtn);
 
         MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(FontAwesome.PENCIL);
-        ExternalResource translateRes = new ExternalResource("http://community.mycollab.com/docs/developing-mycollab/translating/");
+        ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/translating/");
         BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
         translateOpener.extend(translateBtn);
         accountPopupContent.addOption(translateBtn);

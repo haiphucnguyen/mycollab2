@@ -26,14 +26,14 @@
         <div style="padding: 0px 25px;">
         As you get started with MyCollab, we recommend that you:
           <ul>
-            <li style="padding: 5px 0px">Install MyCollab on your server <a href="http://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/">Installation</a>
+            <li style="padding: 5px 0px">Install MyCollab on your server <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/">Installation</a>
             <li style="padding: 5px 0px">If you are using Windows, you can install MyCollab as a Window service by following steps
             at
-            <a href="http://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-windows-service/">Startup as Windows Service</a></li>
+            <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-windows-service/">Startup as Windows Service</a></li>
             <li>If you are using Unix, you can configure MyCollab as a Unit startup script by following steps at <a
-                    href="http://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-unix-service/">Startup as Unix Service</a></li>
+                    href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/startup-as-unix-service/">Startup as Unix Service</a></li>
             <li style="padding: 5px 0px">Common questions that MyCollab users asked us, such as how to change the server port, are
-              described at our FAQ page <a href="http://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/">FAQ</a></li>
+              described at our FAQ page <a href="https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/">FAQ</a></li>
             <li style="padding: 5px 0px">If you still have any question, suggestion etc to make MyCollab better, you are welcome to post a message into our support page <a href="http://support.mycollab.com">http://support.mycollab.com</a></li>
           </ul>
         </div>

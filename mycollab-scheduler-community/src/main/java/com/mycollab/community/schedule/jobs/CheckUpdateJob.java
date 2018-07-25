@@ -59,7 +59,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
     private ServerConfiguration serverConfiguration;
 
     @Override
-    public void executeJob(JobExecutionContext context) throws JobExecutionException {
+    public void executeJob(JobExecutionContext context) {
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(serverConfiguration.getApiUrl("checkupdate?version=" + Version.getVersion()), String.class);
         final Properties props = JsonDeSerializer.fromJson(result, Properties.class);

@@ -29,8 +29,6 @@ import java.util.*
 class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
                           private val appPropertiesService: AppPropertiesService) : LicenseResolver, InitializingBean {
 
-    private lateinit var properties: Properties
-
     private lateinit var _licenseInfo: LicenseInfo
     override var licenseInfo: LicenseInfo? = null
         get() = _licenseInfo
