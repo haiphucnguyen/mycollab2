@@ -19,8 +19,7 @@ class BillingPlanCheckerServiceImpl(private val licenseResolver: LicenseResolver
                                     private val userMapper: UserMapperExt) : BillingPlanCheckerService {
 
     @Throws(UsageExceedBillingPlanException::class)
-    override fun validateAccountCanCreateMoreProject(sAccountId: Int) {
-    }
+    override fun validateAccountCanCreateMoreProject(sAccountId: Int) = Unit
 
     @Throws(UsageExceedBillingPlanException::class)
     override fun validateAccountCanCreateNewUser(sAccountId: Int) {
@@ -38,6 +37,5 @@ class BillingPlanCheckerServiceImpl(private val licenseResolver: LicenseResolver
     }
 
     @Throws(UsageExceedBillingPlanException::class)
-    override fun validateAccountCanUploadMoreFiles(sAccountId: Int, extraBytes: Long) {
-    }
+    override fun validateAccountCanUploadMoreFiles(sAccountId: Int, extraBytes: Long) = Unit
 }
