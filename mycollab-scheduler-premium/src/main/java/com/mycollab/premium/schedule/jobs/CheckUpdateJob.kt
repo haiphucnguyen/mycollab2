@@ -3,7 +3,8 @@ package com.mycollab.premium.schedule.jobs
 import com.mycollab.configuration.EnDecryptHelper
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.core.BroadcastMessage
-import com.mycollab.core.Broadcaster
+import com.mycollab.core.BroadcastMessage.Companion.SCOPE_GLOBAL
+import com.mycollab.core.Broadcaster.Companion.broadcast
 import com.mycollab.core.NewUpdateAvailableNotification
 import com.mycollab.core.Version
 import com.mycollab.core.utils.JsonDeSerializer
@@ -32,8 +33,13 @@ import java.util.zip.ZipFile
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CheckUpdateJob(private val serverConfiguration: ServerConfiguration,
-                     private val licenseResolver: LicenseResolver) : GenericQuartzJobBean() {
+class CheckUpdateJob() : GenericQuartzJobBean() {
+
+    @Autowired
+    private lateinit var serverConfiguration: ServerConfiguration
+
+    @Autowired
+    private lateinit var licenseResolver: LicenseResolver
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
@@ -63,10 +69,10 @@ class CheckUpdateJob(private val serverConfiguration: ServerConfiguration,
                         val installerFile = downloadMyCollabThread.tmpFile
                         if (installerFile.exists() && installerFile.isFile && installerFile.length() > 0 && isValid(installerFile)) {
                             latestFileDownloadedPath = installerFile.absolutePath
-                            Broadcaster.broadcast(BroadcastMessage(NewUpdateAvailableNotification(version,
+                            broadcast(BroadcastMessage(SCOPE_GLOBAL, NewUpdateAvailableNotification(version,
                                     autoDownloadLink, manualDownloadLink, latestFileDownloadedPath)))
                         } else {
-                            Broadcaster.broadcast(BroadcastMessage(NewUpdateAvailableNotification(version, null,
+                            broadcast(BroadcastMessage(SCOPE_GLOBAL, NewUpdateAvailableNotification(version, null,
                                     manualDownloadLink, null)))
                         }
                     } catch (e: Exception) {
@@ -75,7 +81,7 @@ class CheckUpdateJob(private val serverConfiguration: ServerConfiguration,
                         isDownloading = false
                     }
                 } else {
-                    Broadcaster.broadcast(BroadcastMessage(NewUpdateAvailableNotification(version, autoDownloadLink,
+                    broadcast(BroadcastMessage(SCOPE_GLOBAL, NewUpdateAvailableNotification(version, autoDownloadLink,
                             manualDownloadLink, latestFileDownloadedPath)))
                 }
             }

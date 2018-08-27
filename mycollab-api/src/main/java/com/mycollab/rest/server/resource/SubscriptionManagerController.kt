@@ -119,7 +119,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                 subscription.subscriptioncustomerurl = subscriptionCustomerUrl
 
                 subscriptionMapper.updateByPrimaryKey(subscription)
-                Broadcaster.broadcast(BroadcastMessage(subscription.accountid, null,""))
+                Broadcaster.broadcast(BroadcastMessage(BroadcastMessage.SCOPE_USER, subscription.accountid, null,""))
 
                 val accountEx = BillingAccountExample()
                 accountEx.createCriteria().andIdEqualTo(sAccountId)
