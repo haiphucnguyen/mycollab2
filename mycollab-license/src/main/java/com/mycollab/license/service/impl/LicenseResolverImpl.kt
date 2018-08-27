@@ -109,7 +109,7 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
                 if (newLicenseInfo.isExpired) {
                     throw UserInvalidInputException("License is expired")
                 }
-                if (_licenseInfo != null && newLicenseInfo.isTrial) {
+                if (newLicenseInfo.isTrial) {
                     throw UserInvalidInputException("You can not enter another trial license during trial period")
                 }
                 val licenseFile = licenseFile

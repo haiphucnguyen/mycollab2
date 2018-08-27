@@ -32,12 +32,8 @@ import java.util.zip.ZipFile
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class CheckUpdateJob : GenericQuartzJobBean() {
-    @Autowired
-    private lateinit var serverConfiguration: ServerConfiguration
-
-    @Autowired
-    private lateinit var licenseResolver: LicenseResolver
+class CheckUpdateJob(private val serverConfiguration: ServerConfiguration,
+                     private val licenseResolver: LicenseResolver) : GenericQuartzJobBean() {
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
