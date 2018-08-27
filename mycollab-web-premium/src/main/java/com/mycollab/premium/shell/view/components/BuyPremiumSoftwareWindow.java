@@ -4,6 +4,7 @@ import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -24,8 +25,7 @@ public class BuyPremiumSoftwareWindow extends MWindow {
         try {
             ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
             String result = restTemplate.getForObject(serverConfiguration.getApiUrl("linktobuy"), String.class);
-            Label webPage = new Label(result, ContentMode.HTML);
-            webPage.setHeight("600px");
+            Label webPage = ELabel.html(result).withHeight("600px");
             this.setContent(content.with(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         } catch (Exception e) {
             String result = FileUtils.readFileAsPlainString("buying.html");

@@ -10,7 +10,7 @@ app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
 server.address=${serveraddress}
-server.apiUrl=http://api.mycollab.com/api/
+server.apiUrl=https://api.mycollab.com/
 server.storageSystem=file
 server.siteUrl=http://%s:%d/
 server.resourceDownloadUrl=http://%s:%d/file/
