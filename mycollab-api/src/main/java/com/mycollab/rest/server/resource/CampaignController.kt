@@ -29,11 +29,11 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                          private val applicationConfiguration: ApplicationConfiguration) {
 
     @ApiOperation(value = "Get the html page contains link to buy", response = String::class)
-    @RequestMapping(method = [(RequestMethod.GET)], path = ["/linktobuy"])
+    @RequestMapping(method = [(RequestMethod.GET)], path = ["/linktobuy", "api/linktobuy"])
     @Throws(IOException::class)
     fun showLinkToBuy() = FileUtils.readFileAsPlainString("buying.html")
 
-    @RequestMapping(method = [(RequestMethod.GET)], path = ["/storeweb"])
+    @RequestMapping(method = [(RequestMethod.GET)], path = ["/storeweb", "api/storeweb"])
     @Throws(IOException::class)
     fun displayStoreWeb() = FileUtils.readFileAsPlainString("pricing.html")
 
