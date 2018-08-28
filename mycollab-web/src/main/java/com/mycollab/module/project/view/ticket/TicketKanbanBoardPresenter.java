@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.ticket;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.module.project.CurrentProjectVariables;

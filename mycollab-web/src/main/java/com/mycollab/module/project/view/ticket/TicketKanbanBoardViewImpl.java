@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.ticket;
+package com.mycollab.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.OptionI18nEnum;
