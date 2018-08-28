@@ -19,11 +19,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-client-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.mycollab</groupId>
@@ -312,6 +307,7 @@
                                 <copy todir="${installer.staging.dir}/lib">
                                     <fileset dir="${basedir}/src/main/lib"/>
                                 </copy>
+                                <chmod dir="${installer.staging.dir}/bin/" includes="*.sh" perm="700"/>
                             </target>
                         </configuration>
                     </execution>

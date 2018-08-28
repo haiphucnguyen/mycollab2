@@ -131,7 +131,7 @@ class CheckUpdateJob() : GenericQuartzJobBean() {
                         while (bytesRead != -1) {
                             outputStream.write(buffer, 0, bytesRead)
                             loadedBytes += bytesRead
-                            LOG.info("  Progress: ${loadedBytes / 1024}")
+                            LOG.info("  Progress: ${loadedBytes / 1024} Kb")
                             bytesRead = inputStream.read(buffer)
                         }
                         outputStream.close()

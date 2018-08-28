@@ -73,7 +73,7 @@ class ProjectMemberServiceImpl(private val projectMemberMapper: ProjectMemberMap
                 userAccountEx.createCriteria().andUsernameNotIn(listOf(record.username)).andProjectidEqualTo(record.projectid)
                         .andIsadminEqualTo(java.lang.Boolean.TRUE).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE)
                 if (projectMemberMapper.countByExample(userAccountEx) == 0L) {
-                    throw UserInvalidInputException(String.format("Can not change role of user %s. The reason is %s is the unique account owner of the current project.", record.username, record.username))
+                    throw UserInvalidInputException("Can not change role of user ${record.username}. The reason is ${record.username} is the unique account owner of the current project.")
                 }
             }
         }

@@ -330,6 +330,7 @@
                                 </copy>
                                 <copy file="${project.build.directory}/mycollab-runner-${project.version}.jar"
                                       tofile="${installer.staging.dir}/lib/mycollab-runner-${project.version}.jar"/>
+                                <chmod dir="${installer.staging.dir}/bin/" includes="*.sh" perm="700"/>
                             </target>
                         </configuration>
                     </execution>

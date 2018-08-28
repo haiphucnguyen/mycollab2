@@ -27,8 +27,7 @@ class CheckVersionController(private val editionInfo: EditionInfo) {
         val liveVersion = editionInfo.version
         props["version"] = liveVersion
         props["downloadLink"] = "https://www.mycollab.com/ce-registration/"
-        props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                Version.getVersion().replace('.', '-'))
+        props["releaseNotes"] = "https://community.mycollab.com/releases/release-notes-for-mycollab-${Version.getVersion().replace('.', '-')}/"
 
         if (version != null && Version.isEditionNewer(liveVersion, version) &&
                 Version.isEditionNewer(version, "5.3.4")) {
@@ -44,8 +43,7 @@ class CheckVersionController(private val editionInfo: EditionInfo) {
         val liveVersion = editionInfo.version
         props["version"] = liveVersion
         props["downloadLink"] = "https://www.mycollab.com/ee-registration/"
-        props["releaseNotes"] = String.format("https://community.mycollab.com/releases/release-notes-for-mycollab-%s/",
-                Version.getVersion().replace('.', '-'))
+        props["releaseNotes"] = "https://community.mycollab.com/releases/release-notes-for-mycollab-${Version.getVersion().replace('.', '-')}/"
         props["autoDownload"] = editionInfo.premiumUpgradeLink
         return props
     }

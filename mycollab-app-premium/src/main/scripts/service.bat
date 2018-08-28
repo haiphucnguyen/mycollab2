@@ -17,9 +17,9 @@ goto end
 rem ----- Execute The Requested Command ---------------------------------------
 set SERVICE_NAME=MyCollab5
 
-if "%PROCESSOR_ARCHITECTURE%" == "X86" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5.exe
-if "%PROCESSOR_ARCHITECTURE%" == "AMD64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5amd64.exe
-if "%PROCESSOR_ARCHITECTURE%" == "IA64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5ia64.exe
+if "%PROCESSOR_ARCHITECTURE%" == "X86" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6.exe
+if "%PROCESSOR_ARCHITECTURE%" == "AMD64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6amd64.exe
+if "%PROCESSOR_ARCHITECTURE%" == "IA64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6ia64.exe
 
 REM Install service
 IF NOT DEFINED EXT_INSTALL (
@@ -43,13 +43,13 @@ set PR_CLASSPATH=%MYCOLLAB_HOME%\executor.jar
 REM Startup configuration
 set PR_STARTUP=auto
 set PR_STARTMODE=jvm
-set PR_STARTCLASS=com.esofthead.mycollab.Executor
+set PR_STARTCLASS=com.mycollab.runner.Executor
 set PR_STARTPATH=%MYCOLLAB_HOME%
 set PR_STARTMETHOD=start
 
 REM Shutdown configuration
 set PR_STOPMODE=jvm
-set PR_STOPCLASS=com.esofthead.mycollab.Executor
+set PR_STOPCLASS=com.mycollab.runner.Executor
 set PR_STOPMETHOD=stop
 set PR_STOPPATH=%MYCOLLAB_HOME%
 

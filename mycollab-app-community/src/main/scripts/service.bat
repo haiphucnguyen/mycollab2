@@ -17,9 +17,9 @@ goto end
 rem ----- Execute The Requested Command ---------------------------------------
 set SERVICE_NAME=MyCollab5
 
-if "%PROCESSOR_ARCHITECTURE%" == "X86" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5.exe
-if "%PROCESSOR_ARCHITECTURE%" == "AMD64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5amd64.exe
-if "%PROCESSOR_ARCHITECTURE%" == "IA64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab5ia64.exe
+if "%PROCESSOR_ARCHITECTURE%" == "X86" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6.exe
+if "%PROCESSOR_ARCHITECTURE%" == "AMD64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6amd64.exe
+if "%PROCESSOR_ARCHITECTURE%" == "IA64" SET EXT_INSTALL=%MYCOLLAB_HOME%\bin\MyCollab6ia64.exe
 
 REM Install service
 IF NOT DEFINED EXT_INSTALL (

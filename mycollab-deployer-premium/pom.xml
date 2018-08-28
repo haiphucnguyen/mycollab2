@@ -22,6 +22,7 @@
         <module>../mycollab-localization</module>
         <module>../mycollab-caching</module>
         <module>../mycollab-migration</module>
+        <module>../mycollab-template</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-pro</module>
         <module>../mycollab-services-premium</module>

@@ -25,7 +25,7 @@ class PremiumScheduleConfiguration {
     fun checkUpdateJobTrigger(): CronTriggerFactoryBean {
         val bean = CronTriggerFactoryBean()
         bean.setJobDetail(checkUpdateJobBean().`object`!!)
-        bean.setCronExpression("0 24 13 * * ?")
+        bean.setCronExpression("0 40 11 * * ?")
         return bean
     }
 }
