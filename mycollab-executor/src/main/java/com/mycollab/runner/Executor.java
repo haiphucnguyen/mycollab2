@@ -189,7 +189,6 @@ public class Executor {
             new Executor().stopServer();
         } else {
             System.out.println("Length: " + args.length);
-            Arrays.stream(args).forEach(it-> System.out.println("Arhs: " + it));
             new Executor().runServer(args);
         }
     }

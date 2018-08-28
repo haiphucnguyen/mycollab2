@@ -1,5 +1,5 @@
 #=====================================================
-# You can visit link https://community.mycollab.com/configuration/
+# You can visit link https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/advanced-configuration/
 # to get all configuration fieldBuilder and their meanings
 #=====================================================
 
@@ -9,8 +9,9 @@
 app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
+server.port=${port:8080}
 server.address=${serveraddress}
-server.apiUrl=http://api.mycollab.com/api/
+server.apiUrl=https://api.mycollab.com/
 server.storageSystem=file
 server.siteUrl=http://%s:%d/
 server.resourceDownloadUrl=http://%s:%d/file/
