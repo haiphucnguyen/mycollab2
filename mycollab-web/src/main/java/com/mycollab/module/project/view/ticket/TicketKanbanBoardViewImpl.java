@@ -28,8 +28,11 @@ import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.*;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.AsyncInvoker.PageCommand;
+import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -329,7 +332,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                             NotificationUtil.showErrorNotification("Invalid state for bug");
                         } else if (ticket.isRisk() && (!stage.equals(Open.name()) && !stage.equals(Closed.name()))) {
                             NotificationUtil.showErrorNotification("Invalid state for risk");
-                        } else if (ticket.isTask() && (!stage.equals(Open.name()) && !stage.equals(Closed.name()))) {
+                        } else if (ticket.isTask() && (!stage.equals(Open.name()) && !stage.equals(Pending.name()) && !stage.equals(InProgress.name()) && !stage.equals(Closed.name()))) {
                             NotificationUtil.showErrorNotification("Invalid state for task");
                         } else {
                             int newIndex = details.getOverIndex();
