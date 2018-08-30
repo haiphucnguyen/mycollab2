@@ -150,7 +150,7 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
             } catch (e: Exception) {
                 throw MyCollabException(e)
             } finally {
-                DistributionLockUtil.removeLock("gantt-milestone-service" + sAccountId)
+                DistributionLockUtil.removeLock("gantt-milestone-service$sAccountId")
                 lock.unlock()
             }
         }
@@ -174,7 +174,7 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                 batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
                                 batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
-                                batchTasksStatement.setDouble(5, it.progress!!)
+                                batchTasksStatement.setDouble(5, it.progress ?: 0.0)
                                 batchTasksStatement.setString(6, it.assignUser)
                                 batchTasksStatement.setInt(7, it.ganttIndex!!)
                                 batchTasksStatement.setObject(8, it.milestoneId)
@@ -229,7 +229,7 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
             } catch (e: Exception) {
                 throw MyCollabException(e)
             } finally {
-                DistributionLockUtil.removeLock("gantt-bug-service" + sAccountId)
+                DistributionLockUtil.removeLock("gantt-bug-service$sAccountId")
                 lock.unlock()
             }
         }

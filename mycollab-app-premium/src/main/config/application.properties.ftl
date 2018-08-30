@@ -9,7 +9,6 @@
 app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
-server.port=${port:8080}
 server.address=${serveraddress}
 server.apiUrl=https://api.mycollab.com/
 server.storageSystem=file

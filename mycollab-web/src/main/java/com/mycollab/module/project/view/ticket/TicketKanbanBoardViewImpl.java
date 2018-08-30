@@ -7,11 +7,18 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.Risk;
+import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.event.TicketEvent;
+import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.RiskI18nEnum;
+import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.query.TicketQueryInfo;
+import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
@@ -20,16 +27,16 @@ import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
 import com.mycollab.module.project.view.ticket.TicketSearchPanel;
 import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
+import com.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -41,6 +48,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.BaseTheme;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -104,6 +112,21 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         viewButtons.withDefaultButton(kanbanBtn);
         groupWrapLayout.addComponent(viewButtons);
 
+        MButton filterBugsBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+
+        });
+
+        MButton filterTasksBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+
+        });
+
+        MButton filterRisksBtn = new MButton(UserUIContext.getMessage(RiskI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+
+        });
+
+        MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), filterBugsBtn, ELabel.html("|"), filterTasksBtn, ELabel.html("|"), filterRisksBtn)
+                .withDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
         kanbanLayout.addStyleName("kanban-layout");
@@ -139,7 +162,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             }
         });
 
-        this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
+        this.with(searchPanel, controlLayout, kanbanLayout).expand(kanbanLayout);
     }
 
     @Override
@@ -204,13 +227,13 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                 for (int page = 0; page < pages + 1; page++) {
                     List<ProjectTicket> tickets = (List<ProjectTicket>) ticketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(tickets)) {
-                        for (ProjectTicket ticket : tickets) {
+                        tickets.forEach(ticket -> {
                             String status = ticket.getStatus();
                             KanbanBlock kanbanBlock = kanbanBlocks.get(status);
                             if (kanbanBlock != null) {
                                 kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
                             }
-                        }
+                        });
                         this.push();
                     }
                 }
@@ -246,9 +269,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
             footer.addComponent(popupFieldFactory.createCommentsPopupField(projectTicket));
             footer.addComponent(popupFieldFactory.createFollowersPopupField(projectTicket));
-            footer.addComponent(popupFieldFactory.createStartDatePopupField(projectTicket));
-            footer.addComponent(popupFieldFactory.createEndDatePopupField(projectTicket));
-            footer.addComponent(popupFieldFactory.createDueDatePopupField(projectTicket));
             footer.addComponent(popupFieldFactory.createAssigneePopupField(projectTicket));
 
             this.addComponent(footer);
@@ -261,11 +281,11 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         private Label header;
 
         KanbanBlock(String stage) {
-            this.withFullHeight().withWidth("350px").withStyleName("kanban-block").withMargin(false);
+            this.withFullHeight().withWidth("250px").withStyleName("kanban-block").withMargin(false);
             this.status = stage;
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
-            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'red'});");
+            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
 
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
@@ -284,13 +304,13 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         KanbanBlockItem kanbanItem = (KanbanBlockItem) dragComponent;
                         ProjectTicket ticket = kanbanItem.projectTicket;
 
-                        if (ticket.isBug() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.ReOpen.name()) || !stage.equals(StatusI18nEnum.Verified.name())
+                        if (ticket.isBug() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.ReOpen.name()) && !stage.equals(StatusI18nEnum.Verified.name())
                                 || !stage.equals(StatusI18nEnum.Resolved.name()))) {
-                            NotificationUtil.showErrorNotification("AAA");
-                        } else if (ticket.isRisk() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.Closed.name()))) {
-                            NotificationUtil.showErrorNotification("BBB");
-                        } else if (ticket.isTask() && (!stage.equals(StatusI18nEnum.Open.name()) || !stage.equals(StatusI18nEnum.Closed.name()))) {
-                            NotificationUtil.showErrorNotification("CCC");
+                            NotificationUtil.showErrorNotification("Invalid state for bug");
+                        } else if (ticket.isRisk() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.Closed.name()))) {
+                            NotificationUtil.showErrorNotification("Invalid state for risk");
+                        } else if (ticket.isTask() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.Closed.name()))) {
+                            NotificationUtil.showErrorNotification("Invalid state for task");
                         } else {
                             int newIndex = details.getOverIndex();
                             if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
@@ -299,6 +319,32 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                                 dragLayoutContainer.addComponent(kanbanItem, 0);
                             } else {
                                 dragLayoutContainer.addComponent(kanbanItem, newIndex);
+                            }
+
+                            if (ticket.isBug()) {
+                                BugWithBLOBs bug = new BugWithBLOBs();
+                                bug.setId(ticket.getTypeId());
+                                bug.setStatus(stage);
+                                bug.setProjectid(ticket.getProjectId());
+                                bug.setSaccountid(AppUI.getAccountId());
+                                BugService bugService = AppContextUtil.getSpringBean(BugService.class);
+                                bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
+                            } else if (ticket.isTask()) {
+                                Task task = new Task();
+                                task.setId(ticket.getTypeId());
+                                task.setStatus(stage);
+                                task.setSaccountid(AppUI.getAccountId());
+                                task.setProjectid(ticket.getProjectId());
+                                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                                taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
+                            } else if (ticket.isRisk()) {
+                                Risk risk = new Risk();
+                                risk.setId(ticket.getTypeId());
+                                risk.setStatus(stage);
+                                risk.setSaccountid(AppUI.getAccountId());
+                                risk.setProjectid(ticket.getProjectId());
+                                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
+                                riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
                             }
 
                             refresh();

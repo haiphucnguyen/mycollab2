@@ -86,7 +86,7 @@ goto execCmd
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% -jar executor.jar %* %MYCOLLAB_OPTS% -Dport=%MYCOLLAB_PORT%
+%_EXECJAVA% -jar executor.jar %* %MYCOLLAB_OPTS% -Dserver.port=%MYCOLLAB_PORT%
 goto end
 
 :end

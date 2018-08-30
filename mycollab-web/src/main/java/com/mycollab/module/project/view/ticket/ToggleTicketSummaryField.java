@@ -138,6 +138,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                 BugWithBLOBs bug = new BugWithBLOBs();
                 bug.setId(ticket.getTypeId());
                 bug.setName(ticket.getName());
+                bug.setProjectid(ticket.getProjectId());
                 bug.setSaccountid(AppUI.getAccountId());
                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
@@ -146,6 +147,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                 task.setId(ticket.getTypeId());
                 task.setName(ticket.getName());
                 task.setSaccountid(AppUI.getAccountId());
+                task.setProjectid(ticket.getProjectId());
                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
             } else if (ticket.isRisk()) {
@@ -153,6 +155,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
                 risk.setId(ticket.getTypeId());
                 risk.setName(ticket.getName());
                 risk.setSaccountid(AppUI.getAccountId());
+                risk.setProjectid(ticket.getProjectId());
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
             }
@@ -164,7 +167,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
     private String buildTicketLink() {
         Div issueDiv = new Div();
 
-        A ticketLink = new A().setId("tag" + TooltipHelper.TOOLTIP_ID);
+        A ticketLink = new A().setId(String.format("tag%s", TooltipHelper.TOOLTIP_ID));
         if (ticket.isBug() || ticket.isTask()) {
             ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + ""));
@@ -172,7 +175,7 @@ public class ToggleTicketSummaryField extends AbstractToggleSummaryField {
             ticketLink.setHref(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(),
                     ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""));
         } else {
-            throw new IgnoreException("Not support type: " + ticket.getType());
+            throw new IgnoreException(String.format("Not support type: %s", ticket.getType()));
         }
 
         ticketLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ticket.getType(), ticket.getTypeId() + ""));

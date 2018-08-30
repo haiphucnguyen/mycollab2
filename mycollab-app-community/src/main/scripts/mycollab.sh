@@ -154,7 +154,7 @@ if [ "$1" = "--start" ] ; then
   shift
   touch "$MYCOLLAB_OUT"
   cd ..
-  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar $MYCOLLAB_OPTS -Dport=$MYCOLLAB_PORT &
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar $MYCOLLAB_OPTS -Dserver.port=$MYCOLLAB_PORT &
 
   if [ ! -z "$MYCOLLAB_PID" ]; then
     echo $! > "$MYCOLLAB_PID"
