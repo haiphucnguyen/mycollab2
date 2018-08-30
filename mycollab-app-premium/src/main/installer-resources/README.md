@@ -53,6 +53,7 @@ Version 6.0.0
 * Improve the overall performance
 * Support Java 9 and 10
 * [Premium] Clean and comprehensive notifications
+* [Premium] Fix inline edit in ticket components
 
 **Bug Fixes**
 
