@@ -24,19 +24,16 @@ import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
-import com.mycollab.module.project.view.ticket.TicketKanbanBoardView;
-import com.mycollab.module.project.view.ticket.TicketSearchPanel;
-import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.*;
+import com.mycollab.vaadin.AsyncInvoker.PageCommand;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.vaadin.event.dd.DragAndDropEvent;
@@ -66,6 +63,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.*;
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
@@ -79,6 +78,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     private DDHorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
     private ProjectTicketSearchCriteria baseCriteria;
+
+    private StatusI18nEnum[] statuses;
 
     private ApplicationEventListener<TicketEvent.SearchRequest> searchHandler = new
             ApplicationEventListener<TicketEvent.SearchRequest>() {
@@ -112,19 +113,24 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         viewButtons.withDefaultButton(kanbanBtn);
         groupWrapLayout.addComponent(viewButtons);
 
-        MButton filterBugsBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+        MButton allFilterBtn = new MButton("All").withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+            statuses = OptionI18nEnum.statuses;
 
+        });
+
+        MButton filterBugsBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
+            statuses = OptionI18nEnum.bugStatuses;
         });
 
         MButton filterTasksBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
-
+            statuses = OptionI18nEnum.taskStatuses;
         });
 
         MButton filterRisksBtn = new MButton(UserUIContext.getMessage(RiskI18nEnum.SINGLE)).withStyleName(BaseTheme.BUTTON_LINK).withListener((Button.ClickListener) clickEvent -> {
-
+            statuses = OptionI18nEnum.riskStatuses;
         });
 
-        MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), filterBugsBtn, ELabel.html("|"), filterTasksBtn, ELabel.html("|"), filterRisksBtn)
+        MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), allFilterBtn, ELabel.html("|"), filterBugsBtn, ELabel.html("|"), filterTasksBtn, ELabel.html("|"), filterRisksBtn)
                 .withDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
         kanbanLayout = new DDHorizontalLayout();
@@ -192,7 +198,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
     @Override
     public void display() {
-        searchPanel.selectQueryInfo(TicketQueryInfo.OPEN_TICKETS);
+        searchPanel.selectQueryInfo(TicketQueryInfo.ALL_TICKETS);
     }
 
     private void reload() {
@@ -210,7 +216,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         kanbanBlocks = new ConcurrentHashMap<>();
 
         setProjectNavigatorVisibility(false);
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+        AsyncInvoker.access(getUI(), new PageCommand() {
             @Override
             public void run() {
                 StatusI18nEnum[] statuses = OptionI18nEnum.statuses;
@@ -304,12 +310,12 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                         KanbanBlockItem kanbanItem = (KanbanBlockItem) dragComponent;
                         ProjectTicket ticket = kanbanItem.projectTicket;
 
-                        if (ticket.isBug() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.ReOpen.name()) && !stage.equals(StatusI18nEnum.Verified.name())
-                                || !stage.equals(StatusI18nEnum.Resolved.name()))) {
+                        if (ticket.isBug() && (!stage.equals(Open.name()) && !stage.equals(ReOpen.name()) && !stage.equals(Verified.name())
+                                || !stage.equals(Resolved.name()) && !stage.equals(InProgress.name()) && !stage.equals(Unresolved.name()))) {
                             NotificationUtil.showErrorNotification("Invalid state for bug");
-                        } else if (ticket.isRisk() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.Closed.name()))) {
+                        } else if (ticket.isRisk() && (!stage.equals(Open.name()) && !stage.equals(Closed.name()))) {
                             NotificationUtil.showErrorNotification("Invalid state for risk");
-                        } else if (ticket.isTask() && (!stage.equals(StatusI18nEnum.Open.name()) && !stage.equals(StatusI18nEnum.Closed.name()))) {
+                        } else if (ticket.isTask() && (!stage.equals(Open.name()) && !stage.equals(Closed.name()))) {
                             NotificationUtil.showErrorNotification("Invalid state for task");
                         } else {
                             int newIndex = details.getOverIndex();
