@@ -89,6 +89,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                              @RequestParam("Phone") phone: String,
                              @RequestParam("SubscriptionCustomerUrl") subscriptionCustomerUrl: String): String {
         try {
+            LOG.info("Activate subscription name: $customerFullName email $email")
             val decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(subscriptionReferrer)
             val arr = decryptReferrer.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val sAccountId = Integer.parseInt(arr[0])
@@ -158,6 +159,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                            @RequestParam("SubscriptionReference") subscriptionReference: String,
                            @RequestParam("OrderSubTotalUSD") orderSubTotalUSD: String,
                            @RequestParam("Status") status: String): String {
+        LOG.info("Rebill name $customerFullName email $email status $status")
         val ex = BillingSubscriptionExample()
         ex.createCriteria().andSubreferenceEqualTo(subscriptionReference)
         val billingSubscriptions = subscriptionMapper.selectByExample(ex)

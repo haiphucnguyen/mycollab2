@@ -48,8 +48,8 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
                         @RequestParam(value = "sourceCampaign", required = false) sourceCampaign: String,
                         @RequestParam(value = "test", required = false) test: String,
                         @RequestParam(value = "subscriptionReference", required = false) subscriptionReference: String): String {
+        LOG.info("Generate license email: $email company: $company")
         val now = LocalDateTime()
-
         val proEditionInfo = ProEditionInfo()
         proEditionInfo.internalproductname = internalProductName
         proEditionInfo.email = email
@@ -101,6 +101,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
                                @RequestParam("OrderProductNames") orderProductNames: String,
                                @RequestParam("OrderReferrer") orderReferrer: String,
                                @RequestParam("OrderSubTotalUSD") orderSubTotalUSD: String): String {
+        LOG.info("Complete order name: $customerName email: $customerEmail id: $orderId")
         val ex = ProEditionInfoExample()
         ex.createCriteria().andOrderidEqualTo(orderId)
         val proEditionInfos = proEditionMapper.selectByExample(ex)
@@ -124,6 +125,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
     @RequestMapping(path = ["/register-trial"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded", "Accept=application/json"])
     @CrossOrigin
     fun registerTrial(): String {
+        LOG.info("Process trial request")
         val info = LicenseInfo()
         info.customerId = "0"
         info.licenseType = LicenseType.PRO_TRIAL

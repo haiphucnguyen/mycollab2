@@ -24,7 +24,7 @@ class AccountController(private var billingService: BillingService,
                @RequestParam("password") password: String, @RequestParam("email") email: String,
                @RequestParam("timezone") timezoneId: String, @RequestParam("isEmailVerified") isEmailVerified: Boolean?): String {
         var emailVerifiedMutableVal = isEmailVerified
-        LOG.debug("Register account with subDomain $subDomain, username $email")
+        LOG.info("Register account with subDomain $subDomain, username $email")
         if (emailVerifiedMutableVal == null) {
             emailVerifiedMutableVal = java.lang.Boolean.FALSE
         }

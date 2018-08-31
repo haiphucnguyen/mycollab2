@@ -41,6 +41,7 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
                                @RequestParam("OrderReferrer") orderReferrer: String,
                                @RequestParam("OrderSubTotalUSD") orderSubTotalUSD: String): String {
         try {
+            LOG.info("Callback bankwire name: $customerName email: $customerEmail")
             val decryptReferrer = EnDecryptHelper.decryptTextWithEncodeFriendly(orderReferrer)
             val arr = decryptReferrer.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val subscription = BillingSubscription()

@@ -6,6 +6,7 @@ import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLead
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
 import com.mycollab.ondemand.module.support.service.EmailReferenceService
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
 import org.springframework.core.io.UrlResource
 import org.springframework.http.HttpHeaders
@@ -51,7 +52,12 @@ class DownloadVerifyController(private val communityLeadMapper: CommunityLeadMap
                     .body(res)
 
         } else {
+            LOG.error("Can not find email $email")
             throw ResourceNotFoundException("Can not find email: $email")
         }
+    }
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(DownloadVerifyController::class.java)
     }
 }
