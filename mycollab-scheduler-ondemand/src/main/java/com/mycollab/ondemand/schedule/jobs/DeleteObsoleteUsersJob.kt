@@ -5,6 +5,7 @@ import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -21,7 +22,14 @@ class DeleteObsoleteUsersJob(private val billingAccountMapperExt2: BillingAccoun
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val users = billingAccountMapperExt2.findUsersNotBelongToAnyAccount()
-        users.forEach { userAvatarService.removeAvatar(it.username) }
+        users.forEach {
+            LOG.info("Delete obsolete user ${it.username}")
+            userAvatarService.removeAvatar(it.username)
+        }
         billingAccountMapperExt2.removeUsersNotBelongToAnyAccount()
+    }
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(DeleteObsoleteUsersJob::class.java)
     }
 }

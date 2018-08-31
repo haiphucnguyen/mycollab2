@@ -14,6 +14,7 @@ import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.LocalDateTime
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -49,5 +50,11 @@ class SendingCountUserLoginByDateJob(private val userService: UserService,
                     "Today system-logins count", contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE))
 
         }
+
+        LOG.info("Sending the number of users access the system ${accessedUsers?.size}")
+    }
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(SendingCountUserLoginByDateJob::class.java)
     }
 }

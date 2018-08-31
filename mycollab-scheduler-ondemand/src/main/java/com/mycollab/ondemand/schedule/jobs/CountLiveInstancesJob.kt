@@ -9,6 +9,8 @@ import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * @author MyCollab Ltd
@@ -26,8 +28,13 @@ class CountLiveInstancesJob(private val liveInstanceMapper: LiveInstanceMapper,
         val liveInstances = liveInstanceMapper.selectByExample(ex)
         contentGenerator.putVariable("instances", liveInstances)
         contentGenerator.putVariable("count", liveInstances.size)
+        LOG.info("Send detail ${liveInstances.size} instances to site admin")
         extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.notifyEmail,
                 listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
                 "Today live instances count", contentGenerator.parseFile("mailCountLiveInstances.ftl"))
+    }
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(CountLiveInstancesJob::class.java)
     }
 }

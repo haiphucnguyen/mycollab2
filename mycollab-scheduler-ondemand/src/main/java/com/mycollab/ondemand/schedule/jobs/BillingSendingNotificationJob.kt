@@ -52,6 +52,7 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
 
         val trialAccountsWithOwners = billingService.trialAccountsWithOwners
         trialAccountsWithOwners.forEach {
+            LOG.info("Send the trial account will come to end soon to ${it.accountname}")
             val accountTrialFrom = DateTime(MoreObjects.firstNonNull(it.trialfrom, it.createdtime))
             val accountTrialTo = DateTime(MoreObjects.firstNonNull(it.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL)))
             val durationDays = Duration(now, accountTrialTo).standardDays

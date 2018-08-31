@@ -15,6 +15,7 @@ import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.joda.time.DateTime
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -46,6 +47,7 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
                     contentGenerator.putVariable("unsubscribeUrl",
                             SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"),
                                     it.email))
+                    LOG.info("Send follow up email to sign up user ${it.email}")
                     extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
                             listOf(MailRecipientField(it.email, leadName)),
                             "How are things going with MyCollab?",
@@ -53,5 +55,9 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
                 }
             }
         }
+    }
+
+    companion object {
+        val LOG = LoggerFactory.getLogger(FollowupSignupUserAfterOneWeekJob::class.java)
     }
 }
