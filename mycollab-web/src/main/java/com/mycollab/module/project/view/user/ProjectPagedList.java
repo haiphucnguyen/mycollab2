@@ -135,7 +135,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
-            metaInfo.addComponent(ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO).withWidthUndefined());
+            metaInfo.addComponent(ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO).withUndefinedWidth());
 
             linkIconFix.addComponent(metaInfo);
 

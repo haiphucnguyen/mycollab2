@@ -231,7 +231,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch())
                     .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withWidthUndefined()
+            final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withUndefinedWidth()
                     .withAlign(nameField, Alignment.MIDDLE_LEFT);
             this.setCompositionRoot(basicSearchBody);
         }
@@ -266,9 +266,10 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             MVerticalLayout addMessageWrapper = new MVerticalLayout().withWidth("800px");
 
             Label titleLbl = new Label(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
-            final TextField titleField = new MTextField().withFullWidth().withNullRepresentation("").withRequired(true)
-                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                            UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE)));
+            // TODO
+            final TextField titleField = new MTextField().withFullWidth().withRequiredIndicatorVisible(true);
+//                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                            UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE)));
 
             MHorizontalLayout titleLayout = new MHorizontalLayout(titleLbl, titleField).expand(titleField).withFullWidth();
 

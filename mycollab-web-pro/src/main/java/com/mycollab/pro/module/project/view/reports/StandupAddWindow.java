@@ -16,7 +16,7 @@ import com.mycollab.vaadin.event.IEditFormHandler;
 import com.mycollab.vaadin.ui.*;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -91,7 +91,7 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("whatlastday") || propertyId.equals("whattoday") || propertyId.equals("whatproblem")) {
                 final RichTextArea richText = new RichTextArea();
                 richText.setWidth("100%");

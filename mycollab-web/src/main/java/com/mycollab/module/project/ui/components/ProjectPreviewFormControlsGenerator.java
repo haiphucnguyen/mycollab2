@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,8 +18,8 @@ package com.mycollab.module.project.ui.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -29,7 +29,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -39,6 +38,7 @@ import java.io.Serializable;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO
 public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -131,21 +131,21 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
             layout.with(editButtons);
 
             if (canRead && (buttonEnableFlags & NAVIGATOR_BTN_PRESENTED) == NAVIGATOR_BTN_PRESENTED) {
-                ButtonGroup navigationBtns = new ButtonGroup();
-                MButton previousItem = new MButton("", clickEvent -> {
-                    T item = previewForm.getBean();
-                    previewForm.fireGotoPrevious(item);
-                }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(WebThemes.BUTTON_OPTION)
-                        .withDescription(UserUIContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_PREVIOUS_ITEM));
-                navigationBtns.addButton(previousItem);
-
-                MButton nextItemBtn = new MButton("", clickEvent -> {
-                    T item = previewForm.getBean();
-                    previewForm.fireGotoNextItem(item);
-                }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(WebThemes.BUTTON_OPTION)
-                        .withDescription(UserUIContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
-                navigationBtns.addButton(nextItemBtn);
-                layout.addComponent(navigationBtns);
+//                ButtonGroup navigationBtns = new ButtonGroup();
+//                MButton previousItem = new MButton("", clickEvent -> {
+//                    T item = previewForm.getBean();
+//                    previewForm.fireGotoPrevious(item);
+//                }).withIcon(FontAwesome.CHEVRON_LEFT).withStyleName(WebThemes.BUTTON_OPTION)
+//                        .withDescription(UserUIContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_PREVIOUS_ITEM));
+//                navigationBtns.addButton(previousItem);
+//
+//                MButton nextItemBtn = new MButton("", clickEvent -> {
+//                    T item = previewForm.getBean();
+//                    previewForm.fireGotoNextItem(item);
+//                }).withIcon(FontAwesome.CHEVRON_RIGHT).withStyleName(WebThemes.BUTTON_OPTION)
+//                        .withDescription(UserUIContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
+//                navigationBtns.addButton(nextItemBtn);
+//                layout.addComponent(navigationBtns);
             }
 
             if (popupButtonsControl.getComponentCount() > 0) {

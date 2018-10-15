@@ -31,36 +31,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.tltv.gantt</groupId>
-            <artifactId>gantt-addon</artifactId>
-            <version>0.9.5</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-client</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-sass-compiler</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.vaadin.external.google</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>org.vaadin.alump.distributionbar</groupId>
             <artifactId>dbar-addon</artifactId>
-            <version>2.0.0</version>
+            <version>3.0.1</version>
         </dependency>
     </dependencies>
 </project>

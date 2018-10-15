@@ -8,6 +8,7 @@ import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
+import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -78,13 +79,13 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
     }
 
     @Override
-    protected Component onAttachField(Object propertyId, final Field<?> field) {
+    protected HasValue<?> onAttachField(Object propertyId, final HasValue<?> field) {
         if (propertyId.equals("whatlastday")) {
-            whatYesterdayField.setContentComp(field);
+            whatYesterdayField.setContentComp((Component) field);
         } else if (propertyId.equals("whattoday")) {
-            whatTodayField.setContentComp(field);
+            whatTodayField.setContentComp((Component) field);
         } else if (propertyId.equals("whatproblem")) {
-            whatProblemField.setContentComp(field);
+            whatProblemField.setContentComp((Component) field);
         }
         return field;
     }

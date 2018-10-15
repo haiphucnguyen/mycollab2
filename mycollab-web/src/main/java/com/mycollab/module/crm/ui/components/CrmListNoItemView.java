@@ -32,9 +32,9 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 public abstract class CrmListNoItemView extends AbstractVerticalPageView {
     public CrmListNoItemView() {
-        ELabel image = ELabel.h2(titleIcon().getHtml()).withWidthUndefined();
-        ELabel title = ELabel.h2(titleMessage()).withWidthUndefined();
-        ELabel hintLabel = new ELabel(hintMessage()).withWidthUndefined();
+        ELabel image = ELabel.h2(titleIcon().getHtml()).withUndefinedWidth();
+        ELabel title = ELabel.h2(titleMessage()).withUndefinedWidth();
+        ELabel hintLabel = new ELabel(hintMessage()).withUndefinedWidth();
 
         MButton createItemBtn = new MButton(actionMessage(), actionListener()).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(hasPermission());

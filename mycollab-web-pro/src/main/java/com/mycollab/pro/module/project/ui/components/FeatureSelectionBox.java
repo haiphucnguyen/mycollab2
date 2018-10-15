@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.ui.components;
 
 import com.google.common.base.MoreObjects;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;

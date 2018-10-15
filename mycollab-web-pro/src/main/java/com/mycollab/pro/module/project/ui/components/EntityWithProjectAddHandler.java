@@ -5,9 +5,7 @@ import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
-import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.view.task.TaskAddWindow;
-import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -22,12 +20,11 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
-import java.util.List;
-
 /**
  * @author MyCollab Ltd
  * @since 5.2.1
  */
+// TODO
 public class EntityWithProjectAddHandler {
     private Object entity;
     private Window prjSelectionWindow;
@@ -79,13 +76,13 @@ public class EntityWithProjectAddHandler {
 
     private static class UserInvolvedProjectsSelection extends ComboBox {
         UserInvolvedProjectsSelection() {
-            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-            ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-            List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-            for (SimpleProject project : projects) {
-                this.addItem(project);
-                this.setItemCaption(project, project.getName());
-            }
+//            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//            ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
+//            List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
+//            for (SimpleProject project : projects) {
+//                this.addItem(project);
+//                this.setItemCaption(project, project.getName());
+//            }
         }
     }
 }

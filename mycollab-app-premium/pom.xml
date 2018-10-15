@@ -62,6 +62,7 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
@@ -73,6 +74,7 @@
             <artifactId>mycollab-mobile-premium</artifactId>
             <version>${project.version}</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>com.mycollab</groupId>
@@ -94,21 +96,10 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
+            <artifactId>vaadin-compatibility-client</artifactId>
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

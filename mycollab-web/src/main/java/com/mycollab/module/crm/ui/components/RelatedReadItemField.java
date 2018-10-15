@@ -34,6 +34,7 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 public class RelatedReadItemField extends CustomField {
     private static final long serialVersionUID = 1L;
 
@@ -123,7 +124,12 @@ public class RelatedReadItemField extends CustomField {
     }
 
     @Override
-    public Class<?> getType() {
-        return Object.class;
+    protected void doSetValue(Object o) {
+
+    }
+
+    @Override
+    public Object getValue() {
+        return null;
     }
 }

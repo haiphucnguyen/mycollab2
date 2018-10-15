@@ -5,8 +5,6 @@ import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.SearchField;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -19,21 +17,21 @@ import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.mycollab.module.project.view.time.IInvoiceContainer;
-import com.mycollab.vaadin.reporting.FormReportLayout;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.reporting.FormReportLayout;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -47,6 +45,7 @@ import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
+// TODO
 @ViewComponent
 public class InvoiceContainerImpl extends AbstractVerticalPageView implements IInvoiceContainer {
 
@@ -104,7 +103,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     public void display() {
         removeAllComponents();
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
-            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
+            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withUndefinedWidth();
 
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();
@@ -151,7 +150,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds.buildPropertyParamInList(SearchField.AND,
                 Collections.singletonList(CurrentProjectVariables.getProjectId())));
         int count = invoiceListComp.setSearchCriteria(searchCriteria);
-        statusComboBox.setItemCaption(status, status + " (" + count + ")");
+//        statusComboBox.setItemCaption(status, status + " (" + count + ")");
         if (count > 0) {
             SimpleInvoice invoice = invoiceListComp.getItemAt(0);
             if (invoice != null) {
@@ -183,8 +182,8 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         InvoiceListComp() {
             super(AppContextUtil.getSpringBean(InvoiceService.class), new InvoiceRowDisplayHandler(), Integer.MAX_VALUE);
             setWidth("300px");
-            new Restrain(this).setMinHeight("50px").setMaxHeight((Page.getCurrent()
-                    .getBrowserWindowHeight() - 320) + "px");
+//            new Restrain(this).setMinHeight("50px").setMaxHeight((Page.getCurrent()
+//                    .getBrowserWindowHeight() - 320) + "px");
             addStyleName(WebThemes.BORDER_LIST);
         }
 
@@ -200,7 +199,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             final MVerticalLayout layout = new MVerticalLayout().withStyleName(WebThemes.BORDER_LIST_ROW)
                     .withStyleName(WebThemes.CURSOR_POINTER);
             InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
-            ELabel statusLbl = new ELabel(UserUIContext.getMessage(invoiceStatus)).withWidthUndefined();
+            ELabel statusLbl = new ELabel(UserUIContext.getMessage(invoiceStatus)).withUndefinedWidth();
             if (invoiceStatus == InvoiceStatus.Paid) {
                 statusLbl.withStyleName("invoice", "paid");
             } else if (invoiceStatus == InvoiceStatus.Scheduled) {
@@ -225,7 +224,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     private static class InvoiceStatusComboBox extends I18nValueComboBox {
         InvoiceStatusComboBox() {
             super();
-            this.setNullSelectionAllowed(false);
+//            this.setNullSelectionAllowed(false);
             this.setCaption(null);
             this.loadData(Arrays.asList(InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled));
         }

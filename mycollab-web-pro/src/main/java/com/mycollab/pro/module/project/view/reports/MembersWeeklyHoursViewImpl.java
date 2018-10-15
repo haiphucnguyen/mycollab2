@@ -3,7 +3,6 @@ package com.mycollab.pro.module.project.view.reports;
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -46,6 +45,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.3.0
  */
+// TODO
 @ViewComponent
 public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView implements MembersWeeklyHoursView {
     private MVerticalLayout searchResultLayout;
@@ -72,16 +72,16 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         searchLayout.addComponent(projectsSelection, 1, 0);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebThemes.META_COLOR), 2, 0);
         final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
-        dateFieldExt.setValue(new DateTime().toDate());
+//        dateFieldExt.setValue(new DateTime().toDate());
 
-        searchLayout.addComponent(dateFieldExt, 3, 0);
+//        searchLayout.addComponent(dateFieldExt, 3, 0);
         container.with(searchLayout);
         MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> {
             Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
             if (CollectionUtils.isEmpty(selectedProjects)) {
                 NotificationUtil.showErrorNotification("You must select at least one project");
             } else {
-                buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
+//                buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
             }
         }).withStyleName(WebThemes.BUTTON_ACTION);
         searchLayout.addComponent(searchBtn, 4, 0);

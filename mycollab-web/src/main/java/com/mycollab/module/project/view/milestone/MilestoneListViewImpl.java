@@ -61,6 +61,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 @ViewComponent
 public class MilestoneListViewImpl extends AbstractLazyPageView implements MilestoneListView {
     private static final long serialVersionUID = 1L;
@@ -191,8 +192,8 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
                     .withIcon(FontAwesome.TH).withWidth("100px");
             viewButtons.addButton(kanbanBtn);
         }
-        viewButtons.withDefaultButton(boardBtn);
-        layout.with(viewButtons);
+//        viewButtons.withDefaultButton(boardBtn);
+//        layout.with(viewButtons);
 
         return layout;
     }
@@ -204,7 +205,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         MHorizontalLayout closedHeaderLayout = new MHorizontalLayout();
 
-        closedHeader = ELabel.html("").withWidthUndefined();
+        closedHeader = ELabel.html("").withUndefinedWidth();
         closedHeaderLayout.with(closedHeader).withAlign(closedHeader, Alignment.MIDDLE_CENTER);
 
         bodyContent.addComponent(closedHeaderLayout, "closed-header");
@@ -212,7 +213,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         bodyContent.addComponent(closeContainer, "closed-milestones");
 
         MHorizontalLayout inProgressHeaderLayout = new MHorizontalLayout();
-        inProgressHeader = ELabel.html("").withWidthUndefined();
+        inProgressHeader = ELabel.html("").withUndefinedWidth();
         inProgressHeaderLayout.addComponent(inProgressHeader);
         inProgressHeaderLayout.setComponentAlignment(inProgressHeader, Alignment.MIDDLE_CENTER);
 
@@ -221,7 +222,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         bodyContent.addComponent(this.inProgressContainer, "in-progress-milestones");
 
         MHorizontalLayout futureHeaderLayout = new MHorizontalLayout();
-        futureHeader = ELabel.html("").withWidthUndefined();
+        futureHeader = ELabel.html("").withUndefinedWidth();
         futureHeaderLayout.addComponent(futureHeader);
         futureHeaderLayout.setComponentAlignment(futureHeader, Alignment.MIDDLE_CENTER);
 

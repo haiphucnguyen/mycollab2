@@ -38,6 +38,7 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -199,6 +200,7 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
             return permissionMap;
         }
 
+        // TODO
         private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Role> {
             private static final long serialVersionUID = 1L;
 
@@ -207,13 +209,13 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
             }
 
             @Override
-            protected Field<?> onCreateField(final Object propertyId) {
+            protected HasValue<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("description")) {
                     return new RichTextArea();
                 } else if (propertyId.equals("rolename")) {
-                    return new MTextField().withNullRepresentation("").withRequired(true)
-                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                                    UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+//                    return new MTextField().withRequired(true)
+//                            .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                                    UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
 
                 }
                 return null;

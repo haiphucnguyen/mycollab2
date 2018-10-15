@@ -5,8 +5,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTooltipGenerator;
@@ -34,9 +32,7 @@ import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
 import com.mycollab.pro.module.project.view.assignments.AssignmentSearchPanel;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.AsyncInvoker;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -60,7 +56,6 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -74,6 +69,7 @@ import static com.mycollab.vaadin.web.ui.WebThemes.BUTTON_ACTION;
  * @author MyCollab Ltd
  * @since 5.4.2
  */
+// TODO
 @ViewComponent
 public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMilestoneKanbanView {
     private AssignmentSearchPanel searchPanel;
@@ -118,7 +114,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             @Override
             protected ComponentContainer buildSearchTitle() {
                 return new MHorizontalLayout(ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
-                        " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withWidthUndefined());
+                        " " + UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withUndefinedWidth());
             }
         };
 
@@ -204,10 +200,10 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
         viewButtons.addButton(boardBtn);
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.withDefaultButton(kanbanBtn);
-        MHorizontalLayout groupWrapLayout = new MHorizontalLayout(toggleShowClosedMilestonesBtn, newMilestoneBtn, viewButtons);
-        groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        searchPanel.addHeaderRight(groupWrapLayout);
+//        viewButtons.withDefaultButton(kanbanBtn);
+//        MHorizontalLayout groupWrapLayout = new MHorizontalLayout(toggleShowClosedMilestonesBtn, newMilestoneBtn, viewButtons);
+//        groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+//        searchPanel.addHeaderRight(groupWrapLayout);
 
         ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
@@ -388,7 +384,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                     return new Not(VerticalLocationIs.MIDDLE);
                 }
             });
-            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) + "px");
+//            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) + "px");
             MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth().withStyleName("header");
             if (milestone == null) {
                 header = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).withStyleName(UIConstants.TEXT_ELLIPSIS)
@@ -418,15 +414,16 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                         ColorPickerPopup popup = new ColorPickerPopup(Color.CYAN);
                         popup.center();
                         UI.getCurrent().addWindow(popup);
-                        popup.addColorChangeListener(colorChangeEvent -> {
-                            Color color = colorChangeEvent.getColor();
-                            String colorStr = color.getCSS().substring(1);
-                            MilestoneService optionValService = AppContextUtil.getSpringBean(MilestoneService.class);
-                            milestone.setColor(colorStr);
-                            optionValService.updateWithSession(milestone, UserUIContext.getUsername());
-                            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#"
-                                    + colorStr + "'});");
-                        });
+                        // TODO
+//                        popup.addColorChangeListener(colorChangeEvent -> {
+//                            Color color = colorChangeEvent.getColor();
+//                            String colorStr = color.getCSS().substring(1);
+//                            MilestoneService optionValService = AppContextUtil.getSpringBean(MilestoneService.class);
+//                            milestone.setColor(colorStr);
+//                            optionValService.updateWithSession(milestone, UserUIContext.getUsername());
+//                            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#"
+//                                    + colorStr + "'});");
+//                        });
                         controlsBtn.setPopupVisible(false);
                     }).withIcon(FontAwesome.PENCIL);
                     popupContent.addOption(changeColorBtn);
@@ -510,7 +507,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             }
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
-            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined(),
+            MHorizontalLayout headerLayout = new MHorizontalLayout(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withUndefinedWidth(),
                     toggleTicketSummaryField).expand(toggleTicketSummaryField).withFullWidth();
             this.addComponent(headerLayout);
 

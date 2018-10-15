@@ -27,16 +27,17 @@ import java.util.Locale;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO
 public class CountryComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public CountryComboBox() {
         String[] countryList = CountryValueFactory.countryList;
-        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-        Arrays.stream(countryList).forEach(country -> {
-            Locale obj = new Locale("", country);
-            this.addItem(country);
-            this.setItemCaption(country, obj.getDisplayCountry(UserUIContext.getUserLocale()));
-        });
+//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//        Arrays.stream(countryList).forEach(country -> {
+//            Locale obj = new Locale("", country);
+//            this.addItem(country);
+//            this.setItemCaption(country, obj.getDisplayCountry(UserUIContext.getUserLocale()));
+//        });
     }
 }

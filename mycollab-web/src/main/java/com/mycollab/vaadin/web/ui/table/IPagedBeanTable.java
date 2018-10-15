@@ -22,7 +22,6 @@ import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
 import com.mycollab.vaadin.event.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Table;
 import com.vaadin.util.ReflectTools;
 
 import java.io.Serializable;
@@ -35,6 +34,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO
 public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
 
     int setSearchCriteria(S searchCriteria);
@@ -43,11 +43,11 @@ public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelecta
 
     void addTableListener(TableClickListener listener);
 
-    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
+//    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
 
     List<TableViewField> getDisplayColumns();
 
-    T getBeanByIndex(Object itemId);
+//    T getBeanByIndex(Object itemId);
 
     void refresh();
 

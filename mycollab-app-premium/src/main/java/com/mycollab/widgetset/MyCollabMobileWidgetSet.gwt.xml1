@@ -6,7 +6,7 @@
     <!-- WS Compiler: manually edited -->
     
     <inherits name="com.vaadin.DefaultWidgetSet" />
-
+<!--
     <inherits name="com.vaadin.addon.touchkit.gwt.TouchKitWidgetSet" />
 
     <inherits name="org.vaadin.thomas.slidemenu.SlidemenuWidgetset" />
@@ -18,4 +18,5 @@
     <inherits name="org.vaadin.resetbuttonfortextfield.WidgetSet"/>
 
     <inherits name="org.vaadin.jouni.dom.DomWidgetset"/>
+    -->
 </module>

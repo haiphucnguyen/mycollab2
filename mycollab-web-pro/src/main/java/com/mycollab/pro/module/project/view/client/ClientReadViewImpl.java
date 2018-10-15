@@ -37,7 +37,7 @@ import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -228,7 +228,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
-            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
+            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             this.addComponent(prjInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();

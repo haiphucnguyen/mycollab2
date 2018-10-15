@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,7 +24,6 @@ import com.mycollab.core.DebugException;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.FileUtils;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.ecm.StorageNames;
 import com.mycollab.module.ecm.domain.*;
 import com.mycollab.module.ecm.service.ExternalDriveService;
@@ -39,8 +38,8 @@ import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.addon.webcomponents.FloatingComponent;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.mycollab.vaadin.resources.StreamDownloadResourceUtil;
@@ -204,7 +203,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             selectedResourceControlLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("400px")
                     .withStyleName("margin-top", "margin-left");
 
-            FloatingComponent.floatThis(selectedResourceControlLayout).setContainerId("main-body");
+//            FloatingComponent.floatThis(selectedResourceControlLayout).setContainerId("main-body");
             with(bodyContainer, selectedResourceControlLayout).expand(bodyContainer);
             if (currentFolder instanceof ExternalFolder) {
                 resources = externalResourceService.getResources(((ExternalFolder) currentFolder).getExternalDrive(),

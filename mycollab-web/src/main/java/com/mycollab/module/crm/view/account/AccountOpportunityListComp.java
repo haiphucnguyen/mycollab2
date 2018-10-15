@@ -82,7 +82,7 @@ public class AccountOpportunityListComp extends RelatedListComp2<OpportunityServ
 
         MHorizontalLayout notesWrap = new MHorizontalLayout().withFullWidth();
         ELabel noteLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_NOTE))
-                .withWidthUndefined();
+                .withUndefinedWidth();
         notesWrap.addComponent(noteLbl);
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");

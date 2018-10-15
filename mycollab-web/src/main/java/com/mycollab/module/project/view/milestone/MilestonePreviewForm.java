@@ -51,9 +51,10 @@ import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.ContainerViewField;
+import com.vaadin.data.HasValue;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -79,7 +80,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             SimpleMilestone milestone = attachForm.getBean();
             if (Milestone.Field.startdate.equalTo(propertyId)) {
                 return new DateViewField(milestone.getStartdate());
@@ -192,20 +193,20 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
         public Component generateRow(IBeanList<ProjectTicket> host, ProjectTicket genericTask, int rowIndex) {
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, "margin-bottom");
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(genericTask.getType())).withWidthUndefined());
+            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(genericTask.getType())).withUndefinedWidth());
             String status = "";
             if (genericTask.isMilestone()) {
                 status = UserUIContext.getMessage(MilestoneStatus.class, genericTask.getStatus());
             } else {
                 status = UserUIContext.getMessage(StatusI18nEnum.class, genericTask.getStatus());
             }
-            rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
+            rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withUndefinedWidth());
             String avatarLink = StorageUtils.getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                     .setTitle(genericTask.getAssignUserFullName());
 
             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(genericTask);
-            rowComp.with(ELabel.html(img.write()).withWidthUndefined(), toggleTicketSummaryField).expand(toggleTicketSummaryField);
+            rowComp.with(ELabel.html(img.write()).withUndefinedWidth(), toggleTicketSummaryField).expand(toggleTicketSummaryField);
             return rowComp;
         }
     }

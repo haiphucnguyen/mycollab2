@@ -63,7 +63,7 @@ public class CommentRowDisplayHandler implements IBeanList.RowDisplayHandler<Sim
         ELabel timePostLbl = ELabel.html(UserUIContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 UserUIContext.formatPrettyTime(comment.getCreatedtime())))
                 .withDescription(UserUIContext.formatDateTime(comment.getCreatedtime()))
-                .withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
 
         messageHeader.with(timePostLbl).expand(timePostLbl);
 

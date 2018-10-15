@@ -126,13 +126,13 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
             Label billingPrice = ELabel.html("<span class='billing-price'>$" + plan.getPricing() + "</span>/" + UserUIContext.getMessage(DayI18nEnum.OPT_MONTH))
-                    .withStyleName("billing-price-lbl").withWidthUndefined();
+                    .withStyleName("billing-price-lbl").withUndefinedWidth();
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
-                    "Users").withWidthUndefined();
+                    "Users").withUndefinedWidth();
             String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
-            Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
+            Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withUndefinedWidth();
             Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
-                    "</span>&nbsp;Projects").withWidthUndefined();
+                    "</span>&nbsp;Projects").withUndefinedWidth();
 
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isNotActive()) {
@@ -183,13 +183,13 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
             Label billingPrice = ELabel.html("<span class='billing-price'>$" + Math.round(plan.getPricing() * 10) + "</span>/" +
-                    UserUIContext.getMessage(DayI18nEnum.OPT_YEAR)).withStyleName("billing-price-lbl").withWidthUndefined();
+                    UserUIContext.getMessage(DayI18nEnum.OPT_YEAR)).withStyleName("billing-price-lbl").withUndefinedWidth();
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
-                    "Users").withWidthUndefined();
+                    "Users").withUndefinedWidth();
             String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
-            Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
+            Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withUndefinedWidth();
             Label billingProject = ELabel.html("<span class='billing-project'>" + plan.getNumprojects() +
-                    "</span>&nbsp;Projects").withWidthUndefined();
+                    "</span>&nbsp;Projects").withUndefinedWidth();
 
             if (currentBillingPlan.getId().equals(plan.getId())) {
                 if (billingAccount.isNotActive()) {

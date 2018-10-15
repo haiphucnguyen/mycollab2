@@ -10,32 +10,27 @@ import com.mycollab.ondemand.module.billing.domain.SimpleBillingSubscription;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.ui.field.EmailViewField;
+import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.data.sort.SortOrder;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.BrowserWindowOpener;
-import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.renderers.DateRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author MyCollab Ltd
  * @since 5.3.5
  */
+// TODO
 @ViewComponent
 public class BillingHistoryViewImpl extends AbstractLazyPageView implements BillingHistoryView {
     public BillingHistoryViewImpl() {
@@ -87,24 +82,24 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
             ex.setOrderByClause("expiredDate DESC");
             List<BillingSubscriptionHistory> billingSubscriptionHistories = billingSubscriptionHistoryMapper.selectByExample(ex);
             with(new MHorizontalLayout(ELabel.h3("History")).withMargin(new MarginInfo(true, false, true, false)));
-            BeanItemContainer<BillingSubscriptionHistory> container = new BeanItemContainer<>(BillingSubscriptionHistory.class, billingSubscriptionHistories);
-            Grid grid = new Grid(container);
-            grid.setWidth("100%");
-            grid.setColumnOrder("productname", "orderid", "status", "expireddate", "totalprice", "createdtime");
-            grid.getColumn("productname").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_NAME));
-            grid.getColumn("orderid").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_ORDER));
-            grid.getColumn("status").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS));
-            grid.getColumn("expireddate").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_EXPIRED_DATE));
-            grid.getColumn("expireddate").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", UserUIContext.getUserLocale()));
-            grid.getColumn("totalprice").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_PRICE_IN_USD));
-            grid.getColumn("createdtime").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
-            grid.getColumn("createdtime").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", UserUIContext.getUserLocale()));
-            grid.removeColumn("id");
-            grid.removeColumn("selected");
-            grid.removeColumn("subscriptionid");
-            grid.removeColumn("extraData");
-            grid.setSortOrder(Arrays.asList(new SortOrder("expireddate", SortDirection.DESCENDING), new SortOrder("createdtime", SortDirection.DESCENDING)));
-            with(grid);
+//            BeanItemContainer<BillingSubscriptionHistory> container = new BeanItemContainer<>(BillingSubscriptionHistory.class, billingSubscriptionHistories);
+//            Grid grid = new Grid(container);
+//            grid.setWidth("100%");
+//            grid.setColumnOrder("productname", "orderid", "status", "expireddate", "totalprice", "createdtime");
+//            grid.getColumn("productname").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_NAME));
+//            grid.getColumn("orderid").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_ORDER));
+//            grid.getColumn("status").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS));
+//            grid.getColumn("expireddate").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_EXPIRED_DATE));
+//            grid.getColumn("expireddate").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", UserUIContext.getUserLocale()));
+//            grid.getColumn("totalprice").setHeaderCaption(UserUIContext.getMessage(BillingI18nEnum.OPT_PRICE_IN_USD));
+//            grid.getColumn("createdtime").setHeaderCaption(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
+//            grid.getColumn("createdtime").setRenderer(new DateRenderer("%1$tB %1$te, %1$tY", UserUIContext.getUserLocale()));
+//            grid.removeColumn("id");
+//            grid.removeColumn("selected");
+//            grid.removeColumn("subscriptionid");
+//            grid.removeColumn("extraData");
+//            grid.setSortOrder(Arrays.asList(new SortOrder("expireddate", SortDirection.DESCENDING), new SortOrder("createdtime", SortDirection.DESCENDING)));
+//            with(grid);
         } else {
             with(new Label("Trial"));
         }

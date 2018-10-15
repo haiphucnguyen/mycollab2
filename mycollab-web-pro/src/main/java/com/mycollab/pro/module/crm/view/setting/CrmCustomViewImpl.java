@@ -28,7 +28,7 @@ import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -41,6 +41,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 @ViewComponent
 public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmCustomView {
     private static final long serialVersionUID = 1L;
@@ -118,7 +119,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         this.moduleName = moduleName;
         headerLbl.setValue(FontAwesome.MAGIC.getHtml() + " " + moduleName + ": Edit Page Layout (Beta)");
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
-        moduleComboBox.select(moduleName);
+//        moduleComboBox.select(moduleName);
         layoutComp.displayLayoutCustom(getDynaForm(moduleName));
     }
 

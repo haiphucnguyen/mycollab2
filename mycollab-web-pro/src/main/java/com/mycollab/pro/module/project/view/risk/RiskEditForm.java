@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
@@ -9,19 +8,21 @@ import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
+import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
-import org.vaadin.jouni.restrain.Restrain;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -29,6 +30,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
+// TODO
 public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
     @Override
     public void setBean(final SimpleRisk item) {
@@ -50,7 +52,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
-            new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
+//            new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
             layout.addComponent(gridLayout);
             layout.setExpandRatio(gridLayout, 1.0f);
 
@@ -85,7 +87,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
         }
 
         @Override
-        protected Component onAttachField(Object propertyId, Field<?> field) {
+        protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
             return formLayoutFactory.attachField(propertyId, field);
         }
     }

@@ -48,6 +48,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
+// TODO
 public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, ActivitySearchCriteria, SimpleActivity> {
     private static final long serialVersionUID = 1L;
 
@@ -60,45 +61,45 @@ public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, Ac
     public ActivityTableDisplay(TableViewField requireColumn, List<TableViewField> displayColumns) {
         super(AppContextUtil.getSpringBean(EventService.class), SimpleActivity.class, requireColumn, displayColumns);
 
-        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-            final SimpleActivity simpleEvent = getBeanByIndex(itemId);
-            final CheckBoxDecor cb = new CheckBoxDecor("", simpleEvent.isSelected());
-            cb.setImmediate(true);
-            cb.addValueChangeListener(valueChangeEvent -> fireSelectItemEvent(simpleEvent));
-            simpleEvent.setExtraData(cb);
-            return cb;
-        });
-
-        this.addGeneratedColumn("startDate", (source, itemId, columnId) -> {
-            SimpleActivity event = getBeanByIndex(itemId);
-            return new ELabel(UserUIContext.formatPrettyTime(event.getStartDate()))
-                    .withDescription(UserUIContext.formatDateTime(event.getStartDate()));
-        });
-
-        this.addGeneratedColumn("endDate", (source, itemId, columnId) -> {
-            SimpleActivity event = getBeanByIndex(itemId);
-            return new ELabel(UserUIContext.formatPrettyTime(event.getEndDate())).withDescription(UserUIContext.formatDateTime(event.getEndDate()));
-        });
-
-        this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
-            SimpleActivity simpleEvent = getBeanByIndex(itemId);
-
-            FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
-            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
-                    simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
-
-            if (simpleEvent.isCompleted()) {
-                b.addStyleName(WebThemes.LINK_COMPLETED);
-            } else if (simpleEvent.isOverdue()) {
-                b.addStyleName(WebThemes.LINK_OVERDUE);
-            }
-            return b;
-        });
-
-        this.addGeneratedColumn("status", (source, itemId, columnId) -> {
-            SimpleActivity simpleEvent = getBeanByIndex(itemId);
-            return new Label(UserUIContext.getMessage(OptionI18nEnum.CallStatus.class, simpleEvent.getStatus()));
-        });
+//        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+//            final SimpleActivity simpleEvent = getBeanByIndex(itemId);
+//            final CheckBoxDecor cb = new CheckBoxDecor("", simpleEvent.isSelected());
+//            cb.setImmediate(true);
+//            cb.addValueChangeListener(valueChangeEvent -> fireSelectItemEvent(simpleEvent));
+//            simpleEvent.setExtraData(cb);
+//            return cb;
+//        });
+//
+//        this.addGeneratedColumn("startDate", (source, itemId, columnId) -> {
+//            SimpleActivity event = getBeanByIndex(itemId);
+//            return new ELabel(UserUIContext.formatPrettyTime(event.getStartDate()))
+//                    .withDescription(UserUIContext.formatDateTime(event.getStartDate()));
+//        });
+//
+//        this.addGeneratedColumn("endDate", (source, itemId, columnId) -> {
+//            SimpleActivity event = getBeanByIndex(itemId);
+//            return new ELabel(UserUIContext.formatPrettyTime(event.getEndDate())).withDescription(UserUIContext.formatDateTime(event.getEndDate()));
+//        });
+//
+//        this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
+//            SimpleActivity simpleEvent = getBeanByIndex(itemId);
+//
+//            FontAwesome iconLink = CrmAssetsManager.getAsset(simpleEvent.getEventType());
+//            ELabel b = ELabel.html(iconLink.getHtml() + " " + simpleEvent.getSubject(), CrmLinkBuilder.generateActivityPreviewLinkFull(
+//                    simpleEvent.getEventType(), simpleEvent.getId())).withDescription(generateToolTip(simpleEvent));
+//
+//            if (simpleEvent.isCompleted()) {
+//                b.addStyleName(WebThemes.LINK_COMPLETED);
+//            } else if (simpleEvent.isOverdue()) {
+//                b.addStyleName(WebThemes.LINK_OVERDUE);
+//            }
+//            return b;
+//        });
+//
+//        this.addGeneratedColumn("status", (source, itemId, columnId) -> {
+//            SimpleActivity simpleEvent = getBeanByIndex(itemId);
+//            return new Label(UserUIContext.getMessage(OptionI18nEnum.CallStatus.class, simpleEvent.getStatus()));
+//        });
     }
 
     private static String generateToolTip(SimpleActivity event) {

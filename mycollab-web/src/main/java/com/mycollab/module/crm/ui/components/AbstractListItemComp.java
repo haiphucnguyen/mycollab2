@@ -32,7 +32,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -40,6 +39,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends AbstractVerticalPageView implements IListView<S, B> {
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
     private SelectionOptionButton selectOptionButton;
     private DefaultMassItemActionHandlerContainer tableActionControls;
-    private ButtonGroup extraControlsLayout;
+//    private ButtonGroup extraControlsLayout;
 
     public AbstractListItemComp() {
         this.withMargin(new MarginInfo(false, true, true, true));
@@ -76,11 +76,11 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
         MHorizontalLayout leftContainer = new MHorizontalLayout(selectOptionButton, tableActionControls, selectedItemsNumberLabel);
         leftContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        extraControlsLayout = new ButtonGroup();
+//        extraControlsLayout = new ButtonGroup();
         buildExtraControls();
 
-        viewControlsLayout.with(leftContainer, extraControlsLayout).withAlign(leftContainer, Alignment.MIDDLE_LEFT)
-                .withAlign(extraControlsLayout, Alignment.MIDDLE_RIGHT);
+//        viewControlsLayout.with(leftContainer, extraControlsLayout).withAlign(leftContainer, Alignment.MIDDLE_LEFT)
+//                .withAlign(extraControlsLayout, Alignment.MIDDLE_RIGHT);
         return viewControlsLayout;
     }
 
@@ -98,7 +98,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
     }
 
     public void addExtraButton(Button component) {
-        extraControlsLayout.addButton(component);
+//        extraControlsLayout.addButton(component);
     }
 
     @Override

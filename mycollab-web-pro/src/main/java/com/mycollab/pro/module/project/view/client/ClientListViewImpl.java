@@ -29,7 +29,7 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
@@ -73,7 +73,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
     }
 
     private Component generateClientBlock(final SimpleAccount client) {
-        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px").withHeightUndefined()
+        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px").withUndefinedHeight()
                 .withMargin(false).withSpacing(false);
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))

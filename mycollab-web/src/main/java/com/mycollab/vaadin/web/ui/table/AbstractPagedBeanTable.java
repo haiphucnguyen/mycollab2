@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,20 +28,16 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
-import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Table.ColumnGenerator;
-import com.vaadin.ui.themes.ValoTheme;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static com.mycollab.vaadin.web.ui.WebThemes.SCROLLABLE_CONTAINER;
 
@@ -68,7 +64,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     private int currentViewCount;
     protected int totalCount;
 
-    protected Table tableItem;
+    //    protected Table tableItem;
     private HorizontalLayout controlBarWrapper;
 
     private Set<SelectableItemHandler<B>> selectableHandlers;
@@ -80,7 +76,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     private List<TableViewField> displayColumns;
     private List<TableViewField> defaultSelectedColumns;
 
-    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
+//    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
 
     public AbstractPagedBeanTable(Class<B> type, List<TableViewField> displayColumns) {
         this(type, null, displayColumns);
@@ -122,32 +118,32 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     }
 
     private void displayTableColumns() {
-        Set<String> visibleColumnsCol = new LinkedHashSet<>();
-        Set<String> columnHeadersCol = new LinkedHashSet<>();
-
-        if (requiredColumn != null) {
-            visibleColumnsCol.add(requiredColumn.getField());
-            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
-            tableItem.setColumnWidth(requiredColumn.getField(), requiredColumn.getDefaultWidth());
-        }
-
-        for (int i = 0; i < displayColumns.size(); i++) {
-            TableViewField viewField = displayColumns.get(i);
-            visibleColumnsCol.add(viewField.getField());
-            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
-
-            if (i == 0) {
-                tableItem.setColumnExpandRatio(viewField.getField(), 1.0f);
-            } else {
-                tableItem.setColumnWidth(viewField.getField(), viewField.getDefaultWidth());
-            }
-        }
-
-        String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
-        String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
-
-        tableItem.setVisibleColumns(visibleColumns);
-        tableItem.setColumnHeaders(columnHeaders);
+//        Set<String> visibleColumnsCol = new LinkedHashSet<>();
+//        Set<String> columnHeadersCol = new LinkedHashSet<>();
+//
+//        if (requiredColumn != null) {
+//            visibleColumnsCol.add(requiredColumn.getField());
+//            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
+//            tableItem.setColumnWidth(requiredColumn.getField(), requiredColumn.getDefaultWidth());
+//        }
+//
+//        for (int i = 0; i < displayColumns.size(); i++) {
+//            TableViewField viewField = displayColumns.get(i);
+//            visibleColumnsCol.add(viewField.getField());
+//            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
+//
+//            if (i == 0) {
+//                tableItem.setColumnExpandRatio(viewField.getField(), 1.0f);
+//            } else {
+//                tableItem.setColumnWidth(viewField.getField(), viewField.getDefaultWidth());
+//            }
+//        }
+//
+//        String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
+//        String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
+//
+//        tableItem.setVisibleColumns(visibleColumns);
+//        tableItem.setColumnHeaders(columnHeaders);
     }
 
     @Override
@@ -198,10 +194,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         fireEvent(event);
     }
 
-    @Override
-    public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
-        this.columnGenerators.put(id, generatedColumn);
-    }
+//    @Override
+//    public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
+//        this.columnGenerators.put(id, generatedColumn);
+//    }
 
     @Override
     public int setSearchCriteria(final S searchCriteria) {
@@ -214,12 +210,12 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         this.displayNumItems = displayNumItems;
     }
 
-    @Override
-    public B getBeanByIndex(final Object itemId) {
-        final Container container = tableItem.getContainerDataSource();
-        final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
-        return item == null ? null : item.getBean();
-    }
+//    @Override
+//    public B getBeanByIndex(final Object itemId) {
+//        final Container container = tableItem.getContainerDataSource();
+//        final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
+//        return item == null ? null : item.getBean();
+//    }
 
     @Override
     public void refresh() {
@@ -336,69 +332,69 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     }
 
     private void createTable() {
-        tableItem = new Table();
-        tableItem.setWidth("100%");
-        tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-        tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
-        tableItem.setSortEnabled(false);
-
-        // set column generator
-        for (Map.Entry<Object, ColumnGenerator> entry : columnGenerators.entrySet()) {
-            tableItem.addGeneratedColumn(entry.getKey(), entry.getValue());
-        }
-
-        if (StringUtils.isNotBlank((String) sortColumnId)) {
-            tableItem.setColumnIcon(sortColumnId, isAscending ? FontAwesome.CARET_DOWN : FontAwesome.CARET_UP);
-        }
-
-        tableItem.addHeaderClickListener(headerClickEvent -> {
-            String propertyId = (String) headerClickEvent.getPropertyId();
-
-            if (propertyId.equals("selected")) {
-                return;
-            }
-
-            if (searchRequest != null) {
-                S searchCriteria = searchRequest.getSearchCriteria();
-                if (sortColumnId == null) {
-                    sortColumnId = propertyId;
-                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-                    isAscending = false;
-                } else if (propertyId.equals(sortColumnId)) {
-                    isAscending = !isAscending;
-                    String direction = (isAscending) ? SearchCriteria.ASC : SearchCriteria.DESC;
-                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, direction)));
-                } else {
-                    sortColumnId = propertyId;
-                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-                    isAscending = false;
-                }
-
-                setSearchCriteria(searchCriteria);
-            }
-        });
-
-        BeanItemContainer<B> container = new BeanItemContainer<>(type, currentListData);
-        tableItem.setPageLength(0);
-        tableItem.setContainerDataSource(container);
-        displayTableColumns();
-
-        if (this.getComponentCount() > 0) {
-            final Component component0 = this.getComponent(0);
-            if (component0 instanceof Table) {
-                this.replaceComponent(component0, tableItem);
-            } else {
-                this.addComponent(tableItem, 0);
-            }
-        } else {
-            this.addComponent(tableItem, 0);
-        }
-        this.setExpandRatio(tableItem, 1);
+//        tableItem = new Table();
+//        tableItem.setWidth("100%");
+//        tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
+//        tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
+//        tableItem.setSortEnabled(false);
+//
+//        // set column generator
+//        for (Map.Entry<Object, ColumnGenerator> entry : columnGenerators.entrySet()) {
+//            tableItem.addGeneratedColumn(entry.getKey(), entry.getValue());
+//        }
+//
+//        if (StringUtils.isNotBlank((String) sortColumnId)) {
+//            tableItem.setColumnIcon(sortColumnId, isAscending ? FontAwesome.CARET_DOWN : FontAwesome.CARET_UP);
+//        }
+//
+//        tableItem.addHeaderClickListener(headerClickEvent -> {
+//            String propertyId = (String) headerClickEvent.getPropertyId();
+//
+//            if (propertyId.equals("selected")) {
+//                return;
+//            }
+//
+//            if (searchRequest != null) {
+//                S searchCriteria = searchRequest.getSearchCriteria();
+//                if (sortColumnId == null) {
+//                    sortColumnId = propertyId;
+//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
+//                    isAscending = false;
+//                } else if (propertyId.equals(sortColumnId)) {
+//                    isAscending = !isAscending;
+//                    String direction = (isAscending) ? SearchCriteria.ASC : SearchCriteria.DESC;
+//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, direction)));
+//                } else {
+//                    sortColumnId = propertyId;
+//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
+//                    isAscending = false;
+//                }
+//
+//                setSearchCriteria(searchCriteria);
+//            }
+//        });
+//
+//        BeanItemContainer<B> container = new BeanItemContainer<>(type, currentListData);
+//        tableItem.setPageLength(0);
+//        tableItem.setContainerDataSource(container);
+//        displayTableColumns();
+//
+//        if (this.getComponentCount() > 0) {
+//            final Component component0 = this.getComponent(0);
+//            if (component0 instanceof Table) {
+//                this.replaceComponent(component0, tableItem);
+//            } else {
+//                this.addComponent(tableItem, 0);
+//            }
+//        } else {
+//            this.addComponent(tableItem, 0);
+//        }
+//        this.setExpandRatio(tableItem, 1);
     }
 
-    public Table getTable() {
-        return tableItem;
-    }
+//    public Table getTable() {
+//        return tableItem;
+//    }
 
     public List<TableViewField> getDefaultSelectedColumns() {
         return defaultSelectedColumns;
@@ -409,7 +405,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         return displayColumns;
     }
 
-    public Object[] getVisibleColumns() {
-        return tableItem.getVisibleColumns();
-    }
+//    public Object[] getVisibleColumns() {
+//        return tableItem.getVisibleColumns();
+//    }
 }

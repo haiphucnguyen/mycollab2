@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -43,8 +43,8 @@ import com.mycollab.vaadin.web.ui.SortButton;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -60,6 +60,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
+// TODO
 @ViewComponent
 public class PageListViewImpl extends AbstractVerticalPageView implements PageListView {
     private static final long serialVersionUID = 1L;
@@ -117,7 +118,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         headerLayout.with(sortLbl).withAlign(sortLbl, Alignment.MIDDLE_RIGHT);
 
         ToggleButtonGroup sortGroup = new ToggleButtonGroup();
-        headerLayout.with(sortGroup).withAlign(sortGroup, Alignment.MIDDLE_RIGHT);
+//        headerLayout.with(sortGroup).withAlign(sortGroup, Alignment.MIDDLE_RIGHT);
 
         SortButton sortDateBtn = new SortButton(UserUIContext.getMessage(PageI18nEnum.OPT_SORT_BY_DATE), clickEvent -> {
             dateSourceAscend = !dateSourceAscend;
@@ -151,7 +152,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
             displayPages(resources);
         });
         sortGroup.addButton(sortKindBtn);
-        sortGroup.withDefaultButton(sortDateBtn);
+//        sortGroup.withDefaultButton(sortDateBtn);
 
         MButton newGroupBtn = new MButton(UserUIContext.getMessage(PageI18nEnum.NEW_GROUP),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow()))

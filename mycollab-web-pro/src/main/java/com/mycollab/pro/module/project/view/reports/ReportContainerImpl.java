@@ -46,7 +46,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         standupConsole.addComponent(ELabel.fontIcon(FontAwesome.LEGAL).withStyleName("icon-38px"));
         A standupReportLink = new A(ProjectLinkGenerator.generateStandupDashboardLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
-        standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
+        standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withUndefinedWidth());
         standupConsole.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
         content.addComponent(standupConsole);
 
@@ -55,7 +55,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         hoursWeeklyReport.addComponent(ELabel.fontIcon(FontAwesome.BALANCE_SCALE).withStyleName("icon-38px"));
         A hoursWeeklyReportLink = new A(ProjectLinkGenerator.generateHoursWeeklyReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
-        hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withWidthUndefined());
+        hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withUndefinedWidth());
         hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
                 .withFullWidth());
         content.addComponent(hoursWeeklyReport);
@@ -65,7 +65,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         userWorkloadReport.addComponent(ELabel.fontIcon(FontAwesome.BAR_CHART).withStyleName("icon-38px"));
         A userWorkloadReportLink = new A(ProjectLinkGenerator.generateUsersWorkloadReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
-        userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withWidthUndefined());
+        userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withUndefinedWidth());
         userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
 //        content.addComponent(userWorkloadReport);
 
@@ -74,7 +74,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         timesheetReport.addComponent(ELabel.fontIcon(FontAwesome.CLOCK_O).withStyleName("icon-38px"));
         A timesheetReportLink = new A(ProjectLinkGenerator.generateTimesheetReportLink())
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
-        timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withWidthUndefined());
+        timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withUndefinedWidth());
         timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
                 .withFullWidth());
         content.addComponent(timesheetReport);

@@ -82,14 +82,14 @@ public class OpportunityContactListComp extends RelatedListComp2<ContactOpportun
         MHorizontalLayout controlsBtnWrap = new MHorizontalLayout().withSpacing(false).withFullWidth();
 
         MHorizontalLayout notesWrap = new MHorizontalLayout(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_NOTE))
-                .withWidthUndefined()).withFullWidth();
+                .withUndefinedWidth()).withFullWidth();
 
         CssLayout noteBlock = new CssLayout();
         noteBlock.setWidth("100%");
         noteBlock.setStyleName("list-note-block");
         for (OptionI18nEnum.OpportunityContactRole role : CrmDataTypeFactory.opportunityContactRoleList) {
             ELabel note = new ELabel(UserUIContext.getMessage(role)).withStyleName("note-label", colormap.get(role.name()))
-                    .withWidthUndefined().withHeightUndefined();
+                    .withUndefinedWidth().withUndefinedHeight();
             noteBlock.addComponent(note);
         }
         notesWrap.with(noteBlock).expand(noteBlock);

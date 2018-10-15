@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -53,7 +53,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -66,6 +65,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
+// TODO
 @ViewComponent
 public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements PageReadView {
     private static final long serialVersionUID = 1L;
@@ -213,7 +213,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             if (pageVersions.size() > 0) {
                 final ComboBox pageSelection = new ComboBox();
                 content.addComponent(pageSelection);
-                pageSelection.setNullSelectionAllowed(false);
+//                pageSelection.setNullSelectionAllowed(false);
                 pageSelection.setTextInputAllowed(false);
 
                 pageSelection.addValueChangeListener(valueChangeEvent -> {
@@ -226,13 +226,13 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                     }
                 });
 
-                pageSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-                pageSelection.setNullSelectionAllowed(false);
+//                pageSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+//                pageSelection.setNullSelectionAllowed(false);
 
                 for (int i = 0; i < pageVersions.size(); i++) {
                     PageVersion version = pageVersions.get(i);
-                    pageSelection.addItem(version);
-                    pageSelection.setItemCaption(version, getVersionDisplay(version, i));
+//                    pageSelection.addItem(version);
+//                    pageSelection.setItemCaption(version, getVersionDisplay(version, i));
                 }
 
                 if (pageVersions.size() > 0) {

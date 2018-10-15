@@ -96,18 +96,18 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
             with(summaryLayout);
             ELabel totalHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
-                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             ELabel totalBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
-                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             ELabel totalNonBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE,
-                    nonBillableHours)).withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    nonBillableHours)).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
                     totalNonBillableHoursLbl).withMargin(false);
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);
 
             MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_COST))
-                            .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
-                    ELabel.hr(), new ELabel(cost + "").withWidthUndefined()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
+                            .withStyleName(ValoTheme.LABEL_COLORED).withUndefinedWidth(),
+                    ELabel.hr(), new ELabel(cost + "").withUndefinedWidth()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
             summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);
         }
     }

@@ -21,7 +21,7 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -54,11 +54,11 @@ public class ELabel extends Label {
         return this;
     }
 
-    public ELabel withWidthUndefined() {
+    public ELabel withUndefinedWidth() {
         return withWidth("-1px");
     }
 
-    public ELabel withHeightUndefined() {
+    public ELabel withUndefinedHeight() {
         return withHeight("-1px");
     }
 
@@ -125,11 +125,11 @@ public class ELabel extends Label {
     }
 
     public static ELabel fontIcon(FontAwesome icon) {
-        return ELabel.html(icon.getHtml()).withWidthUndefined();
+        return ELabel.html(icon.getHtml()).withUndefinedWidth();
     }
 
     public static ELabel EMPTY_SPACE() {
-        return ELabel.html("&nbsp;").withWidthUndefined();
+        return ELabel.html("&nbsp;").withUndefinedWidth();
     }
 
     public static ELabel hr() {

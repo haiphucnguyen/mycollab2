@@ -45,13 +45,13 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, UserUIContext.formatDate
-                        (licenseInfo.getExpireDate()))).withStyleName(WebThemes.LABEL_OVERDUE).withWidthUndefined());
+                        (licenseInfo.getExpireDate()))).withStyleName(WebThemes.LABEL_OVERDUE).withUndefinedWidth());
             } else if (licenseInfo.isTrial()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
-                        .withWidthUndefined());
+                        .withUndefinedWidth());
             } else {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
-                        .withWidthUndefined());
+                        .withUndefinedWidth());
             }
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
             layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), UserUIContext.getMessage
@@ -75,7 +75,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
                         new MHorizontalLayout(checkoutBtn, licenseBtn).alignAll(Alignment.MIDDLE_CENTER));
             }
         } catch (Exception e) {
-            bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
+            bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withUndefinedWidth());
         }
     }
 }

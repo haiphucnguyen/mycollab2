@@ -5,8 +5,6 @@ import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.*;
-import com.mycollab.db.query.ConstantValueInjector;
-import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -41,7 +39,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -49,12 +46,12 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.*;
-import java.util.Calendar;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
  */
+// TODO
 @ViewComponent
 public class TimeTrackingViewImpl extends AbstractVerticalPageView implements TimeTrackingView {
     private static final long serialVersionUID = 1L;
@@ -79,9 +76,9 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
     private void initListSelectStyle(ListSelect listSelect) {
         listSelect.setWidth("300px");
-        listSelect.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-        listSelect.setNullSelectionAllowed(false);
-        listSelect.setMultiSelect(true);
+//        listSelect.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
+//        listSelect.setNullSelectionAllowed(false);
+//        listSelect.setMultiSelect(true);
         listSelect.setRows(4);
     }
 
@@ -162,14 +159,14 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
             fromDateField = new PopupDateFieldExt();
-            fromDateField.setResolution(Resolution.DAY);
+//            fromDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(fromDateField, 1, 0);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new PopupDateFieldExt();
-            toDateField.setResolution(Resolution.DAY);
+//            toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
@@ -216,9 +213,9 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
             Calendar date = new GregorianCalendar();
             date.set(java.util.Calendar.DAY_OF_MONTH, 1);
-            fromDateField.setValue(date.getTime());
+//            fromDateField.setValue(date.getTime());
             date.add(java.util.Calendar.DAY_OF_MONTH, date.getActualMaximum(java.util.Calendar.DAY_OF_MONTH));
-            toDateField.setValue(date.getTime());
+//            toDateField.setValue(date.getTime());
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
             searchTimeReporting();
         } else {
@@ -251,10 +248,10 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
-        final Date fromDate = fromDateField.getValue();
-        final Date toDate = toDateField.getValue();
-        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
+//        final Date fromDate = fromDateField.getValue();
+//        final Date toDate = toDateField.getValue();
+//        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+//                ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
 
         Collection<String> selectedUsers = (Collection<String>) userField.getValue();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
@@ -279,8 +276,8 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         searchCriteria.setBillable(null);
         Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-        totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-                fromDate, toDate, totalHour, billableHour, nonBillableHours));
+//        totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+//                fromDate, toDate, totalHour, billableHour, nonBillableHours));
 
         timeTrackingWrapper.removeAllComponents();
 
@@ -342,10 +339,10 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         private static final long serialVersionUID = 1L;
 
         UserInvolvedProjectsListSelect() {
-            for (SimpleProject project : projects) {
-                this.addItem(project.getId());
-                this.setItemCaption(project.getId(), project.getName());
-            }
+//            for (SimpleProject project : projects) {
+//                this.addItem(project.getId());
+//                this.setItemCaption(project.getId(), project.getName());
+//            }
         }
 
     }
@@ -358,10 +355,10 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
             users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppUI.getAccountId());
 
-            for (SimpleUser user : users) {
-                this.addItem(user.getUsername());
-                this.setItemCaption(user.getUsername(), user.getDisplayName());
-            }
+//            for (SimpleUser user : users) {
+//                this.addItem(user.getUsername());
+//                this.setItemCaption(user.getUsername(), user.getDisplayName());
+//            }
         }
 
         List<String> getUsernames() {

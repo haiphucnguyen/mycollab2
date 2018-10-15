@@ -84,14 +84,14 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
         MHorizontalLayout controlsBtnWrap = new MHorizontalLayout().withFullWidth();
 
         MHorizontalLayout notesWrap = new MHorizontalLayout().withFullWidth();
-        ELabel noteLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_NOTE)).withWidthUndefined()
+        ELabel noteLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_NOTE)).withUndefinedWidth()
                 .withStyleName("list-note-lbl");
         notesWrap.addComponent(noteLbl);
 
         MCssLayout noteBlock = new MCssLayout().withFullWidth().withStyleName("list-note-block");
         for (CaseStatus status : CrmDataTypeFactory.casesStatusList) {
             ELabel note = new ELabel(UserUIContext.getMessage(status)).withStyleName("note-label", colorsMap.get(status
-                    .name())).withWidthUndefined();
+                    .name())).withUndefinedWidth();
             noteBlock.addComponent(note);
         }
         notesWrap.with(noteBlock).expand(noteBlock);

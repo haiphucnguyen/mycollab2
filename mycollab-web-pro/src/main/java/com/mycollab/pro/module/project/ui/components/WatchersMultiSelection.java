@@ -18,7 +18,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -30,6 +29,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
+// TODO
 public class WatchersMultiSelection extends MVerticalLayout {
     private List<SimpleProjectMember> unsavedMembers = new ArrayList<>();
     private List<SimpleUser> followers;
@@ -44,7 +44,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
         this.canModified = canModified;
         monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
         followers = monitorItemService.getWatchers(type, typeId);
-        new Restrain(this).setMaxHeight("600px");
+//        new Restrain(this).setMaxHeight("600px");
         this.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

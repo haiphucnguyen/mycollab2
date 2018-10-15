@@ -34,10 +34,10 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public abstract class ProjectListNoItemView extends VerticalLayout {
     public ProjectListNoItemView() {
         MVerticalLayout content = new MVerticalLayout().withWidth("700px");
-        ELabel image = ELabel.h2(viewIcon().getHtml()).withWidthUndefined();
+        ELabel image = ELabel.h2(viewIcon().getHtml()).withUndefinedWidth();
 
-        ELabel title = ELabel.h2(viewTitle()).withWidthUndefined();
-        ELabel body = ELabel.html(viewHint()).withStyleName(UIConstants.LABEL_WORD_WRAP).withWidthUndefined();
+        ELabel title = ELabel.h2(viewTitle()).withUndefinedWidth();
+        ELabel body = ELabel.html(viewHint()).withStyleName(UIConstants.LABEL_WORD_WRAP).withUndefinedWidth();
         MHorizontalLayout links = createControlButtons();
         content.with(image, title, body, links).alignAll(Alignment.TOP_CENTER);
         this.addComponent(content);

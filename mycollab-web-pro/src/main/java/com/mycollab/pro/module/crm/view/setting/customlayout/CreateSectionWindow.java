@@ -16,6 +16,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 public class CreateSectionWindow extends Window {
     private static final long serialVersionUID = 1L;
 
@@ -66,14 +67,14 @@ public class CreateSectionWindow extends Window {
         private static final long serialVersionUID = 1L;
 
         SectionLayoutComboBox() {
-            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-            this.setNullSelectionAllowed(false);
-            this.addItem(LayoutType.ONE_COLUMN);
-            this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");
-
-            this.addItem(LayoutType.TWO_COLUMN);
-            this.setItemCaption(LayoutType.TWO_COLUMN, "Two Columns");
-            this.select(LayoutType.ONE_COLUMN);
+//            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+//            this.setNullSelectionAllowed(false);
+//            this.addItem(LayoutType.ONE_COLUMN);
+//            this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");
+//
+//            this.addItem(LayoutType.TWO_COLUMN);
+//            this.setItemCaption(LayoutType.TWO_COLUMN, "Two Columns");
+//            this.select(LayoutType.ONE_COLUMN);
         }
     }
 

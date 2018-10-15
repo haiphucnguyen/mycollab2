@@ -62,7 +62,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
         header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
-                .withWidthUndefined());
+                .withUndefinedWidth());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
         assignmentList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectGenericItemService.class),

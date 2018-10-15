@@ -92,13 +92,13 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     new A(ProjectLinkGenerator.generateProjectMemberLink(project.getId(), project.getMemlead()))
                             .appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                     .setTitle(project.getLeadFullName());
-            ELabel leadLbl = ELabel.html(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER) + ": " + leadAvatar.write()).withWidthUndefined();
+            ELabel leadLbl = ELabel.html(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER) + ": " + leadAvatar.write()).withUndefinedWidth();
             footer.with(leadLbl);
         }
         if (project.getHomepage() != null) {
             ELabel homepageLbl = ELabel.html(FontAwesome.WECHAT.getHtml() + " " + new A(project.getHomepage())
                     .appendText(project.getHomepage()).setTarget("_blank").write())
-                    .withStyleName(ValoTheme.LABEL_SMALL).withWidthUndefined();
+                    .withStyleName(ValoTheme.LABEL_SMALL).withUndefinedWidth();
             homepageLbl.setDescription(UserUIContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE));
         }
 
@@ -114,7 +114,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             clientDiv.appendChild(new A(ProjectLinkGenerator.generateClientPreviewLink(project.getAccountid()))
                     .appendText(StringUtils.trim(project.getClientName(), 30, true)));
             ELabel accountBtn = ELabel.html(clientDiv.write()).withStyleName(WebThemes.BUTTON_LINK)
-                    .withWidthUndefined();
+                    .withUndefinedWidth();
             footer.addComponents(accountBtn);
         }
 

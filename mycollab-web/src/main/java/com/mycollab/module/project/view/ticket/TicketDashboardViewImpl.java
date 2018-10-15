@@ -77,6 +77,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 @ViewComponent
 public class TicketDashboardViewImpl extends AbstractVerticalPageView implements TicketDashboardView {
     private static final long serialVersionUID = 1L;
@@ -189,8 +190,8 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.withDefaultButton(advanceDisplayBtn);
-        groupWrapLayout.addComponent(viewButtons);
+//        viewButtons.withDefaultButton(advanceDisplayBtn);
+//        groupWrapLayout.addComponent(viewButtons);
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));

@@ -50,7 +50,7 @@ public class NotPresentedView extends AbstractSingleContainerPageView {
         titleIcon.setWidthUndefined();
         bodyLayout.with(titleIcon);
 
-        Label label = ELabel.h2(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION)).withWidthUndefined();
+        Label label = ELabel.h2(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION)).withUndefinedWidth();
         bodyLayout.with(label).withAlign(label, Alignment.MIDDLE_CENTER);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -63,7 +63,7 @@ public class NotPresentedView extends AbstractSingleContainerPageView {
         } catch (Exception e) {
             Div informDiv = new Div().appendText("Can not load the store page. You can check the online edition at ")
                     .appendChild(new A("https://www.mycollab.com/pricing/download/", "_blank").appendText("here"));
-            ELabel webPage = ELabel.html(informDiv.write()).withWidthUndefined();
+            ELabel webPage = ELabel.html(informDiv.write()).withUndefinedWidth();
             bodyLayout.with(new MVerticalLayout(webPage).withAlign(webPage, Alignment.TOP_CENTER));
         }
     }

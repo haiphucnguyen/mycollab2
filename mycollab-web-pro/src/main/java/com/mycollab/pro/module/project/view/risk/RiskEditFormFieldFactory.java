@@ -18,7 +18,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.ui.Field;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -36,16 +36,15 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         Risk risk = attachForm.getBean();
         if (Risk.Field.description.equalTo(propertyId)) {
             final RichTextArea desc = new RichTextArea();
-            desc.setNullRepresentation("");
-            if (isValidateForm) {
-                desc.setRequired(true);
-                desc.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
-            }
+//            if (isValidateForm) {
+//                desc.setRequired(true);
+//                desc.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                        UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
+//            }
             return desc;
         } else if (Risk.Field.createduser.equalTo(propertyId)) {
             if (risk.getCreateduser() == null) {
@@ -76,11 +75,11 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Risk.Field.priority.equalTo(propertyId)) {
             return new PriorityComboBox();
         } else if (Risk.Field.name.equalTo(propertyId)) {
-            MTextField field = new MTextField().withNullRepresentation("");
-            if (isValidateForm) {
-                field.withRequired(true).withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
-            }
+            MTextField field = new MTextField();
+//            if (isValidateForm) {
+//                field.withRequired(true).withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
+//                        UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
+//            }
             return field;
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();

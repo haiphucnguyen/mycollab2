@@ -67,7 +67,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
         MHorizontalLayout header = new MHorizontalLayout().withFullWidth();
 
         ELabel layoutHeader = ELabel.h2(String.format("%s %s", FontAwesome.EYE.getHtml(), UserUIContext.getMessage(FollowerI18nEnum
-                .OPT_MY_FOLLOWING_TICKETS, 0))).withWidthUndefined();
+                .OPT_MY_FOLLOWING_TICKETS, 0))).withUndefinedWidth();
 
         Button exportBtn = new Button(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT), clickEvent -> exportButtonControl.setPopupVisible(true));
         exportButtonControl = new SplitButton(exportBtn);

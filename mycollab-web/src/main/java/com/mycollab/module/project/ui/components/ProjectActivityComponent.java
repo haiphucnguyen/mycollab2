@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -47,7 +47,10 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -66,6 +69,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
+// TODO
 public class ProjectActivityComponent extends MVerticalLayout implements ReloadableComponent {
     private static Logger LOG = LoggerFactory.getLogger(ProjectActivityComponent.class);
     private String type;
@@ -97,25 +101,25 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         this.groupFormatter = AuditLogRegistry.getFieldGroupFormatterOfType(type);
         headerLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, 0));
 
-        final OptionGroup sortDirection = new OptionGroup();
-        sortDirection.addStyleName("sortDirection");
-        String oldestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_OLDEST_FIRST);
-        final String newestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
-        sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
-        sortDirection.setValue(newestFirstDirection);
-        sortDirection.addValueChangeListener(valueChangeEvent -> {
-            Object value = sortDirection.getValue();
-            isAscending = newestFirstDirection.equals(value);
-            displayActivities();
-        });
+//        final OptionGroup sortDirection = new OptionGroup();
+//        sortDirection.addStyleName("sortDirection");
+//        String oldestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_OLDEST_FIRST);
+//        final String newestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
+//        sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
+//        sortDirection.setValue(newestFirstDirection);
+//        sortDirection.addValueChangeListener(valueChangeEvent -> {
+//            Object value = sortDirection.getValue();
+//            isAscending = newestFirstDirection.equals(value);
+//            displayActivities();
+//        });
 
-        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
-                .withFullWidth().with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
-                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
+//        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
+//                .withFullWidth().with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
+//                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
         commentBox = new ProjectCommentInput(this, type, extraTypeId);
         activityBox = new MVerticalLayout().withMargin(new MMarginInfo(true, true, true, false));
-        this.with(headerPanel, commentBox, activityBox);
+//        this.with(headerPanel, commentBox, activityBox);
 
         commentService = AppContextUtil.getSpringBean(CommentService.class);
         auditLogService = AppContextUtil.getSpringBean(AuditLogService.class);

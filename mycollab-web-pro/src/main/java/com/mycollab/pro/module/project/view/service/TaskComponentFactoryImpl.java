@@ -69,6 +69,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.2
  */
+// TODO
 @Service
 public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
@@ -162,9 +163,10 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
-                            StringUtils.trim(milestoneName, 20, true);
+//                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+//                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+//                            StringUtils.trim(milestoneName, 20, true);
+                    return "";
                 }
             }
         };
@@ -396,7 +398,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
                 dateField = new PopupDateFieldExt();
-                dateField.setValue(new GregorianCalendar().getTime());
+//                dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
             } else {
@@ -409,7 +411,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
                 Long delta = HumanTime.eval(timeVal).getDelta();
-                Date date = dateField.getValue();
+//                Date date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
@@ -417,7 +419,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
                     timeLogging.setLoguser(UserUIContext.getUsername());
-                    timeLogging.setLogforday(date);
+//                    timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.TASK);

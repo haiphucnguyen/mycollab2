@@ -29,6 +29,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 4.0
  */
+// TODO
 public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSelectableComp {
     private static final long serialVersionUID = 1L;
 
@@ -146,7 +147,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         if (user.getMemberAvatarId() != null) {
             timeLogging.setLogUserAvatarId(user.getMemberAvatarId());
         }
-        timeLogging.setLogforday(dateField.getValue());
+//        timeLogging.setLogforday(dateField.getValue());
         timeLogging.setLogvalue(timeField.getValue());
         timeLogging.setIsbillable(isBillableCheckBox.getValue());
         timeLogging.setIsovertime(isOvertimeCheckBox.getValue());

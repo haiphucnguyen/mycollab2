@@ -5,10 +5,9 @@ import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.Reindeer;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -17,6 +16,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 public class CustomFieldComponent extends CssLayout {
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,7 @@ public class CustomFieldComponent extends CssLayout {
             fieldEditPanel = new Panel();
             panelContentLayout = new MVerticalLayout().withFullWidth();
             fieldEditPanel.setContent(panelContentLayout);
-            fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
+//            fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
             fieldEditPanel.setWidth("300px");
 
             createDefaultEditOption();

@@ -21,7 +21,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.PopupView;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
+// TODO
 @Service
 public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory {
     @Override
@@ -64,10 +65,10 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
                 return milestone.getOwnerFullName();
             }
         };
-        builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
-                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getAssignuser())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+//        builder.withBean(milestone).withBindProperty("owner").withDescription(milestone.getOwnerFullName())
+//                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+//                .withService(AppContextUtil.getSpringBean(MilestoneService.class)).withValue(milestone.getAssignuser())
+//                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 
@@ -88,10 +89,10 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
 
             }
         };
-        builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
-                .withValue(milestone.getStartdate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+//        builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
+//                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+//                .withValue(milestone.getStartdate())
+//                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 
@@ -112,10 +113,10 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
 
             }
         };
-        builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
-                .withValue(milestone.getEnddate())
-                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+//        builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
+//                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+//                .withValue(milestone.getEnddate())
+//                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
     }
 

@@ -1,6 +1,5 @@
 package com.mycollab.pro.module.project.view.client;
 
-import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.service.AccountService;
@@ -9,9 +8,6 @@ import com.mycollab.module.crm.view.account.AccountEditFormFieldFactory;
 import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.file.service.EntityUploaderService;
 import com.mycollab.module.project.i18n.ClientI18nEnum;
-import com.mycollab.module.project.ui.ProjectAssetsUtil;
-import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
-import com.mycollab.vaadin.web.ui.UploadImageField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -23,11 +19,11 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
+import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.awt.image.BufferedImage;
 
@@ -37,6 +33,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd
  * @since 5.2.9
  */
+// TODO
 @ViewComponent
 public class ClientAddViewImpl extends AbstractVerticalPageView implements ClientAddView {
     private final AdvancedEditBeanForm<SimpleAccount> editForm;
@@ -95,12 +92,13 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
                 return new MHorizontalLayout(titleLbl).expand(titleLbl);
             } else {
                 titleLbl = ELabel.h2(account.getAccountname());
-                UploadImageField uploadImageField = new UploadImageField(this);
-                uploadImageField.setButtonCaption(UserUIContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
-
-                MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.clientLogoComp(account, 100),
-                        uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
-                return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
+//                UploadImageField uploadImageField = new UploadImageField(this);
+//                uploadImageField.setButtonCaption(UserUIContext.getMessage(FileI18nEnum.ACTION_CHANGE_LOGO));
+//
+//                MVerticalLayout logoLayout = new MVerticalLayout(ProjectAssetsUtil.clientLogoComp(account, 100),
+//                        uploadImageField).withMargin(false).withWidth("-1px").alignAll(Alignment.TOP_CENTER);
+//                return new MHorizontalLayout(logoLayout, titleLbl).expand(titleLbl);
+                return new MHorizontalLayout();
             }
         }
 

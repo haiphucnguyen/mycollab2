@@ -46,7 +46,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectTick
     @Override
     protected ComponentContainer buildSearchTitle() {
         return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " " + UserUIContext.getMessage
-                (ProjectCommonI18nEnum.OPT_ASSIGNMENT_LIST)).withWidthUndefined());
+                (ProjectCommonI18nEnum.OPT_ASSIGNMENT_LIST)).withUndefinedWidth());
     }
 
     @Override

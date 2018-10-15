@@ -27,7 +27,7 @@ import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -42,6 +42,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 @ViewComponent
 public class StandupListViewImpl extends AbstractVerticalPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
@@ -67,7 +68,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     public StandupListViewImpl() {
         this.setMargin(new MarginInfo(false, false, true, false));
         standupCalendar.addValueChangeListener(valueChangeEvent -> {
-            onDate = standupCalendar.getValue();
+//            onDate = standupCalendar.getValue();
             showReports();
         });
     }
@@ -88,7 +89,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     public void display(List<Integer> projectIds, Date date) {
         this.projectIds = projectIds;
         this.onDate = date;
-        standupCalendar.setValue(date);
+//        standupCalendar.setValue(date);
     }
 
     private void showReports() {
@@ -166,7 +167,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             final MHorizontalLayout layout = new MHorizontalLayout(ProjectAssetsUtil.projectLogoComp(project
                     .getProjectKey(), project.getProjectId(), project.getProjectAvatarId(), 32),
                     projectLbl, new ELabel(" (" + project.getTotalWrittenReports() + " / "
-                    + project.getTotalReports() + ")").withWidthUndefined()).expand(projectLbl).withStyleName(WebThemes
+                    + project.getTotalReports() + ")").withUndefinedWidth()).expand(projectLbl).withStyleName(WebThemes
                     .BORDER_LIST_ROW).withStyleName(WebThemes.CURSOR_POINTER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedProject = project;

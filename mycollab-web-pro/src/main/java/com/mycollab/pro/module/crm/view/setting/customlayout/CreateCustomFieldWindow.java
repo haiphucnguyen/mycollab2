@@ -12,9 +12,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Table.ColumnHeaderMode;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -23,6 +21,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 public class CreateCustomFieldWindow extends Window {
     private static final long serialVersionUID = 1L;
 
@@ -103,21 +102,21 @@ public class CreateCustomFieldWindow extends Window {
                 expand(title).withStyleName(WebThemes.PANEL_HEADER);
         header.setWidthUndefined();
 
-        Table fieldSelectionTable = new Table();
-        fieldSelectionTable.setWidth("100%");
-        fieldSelectionTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
-        fieldSelectionTable.addContainerProperty("icon", Embedded.class, null);
-        fieldSelectionTable.addContainerProperty("type", Button.class, null);
-        fieldSelectionTable.setColumnWidth("icon", 20);
-        fieldSelectionTable.setVisibleColumns("icon", "type");
-
-        for (final Object[] rowItems : fieldsTable) {
-            final Button typeLink = new Button((String) rowItems[1], clickEvent -> constructFieldPanel((String) rowItems[1]));
-            typeLink.addStyleName(WebThemes.BUTTON_LINK);
-            fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
-        }
-
-        panel.with(header, fieldSelectionTable);
+//        Table fieldSelectionTable = new Table();
+//        fieldSelectionTable.setWidth("100%");
+//        fieldSelectionTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+//        fieldSelectionTable.addContainerProperty("icon", Embedded.class, null);
+//        fieldSelectionTable.addContainerProperty("type", Button.class, null);
+//        fieldSelectionTable.setColumnWidth("icon", 20);
+//        fieldSelectionTable.setVisibleColumns("icon", "type");
+//
+//        for (final Object[] rowItems : fieldsTable) {
+//            final Button typeLink = new Button((String) rowItems[1], clickEvent -> constructFieldPanel((String) rowItems[1]));
+//            typeLink.addStyleName(WebThemes.BUTTON_LINK);
+//            fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
+//        }
+//
+//        panel.with(header, fieldSelectionTable);
         return panel;
     }
 

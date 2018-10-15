@@ -54,7 +54,6 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.addon.webcomponents.FloatingComponent;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
@@ -76,6 +75,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
+// TODO
 @ViewComponent
 public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements MilestoneRoadmapView, IBlockContainer {
 
@@ -216,8 +216,8 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         this.addComponent(header);
         roadMapView = new MVerticalLayout().withSpacing(false);
         filterPanel = new MVerticalLayout().withWidth("250px").withStyleName(WebThemes.BOX);
-        FloatingComponent floatingComponent = FloatingComponent.floatThis(filterPanel);
-        floatingComponent.setContainerId("main-body");
+//        FloatingComponent floatingComponent = FloatingComponent.floatThis(filterPanel);
+//        floatingComponent.setContainerId("main-body");
         this.addComponent(new MHorizontalLayout().withFullWidth().with(roadMapView, filterPanel).expand(roadMapView));
     }
 
@@ -256,8 +256,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             viewButtons.addButton(kanbanBtn);
         }
 
-        viewButtons.withDefaultButton(roadmapBtn);
-        return new MHorizontalLayout(createBtn, printBtn, viewButtons);
+//        viewButtons.withDefaultButton(roadmapBtn);
+//        return new MHorizontalLayout(createBtn, printBtn, viewButtons);
+        return new MHorizontalLayout();
     }
 
     private static class MilestoneBlock extends BlockRowRender {
@@ -268,7 +269,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
             FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
             ELabel statusLbl = ELabel.html(statusIcon.getHtml() + " " + UserUIContext.getMessage(MilestoneStatus.class,
-                    milestone.getStatus())).withStyleName(UIConstants.BLOCK).withWidthUndefined();
+                    milestone.getStatus())).withStyleName(UIConstants.BLOCK).withUndefinedWidth();
             ToggleMilestoneSummaryField toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone, false, true);
             MHorizontalLayout headerLayout = new MHorizontalLayout(statusLbl, toggleMilestoneSummaryField).expand
                     (toggleMilestoneSummaryField).withFullWidth();
@@ -327,18 +328,18 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                             ToggleTicketSummaryField toggleTicketSummaryField = new ToggleTicketSummaryField(ticket);
                             MHorizontalLayout rowComp = new MHorizontalLayout(ELabel.EMPTY_SPACE());
                             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withWidthUndefined());
+                            rowComp.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(ticket.getType())).withUndefinedWidth());
                             String status = "";
                             if (ticket.isMilestone()) {
                                 status = UserUIContext.getMessage(MilestoneStatus.class, ticket.getStatus());
                             } else {
                                 status = UserUIContext.getMessage(StatusI18nEnum.class, ticket.getStatus());
                             }
-                            rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withWidthUndefined());
+                            rowComp.with(new ELabel(status).withStyleName(UIConstants.BLOCK).withUndefinedWidth());
                             String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                             Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX)
                                     .setTitle(ticket.getAssignUserFullName());
-                            rowComp.with(ELabel.html(img.write()).withWidthUndefined());
+                            rowComp.with(ELabel.html(img.write()).withUndefinedWidth());
 
                             rowComp.with(toggleTicketSummaryField).expand(toggleTicketSummaryField);
                             issueLayout.addComponent(rowComp);

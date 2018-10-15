@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,8 +23,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -34,6 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 public class AccountSelectionField extends CustomField<Integer> implements FieldSelection<Account> {
     private static final long serialVersionUID = 1L;
 
@@ -45,26 +44,26 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
         this.account = null;
     }
 
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object value = newDataSource.getValue();
-        if (value instanceof Integer) {
-            setAccountByVal((Integer) value);
-            super.setPropertyDataSource(newDataSource);
-        } else {
-            super.setPropertyDataSource(newDataSource);
-        }
-    }
-
-    @Override
-    public void commit() throws SourceException, Validator.InvalidValueException {
-        if (account != null) {
-            setInternalValue(account.getId());
-        } else {
-            setInternalValue(null);
-        }
-        super.commit();
-    }
+//    @Override
+//    public void setPropertyDataSource(Property newDataSource) {
+//        Object value = newDataSource.getValue();
+//        if (value instanceof Integer) {
+//            setAccountByVal((Integer) value);
+//            super.setPropertyDataSource(newDataSource);
+//        } else {
+//            super.setPropertyDataSource(newDataSource);
+//        }
+//    }
+//
+//    @Override
+//    public void commit() throws SourceException, Validator.InvalidValueException {
+//        if (account != null) {
+//            setInternalValue(account.getId());
+//        } else {
+//            setInternalValue(null);
+//        }
+//        super.commit();
+//    }
 
     private void setAccountByVal(Integer accountId) {
         AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
@@ -84,7 +83,7 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
         account = data;
         if (account != null) {
             accountName.setValue(account.getAccountname());
-            setInternalValue(account.getId());
+//            setInternalValue(account.getId());
         }
     }
 
@@ -93,7 +92,7 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
         MHorizontalLayout layout = new MHorizontalLayout().withFullWidth()
                 .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        accountName.setNullRepresentation("");
+//        accountName.setNullRepresentation("");
         accountName.setEnabled(true);
         accountName.setWidth("100%");
 
@@ -111,7 +110,12 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
     }
 
     @Override
-    public Class<Integer> getType() {
-        return Integer.class;
+    protected void doSetValue(Integer integer) {
+
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
     }
 }

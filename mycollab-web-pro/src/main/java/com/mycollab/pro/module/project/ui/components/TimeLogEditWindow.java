@@ -40,6 +40,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 4.3.3
  */
+// TODO
 public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private static final long serialVersionUID = 1L;
 
@@ -88,49 +89,49 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                         TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new TableViewField(null, "id",
                                 WebUIConstants.TABLE_CONTROL_WIDTH)));
 
-        tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
-            final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
-
-            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
-                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
-        });
-
-        tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
-            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
-        });
-
-        tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
-            SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
-            return new Label(itemTimeLogging.getLogvalue() + "");
-        });
-
-        tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
-            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
-            return icon;
-        });
-
-        tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
-            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
-            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
-            return icon;
-        });
-
-        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-            final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
-            MButton deleteBtn = new MButton("", clickEvent -> {
-                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
-                loadTimeValue();
-                hasTimeChange = true;
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
-            itemTimeLogging.setExtraData(deleteBtn);
-
-            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
-            return deleteBtn;
-        });
+//        tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
+//            final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
+//
+//            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
+//                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
+//        });
+//
+//        tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
+//        });
+//
+//        tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+//            return new Label(itemTimeLogging.getLogvalue() + "");
+//        });
+//
+//        tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
+//            return icon;
+//        });
+//
+//        tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
+//            return icon;
+//        });
+//
+//        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+//            final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+//            MButton deleteBtn = new MButton("", clickEvent -> {
+//                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
+//                loadTimeValue();
+//                hasTimeChange = true;
+//            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+//            itemTimeLogging.setExtraData(deleteBtn);
+//
+//            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
+//            return deleteBtn;
+//        });
 
         tableItem.setWidth("100%");
         content.addComponent(tableItem);
@@ -147,7 +148,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         totalSpentTimeLbl = new ELabel("_").withStyleName(ValoTheme.LABEL_LARGE, ValoTheme.LABEL_BOLD);
         totalLayout.addComponent(totalSpentTimeLbl);
 
-        MHorizontalLayout addLayout = new MHorizontalLayout().withWidthUndefined();
+        MHorizontalLayout addLayout = new MHorizontalLayout().withUndefinedWidth();
         addLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         spentTimePanel.addComponent(addLayout);
 
@@ -155,7 +156,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         newTimeInputField.setWidth("80px");
 
         forDateField = new PopupDateFieldExt();
-        forDateField.setValue(new GregorianCalendar().getTime());
+//        forDateField.setValue(new GregorianCalendar().getTime());
 
         isBillableField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
         isOvertimeField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
@@ -244,8 +245,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     }
 
     protected Date forLogDate() {
-        Date date = forDateField.getValue();
-        return (date != null) ? date : new GregorianCalendar().getTime();
+//        Date date = forDateField.getValue();
+//        return (date != null) ? date : new GregorianCalendar().getTime();
+        return null;
     }
 
     protected abstract void saveTimeInvest();

@@ -24,11 +24,11 @@ import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.button.MButton;
 
 import java.lang.reflect.Method;
@@ -40,6 +40,7 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 3.0
  */
+// TODO
 public class VerticalTabsheet extends CustomComponent {
     private static final long serialVersionUID = 1L;
 
@@ -62,7 +63,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     public VerticalTabsheet() {
         CssLayout contentLayout = new CssLayout();
-        new Restrain(contentLayout).setMinHeight("100%");
+//        new Restrain(contentLayout).setMinHeight("100%");
 
         navigatorWrapper = new CssLayout();
         navigatorWrapper.setStyleName("navigator-wrap");
@@ -71,11 +72,11 @@ public class VerticalTabsheet extends CustomComponent {
 
         contentWrapper = new VerticalLayout();
         contentWrapper.setStyleName("container-wrap");
-        new Restrain(contentWrapper).setMinHeight("100%");
+//        new Restrain(contentWrapper).setMinHeight("100%");
 
         tabContainer = new VerticalLayout();
         contentWrapper.addComponent(tabContainer);
-        new Restrain(tabContainer).setMinHeight("100%");
+//        new Restrain(tabContainer).setMinHeight("100%");
 
         contentLayout.addComponent(navigatorWrapper);
         contentLayout.addComponent(contentWrapper);
@@ -122,7 +123,7 @@ public class VerticalTabsheet extends CustomComponent {
                         selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
                         selectedComp = compMap.get(button.getTabId());
                     }
-                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this));
+//                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this));
                 } else {
                     Page.getCurrent().open(button.link, "_blank", false);
                 }
@@ -480,5 +481,9 @@ public class VerticalTabsheet extends CustomComponent {
             throw new MyCollabException("Do not support");
         }
 
+        @Override
+        public void setDescription(String s, ContentMode contentMode) {
+
+        }
     }
 }

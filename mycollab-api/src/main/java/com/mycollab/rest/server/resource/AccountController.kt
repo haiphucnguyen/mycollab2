@@ -18,7 +18,7 @@ class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
                         private var deploymentMode: IDeploymentMode) {
 
-    @CrossOrigin(origins = ["https://*.mycollab.com", "https://mycollab.com"])
+    @CrossOrigin(origins = ["https://*.mycollab.com", "https://mycollab.com", "https://www.mycollab.com"])
     @RequestMapping(value = "signUp", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun signUp(@RequestParam("subDomain") subDomain: String, @RequestParam("planId") planId: Int,
                @RequestParam("password") password: String, @RequestParam("email") email: String,

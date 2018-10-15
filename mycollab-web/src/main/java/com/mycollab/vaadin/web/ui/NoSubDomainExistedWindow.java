@@ -37,9 +37,9 @@ public class NoSubDomainExistedWindow extends MVerticalLayout {
     public NoSubDomainExistedWindow(final String domain) {
         this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         final Label titleIcon = ELabel.fontIcon(FontAwesome.EXCLAMATION_CIRCLE).withStyleName("warning-icon",
-                ValoTheme.LABEL_NO_MARGIN).withWidthUndefined();
+                ValoTheme.LABEL_NO_MARGIN).withUndefinedWidth();
 
-        Label warningMsg = new ELabel(UserUIContext.getMessage(ShellI18nEnum.ERROR_NO_SUB_DOMAIN, domain)).withWidthUndefined();
+        Label warningMsg = new ELabel(UserUIContext.getMessage(ShellI18nEnum.ERROR_NO_SUB_DOMAIN, domain)).withUndefinedWidth();
 
         Button backToHome = new Button(UserUIContext.getMessage(ShellI18nEnum.BUTTON_BACK_TO_HOME_PAGE),
                 clickEvent -> getUI().getPage().setLocation("https://www.mycollab.com"));

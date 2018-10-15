@@ -163,7 +163,8 @@ class CloudDriveSettingWindow extends MWindow {
             layout.with(folderTitleLbl).withAlign(folderTitleLbl, Alignment.MIDDLE_LEFT);
 
             final TextField folderNameTextField = new TextField();
-            folderNameTextField.setImmediate(true);
+            // TODO
+//            folderNameTextField.setImmediate(true);
             folderNameTextField.setValue(drive.getFoldername());
             layout.addComponent(folderNameTextField);
 

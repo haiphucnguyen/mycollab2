@@ -194,7 +194,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                 layout.setColumnExpandRatio(1, 1.0f);
 
                 ELabel assigneeLbl = new ELabel(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE))
-                        .withWidthUndefined();
+                        .withUndefinedWidth();
                 layout.addComponent(assigneeLbl, 0, 1);
                 String assignUserName = (String) PropertyUtils.getProperty(bean, "assignuser");
                 String assignUserAvatarId = (String) PropertyUtils.getProperty(bean, "ownerAvatarId");

@@ -114,7 +114,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
         headerLbl = ELabel.h2(String.format("%s %s", FontAwesome.STAR.getHtml(),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES))).withWidthUndefined();
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES))).withUndefinedWidth();
         header.with(headerLbl);
 
         isSortAsc = true;

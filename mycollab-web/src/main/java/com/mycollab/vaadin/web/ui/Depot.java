@@ -38,7 +38,7 @@ public class Depot extends DDVerticalLayout {
         header = new MHorizontalLayout().withHeight("40px").withStyleName("depotHeader");
         bodyContent = content;
         bodyContent.setWidth("100%");
-        headerContent = new MHorizontalLayout().withFullHeight().withWidthUndefined().withVisible(false);
+        headerContent = new MHorizontalLayout().withFullHeight().withUndefinedWidth().withVisible(false);
         this.addComponent(header);
 
         headerLbl = new Label(title);

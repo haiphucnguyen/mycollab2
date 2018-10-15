@@ -7,7 +7,6 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.ui.components.calendar.event.BasicEventProvider;
 
 import java.util.List;
 
@@ -15,7 +14,8 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public class GenericAssignmentProvider extends BasicEventProvider {
+// TODO
+public class GenericAssignmentProvider {
     private Double totalBillableHours = 0d;
     private Double totalNonBillableHours = 0d;
     private int assignMeNum = 0;
@@ -35,9 +35,9 @@ public class GenericAssignmentProvider extends BasicEventProvider {
             } else {
                 assignOthersNum += 1;
             }
-            addEvent(new GenericAssignmentEvent(assignment, showProject));
+//            addEvent(new GenericAssignmentEvent(assignment, showProject));
         }
-        fireEventSetChange();
+//        fireEventSetChange();
     }
 
     public Double getTotalBillableHours() {

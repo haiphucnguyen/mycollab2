@@ -2,36 +2,27 @@ package com.mycollab.pro.vaadin.web.ui.field;
 
 import com.google.common.base.MoreObjects;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.persistence.service.ICrudService;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.Label;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.PopupView;
-import org.vaadin.jouni.restrain.Restrain;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
  */
+// TODO
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
     protected String description;
-    protected Field field;
+    protected HasValue field;
     private boolean hasPermission = true;
     protected B bean;
     private String bindProperty;
-    private BeanFieldGroup fieldGroup;
+    //    private BeanFieldGroup fieldGroup;
     private ICrudService crudService;
 
     public PopupBeanFieldBuilder withValue(Object value) {
@@ -44,7 +35,7 @@ public abstract class PopupBeanFieldBuilder<B> {
         return this;
     }
 
-    public PopupBeanFieldBuilder withField(Field field) {
+    public PopupBeanFieldBuilder withField(HasValue<?> field) {
         this.field = field;
         return this;
     }
@@ -108,41 +99,41 @@ public abstract class PopupBeanFieldBuilder<B> {
 
         @Override
         protected void doHide() {
-            try {
-                if (fieldGroup.isModified()) {
-                    fieldGroup.commit();
-                    save();
-                    this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
-                    setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
-                    BeanPopupView.this.setDescription(generateDescription());
-                }
-            } catch (FieldGroup.CommitException e) {
-                throw new MyCollabException(e);
-            }
+//            try {
+//                if (fieldGroup.isModified()) {
+//                    fieldGroup.commit();
+//                    save();
+//                    this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
+//                    setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
+//                    BeanPopupView.this.setDescription(generateDescription());
+//                }
+//            } catch (FieldGroup.CommitException e) {
+//                throw new MyCollabException(e);
+//            }
         }
 
         @Override
         protected void doShow() {
-            BeanItem item = new BeanItem(bean);
-            fieldGroup = new BeanFieldGroup(bean.getClass());
-
-            MVerticalLayout layout = getWrapContent();
-            layout.removeAllComponents();
-            Label headerLbl = ELabel.h3(caption);
-            layout.with(headerLbl);
-            layout.with(field);
-            if (field instanceof AbstractComponent) {
-                new Restrain((AbstractComponent) field).setMaxWidth("600px");
-            }
-
-            fieldGroup.setBuffered(true);
-            fieldGroup.setItemDataSource(item);
-            fieldGroup.bind(field, bindProperty);
-            boolean checkPermission = isPermission();
-            field.setVisible(checkPermission);
-            if (!checkPermission) {
-                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
-            }
+//            BeanItem item = new BeanItem(bean);
+//            fieldGroup = new BeanFieldGroup(bean.getClass());
+//
+//            MVerticalLayout layout = getWrapContent();
+//            layout.removeAllComponents();
+//            Label headerLbl = ELabel.h3(caption);
+//            layout.with(headerLbl);
+//            layout.with(field);
+//            if (field instanceof AbstractComponent) {
+//                new Restrain((AbstractComponent) field).setMaxWidth("600px");
+//            }
+//
+//            fieldGroup.setBuffered(true);
+//            fieldGroup.setItemDataSource(item);
+//            fieldGroup.bind(field, bindProperty);
+//            boolean checkPermission = isPermission();
+//            field.setVisible(checkPermission);
+//            if (!checkPermission) {
+//                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+//            }
         }
     }
 }

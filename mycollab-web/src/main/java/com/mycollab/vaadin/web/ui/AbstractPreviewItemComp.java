@@ -67,7 +67,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, FontAwesome iconResource, ReadViewLayout layout) {
-        ELabel headerLbl = ELabel.h2("").withWidthUndefined();
+        ELabel headerLbl = ELabel.h2("").withUndefinedWidth();
         this.previewLayout = layout;
 
         header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth();

@@ -36,7 +36,7 @@ import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -49,6 +49,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 1.0
  */
+// TODO
 @ViewComponent
 public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> implements ProjectRoleAddView {
     private static final long serialVersionUID = 1L;
@@ -91,18 +92,16 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 if (propertyId.equals("description")) {
-                    final TextArea textArea = new TextArea();
-                    textArea.setNullRepresentation("");
-                    return textArea;
+                    return new TextArea();
                 } else if (propertyId.equals("rolename")) {
                     final TextField tf = new TextField();
-                    if (isValidateForm) {
-                        tf.setNullRepresentation("");
-                        tf.setRequired(true);
-                        tf.setRequiredError("Please enter a role name");
-                    }
+//                    if (isValidateForm) {
+//                        tf.setNullRepresentation("");
+//                        tf.setRequired(true);
+//                        tf.setRequiredError("Please enter a role name");
+//                    }
                     return tf;
                 }
                 return null;

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -82,26 +81,26 @@ public class GridFormLayoutHelper implements Serializable {
         return layout.getRows();
     }
 
-    public <T extends Component> T addComponent(T field, String caption, int columns, int rows, int colSpan, String width) {
+    public <T> T addComponent(T field, String caption, int columns, int rows, int colSpan, String width) {
         return this.addComponent(field, caption, null, columns, rows, colSpan, width, captionAlignment);
     }
 
-    public <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int
+    public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int
             colSpan, String width) {
         return this.addComponent(field, caption, contextHelp, columns, rows, colSpan, width, captionAlignment);
     }
 
-    public <T extends Component> T addComponent(T field, String caption, int columns, int rows) {
+    public <T> T addComponent(T field, String caption, int columns, int rows) {
         return this.addComponent(field, caption, null, columns, rows, 1, fieldControlWidth, captionAlignment);
     }
 
-    public <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows) {
+    public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows) {
         return this.addComponent(field, caption, contextHelp, columns, rows, 1, fieldControlWidth, captionAlignment);
     }
 
-    private <T extends Component> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
+    private <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
         GridCellWrapper cell = buildCell(caption, contextHelp, columns, rows, colSpan, width, alignment);
-        cell.addComponent(field);
+        cell.addComponent((Component) field);
         return field;
     }
 
@@ -117,7 +116,7 @@ public class GridFormLayoutHelper implements Serializable {
                     .withAlign(captionLbl, alignment);
             if (StringUtils.isNotBlank(contextHelp)) {
                 ELabel contextHelpLbl = ELabel.html("&nbsp;" + FontAwesome.QUESTION_CIRCLE.getHtml())
-                        .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withWidthUndefined();
+                        .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();
                 captionWrapper.with(contextHelpLbl);
             }
             layout.addComponent(captionWrapper, 2 * columns, rows);
