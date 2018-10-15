@@ -31,6 +31,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -63,7 +64,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
     protected Component buildExtraControls() {
         return new MButton(UserUIContext.getMessage(ComponentI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
     }
 

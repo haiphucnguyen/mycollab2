@@ -48,6 +48,7 @@ import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -162,7 +163,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             milestone.setSaccountid(AppUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 

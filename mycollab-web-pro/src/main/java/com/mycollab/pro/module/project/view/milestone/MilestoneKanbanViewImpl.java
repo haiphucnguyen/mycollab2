@@ -42,6 +42,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.colorpicker.Color;
@@ -194,7 +195,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             milestone.setSaccountid(AppUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(boardBtn);
@@ -445,7 +446,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
                                     ((ComponentContainer) KanbanBlock.this.getParent()).removeComponent(KanbanBlock.this);
                                 }
                             });
-                }).withIcon(FontAwesome.TRASH_O);
+                }).withIcon(VaadinIcons.TRASH);
                 popupContent.addDangerOption(deleteBtn);
             }
 
@@ -456,7 +457,7 @@ public class MilestoneKanbanViewImpl extends AbstractLazyPageView implements IMi
             MButton newAssignmentBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
                     clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class)
                             .createNewTicketWindow(null, CurrentProjectVariables.getProjectId(), milestoneId, false)))
-                    .withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+                    .withIcon(VaadinIcons.PLUS).withStyleName(BUTTON_ACTION);
 
             this.with(headerLayout, dragLayoutContainer, newAssignmentBtn).withAlign(newAssignmentBtn, Alignment.MIDDLE_RIGHT);
         }

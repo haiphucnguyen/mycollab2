@@ -45,6 +45,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -131,7 +132,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
             @Override
             public AbstractComponent getLayout() {
                 String title = (user.getUsername() == null) ? UserUIContext.getMessage(UserI18nEnum.NEW) : user.getDisplayName();
-                AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
+                AddViewLayout formAddLayout = new AddViewLayout(title, VaadinIcons.USER);
 
                 wrappedLayoutFactory = buildFormLayout();
                 formAddLayout.addHeaderRight(generateEditFormControls(editUserForm, true, false, true));
@@ -210,7 +211,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
             @Override
             public AbstractComponent getLayout() {
                 String title = (user.getUsername() == null) ? UserUIContext.getMessage(UserI18nEnum.NEW) : user.getDisplayName();
-                AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
+                AddViewLayout formAddLayout = new AddViewLayout(title, VaadinIcons.USER);
                 formAddLayout.addHeaderRight(generateEditFormControls(editUserForm, true, false, true));
                 FormContainer formContainer = new FormContainer();
                 basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);

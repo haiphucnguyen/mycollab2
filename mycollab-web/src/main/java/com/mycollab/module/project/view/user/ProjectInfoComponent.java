@@ -56,6 +56,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -170,7 +171,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebThemes.BOX);
-            controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
+            controlsBtn.setIcon(VaadinIcons.ELLIPSIS_H);
 
             OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
@@ -185,7 +186,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             MButton settingBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS), clickEvent -> {
                 controlsBtn.setPopupVisible(false);
                 EventBusFactory.getInstance().post(new ProjectNotificationEvent.GotoList(this, null));
-            }).withIcon(FontAwesome.COG);
+            }).withIcon(VaadinIcons.COG);
             popupButtonsControl.addOption(settingBtn);
 
             popupButtonsControl.addSeparator();
@@ -260,7 +261,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                                 }
                             });
-                }).withIcon(FontAwesome.TRASH_O);
+                }).withIcon(VaadinIcons.TRASH);
                 popupButtonsControl.addDangerOption(deleteProjectBtn);
             }
 

@@ -7,6 +7,7 @@ import com.mycollab.module.crm.view.setting.ICrmCustomView;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -53,7 +54,7 @@ public class CreateSectionWindow extends Window {
             close();
         });
         saveBtn.setStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setIcon(FontAwesome.SAVE);
+        saveBtn.setIcon(VaadinIcons.PENCIL);
 
 
         Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());

@@ -34,8 +34,8 @@ import com.mycollab.vaadin.resources.VaadinResourceFactory;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
@@ -117,10 +117,10 @@ public class AttachmentDisplayComponent extends CssLayout {
                             ((ComponentContainer) attachmentLayout.getParent()).removeComponent(attachmentLayout);
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName("attachment-control");
+        }).withIcon(VaadinIcons.TRASH).withStyleName("attachment-control");
         attachmentLayout.addComponent(trashBtn, "top: 9px; left: 9px; z-index: 1;");
 
-        MButton downloadBtn = new MButton().withIcon(FontAwesome.DOWNLOAD).withStyleName("attachment-control");
+        MButton downloadBtn = new MButton().withIcon(VaadinIcons.DOWNLOAD).withStyleName("attachment-control");
         FileDownloader fileDownloader = new FileDownloader(VaadinResourceFactory.getInstance()
                 .getStreamResource(attachment.getPath()));
         fileDownloader.extend(downloadBtn);

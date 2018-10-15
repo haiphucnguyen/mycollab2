@@ -19,6 +19,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -90,9 +91,9 @@ class CloudDriveSettingWindow extends MWindow {
             iconWapper.setWidth("60px");
 
             if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
-                ELabel driveIcon = ELabel.fontIcon(FontAwesome.DROPBOX);
-                driveIcon.addStyleName("icon-38px");
-                iconWapper.addComponent(driveIcon);
+//                ELabel driveIcon = ELabel.fontIcon(FontAwesome.DROPBOX);
+//                driveIcon.addStyleName("icon-38px");
+//                iconWapper.addComponent(driveIcon);
             }
 
             titleLayout.with(iconWapper);
@@ -184,7 +185,7 @@ class CloudDriveSettingWindow extends MWindow {
                 } catch (Exception e) {
                     throw new MyCollabException(e);
                 }
-            }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);

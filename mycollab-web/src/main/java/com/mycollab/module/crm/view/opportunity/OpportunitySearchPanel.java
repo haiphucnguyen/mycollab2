@@ -37,6 +37,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -75,7 +76,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
     protected Component buildExtraControls() {
         return (canCreateOpportunity) ? new MButton(UserUIContext.getMessage(OpportunityI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new OpportunityEvent.GotoAdd(OpportunitySearchPanel.this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) : null;
     }
 

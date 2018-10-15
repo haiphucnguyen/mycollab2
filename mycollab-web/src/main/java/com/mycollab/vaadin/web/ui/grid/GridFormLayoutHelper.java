@@ -19,7 +19,7 @@ package com.mycollab.vaadin.web.ui.grid;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
@@ -115,7 +115,7 @@ public class GridFormLayoutHelper implements Serializable {
                     .withWidth(defaultCaptionWidth).withFullHeight().withStyleName("gridform-caption").with(captionLbl).expand(captionLbl)
                     .withAlign(captionLbl, alignment);
             if (StringUtils.isNotBlank(contextHelp)) {
-                ELabel contextHelpLbl = ELabel.html("&nbsp;" + FontAwesome.QUESTION_CIRCLE.getHtml())
+                ELabel contextHelpLbl = ELabel.html("&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
                         .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();
                 captionWrapper.with(contextHelpLbl);
             }

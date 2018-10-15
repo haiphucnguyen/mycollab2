@@ -34,6 +34,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
@@ -72,7 +73,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
     protected Component buildExtraControls() {
         return (canCreateCampaign) ? new MButton(UserUIContext.getMessage(CampaignI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) : null;
     }
 

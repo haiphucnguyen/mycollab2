@@ -40,12 +40,12 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 

@@ -26,6 +26,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
@@ -76,14 +77,14 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
         MButton createCustomFieldBtn = new MButton("New Custom Field", clickEvent -> {
             CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(CrmCustomViewImpl.this);
             UI.getCurrent().addWindow(createCustomFieldWindow);
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn, Alignment.MIDDLE_LEFT);
 
         MButton createSectionBtn = new MButton("New Section", clickEvent -> {
             CreateSectionWindow createSectionWindow = new CreateSectionWindow(CrmCustomViewImpl.this);
             UI.getCurrent().addWindow(createSectionWindow);
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         controlLayout.addComponent(createSectionBtn);
         controlLayout.setComponentAlignment(createSectionBtn, Alignment.MIDDLE_LEFT);
@@ -105,7 +106,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
             DynaForm rebuildForm = layoutComp.rebuildForm();
             MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
             formService.saveCustomForm(AppUI.getAccountId(), moduleName, rebuildForm);
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> display(moduleName))
                 .withStyleName(WebThemes.BUTTON_OPTION);

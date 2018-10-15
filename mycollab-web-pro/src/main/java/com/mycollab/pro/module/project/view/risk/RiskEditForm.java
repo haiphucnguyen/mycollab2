@@ -18,6 +18,7 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
@@ -74,7 +75,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
                     postExecution();
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(this, ProjectTypeConstants.RISK, riskId));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);

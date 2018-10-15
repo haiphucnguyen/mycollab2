@@ -3,17 +3,14 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.arguments.ValuedBean;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
-import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
@@ -21,7 +18,7 @@ import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
@@ -34,7 +31,6 @@ import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
@@ -126,7 +122,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
 //                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
 //                loadTimeValue();
 //                hasTimeChange = true;
-//            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+//            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 //            itemTimeLogging.setExtraData(deleteBtn);
 //
 //            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
@@ -169,7 +165,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 loadTimeValue();
                 newTimeInputField.setValue(0d);
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
         addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 

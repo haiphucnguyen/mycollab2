@@ -18,7 +18,6 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -44,6 +43,7 @@ import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -52,17 +52,15 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

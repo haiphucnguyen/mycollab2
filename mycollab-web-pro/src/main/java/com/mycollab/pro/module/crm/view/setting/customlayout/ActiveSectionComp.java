@@ -11,6 +11,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -61,7 +62,7 @@ class ActiveSectionComp extends GenericSectionComp {
 
         Button deleteSectionBtn = new Button();
         deleteSectionBtn.setDescription("Remove this Section");
-        deleteSectionBtn.setIcon(FontAwesome.TRASH_O);
+        deleteSectionBtn.setIcon(VaadinIcons.TRASH);
         deleteSectionBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
         header.addComponent(deleteSectionBtn);
 

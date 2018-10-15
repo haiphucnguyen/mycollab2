@@ -32,6 +32,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -62,7 +63,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
         splitBtn.setSizeUndefined();
         splitBtn.setEnabled(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL) || UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
         splitBtn.addStyleName(WebThemes.BUTTON_ACTION);
-        splitBtn.setIcon(FontAwesome.PLUS);
+        splitBtn.setIcon(VaadinIcons.PLUS);
         splitBtn.setCaption(UserUIContext.getMessage(TaskI18nEnum.NEW));
         splitBtn.addClickListener(event -> EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null)));
 

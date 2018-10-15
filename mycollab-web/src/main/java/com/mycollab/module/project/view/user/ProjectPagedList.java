@@ -44,6 +44,7 @@ import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -97,7 +98,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             MHorizontalLayout metaInfo = new MHorizontalLayout().withFullWidth();
             metaInfo.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
+            Div activeMembersDiv = new Div().appendText(VaadinIcons.USERS.getHtml() + " " + project.getNumActiveMembers())
                     .setTitle(UserUIContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
             Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext
                     .formatPrettyTime(project.getCreatedtime())).setTitle(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));

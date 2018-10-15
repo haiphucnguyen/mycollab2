@@ -25,6 +25,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -100,7 +101,7 @@ public class MailFormWindow extends MWindow {
     }
 
     private Layout createTextFieldMailWithHelp(String title, Component component) {
-        return new MHorizontalLayout(ELabel.html(title + "&nbsp;" + FontAwesome.QUESTION_CIRCLE.getHtml())
+        return new MHorizontalLayout(ELabel.html(title + "&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
                 .withStyleName(WebThemes.INLINE_HELP).withDescription("Enter the user name or email, then press the enter button to finish the entry")
                 .withWidth("80px"), component).expand(component).withFullWidth()
                 .withDefaultComponentAlignment(Alignment.MIDDLE_LEFT);

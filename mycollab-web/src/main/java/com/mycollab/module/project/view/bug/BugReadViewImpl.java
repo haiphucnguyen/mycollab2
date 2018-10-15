@@ -48,6 +48,7 @@ import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -352,7 +353,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = ELabel.html(FontAwesome.USER.getHtml() + " " +
+            Label peopleInfoHeader = ELabel.html(VaadinIcons.USER.getHtml() + " " +
                     UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE));
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);

@@ -82,7 +82,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
 //            } catch (Exception e) {
 //                throw new MyCollabException(e);
 //            }
-//        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+//        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 //        body.addComponent(saveBtn);
 //
 //        this.addComponent(body);

@@ -43,7 +43,6 @@ import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
-import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
@@ -56,17 +55,16 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

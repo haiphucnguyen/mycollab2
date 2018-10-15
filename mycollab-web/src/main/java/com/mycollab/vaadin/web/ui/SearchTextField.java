@@ -19,7 +19,7 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.TextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -36,7 +36,7 @@ public abstract class SearchTextField extends MHorizontalLayout {
 
     public SearchTextField() {
         this.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
-        ELabel icon = ELabel.fontIcon(FontAwesome.SEARCH);
+        ELabel icon = ELabel.fontIcon(VaadinIcons.SEARCH);
         innerField = new TextField();
 //        innerField.setImmediate(true);
 //        innerField.setInputPrompt(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH));

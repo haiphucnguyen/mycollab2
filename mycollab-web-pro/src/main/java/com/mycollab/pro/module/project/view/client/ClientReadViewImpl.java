@@ -35,9 +35,10 @@ import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), FontAwesome.INSTITUTION);
+        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION);
     }
 
     @Override
@@ -129,7 +130,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
+            Label peopleInfoHeader = new Label(VaadinIcons.USER.getHtml() + " " +
                     UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
@@ -208,7 +209,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
             ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
-            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
+            Div activeMembersDiv = new Div().appendText(VaadinIcons.USERS.getHtml() + " " + project.getNumActiveMembers())
                     .setTitle(UserUIContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
             Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext
                     .formatPrettyTime(project.getCreatedtime())).setTitle(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));

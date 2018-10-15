@@ -14,6 +14,7 @@ import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -86,7 +87,7 @@ public class FileMainViewImpl extends AbstractLazyPageView implements FileMainVi
         MButton settingBtn = new MButton("", clickEvent -> {
             CloudDriveSettingWindow cloudDriveSettingWindow = new CloudDriveSettingWindow();
             UI.getCurrent().addWindow(cloudDriveSettingWindow);
-        }).withIcon(FontAwesome.COG).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+        }).withIcon(VaadinIcons.COG).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
         navButton.with(settingBtn);
 

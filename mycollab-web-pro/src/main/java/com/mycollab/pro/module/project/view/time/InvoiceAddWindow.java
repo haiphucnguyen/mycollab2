@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.time;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleInvoice;
@@ -10,13 +9,14 @@ import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -62,7 +62,7 @@ public class InvoiceAddWindow extends MWindow {
                 uploadField.saveContentsToRepo(attachPath);
                 close();
             }
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);

@@ -39,6 +39,7 @@ import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -97,7 +98,7 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
 
             @Override
             public AbstractComponent getLayout() {
-                AddViewLayout formAddLayout = new AddViewLayout(initFormHeader(), FontAwesome.USERS);
+                AddViewLayout formAddLayout = new AddViewLayout(initFormHeader(), VaadinIcons.USERS);
 
                 ComponentContainer topLayout = createButtonControls();
                 if (topLayout != null) {

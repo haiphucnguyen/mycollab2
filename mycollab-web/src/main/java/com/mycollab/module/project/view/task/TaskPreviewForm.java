@@ -52,6 +52,7 @@ import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -105,7 +106,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(), ProjectTypeConstants.TASK, beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    FontAwesome fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
+                    VaadinIcons fontPriority = ProjectAssetsManager.getPriority(beanItem.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(Priority.class, beanItem.getPriority());
                     DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
                     field.addStyleName("priority-" + beanItem.getPriority().toLowerCase());
@@ -180,7 +181,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     task.setProjectid(beanItem.getProjectid());
                     task.setSaccountid(beanItem.getSaccountid());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
-                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS);
 
                 final SplitButton splitButton = new SplitButton(addNewTaskBtn);
                 splitButton.setWidthUndefined();

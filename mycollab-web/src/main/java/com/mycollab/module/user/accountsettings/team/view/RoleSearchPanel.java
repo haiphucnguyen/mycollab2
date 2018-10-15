@@ -27,6 +27,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
@@ -53,14 +54,14 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return HeaderWithFontAwesome.h2(FontAwesome.USERS, UserUIContext.getMessage(RoleI18nEnum.LIST));
+        return HeaderWithFontAwesome.h2(VaadinIcons.USERS, UserUIContext.getMessage(RoleI18nEnum.LIST));
     }
 
     @Override
     protected Component buildExtraControls() {
         return new MButton(UserUIContext.getMessage(RoleI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RoleEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.ACCOUNT_ROLE));
     }
 

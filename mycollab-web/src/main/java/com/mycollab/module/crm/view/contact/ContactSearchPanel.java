@@ -35,6 +35,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
@@ -67,7 +68,7 @@ public class ContactSearchPanel extends DefaultGenericSearchPanel<ContactSearchC
     protected Component buildExtraControls() {
         return new MButton(UserUIContext.getMessage(ContactI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CONTACT));
     }
 

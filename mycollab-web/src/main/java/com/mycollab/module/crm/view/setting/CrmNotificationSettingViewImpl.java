@@ -85,7 +85,7 @@ public class CrmNotificationSettingViewImpl extends AbstractVerticalPageView imp
 //            } catch (Exception e) {
 //                throw new MyCollabException(e);
 //            }
-//        }).withIcon(FontAwesome.REFRESH).withStyleName(WebThemes.BUTTON_ACTION);
+//        }).withIcon(VaadinIcons.REFRESH).withStyleName(WebThemes.BUTTON_ACTION);
 //        body.with(updateBtn).withAlign(updateBtn, Alignment.BOTTOM_LEFT);
 //
 //        bodyWrapper.addComponent(body);

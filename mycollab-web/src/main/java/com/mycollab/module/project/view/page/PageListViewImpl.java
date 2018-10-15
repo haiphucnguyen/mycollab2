@@ -42,6 +42,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.SortButton;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -156,13 +157,13 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         MButton newGroupBtn = new MButton(UserUIContext.getMessage(PageI18nEnum.NEW_GROUP),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow()))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         newGroupBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         headerLayout.with(newGroupBtn).withAlign(newGroupBtn, Alignment.MIDDLE_RIGHT);
 
         MButton newPageBtn = new MButton(UserUIContext.getMessage(PageI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new PageEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         newPageBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         headerLayout.with(newPageBtn).withAlign(newPageBtn, Alignment.MIDDLE_RIGHT);
@@ -224,7 +225,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                         resources.remove(resource);
                         displayPages(resources);
                     }
-                })).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
+                })).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
         deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));
@@ -266,7 +267,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
                             displayPages(resources);
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
         deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
 
         container.addComponent(new MHorizontalLayout(editBtn, deleteBtn));

@@ -58,6 +58,7 @@ import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -176,7 +177,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         MButton newTicketBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW), clickEvent -> {
             UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class)
                     .createNewTicketWindow(null, CurrentProjectVariables.getProjectId(), null, false));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWriteTicket());
         groupWrapLayout.addComponent(newTicketBtn);
 

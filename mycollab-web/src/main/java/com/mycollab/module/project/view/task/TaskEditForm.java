@@ -39,6 +39,7 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
@@ -124,7 +125,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(TaskEditForm.this,
                             ProjectTypeConstants.TASK, taskId));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);

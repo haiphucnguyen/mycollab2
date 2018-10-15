@@ -23,6 +23,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -140,7 +141,7 @@ public class ImagePreviewCropWindow extends MWindow {
             previewImage.setWidth("100px");
             previewPhoto.addComponent(previewImage);
         } else {
-            previewPhoto.addComponent(ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE).withStyleName("icon-48px").withUndefinedWidth());
+            previewPhoto.addComponent(ELabel.fontIcon(VaadinIcons.QUESTION_CIRCLE).withStyleName("icon-48px").withUndefinedWidth());
         }
     }
 

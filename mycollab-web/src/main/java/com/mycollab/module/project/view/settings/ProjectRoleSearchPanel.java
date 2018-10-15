@@ -29,6 +29,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -54,7 +55,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return HeaderWithFontAwesome.h2(FontAwesome.GROUP, UserUIContext.getMessage(ProjectRoleI18nEnum.LIST));
+        return HeaderWithFontAwesome.h2(VaadinIcons.GROUP, UserUIContext.getMessage(ProjectRoleI18nEnum.LIST));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.ROLES)) {
             return new MButton(UserUIContext.getMessage(ProjectRoleI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoAdd(this, null)))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         } else return null;
     }
 

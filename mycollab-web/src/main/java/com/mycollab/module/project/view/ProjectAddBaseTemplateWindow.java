@@ -36,6 +36,7 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
@@ -94,7 +95,7 @@ public class ProjectAddBaseTemplateWindow extends MWindow {
                         new PageActionChain(new ProjectScreenData.Goto(newProjectId))));
                 close();
             }
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, okBtn);

@@ -129,7 +129,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 //                    .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 //
 //            MButton deleteBtn = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(TimeTrackingTableDisplay.this, itemLogging, "delete")))
-//                    .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+//                    .withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 //
 //            return new MHorizontalLayout(editBtn, deleteBtn);
 //        });

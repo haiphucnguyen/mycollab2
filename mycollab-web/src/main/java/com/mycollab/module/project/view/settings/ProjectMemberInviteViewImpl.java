@@ -42,6 +42,7 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -80,7 +81,7 @@ public class ProjectMemberInviteViewImpl extends AbstractVerticalPageView implem
             displayRolePermission(roleId);
         });
 
-        AddViewLayout userAddLayout = new AddViewLayout(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_INVITE_MEMBERS), FontAwesome.USER);
+        AddViewLayout userAddLayout = new AddViewLayout(UserUIContext.getMessage(ProjectMemberI18nEnum.FORM_INVITE_MEMBERS), VaadinIcons.USER);
         userAddLayout.addHeaderRight(createButtonControls());
 
         GridFormLayoutHelper informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);

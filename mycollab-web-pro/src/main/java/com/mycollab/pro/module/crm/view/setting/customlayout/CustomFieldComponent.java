@@ -4,6 +4,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -82,7 +83,7 @@ public class CustomFieldComponent extends CssLayout {
             }
         });
         saveBtn.setStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setIcon(FontAwesome.SAVE);
+        saveBtn.setIcon(VaadinIcons.PENCIL);
         panelContentLayout.addComponent(saveBtn);
         ((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
                 saveBtn, Alignment.MIDDLE_CENTER);

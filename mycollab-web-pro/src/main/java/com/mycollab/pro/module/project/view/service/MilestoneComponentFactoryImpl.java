@@ -5,27 +5,23 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.file.StorageUtils;
-import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.service.MilestoneComponentFactory;
-import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.PopupView;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**

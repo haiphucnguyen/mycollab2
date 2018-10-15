@@ -29,6 +29,7 @@ import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -135,7 +136,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
             invoice.setStatus(InvoiceStatus.Scheduled.name());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
         return new MHorizontalLayout(createBtn);
     }
@@ -295,7 +296,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                                 EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });
-            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.TRASH_O);
+            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(VaadinIcons.TRASH);
             deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);

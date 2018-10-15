@@ -39,7 +39,7 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
@@ -125,7 +125,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                     }
                     postExecution();
                 }
-            }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);

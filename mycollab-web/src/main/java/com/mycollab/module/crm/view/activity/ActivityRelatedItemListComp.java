@@ -29,6 +29,7 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -52,15 +53,15 @@ public class ActivityRelatedItemListComp extends RelatedListComp<SimpleActivity,
     private void initUI() {
         if (allowCreateNew) {
             final MButton newTaskBtn = new MButton(UserUIContext.getMessage(TaskI18nEnum.NEW), clickEvent -> fireNewRelatedItem("task"))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                     .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_TASK));
 
             final MButton newCallBtn = new MButton(UserUIContext.getMessage(CallI18nEnum.NEW), clickEvent -> fireNewRelatedItem("call"))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                     .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CALL));
 
             final MButton newMeetingBtn = new MButton(UserUIContext.getMessage(MeetingI18nEnum.NEW), clickEvent -> fireNewRelatedItem("meeting"))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                     .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_MEETING));
 
             this.addComponent(new MHorizontalLayout(newTaskBtn, newCallBtn, newMeetingBtn));

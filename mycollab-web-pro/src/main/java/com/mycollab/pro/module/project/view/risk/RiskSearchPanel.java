@@ -18,6 +18,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -50,7 +51,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
     protected Component buildExtraControls() {
         return new MButton(UserUIContext.getMessage(RiskI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null)))
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS)
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
     }
 

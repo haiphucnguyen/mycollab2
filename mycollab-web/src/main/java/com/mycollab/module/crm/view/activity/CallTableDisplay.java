@@ -49,7 +49,7 @@ public class CallTableDisplay extends DefaultPagedBeanTable<CallService, CallSea
 //        this.addGeneratedColumn("isClosed", (source, itemId, columnId) -> {
 //            final SimpleCall call = getBeanByIndex(itemId);
 //            MButton b = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(CallTableDisplay.this, call, "isClosed")))
-//                    .withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK);
+//                    .withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK);
 //            b.setDescription(UserUIContext.getMessage(CallI18nEnum.OPT_CLOSE_THIS_CALL));
 //            return b;
 //        });

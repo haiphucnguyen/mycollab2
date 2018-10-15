@@ -17,6 +17,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -47,7 +48,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             return new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         } else return null;
     }
 

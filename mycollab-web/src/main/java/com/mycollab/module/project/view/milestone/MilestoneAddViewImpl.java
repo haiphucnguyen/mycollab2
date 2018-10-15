@@ -29,6 +29,7 @@ import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
 
@@ -54,7 +55,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
     }
 
     @Override
-    protected FontAwesome initFormIconResource() {
+    protected VaadinIcons initFormIconResource() {
         return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
     }
 

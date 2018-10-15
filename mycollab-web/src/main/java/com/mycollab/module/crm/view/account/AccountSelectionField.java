@@ -23,6 +23,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -100,9 +101,9 @@ public class AccountSelectionField extends CustomField<Integer> implements Field
             AccountSelectionWindow accountWindow = new AccountSelectionWindow(AccountSelectionField.this);
             UI.getCurrent().addWindow(accountWindow);
             accountWindow.show();
-        }).withIcon(FontAwesome.ELLIPSIS_H).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
+        }).withIcon(VaadinIcons.ELLIPSIS_H).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
 
-        MButton clearBtn = new MButton("", clickEvent -> clearValue()).withIcon(FontAwesome.TRASH_O)
+        MButton clearBtn = new MButton("", clickEvent -> clearValue()).withIcon(VaadinIcons.TRASH)
                 .withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
 
         layout.with(accountName, browseBtn, clearBtn).expand(accountName);

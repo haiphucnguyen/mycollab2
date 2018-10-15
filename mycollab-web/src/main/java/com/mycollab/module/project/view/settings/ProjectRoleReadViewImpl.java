@@ -36,6 +36,7 @@ import com.mycollab.vaadin.web.ui.DefaultReadViewLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -60,7 +61,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
 
     public ProjectRoleReadViewImpl() {
         withMargin(new MarginInfo(true, false, true, false));
-        headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, UserUIContext.getMessage(ProjectRoleI18nEnum.DETAIL));
+        headerText = HeaderWithFontAwesome.h2(VaadinIcons.USERS, UserUIContext.getMessage(ProjectRoleI18nEnum.DETAIL));
         headerText.setSizeUndefined();
         this.addComponent(constructHeader());
 

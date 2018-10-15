@@ -34,9 +34,9 @@ import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -67,8 +67,8 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
     }
 
     @Override
-    protected FontAwesome initFormIconResource() {
-        return FontAwesome.GROUP;
+    protected VaadinIcons initFormIconResource() {
+        return VaadinIcons.GROUP;
     }
 
     @Override

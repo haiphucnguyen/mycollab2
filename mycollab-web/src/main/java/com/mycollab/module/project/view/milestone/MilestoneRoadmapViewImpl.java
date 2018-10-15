@@ -60,6 +60,7 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -227,7 +228,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             milestone.setSaccountid(AppUI.getAccountId());
             milestone.setProjectid(CurrentProjectVariables.getProjectId());
             UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
         MButton printBtn = new MButton("", clickEvent ->

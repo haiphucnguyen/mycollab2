@@ -10,6 +10,7 @@ import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.IntegerDe
 import com.mycollab.pro.module.crm.view.setting.customlayout.fieldinfo.TextDetailFieldInfoPanel;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -86,7 +87,7 @@ public class CreateCustomFieldWindow extends Window {
             DynaSection section = fieldPanel.updateCustomField();
             viewParent.refreshSectionLayout(section);
             close();
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);

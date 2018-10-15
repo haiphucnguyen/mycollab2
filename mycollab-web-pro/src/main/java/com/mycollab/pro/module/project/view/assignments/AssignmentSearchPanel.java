@@ -13,6 +13,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.joda.time.LocalDate;
@@ -54,7 +55,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectTick
         if (isCreateAssignment) {
             return new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
                     clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(new
-                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), null, true))).withIcon(FontAwesome.PLUS).withStyleName(BUTTON_ACTION);
+                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), null, true))).withIcon(VaadinIcons.PLUS).withStyleName(BUTTON_ACTION);
         }
         return null;
     }

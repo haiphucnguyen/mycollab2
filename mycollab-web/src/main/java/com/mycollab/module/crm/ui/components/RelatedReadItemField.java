@@ -24,6 +24,7 @@ import com.mycollab.module.crm.service.*;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.web.ui.LabelLink;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -57,7 +58,7 @@ public class RelatedReadItemField extends CustomField {
                 return new Label("");
             }
 
-            FontAwesome relatedLink = null;
+            VaadinIcons relatedLink = null;
             String relateItemName = null;
 
             if (CrmTypeConstants.ACCOUNT.equals(type)) {

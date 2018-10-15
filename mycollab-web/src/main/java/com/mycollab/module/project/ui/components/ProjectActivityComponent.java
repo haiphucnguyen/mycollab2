@@ -45,6 +45,7 @@ import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.mycollab.vaadin.web.ui.AttachmentDisplayComponent;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -196,7 +197,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                 .withStyleName(UIConstants.META_INFO);
 
         if (hasDeletePermission(comment)) {
-            MButton msgDeleteBtn = new MButton(FontAwesome.TRASH_O).withListener(clickEvent -> {
+            MButton msgDeleteBtn = new MButton(VaadinIcons.TRASH).withListener(clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),

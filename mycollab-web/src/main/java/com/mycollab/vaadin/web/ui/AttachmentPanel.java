@@ -27,7 +27,7 @@ import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -78,7 +78,7 @@ public class AttachmentPanel extends CssLayout {
             }
             fileStores.remove(fileName);
             AttachmentPanel.this.removeComponent(fileAttachmentLayout);
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
         ELabel fileLbl = ELabel.html(fileName).withDescription(fileName).withStyleName(UIConstants.TEXT_ELLIPSIS);
         fileAttachmentLayout.with(ELabel.fontIcon(FileAssetsUtil.getFileIconResource(fileName)).withUndefinedWidth(),

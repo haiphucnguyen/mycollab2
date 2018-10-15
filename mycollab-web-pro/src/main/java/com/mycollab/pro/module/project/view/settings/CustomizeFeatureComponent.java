@@ -14,6 +14,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.BlockWidget;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.VerticalLayout;
@@ -118,7 +119,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
             CurrentProjectVariables.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.isAdmin());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withVisible(CurrentProjectVariables.isAdmin());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);

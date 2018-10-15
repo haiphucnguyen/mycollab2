@@ -28,6 +28,7 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -76,7 +77,7 @@ public class TagViewComponent extends CssLayout {
 
     private Button createAddTagBtn() {
         final MButton addTagBtn = new MButton(UserUIContext.getMessage(TagI18nEnum.ACTION_ADD))
-                .withIcon(FontAwesome.PLUS_CIRCLE).withStyleName(WebThemes.BUTTON_LINK);
+                .withIcon(VaadinIcons.PLUS_CIRCLE).withStyleName(WebThemes.BUTTON_LINK);
         addTagBtn.addClickListener(clickEvent -> {
             removeComponent(addTagBtn);
             addComponent(createSaveTagComp());

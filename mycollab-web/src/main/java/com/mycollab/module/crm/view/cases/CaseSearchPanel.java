@@ -35,6 +35,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -71,7 +72,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
     protected Component buildExtraControls() {
         return (canCreateCase) ? new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW),
                 clickEvent -> EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) : null;
     }
 

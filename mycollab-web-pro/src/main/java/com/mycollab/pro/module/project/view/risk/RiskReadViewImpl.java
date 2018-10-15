@@ -17,6 +17,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
@@ -138,7 +139,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = ELabel.html(FontAwesome.USER.getHtml() + " " +
+            Label peopleInfoHeader = ELabel.html(VaadinIcons.USER.getHtml() + " " +
                     UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE)).withStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 

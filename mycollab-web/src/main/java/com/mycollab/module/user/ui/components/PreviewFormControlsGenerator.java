@@ -21,6 +21,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -65,7 +66,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
     public HorizontalLayout createButtonControls(int buttonEnableFlags, String permissionItem) {
         optionBtn = new PopupButton();
         optionBtn.addStyleName(WebThemes.BUTTON_OPTION);
-        optionBtn.setIcon(FontAwesome.ELLIPSIS_H);
+        optionBtn.setIcon(VaadinIcons.ELLIPSIS_H);
 
         if (permissionItem != null) {
             boolean canWrite = UserUIContext.canWrite(permissionItem);
@@ -77,7 +78,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                     optionBtn.setPopupVisible(false);
                     T item = previewForm.getBean();
                     previewForm.fireAddForm(item);
-                }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
                 editButtons.addComponent(addBtn);
             }
 
@@ -94,7 +95,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                     T item = previewForm.getBean();
                     previewForm.fireDeleteForm(item);
-                }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
+                }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_DANGER);
                 editButtons.addComponent(deleteBtn);
             }
 

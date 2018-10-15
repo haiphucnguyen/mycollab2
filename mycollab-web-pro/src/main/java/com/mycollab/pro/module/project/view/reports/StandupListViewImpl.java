@@ -25,9 +25,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -196,7 +196,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             } else {
                 NotificationUtil.showErrorNotification("You do not select any project");
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
 
         header.with(newReportBtn).withAlign(newReportBtn, Alignment.TOP_RIGHT);
         this.addComponent(header);

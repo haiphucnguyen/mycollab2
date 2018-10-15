@@ -23,6 +23,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -48,12 +49,12 @@ public class ContactSelectionField extends CustomField<Integer> implements Field
             ContactSelectionWindow contactWindow = new ContactSelectionWindow(ContactSelectionField.this);
             UI.getCurrent().addWindow(contactWindow);
             contactWindow.show();
-        }).withIcon(FontAwesome.ELLIPSIS_H).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
+        }).withIcon(VaadinIcons.ELLIPSIS_H).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
 
         clearBtn = new MButton("", clickEvent -> {
             contactName.setValue("");
             contact = null;
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
     }
 
     @Override

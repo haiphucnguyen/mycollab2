@@ -23,11 +23,10 @@ import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -64,7 +63,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
-                .withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
         saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),

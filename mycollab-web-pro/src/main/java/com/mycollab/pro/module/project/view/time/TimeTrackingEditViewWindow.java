@@ -18,6 +18,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -98,7 +99,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
 

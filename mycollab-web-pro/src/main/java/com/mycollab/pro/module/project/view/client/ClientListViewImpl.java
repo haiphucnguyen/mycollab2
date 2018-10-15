@@ -28,6 +28,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -93,7 +94,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                 .withVisible(UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
         deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
 

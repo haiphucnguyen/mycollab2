@@ -24,6 +24,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -131,7 +132,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE)
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL)
                 .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);

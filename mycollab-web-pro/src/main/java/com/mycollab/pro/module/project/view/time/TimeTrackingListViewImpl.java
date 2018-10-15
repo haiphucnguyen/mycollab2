@@ -35,6 +35,7 @@ import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -118,7 +119,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow();
             UI.getCurrent().addWindow(addTimeEntry);
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.PLUS);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS);
         createBtn.setVisible(!CurrentProjectVariables.isProjectArchived() &&
                 CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TIME));
         groupWrapLayout.addComponent(createBtn);

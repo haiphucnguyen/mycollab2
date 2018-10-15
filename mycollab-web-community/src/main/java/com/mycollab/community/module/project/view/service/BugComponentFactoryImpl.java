@@ -31,10 +31,10 @@ import com.mycollab.module.project.view.service.BugComponentFactory;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 
 import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 

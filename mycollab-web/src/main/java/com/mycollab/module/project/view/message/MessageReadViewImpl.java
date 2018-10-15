@@ -41,6 +41,7 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -67,8 +68,6 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
     private CheckBox stickyCheck;
 
     public MessageReadViewImpl() {
-        super();
-
         header = new MHorizontalLayout().withMargin(true).withStyleName("hdr-view").withFullWidth();
         previewForm = new AdvancedPreviewBeanForm<>();
 
@@ -123,7 +122,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                                 previewForm.fireCancelForm(message);
                             }
                         });
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_DANGER);
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_DANGER);
             deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             stickyCheck = new CheckBox(UserUIContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());

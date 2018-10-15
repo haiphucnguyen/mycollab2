@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,10 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.web.ui.*;
+import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
+import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -182,7 +185,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
+            Label peopleInfoHeader = new Label(VaadinIcons.USER.getHtml() + " " +
                     UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);

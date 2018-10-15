@@ -45,6 +45,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.AddViewLayout2;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -103,7 +104,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
     private ComponentContainer createButtonControls() {
         MButton updateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), clickEvent ->
-                updateContactRoles()).withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
+                updateContactRoles()).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                 clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null)))
@@ -255,7 +256,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
                     associateOpportunity.setOpportunityid(opportunity.getId());
                     contactService.removeContactOpportunityRelationship(associateOpportunity, AppUI.getAccountId());
                 }
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             this.addComponent(deleteBtn);
             this.setExpandRatio(deleteBtn, 1.0f);
         }

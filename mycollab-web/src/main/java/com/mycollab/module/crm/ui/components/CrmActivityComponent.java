@@ -46,6 +46,7 @@ import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.mycollab.vaadin.web.ui.AttachmentDisplayComponent;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -207,7 +208,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
                                     activityBox.removeComponent(layout);
                                 }
                             })
-            ).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+            ).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             messageHeader.with(timePostLbl, msgDeleteBtn).expand(timePostLbl);
         } else {

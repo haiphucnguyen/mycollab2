@@ -26,6 +26,7 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -348,7 +349,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
 
             SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
             if (billingAccount.isNotActive()) {

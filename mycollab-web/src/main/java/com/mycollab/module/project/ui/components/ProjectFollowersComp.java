@@ -40,6 +40,7 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -118,7 +119,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             });
             header.addComponent(addPopupView);
         }
-        header.addComponent(ELabel.fontIcon(FontAwesome.QUESTION_CIRCLE).withStyleName(WebThemes.INLINE_HELP)
+        header.addComponent(ELabel.fontIcon(VaadinIcons.QUESTION_CIRCLE).withStyleName(WebThemes.INLINE_HELP)
                 .withDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP)));
 
         this.addComponent(header);

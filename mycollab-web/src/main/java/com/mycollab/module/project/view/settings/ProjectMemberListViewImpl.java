@@ -50,6 +50,7 @@ import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -186,7 +187,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
                             EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, CurrentProjectVariables.getProjectId()));
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_LINK)
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS))
                 .withDescription("Remove user '" + member.getDisplayName() + "' out of this project");
 

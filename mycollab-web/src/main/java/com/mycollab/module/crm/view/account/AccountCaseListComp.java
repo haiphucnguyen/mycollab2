@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.AbstractBeanBlockList;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
@@ -99,7 +99,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
 
         if (UserUIContext.canWrite(RolePermissionCollections.CRM_CASE)) {
             MButton createBtn = new MButton(UserUIContext.getMessage(CaseI18nEnum.NEW), clickEvent -> fireNewRelatedItem(""))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
             controlsBtnWrap.with(createBtn).withAlign(createBtn, Alignment.TOP_RIGHT);
         }
 
@@ -152,7 +152,7 @@ public class AccountCaseListComp extends RelatedListComp2<CaseService, CaseSearc
                                     AccountCaseListComp.this.refresh();
                                 }
                             })
-            ).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+            ).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             blockContent.addComponent(deleteBtn);
             blockContent.setComponentAlignment(deleteBtn, Alignment.TOP_RIGHT);
