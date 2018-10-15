@@ -87,7 +87,7 @@ public class CreateCustomFieldWindow extends Window {
             DynaSection section = fieldPanel.updateCustomField();
             viewParent.refreshSectionLayout(section);
             close();
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);

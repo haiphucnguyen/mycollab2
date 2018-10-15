@@ -75,7 +75,7 @@ class AdvancedInfoChangeWindow extends MWindow {
                 .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> changeInfo())
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(false, true, false, true));
         mainLayout.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);

@@ -77,7 +77,7 @@ public abstract class MassUpdateWindow<B> extends MWindow {
             updateForm.commit();
             massUpdateCommand.massUpdate(beanItem);
             close();
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 
         closeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);

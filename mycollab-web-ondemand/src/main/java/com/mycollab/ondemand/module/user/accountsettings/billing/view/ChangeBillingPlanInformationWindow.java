@@ -65,7 +65,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                         close();
                         Page.getCurrent().getJavaScript().execute("window.location.reload();");
                     }
-                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);

@@ -114,7 +114,7 @@ public class LogoEditWindow extends MWindow {
                     throw new MyCollabException("Error when saving account logo", e);
                 }
             }
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withClickShortcut(ShortcutAction.KeyCode.ENTER);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlBtns = new MHorizontalLayout(acceptBtn, cancelBtn);
         previewBoxRight.with(controlBtns).withAlign(controlBtns, Alignment.TOP_LEFT);

@@ -125,7 +125,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     EventBusFactory.getInstance().post(new TicketEvent.NewTicketAdded(TaskEditForm.this,
                             ProjectTypeConstants.TASK, taskId));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);

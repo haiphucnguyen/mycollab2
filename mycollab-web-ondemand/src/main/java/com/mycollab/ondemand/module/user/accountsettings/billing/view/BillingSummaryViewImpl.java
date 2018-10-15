@@ -349,7 +349,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 
             SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
             if (billingAccount.isNotActive()) {

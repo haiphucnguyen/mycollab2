@@ -119,7 +119,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
             CurrentProjectVariables.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL).withVisible(CurrentProjectVariables.isAdmin());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withVisible(CurrentProjectVariables.isAdmin());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);

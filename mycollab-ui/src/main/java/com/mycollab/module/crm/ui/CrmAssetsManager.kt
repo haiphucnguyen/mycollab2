@@ -36,7 +36,7 @@ object CrmAssetsManager {
             CrmTypeConstants.MEETING to VaadinIcons.CALENDAR_O,
             CrmTypeConstants.CAMPAIGN to VaadinIcons.TROPHY,
             CrmTypeConstants.DETAIL to VaadinIcons.LIST,
-            CrmTypeConstants.NOTE to VaadinIcons.PENCIL
+            CrmTypeConstants.NOTE to VaadinIcons.CLIPBOARD
     )
 
     @JvmStatic fun getAsset(resId: String): VaadinIcons =

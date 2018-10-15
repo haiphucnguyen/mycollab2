@@ -54,7 +54,7 @@ public class CreateSectionWindow extends Window {
             close();
         });
         saveBtn.setStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setIcon(VaadinIcons.PENCIL);
+        saveBtn.setIcon(VaadinIcons.CLIPBOARD);
 
 
         Button cancelBtn = new Button(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), event -> close());

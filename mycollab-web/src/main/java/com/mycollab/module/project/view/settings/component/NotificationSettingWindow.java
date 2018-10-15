@@ -88,7 +88,7 @@ public class NotificationSettingWindow extends MWindow {
 //            } catch (Exception e) {
 //                throw new MyCollabException(e);
 //            }
-//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL);
+//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 //        MHorizontalLayout btnControls = new MHorizontalLayout(closeBtn, saveBtn);
 //        body.with(btnControls).withAlign(btnControls, Alignment.TOP_RIGHT);
 //

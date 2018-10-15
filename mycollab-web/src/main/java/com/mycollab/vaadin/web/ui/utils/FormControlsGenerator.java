@@ -21,7 +21,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComponentContainer;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -50,7 +49,7 @@ public class FormControlsGenerator {
                 if (editForm.validateForm()) {
                     editForm.fireSaveAndNewForm();
                 }
-            }).withIcon(FontAwesome.SHARE_ALT).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD_CROSS).withStyleName(WebThemes.BUTTON_ACTION);
             layout.addComponent(saveAndNewBtn);
         }
 
@@ -59,7 +58,7 @@ public class FormControlsGenerator {
                 if (editForm.validateForm()) {
                     editForm.fireSaveForm();
                 }
-            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
             layout.addComponent(saveBtn);
         }
 

@@ -132,7 +132,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PENCIL)
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD)
                 .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);

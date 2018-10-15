@@ -63,7 +63,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
-                .withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
         saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),

@@ -83,7 +83,7 @@ public class CustomFieldComponent extends CssLayout {
             }
         });
         saveBtn.setStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setIcon(VaadinIcons.PENCIL);
+        saveBtn.setIcon(VaadinIcons.CLIPBOARD);
         panelContentLayout.addComponent(saveBtn);
         ((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
                 saveBtn, Alignment.MIDDLE_CENTER);

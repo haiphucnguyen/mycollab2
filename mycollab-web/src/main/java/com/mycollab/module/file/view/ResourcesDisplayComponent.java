@@ -449,7 +449,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
                 resourcesContainer.constructBody(baseFolder);
                 close();
-            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);
@@ -497,7 +497,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     NotificationUtil.showErrorNotification(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
                             UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
                 }
-            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);

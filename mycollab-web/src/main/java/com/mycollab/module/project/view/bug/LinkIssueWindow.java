@@ -102,7 +102,7 @@ public class LinkIssueWindow extends MWindow {
                         close();
                         EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedBug.getId()));
                     }
-                }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+                }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);

@@ -106,7 +106,7 @@ public class CrmCustomViewImpl extends AbstractVerticalPageView implements ICrmC
             DynaForm rebuildForm = layoutComp.rebuildForm();
             MasterFormService formService = AppContextUtil.getSpringBean(MasterFormService.class);
             formService.saveCustomForm(AppUI.getAccountId(), moduleName, rebuildForm);
-        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> display(moduleName))
                 .withStyleName(WebThemes.BUTTON_OPTION);

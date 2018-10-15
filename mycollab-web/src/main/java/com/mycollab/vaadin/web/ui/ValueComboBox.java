@@ -36,19 +36,15 @@ public class ValueComboBox extends ComboBox {
      */
     public ValueComboBox(boolean nullIsAllowable, String... values) {
         this();
-//        this.setNullSelectionAllowed(nullIsAllowable);
-//        this.setImmediate(true);
-//        this.loadData(values);
-//
-//        this.select(this.getItemIds().iterator().next());
+        this.setEmptySelectionAllowed(nullIsAllowable);
+        this.loadData(values);
     }
 
     public final void loadData(String... values) {
-//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-//        Stream.of(values).forEach(value -> addItem(value));
-//
-//        if (!this.isNullSelectionAllowed()) {
-//            this.select(this.getItemIds().iterator().next());
-//        }
+        this.setItems(values);
+
+        if (!this.isEmptySelectionAllowed() && values.length > 0) {
+            this.setSelectedItem(values[0]);
+        }
     }
 }

@@ -106,7 +106,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             String queryText = queryTextField.getValue();
             saveSearchCriteria(queryText);
-        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
         filterBox.addComponent(saveBtn);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> buildFilterBox(null))

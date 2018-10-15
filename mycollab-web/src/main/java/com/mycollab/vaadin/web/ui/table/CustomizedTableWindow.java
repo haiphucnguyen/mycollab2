@@ -96,7 +96,7 @@ public abstract class CustomizedTableWindow extends MWindow {
 //            viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(selectedColumns)));
 //            customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
 //            close();
-//        }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+//        }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 //
 //        final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
 //                .withStyleName(WebThemes.BUTTON_OPTION);

@@ -309,7 +309,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                     NotificationUtil.showErrorNotification(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
                             UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE)));
                 }
-            }).withIcon(VaadinIcons.PENCIL).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
             MHorizontalLayout controls = new MHorizontalLayout(attachments, chkIsStick, cancelBtn, saveBtn)
                     .expand(attachments).withFullWidth().alignAll(Alignment.TOP_LEFT);
