@@ -83,14 +83,14 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
         headerText = ComponentUtils.headerH2(ProjectTypeConstants.MEMBER, UserUIContext.getMessage(ProjectMemberI18nEnum.LIST));
         viewHeader.with(headerText).expand(headerText);
 
-        final MButton sortBtn = new MButton().withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+        final MButton sortBtn = new MButton().withIcon(VaadinIcons.CARET_UP).withStyleName(WebThemes.BUTTON_ICON_ONLY);
         sortBtn.addClickListener(clickEvent -> {
             sortAsc = !sortAsc;
             if (sortAsc) {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                sortBtn.setIcon(VaadinIcons.CARET_UP);
                 displayMembers();
             } else {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                sortBtn.setIcon(VaadinIcons.CARET_DOWN);
                 displayMembers();
             }
         });
@@ -117,7 +117,7 @@ public class ProjectMemberListViewImpl extends AbstractVerticalPageView implemen
             protected Object doEval() {
                 return searchCriteria;
             }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         viewHeader.addComponent(printBtn);
 
         MButton createBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES),

@@ -113,7 +113,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             protected Object doEval() {
                 return searchCriteria;
             }
-        }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
+        }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         groupWrapLayout.addComponent(printBtn);
 
         MButton createBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {

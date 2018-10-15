@@ -136,7 +136,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.SEARCH).withStyleName(WebThemes.BUTTON_ACTION);
 
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 

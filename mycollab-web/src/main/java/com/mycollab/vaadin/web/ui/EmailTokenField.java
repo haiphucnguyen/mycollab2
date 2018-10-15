@@ -26,7 +26,7 @@ import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -159,7 +159,7 @@ class EmailTokenField extends CssLayout  {
 //    }
 
     private Component generateToken(final String email) {
-        MButton btn = new MButton(email).withIcon(FontAwesome.TIMES).withStyleName("token-field");
+        MButton btn = new MButton(email).withIcon(VaadinIcons.CLOSE_SMALL).withStyleName("token-field");
         btn.addClickListener(clickEvent -> {
             EmailTokenField.this.removeComponent(btn);
             inviteEmails.remove(email);
@@ -168,7 +168,7 @@ class EmailTokenField extends CssLayout  {
     }
 
     private Component generateToken(final SimpleUser user) {
-        final Button btn = new Button("", FontAwesome.TIMES);
+        final Button btn = new Button("", VaadinIcons.CLOSE_SMALL);
         btn.setCaptionAsHtml(true);
         btn.setCaption((new Img("", StorageUtils.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user.getDisplayName());
         btn.addClickListener(clickEvent -> {

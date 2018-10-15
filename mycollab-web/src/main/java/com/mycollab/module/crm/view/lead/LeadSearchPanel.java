@@ -108,7 +108,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
             layout.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
             layout.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 

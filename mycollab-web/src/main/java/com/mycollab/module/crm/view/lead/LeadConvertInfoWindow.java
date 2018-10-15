@@ -31,6 +31,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -105,11 +106,11 @@ public class LeadConvertInfoWindow extends MWindow {
 
         MVerticalLayout infoLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, true));
 
-        String createAccountTxt = FontAwesome.CHECK.getHtml() + " Create Account: " + lead.getAccountname();
+        String createAccountTxt = VaadinIcons.CHECK.getHtml() + " Create Account: " + lead.getAccountname();
         Label createAccountLbl = new Label(createAccountTxt, ContentMode.HTML);
         infoLayout.addComponent(createAccountLbl);
 
-        String createContactTxt = FontAwesome.CHECK.getHtml() + " Create Contact: " + lead.getLastname()
+        String createContactTxt = VaadinIcons.CHECK.getHtml() + " Create Contact: " + lead.getLastname()
                 + (lead.getFirstname() != null ? " " + lead.getFirstname() : "");
         Label createContactLbl = new Label(createContactTxt, ContentMode.HTML);
         infoLayout.addComponent(createContactLbl);

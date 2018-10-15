@@ -150,15 +150,15 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             OptionPopupContent contentLayout = new OptionPopupContent();
             contentLayout.setWidth("550px");
 
-            final MButton sortBtn = new MButton(FontAwesome.SORT_ALPHA_ASC);
+            final MButton sortBtn = new MButton(VaadinIcons.CARET_UP);
             sortBtn.withListener(clickEvent -> {
                 isSortAsc = !isSortAsc;
                 if (searchCriteria != null) {
                     if (isSortAsc) {
-                        sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                        sortBtn.setIcon(VaadinIcons.CARET_UP);
                         searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
                     } else {
-                        sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                        sortBtn.setIcon(VaadinIcons.CARET_DOWN);
                         searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
                     }
                     displayResults();
@@ -171,7 +171,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
             MButton searchBtn = new MButton("", clickEvent -> {
                 searchCriteria.setProjectName(StringSearchField.and(searchField.getValue()));
                 displayResults();
-            }).withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.SEARCH).withStyleName(WebThemes.BUTTON_ACTION);
 
             MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
                     .withFullWidth().withStyleName("border-bottom");

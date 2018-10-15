@@ -37,6 +37,7 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -136,7 +137,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 protected Object doEval() {
                     return searchCriteria;
                 }
-            }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
+            }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                     .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
             headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);

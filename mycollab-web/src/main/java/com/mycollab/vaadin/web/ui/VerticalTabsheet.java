@@ -20,8 +20,8 @@ import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ErrorMessage;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.ContentMode;
@@ -187,7 +187,7 @@ public class VerticalTabsheet extends CustomComponent {
             this.hideTabsCaption();
 
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
-            toggleBtn.setIcon(FontAwesome.ANGLE_DOUBLE_RIGHT);
+            toggleBtn.setIcon(VaadinIcons.ANGLE_DOUBLE_RIGHT);
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
             toggleBtn.setCaption("");
@@ -198,7 +198,7 @@ public class VerticalTabsheet extends CustomComponent {
 
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
-            toggleBtn.setIcon(FontAwesome.TIMES);
+            toggleBtn.setIcon(VaadinIcons.CLOSE_SMALL);
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
         }
     }

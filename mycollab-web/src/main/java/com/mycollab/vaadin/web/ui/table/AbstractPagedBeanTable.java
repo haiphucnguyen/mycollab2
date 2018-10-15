@@ -344,7 +344,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 //        }
 //
 //        if (StringUtils.isNotBlank((String) sortColumnId)) {
-//            tableItem.setColumnIcon(sortColumnId, isAscending ? FontAwesome.CARET_DOWN : FontAwesome.CARET_UP);
+//            tableItem.setColumnIcon(sortColumnId, isAscending ? VaadinIcons.CARET_DOWN : FontAwesome.CARET_UP);
 //        }
 //
 //        tableItem.addHeaderClickListener(headerClickEvent -> {

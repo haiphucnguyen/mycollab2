@@ -12,7 +12,7 @@ import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -63,7 +63,7 @@ class ProjectTicketSelectionWindow extends MWindow {
         nameField.setWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
         final MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH);
 
         final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
                 .withStyleName(WebThemes.BUTTON_OPTION);

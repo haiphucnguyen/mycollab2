@@ -72,14 +72,14 @@ public class ProjectMembersWidget extends Depot {
 
     public ProjectMembersWidget() {
         super("", new CssLayout());
-        final MButton sortBtn = new MButton().withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+        final MButton sortBtn = new MButton().withIcon(VaadinIcons.CARET_UP).withStyleName(WebThemes.BUTTON_ICON_ONLY);
         sortBtn.addClickListener(clickEvent -> {
             sortAsc = !sortAsc;
             if (sortAsc) {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                sortBtn.setIcon(VaadinIcons.CARET_UP);
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
             } else {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                sortBtn.setIcon(VaadinIcons.CARET_DOWN);
                 searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
                         SearchCriteria.DESC)));
             }

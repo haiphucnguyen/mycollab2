@@ -55,6 +55,7 @@ import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -123,14 +124,14 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             isSortAsc = !isSortAsc;
             if (searchCriteria != null) {
                 if (isSortAsc) {
-                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                    sortBtn.setIcon(VaadinIcons.CARET_UP);
                 } else {
-                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                    sortBtn.setIcon(VaadinIcons.CARET_DOWN);
                 }
                 displayFavoriteList();
             }
         });
-        sortBtn.withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY).withWidth("-1px");
+        sortBtn.withIcon(VaadinIcons.CARET_UP).withStyleName(WebThemes.BUTTON_ICON_ONLY).withWidth("-1px");
 
         final SearchTextField searchTextField = new SearchTextField() {
             @Override

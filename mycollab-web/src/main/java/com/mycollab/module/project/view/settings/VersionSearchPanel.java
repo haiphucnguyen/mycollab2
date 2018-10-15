@@ -89,7 +89,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
             basicSearchBody.with(nameField);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
             basicSearchBody.with(searchBtn);
 

@@ -17,6 +17,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -124,7 +125,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH);
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH);
 
             MButton clearBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> userField.setValue(null))
                     .withStyleName(WebThemes.BUTTON_OPTION);

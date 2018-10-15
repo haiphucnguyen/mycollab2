@@ -170,7 +170,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                     protected Object doEval() {
                         return baseCriteria;
                     }
-                }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
+                }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
         groupWrapLayout.addComponent(printBtn);
 

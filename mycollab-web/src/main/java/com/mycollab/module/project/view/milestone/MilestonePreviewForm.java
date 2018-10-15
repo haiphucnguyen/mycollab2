@@ -52,7 +52,7 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.ContainerViewField;
 import com.vaadin.data.HasValue;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -93,7 +93,7 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
                 return new RichTextViewField(milestone.getDescription());
             } else if (Milestone.Field.status.equalTo(propertyId)) {
                 String milestoneStatus = UserUIContext.getMessage(MilestoneStatus.class, milestone.getStatus());
-                FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
+                VaadinIcons statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
                 return new DefaultViewField(statusIcon.getHtml() + " " + milestoneStatus, ContentMode.HTML)
                         .withStyleName(UIConstants.FIELD_NOTE);
             } else if (Milestone.Field.id.equalTo(propertyId)) {

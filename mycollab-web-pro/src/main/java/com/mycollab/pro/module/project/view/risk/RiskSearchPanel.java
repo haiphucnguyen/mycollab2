@@ -83,7 +83,7 @@ class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
             myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))

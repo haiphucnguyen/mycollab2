@@ -230,7 +230,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch())
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SEARCH)
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
             final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withUndefinedWidth()
                     .withAlign(nameField, Alignment.MIDDLE_LEFT);

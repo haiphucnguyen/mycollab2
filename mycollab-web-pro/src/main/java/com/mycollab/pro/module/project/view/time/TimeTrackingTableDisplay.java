@@ -106,13 +106,13 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 //
 //        this.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
 //                    SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-//                    return (timeLogging.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//                    return (timeLogging.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
 //                }
 //        );
 //
 //        this.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
 //                    SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-//                    return (Boolean.TRUE.equals(timeLogging.getIsovertime())) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//                    return (Boolean.TRUE.equals(timeLogging.getIsovertime())) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
 //                }
 //        );
 //

@@ -119,11 +119,11 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
         if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
             removeLayoutStyleName(WebThemes.LINK_COMPLETED);
             quickActionStatusBtn.setCaption(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE));
-            quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
+            quickActionStatusBtn.setIcon(VaadinIcons.ARCHIVE);
         } else {
             addLayoutStyleName(WebThemes.LINK_COMPLETED);
             quickActionStatusBtn.setCaption(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN));
-            quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
+            quickActionStatusBtn.setIcon(VaadinIcons.CLIPBOARD);
         }
 
     }
@@ -152,12 +152,12 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
                 beanItem.setStatus(StatusI18nEnum.Open.name());
                 ComponentReadViewImpl.this.removeLayoutStyleName(WebThemes.LINK_COMPLETED);
                 quickActionStatusBtn.setCaption(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLOSE));
-                quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
+                quickActionStatusBtn.setIcon(VaadinIcons.ARCHIVE);
             } else {
                 beanItem.setStatus(StatusI18nEnum.Closed.name());
                 ComponentReadViewImpl.this.addLayoutStyleName(WebThemes.LINK_COMPLETED);
                 quickActionStatusBtn.setCaption(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN));
-                quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
+                quickActionStatusBtn.setIcon(VaadinIcons.CLIPBOARD);
             }
 
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);

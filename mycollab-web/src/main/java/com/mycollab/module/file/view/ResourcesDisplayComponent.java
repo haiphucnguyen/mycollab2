@@ -375,7 +375,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
 
             if (resource instanceof Content) {
-                ELabel lbl = ELabel.html(FontAwesome.ARCHIVE.getHtml() + " " + FileUtils.getVolumeDisplay(resource.getSize()))
+                ELabel lbl = ELabel.html(VaadinIcons.ARCHIVE.getHtml() + " " + FileUtils.getVolumeDisplay(resource.getSize()))
                         .withStyleName(UIConstants.META_INFO);
                 moreInfoAboutResLayout.addComponent(lbl);
             }

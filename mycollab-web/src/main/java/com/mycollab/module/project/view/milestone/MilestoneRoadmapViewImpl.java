@@ -145,7 +145,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         futureMilestoneSelection.addValueChangeListener(valueChangeEvent ->
                 displayMilestones(baseCriteria, closeMilestoneSelection.getValue(), inProgressMilestoneSelection.getValue(),
                         futureMilestoneSelection.getValue()));
-        futureMilestoneSelection.setIcon(FontAwesome.CLOCK_O);
+        futureMilestoneSelection.setIcon(VaadinIcons.CLOCK);
 
         filterPanel.with(closeMilestoneSelection, inProgressMilestoneSelection, futureMilestoneSelection);
         displayWidget();
@@ -238,7 +238,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                         return baseCriteria;
                     }
                 }))
-        ).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
+        ).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
@@ -268,7 +268,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         MilestoneBlock(final SimpleMilestone milestone) {
             this.withMargin(new MarginInfo(true, false, true, false)).withStyleName("roadmap-block");
 
-            FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
+            VaadinIcons statusIcon = ProjectAssetsUtil.getPhaseIcon(milestone.getStatus());
             ELabel statusLbl = ELabel.html(statusIcon.getHtml() + " " + UserUIContext.getMessage(MilestoneStatus.class,
                     milestone.getStatus())).withStyleName(UIConstants.BLOCK).withUndefinedWidth();
             ToggleMilestoneSummaryField toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone, false, true);

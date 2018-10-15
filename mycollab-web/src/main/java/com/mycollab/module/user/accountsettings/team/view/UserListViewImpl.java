@@ -81,14 +81,14 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
         headerText = HeaderWithFontAwesome.h2(VaadinIcons.USERS, UserUIContext.getMessage(UserI18nEnum.LIST) + " " +
                 UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, 0));
 
-        final MButton sortBtn = new MButton().withIcon(FontAwesome.SORT_ALPHA_ASC).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+        final MButton sortBtn = new MButton().withIcon(VaadinIcons.CARET_UP).withStyleName(WebThemes.BUTTON_ICON_ONLY);
         sortBtn.addClickListener(clickEvent -> {
             sortAsc = !sortAsc;
             if (sortAsc) {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                sortBtn.setIcon(VaadinIcons.CARET_UP);
                 displayUsers();
             } else {
-                sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                sortBtn.setIcon(VaadinIcons.CARET_DOWN);
                 displayUsers();
             }
         });
@@ -115,7 +115,7 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
                     protected Object doEval() {
                         return searchCriteria;
                     }
-                }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
+                }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         header.with(headerText, sortBtn, searchTextField, printBtn, createBtn).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);

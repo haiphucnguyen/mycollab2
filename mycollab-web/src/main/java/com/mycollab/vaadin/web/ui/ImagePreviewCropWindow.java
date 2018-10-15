@@ -24,7 +24,6 @@ import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -92,7 +91,7 @@ public class ImagePreviewCropWindow extends MWindow {
                     throw new MyCollabException("Error when saving user avatar", e);
                 }
             }
-        }).withIcon(FontAwesome.CHECK).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.CHECK).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout controlBtns = new MHorizontalLayout(acceptBtn, cancelBtn);
 

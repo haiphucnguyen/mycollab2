@@ -240,7 +240,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                                 }
                             });
-                }).withIcon(FontAwesome.ARCHIVE);
+                }).withIcon(VaadinIcons.ARCHIVE);
                 popupButtonsControl.addOption(archiveProjectBtn);
             }
 
