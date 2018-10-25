@@ -16,6 +16,9 @@
  */
 package com.mycollab.vaadin.web.ui;
 
+import com.mycollab.vaadin.ui.ELabel;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -41,18 +44,18 @@ public class Depot extends DDVerticalLayout {
         headerContent = new MHorizontalLayout().withFullHeight().withUndefinedWidth().withVisible(false);
         this.addComponent(header);
 
-        headerLbl = new Label(title);
+        headerLbl = new Label(VaadinIcons.PLUS.getHtml() + title, ContentMode.HTML);
         final MHorizontalLayout headerLeft = new MHorizontalLayout(headerLbl).withStyleName("depot-title")
                 .withAlign(headerLbl, Alignment.MIDDLE_LEFT).withFullWidth();
         headerLeft.addLayoutClickListener(layoutClickEvent -> {
             isOpened = !isOpened;
             if (isOpened) {
+                headerLbl.setValue(VaadinIcons.PLUS.getHtml() + title);
                 bodyContent.setVisible(true);
-                removeStyleName("collapsed");
                 header.removeStyleName("border-bottom");
             } else {
+                headerLbl.setValue(VaadinIcons.MINUS.getHtml() + title);
                 bodyContent.setVisible(false);
-                addStyleName("collapsed");
                 header.addStyleName("border-bottom");
             }
         });

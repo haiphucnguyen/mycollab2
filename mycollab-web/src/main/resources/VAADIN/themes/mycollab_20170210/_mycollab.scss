@@ -628,12 +628,6 @@ $v-line-height--header:1.5em;
         padding: 0px $my-space;
         display: inline-flex;
         font-size: 16px;
-        &::before {
-          content:'\f0d7';
-          font-family:FontAwesome;
-          font-size:16px;
-          padding-right: 5px;
-        }
       }
     }
     .depotContent {
@@ -652,13 +646,6 @@ $v-line-height--header:1.5em;
         @include margin-container(5px, 5px, 5px, 5px);
       }
     }
-  }
-
-  .depotComp.collapsed .depotHeader .depot-title::before {
-    content:'\f0da';
-    font-family:FontAwesome;
-    font-size:16px;
-    padding-right: 5px;
   }
 
   .depotComp {
