@@ -477,7 +477,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
 
             UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
-//            projectListSelect.setNullSelectionAllowed(false);
+//            projectListSelect.setEmptySelectionAllowed(false);
 //            if (projectId != null) {
 //                projectListSelect.setValue(projectId);
 //            } else {
@@ -498,7 +498,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             });
 
             loadAssociateTicketTypePerProject();
-//            typeSelection.setNullSelectionAllowed(false);
+//            typeSelection.setEmptySelectionAllowed(false);
 //            if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
 //                typeSelection.select(typeSelection.getItemIds().iterator().next());
 //            } else {

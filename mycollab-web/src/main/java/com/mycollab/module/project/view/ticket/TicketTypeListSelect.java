@@ -26,7 +26,7 @@ import com.vaadin.ui.ListSelect;
 class TicketTypeListSelect extends ListSelect {
     TicketTypeListSelect() {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setMultiSelect(true);
 //        this.setRows(3);
 //

@@ -27,7 +27,7 @@ public class MilestoneListSelect extends IntegerKeyListSelect {
 
     public MilestoneListSelect() {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setMultiSelect(true);
 //        this.setRows(4);
 //

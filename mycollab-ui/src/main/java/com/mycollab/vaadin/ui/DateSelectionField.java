@@ -37,7 +37,7 @@ public class DateSelectionField extends CustomField<Date> {
 //
 //    public DateSelectionField() {
 //        cboMonth = new ComboBox();
-//        cboMonth.setNullSelectionAllowed(true);
+//        cboMonth.setEmptySelectionAllowed(true);
 //        cboMonth.setPageLength(12);
 //        cboMonth.setImmediate(true);
 //
@@ -45,14 +45,14 @@ public class DateSelectionField extends CustomField<Date> {
 //        cboMonth.setWidth("117px");
 //
 //        cboDate = new ComboBox();
-//        cboDate.setNullSelectionAllowed(true);
+//        cboDate.setEmptySelectionAllowed(true);
 //        cboDate.setImmediate(true);
 //
 //        addDayItems();
 //        cboDate.setWidth("80px");
 //
 //        cboYear = new ComboBox();
-//        cboYear.setNullSelectionAllowed(true);
+//        cboYear.setEmptySelectionAllowed(true);
 //        cboYear.setImmediate(true);
 //
 //        addYearItems();

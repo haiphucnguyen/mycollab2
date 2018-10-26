@@ -36,7 +36,7 @@ public class LanguageSelectionField extends CustomField<String> {
     private Label languageCode;
 
     public LanguageSelectionField() {
-//        languageBox.setNullSelectionAllowed(false);
+//        languageBox.setEmptySelectionAllowed(false);
 //        languageBox.setImmediate(true);
 //        languageBox.setWidth("200px");
 //        languageBox.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);

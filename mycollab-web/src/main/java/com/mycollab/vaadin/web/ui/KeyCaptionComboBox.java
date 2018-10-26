@@ -28,7 +28,7 @@ public class KeyCaptionComboBox extends ComboBox {
 
     public KeyCaptionComboBox(boolean nullSelectionAllowed) {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(nullSelectionAllowed);
+//        this.setEmptySelectionAllowed(nullSelectionAllowed);
     }
 
     public void addItem(Object itemId, String caption) {

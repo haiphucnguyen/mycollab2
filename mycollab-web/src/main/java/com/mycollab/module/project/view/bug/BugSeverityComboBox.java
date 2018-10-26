@@ -28,7 +28,7 @@ public class BugSeverityComboBox extends I18nValueComboBox {
 
     public BugSeverityComboBox() {
         super();
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setCaption(null);
 //        this.loadData(Arrays.asList(OptionI18nEnum.bug_severities));
 //

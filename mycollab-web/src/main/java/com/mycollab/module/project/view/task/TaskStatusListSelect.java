@@ -34,7 +34,7 @@ import java.util.List;
 public class TaskStatusListSelect extends ListSelect {
     public TaskStatusListSelect() {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setMultiSelect(true);
         this.setRows(4);
     }

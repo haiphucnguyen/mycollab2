@@ -225,7 +225,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     private static class InvoiceStatusComboBox extends I18nValueComboBox {
         InvoiceStatusComboBox() {
             super();
-//            this.setNullSelectionAllowed(false);
+//            this.setEmptySelectionAllowed(false);
             this.setCaption(null);
             this.loadData(Arrays.asList(InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled));
         }

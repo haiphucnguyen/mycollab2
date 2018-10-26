@@ -30,7 +30,7 @@ public class PriorityComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public PriorityComboBox() {
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
         this.setWidth("150px");
 
         this.loadData(Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None));

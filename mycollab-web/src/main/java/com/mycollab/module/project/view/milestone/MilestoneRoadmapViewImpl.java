@@ -61,7 +61,6 @@ import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -157,14 +156,14 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         int totalCloseCount = milestoneService.getTotalCount(tmpCriteria);
         closeMilestoneSelection.setCaption(String.format("%s (%d)",
                 UserUIContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE), totalCloseCount));
-        closeMilestoneSelection.setIcon(FontAwesome.MINUS_CIRCLE);
+        closeMilestoneSelection.setIcon(VaadinIcons.MINUS_CIRCLE);
         filterPanel.addComponent(closeMilestoneSelection);
 
         tmpCriteria.setStatuses(new SetSearchField<>(MilestoneStatus.InProgress.name()));
         int totalInProgressCount = milestoneService.getTotalCount(tmpCriteria);
         inProgressMilestoneSelection.setCaption(String.format("%s (%d)",
                 UserUIContext.getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE), totalInProgressCount));
-        inProgressMilestoneSelection.setIcon(FontAwesome.SPINNER);
+        inProgressMilestoneSelection.setIcon(VaadinIcons.SPINNER);
         filterPanel.addComponent(inProgressMilestoneSelection);
 
         tmpCriteria.setStatuses(new SetSearchField<>(MilestoneStatus.Future.name()));
@@ -242,24 +241,17 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
         MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null))).withIcon(FontAwesome.SERVER).withWidth("100px");
+                EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null))).withIcon(VaadinIcons.SERVER).withWidth("100px");
 
         MButton roadmapBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST)).withIcon
-                (FontAwesome.NAVICON).withWidth("100px");
+                (VaadinIcons.BULLETS).withWidth("100px");
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(boardBtn);
-        if (!SiteConfiguration.isCommunityEdition()) {
-            MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN),
-                    clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoKanban(MilestoneRoadmapViewImpl.this)))
-                    .withIcon(FontAwesome.TH).withWidth("100px");
-            viewButtons.addButton(kanbanBtn);
-        }
 
-//        viewButtons.withDefaultButton(roadmapBtn);
-//        return new MHorizontalLayout(createBtn, printBtn, viewButtons);
-        return new MHorizontalLayout();
+        viewButtons.withDefaultButton(roadmapBtn);
+        return new MHorizontalLayout(createBtn, printBtn, viewButtons);
     }
 
     private static class MilestoneBlock extends BlockRowRender {

@@ -17,47 +17,49 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
 // TODO
-public class ToggleButtonGroup {
+public class ToggleButtonGroup extends HorizontalLayout {
     private static final long serialVersionUID = 1L;
 
     private Button selectedBtn;
 
     public ToggleButtonGroup() {
-//        this.addStyleName("toggle-btn-group");
+        setSpacing(false);
+        this.addStyleName("toggle-btn-group");
     }
 
-    //    @Override
     public Button addButton(Button button) {
-//        super.addButton(button);
-//        button.addClickListener(clickEvent -> {
-//            if (!clickEvent.getButton().equals(selectedBtn)) {
-//                selectedBtn = clickEvent.getButton();
-//                for (Component component : ToggleButtonGroup.this) {
-//                    component.removeStyleName(WebThemes.BTN_ACTIVE);
-//                }
-//                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
-//            }
-//        });
+        super.addComponent(button);
+        button.addClickListener(clickEvent -> {
+            if (!clickEvent.getButton().equals(selectedBtn)) {
+                selectedBtn = clickEvent.getButton();
+                for (Component component : ToggleButtonGroup.this) {
+                    component.removeStyleName(WebThemes.BTN_ACTIVE);
+                }
+                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
+            }
+        });
         return button;
     }
 
-//    public ButtonGroup withDefaultButton(Button button) {
-//        for (Component component : ToggleButtonGroup.this) {
-//            Button currentBtn = (Button) component;
-//            if (currentBtn.equals(button)) {
-//                selectedBtn = button;
-//                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
-//            } else {
-//                currentBtn.removeStyleName(WebThemes.BTN_ACTIVE);
-//            }
-//        }
-//        return this;
-//    }
+    public ToggleButtonGroup withDefaultButton(Button button) {
+        for (Component component : ToggleButtonGroup.this) {
+            Button currentBtn = (Button) component;
+            if (currentBtn.equals(button)) {
+                selectedBtn = button;
+                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
+            } else {
+                currentBtn.removeStyleName(WebThemes.BTN_ACTIVE);
+            }
+        }
+        return this;
+    }
 
 }

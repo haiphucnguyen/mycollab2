@@ -33,7 +33,7 @@ public class OptionValComboBox extends ComboBox {
 
     public OptionValComboBox(Class<? extends Enum> enumCls) {
 //        this.setPageLength(20);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 //        this.enumCls = enumCls;
 //

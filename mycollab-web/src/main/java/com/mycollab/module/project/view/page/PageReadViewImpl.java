@@ -213,7 +213,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             if (pageVersions.size() > 0) {
                 final ComboBox pageSelection = new ComboBox();
                 content.addComponent(pageSelection);
-//                pageSelection.setNullSelectionAllowed(false);
+//                pageSelection.setEmptySelectionAllowed(false);
                 pageSelection.setTextInputAllowed(false);
 
                 pageSelection.addValueChangeListener(valueChangeEvent -> {
@@ -227,7 +227,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 });
 
 //                pageSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//                pageSelection.setNullSelectionAllowed(false);
+//                pageSelection.setEmptySelectionAllowed(false);
 
                 for (int i = 0; i < pageVersions.size(); i++) {
                     PageVersion version = pageVersions.get(i);

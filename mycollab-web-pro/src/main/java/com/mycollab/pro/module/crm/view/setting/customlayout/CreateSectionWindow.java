@@ -69,7 +69,7 @@ public class CreateSectionWindow extends Window {
 
         SectionLayoutComboBox() {
 //            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-//            this.setNullSelectionAllowed(false);
+//            this.setEmptySelectionAllowed(false);
 //            this.addItem(LayoutType.ONE_COLUMN);
 //            this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");
 //

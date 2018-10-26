@@ -136,7 +136,7 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
             projectField = new UserInvolvedProjectsListSelect();
             projectField.setWidth("300px");
 //            projectField.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//            projectField.setNullSelectionAllowed(false);
+//            projectField.setEmptySelectionAllowed(false);
 //            projectField.setMultiSelect(true);
             projectField.setRows(4);
             selectionLayout.addComponent(projectField, 3, 0, 3, 1);

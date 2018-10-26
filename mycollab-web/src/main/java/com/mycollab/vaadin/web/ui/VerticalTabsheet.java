@@ -123,7 +123,7 @@ public class VerticalTabsheet extends CustomComponent {
                         selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
                         selectedComp = compMap.get(button.getTabId());
                     }
-//                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this));
+                    fireTabChangeEvent(new SelectedTabChangeEvent(VerticalTabsheet.this, true));
                 } else {
                     Page.getCurrent().open(button.link, "_blank", false);
                 }

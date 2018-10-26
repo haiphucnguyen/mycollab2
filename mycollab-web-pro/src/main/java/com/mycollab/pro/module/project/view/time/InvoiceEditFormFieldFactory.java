@@ -75,7 +75,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
     private static class PricingTypeField extends I18nValueComboBox {
         PricingTypeField() {
             super();
-//            this.setNullSelectionAllowed(false);
+//            this.setEmptySelectionAllowed(false);
             this.setCaption(null);
             this.loadData(Arrays.asList(InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL));
         }

@@ -75,7 +75,7 @@ public class DateTimeOptionField extends CustomField<Date> {
 //        timeFormatComboBox.setImmediate(true);
 //        timeFormatComboBox.setCaption(null);
 //        timeFormatComboBox.loadData("AM", "PM");
-//        timeFormatComboBox.setNullSelectionAllowed(false);
+//        timeFormatComboBox.setEmptySelectionAllowed(false);
 
         toggleTimeBtn = new Button("", clickEvent -> toggleHideTimeOption(!hideTimeOption));
         toggleTimeBtn.addStyleName(WebThemes.BUTTON_LINK);

@@ -12,7 +12,7 @@ public class ItemOrderComboBox extends ComboBox {
 
     public ItemOrderComboBox() {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.addItem(Order.ASCENDING);
 //        this.setItemCaption(Order.ASCENDING, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING));
 //

@@ -41,7 +41,7 @@ public class ProjectMemberListSelect extends ListSelect {
 
     public ProjectMemberListSelect(boolean listActiveMembersOnly, List<Integer> projectIds) {
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setMultiSelect(true);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

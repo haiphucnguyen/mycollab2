@@ -33,7 +33,7 @@ public class OptionValListSelect extends ListSelect {
 
     public OptionValListSelect(Class<? extends Enum> enumCls) {
 //        this.setRows(1);
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
 //        this.enumCls = enumCls;
 //        this.setConverter(new StringToOptionConverter());

@@ -87,7 +87,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
 
         ProgressStatusComboBox() {
             setCaption(null);
-//            this.setNullSelectionAllowed(false);
+//            this.setEmptySelectionAllowed(false);
 //            this.loadData(Arrays.asList(MilestoneStatus.InProgress, MilestoneStatus.Future, MilestoneStatus.Closed));
 //
 //            this.setItemIcon(MilestoneStatus.InProgress.name(), FontAwesome.SPINNER);

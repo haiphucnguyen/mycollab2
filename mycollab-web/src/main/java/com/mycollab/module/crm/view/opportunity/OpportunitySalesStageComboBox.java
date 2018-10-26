@@ -30,6 +30,6 @@ public class OpportunitySalesStageComboBox extends I18nValueComboBox {
 
     public OpportunitySalesStageComboBox() {
         this.loadData(Arrays.asList(CrmDataTypeFactory.opportunitySalesStageList));
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
     }
 }

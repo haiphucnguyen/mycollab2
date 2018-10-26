@@ -279,7 +279,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
         private static final long serialVersionUID = 1L;
 
         RoleDecisionComboBox() {
-//            this.setNullSelectionAllowed(false);
+//            this.setEmptySelectionAllowed(false);
             this.loadData(Arrays.asList(CrmDataTypeFactory.opportunityContactRoleList));
         }
     }

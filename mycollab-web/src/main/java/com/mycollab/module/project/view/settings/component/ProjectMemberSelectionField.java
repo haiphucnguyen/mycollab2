@@ -38,7 +38,6 @@ public class ProjectMemberSelectionField extends CustomField<String> {
     private MButton assignToMeBtn;
 
     public ProjectMemberSelectionField() {
-//        this.setImmediate(true);
         memberSelectionBox = new ProjectMemberSelectionBox(true);
         memberSelectionBox.addValueChangeListener(valueChangeEvent -> {
             SimpleProjectMember value = (SimpleProjectMember) memberSelectionBox.getValue();

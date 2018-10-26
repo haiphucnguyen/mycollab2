@@ -36,7 +36,7 @@ public class RoleComboBox extends ComboBox {
     private static final long serialVersionUID = 1L;
 
     public RoleComboBox() {
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
 //        this.setItemCaptionMode(ItemCaptionMode.PROPERTY);
 
         RoleSearchCriteria criteria = new RoleSearchCriteria();

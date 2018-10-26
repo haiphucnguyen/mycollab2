@@ -189,14 +189,14 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 //                typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
 //            }
 //
-//            typeSelection.setNullSelectionAllowed(false);
+//            typeSelection.setEmptySelectionAllowed(false);
 //            if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
 //                typeSelection.select(typeSelection.getItemIds().iterator().next());
 //            } else {
 //                throw new SecureAccessException();
 //            }
 //
-//            typeSelection.setNullSelectionAllowed(false);
+//            typeSelection.setEmptySelectionAllowed(false);
             typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, prjId, milestoneId));
 
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);

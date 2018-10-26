@@ -12,7 +12,7 @@ import java.util.Arrays;
 // TODO
 public class InvoiceStatusComboBox extends I18nValueComboBox {
     public InvoiceStatusComboBox() {
-//        this.setNullSelectionAllowed(false);
+//        this.setEmptySelectionAllowed(false);
         this.setCaption(null);
         this.loadData(Arrays.asList(OptionI18nEnum.invoiceStatuses));
     }

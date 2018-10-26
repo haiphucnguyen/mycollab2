@@ -78,7 +78,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
     private void initListSelectStyle(ListSelect listSelect) {
         listSelect.setWidth("300px");
 //        listSelect.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-//        listSelect.setNullSelectionAllowed(false);
+//        listSelect.setEmptySelectionAllowed(false);
 //        listSelect.setMultiSelect(true);
         listSelect.setRows(4);
     }
