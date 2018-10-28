@@ -156,7 +156,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedGrid<ProjectRoleSearchCriteria, SimpleProjectRole> getPagedBeanTable() {
+    public AbstractPagedGrid<ProjectRoleSearchCriteria, SimpleProjectRole> getPagedBeanGrid() {
         return this.tableItem;
     }
 }

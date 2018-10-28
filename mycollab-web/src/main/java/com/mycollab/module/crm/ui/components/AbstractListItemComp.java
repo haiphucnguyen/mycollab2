@@ -45,7 +45,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
     protected MVerticalLayout contentLayout;
     protected DefaultGenericSearchPanel<S> searchPanel;
-    protected AbstractPagedGrid<S, B> tableItem;
+    protected AbstractPagedGrid<S, B> grid;
 
     private Label selectedItemsNumberLabel = new Label();
 
@@ -61,15 +61,15 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
         contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         with(contentLayout).expand(contentLayout);
-        tableItem = createBeanTable();
-        contentLayout.with(buildControlsLayout(), tableItem).expand(tableItem);
-        tableItem.setHeightUndefined();
+        grid = createGrid();
+        contentLayout.with(buildControlsLayout(), grid).expand(grid);
+        grid.setHeightUndefined();
     }
 
     private ComponentContainer buildControlsLayout() {
         MHorizontalLayout viewControlsLayout = new MHorizontalLayout().withStyleName(WebThemes.TABLE_ACTION_CONTROLS).withFullWidth();
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
+        selectOptionButton = new SelectionOptionButton(grid);
         selectOptionButton.setSizeUndefined();
         tableActionControls = createActionControls();
 
@@ -107,8 +107,8 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
     }
 
     @Override
-    public AbstractPagedGrid<S, B> getPagedBeanTable() {
-        return tableItem;
+    public AbstractPagedGrid<S, B> getPagedBeanGrid() {
+        return grid;
     }
 
     @Override
@@ -123,14 +123,14 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
     @Override
     public HasSelectableItemHandlers<B> getSelectableItemHandlers() {
-        return tableItem;
+        return grid;
     }
 
     abstract protected void buildExtraControls();
 
     abstract protected DefaultGenericSearchPanel<S> createSearchPanel();
 
-    abstract protected AbstractPagedGrid<S, B> createBeanTable();
+    abstract protected AbstractPagedGrid<S, B> createGrid();
 
     abstract protected DefaultMassItemActionHandlerContainer createActionControls();
 }

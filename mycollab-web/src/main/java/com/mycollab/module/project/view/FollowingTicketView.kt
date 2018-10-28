@@ -31,5 +31,5 @@ interface FollowingTicketView : InitializingView {
 
     val searchHandlers: HasSearchHandlers<FollowingTicketSearchCriteria>
 
-    val pagedBeanTable: AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket>
+    val pagedBeanGrid: AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket>
 }

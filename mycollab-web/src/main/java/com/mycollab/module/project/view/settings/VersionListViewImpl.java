@@ -192,7 +192,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     }
 
     @Override
-    public AbstractPagedGrid<VersionSearchCriteria, SimpleVersion> getPagedBeanTable() {
+    public AbstractPagedGrid<VersionSearchCriteria, SimpleVersion> getPagedBeanGrid() {
         return this.tableItem;
     }
 }

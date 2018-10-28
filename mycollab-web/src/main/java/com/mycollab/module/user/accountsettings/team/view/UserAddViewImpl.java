@@ -46,11 +46,9 @@ import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -145,7 +143,6 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                 MVerticalLayout bottomPanel = new MVerticalLayout().withMargin(false);
                 Button moreInfoBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.ACTION_MORE_INFORMATION), event -> {
                     editUserForm.displayAdvancedForm(user);
-                    setFormBuffered(true);
                 }).withStyleName(WebThemes.BUTTON_LINK);
                 MHorizontalLayout linkWrap = new MHorizontalLayout(moreInfoBtn).withMargin(true);
                 bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);

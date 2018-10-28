@@ -81,7 +81,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 MButton assignBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), clickEvent -> {
                     T item = previewForm.getBean();
                     previewForm.fireAssignForm(item);
-                }).withIcon(FontAwesome.SHARE).withStyleName(WebThemes.BUTTON_ACTION);
+                }).withIcon(VaadinIcons.SHARE).withStyleName(WebThemes.BUTTON_ACTION);
                 editButtons.addComponent(assignBtn);
             }
 

@@ -87,7 +87,6 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((DateField) formField).setZoneId(UserUIContext.getUserTimeZone().toZoneId());
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
-                postCreateField(bindField, formField);
                 attachForm.attachField(bindField, formField);
             }
         } else {
@@ -126,7 +125,6 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
 
-                postCreateField(field.getName(), formField);
                 attachForm.attachField(field.getName(), formField);
             }
         }
@@ -134,6 +132,12 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
 
     @Override
     public boolean commit() {
+        try {
+            binder.writeBean(attachForm.getBean());
+        } catch (ValidationException e) {
+            List<ValidationResult> beanValidationErrors = e.getBeanValidationErrors();
+            return false;
+        }
         BinderValidationStatus<B> validate = binder.validate();
         BinderValidationStatusHandler<B> validationStatusHandler = binder.getValidationStatusHandler();
         binder.setValidationStatusHandler((BinderValidationStatusHandler<B>) status -> {
@@ -147,9 +151,8 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     // since we are displaying the resulting string as HTML
                     .map(errorString -> Jsoup.clean(errorString, Whitelist.simpleText()))
                     .collect(Collectors.joining("<br>"));
-            System.out.println("SSS: " + errorMessage);
         });
-        return validate.isOk();
+        return true;
 //        try {
 //            fieldGroup.commit();
 //            attachForm.setValid(true);
@@ -175,66 +178,5 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
 //        }
     }
 
-    //    @Override
-//    public void preCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-//        for (Object propertyId : fieldGroup.getBoundPropertyIds()) {
-//            fieldGroup.getField(propertyId).removeStyleName("errorField");
-//        }
-//        StringBuilder errorMsg = new StringBuilder();
-//        int violationCount = 0;
-//        for (Field<?> f : commitEvent.getFieldBinder().getFields()) {
-//            try {
-//                if (f instanceof CustomField) {
-//                    continue;
-//                }
-//                f.validate();
-//            } catch (com.vaadin.data.Validator.InvalidValueException e) {
-//                violationCount++;
-//                errorMsg.append(e.getHtmlMessage()).append("<br/>");
-//                f.addStyleName("errorField");
-//            }
-//        }
-//        if (violationCount > 0) {
-//            throw new FieldGroup.CommitException(errorMsg.toString());
-//        }
-//    }
-//
-//    @Override
-//    public void postCommit(FieldGroup.CommitEvent commitEvent) throws FieldGroup.CommitException {
-//        Set<ConstraintViolation<B>> violations = validation.validate(attachForm.getBean());
-//        if (violations.size() > 0) {
-//            StringBuilder errorMsg = new StringBuilder();
-//
-//            for (ConstraintViolation violation : violations) {
-//                errorMsg.append(violation.getMessage()).append("<br/>");
-//                Path propertyPath = violation.getPropertyPath();
-//                if (propertyPath != null && !propertyPath.toString().equals("")) {
-//                    fieldGroup.getField(propertyPath.toString()).addStyleName("errorField");
-//                } else {
-//                    Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
-//                    if (validateAnno instanceof DateComparison) {
-//                        String firstDateField = ((DateComparison) validateAnno).firstDateField();
-//                        String lastDateField = ((DateComparison) validateAnno).lastDateField();
-//
-//                        fieldGroup.getField(firstDateField).addStyleName("errorField");
-//                        fieldGroup.getField(lastDateField).addStyleName("errorField");
-//                    }
-//                }
-//
-//            }
-//            throw new FieldGroup.CommitException(errorMsg.toString());
-//        }
-//    }
-//
-    @Override
-    public void setBuffered(boolean isBuffered) {
-//        if (fieldGroup != null) {
-//            fieldGroup.setBuffered(isBuffered);
-//        }
-    }
-
     abstract protected HasValue<?> onCreateField(Object propertyId);
-
-    protected void postCreateField(Object propertyId, HasValue<?> field) {
-    }
 }

@@ -44,7 +44,7 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
     @Override
     protected void buildExtraControls() {
         MButton customizeViewBtn = ComponentUtils.createCustomizeViewButton()
-                .withListener(clickEvent -> UI.getCurrent().addWindow(new ContactListCustomizeWindow(tableItem)));
+                .withListener(clickEvent -> UI.getCurrent().addWindow(new ContactListCustomizeWindow(grid)));
         this.addExtraButton(customizeViewBtn);
     }
 
@@ -54,7 +54,7 @@ public class ContactListViewImpl extends AbstractListItemComp<ContactSearchCrite
     }
 
     @Override
-    protected AbstractPagedGrid<ContactSearchCriteria, SimpleContact> createBeanTable() {
+    protected AbstractPagedGrid<ContactSearchCriteria, SimpleContact> createGrid() {
         return new ContactTableDisplay(CrmTypeConstants.CONTACT, ContactTableFieldDef.selected,
                 Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.title,
                         ContactTableFieldDef.account, ContactTableFieldDef.email, ContactTableFieldDef.phoneOffice));

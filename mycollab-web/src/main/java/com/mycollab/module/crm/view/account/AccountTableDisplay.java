@@ -16,40 +16,15 @@
  */
 package com.mycollab.module.crm.view.account;
 
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Br;
-import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.GridFieldMeta;
-import com.mycollab.core.utils.StringUtils;
-import com.mycollab.module.crm.CrmLinkGenerator;
-import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.service.AccountService;
-import com.mycollab.module.crm.ui.components.CrmAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.TooltipHelper;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.CheckBoxDecor;
-import com.mycollab.vaadin.web.ui.UrlLink;
-import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
-import com.vaadin.server.*;
-import com.vaadin.shared.Registration;
-import com.vaadin.shared.communication.SharedState;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.renderers.Renderer;
-import elemental.json.JsonObject;
-import elemental.json.JsonValue;
+import com.vaadin.server.Setter;
 import org.vaadin.grid.cellrenderers.editoraware.CheckboxRenderer;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 /**

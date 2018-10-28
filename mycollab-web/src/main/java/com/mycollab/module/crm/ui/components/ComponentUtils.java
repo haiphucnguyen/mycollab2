@@ -34,7 +34,7 @@ public class ComponentUtils {
     }
 
     public static MButton createCustomizeViewButton() {
-        return new MButton("").withIcon(FontAwesome.ADJUST)
+        return new MButton("").withIcon(VaadinIcons.ADJUST)
                 .withStyleName(WebThemes.BUTTON_ACTION, WebThemes.BUTTON_SMALL_PADDING)
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
     }

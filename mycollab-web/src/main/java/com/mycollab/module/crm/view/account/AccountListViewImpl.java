@@ -42,7 +42,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected AbstractPagedGrid<AccountSearchCriteria, SimpleAccount> createBeanTable() {
+    protected AbstractPagedGrid<AccountSearchCriteria, SimpleAccount> createGrid() {
         return new AccountTableDisplay(CrmTypeConstants.ACCOUNT, AccountTableFieldDef.selected,
                 Arrays.asList(AccountTableFieldDef.accountname, AccountTableFieldDef.city,
                         AccountTableFieldDef.phoneoffice, AccountTableFieldDef.email,
@@ -77,7 +77,7 @@ public class AccountListViewImpl extends AbstractListItemComp<AccountSearchCrite
     @Override
     protected void buildExtraControls() {
         MButton customizeViewBtn = ComponentUtils.createCustomizeViewButton()
-                .withListener(clickEvent -> UI.getCurrent().addWindow(new AccountListCustomizeWindow((AccountTableDisplay) tableItem)));
+                .withListener(clickEvent -> UI.getCurrent().addWindow(new AccountListCustomizeWindow((AccountTableDisplay) grid)));
         this.addExtraButton(customizeViewBtn);
     }
 

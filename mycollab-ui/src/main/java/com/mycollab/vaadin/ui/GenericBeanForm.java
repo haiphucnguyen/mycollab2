@@ -30,24 +30,10 @@ public class GenericBeanForm<B> extends CssLayout {
 
     private IFormLayoutFactory layoutFactory;
     protected IBeanFieldGroupFieldFactory<B> fieldFactory;
-
-    private boolean isValid;
     protected B bean;
 
     public GenericBeanForm() {
         this.setWidth("100%");
-    }
-
-    /**
-     * Disable form validation bean. This is used to switch views of forms and keep the previous values of bean
-     * without validation. You should be careful to use this method
-     *
-     * @param isBuffered
-     */
-    public void setFormBuffered(boolean isBuffered) {
-        if (fieldFactory != null) {
-            fieldFactory.setBuffered(isBuffered);
-        }
     }
 
     public void setFormLayoutFactory(IFormLayoutFactory layoutFactory) {
@@ -89,9 +75,5 @@ public class GenericBeanForm<B> extends CssLayout {
 
     public void attachField(Object propertyId, HasValue<?> field) {
         layoutFactory.attachField(propertyId, field);
-    }
-
-    protected boolean isValid() {
-        return this.isValid;
     }
 }

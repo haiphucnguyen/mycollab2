@@ -196,7 +196,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
     }
 
     @Override
-    public AbstractPagedGrid<ComponentSearchCriteria, SimpleComponent> getPagedBeanTable() {
+    public AbstractPagedGrid<ComponentSearchCriteria, SimpleComponent> getPagedBeanGrid() {
         return tableItem;
     }
 }

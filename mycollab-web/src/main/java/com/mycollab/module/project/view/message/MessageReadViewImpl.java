@@ -42,7 +42,6 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -172,7 +171,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
                     AppUI.getAccountId(), message.getProjectid(), ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentField = new HorizontalLayout();
-                Button attachmentIcon = new Button(null, FontAwesome.PAPERCLIP);
+                Button attachmentIcon = new Button(null, VaadinIcons.PAPERCLIP);
                 attachmentIcon.addStyleName(WebThemes.BUTTON_ICON_ONLY);
                 attachmentField.addComponent(attachmentIcon);
 

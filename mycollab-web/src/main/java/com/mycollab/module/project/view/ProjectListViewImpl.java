@@ -35,7 +35,7 @@ import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 import com.mycollab.vaadin.web.ui.table.IPagedGrid;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -174,7 +174,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
         layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
         MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new ProjectListCustomizeWindow(tableItem)))
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.ADJUST);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.ADJUST);
         customizeViewBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
@@ -220,7 +220,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
     }
 
     @Override
-    public IPagedGrid<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
+    public IPagedGrid<ProjectSearchCriteria, SimpleProject> getPagedBeanGrid() {
         return tableItem;
     }
 }

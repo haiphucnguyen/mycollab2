@@ -50,7 +50,7 @@ import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -134,7 +134,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
                 ProjectRolePermissionCollections.PAGES);
 
-        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(WebThemes
+        MButton exportPdfBtn = new MButton("").withIcon(VaadinIcons.FILE_O).withStyleName(WebThemes
                 .BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
         OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {

@@ -40,17 +40,17 @@ import java.util.Arrays;
  */
 public class AccountListDashlet extends Depot {
     private static final long serialVersionUID = 1L;
-    private AccountTableDisplay tableItem;
+    private AccountTableDisplay grid;
 
     public AccountListDashlet() {
         super(UserUIContext.getMessage(AccountI18nEnum.MY_ITEMS), new VerticalLayout());
         this.setMargin(new MarginInfo(true, false, false, false));
-        tableItem = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname,
+        grid = new AccountTableDisplay(Arrays.asList(AccountTableFieldDef.accountname,
                 AccountTableFieldDef.phoneoffice, AccountTableFieldDef.email));
-        bodyContent.addComponent(tableItem);
+        bodyContent.addComponent(grid);
 
-        MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new AccountListCustomizeWindow(tableItem)))
-                .withIcon(FontAwesome.ADJUST).withStyleName(WebThemes.BUTTON_SMALL_PADDING);
+        MButton customizeViewBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new AccountListCustomizeWindow(grid)))
+                .withIcon(VaadinIcons.ADJUST).withStyleName(WebThemes.BUTTON_SMALL_PADDING);
         customizeViewBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.OPT_LAYOUT_OPTIONS));
         this.addHeaderElement(customizeViewBtn);
     }
@@ -59,6 +59,6 @@ public class AccountListDashlet extends Depot {
         final AccountSearchCriteria criteria = new AccountSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         criteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
-        tableItem.setSearchCriteria(criteria);
+        grid.setSearchCriteria(criteria);
     }
 }

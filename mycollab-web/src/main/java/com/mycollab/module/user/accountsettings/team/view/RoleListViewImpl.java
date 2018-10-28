@@ -128,7 +128,7 @@ public class RoleListViewImpl extends AbstractVerticalPageView implements RoleLi
     }
 
     @Override
-    public AbstractPagedGrid<RoleSearchCriteria, SimpleRole> getPagedBeanTable() {
+    public AbstractPagedGrid<RoleSearchCriteria, SimpleRole> getPagedBeanGrid() {
         return this.tableItem;
     }
 }

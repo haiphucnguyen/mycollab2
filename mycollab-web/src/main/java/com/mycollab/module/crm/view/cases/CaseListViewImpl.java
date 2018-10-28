@@ -44,7 +44,7 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
     @Override
     protected void buildExtraControls() {
         MButton customizeViewBtn = ComponentUtils.createCustomizeViewButton().withListener(clickEvent -> UI.getCurrent().addWindow(
-                new CaseListCustomizeWindow(tableItem)));
+                new CaseListCustomizeWindow(grid)));
         this.addExtraButton(customizeViewBtn);
     }
 
@@ -54,7 +54,7 @@ public class CaseListViewImpl extends AbstractListItemComp<CaseSearchCriteria, S
     }
 
     @Override
-    protected AbstractPagedGrid<CaseSearchCriteria, SimpleCase> createBeanTable() {
+    protected AbstractPagedGrid<CaseSearchCriteria, SimpleCase> createGrid() {
         return new CaseTableDisplay(
                 CrmTypeConstants.CASE, CaseTableFieldDef.selected,
                 Arrays.asList(CaseTableFieldDef.subject, CaseTableFieldDef.account,

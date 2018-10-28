@@ -130,7 +130,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanTable() {
+    public AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanGrid() {
         return this.ticketTable;
     }
 }

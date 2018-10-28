@@ -315,7 +315,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         MButton assignBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ASSIGN),
                 clickEvent -> UI.getCurrent().addWindow(new AssignBugWindow(beanItem)))
-                .withIcon(FontAwesome.SHARE).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.SHARE).withStyleName(WebThemes.BUTTON_ACTION);
         assignBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
         bugWorkflowControl = new CssLayout();

@@ -44,7 +44,7 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
     @Override
     protected void buildExtraControls() {
         MButton customizeViewBtn = ComponentUtils.createCustomizeViewButton()
-                .withListener(clickEvent -> UI.getCurrent().addWindow(new CampaignListCustomizeWindow(tableItem)));
+                .withListener(clickEvent -> UI.getCurrent().addWindow(new CampaignListCustomizeWindow(grid)));
         this.addExtraButton(customizeViewBtn);
     }
 
@@ -54,7 +54,7 @@ public class CampaignListViewImpl extends AbstractListItemComp<CampaignSearchCri
     }
 
     @Override
-    protected AbstractPagedGrid<CampaignSearchCriteria, SimpleCampaign> createBeanTable() {
+    protected AbstractPagedGrid<CampaignSearchCriteria, SimpleCampaign> createGrid() {
         return new CampaignTableDisplay(CrmTypeConstants.CAMPAIGN, CampaignTableFieldDef.selected,
                 Arrays.asList(CampaignTableFieldDef.campaignname, CampaignTableFieldDef.status,
                         CampaignTableFieldDef.type, CampaignTableFieldDef.expectedRevenue,

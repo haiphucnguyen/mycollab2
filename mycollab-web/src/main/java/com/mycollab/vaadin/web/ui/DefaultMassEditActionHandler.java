@@ -64,7 +64,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
 
     @Override
     public StreamResource buildStreamResource(ReportExportType exportType) {
-        IPagedGrid pagedBeanTable = ((IListView) presenter.getView()).getPagedBeanTable();
+        IPagedGrid pagedBeanTable = ((IListView) presenter.getView()).getPagedBeanGrid();
         final Map<String, Object> additionalParameters = new HashMap<>();
         additionalParameters.put("siteUrl", AppUI.getSiteUrl());
         additionalParameters.put(SimpleReportTemplateExecutor.CRITERIA, presenter.searchCriteria);

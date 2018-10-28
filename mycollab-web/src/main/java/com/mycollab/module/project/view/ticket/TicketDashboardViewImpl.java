@@ -356,7 +356,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedGrid<ProjectTicketSearchCriteria, ProjectTicket> getPagedBeanTable() {
+    public AbstractPagedGrid<ProjectTicketSearchCriteria, ProjectTicket> getPagedBeanGrid() {
         return null;
     }
 }

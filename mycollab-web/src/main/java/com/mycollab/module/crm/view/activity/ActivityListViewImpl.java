@@ -56,7 +56,7 @@ public class ActivityListViewImpl extends AbstractListItemComp<ActivitySearchCri
     }
 
     @Override
-    protected AbstractPagedGrid<ActivitySearchCriteria, SimpleActivity> createBeanTable() {
+    protected AbstractPagedGrid<ActivitySearchCriteria, SimpleActivity> createGrid() {
         return new ActivityTableDisplay(
                 new GridFieldMeta(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(

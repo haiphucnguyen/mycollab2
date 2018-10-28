@@ -43,7 +43,7 @@ public interface IListView<S extends SearchCriteria, B> extends PageView {
 
     HasSelectableItemHandlers<B> getSelectableItemHandlers();
 
-    IPagedGrid<S, B> getPagedBeanTable();
+    IPagedGrid<S, B> getPagedBeanGrid();
 
     void showNoItemView();
 }

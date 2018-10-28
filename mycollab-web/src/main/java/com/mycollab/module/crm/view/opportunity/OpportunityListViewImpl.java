@@ -44,7 +44,7 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
     @Override
     protected void buildExtraControls() {
         MButton customizeViewBtn = ComponentUtils.createCustomizeViewButton().withListener(
-                clickEvent -> UI.getCurrent().addWindow(new OpportunityListCustomizeWindow(tableItem))
+                clickEvent -> UI.getCurrent().addWindow(new OpportunityListCustomizeWindow(grid))
         );
         this.addExtraButton(customizeViewBtn);
     }
@@ -55,7 +55,7 @@ public class OpportunityListViewImpl extends AbstractListItemComp<OpportunitySea
     }
 
     @Override
-    protected AbstractPagedGrid<OpportunitySearchCriteria, SimpleOpportunity> createBeanTable() {
+    protected AbstractPagedGrid<OpportunitySearchCriteria, SimpleOpportunity> createGrid() {
         return new OpportunityTableDisplay(CrmTypeConstants.OPPORTUNITY,
                 OpportunityTableFieldDef.selected, Arrays.asList(
                 OpportunityTableFieldDef.opportunityName, OpportunityTableFieldDef.accountName,
