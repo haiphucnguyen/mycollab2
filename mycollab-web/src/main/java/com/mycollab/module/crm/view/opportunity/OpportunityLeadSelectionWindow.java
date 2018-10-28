@@ -48,8 +48,8 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
                 Arrays.asList(LeadTableFieldDef.name, LeadTableFieldDef.status,
                         LeadTableFieldDef.email, LeadTableFieldDef.phoneoffice));
 
-//        tableItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
-//            final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
+//            final SimpleLead lead = gridItem.getBeanByIndex(itemId);
 //            return new ELabel(lead.getLeadName()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateTooltipLead(UserUIContext.getUserLocale(), lead,
 //                            AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));

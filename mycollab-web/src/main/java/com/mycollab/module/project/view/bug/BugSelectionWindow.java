@@ -58,7 +58,7 @@ public class BugSelectionWindow extends MWindow {
             criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             tableItem.setSearchCriteria(criteria);
         });
-//        new Restrain(tableItem).setMaxHeight((UIUtils.getBrowserHeight() - 120) + "px");
+//        new Restrain(gridItem).setMaxHeight((UIUtils.getBrowserHeight() - 120) + "px");
         this.setContent(new MVerticalLayout(bugSearchPanel, tableItem));
     }
 
@@ -67,8 +67,8 @@ public class BugSelectionWindow extends MWindow {
                 Arrays.asList(BugTableFieldDef.summary, BugTableFieldDef.severity, BugTableFieldDef.resolution));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
-//        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
-//            final SimpleBug bug = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
+//            final SimpleBug bug = gridItem.getBeanByIndex(itemId);
 //
 //            MButton b = new MButton(bug.getName(), clickEvent -> {
 //                fieldSelection.fireValueChange(bug);

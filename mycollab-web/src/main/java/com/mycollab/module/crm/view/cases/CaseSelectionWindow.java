@@ -61,8 +61,8 @@ public class CaseSelectionWindow extends MWindow {
                 CaseTableFieldDef.priority, CaseTableFieldDef.status, CaseTableFieldDef.assignUser));
         tableItem.setDisplayNumItems(10);
 
-//        tableItem.addGeneratedColumn("subject", (source, itemId, columnId) -> {
-//            final SimpleCase cases = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("subject", (source, itemId, columnId) -> {
+//            final SimpleCase cases = gridItem.getBeanByIndex(itemId);
 //
 //            return new MButton(cases.getSubject(), clickEvent -> {
 //                fieldSelection.fireValueChange(cases);

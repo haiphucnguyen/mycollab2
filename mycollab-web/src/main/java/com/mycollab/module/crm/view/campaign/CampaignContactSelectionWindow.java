@@ -52,8 +52,8 @@ public class CampaignContactSelectionWindow extends RelatedItemSelectionWindow<S
                 Arrays.asList(ContactTableFieldDef.name, ContactTableFieldDef.email,
                         ContactTableFieldDef.phoneOffice, ContactTableFieldDef.account));
 
-//        tableItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
-//            final SimpleContact contact = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
+//            final SimpleContact contact = gridItem.getBeanByIndex(itemId);
 //
 //            return new ELabel(contact.getContactName()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateToolTipContact(UserUIContext.getUserLocale(), AppUI.getDateFormat(),

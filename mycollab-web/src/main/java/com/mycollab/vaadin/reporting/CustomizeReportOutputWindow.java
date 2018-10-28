@@ -187,7 +187,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                 UserUIContext.getUsername(), viewId);
         if (!(viewLayoutDef instanceof NullCustomViewStore)) {
             try {
-                return FieldDefAnalyzer.toTableFields(viewLayoutDef.getViewinfo());
+                return FieldDefAnalyzer.toGridFields(viewLayoutDef.getViewinfo());
             } catch (Exception e) {
                 return getDefaultColumns();
             }

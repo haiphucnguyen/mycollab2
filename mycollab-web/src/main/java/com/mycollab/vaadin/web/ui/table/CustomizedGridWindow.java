@@ -67,7 +67,7 @@ public abstract class CustomizedGridWindow extends MWindow {
 //        contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 //
 //        MButton restoreLink = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
-//            List<GridFieldMeta> defaultSelectedColumns = tableItem.getDefaultSelectedColumns();
+//            List<GridFieldMeta> defaultSelectedColumns = gridItem.getDefaultSelectedColumns();
 //            if (defaultSelectedColumns != null) {
 //                final List<GridFieldMeta> selectedColumns = new ArrayList<>();
 //                final Collection<GridFieldMeta> itemIds = container.getItemIds();
@@ -126,7 +126,7 @@ public abstract class CustomizedGridWindow extends MWindow {
     abstract protected Collection<GridFieldMeta> getAvailableColumns();
 
     private Collection<String> getViewColumns() {
-//        Object[] visibleColumns = tableItem.getVisibleColumns();
+//        Object[] visibleColumns = gridItem.getVisibleColumns();
 //        String[] copyArr = Arrays.copyOf(visibleColumns, visibleColumns.length, String[].class);
 //        return Arrays.asList(copyArr);
         return Arrays.asList();

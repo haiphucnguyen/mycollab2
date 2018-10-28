@@ -77,17 +77,17 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
                         new GridFieldMeta(GenericI18Enum.FORM_DUE_DATE, "duedate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
                         new GridFieldMeta(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
-//        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleVersion version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+//            final SimpleVersion version = gridItem.getBeanByIndex(itemId);
 //            final CheckBoxDecor cb = new CheckBoxDecor("", version.isSelected());
 //            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(version));
+//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(version));
 //            version.setExtraData(cb);
 //            return cb;
 //        });
 //
-//        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
-//            final Version version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
+//            final Version version = gridItem.getBeanByIndex(itemId);
 //            final LabelLink b = new LabelLink(version.getName(), ProjectLinkGenerator
 //                    .generateBugVersionPreviewLink(version.getProjectid(), version.getId()));
 //            if (version.getStatus() != null && version.getStatus().equals(StatusI18nEnum.Closed.name())) {
@@ -100,23 +100,23 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 //            return b;
 //        });
 //
-//        tableItem.addGeneratedColumn("duedate", (source, itemId, columnId) -> {
-//            final Version bugVersion = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("duedate", (source, itemId, columnId) -> {
+//            final Version bugVersion = gridItem.getBeanByIndex(itemId);
 //            return new ELabel().prettyDate(bugVersion.getDuedate());
 //        });
 //
-//        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-//            SimpleVersion version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+//            SimpleVersion version = gridItem.getBeanByIndex(itemId);
 //            return new ProgressBarIndicator(version.getNumBugs(), version.getNumOpenBugs(), false);
 //        });
 //
-//        tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
-//            SimpleVersion version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
+//            SimpleVersion version = gridItem.getBeanByIndex(itemId);
 //            return ELabel.i18n(version.getStatus(), StatusI18nEnum.class);
 //        });
 //
-//        tableItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
-//            SimpleVersion version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
+//            SimpleVersion version = gridItem.getBeanByIndex(itemId);
 //            return ELabel.richText(version.getDescription());
 //        });
 

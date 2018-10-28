@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,6 +22,7 @@ import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
 import com.mycollab.vaadin.event.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.renderers.AbstractRenderer;
 import com.vaadin.util.ReflectTools;
 
 import java.io.Serializable;
@@ -35,20 +36,20 @@ import java.util.List;
  * @since 2.0
  */
 // TODO
-public interface IPagedGrid<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
+public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableItemHandlers<B>, HasPageableHandlers, Component {
 
     int setSearchCriteria(S searchCriteria);
 
-    Collection<T> getCurrentDataList();
+    Collection<B> getCurrentDataList();
 
     @Deprecated
     void addTableListener(TableClickListener listener);
 
-//    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
+    void addGeneratedColumn(String id, AbstractRenderer generatedColumn);
 
     List<GridFieldMeta> getDisplayColumns();
 
-//    T getBeanByIndex(Object itemId);
+    B getBeanByIndex(Object itemId);
 
     @Deprecated
     interface TableClickListener extends EventListener, Serializable {

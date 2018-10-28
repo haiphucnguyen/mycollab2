@@ -82,17 +82,17 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
                         new GridFieldMeta(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
                         new GridFieldMeta(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
-//        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleComponent component = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+//            final SimpleComponent component = gridItem.getBeanByIndex(itemId);
 //            CheckBoxDecor cb = new CheckBoxDecor("", component.isSelected());
 //            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(component));
+//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(component));
 //            component.setExtraData(cb);
 //            return cb;
 //        });
 //
-//        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
+//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
 //            LabelLink b = new LabelLink(bugComponent.getName(), ProjectLinkGenerator
 //                    .generateBugComponentPreviewLink(bugComponent.getProjectid(), bugComponent.getId()));
 //            if (bugComponent.getStatus() != null && bugComponent.getStatus().equals(StatusI18nEnum.Closed.name())) {
@@ -103,24 +103,24 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
 //            return b;
 //        });
 
-//        tableItem.addGeneratedColumn("userLeadFullName", (source, itemId, columnId) -> {
-//            SimpleComponent component = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("userLeadFullName", (source, itemId, columnId) -> {
+//            SimpleComponent component = gridItem.getBeanByIndex(itemId);
 //            return new ProjectUserLink(component.getProjectid(), component.getUserlead(),
 //                    component.getUserLeadAvatarId(), component.getUserLeadFullName());
 //        });
 //
-//        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
 //            return new ProgressBarIndicator(bugComponent.getNumBugs(), bugComponent.getNumOpenBugs(), false);
 //        });
 //
-//        tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
+//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
 //            return ELabel.i18n(bugComponent.getStatus(), StatusI18nEnum.class);
 //        });
 //
-//        tableItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
-//            SimpleComponent version = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
+//            SimpleComponent version = gridItem.getBeanByIndex(itemId);
 //            return ELabel.richText(version.getDescription());
 //        });
 

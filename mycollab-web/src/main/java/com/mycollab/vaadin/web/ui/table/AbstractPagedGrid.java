@@ -21,6 +21,7 @@ import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
 import com.mycollab.common.json.FieldDefAnalyzer;
 import com.mycollab.common.service.CustomViewStoreService;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.spring.AppContextUtil;
@@ -29,15 +30,14 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
 import com.vaadin.ui.*;
+import com.vaadin.ui.renderers.AbstractRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.TypeVariable;
+import java.util.*;
 
 import static com.mycollab.vaadin.web.ui.WebThemes.SCROLLABLE_CONTAINER;
 
@@ -64,19 +64,20 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     private int currentViewCount;
     protected int totalCount;
 
-    //    protected Table tableItem;
+    //    protected Table gridItem;
     private HorizontalLayout controlBarWrapper;
 
     private Set<SelectableItemHandler<B>> selectableHandlers;
     private Set<PageableHandler> pageableHandlers;
 
     protected Class<B> type;
+    protected Grid<B> gridItem;
 
     private GridFieldMeta requiredColumn;
     private List<GridFieldMeta> displayColumns;
     private List<GridFieldMeta> defaultSelectedColumns;
 
-//    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
+    private final Map<String, AbstractRenderer> columnGenerators = new HashMap<>();
 
     public AbstractPagedGrid(Class<B> type, List<GridFieldMeta> displayColumns) {
         this(type, null, displayColumns);
@@ -93,7 +94,7 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
                     UserUIContext.getUsername(), viewId);
             if (!(viewLayoutDef instanceof NullCustomViewStore)) {
                 try {
-                    this.displayColumns = FieldDefAnalyzer.toTableFields(viewLayoutDef.getViewinfo());
+                    this.displayColumns = FieldDefAnalyzer.toGridFields(viewLayoutDef.getViewinfo());
                 } catch (Exception e) {
                     LOG.error("Error", e);
                     this.displayColumns = displayColumns;
@@ -113,37 +114,36 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
 
     public void setDisplayColumns(List<GridFieldMeta> viewFields) {
         this.displayColumns = viewFields;
-        displayTableColumns();
-        this.markAsDirty();
+        setDisplayColumns();
     }
 
-    private void displayTableColumns() {
-//        Set<String> visibleColumnsCol = new LinkedHashSet<>();
-//        Set<String> columnHeadersCol = new LinkedHashSet<>();
-//
+    private void setDisplayColumns() {
+        Set<String> visibleColumnsCol = new LinkedHashSet<>();
+        Set<String> columnHeadersCol = new LinkedHashSet<>();
+
 //        if (requiredColumn != null) {
 //            visibleColumnsCol.add(requiredColumn.getField());
 //            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
-//            tableItem.setColumnWidth(requiredColumn.getField(), requiredColumn.getDefaultWidth());
+//            gridItem.getColumn(requiredColumn.getField()).setWidth(requiredColumn.getDefaultWidth());
 //        }
-//
-//        for (int i = 0; i < displayColumns.size(); i++) {
-//            GridFieldMeta viewField = displayColumns.get(i);
-//            visibleColumnsCol.add(viewField.getField());
-//            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
-//
-//            if (i == 0) {
-//                tableItem.setColumnExpandRatio(viewField.getField(), 1.0f);
-//            } else {
-//                tableItem.setColumnWidth(viewField.getField(), viewField.getDefaultWidth());
-//            }
-//        }
-//
-//        String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
-//        String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
-//
-//        tableItem.setVisibleColumns(visibleColumns);
-//        tableItem.setColumnHeaders(columnHeaders);
+
+        for (int i = 0; i < displayColumns.size(); i++) {
+            GridFieldMeta viewField = displayColumns.get(i);
+            visibleColumnsCol.add(viewField.getField());
+            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
+
+            if (i == 0) {
+                gridItem.getColumn(viewField.getField()).setExpandRatio(1);
+            } else {
+                gridItem.getColumn(viewField.getField()).setWidth(viewField.getDefaultWidth());
+            }
+        }
+
+        String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
+        String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
+
+//        gridItem.setVisibleColumns(visibleColumns);
+//        gridItem.setColumnHeaders(columnHeaders);
     }
 
     @Override
@@ -182,7 +182,7 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     public void setCurrentDataList(Collection<B> list) {
         currentListData = list;
         currentViewCount = list.size();
-        createTable();
+        createGrid();
     }
 
     @Override
@@ -194,10 +194,10 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         fireEvent(event);
     }
 
-//    @Override
-//    public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
-//        this.columnGenerators.put(id, generatedColumn);
-//    }
+    @Override
+    public void addGeneratedColumn(String id, AbstractRenderer generatedColumn) {
+        this.columnGenerators.put(id, generatedColumn);
+    }
 
     @Override
     public int setSearchCriteria(final S searchCriteria) {
@@ -210,12 +210,11 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         this.displayNumItems = displayNumItems;
     }
 
-//    @Override
-//    public B getBeanByIndex(final Object itemId) {
-//        final Container container = tableItem.getContainerDataSource();
-//        final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
-//        return item == null ? null : item.getBean();
-//    }
+    @Override
+    public B getBeanByIndex(final Object itemId) {
+//        return (B)gridItem.getDataProvider().get(itemId);
+        return null;
+    }
 
     private void pageChange(final int currentPage) {
         if (searchRequest != null) {
@@ -323,26 +322,27 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         currentListData = queryCurrentData();
         currentViewCount = currentListData.size();
 
-        createTable();
+        createGrid();
     }
 
-    private void createTable() {
-//        tableItem = new Table();
-//        tableItem.setWidth("100%");
-//        tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-//        tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
-//        tableItem.setSortEnabled(false);
-//
-//        // set column generator
-//        for (Map.Entry<Object, ColumnGenerator> entry : columnGenerators.entrySet()) {
-//            tableItem.addGeneratedColumn(entry.getKey(), entry.getValue());
-//        }
-//
-//        if (StringUtils.isNotBlank((String) sortColumnId)) {
-//            tableItem.setColumnIcon(sortColumnId, isAscending ? VaadinIcons.CARET_DOWN : FontAwesome.CARET_UP);
-//        }
-//
-//        tableItem.addHeaderClickListener(headerClickEvent -> {
+    private void createGrid() {
+        Class typeCls;
+        try {
+            typeCls = Class.forName(this.type.getTypeName());
+        } catch (ClassNotFoundException e) {
+            throw new MyCollabException(e);
+        }
+        gridItem = new Grid<>(typeCls);
+        gridItem.setWidth("100%");
+
+        gridItem.setItems(currentListData);
+
+        // set column generator
+        for (Map.Entry<String, AbstractRenderer> entry : columnGenerators.entrySet()) {
+            gridItem.getColumn(entry.getKey()).setRenderer(entry.getValue());
+        }
+
+//        gridItem.addHeaderClickListener(headerClickEvent -> {
 //            String propertyId = (String) headerClickEvent.getPropertyId();
 //
 //            if (propertyId.equals("selected")) {
@@ -368,27 +368,24 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
 //                setSearchCriteria(searchCriteria);
 //            }
 //        });
-//
-//        BeanItemContainer<B> container = new BeanItemContainer<>(type, currentListData);
-//        tableItem.setPageLength(0);
-//        tableItem.setContainerDataSource(container);
-//        displayTableColumns();
-//
-//        if (this.getComponentCount() > 0) {
-//            final Component component0 = this.getComponent(0);
-//            if (component0 instanceof Table) {
-//                this.replaceComponent(component0, tableItem);
-//            } else {
-//                this.addComponent(tableItem, 0);
-//            }
-//        } else {
-//            this.addComponent(tableItem, 0);
-//        }
-//        this.setExpandRatio(tableItem, 1);
+
+        setDisplayColumns();
+
+        if (this.getComponentCount() > 0) {
+            final Component component0 = this.getComponent(0);
+            if (component0 instanceof Grid) {
+                this.replaceComponent(component0, gridItem);
+            } else {
+                this.addComponent(gridItem, 0);
+            }
+        } else {
+            this.addComponent(gridItem, 0);
+        }
+        this.setExpandRatio(gridItem, 1);
     }
 
 //    public Table getTable() {
-//        return tableItem;
+//        return gridItem;
 //    }
 
     public List<GridFieldMeta> getDefaultSelectedColumns() {
@@ -401,6 +398,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     }
 
 //    public Object[] getVisibleColumns() {
-//        return tableItem.getVisibleColumns();
+//        return gridItem.getVisibleColumns();
 //    }
 }

@@ -49,8 +49,8 @@ public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindo
                 OpportunityTableFieldDef.opportunityName, OpportunityTableFieldDef.saleStage,
                 OpportunityTableFieldDef.expectedCloseDate));
 
-//        tableItem.addGeneratedColumn("opportunityname", (source, itemId, columnId) -> {
-//            final SimpleOpportunity opportunity = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("opportunityname", (source, itemId, columnId) -> {
+//            final SimpleOpportunity opportunity = gridItem.getBeanByIndex(itemId);
 //
 //            ELabel b = new ELabel(opportunity.getOpportunityname()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateTooltipOpportunity(UserUIContext.getUserLocale(),

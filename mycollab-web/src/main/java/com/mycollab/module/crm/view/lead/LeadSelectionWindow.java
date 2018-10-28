@@ -59,8 +59,8 @@ public class LeadSelectionWindow extends MWindow {
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 
-//        tableItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
-//            final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("leadName", (source, itemId, columnId) -> {
+//            final SimpleLead lead = gridItem.getBeanByIndex(itemId);
 //            return new MButton(lead.getLeadName(), clickEvent -> {
 //                fieldSelection.fireValueChange(lead);
 //                close();

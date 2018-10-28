@@ -74,17 +74,17 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
                 Arrays.asList(new GridFieldMeta(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
                         new GridFieldMeta(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)));
 
-//        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleProjectRole role = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+//            final SimpleProjectRole role = gridItem.getBeanByIndex(itemId);
 //            CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
 //            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(role));
+//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(role));
 //            role.setExtraData(cb);
 //            return cb;
 //        });
 //
-//        tableItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
-//            ProjectRole role = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
+//            ProjectRole role = gridItem.getBeanByIndex(itemId);
 //            return new LabelLink(role.getRolename(),
 //                    ProjectLinkGenerator.generateRolePreviewLink(role.getProjectid(), role.getId()));
 //        });

@@ -60,8 +60,8 @@ public class OpportunitySelectionWindow extends MWindow {
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 
-//        tableItem.addGeneratedColumn(Opportunity.Field.opportunityname.name(), (source, itemId, columnId) -> {
-//            final SimpleOpportunity opportunity = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Opportunity.Field.opportunityname.name(), (source, itemId, columnId) -> {
+//            final SimpleOpportunity opportunity = gridItem.getBeanByIndex(itemId);
 //
 //            return new MButton(opportunity.getOpportunityname(), clickEvent -> {
 //                fieldSelection.fireValueChange(opportunity);

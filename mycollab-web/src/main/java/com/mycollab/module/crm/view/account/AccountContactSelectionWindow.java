@@ -50,8 +50,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
         this.tableItem = new ContactTableDisplay(ContactTableFieldDef.selected, Arrays.asList(ContactTableFieldDef.name,
                 ContactTableFieldDef.title, ContactTableFieldDef.account, ContactTableFieldDef.phoneOffice));
 
-//        tableItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
-//            final SimpleContact contact = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
+//            final SimpleContact contact = gridItem.getBeanByIndex(itemId);
 //
 //            return new ELabel(contact.getContactName()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateToolTipContact

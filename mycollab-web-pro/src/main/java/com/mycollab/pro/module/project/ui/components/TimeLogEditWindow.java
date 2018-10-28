@@ -85,39 +85,39 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                         TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new GridFieldMeta(null, "id",
                                 WebUIConstants.TABLE_CONTROL_WIDTH)));
 
-//        tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
-//            final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
+//            final SimpleItemTimeLogging timeLoggingItem = gridItem.getBeanByIndex(itemId);
 //
 //            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
 //                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
 //        });
 //
-//        tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
 //            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
 //        });
 //
-//        tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging itemTimeLogging = gridItem.getBeanByIndex(itemId);
 //            return new Label(itemTimeLogging.getLogvalue() + "");
 //        });
 //
-//        tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
 //            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
 //            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
 //            return icon;
 //        });
 //
-//        tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
+//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
 //            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
 //            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
 //            return icon;
 //        });
 //
-//        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-//            final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+//            final SimpleItemTimeLogging itemTimeLogging = gridItem.getBeanByIndex(itemId);
 //            MButton deleteBtn = new MButton("", clickEvent -> {
 //                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
 //                loadTimeValue();

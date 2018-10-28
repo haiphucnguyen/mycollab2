@@ -61,8 +61,8 @@ public class AccountSelectionWindow extends MWindow {
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
 
-//        tableItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
-//            final SimpleAccount account = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
+//            final SimpleAccount account = gridItem.getBeanByIndex(itemId);
 //
 //            return new MButton(account.getAccountname(), clickEvent -> {
 //                fieldSelection.fireValueChange(account);

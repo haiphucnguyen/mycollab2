@@ -79,17 +79,17 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
                 ProjectTableFieldDef.lead, ProjectTableFieldDef.client, ProjectTableFieldDef.startDate,
                 ProjectTableFieldDef.status));
 
-//        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleProject item = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+//            final SimpleProject item = gridItem.getBeanByIndex(itemId);
 //            final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
 //            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(item));
+//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(item));
 //            item.setExtraData(cb);
 //            return cb;
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.name.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            A projectLink = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
 //            projectLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.PROJECT,
 //                    project.getId() + ""));
@@ -108,14 +108,14 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 //                    .expand(b).alignAll(Alignment.MIDDLE_LEFT).withMargin(false);
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.memlead.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.memlead.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            return ELabel.html(ProjectLinkBuilder.generateProjectMemberHtmlLink(project.getId(), project.getMemlead(),
 //                    project.getLeadFullName(), project.getLeadAvatarId(), true));
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.accountid.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.accountid.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            if (project.getAccountid() != null) {
 //                LabelLink b = new LabelLink(project.getClientName(),
 //                        ProjectLinkGenerator.generateClientPreviewLink(project.getAccountid()));
@@ -126,23 +126,23 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 //            }
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.planstartdate.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.planstartdate.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            return new Label(UserUIContext.formatDate(project.getPlanstartdate()));
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.planenddate.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.planenddate.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            return new Label(UserUIContext.formatDate(project.getPlanenddate()));
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.projectstatus.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.projectstatus.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            return ELabel.i18n(project.getProjectstatus(), StatusI18nEnum.class);
 //        });
 //
-//        tableItem.addGeneratedColumn(Project.Field.createdtime.name(), (source, itemId, columnId) -> {
-//            SimpleProject project = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn(Project.Field.createdtime.name(), (source, itemId, columnId) -> {
+//            SimpleProject project = gridItem.getBeanByIndex(itemId);
 //            return new Label(UserUIContext.formatDate(project.getCreatedtime()));
 //        });
 

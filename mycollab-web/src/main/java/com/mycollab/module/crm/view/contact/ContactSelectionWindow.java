@@ -61,8 +61,8 @@ public class ContactSelectionWindow extends MWindow {
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
 
-//        tableItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
-//            final SimpleContact contact = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("contactName", (source, itemId, columnId) -> {
+//            final SimpleContact contact = gridItem.getBeanByIndex(itemId);
 //
 //            return new MButton(contact.getContactName(), clickEvent -> {
 //                fieldSelection.fireValueChange(contact);

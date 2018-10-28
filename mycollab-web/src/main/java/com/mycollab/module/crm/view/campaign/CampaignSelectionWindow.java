@@ -58,8 +58,8 @@ public class CampaignSelectionWindow extends MWindow {
         tableItem.setDisplayNumItems(10);
         tableItem.setWidth("100%");
 
-//        tableItem.addGeneratedColumn("campaignname", (source, itemId, columnId) -> {
-//            final SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("campaignname", (source, itemId, columnId) -> {
+//            final SimpleCampaign campaign = gridItem.getBeanByIndex(itemId);
 //
 //            return new MButton(campaign.getCampaignname(), clickEvent -> {
 //                fieldSelection.fireValueChange(campaign);

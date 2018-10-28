@@ -54,8 +54,8 @@ class LeadCampaignSelectionWindow extends RelatedItemSelectionWindow<SimpleCampa
                 Arrays.asList(CampaignTableFieldDef.campaignname, CampaignTableFieldDef.status,
                         CampaignTableFieldDef.type, CampaignTableFieldDef.endDate));
 
-//        tableItem.addGeneratedColumn("campaignname", (source, itemId, columnId) -> {
-//            final SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("campaignname", (source, itemId, columnId) -> {
+//            final SimpleCampaign campaign = gridItem.getBeanByIndex(itemId);
 //
 //            ELabel b = new ELabel(campaign.getCampaignname()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateTooltipCampaign(UserUIContext.getUserLocale(), AppUI.getDateFormat(),

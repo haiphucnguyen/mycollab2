@@ -34,7 +34,7 @@ import java.util.List;
 public class FieldDefAnalyzer {
     private static Logger LOG = LoggerFactory.getLogger(FieldDefAnalyzer.class);
 
-    public static List<GridFieldMeta> toTableFields(String jsonValue) {
+    public static List<GridFieldMeta> toGridFields(String jsonValue) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(jsonValue, new TypeReference<List<GridFieldMeta>>() {

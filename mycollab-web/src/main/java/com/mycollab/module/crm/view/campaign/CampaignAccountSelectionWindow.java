@@ -53,8 +53,8 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
                 Arrays.asList(AccountTableFieldDef.accountname, AccountTableFieldDef.phoneoffice,
                         AccountTableFieldDef.email, AccountTableFieldDef.city));
 
-//        tableItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
-//            SimpleAccount account = tableItem.getBeanByIndex(itemId);
+//        gridItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
+//            SimpleAccount account = gridItem.getBeanByIndex(itemId);
 //            return new ELabel(account.getAccountname()).withStyleName(WebThemes.BUTTON_LINK)
 //                    .withDescription(CrmTooltipGenerator.generateToolTipAccount(UserUIContext.getUserLocale(), account,
 //                            AppUI.getSiteUrl()));
