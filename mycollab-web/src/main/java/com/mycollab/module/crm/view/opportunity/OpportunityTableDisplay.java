@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.opportunity;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleOpportunity;
 import com.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.mycollab.module.crm.service.OpportunityService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,17 +30,17 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class OpportunityTableDisplay extends DefaultPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
+public class OpportunityTableDisplay extends DefaultPagedGrid<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
 
-    public OpportunityTableDisplay(List<TableViewField> displayColumns) {
+    public OpportunityTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public OpportunityTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public OpportunityTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
     }
 
-    public OpportunityTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public OpportunityTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(OpportunityService.class),
                 SimpleOpportunity.class, viewId, requiredColumn, displayColumns);
 

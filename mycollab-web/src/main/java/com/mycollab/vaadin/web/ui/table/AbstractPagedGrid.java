@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.web.ui.table;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
 import com.mycollab.common.json.FieldDefAnalyzer;
@@ -47,10 +47,10 @@ import static com.mycollab.vaadin.web.ui.WebThemes.SCROLLABLE_CONTAINER;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extends VerticalLayout implements IPagedBeanTable<S, B> {
+public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends VerticalLayout implements IPagedGrid<S, B> {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractPagedBeanTable.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractPagedGrid.class);
 
     private int displayNumItems = BasicSearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
     private Collection<B> currentListData;
@@ -72,21 +72,21 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 
     protected Class<B> type;
 
-    private TableViewField requiredColumn;
-    private List<TableViewField> displayColumns;
-    private List<TableViewField> defaultSelectedColumns;
+    private GridFieldMeta requiredColumn;
+    private List<GridFieldMeta> displayColumns;
+    private List<GridFieldMeta> defaultSelectedColumns;
 
 //    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
 
-    public AbstractPagedBeanTable(Class<B> type, List<TableViewField> displayColumns) {
+    public AbstractPagedGrid(Class<B> type, List<GridFieldMeta> displayColumns) {
         this(type, null, displayColumns);
     }
 
-    public AbstractPagedBeanTable(Class<B> type, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public AbstractPagedGrid(Class<B> type, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(type, null, requiredColumn, displayColumns);
     }
 
-    public AbstractPagedBeanTable(Class<B> type, String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public AbstractPagedGrid(Class<B> type, String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         if (viewId != null) {
             CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
             CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(AppUI.getAccountId(),
@@ -111,7 +111,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         addStyleName(SCROLLABLE_CONTAINER);
     }
 
-    public void setDisplayColumns(List<TableViewField> viewFields) {
+    public void setDisplayColumns(List<GridFieldMeta> viewFields) {
         this.displayColumns = viewFields;
         displayTableColumns();
         this.markAsDirty();
@@ -128,7 +128,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 //        }
 //
 //        for (int i = 0; i < displayColumns.size(); i++) {
-//            TableViewField viewField = displayColumns.get(i);
+//            GridFieldMeta viewField = displayColumns.get(i);
 //            visibleColumnsCol.add(viewField.getField());
 //            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
 //
@@ -216,11 +216,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 //        final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
 //        return item == null ? null : item.getBean();
 //    }
-
-    @Override
-    public void refresh() {
-        doSearch();
-    }
 
     private void pageChange(final int currentPage) {
         if (searchRequest != null) {
@@ -396,12 +391,12 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 //        return tableItem;
 //    }
 
-    public List<TableViewField> getDefaultSelectedColumns() {
+    public List<GridFieldMeta> getDefaultSelectedColumns() {
         return defaultSelectedColumns;
     }
 
     @Override
-    public List<TableViewField> getDisplayColumns() {
+    public List<GridFieldMeta> getDisplayColumns() {
         return displayColumns;
     }
 

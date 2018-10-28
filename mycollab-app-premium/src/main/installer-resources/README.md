@@ -317,7 +317,7 @@ Version 5.3.4
 * [Premium] Allow adding the new assignment in calendar view
 * [Premium] The new Hourly weekly report
 * Change the template engine from Velocity to Freemarker
-* Allow customizing the report fields
+* Allow customizing the report fieldMetas
 * Externalize more strings for localization
 * Reduce the SQL queries in schedule task by caching objects
 * Support German language (Contributor: Marco Gantenbein)
@@ -339,7 +339,7 @@ Version 5.3.3
 
 **Improvements & New Features**
 
-* Allow to customize the report fields in the project module
+* Allow to customize the report fieldMetas in the project module
 * Allow project member can set time for task and issue
 * Apply the date formats in report and tooltip
 * Support localization for languages easier
@@ -351,7 +351,7 @@ Version 5.3.3
 
 * [Premium] Time-log window causes error in several special cases
 * Can not search projects in the project list view
-* Timezone on several date fields are not correct
+* Timezone on several date fieldMetas are not correct
 * Not check validate dates in the issue entry
 * Upload project favicon does not work with Java 7
 * Can not change the timezone in the user profile view in several cases
@@ -393,7 +393,7 @@ Version 5.3.1
 * Add the new issue navigation buttons
 * Site administrator can define the default timezone, language, date formats
 * Do not limit the supported languages
-* Display the custom date format of account in all form fields
+* Display the custom date format of account in all form fieldMetas
 * General performance improvement
 * Other minor improvements
 
@@ -535,7 +535,7 @@ Version 5.2.9
 
 **Bug Fixes**
 
-* [Premium] Display wrong list of history fields in several special cases
+* [Premium] Display wrong list of history fieldMetas in several special cases
 * [Premium] Save the new project throws error
 * Rename option column may cause the error in trending chart
 * Websocket timeout error
@@ -967,7 +967,7 @@ Version 5.0.5
 * Display comment in CRM activity stream
 * Support font awesome in emails
 * Minor bug fixes in reporting
-* Cache reflection fields hence upgrade the app performance up to 5%
+* Cache reflection fieldMetas hence upgrade the app performance up to 5%
 * Add time summary for bug group, milestone, component, version views
 * Allow system admin can change the SMTP setting on the fly
 * Enable gzip compression for assets by default
@@ -1338,7 +1338,7 @@ Version 4.3.2
 
 **Bug Fixes**
 
-* Add more tracked fields in version notification email.
+* Add more tracked fieldMetas in version notification email.
 * Fixed NPE when browser cookie is disabled.
 * Fixed bug view render wrongly in some rare cases.
 * Fixed overflow tooltip title if it is too long
@@ -1440,7 +1440,7 @@ Version 4.1.0
 **Improvements**
 
 * Boot time of application is much faster than previous version in some OSes
-* Email template of bug and bug are re-ordered fields more logically
+* Email template of bug and bug are re-ordered fieldMetas more logically
 * Cache spring service classes to init application context faster
 * Support user localization.common
 * Make install process easier for non-tech users

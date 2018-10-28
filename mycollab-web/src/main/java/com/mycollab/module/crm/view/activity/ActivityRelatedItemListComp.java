@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.crm.domain.SimpleActivity;
 import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
@@ -30,7 +30,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -69,10 +68,10 @@ public class ActivityRelatedItemListComp extends RelatedListComp<SimpleActivity,
         }
 
         tableItem = new ActivityTableDisplay(Arrays.asList(
-                new TableViewField(ActivityI18nEnum.FORM_SUBJECT, "subject", WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_S_LABEL_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_START_DATE, "startDate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_END_DATE, "endDate", WebUIConstants.TABLE_DATE_TIME_WIDTH)));
+                new GridFieldMeta(ActivityI18nEnum.FORM_SUBJECT, "subject", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                new GridFieldMeta(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_S_LABEL_WIDTH),
+                new GridFieldMeta(GenericI18Enum.FORM_START_DATE, "startDate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
+                new GridFieldMeta(GenericI18Enum.FORM_END_DATE, "endDate", WebUIConstants.TABLE_DATE_TIME_WIDTH)));
 
         this.addComponent(tableItem);
     }

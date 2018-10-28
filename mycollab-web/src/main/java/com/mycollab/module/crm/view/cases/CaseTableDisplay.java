@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.cases;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleCase;
 import com.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.mycollab.module.crm.service.CaseService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,17 +30,17 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class CaseTableDisplay extends DefaultPagedBeanTable<CaseService, CaseSearchCriteria, SimpleCase> {
+public class CaseTableDisplay extends DefaultPagedGrid<CaseService, CaseSearchCriteria, SimpleCase> {
 
-    public CaseTableDisplay(List<TableViewField> displayColumns) {
+    public CaseTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public CaseTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public CaseTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
     }
 
-    public CaseTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public CaseTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(CaseService.class), SimpleCase.class, viewId, requiredColumn, displayColumns);
 
 //        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {

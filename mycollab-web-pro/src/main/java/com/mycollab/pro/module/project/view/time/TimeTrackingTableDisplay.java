@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view.time;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Text;
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -12,7 +12,7 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +22,13 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria,
+public class TimeTrackingTableDisplay extends DefaultPagedGrid<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria,
         SimpleItemTimeLogging> {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(TimeTrackingTableDisplay.class);
 
-    public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
+    public TimeTrackingTableDisplay(List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class, displayColumns);
 
 //        this.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {

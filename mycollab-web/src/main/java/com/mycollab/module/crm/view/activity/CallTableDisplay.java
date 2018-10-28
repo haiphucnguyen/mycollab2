@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleCall;
 import com.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.mycollab.module.crm.service.CallService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ import java.util.List;
  * @since 1.0.0
  */
 // TODO
-public class CallTableDisplay extends DefaultPagedBeanTable<CallService, CallSearchCriteria, SimpleCall> {
+public class CallTableDisplay extends DefaultPagedGrid<CallService, CallSearchCriteria, SimpleCall> {
     private static final long serialVersionUID = 1L;
 
-    public CallTableDisplay(TableViewField requireColumn, List<TableViewField> displayColumns) {
+    public CallTableDisplay(GridFieldMeta requireColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(CallService.class), SimpleCall.class, requireColumn, displayColumns);
 
 //        this.addGeneratedColumn("subject", (source, itemId, columnId) -> {

@@ -26,7 +26,7 @@ import com.mycollab.vaadin.event.HasSelectableItemHandlers;
 import com.mycollab.vaadin.event.HasSelectionOptionHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -45,7 +45,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
     protected MVerticalLayout contentLayout;
     protected DefaultGenericSearchPanel<S> searchPanel;
-    protected AbstractPagedBeanTable<S, B> tableItem;
+    protected AbstractPagedGrid<S, B> tableItem;
 
     private Label selectedItemsNumberLabel = new Label();
 
@@ -107,7 +107,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
     }
 
     @Override
-    public AbstractPagedBeanTable<S, B> getPagedBeanTable() {
+    public AbstractPagedGrid<S, B> getPagedBeanTable() {
         return tableItem;
     }
 
@@ -130,7 +130,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
 
     abstract protected DefaultGenericSearchPanel<S> createSearchPanel();
 
-    abstract protected AbstractPagedBeanTable<S, B> createBeanTable();
+    abstract protected AbstractPagedGrid<S, B> createBeanTable();
 
     abstract protected DefaultMassItemActionHandlerContainer createActionControls();
 }

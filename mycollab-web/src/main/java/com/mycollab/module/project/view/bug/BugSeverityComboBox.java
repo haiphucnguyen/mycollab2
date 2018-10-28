@@ -16,7 +16,10 @@
  */
 package com.mycollab.module.project.view.bug;
 
+import com.mycollab.module.project.i18n.OptionI18nEnum;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+
+import java.util.Arrays;
 
 /**
  * @author MyCollab Ltd.
@@ -27,10 +30,8 @@ public class BugSeverityComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
     public BugSeverityComboBox() {
-        super();
-//        this.setEmptySelectionAllowed(false);
-//        this.setCaption(null);
-//        this.loadData(Arrays.asList(OptionI18nEnum.bug_severities));
+        this.setEmptySelectionAllowed(false);
+        this.loadData(Arrays.asList(OptionI18nEnum.bug_severities));
 //
 //        this.setItemIcon(BugSeverity.Critical.name(), FontAwesome.STAR);
 //        this.setItemIcon(BugSeverity.Major.name(), FontAwesome.STAR);

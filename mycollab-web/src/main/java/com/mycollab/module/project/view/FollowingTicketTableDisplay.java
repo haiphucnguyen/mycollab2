@@ -20,7 +20,7 @@ import com.mycollab.module.project.domain.FollowingTicket;
 import com.mycollab.module.project.domain.criteria.FollowingTicketSearchCriteria;
 import com.mycollab.module.project.service.ProjectFollowingTicketService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.Arrays;
 
@@ -29,7 +29,7 @@ import java.util.Arrays;
  * @since 1.0
  */
 // TODO
-public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFollowingTicketService, FollowingTicketSearchCriteria, FollowingTicket> {
+public class FollowingTicketTableDisplay extends DefaultPagedGrid<ProjectFollowingTicketService, FollowingTicketSearchCriteria, FollowingTicket> {
     private static final long serialVersionUID = 1L;
 
     public FollowingTicketTableDisplay() {

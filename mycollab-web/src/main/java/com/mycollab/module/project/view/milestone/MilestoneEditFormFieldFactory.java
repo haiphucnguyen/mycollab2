@@ -27,8 +27,14 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.IconGenerator;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+
+import java.util.Arrays;
+
+import static com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.*;
 
 /**
  * @author MyCollab Ltd.
@@ -87,12 +93,17 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
 
         ProgressStatusComboBox() {
             setCaption(null);
-//            this.setEmptySelectionAllowed(false);
-//            this.loadData(Arrays.asList(MilestoneStatus.InProgress, MilestoneStatus.Future, MilestoneStatus.Closed));
-//
-//            this.setItemIcon(MilestoneStatus.InProgress.name(), FontAwesome.SPINNER);
-//            this.setItemIcon(MilestoneStatus.Future.name(), FontAwesome.CLOCK_O);
-//            this.setItemIcon(MilestoneStatus.Closed.name(), FontAwesome.MINUS_CIRCLE);
+            this.setEmptySelectionAllowed(false);
+            this.loadData(Arrays.asList(InProgress, Future, Closed));
+            this.setItemIconGenerator((IconGenerator<String>) it -> {
+                if (it.equals(InProgress.name())) {
+                    return VaadinIcons.SPINNER;
+                } else if (it.equals(Future.name())) {
+                    return VaadinIcons.CLOCK;
+                } else {
+                    return VaadinIcons.MINUS_CIRCLE;
+                }
+            });
         }
 
 //        @Override

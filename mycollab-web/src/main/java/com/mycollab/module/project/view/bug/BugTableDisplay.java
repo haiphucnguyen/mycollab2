@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.project.view.bug;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,18 +30,18 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-class BugTableDisplay extends DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> {
+class BugTableDisplay extends DefaultPagedGrid<BugService, BugSearchCriteria, SimpleBug> {
     private static final long serialVersionUID = 1L;
 
-    BugTableDisplay(List<TableViewField> displayColumns) {
+    BugTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    BugTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    BugTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
     }
 
-    BugTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    BugTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(BugService.class), SimpleBug.class, viewId, requiredColumn, displayColumns);
 
 //        this.addGeneratedColumn("assignuserFullName", (source, itemId, columnId) -> {

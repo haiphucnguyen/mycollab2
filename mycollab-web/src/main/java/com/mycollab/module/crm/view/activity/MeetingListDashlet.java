@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
@@ -47,9 +47,9 @@ public class MeetingListDashlet extends Depot {
         this.setMargin(new MarginInfo(true, false, false, false));
 
         tableItem = new MeetingTableDisplay(Arrays.asList(
-                new TableViewField(MeetingI18nEnum.FORM_SUBJECT, "subject", WebUIConstants.TABLE_X_LABEL_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_START_DATE, "startdate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
-                new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_S_LABEL_WIDTH)));
+                new GridFieldMeta(MeetingI18nEnum.FORM_SUBJECT, "subject", WebUIConstants.TABLE_X_LABEL_WIDTH),
+                new GridFieldMeta(GenericI18Enum.FORM_START_DATE, "startdate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
+                new GridFieldMeta(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_S_LABEL_WIDTH)));
 
         bodyContent.addComponent(tableItem);
 

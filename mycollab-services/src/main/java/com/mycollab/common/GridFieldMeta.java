@@ -28,18 +28,18 @@ import java.io.IOException;
  * @author MyCollab Ltd
  * @since 5.3.1
  */
-@JsonSerialize(using = TableViewField.Serializer.class)
-@JsonDeserialize(using = TableViewField.DeSerializer.class)
-public class TableViewField {
+@JsonSerialize(using = GridFieldMeta.Serializer.class)
+@JsonDeserialize(using = GridFieldMeta.DeSerializer.class)
+public class GridFieldMeta {
     private Enum<?> descKey;
     private String field;
     private Integer defaultWidth;
 
-    public TableViewField(String field, Integer defaultWidth) {
+    public GridFieldMeta(String field, Integer defaultWidth) {
         this(null, field, defaultWidth);
     }
 
-    public TableViewField(Enum<?> descKey, String field, Integer defaultWidth) {
+    public GridFieldMeta(Enum<?> descKey, String field, Integer defaultWidth) {
         this.descKey = descKey;
         this.field = field;
         this.defaultWidth = defaultWidth;
@@ -48,9 +48,9 @@ public class TableViewField {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TableViewField)) return false;
+        if (!(o instanceof GridFieldMeta)) return false;
 
-        TableViewField that = (TableViewField) o;
+        GridFieldMeta that = (GridFieldMeta) o;
 
         return (descKey != null ? descKey.equals(that.descKey) : that.descKey == null) && field.equals(that.field) && defaultWidth.equals(that.defaultWidth);
 
@@ -88,23 +88,23 @@ public class TableViewField {
         this.defaultWidth = defaultWidth;
     }
 
-    public static class Serializer extends JsonSerializer<TableViewField> {
+    public static class Serializer extends JsonSerializer<GridFieldMeta> {
         @Override
-        public void serialize(TableViewField tableViewField, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        public void serialize(GridFieldMeta gridFieldMeta, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
             jsonGenerator.writeStartObject();
-            jsonGenerator.writeStringField("field", tableViewField.field);
-            jsonGenerator.writeNumberField("defaultWidth", tableViewField.defaultWidth);
-            if (tableViewField.descKey != null) {
-                jsonGenerator.writeStringField("desc", tableViewField.descKey.name());
-                jsonGenerator.writeStringField("descCls", tableViewField.descKey.getClass().getName());
+            jsonGenerator.writeStringField("field", gridFieldMeta.field);
+            jsonGenerator.writeNumberField("defaultWidth", gridFieldMeta.defaultWidth);
+            if (gridFieldMeta.descKey != null) {
+                jsonGenerator.writeStringField("desc", gridFieldMeta.descKey.name());
+                jsonGenerator.writeStringField("descCls", gridFieldMeta.descKey.getClass().getName());
             }
             jsonGenerator.writeEndObject();
         }
     }
 
-    public static class DeSerializer extends JsonDeserializer<TableViewField> {
+    public static class DeSerializer extends JsonDeserializer<GridFieldMeta> {
         @Override
-        public TableViewField deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        public GridFieldMeta deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
             JsonNode node = jsonParser.getCodec().readTree(jsonParser);
             String field = node.get("field").asText();
             Integer defaultWidth = node.get("defaultWidth").asInt(200);
@@ -114,12 +114,12 @@ public class TableViewField {
                     String descClsName = node.get("descCls").asText();
                     Class descEnumCls = Class.forName(descClsName);
                     Enum descKey = Enum.valueOf(descEnumCls, descNode.asText());
-                    return new TableViewField(descKey, field, defaultWidth);
+                    return new GridFieldMeta(descKey, field, defaultWidth);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            return new TableViewField(field, defaultWidth);
+            return new GridFieldMeta(field, defaultWidth);
         }
     }
 }

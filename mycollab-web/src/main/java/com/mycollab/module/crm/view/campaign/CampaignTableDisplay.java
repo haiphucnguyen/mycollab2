@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.campaign;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleCampaign;
 import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.mycollab.module.crm.service.CampaignService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,17 +30,17 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class CampaignTableDisplay extends DefaultPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
+public class CampaignTableDisplay extends DefaultPagedGrid<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
 
-    public CampaignTableDisplay(List<TableViewField> displayColumns) {
+    public CampaignTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public CampaignTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public CampaignTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
     }
 
-    public CampaignTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public CampaignTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(CampaignService.class), SimpleCampaign.class, viewId, requiredColumn, displayColumns);
 //        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {
 //            final SimpleCampaign campaign = getBeanByIndex(itemId);

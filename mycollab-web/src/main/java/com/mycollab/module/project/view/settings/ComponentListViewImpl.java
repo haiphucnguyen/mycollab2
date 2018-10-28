@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.settings;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -36,8 +36,8 @@ import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -55,7 +55,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
 
     private ComponentSearchPanel componentSearchPanel;
     private SelectionOptionButton selectOptionButton;
-    private DefaultPagedBeanTable<ComponentService, ComponentSearchCriteria, SimpleComponent> tableItem;
+    private DefaultPagedGrid<ComponentService, ComponentSearchCriteria, SimpleComponent> tableItem;
     private VerticalLayout componentListLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
@@ -73,14 +73,14 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ComponentService.class),
-                SimpleComponent.class, new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
+        tableItem = new DefaultPagedGrid<>(AppContextUtil.getSpringBean(ComponentService.class),
+                SimpleComponent.class, new GridFieldMeta(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(
-                        new TableViewField(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                        new TableViewField(ComponentI18nEnum.FORM_LEAD, "userLeadFullName", WebUIConstants.TABLE_X_LABEL_WIDTH),
-                        new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
-                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
-                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
+                        new GridFieldMeta(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                        new GridFieldMeta(ComponentI18nEnum.FORM_LEAD, "userLeadFullName", WebUIConstants.TABLE_X_LABEL_WIDTH),
+                        new GridFieldMeta(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
+                        new GridFieldMeta(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
+                        new GridFieldMeta(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
 //        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
 //            final SimpleComponent component = tableItem.getBeanByIndex(itemId);
@@ -196,7 +196,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
     }
 
     @Override
-    public AbstractPagedBeanTable<ComponentSearchCriteria, SimpleComponent> getPagedBeanTable() {
+    public AbstractPagedGrid<ComponentSearchCriteria, SimpleComponent> getPagedBeanTable() {
         return tableItem;
     }
 }

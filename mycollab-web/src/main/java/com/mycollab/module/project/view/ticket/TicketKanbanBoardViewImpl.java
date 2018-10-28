@@ -114,8 +114,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-//        viewButtons.withDefaultButton(kanbanBtn);
-//        groupWrapLayout.addComponent(viewButtons);
+        viewButtons.withDefaultButton(kanbanBtn);
+        groupWrapLayout.addComponent(viewButtons);
 
         ToggleButtonGroup group = new ToggleButtonGroup();
 
@@ -125,7 +125,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             queryTickets(baseCriteria);
         });
         group.addButton(allFilterBtn);
-//        group.withDefaultButton(allFilterBtn);
+        group.withDefaultButton(allFilterBtn);
 
         MButton filterBugsBtn = new MButton(UserUIContext.getMessage(BugI18nEnum.SINGLE)).withStyleName(WebThemes.BUTTON_OPTION).withListener((Button.ClickListener) clickEvent -> {
             statuses = OptionI18nEnum.bugStatuses;
@@ -148,8 +148,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         });
         group.addButton(filterRisksBtn);
 
-//        MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), group)
-//                .withDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), group)
+                .withDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
         kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -186,7 +186,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             }
         });
 
-        this.with(searchPanel, /*controlLayout, */kanbanLayout).expand(kanbanLayout);
+        this.with(searchPanel, controlLayout, kanbanLayout).expand(kanbanLayout);
     }
 
     @Override

@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.lead;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleLead;
 import com.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.mycollab.module.crm.service.LeadService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,18 +30,18 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class LeadTableDisplay extends DefaultPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> {
+public class LeadTableDisplay extends DefaultPagedGrid<LeadService, LeadSearchCriteria, SimpleLead> {
 
-    public LeadTableDisplay(List<TableViewField> displayColumns) {
+    public LeadTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public LeadTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public LeadTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
 
     }
 
-    public LeadTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public LeadTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(LeadService.class),
                 SimpleLead.class, viewId, requiredColumn, displayColumns);
 

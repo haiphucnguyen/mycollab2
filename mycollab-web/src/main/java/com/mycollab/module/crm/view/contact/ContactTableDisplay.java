@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.contact;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleContact;
 import com.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,19 +30,19 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class ContactTableDisplay extends DefaultPagedBeanTable<ContactService, ContactSearchCriteria, SimpleContact> {
+public class ContactTableDisplay extends DefaultPagedGrid<ContactService, ContactSearchCriteria, SimpleContact> {
     private static final long serialVersionUID = 1L;
 
-    public ContactTableDisplay(List<TableViewField> displayColumns) {
+    public ContactTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public ContactTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public ContactTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
 
     }
 
-    public ContactTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public ContactTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(ContactService.class), SimpleContact.class, viewId, requiredColumn, displayColumns);
 
 //        addGeneratedColumn("selected", (source, itemId, columnId) -> {

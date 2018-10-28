@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.user.accountsettings.team.view;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.user.domain.SimpleRole;
 import com.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.mycollab.module.user.service.RoleService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class RoleTableDisplay extends DefaultPagedBeanTable<RoleService, RoleSearchCriteria, SimpleRole> {
+public class RoleTableDisplay extends DefaultPagedGrid<RoleService, RoleSearchCriteria, SimpleRole> {
     private static final long serialVersionUID = 1L;
 
-    public RoleTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public RoleTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(RoleService.class), SimpleRole.class, requiredColumn, displayColumns);
 
 //        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {

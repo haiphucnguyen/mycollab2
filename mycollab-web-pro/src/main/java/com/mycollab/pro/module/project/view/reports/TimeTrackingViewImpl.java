@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.reports;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
@@ -36,9 +36,8 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.IPagedGrid;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -97,7 +96,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         }
     }
 
-    private List<TableViewField> getVisibleFields() {
+    private List<GridFieldMeta> getVisibleFields() {
         String groupBy = (String) groupField.getValue();
 
         if (groupBy.equals(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))) {
@@ -302,11 +301,11 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         });
     }
 
-    private IPagedBeanTable.TableClickListener tableClickListener = new IPagedBeanTable.TableClickListener() {
+    private IPagedGrid.TableClickListener tableClickListener = new IPagedGrid.TableClickListener() {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void itemClick(final IPagedBeanTable.TableClickEvent event) {
+        public void itemClick(final IPagedGrid.TableClickEvent event) {
             SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
             if ("name".equals(event.getFieldName())) {
                 int typeId = itemLogging.getTypeid();

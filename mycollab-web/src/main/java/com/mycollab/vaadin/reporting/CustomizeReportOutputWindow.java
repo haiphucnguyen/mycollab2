@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.reporting;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -70,18 +70,18 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 //        listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
 //        listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
 //        listBuilder.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-//        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class,
+//        final BeanItemContainer<GridFieldMeta> container = new BeanItemContainer<>(GridFieldMeta.class,
 //                this.getAvailableColumns());
 //        listBuilder.setContainerDataSource(container);
 //        getAvailableColumns().forEach(field -> listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey())));
 //
-//        final Collection<TableViewField> viewColumnIds = this.getViewColumns();
+//        final Collection<GridFieldMeta> viewColumnIds = this.getViewColumns();
 //        listBuilder.setValue(viewColumnIds);
 //        contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 //
 //        contentLayout.with(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.ACTION_PREVIEW)));
 //        sampleTableDisplay = new Table();
-//        for (TableViewField field : getAvailableColumns()) {
+//        for (GridFieldMeta field : getAvailableColumns()) {
 //            sampleTableDisplay.addContainerProperty(field.getField(), String.class, "",
 //                    UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
 //            sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
@@ -109,7 +109,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 //            @Override
 //            protected StreamResource.StreamSource buildStreamSource() {
 //                return (StreamResource.StreamSource) () -> {
-//                    Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+//                    Collection<GridFieldMeta> columns = (Collection<GridFieldMeta>) listBuilder.getValue();
 //                    // Save custom table view def
 //                    CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
 //                    CustomViewStore viewDef = new CustomViewStore();
@@ -142,7 +142,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 //        final MButton exportMailBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT_MAIL))
 //                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.MAIL_REPLY_ALL);
 //        exportMailBtn.addClickListener(clickEvent -> {
-//            Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+//            Collection<GridFieldMeta> columns = (Collection<GridFieldMeta>) listBuilder.getValue();
 //            SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(
 //                    UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle,
 //                    new RpFieldsBuilder(columns), getExportType(), beanCls, searchableService);
@@ -173,15 +173,15 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
     }
 
     private void filterColumns() {
-//        Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
+//        Collection<GridFieldMeta> columns = (Collection<GridFieldMeta>) listBuilder.getValue();
 //        Collection<String> visibleColumns = new ArrayList<>();
-//        for (TableViewField column : columns) {
+//        for (GridFieldMeta column : columns) {
 //            visibleColumns.add(column.getField());
 //        }
 //        sampleTableDisplay.setVisibleColumns(visibleColumns.toArray(new String[visibleColumns.size()]));
     }
 
-    private Collection<TableViewField> getViewColumns() {
+    private Collection<GridFieldMeta> getViewColumns() {
         CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
         CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(AppUI.getAccountId(),
                 UserUIContext.getUsername(), viewId);
@@ -196,9 +196,9 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         }
     }
 
-    abstract protected Collection<TableViewField> getDefaultColumns();
+    abstract protected Collection<GridFieldMeta> getDefaultColumns();
 
-    abstract protected Collection<TableViewField> getAvailableColumns();
+    abstract protected Collection<GridFieldMeta> getAvailableColumns();
 
     abstract protected Object[] buildSampleData();
 }

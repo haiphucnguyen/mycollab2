@@ -33,8 +33,8 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.IPagedGrid;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -51,7 +51,7 @@ import java.util.Arrays;
 public class ProjectListViewImpl extends AbstractVerticalPageView implements ProjectListView {
     private ProjectSearchPanel projectSearchPanel;
     private SelectionOptionButton selectOptionButton;
-    private DefaultPagedBeanTable<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
+    private DefaultPagedGrid<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
     private VerticalLayout bodyLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
@@ -73,7 +73,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ProjectService.class),
+        tableItem = new DefaultPagedGrid<>(AppContextUtil.getSpringBean(ProjectService.class),
                 SimpleProject.class, ProjectTypeConstants.PROJECT,
                 ProjectTableFieldDef.selected, Arrays.asList(ProjectTableFieldDef.projectName,
                 ProjectTableFieldDef.lead, ProjectTableFieldDef.client, ProjectTableFieldDef.startDate,
@@ -220,7 +220,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
     }
 
     @Override
-    public IPagedBeanTable<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
+    public IPagedGrid<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
         return tableItem;
     }
 }

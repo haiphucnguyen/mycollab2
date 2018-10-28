@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.web.ui.table;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
@@ -35,28 +35,29 @@ import java.util.List;
  * @since 2.0
  */
 // TODO
-public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
+public interface IPagedGrid<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
 
     int setSearchCriteria(S searchCriteria);
 
     Collection<T> getCurrentDataList();
 
+    @Deprecated
     void addTableListener(TableClickListener listener);
 
 //    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
 
-    List<TableViewField> getDisplayColumns();
+    List<GridFieldMeta> getDisplayColumns();
 
 //    T getBeanByIndex(Object itemId);
 
-    void refresh();
-
+    @Deprecated
     interface TableClickListener extends EventListener, Serializable {
         Method itemClickMethod = ReflectTools.findMethod(TableClickListener.class, "itemClick", TableClickEvent.class);
 
         void itemClick(TableClickEvent event);
     }
 
+    @Deprecated
     class TableClickEvent extends ApplicationEvent {
         public static final String TABLE_CLICK_IDENTIFIER = "tableClickEvent";
 
@@ -64,7 +65,7 @@ public interface IPagedBeanTable<S extends SearchCriteria, T> extends HasSelecta
         private String fieldName;
         private Object data;
 
-        public TableClickEvent(IPagedBeanTable source, Object data, String fieldName) {
+        public TableClickEvent(IPagedGrid source, Object data, String fieldName) {
             super(source);
             this.data = data;
             this.fieldName = fieldName;

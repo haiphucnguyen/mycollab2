@@ -35,7 +35,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.SplitButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
@@ -130,7 +130,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedBeanTable<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanTable() {
+    public AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanTable() {
         return this.ticketTable;
     }
 }

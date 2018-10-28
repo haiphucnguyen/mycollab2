@@ -18,6 +18,9 @@ package com.mycollab.module.project.ui.components;
 
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.IconGenerator;
+import com.vaadin.ui.StyleGenerator;
 
 import java.util.Arrays;
 
@@ -29,24 +32,24 @@ import java.util.Arrays;
 public class PriorityComboBox extends I18nValueComboBox {
     private static final long serialVersionUID = 1L;
 
+    public PriorityComboBox(boolean nullIsAllowable, Enum<?>... keys) {
+        super(nullIsAllowable, keys);
+    }
+
     public PriorityComboBox() {
-//        this.setEmptySelectionAllowed(false);
+        this.setEmptySelectionAllowed(false);
         this.setWidth("150px");
 
         this.loadData(Arrays.asList(Priority.Urgent, Priority.High, Priority.Medium, Priority.Low, Priority.None));
-
-//        this.setItemIcon(Priority.Urgent.name(), FontAwesome.ARROW_UP);
-//        this.setItemIcon(Priority.High.name(), FontAwesome.ARROW_UP);
-//        this.setItemIcon(Priority.Medium.name(), FontAwesome.ARROW_UP);
-//        this.setItemIcon(Priority.Low.name(), FontAwesome.ARROW_DOWN);
-//        this.setItemIcon(Priority.None.name(), FontAwesome.ARROW_DOWN);
-//
-//        this.setItemStyleGenerator((source, itemId) -> {
-//            if (itemId != null) {
-//                return String.format("task-%s", itemId.toString().toLowerCase());
-//            }
-//            return null;
-//        });
+        this.setItemIconGenerator((IconGenerator<String>) item -> {
+            if (item.equals(Priority.Urgent.name()) || item.equals(Priority.High.name())
+                    || item.equals(Priority.Medium.name())) {
+                return VaadinIcons.ARROW_UP;
+            } else {
+                return VaadinIcons.ARROW_DOWN;
+            }
+        });
+        this.setStyleGenerator((StyleGenerator<String>) itemId -> String.format("task-%s", itemId.toLowerCase()));
     }
 
 //    @Override

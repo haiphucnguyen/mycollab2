@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.account;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleAccount;
 import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,18 +30,18 @@ import java.util.List;
  * @since 2.0
  */
 // TODO
-public class AccountTableDisplay extends DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
+public class AccountTableDisplay extends DefaultPagedGrid<AccountService, AccountSearchCriteria, SimpleAccount> {
     private static final long serialVersionUID = 1L;
 
-    public AccountTableDisplay(List<TableViewField> displayColumns) {
+    public AccountTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public AccountTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public AccountTableDisplay(GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         this(null, requiredColumn, displayColumns);
     }
 
-    public AccountTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+    public AccountTableDisplay(String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(AccountService.class),
                 SimpleAccount.class, viewId, requiredColumn, displayColumns);
 

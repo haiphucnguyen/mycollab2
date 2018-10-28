@@ -17,27 +17,19 @@
 package com.mycollab.module.crm.view.activity;
 
 import com.hp.gagawa.java.elements.*;
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.module.crm.CrmLinkBuilder;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.SimpleActivity;
 import com.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
-import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.service.EventService;
-import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.CheckBoxDecor;
-import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Label;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,16 +41,16 @@ import java.util.List;
  * @since 2.0
  */
 // TODO
-public class ActivityTableDisplay extends DefaultPagedBeanTable<EventService, ActivitySearchCriteria, SimpleActivity> {
+public class ActivityTableDisplay extends DefaultPagedGrid<EventService, ActivitySearchCriteria, SimpleActivity> {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ActivityTableDisplay.class);
 
-    public ActivityTableDisplay(List<TableViewField> displayColumns) {
+    public ActivityTableDisplay(List<GridFieldMeta> displayColumns) {
         this(null, displayColumns);
     }
 
-    public ActivityTableDisplay(TableViewField requireColumn, List<TableViewField> displayColumns) {
+    public ActivityTableDisplay(GridFieldMeta requireColumn, List<GridFieldMeta> displayColumns) {
         super(AppContextUtil.getSpringBean(EventService.class), SimpleActivity.class, requireColumn, displayColumns);
 
 //        this.addGeneratedColumn("selected", (source, itemId, columnId) -> {

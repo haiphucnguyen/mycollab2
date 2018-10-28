@@ -57,7 +57,7 @@ import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.ValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -78,7 +78,6 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class TicketDashboardViewImpl extends AbstractVerticalPageView implements TicketDashboardView {
     private static final long serialVersionUID = 1L;
@@ -191,8 +190,8 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-//        viewButtons.withDefaultButton(advanceDisplayBtn);
-//        groupWrapLayout.addComponent(viewButtons);
+        viewButtons.withDefaultButton(advanceDisplayBtn);
+        groupWrapLayout.addComponent(viewButtons);
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
@@ -357,7 +356,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedBeanTable<ProjectTicketSearchCriteria, ProjectTicket> getPagedBeanTable() {
+    public AbstractPagedGrid<ProjectTicketSearchCriteria, ProjectTicket> getPagedBeanTable() {
         return null;
     }
 }

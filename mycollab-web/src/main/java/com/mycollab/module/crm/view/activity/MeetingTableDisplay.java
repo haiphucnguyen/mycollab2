@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.crm.view.activity;
 
-import com.mycollab.common.TableViewField;
+import com.mycollab.common.GridFieldMeta;
 import com.mycollab.module.crm.domain.SimpleMeeting;
 import com.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.mycollab.module.crm.service.MeetingService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class MeetingTableDisplay extends DefaultPagedBeanTable<MeetingService, MeetingSearchCriteria, SimpleMeeting> {
+public class MeetingTableDisplay extends DefaultPagedGrid<MeetingService, MeetingSearchCriteria, SimpleMeeting> {
     private static final long serialVersionUID = 1L;
 
-    public MeetingTableDisplay(List<TableViewField> displaycolumns) {
+    public MeetingTableDisplay(List<GridFieldMeta> displaycolumns) {
         super(AppContextUtil.getSpringBean(MeetingService.class), SimpleMeeting.class, displaycolumns);
 
 //        this.addGeneratedColumn("subject", (source, itemId, columnId) -> {
