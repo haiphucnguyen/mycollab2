@@ -99,7 +99,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
 
     @Override
     public AbstractComponent createNonBillableHoursPopupField(SimpleMilestone milestone) {
-        return new MetaFieldBuilder().withCaptionAndIcon(FontAwesome.GIFT, "" + (milestone.getTotalBugNonBillableHours() + milestone.getTotalTaskNonBillableHours()))
+        return new MetaFieldBuilder().withCaptionAndIcon(VaadinIcons.GIFT, "" + (milestone.getTotalBugNonBillableHours() + milestone.getTotalTaskNonBillableHours()))
                 .withDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)).build();
     }
 }

@@ -135,7 +135,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createCommentsPopupField(ProjectTicket assignment) {
-        return new MetaFieldBuilder().withCaption(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(assignment.getNumComments()))
+        return new MetaFieldBuilder().withCaption(VaadinIcons.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(assignment.getNumComments()))
                 .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                         UserUIContext.getMessage(GenericI18Enum.OPT_COMMENTS))).build();
     }

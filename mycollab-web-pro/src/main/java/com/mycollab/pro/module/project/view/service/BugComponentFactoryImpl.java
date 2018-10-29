@@ -183,9 +183,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             super("");
             this.bug = bug;
             if (bug.getNumComments() == null) {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " 0");
+                this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " 0");
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + bug.getNumComments());
+                this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + bug.getNumComments());
             }
         }
 
@@ -210,7 +210,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             searchCriteria.setTypeId(StringSearchField.and(bug.getId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + commentCount);
         }
     }
 
@@ -408,7 +408,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             if (isBillable) {
                 this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + bug.getBillableHours());
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + bug.getNonBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + bug.getNonBillableHours());
             }
         }
 
@@ -464,7 +464,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     if (isBillable) {
                         this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
                     } else {
-                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));

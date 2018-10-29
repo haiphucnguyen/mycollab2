@@ -80,7 +80,7 @@ public class ProjectRoleSearchPanel extends DefaultGenericSearchPanel<ProjectRol
             MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
             basicSearchBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             basicSearchBody.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.FORM_NAME) + ":"));
-            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.addComponent(nameField);
 

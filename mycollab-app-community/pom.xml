@@ -90,7 +90,7 @@
 
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
+            <artifactId>vaadin-compatibility-client</artifactId>
             <scope>provided</scope>
         </dependency>
 

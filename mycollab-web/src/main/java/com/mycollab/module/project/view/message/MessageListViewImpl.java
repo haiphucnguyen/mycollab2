@@ -181,7 +181,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
             notification.setSizeUndefined();
             if (message.getCommentsCount() > 0) {
                 MHorizontalLayout commentNotification = new MHorizontalLayout();
-                Label commentCountLbl = ELabel.html(String.format("%s %s", Integer.toString(message.getCommentsCount()), FontAwesome.COMMENTS.getHtml()));
+                Label commentCountLbl = ELabel.html(String.format("%s %s", Integer.toString(message.getCommentsCount()), VaadinIcons.COMMENTS.getHtml()));
                 commentCountLbl.setSizeUndefined();
                 commentNotification.addComponent(commentCountLbl);
                 notification.addComponent(commentNotification);
@@ -226,7 +226,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
         }
 
         private void createBasicSearchLayout() {
-            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch())

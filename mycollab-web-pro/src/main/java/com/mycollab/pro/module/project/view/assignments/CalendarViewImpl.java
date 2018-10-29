@@ -287,7 +287,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
 //                nonAssigneeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
 //                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + UserUIContext.getMessage
 //                        (TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
-//                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + UserUIContext.getMessage
+//                nonBillableHoursLbl.setValue(VaadinIcons.GIFT.getHtml() + " " + UserUIContext.getMessage
 //                        (TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));
 //            }
 //        });

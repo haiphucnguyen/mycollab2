@@ -23,6 +23,7 @@ import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
 import com.vaadin.server.Setter;
+import com.vaadin.ui.renderers.TextRenderer;
 import org.vaadin.grid.cellrenderers.editoraware.CheckboxRenderer;
 
 import java.util.List;
@@ -47,9 +48,8 @@ public class AccountTableDisplay extends DefaultPagedGrid<AccountService, Accoun
         super(AppContextUtil.getSpringBean(AccountService.class),
                 SimpleAccount.class, viewId, requiredColumn, displayColumns);
 
-        addGeneratedColumn("selected", new CheckboxRenderer((Setter) (bean, fieldVal) -> {
-            System.out.println("PRINT: " + bean + "=--" + fieldVal);
-        }));
+        addGeneratedColumn(SimpleAccount::getAssignUserAvatarId, new TextRenderer());
+//
 //        addGeneratedColumn("selected", (source, itemId, columnId) -> {
 //            final SimpleAccount account = getBeanByIndex(itemId);
 //            final CheckBoxDecor cb = new CheckBoxDecor("", account.isSelected());

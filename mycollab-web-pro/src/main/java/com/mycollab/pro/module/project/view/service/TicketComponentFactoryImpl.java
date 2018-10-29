@@ -429,7 +429,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         TicketCommentsPopupView(ProjectTicket ticket) {
             super("");
             this.ticket = ticket;
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumComments()));
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumComments()));
         }
 
         @Override
@@ -448,7 +448,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             searchCriteria.setTypeId(StringSearchField.and(ticket.getTypeId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + commentCount);
         }
 
         @Override
@@ -613,7 +613,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             if (isBillable) {
                 this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + ticket.getBillableHours());
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + ticket.getNonBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + ticket.getNonBillableHours());
             }
         }
 
@@ -668,7 +668,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     if (isBillable) {
                         this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
                     } else {
-                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));

@@ -21,6 +21,7 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
 import com.mycollab.vaadin.event.HasSelectableItemHandlers;
+import com.vaadin.data.ValueProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.renderers.AbstractRenderer;
 import com.vaadin.util.ReflectTools;
@@ -45,7 +46,7 @@ public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableIt
     @Deprecated
     void addTableListener(TableClickListener listener);
 
-    void addGeneratedColumn(String id, AbstractRenderer generatedColumn);
+    <V> void addGeneratedColumn(ValueProvider<B, V> id, AbstractRenderer generatedColumn);
 
     List<GridFieldMeta> getDisplayColumns();
 

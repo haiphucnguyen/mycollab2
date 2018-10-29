@@ -128,7 +128,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
         public ComponentContainer constructBody() {
             MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
-            subjectField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            subjectField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(subjectField).withAlign(subjectField, Alignment.MIDDLE_CENTER);
 

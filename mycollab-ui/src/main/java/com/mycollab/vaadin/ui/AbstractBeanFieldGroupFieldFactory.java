@@ -18,9 +18,11 @@ package com.mycollab.vaadin.ui;
 
 import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.core.utils.ClassUtils;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.validator.constraints.DateComparison;
 import com.vaadin.data.*;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.DateField;
@@ -31,6 +33,9 @@ import org.jsoup.safety.Whitelist;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Path;
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,10 +50,15 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
     protected GenericBeanForm<B> attachForm;
     private boolean isReadOnlyGroup;
     private BeanValidationBinder<B> binder;
+    private javax.validation.Validator validation;
 
     public AbstractBeanFieldGroupFieldFactory(GenericBeanForm<B> form, boolean isValidateForm, boolean isReadOnlyGroup) {
         this.attachForm = form;
         this.isReadOnlyGroup = isReadOnlyGroup;
+
+        if (isValidateForm) {
+            validation = AppContextUtil.getValidator();
+        }
     }
 
     @Override
@@ -135,7 +145,13 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
         try {
             binder.writeBean(attachForm.getBean());
         } catch (ValidationException e) {
-            List<ValidationResult> beanValidationErrors = e.getBeanValidationErrors();
+            List<BindingValidationStatus<?>> fieldValidationErrors = e.getFieldValidationErrors();
+//            String errorMessage = fieldValidationErrors.stream().filter(it-> it.getStatus() == BindingValidationStatus.Status.ERROR)
+//                    .map(BindingValidationStatus::getMessage)
+//                    // sanitize the individual error strings to avoid code injection
+//                    // since we are displaying the resulting string as HTML
+//                    .map(errorString -> Jsoup.clean(errorString, Whitelist.simpleText()))
+//                    .collect(Collectors.joining("<br>"));
             return false;
         }
         BinderValidationStatus<B> validate = binder.validate();
@@ -152,30 +168,30 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     .map(errorString -> Jsoup.clean(errorString, Whitelist.simpleText()))
                     .collect(Collectors.joining("<br>"));
         });
-        return true;
-//        try {
-//            fieldGroup.commit();
-//            attachForm.setValid(true);
-//            return true;
-//        } catch (FieldGroup.CommitException e) {
-//            attachForm.setValid(false);
-//            Map<Field<?>, com.vaadin.data.Validator.InvalidValueException> invalidFields = e.getInvalidFields();
-//            if (invalidFields != null && invalidFields.size() > 0) {
-//                StringBuilder errorMsg = new StringBuilder();
-//                for (Map.Entry<Field<?>, com.vaadin.data.Validator.InvalidValueException> entry : invalidFields.entrySet()) {
-//                    com.vaadin.data.Validator.InvalidValueException invalidEx = entry.getValue();
-//                    errorMsg.append(invalidEx.getHtmlMessage()).append("<br/>");
-//                    entry.getKey().addStyleName("errorField");
+        Set<ConstraintViolation<B>> violations = validation.validate(attachForm.getBean());
+//        if (violations.size() > 0) {
+//            StringBuilder errorMsg = new StringBuilder();
+//
+//            for (ConstraintViolation violation : violations) {
+//                errorMsg.append(violation.getMessage()).append("<br/>");
+//                Path propertyPath = violation.getPropertyPath();
+//                if (propertyPath != null && !propertyPath.toString().equals("")) {
+//                    fieldGroup.getField(propertyPath.toString()).addStyleName("errorField");
+//                } else {
+//                    Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
+//                    if (validateAnno instanceof DateComparison) {
+//                        String firstDateField = ((DateComparison) validateAnno).firstDateField();
+//                        String lastDateField = ((DateComparison) validateAnno).lastDateField();
+//
+//                        attachForm.getField(firstDateField).addStyleName("errorField");
+//                        fieldGroup.getField(lastDateField).addStyleName("errorField");
+//                    }
 //                }
-//                NotificationUtil.showErrorNotification(errorMsg.toString());
-//                return false;
-//            } else {
-//                NotificationUtil.showErrorNotification(e.getCause().getMessage());
-//                return false;
+//
 //            }
-//        } catch (Exception e) {
-//            throw new MyCollabException(e);
+//            throw new FieldGroup.CommitException(errorMsg.toString());
 //        }
+        return true;
     }
 
     abstract protected HasValue<?> onCreateField(Object propertyId);

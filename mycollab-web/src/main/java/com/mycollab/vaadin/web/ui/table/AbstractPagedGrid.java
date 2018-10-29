@@ -21,7 +21,6 @@ import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
 import com.mycollab.common.json.FieldDefAnalyzer;
 import com.mycollab.common.service.CustomViewStoreService;
-import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.spring.AppContextUtil;
@@ -29,6 +28,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
+import com.vaadin.data.ValueProvider;
 import com.vaadin.ui.*;
 import com.vaadin.ui.renderers.AbstractRenderer;
 import org.slf4j.Logger;
@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.lang.reflect.TypeVariable;
 import java.util.*;
 
 import static com.mycollab.vaadin.web.ui.WebThemes.SCROLLABLE_CONTAINER;
@@ -77,7 +76,7 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     private List<GridFieldMeta> displayColumns;
     private List<GridFieldMeta> defaultSelectedColumns;
 
-    private final Map<String, AbstractRenderer> columnGenerators = new HashMap<>();
+    private final Map<ValueProvider, AbstractRenderer> columnGenerators = new HashMap<>();
 
     public AbstractPagedGrid(Class<B> type, List<GridFieldMeta> displayColumns) {
         this(type, null, displayColumns);
@@ -132,11 +131,11 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
             visibleColumnsCol.add(viewField.getField());
             columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
 
-            if (i == 0) {
-                gridItem.getColumn(viewField.getField()).setExpandRatio(1);
-            } else {
-                gridItem.getColumn(viewField.getField()).setWidth(viewField.getDefaultWidth());
-            }
+//            if (i == 0) {
+//                gridItem.getColumn(viewField.getField()).setExpandRatio(1);
+//            } else {
+//                gridItem.getColumn(viewField.getField()).setWidth(viewField.getDefaultWidth());
+//            }
         }
 
         String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
@@ -195,7 +194,7 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     }
 
     @Override
-    public void addGeneratedColumn(String id, AbstractRenderer generatedColumn) {
+    public <V> void addGeneratedColumn(ValueProvider<B, V> id, AbstractRenderer generatedColumn) {
         this.columnGenerators.put(id, generatedColumn);
     }
 
@@ -326,20 +325,14 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     }
 
     private void createGrid() {
-        Class typeCls;
-        try {
-            typeCls = Class.forName(this.type.getTypeName());
-        } catch (ClassNotFoundException e) {
-            throw new MyCollabException(e);
-        }
-        gridItem = new Grid<>(typeCls);
+        gridItem = new Grid<>();
         gridItem.setWidth("100%");
 
         gridItem.setItems(currentListData);
 
         // set column generator
-        for (Map.Entry<String, AbstractRenderer> entry : columnGenerators.entrySet()) {
-            gridItem.getColumn(entry.getKey()).setRenderer(entry.getValue());
+        for (Map.Entry<ValueProvider, AbstractRenderer> entry : columnGenerators.entrySet()) {
+            gridItem.addColumn(entry.getKey()).setRenderer(entry.getValue());
         }
 
 //        gridItem.addHeaderClickListener(headerClickEvent -> {
@@ -384,12 +377,12 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         this.setExpandRatio(gridItem, 1);
     }
 
-//    public Table getTable() {
-//        return gridItem;
-//    }
-
     public List<GridFieldMeta> getDefaultSelectedColumns() {
         return defaultSelectedColumns;
+    }
+
+    public Grid<B> getGrid() {
+        return gridItem;
     }
 
     @Override
