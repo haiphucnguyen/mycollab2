@@ -23,7 +23,7 @@
         <vaadin.version>8.5.2</vaadin.version>
         <mysql.version>8.0.11</mysql.version>
         <junit.version>4.12</junit.version>
-        <jackson.version>2.9.6</jackson.version>
+        <jackson.version>2.9.7</jackson.version>
 
         <kotlin.version>1.2.61</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>26.0-jre</version>
+            <version>27.0-jre</version>
         </dependency>
 
         <dependency>
