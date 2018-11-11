@@ -1,7 +1,5 @@
 package com.mycollab.pro.module.project.view.risk;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -59,19 +57,19 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             if (risk.getConsequence() == null) {
                 risk.setConsequence(RiskConsequence.Marginal.name());
             }
-            return new I18nValueComboBox(false, RiskConsequence.Catastrophic, RiskConsequence.Critical,
+            return new I18nValueComboBox(RiskConsequence.class, RiskConsequence.Catastrophic, RiskConsequence.Critical,
                     RiskConsequence.Marginal, RiskConsequence.Negligible);
         } else if (Risk.Field.probalitity.equalTo(propertyId)) {
             if (risk.getProbalitity() == null) {
                 risk.setProbalitity(RiskProbability.Possible.name());
             }
-            return new I18nValueComboBox(false, RiskProbability.Certain, RiskProbability.Likely,
+            return new I18nValueComboBox(RiskProbability.class, RiskProbability.Certain, RiskProbability.Likely,
                     RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
         } else if (Risk.Field.status.equalTo(propertyId)) {
             if (risk.getStatus() == null) {
                 risk.setStatus(StatusI18nEnum.Open.name());
             }
-            return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
+            return new I18nValueComboBox(StatusI18nEnum.class, StatusI18nEnum.Open, StatusI18nEnum.Closed);
         } else if (Risk.Field.priority.equalTo(propertyId)) {
             return new PriorityComboBox();
         } else if (Risk.Field.name.equalTo(propertyId)) {

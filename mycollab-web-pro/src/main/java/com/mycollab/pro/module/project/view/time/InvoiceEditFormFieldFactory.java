@@ -8,8 +8,6 @@ import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
 
-import java.util.Arrays;
-
 /**
  * @author MyCollab Ltd
  * @since 5.2.10
@@ -74,10 +72,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
 
     private static class PricingTypeField extends I18nValueComboBox {
         PricingTypeField() {
-            super();
-//            this.setEmptySelectionAllowed(false);
-            this.setCaption(null);
-            this.loadData(Arrays.asList(InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL));
+            super(InvoiceI18nEnum.class, InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL);
         }
     }
 }

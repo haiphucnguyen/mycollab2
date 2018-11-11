@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.user.ui.components;
 
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
@@ -25,35 +26,47 @@ import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.IconGenerator;
+import com.vaadin.ui.ItemCaptionGenerator;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
-// TODO
-public class ActiveUserComboBox extends ComboBox {
+public class ActiveUserComboBox extends ComboBox implements Converter<String, SimpleUser> {
     private static final long serialVersionUID = 1L;
 
-    public ActiveUserComboBox() {
-//        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+    private List<SimpleUser> users;
 
+    public ActiveUserComboBox() {
         UserSearchCriteria criteria = new UserSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
-        loadUserList(users);
+        users = (List<SimpleUser>) userService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
+        setItems(users);
+        setItemCaptionGenerator((ItemCaptionGenerator<SimpleUser>) user -> StringUtils.trim(user.getDisplayName(), 30, true));
+        setItemIconGenerator((IconGenerator<SimpleUser>) user -> UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));
     }
 
-    private void loadUserList(List<SimpleUser> userList) {
-        for (SimpleUser user : userList) {
-//            this.addItem(user.getUsername());
-//            this.setItemCaption(user.getUsername(), StringUtils.trim(user.getDisplayName(), 30, true));
-//            this.setItemIcon(user.getUsername(), UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));
-        }
+    @Override
+    public Result<SimpleUser> convertToModel(String value, ValueContext context) {
+        Optional<SimpleUser> userResult = users.stream().filter(user -> user.getUsername().equals(value)).findFirst();
+        return userResult.isPresent() ? Result.ok(userResult.get()) : Result.error("Can not find user " + value);
+    }
+
+    @Override
+    public String convertToPresentation(SimpleUser value, ValueContext context) {
+        return value.getUsername();
     }
 }

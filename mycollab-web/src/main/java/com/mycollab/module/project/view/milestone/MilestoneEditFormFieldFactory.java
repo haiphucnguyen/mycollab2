@@ -20,6 +20,7 @@ import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
+import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -92,8 +93,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
         private static final long serialVersionUID = 1L;
 
         ProgressStatusComboBox() {
-            setCaption(null);
-            this.setEmptySelectionAllowed(false);
+            super(MilestoneStatus.class, InProgress, Future, Closed);
             this.loadData(Arrays.asList(InProgress, Future, Closed));
             this.setItemIconGenerator((IconGenerator<String>) it -> {
                 if (it.equals(InProgress.name())) {
@@ -105,15 +105,6 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
                 }
             });
         }
-
-//        @Override
-//        public void setPropertyDataSource(Property newDataSource) {
-//            Object value = newDataSource.getValue();
-//            if (value == null) {
-//                newDataSource.setValue(MilestoneStatus.InProgress.name());
-//            }
-//            super.setPropertyDataSource(newDataSource);
-//        }
     }
 
 }

@@ -37,7 +37,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
@@ -224,10 +223,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
     private static class InvoiceStatusComboBox extends I18nValueComboBox {
         InvoiceStatusComboBox() {
-            super();
-//            this.setEmptySelectionAllowed(false);
-            this.setCaption(null);
-            this.loadData(Arrays.asList(InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled));
+            super(InvoiceStatus.class, InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled);
         }
     }
 
@@ -237,7 +233,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                     @Override
                     @Subscribe
                     public void handle(InvoiceEvent.DisplayInvoiceView event) {
-                        SimpleInvoice invoice = (SimpleInvoice) event.getData();
+                        SimpleInvoice invoice = event.getData();
                         if (invoice != null) {
                             showInvoice(invoice);
                         }

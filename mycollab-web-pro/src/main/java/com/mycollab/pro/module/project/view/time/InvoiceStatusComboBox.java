@@ -1,9 +1,8 @@
 package com.mycollab.pro.module.project.view.time;
 
 import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
-
-import java.util.Arrays;
 
 /**
  * @author MyCollab Ltd
@@ -12,8 +11,6 @@ import java.util.Arrays;
 // TODO
 public class InvoiceStatusComboBox extends I18nValueComboBox {
     public InvoiceStatusComboBox() {
-//        this.setEmptySelectionAllowed(false);
-        this.setCaption(null);
-        this.loadData(Arrays.asList(OptionI18nEnum.invoiceStatuses));
+        super(InvoiceStatus.class, OptionI18nEnum.invoiceStatuses);
     }
 }

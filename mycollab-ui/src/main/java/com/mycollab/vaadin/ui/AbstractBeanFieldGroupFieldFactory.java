@@ -89,7 +89,12 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     if (formField instanceof DummyCustomField) {
                         continue;
                     } else if (!(formField instanceof CompoundCustomField)) {
-                        binder.bind(formField, bindField);
+                        Binder.BindingBuilder<B, ?> bindingBuilder = binder.forField(formField);
+
+                        if (formField instanceof Converter) {
+                            bindingBuilder.withConverter((Converter)formField);
+                        }
+                        bindingBuilder.bind(bindField);
                     }
                 }
 
