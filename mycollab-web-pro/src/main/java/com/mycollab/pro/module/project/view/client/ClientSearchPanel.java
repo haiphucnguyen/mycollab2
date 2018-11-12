@@ -14,11 +14,10 @@ import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
@@ -39,7 +38,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
             AccountSearchCriteria.p_lastupdatedtime};
 
     @Override
-    protected HeaderWithFontAwesome buildSearchTitle() {
+    protected HeaderWithIcon buildSearchTitle() {
         return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(ClientI18nEnum.LIST));
     }
 

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,7 @@ import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -43,7 +43,7 @@ public class DateInfoComp extends MVerticalLayout {
     public void displayEntryDateTime(ValuedBean bean) {
         this.removeAllComponents();
         this.withMargin(false);
-        Label dateInfoHeader = ELabel.html(FontAwesome.CALENDAR.getHtml() + " " +
+        Label dateInfoHeader = ELabel.html(VaadinIcons.CALENDAR.getHtml() + " " +
                 UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_DATES));
         dateInfoHeader.setStyleName("info-hdr");
         this.addComponent(dateInfoHeader);

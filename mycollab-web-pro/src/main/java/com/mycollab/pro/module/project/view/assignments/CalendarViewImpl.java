@@ -200,7 +200,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
 //                baseDate = baseDate.minusMonths(1);
 //            }
 //            displayCalendarView();
-//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_LEFT);
+//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CHEVRON_LEFT);
 //        navigationBtns.addButton(previousBtn);
 //
 //        MButton nextBtn = new MButton("", clickEvent -> {
@@ -212,7 +212,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
 //                baseDate = baseDate.plusMonths(1);
 //            }
 //            displayCalendarView();
-//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.CHEVRON_RIGHT);
+//        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CHEVRON_RIGHT);
 //        navigationBtns.addButton(nextBtn);
 //
 //        headerLeftContainer.with(todayBtn, navigationBtns);
@@ -285,7 +285,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
 //                assignMeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_ME_VALUE, provider.getAssignMeNum()));
 //                assignOtherLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGN_TO_OTHERS, provider.getAssignOthersNum()));
 //                nonAssigneeLbl.setValue(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_UNASSIGNED, provider.getNotAssignNum()));
-//                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + UserUIContext.getMessage
+//                billableHoursLbl.setValue(VaadinIcons.MONEY.getHtml() + " " + UserUIContext.getMessage
 //                        (TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, provider.getTotalBillableHours()));
 //                nonBillableHoursLbl.setValue(VaadinIcons.GIFT.getHtml() + " " + UserUIContext.getMessage
 //                        (TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE, provider.getTotalNonBillableHours()));

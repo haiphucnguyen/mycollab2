@@ -103,7 +103,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 //                .withStyleName(WebThemes.BUTTON_OPTION);
 //
 //        final MButton exportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT))
-//                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.DOWNLOAD);
+//                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.DOWNLOAD);
 //        OnDemandFileDownloader fileDownloader = new OnDemandFileDownloader(new LazyStreamSource() {
 //
 //            @Override

@@ -106,13 +106,13 @@ public class TimeTrackingTableDisplay extends DefaultPagedGrid<ItemTimeLoggingSe
 //
 //        this.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
 //                    SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-//                    return (timeLogging.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//                    return (timeLogging.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
 //                }
 //        );
 //
 //        this.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
 //                    SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-//                    return (Boolean.TRUE.equals(timeLogging.getIsovertime())) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//                    return (Boolean.TRUE.equals(timeLogging.getIsovertime())) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
 //                }
 //        );
 //
@@ -126,7 +126,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedGrid<ItemTimeLoggingSe
 //            final SimpleItemTimeLogging itemLogging = getBeanByIndex(itemId);
 //
 //            MButton editBtn = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(TimeTrackingTableDisplay.this, itemLogging, "edit")))
-//                    .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+//                    .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 //
 //            MButton deleteBtn = new MButton("", clickEvent -> fireTableEvent(new TableClickEvent(TimeTrackingTableDisplay.this, itemLogging, "delete")))
 //                    .withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);

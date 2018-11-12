@@ -20,6 +20,7 @@ import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -88,7 +89,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
         private MHorizontalLayout buildHeaderTitle() {
             ELabel titleLbl;
             if (account.getId() == null) {
-                titleLbl = ELabel.h2(FontAwesome.INSTITUTION.getHtml() + " " + UserUIContext.getMessage(ClientI18nEnum.NEW));
+                titleLbl = ELabel.h2(VaadinIcons.INSTITUTION.getHtml() + " " + UserUIContext.getMessage(ClientI18nEnum.NEW));
                 return new MHorizontalLayout(titleLbl).expand(titleLbl);
             } else {
                 titleLbl = ELabel.h2(account.getAccountname());

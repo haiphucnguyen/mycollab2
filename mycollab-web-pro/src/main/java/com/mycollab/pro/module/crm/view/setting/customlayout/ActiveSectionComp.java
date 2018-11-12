@@ -56,7 +56,7 @@ class ActiveSectionComp extends GenericSectionComp {
 
         Button editTitleBtn = new Button();
         editTitleBtn.setDescription("Edit Section's Title");
-        editTitleBtn.setIcon(FontAwesome.EDIT);
+        editTitleBtn.setIcon(VaadinIcons.EDIT);
         editTitleBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
         header.addComponent(editTitleBtn);
 

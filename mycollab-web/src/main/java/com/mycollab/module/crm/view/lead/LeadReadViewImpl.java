@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,7 +40,7 @@ import com.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.ComponentContainer;
 import org.vaadin.viritin.button.MButton;
 
@@ -77,7 +77,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead> implem
         if (UserUIContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
             MButton convertButton = new MButton(UserUIContext.getMessage(LeadI18nEnum.BUTTON_CONVERT_LEAD),
                     clickEvent -> previewForm.fireExtraAction("convert", beanItem))
-                    .withIcon(FontAwesome.FLASK).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.FLASK).withStyleName(WebThemes.BUTTON_ACTION);
             controlsButton.insertToControlBlock(convertButton);
         }
 

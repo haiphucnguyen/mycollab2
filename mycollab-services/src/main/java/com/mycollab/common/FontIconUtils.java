@@ -25,7 +25,7 @@ import java.util.Map;
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-public class FontAwesomeUtils {
+public class FontIconUtils {
     private static final Map<String, String> resources;
 
     static {

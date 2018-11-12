@@ -32,7 +32,11 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.i18n.*;
+import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
+import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
@@ -43,7 +47,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
@@ -100,13 +103,13 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     public AbstractComponent createDueDatePopupField(ProjectTicket assignment) {
         if (assignment.getDueDatePlusOne() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+            divHint.appendText(VaadinIcons.CLOCK.getHtml());
             divHint.appendChild(new Span().appendText(UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)).setCSSClass("hide"));
             return new MetaFieldBuilder().withCaption(divHint.write())
                     .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                             UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))).build();
         } else {
-            return new MetaFieldBuilder().withCaption(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
+            return new MetaFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.CLOCK.getHtml(),
                     UserUIContext.formatPrettyTime(assignment.getDueDatePlusOne())))
                     .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                             UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))).build();
@@ -116,7 +119,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     @Override
     public AbstractComponent createPriorityPopupField(ProjectTicket assignment) {
         return new MetaFieldBuilder().withCaption(ProjectAssetsManager.getPriorityHtml(assignment.getPriority()) + " " +
-                UserUIContext.getMessage(OptionI18nEnum.Priority.class, assignment.getPriority()))
+                UserUIContext.getMessage(Priority.class, assignment.getPriority()))
                 .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                         UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))).build();
     }
@@ -133,7 +136,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createFollowersPopupField(ProjectTicket assignment) {
-        return new MetaFieldBuilder().withCaptionAndIcon(FontAwesome.EYE, "" + NumberUtils.zeroIfNull(assignment.getNumFollowers()))
+        return new MetaFieldBuilder().withCaptionAndIcon(VaadinIcons.EYE, "" + NumberUtils.zeroIfNull(assignment.getNumFollowers()))
                 .withDescription(UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                         UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS))).build();
     }
@@ -147,7 +150,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     @Override
     public AbstractComponent createStatusPopupField(ProjectTicket assignment) {
-        return new MetaFieldBuilder().withCaptionAndIcon(FontAwesome.INFO_CIRCLE, assignment.getStatus()).withDescription
+        return new MetaFieldBuilder().withCaptionAndIcon(VaadinIcons.INFO_CIRCLE, assignment.getStatus()).withDescription
                 (UserUIContext.getMessage(ShellI18nEnum.OPT_UPGRADE_PRO_INTRO,
                         UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))).build();
     }

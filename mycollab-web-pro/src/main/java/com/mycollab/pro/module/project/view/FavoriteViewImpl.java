@@ -114,7 +114,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         setProjectNavigatorVisibility(false);
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
-        headerLbl = ELabel.h2(String.format("%s %s", FontAwesome.STAR.getHtml(),
+        headerLbl = ELabel.h2(String.format("%s %s", VaadinIcons.STAR.getHtml(),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES))).withUndefinedWidth();
         header.with(headerLbl);
 
@@ -172,7 +172,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
-        headerLbl.setValue(String.format("%s %s (%d)", FontAwesome.STAR.getHtml(),
+        headerLbl.setValue(String.format("%s %s (%d)", VaadinIcons.STAR.getHtml(),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), totalCount));
         if (totalCount > 0) {
             ProjectGenericItem assignment = favoriteListComp.getItemAt(0);
@@ -211,7 +211,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         public Component generateRow(final IBeanList<ProjectGenericItem> host, final ProjectGenericItem item, int rowIndex) {
             final MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.BORDER_LIST_ROW,
                     WebThemes.CURSOR_POINTER).withFullWidth();
-            MButton favoriteBtn = new MButton(FontAwesome.STAR, clickEvent -> {
+            MButton favoriteBtn = new MButton(VaadinIcons.STAR, clickEvent -> {
                 FavoriteItem favoriteItem = new FavoriteItem();
                 favoriteItem.setExtratypeid(item.getProjectId());
                 favoriteItem.setType(item.getType());
@@ -259,7 +259,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign(printBtn, Alignment.TOP_RIGHT)
@@ -294,7 +294,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
@@ -327,7 +327,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
@@ -361,7 +361,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
@@ -397,7 +397,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn)
@@ -432,7 +432,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                                 clickEvent -> EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version)))
-                                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
+                                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ACTION)
                                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
                         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, printBtn, editBtn).withAlign

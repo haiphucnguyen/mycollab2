@@ -19,7 +19,7 @@ package com.mycollab.module.project.schedule.email.service
 import com.hp.gagawa.java.elements.A
 import com.hp.gagawa.java.elements.Div
 import com.hp.gagawa.java.elements.Img
-import com.mycollab.common.FontAwesomeUtils
+import com.mycollab.common.FontIconUtils
 import com.mycollab.common.NotificationType
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
@@ -156,13 +156,13 @@ class OverdueProjectTicketsNotificationJob : GenericQuartzJobBean() {
                 val mode = AppContextUtil.getSpringBean(IDeploymentMode::class.java)
                 try {
                     return when (assignment.type) {
-                        ProjectTypeConstants.BUG -> Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.BUG)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl,
+                        ProjectTypeConstants.BUG -> Div().appendText(FontIconUtils.toHtml(ProjectTypeConstants.BUG)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl,
                                 assignment.extraTypeId, assignment.projectShortName)).appendText(assignment.name)).write()
-                        ProjectTypeConstants.TASK -> Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.TASK)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl,
+                        ProjectTypeConstants.TASK -> Div().appendText(FontIconUtils.toHtml(ProjectTypeConstants.TASK)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl,
                                 assignment.extraTypeId, assignment.projectShortName)).appendText(assignment.name)).write()
-                        ProjectTypeConstants.RISK -> Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.RISK)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl,
+                        ProjectTypeConstants.RISK -> Div().appendText(FontIconUtils.toHtml(ProjectTypeConstants.RISK)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl,
                                 assignment.projectId!!, assignment.typeId!!)).appendText(assignment.name)).write()
-                        ProjectTypeConstants.MILESTONE -> Div().appendText(FontAwesomeUtils.toHtml(ProjectTypeConstants.MILESTONE)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl,
+                        ProjectTypeConstants.MILESTONE -> Div().appendText(FontIconUtils.toHtml(ProjectTypeConstants.MILESTONE)).appendChild(DivLessFormatter.EMPTY_SPACE, A(ProjectLinkGenerator.generateMilestonePreviewFullLink(siteUrl,
                                 assignment.projectId!!, assignment.typeId!!)).appendText(assignment.name)).write()
                         else -> throw  MyCollabException("Do not support type $assignment.type")
                     }

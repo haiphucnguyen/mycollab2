@@ -43,7 +43,6 @@ import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
@@ -108,7 +107,7 @@ public class ProjectMemberInviteViewImpl extends AbstractVerticalPageView implem
 //            String roleName = (item != null) ? item.getBean().getRolename() : "";
 //            ProjectMemberInviteViewImpl.this.fireEvent(new ViewEvent<>(this,
 //                    new InviteProjectMembers(inviteUserTokenField.getInviteEmails(), roleId, roleName, messageArea.getValue())));
-        }).withIcon(FontAwesome.SEND).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.PAPERPLANE).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                 clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, CurrentProjectVariables.getProjectId())))

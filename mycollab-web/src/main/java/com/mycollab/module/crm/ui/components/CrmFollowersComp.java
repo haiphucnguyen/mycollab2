@@ -40,7 +40,6 @@ import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -97,7 +96,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
 
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("info-hdr");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Label followerHeader = new Label(FontAwesome.EYE.getHtml() + " " +
+        Label followerHeader = new Label(VaadinIcons.EYE.getHtml() + " " +
                 UserUIContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS), ContentMode.HTML);
         header.addComponent(followerHeader);
 

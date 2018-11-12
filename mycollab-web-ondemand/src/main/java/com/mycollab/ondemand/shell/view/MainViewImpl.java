@@ -26,6 +26,7 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -131,13 +132,13 @@ public class MainViewImpl extends AbstractMainView {
 
         accountPopupContent.addSeparator();
 
-        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD);
+        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/meet-mycollab/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);
         accountPopupContent.addOption(helpBtn);
 
-        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(FontAwesome.LIFE_SAVER);
+        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource supportRes = new ExternalResource("http://support.mycollab.com/");
         BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
         supportOpener.extend(supportBtn);
@@ -160,7 +161,7 @@ public class MainViewImpl extends AbstractMainView {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
-        }).withIcon(FontAwesome.INFO_CIRCLE);
+        }).withIcon(VaadinIcons.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
         MButton releaseNotesBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES)).withIcon(FontAwesome.BULLHORN);

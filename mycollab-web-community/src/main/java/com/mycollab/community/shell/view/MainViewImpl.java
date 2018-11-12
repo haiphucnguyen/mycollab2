@@ -40,6 +40,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
@@ -71,7 +72,7 @@ public class MainViewImpl extends AbstractMainView {
         accountLayout.addComponent(accountNameLabel);
 
         MButton buyPremiumBtn = new MButton("", clickEvent -> UI.getCurrent().addWindow(new AdWindow()))
-                .withIcon(FontAwesome.SHOPPING_CART).withStyleName("ad")
+                .withIcon(VaadinIcons.CART).withStyleName("ad")
                 .withDescription(UserUIContext.getMessage(LicenseI18nEnum.OPT_TRIAL_THE_PRO_EDITION));
         accountLayout.addComponent(buyPremiumBtn);
 
@@ -128,19 +129,19 @@ public class MainViewImpl extends AbstractMainView {
 
         accountPopupContent.addSeparator();
 
-        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD);
+        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/meet-mycollab/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);
         accountPopupContent.addOption(helpBtn);
 
-        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(FontAwesome.LIFE_SAVER);
+        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource supportRes = new ExternalResource("http://support.mycollab.com/");
         BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
         supportOpener.extend(supportBtn);
         accountPopupContent.addOption(supportBtn);
 
-        MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(FontAwesome.PENCIL);
+        MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(VaadinIcons.PENCIL);
         ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/translating/");
         BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
         translateOpener.extend(translateBtn);
@@ -151,7 +152,7 @@ public class MainViewImpl extends AbstractMainView {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
-        }).withIcon(FontAwesome.INFO_CIRCLE);
+        }).withIcon(VaadinIcons.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
         Button releaseNotesBtn = new Button(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES));
@@ -159,13 +160,13 @@ public class MainViewImpl extends AbstractMainView {
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
 
-        releaseNotesBtn.setIcon(FontAwesome.BULLHORN);
+        releaseNotesBtn.setIcon(VaadinIcons.LINES_LIST);
         accountPopupContent.addOption(releaseNotesBtn);
 
         MButton signoutBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
-        }).withIcon(FontAwesome.SIGN_OUT);
+        }).withIcon(VaadinIcons.SIGN_OUT);
         accountPopupContent.addSeparator();
         accountPopupContent.addOption(signoutBtn);
 

@@ -23,6 +23,7 @@ import com.mycollab.vaadin.event.HasMassItemActionHandler
 import com.mycollab.vaadin.event.MassItemActionHandler
 import com.mycollab.vaadin.event.ViewItemAction
 import com.mycollab.vaadin.web.ui.WebThemes
+import com.vaadin.icons.VaadinIcons
 import com.vaadin.server.FileDownloader
 import com.vaadin.server.FontAwesome
 import com.vaadin.server.Resource
@@ -64,7 +65,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
     }
 
     fun addDeleteActionItem() {
-        addActionItem(ViewItemAction.DELETE_ACTION, FontAwesome.TRASH_O, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
+        addActionItem(ViewItemAction.DELETE_ACTION, VaadinIcons.TRASH, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
     }
 
     fun addMailActionItem() {

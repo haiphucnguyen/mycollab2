@@ -145,9 +145,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             this.bug = bug;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
             if (bug.getNumFollowers() == null || bug.getNumFollowers() == 0) {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " 0");
+                this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " 0");
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + bug.getNumFollowers());
+                this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + bug.getNumFollowers());
             }
         }
 
@@ -172,7 +172,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + numFollowers);
         }
     }
 
@@ -225,7 +225,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
-            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
+            super(VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
@@ -277,7 +277,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
         @Override
         protected void doHide() {
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
         }
 
@@ -287,7 +287,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         }
 
         private void refresh() {
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
             markAsDirty();
         }
@@ -327,12 +327,12 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (bug.getDueDateRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendText(VaadinIcons.CLOCK.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
+                    return String.format(" %s %s", VaadinIcons.CLOCK.getHtml(), UserUIContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
                 }
             }
         };
@@ -406,7 +406,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             this.bug = bug;
             this.isBillable = isBillable;
             if (isBillable) {
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + bug.getBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + bug.getBillableHours());
             } else {
                 this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + bug.getNonBillableHours());
             }
@@ -462,7 +462,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
-                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {
                         this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }

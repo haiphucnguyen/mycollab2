@@ -119,7 +119,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             MButton detachTaskBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
                 createTicketLinkButton();
                 updateTicketLink(null);
-            }).withIcon(FontAwesome.UNLINK).withStyleName(WebThemes.BUTTON_DANGER);
+            }).withIcon(VaadinIcons.UNLINK).withStyleName(WebThemes.BUTTON_DANGER);
             ticketLayout.addComponent(detachTaskBtn);
 
             ELabel linkTicketBtn = new ELabel(StringUtils.trim(ticket.getName(), 60, true))

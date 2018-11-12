@@ -56,7 +56,6 @@ import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
@@ -262,12 +261,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 protected String generateSmallContentAsHtml() {
                     if (task.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
-                        divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
+                        divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, task.getStatus());
+                        return VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, task.getStatus());
                     }
                 }
             };
@@ -286,12 +285,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 protected String generateSmallContentAsHtml() {
                     if (risk.getStatus() == null) {
                         Div divHint = new Div().setCSSClass("nonValue");
-                        divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
+                        divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                                 .setCSSClass("hide"));
                         return divHint.write();
                     } else {
-                        return FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, risk.getStatus());
+                        return VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, risk.getStatus());
                     }
                 }
             };
@@ -321,7 +320,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             super("");
             this.ticket = ticket;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumFollowers()));
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumFollowers()));
         }
 
         @Override
@@ -345,7 +344,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             searchCriteria.setType(StringSearchField.and(ticket.getType()));
             searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + numFollowers);
         }
     }
 
@@ -353,7 +352,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
-            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
+            super(VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
@@ -406,7 +405,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
         @Override
         protected void doHide() {
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
         }
 
@@ -417,7 +416,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
         private void refresh() {
             this.fireEvent(new PropertyChangedEvent(beanItem, "status"));
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
             markAsDirty();
         }
@@ -611,7 +610,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             this.ticket = ticket;
             this.isBillable = isBillable;
             if (isBillable) {
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + ticket.getBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + ticket.getBillableHours());
             } else {
                 this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + ticket.getNonBillableHours());
             }
@@ -666,7 +665,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
-                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {
                         this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }

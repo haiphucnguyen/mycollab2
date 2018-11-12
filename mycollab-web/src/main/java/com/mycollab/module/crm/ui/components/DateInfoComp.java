@@ -20,7 +20,7 @@ import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Label;
@@ -43,7 +43,7 @@ public class DateInfoComp extends MVerticalLayout {
     public void displayEntryDateTime(ValuedBean bean) {
         this.removeAllComponents();
         this.withMargin(false);
-        Label dateInfoHeader = new Label(FontAwesome.CALENDAR.getHtml() + " " +
+        Label dateInfoHeader = new Label(VaadinIcons.CALENDAR.getHtml() + " " +
                 UserUIContext.getMessage(CrmCommonI18nEnum.SUB_INFO_DATES), ContentMode.HTML);
         dateInfoHeader.setStyleName("info-hdr");
         this.addComponent(dateInfoHeader);

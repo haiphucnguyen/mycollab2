@@ -50,7 +50,7 @@ public class ELabel extends Label {
     }
 
     public ELabel withDescription(String description) {
-        this.setDescription(description);
+        this.setDescription(description, ContentMode.HTML);
         return this;
     }
 

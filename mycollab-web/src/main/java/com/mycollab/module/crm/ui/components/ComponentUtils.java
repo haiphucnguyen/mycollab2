@@ -19,7 +19,7 @@ package com.mycollab.module.crm.ui.components;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.crm.ui.CrmAssetsManager;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
@@ -29,8 +29,8 @@ import org.vaadin.viritin.button.MButton;
  * @since 5.0.0
  */
 public class ComponentUtils {
-    public static HeaderWithFontAwesome header(String resId, String title) {
-        return HeaderWithFontAwesome.h2(CrmAssetsManager.getAsset(resId), title);
+    public static HeaderWithIcon header(String resId, String title) {
+        return HeaderWithIcon.h2(CrmAssetsManager.getAsset(resId), title);
     }
 
     public static MButton createCustomizeViewButton() {

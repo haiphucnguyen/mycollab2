@@ -133,12 +133,12 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getStatus() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
+                    divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
+                    return VaadinIcons.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
                 }
             }
         };
@@ -207,12 +207,12 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getDeadlineRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendText(VaadinIcons.CLOCK.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                    return String.format(" %s %s", VaadinIcons.CLOCK.getHtml(), UserUIContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
                 }
 
             }
@@ -306,7 +306,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             super("");
             this.task = task;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
         }
 
         @Override
@@ -330,7 +330,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(new NumberSearchField(task.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + numFollowers);
         }
     }
 
@@ -379,7 +379,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             this.task = task;
             this.isBillable = isBillable;
             if (isBillable) {
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + task.getBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + task.getBillableHours());
             } else {
                 this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + task.getNonBillableHours());
             }
@@ -434,7 +434,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     searchCriteria.setTypeId(new NumberSearchField(task.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
-                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {
                         this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }

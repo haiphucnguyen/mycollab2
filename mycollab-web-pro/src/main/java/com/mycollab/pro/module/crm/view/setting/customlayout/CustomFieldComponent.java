@@ -49,7 +49,7 @@ public class CustomFieldComponent extends CssLayout {
             editFieldBtn.setStyleName(WebThemes.POPUP_WITHOUT_INDICATOR);
             editFieldBtn.addStyleName("editFieldBtn");
             editFieldBtn.addStyleName(WebThemes.BUTTON_ICON_ONLY);
-            editFieldBtn.setIcon(FontAwesome.EDIT);
+            editFieldBtn.setIcon(VaadinIcons.EDIT);
 
             fieldEditPanel = new Panel();
             panelContentLayout = new MVerticalLayout().withFullWidth();

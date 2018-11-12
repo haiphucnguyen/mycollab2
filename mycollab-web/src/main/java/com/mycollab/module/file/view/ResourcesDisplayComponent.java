@@ -54,7 +54,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
@@ -136,7 +135,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         MButton uploadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_UPLOAD), clickEvent -> {
             MultiUploadContentWindow multiUploadWindow = new MultiUploadContentWindow();
             UI.getCurrent().addWindow(multiUploadWindow);
-        }).withIcon(FontAwesome.UPLOAD).withStyleName(WebThemes.BUTTON_ACTION)
+        }).withIcon(VaadinIcons.UPLOAD).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
@@ -253,10 +252,10 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 MButton renameBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_RENAME), clickEvent -> UI.getCurrent()
                         .addWindow(new RenameResourceWindow(selectedResource)))
-                        .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_LINK);
+                        .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK);
 
                 MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
-                        .withStyleName(WebThemes.BUTTON_LINK).withIcon(FontAwesome.DOWNLOAD);
+                        .withStyleName(WebThemes.BUTTON_LINK).withIcon(VaadinIcons.DOWNLOAD);
 
                 LazyStreamSource streamSource = new LazyStreamSource() {
                     private static final long serialVersionUID = 1L;
@@ -279,7 +278,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 MButton moveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_MOVE) + "...", clickEvent ->
                         UI.getCurrent().addWindow(new MoveResourceWindow(selectedResource)))
-                        .withIcon(FontAwesome.ARROWS).withStyleName(WebThemes.BUTTON_LINK);
+                        .withIcon(VaadinIcons.ARROWS).withStyleName(WebThemes.BUTTON_LINK);
 
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                         clickEvent -> deleteResourceAction(Collections.singletonList(selectedResource)))
@@ -367,7 +366,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // If renameResource is dropbox renameResource then we can not
             // define the created date so we do not need to display\
             if (resource.getCreated() != null) {
-                ELabel createdTimeLbl = ELabel.html(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext.formatPrettyTime
+                ELabel createdTimeLbl = ELabel.html(VaadinIcons.CLOCK.getHtml() + " " + UserUIContext.formatPrettyTime
                         (resource.getCreated().getTime()))
                         .withDescription(UserUIContext.formatDateTime(resource.getCreated().getTime()))
                         .withStyleName(UIConstants.META_INFO);
@@ -553,7 +552,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(FileI18nEnum.NOT_ATTACH_FILE_WARNING));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.UPLOAD);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.UPLOAD);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);

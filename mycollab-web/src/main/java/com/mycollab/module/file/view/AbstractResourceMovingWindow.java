@@ -30,7 +30,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Tree;
@@ -186,7 +186,7 @@ abstract class AbstractResourceMovingWindow extends MWindow {
                 close();
                 displayAfterMoveSuccess(baseFolder, checkingFail);
             }
-        }).withIcon(FontAwesome.ARROWS).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.ARROWS).withStyleName(WebThemes.BUTTON_ACTION);
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);

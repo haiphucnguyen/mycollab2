@@ -151,7 +151,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             MButton unlinkTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_UNLINK_TICKET), clickEvent -> {
                 createTicketLinkButton();
                 updateTicketLink(null);
-            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(FontAwesome.UNLINK);
+            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(VaadinIcons.UNLINK);
             ticketLayout.addComponent(unlinkTicketBtn);
 
             ELabel linkTicketBtn = new ELabel(StringUtils.trim(selectedTicket.getName(), 60, true))

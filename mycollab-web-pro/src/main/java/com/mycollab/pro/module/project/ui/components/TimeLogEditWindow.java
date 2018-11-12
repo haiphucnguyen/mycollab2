@@ -104,14 +104,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
 //
 //        gridItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
 //            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
-//            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
 //            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
 //            return icon;
 //        });
 //
 //        gridItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
 //            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
-//            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+//            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
 //            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
 //            return icon;
 //        });

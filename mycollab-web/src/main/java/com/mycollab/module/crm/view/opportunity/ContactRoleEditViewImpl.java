@@ -47,7 +47,6 @@ import com.mycollab.vaadin.web.ui.AddViewLayout2;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -108,7 +107,7 @@ public class ContactRoleEditViewImpl extends AbstractVerticalPageView implements
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
                 clickEvent -> EventBusFactory.getInstance().post(new ContactEvent.GotoList(this, null)))
-                .withIcon(FontAwesome.TIMES).withStyleName(WebThemes.BUTTON_OPTION);
+                .withStyleName(WebThemes.BUTTON_OPTION);
 
         return new MHorizontalLayout(cancelBtn, updateBtn);
     }

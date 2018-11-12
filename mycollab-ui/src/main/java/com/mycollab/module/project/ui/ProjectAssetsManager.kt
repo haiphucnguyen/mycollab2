@@ -73,8 +73,8 @@ object ProjectAssetsManager {
         if (StringUtils.isBlank(temp)) {
             temp = Priority.Medium.name
         }
-        val fontAwesome = getPriority(temp)
+        val icon = getPriority(temp)
         return String.format("<span class=\"priority-%s v-icon\" style=\"font-family: VaadinIcons;\">&#x%s;</span>",
-                temp.toLowerCase(), Integer.toHexString(fontAwesome.codepoint))
+                temp.toLowerCase(), Integer.toHexString(icon.codepoint))
     }
 }

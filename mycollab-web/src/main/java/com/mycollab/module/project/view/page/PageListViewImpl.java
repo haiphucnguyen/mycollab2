@@ -35,7 +35,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.ui.SafeHtmlLabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -43,7 +43,6 @@ import com.mycollab.vaadin.web.ui.SortButton;
 import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -109,7 +108,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     }
 
     private void initHeader() {
-        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.PAGE,
+        HeaderWithIcon headerText = ComponentUtils.headerH2(ProjectTypeConstants.PAGE,
                 UserUIContext.getMessage(PageI18nEnum.LIST));
 
         headerLayout.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
@@ -194,7 +193,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
 
         A folderHtml = new A(ProjectLinkGenerator.generatePagesLink(CurrentProjectVariables
-                .getProjectId(), resource.getPath())).appendText(FontAwesome.FOLDER_OPEN.getHtml() + " " + resource.getName());
+                .getProjectId(), resource.getPath())).appendText(VaadinIcons.FOLDER_OPEN.getHtml() + " " + resource.getName());
         ELabel folderLink = ELabel.h3(folderHtml.write());
         container.addComponent(folderLink);
         if (StringUtils.isNotBlank(resource.getDescription())) {
@@ -210,7 +209,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow(resource)))
-                .withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING).withIcon(FontAwesome.EDIT);
+                .withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING).withIcon(VaadinIcons.EDIT);
         editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> ConfirmDialogExt.show(UI.getCurrent(),
@@ -235,7 +234,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
     private Layout displayPageBlock(final Page resource) {
         MVerticalLayout container = new MVerticalLayout().withFullWidth().withStyleName("page-item-block");
         A pageHtml = new A(ProjectLinkGenerator.generatePageRead(CurrentProjectVariables.getProjectId(), resource
-                .getPath())).appendText(FontAwesome.FILE_WORD_O.getHtml() + " " + resource.getSubject());
+                .getPath())).appendText(VaadinIcons.FILE_TEXT.getHtml() + " " + resource.getSubject());
         ELabel pageLink = ELabel.h3(pageHtml.write());
 
         container.with(pageLink, new SafeHtmlLabel(resource.getContent(), 400));
@@ -250,7 +249,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> EventBusFactory.getInstance().post(new PageEvent.GotoEdit(PageListViewImpl.this, resource)))
-                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
+                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK, WebThemes.BUTTON_SMALL_PADDING);
         editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
         MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {

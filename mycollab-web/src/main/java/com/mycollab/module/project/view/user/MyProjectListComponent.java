@@ -29,7 +29,6 @@ import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -97,7 +96,7 @@ public class MyProjectListComponent extends MVerticalLayout {
         searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
 
         final PopupButton projectsPopup = new PopupButton("");
-        projectsPopup.setIcon(FontAwesome.CARET_SQUARE_O_DOWN);
+        projectsPopup.setIcon(VaadinIcons.CARET_SQUARE_DOWN_O);
         projectsPopup.addStyleName(WebThemes.BUTTON_ICON_ONLY);
 
         OptionPopupContent filterBtnLayout = new OptionPopupContent();

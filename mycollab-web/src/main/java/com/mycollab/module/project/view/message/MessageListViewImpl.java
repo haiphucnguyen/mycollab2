@@ -49,7 +49,6 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -195,7 +194,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
                 Label attachmentCountLbl = new Label(Integer.toString(attachments.size()));
                 attachmentCountLbl.setSizeUndefined();
                 attachmentNotification.addComponent(attachmentCountLbl);
-                Button attachmentIcon = new Button(FontAwesome.PAPERCLIP);
+                Button attachmentIcon = new Button(VaadinIcons.PAPERCLIP);
                 attachmentIcon.addStyleName(WebThemes.BUTTON_ICON_ONLY);
                 attachmentNotification.addComponent(attachmentIcon);
                 notification.addComponent(attachmentNotification);

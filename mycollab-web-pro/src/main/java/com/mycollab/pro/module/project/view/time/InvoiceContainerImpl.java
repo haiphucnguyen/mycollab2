@@ -276,7 +276,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.EDIT);
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.EDIT);
             editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {

@@ -42,7 +42,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.Notification;
@@ -139,7 +139,7 @@ public class ProjectMemberInvitePresenter extends AbstractPresenter<ProjectMembe
 
             Collection<String> inviteEmails = invitation.getEmails();
             for (String inviteEmail : inviteEmails) {
-                Div userEmailDiv = new Div().appendText(String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s %s: ", FontAwesome.MAIL_FORWARD.getHtml(),
+                Div userEmailDiv = new Div().appendText(String.format("&nbsp;&nbsp;&nbsp;&nbsp;%s %s: ", VaadinIcons.PAPERPLANE.getHtml(),
                         UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL))).appendChild(new A().setHref("mailto:" + inviteEmail)
                         .appendText(inviteEmail));
                 linksContainer.with(ELabel.html(userEmailDiv.write()), ELabel.hr());

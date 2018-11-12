@@ -24,7 +24,7 @@ import com.vaadin.ui.themes.ValoTheme
  * @author MyCollab Ltd.
  * @since 5.0.1
  */
-class HeaderWithFontAwesome private constructor(private val iconFont: VaadinIcons, title: String, primaryStyle: String) : CssLayout() {
+class HeaderWithIcon private constructor(private val iconFont: VaadinIcons, title: String, primaryStyle: String) : CssLayout() {
     private val wrappedLbl: ELabel = ELabel.html("").withStyleName(primaryStyle, ValoTheme.LABEL_NO_MARGIN)
     private var title: String? = null
 
@@ -45,11 +45,9 @@ class HeaderWithFontAwesome private constructor(private val iconFont: VaadinIcon
     companion object {
 
         @JvmStatic
-        fun h2(iconFont: VaadinIcons, title: String) =
-                HeaderWithFontAwesome(iconFont, title, ValoTheme.LABEL_H2)
+        fun h2(iconFont: VaadinIcons, title: String) = HeaderWithIcon(iconFont, title, ValoTheme.LABEL_H2)
 
         @JvmStatic
-        fun h3(iconFont: VaadinIcons, title: String) =
-                HeaderWithFontAwesome(iconFont, title, ValoTheme.LABEL_H3)
+        fun h3(iconFont: VaadinIcons, title: String) = HeaderWithIcon(iconFont, title, ValoTheme.LABEL_H3)
     }
 }

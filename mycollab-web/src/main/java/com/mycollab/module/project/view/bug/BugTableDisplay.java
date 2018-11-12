@@ -78,7 +78,7 @@ class BugTableDisplay extends DefaultPagedGrid<BugService, BugSearchCriteria, Si
 //        this.addGeneratedColumn("severity", (source, itemId, columnId) -> {
 //            SimpleBug bug = getBeanByIndex(itemId);
 //            Label lbPriority = new Label(UserUIContext.getMessage(BugSeverity.class, bug.getSeverity()));
-//            lbPriority.setIcon(FontAwesome.STAR);
+//            lbPriority.setIcon(VaadinIcons.STAR);
 //            if (bug.getSeverity() != null) {
 //                lbPriority.addStyleName("bug-severity-" + bug.getSeverity().toLowerCase());
 //            }

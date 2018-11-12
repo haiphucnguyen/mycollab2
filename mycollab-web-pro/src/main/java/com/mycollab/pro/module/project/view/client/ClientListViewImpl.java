@@ -78,7 +78,7 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                 .withMargin(false).withSpacing(false);
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
-                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
+                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
                 .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 
         MButton deleteBtn = new MButton("", clickEvent -> {

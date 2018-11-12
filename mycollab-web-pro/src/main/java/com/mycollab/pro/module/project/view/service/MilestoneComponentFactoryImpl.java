@@ -121,7 +121,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         PopupView popupView = new PopupView(new PopupView.Content() {
             @Override
             public String getMinimizedValueAsHTML() {
-                return FontAwesome.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone.getTotalTaskBillableHours());
+                return VaadinIcons.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone.getTotalTaskBillableHours());
             }
 
             @Override

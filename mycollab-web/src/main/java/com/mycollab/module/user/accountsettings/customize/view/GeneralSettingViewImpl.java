@@ -45,7 +45,6 @@ import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -293,7 +292,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
         leftPanel.with(logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.DOWNLOAD);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.DOWNLOAD);
         ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
         BrowserWindowOpener opener = new BrowserWindowOpener(serverConfiguration.getApiUrl("localization/translations"));
         opener.extend(downloadBtn);
