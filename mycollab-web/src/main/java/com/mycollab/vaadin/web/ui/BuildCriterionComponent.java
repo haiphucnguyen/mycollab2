@@ -210,7 +210,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
 
             this.addComponent(fieldSelectionBox, 2, 0);
-            this.addComponent(compareSelectionBox, 3, 0);
+//            this.addComponent(compareSelectionBox, 3, 0);
             this.addComponent(valueBox, 4, 0);
             this.addComponent(deleteBtn, 5, 0);
         }

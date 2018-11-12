@@ -125,7 +125,7 @@ public class CallAddViewImpl extends AbstractEditItemComp<CallWithBLOBs> impleme
             return null;
         }
 
-        private class CallStatusTypeField extends CompoundCustomField {
+        private class CallStatusTypeField extends CustomField {
             private static final long serialVersionUID = 1L;
 
             @Override

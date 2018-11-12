@@ -62,7 +62,7 @@ public class AccountTableDisplay extends DefaultPagedGrid<AccountService, Accoun
         super(AppContextUtil.getSpringBean(AccountService.class),
                 SimpleAccount.class, viewId, requiredColumn, displayColumns);
 
-        addGeneratedColumn(SimpleAccount::getAssignUserAvatarId).setCaption("");
+        addGeneratedColumn(SimpleAccount::isSelected).setCaption("");
         addGeneratedColumn(account -> {
             A accountLink = new A(CrmLinkGenerator.generateAccountPreviewLink(account.getId())).appendText(account.getAccountname());
             accountLink.setAttribute("onmouseover", TooltipHelper.crmHoverJsFunction(CrmTypeConstants.ACCOUNT,

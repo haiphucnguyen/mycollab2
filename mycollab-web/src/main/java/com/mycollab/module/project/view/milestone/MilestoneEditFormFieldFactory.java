@@ -33,8 +33,6 @@ import com.vaadin.ui.IconGenerator;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-import java.util.Arrays;
-
 import static com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.*;
 
 /**
@@ -94,14 +92,14 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
 
         ProgressStatusComboBox() {
             super(MilestoneStatus.class, InProgress, Future, Closed);
-            this.loadData(Arrays.asList(InProgress, Future, Closed));
-            this.setItemIconGenerator((IconGenerator<String>) it -> {
-                if (it.equals(InProgress.name())) {
-                    return VaadinIcons.SPINNER;
-                } else if (it.equals(Future.name())) {
-                    return VaadinIcons.CLOCK;
-                } else {
-                    return VaadinIcons.MINUS_CIRCLE;
+            this.setItemIconGenerator((IconGenerator<MilestoneStatus>) it -> {
+                switch (it) {
+                    case InProgress:
+                        return VaadinIcons.SPINNER;
+                    case Future:
+                        return VaadinIcons.CLOCK;
+                    default:
+                        return VaadinIcons.MINUS_CIRCLE;
                 }
             });
         }

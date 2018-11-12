@@ -30,19 +30,18 @@ import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.data.Converter;
 import com.vaadin.data.Result;
 import com.vaadin.data.ValueContext;
+import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.IconGenerator;
 import com.vaadin.ui.ItemCaptionGenerator;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ActiveUserComboBox extends ComboBox implements Converter<String, SimpleUser> {
+public class ActiveUserComboBox extends ComboBox implements Converter<SimpleUser, String> {
     private static final long serialVersionUID = 1L;
 
     private List<SimpleUser> users;
@@ -60,13 +59,12 @@ public class ActiveUserComboBox extends ComboBox implements Converter<String, Si
     }
 
     @Override
-    public Result<SimpleUser> convertToModel(String value, ValueContext context) {
-        Optional<SimpleUser> userResult = users.stream().filter(user -> user.getUsername().equals(value)).findFirst();
-        return userResult.isPresent() ? Result.ok(userResult.get()) : Result.error("Can not find user " + value);
+    public Result<String> convertToModel(SimpleUser value, ValueContext context) {
+        return (value != null) ? Result.ok(value.getUsername()) : Result.ok(null);
     }
 
     @Override
-    public String convertToPresentation(SimpleUser value, ValueContext context) {
-        return value.getUsername();
+    public SimpleUser convertToPresentation(String value, ValueContext context) {
+        return users.stream().filter(user -> user.getUsername().equals(value)).findFirst().get();
     }
 }
