@@ -174,7 +174,7 @@ public class MainViewImpl extends AbstractMainView {
         MButton signoutBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
-        }).withIcon(FontAwesome.SIGN_OUT);
+        }).withIcon(VaadinIcons.OUT);
         accountPopupContent.addSeparator();
         accountPopupContent.addOption(signoutBtn);
 

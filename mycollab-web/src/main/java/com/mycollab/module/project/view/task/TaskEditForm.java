@@ -19,6 +19,7 @@ package com.mycollab.module.project.view.task;
 import com.mycollab.common.domain.MonitorItem;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.MonitorItemService;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -139,7 +140,11 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
         @Override
         protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
-            return formLayoutFactory.attachField(propertyId, field);
+            try {
+                return formLayoutFactory.attachField(propertyId, field);
+            } catch (Exception e) {
+                throw new MyCollabException("Exception " + propertyId);
+            }
         }
     }
 }
