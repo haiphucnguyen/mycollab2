@@ -28,7 +28,6 @@ import com.mycollab.module.crm.view.lead.LeadSelectionWindow;
 import com.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.KeyCaptionComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -110,24 +109,6 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
     protected Component initContent() {
         return new MHorizontalLayout(relatedItemComboBox, itemField, browseBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
     }
-
-//    @Override
-//    public void setPropertyDataSource(Property newDataSource) {
-//        Object value = newDataSource.getValue();
-//        if (value instanceof String) {
-//            setType((String) value);
-//            super.setPropertyDataSource(newDataSource);
-//        } else {
-//            super.setPropertyDataSource(newDataSource);
-//        }
-//    }
-//
-//    @Override
-//    public void commit() throws SourceException, InvalidValueException {
-//        String value = (String) relatedItemComboBox.getValue();
-//        this.setInternalValue(value);
-//        super.commit();
-//    }
 
     public void setType(String type) {
 //        relatedItemComboBox.select(type);
@@ -219,15 +200,13 @@ public class RelatedEditItemField extends CustomField<String> implements FieldSe
         private static final long serialVersionUID = 1L;
 
         private RelatedItemComboBox() {
-            super(true);
-            setCaption(null);
+            super(true, new Entry(CrmTypeConstants.ACCOUNT, AccountI18nEnum.SINGLE),
+                    new Entry(CrmTypeConstants.CAMPAIGN, CampaignI18nEnum.SINGLE),
+                    new Entry(CrmTypeConstants.CONTACT, ContactI18nEnum.SINGLE),
+                    new Entry(CrmTypeConstants.LEAD, LeadI18nEnum.SINGLE),
+                    new Entry(CrmTypeConstants.OPPORTUNITY, OpportunityI18nEnum.SINGLE),
+                    new Entry(CrmTypeConstants.CASE, CaseI18nEnum.SINGLE));
             this.setWidth("100px");
-            this.addItem(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(AccountI18nEnum.SINGLE));
-            this.addItem(CrmTypeConstants.CAMPAIGN, UserUIContext.getMessage(CampaignI18nEnum.SINGLE));
-            this.addItem(CrmTypeConstants.CONTACT, UserUIContext.getMessage(ContactI18nEnum.SINGLE));
-            this.addItem(CrmTypeConstants.LEAD, UserUIContext.getMessage(LeadI18nEnum.SINGLE));
-            this.addItem(CrmTypeConstants.OPPORTUNITY, UserUIContext.getMessage(OpportunityI18nEnum.SINGLE));
-            this.addItem(CrmTypeConstants.CASE, UserUIContext.getMessage(CaseI18nEnum.SINGLE));
 //            this.select(getNullSelectionItemId());
         }
     }

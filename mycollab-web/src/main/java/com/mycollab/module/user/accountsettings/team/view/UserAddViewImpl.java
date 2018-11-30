@@ -58,7 +58,6 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class UserAddViewImpl extends AbstractVerticalPageView implements UserAddView {
     private static final long serialVersionUID = 1L;
