@@ -8,7 +8,7 @@ spring:
           uri: https://hainguyen@bitbucket.org/hainguyen/mycollab-config-repo.git
           skipSslValidation: true
           username: haiphucnguyen@gmail.com
-          password: DtmLinh80
+          password: HaiLinh7980
   security:
     user:
       name: root
