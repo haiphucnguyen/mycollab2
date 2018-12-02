@@ -20,6 +20,7 @@ import com.mycollab.core.arguments.ValuedBean
 import com.mycollab.core.utils.DateTimeUtils
 
 import java.io.Serializable
+import java.time.LocalDateTime
 import java.util.Date
 
 /**
@@ -42,9 +43,9 @@ class SimpleActivity : ValuedBean(), Serializable {
 
     var typeName: String? = null
 
-    var startDate: Date? = null
+    var startDate: LocalDateTime? = null
 
-    var endDate: Date? = null
+    var endDate: LocalDateTime? = null
 
     var assignUser: String? = null
 
@@ -75,8 +76,7 @@ class SimpleActivity : ValuedBean(), Serializable {
 
     val isOverdue: Boolean
         get() = (!isCompleted && endDate != null
-                && endDate!!
-                .before(DateTimeUtils.getCurrentDateWithoutMS()))
+                && endDate!!.isBefore(DateTimeUtils.getCurrentDateWithoutMS()))
 
     fun getContactFullName(): String? {
         return contact

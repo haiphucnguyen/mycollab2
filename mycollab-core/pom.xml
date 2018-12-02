@@ -71,19 +71,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Business days calculation library-->
-        <dependency>
-            <groupId>net.objectlab.kit</groupId>
-            <artifactId>datecalc-common</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.objectlab.kit</groupId>
-            <artifactId>datecalc-joda</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
         <dependency>
             <groupId>uk.com.robust-it</groupId>
             <artifactId>cloning</artifactId>

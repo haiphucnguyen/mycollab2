@@ -1,23 +1,22 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.vaadin;
 
 import ch.qos.cal10n.IMessageConveyor;
-import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.SessionExpireException;
 import com.mycollab.core.utils.DateTimeUtils;
@@ -33,17 +32,14 @@ import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.vaadin.server.VaadinSession;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * The core class that keep user session data while user login to MyCollab
@@ -72,7 +68,7 @@ public class UserUIContext implements Serializable {
 
     private transient IMessageConveyor messageHelper;
     private Locale userLocale = Locale.US;
-    private TimeZone userTimeZone;
+    private ZoneId userTimeZone;
     private Boolean isValidAccount = true;
 
     public UserUIContext() {
@@ -213,7 +209,7 @@ public class UserUIContext implements Serializable {
         return getInstance().session.getDisplayName();
     }
 
-    public static TimeZone getUserTimeZone() {
+    public static ZoneId getUserTimeZone() {
         return getInstance().userTimeZone;
     }
 
@@ -312,18 +308,20 @@ public class UserUIContext implements Serializable {
      * @param date is the UTC date value
      * @return
      */
-    public static String formatDateTime(Date date) {
+    public static String formatDateTime(LocalDateTime date) {
         if (date == null) {
             return "";
         } else {
-            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
-            if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
-                return formatter.print(jodaDate);
-            } else {
-                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
-                return formatter.print(jodaDate);
-            }
+            // TODO
+            return "Implemented";
+//            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
+//            if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
+//                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
+//                return formatter.print(jodaDate);
+//            } else {
+//                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
+//                return formatter.print(jodaDate);
+//            }
         }
     }
 
@@ -332,8 +330,10 @@ public class UserUIContext implements Serializable {
      * @return
      */
     public static String formatDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
-                UserUIContext.getUserTimeZone());
+        // TODO
+//        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
+//                UserUIContext.getUserTimeZone());
+        return "Implemented";
     }
 
     /**
@@ -350,41 +350,14 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatShortDate(Date date) {
-        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
-                UserUIContext.getUserTimeZone());
+        // TODO
+//        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
+//                UserUIContext.getUserTimeZone());
+        return "Implemented";
     }
 
     public static String formatDuration(Date date) {
         return DateTimeUtils.getPrettyDurationValue(date, getUserLocale());
-    }
-
-    /**
-     * @param hour
-     * @return
-     */
-    public static String formatTime(double hour) {
-        long hourCount = (long) Math.floor(hour);
-        long minuteCount = (long) ((hourCount - hour) * 60);
-
-        String timeFormat = getMessage(DayI18nEnum.TIME_FORMAT);
-        String[] patterns = timeFormat.split(":");
-        String output = "";
-
-        String hourSuffix = getMessage(DayI18nEnum.HOUR_SUFFIX);
-        String hourPluralSuffix = getMessage(DayI18nEnum.HOUR_PLURAL_SUFFIX);
-
-        String minuteSuffix = getMessage(DayI18nEnum.MINUTE_SUFFIX);
-        String minutePluralSuffix = getMessage(DayI18nEnum.MINUTE_PLURAL_SUFFIX);
-        for (String pattern : patterns) {
-            if (pattern.equals("H") && hourCount > 0) {
-                output += hourCount;
-                output += (hourCount > 1 ? hourPluralSuffix : hourSuffix);
-            } else if (pattern.equals("m") && minuteCount > 0) {
-                output += minuteCount;
-                output += (minuteCount > 1 ? minutePluralSuffix : minuteSuffix);
-            }
-        }
-        return output;
     }
 
 }

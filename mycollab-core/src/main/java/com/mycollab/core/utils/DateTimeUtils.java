@@ -1,36 +1,33 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.core.utils;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.PeriodFormat;
-import org.joda.time.format.PeriodFormatter;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 /**
@@ -42,22 +39,14 @@ import java.util.*;
 public class DateTimeUtils {
     private static final Logger LOG = LoggerFactory.getLogger(DateTimeUtils.class);
 
-    private static DateTimeZone utcZone = DateTimeZone.UTC;
+    private static ZoneId utcZone = ZoneId.of("UTC");
 
     public static final long MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
-    /**
-     * Trim hour-minute-second of date instance value to zero.
-     *
-     * @param value
-     * @return
-     */
-    public static Date trimHMSOfDate(Date value) {
-        return new LocalDate(value).toDate();
-    }
 
-    public static Date getCurrentDateWithoutMS() {
-        return new LocalDate().toDate();
+
+    public static LocalDateTime getCurrentDateWithoutMS() {
+        return LocalDate.now().atStartOfDay();
     }
 
     public static Date convertDateByString(String strDate, String format) {
@@ -72,8 +61,8 @@ public class DateTimeUtils {
         return new Date();
     }
 
-    public static String convertToStringWithUserTimeZone(String dateVal, String dateFormat, Locale locale, TimeZone userTimeZone) {
-        Date date = parseDateByW3C(dateVal);
+    public static String convertToStringWithUserTimeZone(String dateVal, String dateFormat, Locale locale, ZoneId userTimeZone) {
+        LocalDateTime date = parseDateByW3C(dateVal);
         return convertToStringWithUserTimeZone(date, dateFormat, locale, userTimeZone);
     }
 
@@ -81,13 +70,11 @@ public class DateTimeUtils {
      * @param strDate
      * @return
      */
-    public static Date parseDateByW3C(String strDate) {
-        String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+    public static LocalDateTime parseDateByW3C(String strDate) {
         if (strDate != null && !strDate.equals("")) {
-            SimpleDateFormat formatter = new SimpleDateFormat(formatW3C);
             try {
-                return formatter.parse(strDate);
-            } catch (ParseException e) {
+                return LocalDateTime.parse(strDate);
+            } catch (DateTimeParseException e) {
                 LOG.error("Error while parse date", e);
             }
         }
@@ -103,7 +90,7 @@ public class DateTimeUtils {
         return "";
     }
 
-    public static String convertToStringWithUserTimeZone(Date date, String dateFormat, Locale locale, TimeZone userTimeZone) {
+    public static String convertToStringWithUserTimeZone(LocalDateTime date, String dateFormat, Locale locale, ZoneId userTimeZone) {
         if (date == null)
             return "";
         return formatDate(date, dateFormat, locale, userTimeZone);
@@ -117,54 +104,43 @@ public class DateTimeUtils {
         return p.format(dateTime);
     }
 
-    public static String getPrettyDurationValue(Date date, Locale locale) {
-        Period period = new Period(new LocalDate(date), LocalDate.now());
-        PeriodFormatter formatter = PeriodFormat.wordBased(locale);
-        return formatter.print(period);
+    public static String getPrettyDurationValue(LocalDate date, Locale locale) {
+        Period period =  Period.between(date, LocalDate.now());
+        // TODO
+//        PeriodFormatter formatter = PeriodFormat.wordBased(locale);
+//        return formatter.print(period);
+        return "Implemented";
     }
 
-    /**
-     * @param date
-     * @param duration Example: Date date = subtractOrAddDayDuration(new Date(), -2);
-     *                 // Result: the last 2 days
-     *
-     *                 Date date = subtractOrAddDayDuration(new Date(), 2); //
-     *                 Result: the next 2 days
-     * @return
-     */
-    public static Date subtractOrAddDayDuration(Date date, int duration) {
-        DateTime localDate = new DateTime(date);
-        return localDate.plusDays(duration).toDate();
-    }
 
-    public static String formatDate(Date date, String dateFormat, Locale locale) {
+    public static String formatDate(LocalDateTime date, String dateFormat, Locale locale) {
         return formatDate(date, dateFormat, locale, null);
     }
 
-    public static String formatDate(Date date, String dateFormat, Locale locale, TimeZone timezone) {
+    public static String formatDate(LocalDateTime date, String dateFormat, Locale locale, ZoneId timezone) {
         if (date == null) {
             return "";
         }
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(dateFormat).withLocale(locale);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat).withLocale(locale);
         if (timezone != null) {
-            formatter = formatter.withZone(DateTimeZone.forTimeZone(timezone));
+            formatter = formatter.withZone(timezone);
         }
 
-        return formatter.print(new DateTime(date));
+        return formatter.format(date);
     }
 
     /**
      * @param date
      * @return
      */
-    public static Date convertDateTimeToUTC(Date date) {
-        return convertDateTimeByTimezone(date, DateTimeZone.UTC.toTimeZone());
+    public static LocalDateTime convertDateTimeToUTC(LocalDateTime date) {
+        return convertDateTimeByTimezone(date, utcZone);
     }
 
-    public static Date convertDateTimeByTimezone(Date date, TimeZone timeZone) {
-        DateTime dateTime = new DateTime(date);
-        return dateTime.toDateTime(DateTimeZone.forTimeZone(timeZone)).toLocalDateTime().toDate();
+    public static LocalDateTime convertDateTimeByTimezone(LocalDateTime date, ZoneId timeZone) {
+        return date.atZone(timeZone).toLocalDateTime();
     }
 
     /**
@@ -173,11 +149,15 @@ public class DateTimeUtils {
      * @param timeInMillis
      * @return
      */
-    public static Date convertTimeFromUTCToSystemTimezone(long timeInMillis) {
-        DateTime dt = new DateTime();
-        dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis) + timeInMillis);
-        dt = dt.withZone(utcZone);
-        return dt.toDate();
+    public static LocalDateTime convertTimeFromUTCToSystemTimezone(long timeInMillis) {
+        LocalDateTime dt = LocalDateTime.now();
+        ZoneId systemTimeZone = ZoneId.systemDefault();
+
+        // TODO
+//        dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis) + timeInMillis);
+//        dt = dt.withZone(utcZone);
+//        return dt.toDate();
+        return LocalDateTime.now();
     }
 
     /**
@@ -218,6 +198,6 @@ public class DateTimeUtils {
     }
 
     public static String getCurrentYear() {
-        return String.valueOf(new LocalDate().getYear());
+        return String.valueOf(LocalDate.now().getYear());
     }
 }

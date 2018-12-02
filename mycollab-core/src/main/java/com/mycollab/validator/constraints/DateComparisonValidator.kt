@@ -17,7 +17,6 @@
 package com.mycollab.validator.constraints
 
 import org.apache.commons.beanutils.PropertyUtils
-import org.joda.time.LocalDate
 
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext

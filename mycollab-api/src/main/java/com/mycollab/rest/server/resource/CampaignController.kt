@@ -85,7 +85,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
 
         val name = "MyCollab-All-${editionInfo.version}.zip"
         val link = editionInfo.communityDownloadLink
-        val altLink = editionInfo.altCommunityDownloadLink
+        val altLink = editionInfo.premiumDownloadLink
         return mapOf("name" to name, "link" to link, "altlink" to altLink)
     }
 }

@@ -5,6 +5,7 @@ import com.mycollab.common.domain.LiveInstanceExample
 import com.mycollab.pro.common.dao.LiveInstanceMapper
 import org.joda.time.DateTime
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -21,8 +22,8 @@ class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstance
         ex.createCriteria().andSysidEqualTo(sysId)
         when {
             liveInstanceMapper.countByExample(ex) == 0L -> {
-                instance.installeddate = DateTime().toDate()
-                instance.lastupdateddate = DateTime().toDate()
+                instance.installeddate = LocalDateTime.now()
+                instance.lastupdateddate = LocalDateTime.now()
                 liveInstanceMapper.insert(instance)
             }
             else -> {
@@ -31,7 +32,7 @@ class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstance
                     val oldInstance = liveInstances[0]
                     instance.id = oldInstance.id
                     instance.installeddate = oldInstance.installeddate
-                    instance.lastupdateddate = DateTime().toDate()
+                    instance.lastupdateddate = LocalDateTime.now()
                     liveInstanceMapper.updateByPrimaryKey(instance)
                 }
             }

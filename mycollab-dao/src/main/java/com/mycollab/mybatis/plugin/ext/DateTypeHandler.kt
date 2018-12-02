@@ -22,6 +22,7 @@ import org.apache.ibatis.type.JdbcType
 import org.apache.ibatis.type.MappedJdbcTypes
 
 import java.sql.*
+import java.time.LocalDateTime
 import java.util.Date
 
 /**
@@ -29,16 +30,16 @@ import java.util.Date
  * @since 1.0
  */
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
-class DateTypeHandler : BaseTypeHandler<Date>() {
+class DateTypeHandler : BaseTypeHandler<LocalDateTime>() {
 
     @Throws(SQLException::class)
-    override fun setNonNullParameter(ps: PreparedStatement, i: Int, parameter: Date, jdbcType: JdbcType) {
+    override fun setNonNullParameter(ps: PreparedStatement, i: Int, parameter: LocalDateTime, jdbcType: JdbcType) {
         val date = DateTimeUtils.convertDateTimeToUTC(parameter)
-        ps.setTimestamp(i, Timestamp(date.time))
+        ps.setTimestamp(i, Timestamp(date.second * 1000L))
     }
 
     @Throws(SQLException::class)
-    override fun getNullableResult(rs: ResultSet, columnName: String): Date? {
+    override fun getNullableResult(rs: ResultSet, columnName: String): LocalDateTime? {
         val sqlTimestamp = rs.getTimestamp(columnName)
         return if (sqlTimestamp != null) {
             DateTimeUtils.convertTimeFromUTCToSystemTimezone(sqlTimestamp.time)
@@ -46,7 +47,7 @@ class DateTypeHandler : BaseTypeHandler<Date>() {
     }
 
     @Throws(SQLException::class)
-    override fun getNullableResult(rs: ResultSet, columnIndex: Int): Date? {
+    override fun getNullableResult(rs: ResultSet, columnIndex: Int): LocalDateTime? {
         val sqlTimestamp = rs.getTimestamp(columnIndex)
         return if (sqlTimestamp != null) {
             DateTimeUtils.convertTimeFromUTCToSystemTimezone(sqlTimestamp.time)
