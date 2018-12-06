@@ -52,8 +52,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -209,7 +209,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             for (SimpleProjectMember member : unsavedMembers) {
                 MonitorItem item = new MonitorItem();
                 item.setExtratypeid(CurrentProjectVariables.getProjectId());
-                item.setMonitorDate(new GregorianCalendar().getTime());
+                item.setMonitorDate(LocalDateTime.now());
                 item.setSaccountid(AppUI.getAccountId());
                 item.setType(type);
                 item.setTypeid(typeId);

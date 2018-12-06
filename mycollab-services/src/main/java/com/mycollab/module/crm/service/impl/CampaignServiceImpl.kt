@@ -31,6 +31,7 @@ import com.mycollab.module.crm.domain.criteria.CampaignSearchCriteria
 import com.mycollab.module.crm.service.CampaignService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -61,7 +62,7 @@ class CampaignServiceImpl(private val campaignMapper: CampaignMapper,
             val associateLead = CampaignLead()
             associateLead.campaignid = record.id
             associateLead.leadid = (record.extraData as SimpleLead).id
-            associateLead.createdtime = GregorianCalendar().time
+            associateLead.createdtime = LocalDateTime.now()
             this.saveCampaignLeadRelationship(listOf(associateLead), record.saccountid)
         }
         return result

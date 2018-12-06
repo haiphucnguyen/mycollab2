@@ -34,6 +34,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @RunWith(SpringJUnit4ClassRunner::class)
 class EventServiceTest : IntegrationServiceTest() {
@@ -57,9 +59,8 @@ class EventServiceTest : IntegrationServiceTest() {
     @Test
     @Throws(ParseException::class)
     fun testSearchByTimeRange() {
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        val startDate = format.parse("2012-11-11 00:00:00")
-        val endDate = format.parse("2012-11-15 00:00:00")
+        val startDate = LocalDate.of(2011, 11, 11)
+        val endDate = LocalDate.of(2012, 11, 15)
         val criteria = ActivitySearchCriteria()
         criteria.startDate = DateTimeSearchField(AND, GREATER_THAN_EQUAL, startDate)
         criteria.endDate = DateTimeSearchField(AND, LESS_THAN_EQUAL, endDate)

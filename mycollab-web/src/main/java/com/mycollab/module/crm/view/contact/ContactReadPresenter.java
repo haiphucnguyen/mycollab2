@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.*;
@@ -32,22 +31,23 @@ import com.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
-import com.mycollab.vaadin.reporting.FormReportLayout;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
+import com.mycollab.vaadin.reporting.FormReportLayout;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.AbstractRelatedListHandler;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -179,7 +179,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                         ContactOpportunity assoOpportunity = new ContactOpportunity();
                         assoOpportunity.setOpportunityid(opportunity.getId());
                         assoOpportunity.setContactid(contact.getId());
-                        assoOpportunity.setCreatedtime(new GregorianCalendar().getTime());
+                        assoOpportunity.setCreatedtime(LocalDateTime.now());
                         associateOpportunities.add(assoOpportunity);
                     }
 

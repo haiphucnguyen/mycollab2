@@ -52,9 +52,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd
@@ -96,7 +95,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
         gridFormLayoutHelper.addComponent(new ELabel(defaultCurrency.getDisplayName(UserUIContext.getUserLocale())),
                 UserUIContext.getMessage(AdminI18nEnum.FORM_DEFAULT_CURRENCY), 0, 3);
 
-        Date now = new GregorianCalendar().getTime();
+        LocalDateTime now = LocalDateTime.now();
         String defaultFullDateFormat = billingAccount.getDateFormatInstance();
         gridFormLayoutHelper.addComponent(new Label(String.format("%s (%s)",
                 DateTimeUtils.formatDate(now, billingAccount.getDateFormatInstance(), UserUIContext.getUserLocale()), defaultFullDateFormat)),

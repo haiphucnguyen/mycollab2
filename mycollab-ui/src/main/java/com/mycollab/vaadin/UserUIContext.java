@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -329,7 +330,7 @@ public class UserUIContext implements Serializable {
      * @param date is the UTC date value
      * @return
      */
-    public static String formatDate(Date date) {
+    public static String formatDate(LocalDateTime date) {
         // TODO
 //        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
 //                UserUIContext.getUserTimeZone());
@@ -341,22 +342,22 @@ public class UserUIContext implements Serializable {
      * @param textIfDateIsNull
      * @return
      */
-    public static String formatDate(Date date, String textIfDateIsNull) {
+    public static String formatDate(LocalDateTime date, String textIfDateIsNull) {
         return date == null ? textIfDateIsNull : formatDate(date);
     }
 
-    public static String formatPrettyTime(Date date) {
+    public static String formatPrettyTime(LocalDateTime date) {
         return DateTimeUtils.getPrettyDateValue(date, getUserLocale());
     }
 
-    public static String formatShortDate(Date date) {
+    public static String formatShortDate(LocalDate date) {
         // TODO
 //        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
 //                UserUIContext.getUserTimeZone());
         return "Implemented";
     }
 
-    public static String formatDuration(Date date) {
+    public static String formatDuration(LocalDateTime date) {
         return DateTimeUtils.getPrettyDurationValue(date, getUserLocale());
     }
 

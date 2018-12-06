@@ -35,6 +35,7 @@ import com.mycollab.spring.AppContextUtil
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -60,7 +61,7 @@ class LeadServiceImpl(private val leadMapper: LeadMapper,
             val associateLead = CampaignLead()
             associateLead.campaignid = (lead.extraData as SimpleCampaign).id
             associateLead.leadid = lead.id
-            associateLead.createdtime = GregorianCalendar().time
+            associateLead.createdtime = LocalDateTime.now()
 
             val campaignService = AppContextUtil.getSpringBean(CampaignService::class.java)
             campaignService.saveCampaignLeadRelationship(listOf(associateLead), lead.saccountid)
@@ -68,7 +69,7 @@ class LeadServiceImpl(private val leadMapper: LeadMapper,
             val associateLead = OpportunityLead()
             associateLead.opportunityid = (lead.extraData as SimpleOpportunity).id
             associateLead.leadid = lead.id
-            associateLead.createdtime = GregorianCalendar().time
+            associateLead.createdtime = LocalDateTime.now()
 
             val opportunityService = AppContextUtil.getSpringBean(OpportunityService::class.java)
             opportunityService.saveOpportunityLeadRelationship(listOf(associateLead), lead.saccountid)
@@ -142,7 +143,7 @@ class LeadServiceImpl(private val leadMapper: LeadMapper,
             oppLead.leadid = lead.id
             oppLead.opportunityid = opportunityId
             oppLead.isconvertrel = true
-            oppLead.createdtime = GregorianCalendar().time
+            oppLead.createdtime = LocalDateTime.now()
             opportunityService.saveOpportunityLeadRelationship(listOf(oppLead), lead.saccountid)
         }
 

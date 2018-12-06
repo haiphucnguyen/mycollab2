@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,7 +18,6 @@ package com.mycollab.module.crm.view.activity;
 
 import com.mycollab.module.crm.domain.CallWithBLOBs;
 import com.mycollab.module.crm.domain.SimpleCall;
-import com.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.CallStatus;
 import com.mycollab.module.crm.i18n.OptionI18nEnum.CallType;
 import com.mycollab.module.crm.ui.components.RelatedReadItemField;
@@ -31,9 +30,6 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.vaadin.data.HasValue;
-import org.joda.time.Duration;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  * @author MyCollab Ltd.
@@ -67,15 +63,15 @@ class CallReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
         } else if (CallWithBLOBs.Field.durationinseconds.equalTo(propertyId)) {
             try {
                 final long duration = Long.parseLong("" + call.getDurationinseconds() * 1000);
-
-                Duration dur = new Duration(duration);
-                PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays()
-                        .appendSuffix("d").appendHours()
-                        .appendSuffix("h").appendMinutes()
-                        .appendSuffix("m").appendSeconds()
-                        .appendSuffix("s").toFormatter();
-                String formatted = formatter.print(dur.toPeriod());
-                return new DefaultViewField(formatted);
+// TODO
+//                Duration dur = new Duration(duration);
+//                PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays()
+//                        .appendSuffix("d").appendHours()
+//                        .appendSuffix("h").appendMinutes()
+//                        .appendSuffix("m").appendSeconds()
+//                        .appendSuffix("s").toFormatter();
+//                String formatted = formatter.print(dur.toPeriod());
+                return new DefaultViewField(/*formatted*/ "");
             } catch (NumberFormatException e) {
                 return new DefaultViewField("");
             }

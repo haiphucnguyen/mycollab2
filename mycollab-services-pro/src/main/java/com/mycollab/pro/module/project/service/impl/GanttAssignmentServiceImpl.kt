@@ -134,8 +134,9 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                                 "`lastUpdatedTime`=?, `assignUser`=?, `ganttIndex`=? WHERE `id` = ?")
                         for (milestoneGanttItem in milestoneGanttItems) {
                             preparedStatement.setString(1, milestoneGanttItem.name)
-                            preparedStatement.setDate(2, getDateWithNullValue(milestoneGanttItem.startDate))
-                            preparedStatement.setDate(3, getDateWithNullValue(milestoneGanttItem.endDate))
+                            // TODO: fix issue
+//                            preparedStatement.setDate(2, getDateWithNullValue(milestoneGanttItem.startDate))
+//                            preparedStatement.setDate(3, getDateWithNullValue(milestoneGanttItem.endDate))
                             preparedStatement.setDate(4, Date(now))
                             preparedStatement.setString(5, milestoneGanttItem.assignUser)
                             preparedStatement.setInt(6, milestoneGanttItem.ganttIndex!!)
@@ -171,8 +172,9 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                         taskGanttItems.forEach {
                             if (ProjectTypeConstants.TASK == it.type) {
                                 batchTasksStatement.setString(1, it.name)
-                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
-                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
+                                // TODO: fix issue
+//                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
+//                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
                                 batchTasksStatement.setDouble(5, it.progress ?: 0.0)
                                 batchTasksStatement.setString(6, it.assignUser)
@@ -211,8 +213,9 @@ class GanttAssignmentServiceImpl(private val ganttMapperExt: GanttMapperExt,
                         taskGanttItems.forEach {
                             if (ProjectTypeConstants.BUG == it.type) {
                                 batchTasksStatement.setString(1, it.name)
-                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
-                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
+                                // TODO: fix issue
+//                                batchTasksStatement.setDate(2, getDateWithNullValue(it.startDate))
+//                                batchTasksStatement.setDate(3, getDateWithNullValue(it.endDate))
                                 batchTasksStatement.setDate(4, Date(now))
                                 batchTasksStatement.setDouble(5, MoreObjects.firstNonNull(it.progress, 0.0)!!)
                                 batchTasksStatement.setString(6, it.assignUser)

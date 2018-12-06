@@ -38,7 +38,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 
 /**
  * @author MyCollab Ltd.
@@ -77,7 +77,7 @@ class ProjectCommentInput extends MHorizontalLayout {
         final MButton newCommentBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_POST), clickEvent -> {
             CommentWithBLOBs comment = new CommentWithBLOBs();
             comment.setComment(Jsoup.clean(commentArea.getValue(), Whitelist.relaxed()));
-            comment.setCreatedtime(new GregorianCalendar().getTime());
+            comment.setCreatedtime(LocalDateTime.now());
             comment.setCreateduser(UserUIContext.getUsername());
             comment.setSaccountid(AppUI.getAccountId());
             comment.setType(type);

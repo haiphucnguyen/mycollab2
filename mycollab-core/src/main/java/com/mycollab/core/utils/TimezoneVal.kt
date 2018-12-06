@@ -41,9 +41,10 @@ class TimezoneVal(val id: String?) : Comparable<TimezoneVal> {
     }
 
     override fun compareTo(other: TimezoneVal): Int {
-        val offsetInMillis1 = timezone.getOffset(LocalDateTime.now())
-        val offsetInMillis2 = other.timezone.getTimeZone().getOffset(LocalDateTime.now())
-        return offsetInMillis1 - offsetInMillis2
+        val now = LocalDateTime.now()
+        val offset1 = now.atZone(timezone).offset.totalSeconds
+        val offset2 = now.atZone(other.timezone).offset.totalSeconds
+        return offset1 - offset2
     }
 
     companion object {
@@ -52,14 +53,12 @@ class TimezoneVal(val id: String?) : Comparable<TimezoneVal> {
         init {
             val zoneIds = TimeZone.getAvailableIDs()
             zoneIds.forEach {
-                val timeZone = TimeZone.getTimeZone(it)
                 try {
-                    DateTimeZone.forTimeZone(timeZone) //check compatible between joda timezone and java timezone
                     val timezoneVal = TimezoneVal(it)
                     var timeZones = cacheTimezones[timezoneVal.area]
                     if (timeZones == null) {
                         timeZones = ArrayList()
-                        cacheTimezones.put(timezoneVal.area, timeZones)
+                        cacheTimezones[timezoneVal.area] = timeZones
                     }
                     timeZones.add(timezoneVal)
                 } catch (e: Exception) {
@@ -72,10 +71,10 @@ class TimezoneVal(val id: String?) : Comparable<TimezoneVal> {
         }
 
         private fun getOffsetString(timeZone: ZoneId): String {
-            val offsetInMillis = DateTimeZone.forTimeZone(timeZone).getOffset(DateTime().millis)
-            var offset = String.format("%02d:%02d", Math.abs(offsetInMillis / 3600000),
-                    Math.abs(offsetInMillis / 60000 % 60))
-            offset = """(GMT${if (offsetInMillis >= 0) "+" else "-"}$offset)"""
+            val offsetInSeconds = LocalDateTime.now().atZone(timeZone).offset.totalSeconds
+            var offset = String.format("%02d:%02d", Math.abs(offsetInSeconds / 3600),
+                    Math.abs(offsetInSeconds / 60 % 60))
+            offset = """(GMT${if (offsetInSeconds >= 0) "+" else "-"}$offset)"""
             return offset
         }
 

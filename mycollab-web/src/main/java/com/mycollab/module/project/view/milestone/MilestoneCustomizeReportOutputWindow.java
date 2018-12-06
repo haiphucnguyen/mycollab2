@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,11 +25,11 @@ import com.mycollab.module.project.fielddef.MilestoneTableFieldDef;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.service.MilestoneService;
-import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import org.joda.time.LocalDate;
+import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -58,8 +58,8 @@ public class MilestoneCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Object[] buildSampleData() {
-        return new Object[]{"Milestone 1", UserUIContext.formatDate(new LocalDate().minusDays(30).toDate()), UserUIContext
-                .formatDate(new LocalDate().plusDays(7).toDate()), UserUIContext.getMessage(MilestoneStatus.InProgress),
+        return new Object[]{"Milestone 1", UserUIContext.formatDate(LocalDateTime.now().minusDays(30)), UserUIContext
+                .formatDate(LocalDateTime.now().plusDays(7)), UserUIContext.getMessage(MilestoneStatus.InProgress),
                 "John Adam", "10", "2"};
     }
 }

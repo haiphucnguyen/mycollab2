@@ -16,7 +16,6 @@
  */
 package com.mycollab.core.utils;
 
-import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +23,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Utility class to process date instance
@@ -40,10 +42,6 @@ public class DateTimeUtils {
     private static final Logger LOG = LoggerFactory.getLogger(DateTimeUtils.class);
 
     private static ZoneId utcZone = ZoneId.of("UTC");
-
-    public static final long MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
-
-
 
     public static LocalDateTime getCurrentDateWithoutMS() {
         return LocalDate.now().atStartOfDay();
@@ -96,16 +94,17 @@ public class DateTimeUtils {
         return formatDate(date, dateFormat, locale, userTimeZone);
     }
 
-    public static String getPrettyDateValue(Date dateTime, Locale locale) {
+    public static String getPrettyDateValue(LocalDateTime dateTime, Locale locale) {
         if (dateTime == null) {
             return "";
         }
-        PrettyTime p = new PrettyTime(locale);
-        return p.format(dateTime);
+//        PrettyTime p = new PrettyTime(locale);
+//        return p.format(dateTime);
+        return "Implemented";
     }
 
-    public static String getPrettyDurationValue(LocalDate date, Locale locale) {
-        Period period =  Period.between(date, LocalDate.now());
+    public static String getPrettyDurationValue(LocalDateTime date, Locale locale) {
+//        Period period = Period.between(date, LocalDate.now());
         // TODO
 //        PeriodFormatter formatter = PeriodFormat.wordBased(locale);
 //        return formatter.print(period);
@@ -165,16 +164,10 @@ public class DateTimeUtils {
      * @return array of two date elements, first is the first day of week, and
      * the second is the end week date
      */
-    public static Date[] getBounceDatesOfWeek(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(date);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        Date begin = calendar.getTime();
-
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-        Date end = calendar.getTime();
-        return new Date[]{begin, end};
+    public static LocalDate[] getBounceDatesOfWeek(LocalDate date) {
+        LocalDate begin = date.with(WeekFields.ISO.dayOfWeek(), 1);
+        LocalDate end = date.with(WeekFields.ISO.dayOfWeek(), 7);
+        return new LocalDate[]{begin, end};
     }
 
     public static LocalDate min(LocalDate... values) {
@@ -199,5 +192,14 @@ public class DateTimeUtils {
 
     public static String getCurrentYear() {
         return String.valueOf(LocalDate.now().getYear());
+    }
+
+    public static LocalDateTime toLocalDateTime(Calendar calendar) {
+        if (calendar == null) {
+            return null;
+        }
+        TimeZone tz = calendar.getTimeZone();
+        ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
+        return LocalDateTime.ofInstant(calendar.toInstant(), zid);
     }
 }

@@ -22,6 +22,7 @@ import org.apache.ibatis.type.JdbcType
 import org.apache.ibatis.type.MappedJdbcTypes
 
 import java.sql.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -54,11 +55,12 @@ class DateTypeHandler : BaseTypeHandler<LocalDateTime>() {
         } else null
     }
 
+    // TODO
     @Throws(SQLException::class)
-    override fun getNullableResult(cs: CallableStatement, columnIndex: Int): Date? {
+    override fun getNullableResult(cs: CallableStatement, columnIndex: Int): LocalDateTime? {
         val sqlTimestamp = cs.getTimestamp(columnIndex)
         return if (sqlTimestamp != null) {
-            Date(sqlTimestamp.time)
+            LocalDateTime.now()
         } else null
     }
 }

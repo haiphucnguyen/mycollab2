@@ -200,12 +200,12 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
             container.addComponent(new Label(StringUtils.trimHtmlTags(resource.getDescription())));
         }
 
-        Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(PageI18nEnum.LABEL_LAST_UPDATE,
-                ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
-                UserUIContext.formatPrettyTime(resource.getCreatedTime()
-                        .getTime())), ContentMode.HTML).withDescription(UserUIContext.formatDateTime(resource.getCreatedTime().getTime()));
-        lastUpdateInfo.addStyleName(UIConstants.META_INFO);
-        container.addComponent(lastUpdateInfo);
+//        Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(PageI18nEnum.LABEL_LAST_UPDATE,
+//                ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), resource.getCreatedUser(), true),
+//                UserUIContext.formatPrettyTime(resource.getCreatedTime()
+//                        .getTime())), ContentMode.HTML).withDescription(UserUIContext.formatDateTime(resource.getCreatedTime().getTime()));
+//        lastUpdateInfo.addStyleName(UIConstants.META_INFO);
+//        container.addComponent(lastUpdateInfo);
 
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> UI.getCurrent().addWindow(new GroupPageAddWindow(resource)))
@@ -239,13 +239,13 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
 
         container.with(pageLink, new SafeHtmlLabel(resource.getContent(), 400));
 
-        Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(
-                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.generateProjectMemberHtmlLink(
-                        CurrentProjectVariables.getProjectId(), resource.getLastUpdatedUser(), true),
-                UserUIContext.formatPrettyTime(resource.getLastUpdatedTime().getTime())), ContentMode.HTML)
-                .withDescription(UserUIContext.formatDateTime(resource.getLastUpdatedTime().getTime()));
-        lastUpdateInfo.addStyleName(UIConstants.META_INFO);
-        container.addComponent(lastUpdateInfo);
+//        Label lastUpdateInfo = new ELabel(UserUIContext.getMessage(
+//                PageI18nEnum.LABEL_LAST_UPDATE, ProjectLinkBuilder.generateProjectMemberHtmlLink(
+//                        CurrentProjectVariables.getProjectId(), resource.getLastUpdatedUser(), true),
+//                UserUIContext.formatPrettyTime(resource.getLastUpdatedTime())), ContentMode.HTML)
+//                .withDescription(UserUIContext.formatDateTime(resource.getLastUpdatedTime()));
+//        lastUpdateInfo.addStyleName(UIConstants.META_INFO);
+//        container.addComponent(lastUpdateInfo);
 
         MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 clickEvent -> EventBusFactory.getInstance().post(new PageEvent.GotoEdit(PageListViewImpl.this, resource)))

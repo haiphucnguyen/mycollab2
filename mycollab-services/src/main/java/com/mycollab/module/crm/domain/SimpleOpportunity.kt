@@ -18,9 +18,7 @@ package com.mycollab.module.crm.domain
 
 import com.mycollab.core.utils.StringUtils
 import com.mycollab.module.crm.i18n.OptionI18nEnum.OpportunitySalesStage
-
-import java.util.Date
-import java.util.GregorianCalendar
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd.
@@ -51,6 +49,6 @@ class SimpleOpportunity : Opportunity() {
             val saleState = salesstage
             val closeDate = expectedcloseddate
             return (OpportunitySalesStage.Closed_Won.name != saleState && OpportunitySalesStage.Closed_Lost.name != saleState
-                    && closeDate != null && closeDate.before(GregorianCalendar().time))
+                    && closeDate != null && closeDate.isBefore(LocalDateTime.now()))
         }
 }

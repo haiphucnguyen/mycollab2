@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author MyCollab Ltd.
@@ -51,14 +51,14 @@ public class DateInfoComp extends MVerticalLayout {
         MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true))
                 .withFullWidth();
         try {
-            Date createdDate = (Date) PropertyUtils.getProperty(bean, "createdtime");
+            LocalDateTime createdDate = (LocalDateTime) PropertyUtils.getProperty(bean, "createdtime");
             ELabel createdDateLbl = new ELabel(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_DATE,
                     UserUIContext.formatPrettyTime(createdDate))).withDescription(
                     UserUIContext.formatDateTime(createdDate));
 
             layout.addComponent(createdDateLbl);
 
-            Date updatedDate = (Date) PropertyUtils.getProperty(bean, "lastupdatedtime");
+            LocalDateTime updatedDate = (LocalDateTime) PropertyUtils.getProperty(bean, "lastupdatedtime");
             ELabel updatedDateLbl = new ELabel(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_UPDATED_DATE,
                     UserUIContext.formatPrettyTime(updatedDate))).withDescription(UserUIContext.formatDateTime(updatedDate));
             layout.addComponent(updatedDateLbl);

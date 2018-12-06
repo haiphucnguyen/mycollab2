@@ -33,6 +33,7 @@ import com.mycollab.module.crm.i18n.*
 import com.mycollab.module.file.StorageUtils
 import com.mycollab.module.user.AccountLinkGenerator
 import org.slf4j.LoggerFactory
+import java.time.ZoneId
 import java.util.*
 
 /**
@@ -127,7 +128,7 @@ object CrmTooltipGenerator {
 
     @JvmStatic
     fun generateToolTipContact(locale: Locale, dateFormat: String, contact: SimpleContact?, siteURL: String,
-                               userTimeZone: TimeZone): String? {
+                               userTimeZone: ZoneId): String? {
         if (contact == null) {
             return generateTooltipNull(locale)
         }
@@ -159,7 +160,7 @@ object CrmTooltipGenerator {
 
             val cell33 = buildCellName(LocalizationHelper.getMessage(locale,
                     ContactI18nEnum.FORM_BIRTHDAY))
-            val birthday = DateTimeUtils.convertToStringWithUserTimeZone(contact.birthday, dateFormat, locale, userTimeZone)
+            val birthday = DateTimeUtils.convertToStringWithUserTimeZone(contact.birthday.atStartOfDay(), dateFormat, locale, userTimeZone)
             val cell34 = buildCellValue(birthday)
 
             trRow3.appendChild(cell31, cell32, cell33, cell34)
@@ -199,7 +200,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateTooltipCampaign(locale: Locale, dateFormat: String, campaign: SimpleCampaign?, siteURl: String, userTimeZone: TimeZone): String? {
+    fun generateTooltipCampaign(locale: Locale, dateFormat: String, campaign: SimpleCampaign?, siteURl: String, userTimeZone: ZoneId): String? {
         if (campaign == null)
             return generateTooltipNull(locale)
 
@@ -269,7 +270,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateTooltipLead(locale: Locale, lead: SimpleLead?, siteURl: String, userTimeZone: TimeZone): String? {
+    fun generateTooltipLead(locale: Locale, lead: SimpleLead?, siteURl: String, userTimeZone: ZoneId): String? {
         if (lead == null)
             return generateTooltipNull(locale)
 
@@ -364,7 +365,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateTooltipOpportunity(locale: Locale, dateFormat: String, opportunity: SimpleOpportunity?, siteURl: String, userTimeZone: TimeZone): String? {
+    fun generateTooltipOpportunity(locale: Locale, dateFormat: String, opportunity: SimpleOpportunity?, siteURl: String, userTimeZone: ZoneId): String? {
         if (opportunity == null)
             return generateTooltipNull(locale)
 
@@ -435,7 +436,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateTooltipCases(locale: Locale, cases: SimpleCase?, siteURL: String, userTimeZone: TimeZone): String? {
+    fun generateTooltipCases(locale: Locale, cases: SimpleCase?, siteURL: String, userTimeZone: ZoneId): String? {
         if (cases == null)
             return generateTooltipNull(locale)
 
@@ -502,7 +503,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateToolTipMeeting(locale: Locale, dateTimeFormat: String, meeting: SimpleMeeting?, siteUrl: String, userTimeZone: TimeZone): String? {
+    fun generateToolTipMeeting(locale: Locale, dateTimeFormat: String, meeting: SimpleMeeting?, siteUrl: String, userTimeZone: ZoneId): String? {
         if (meeting == null)
             return generateTooltipNull(locale)
         try {
@@ -543,7 +544,7 @@ object CrmTooltipGenerator {
     }
 
     @JvmStatic
-    fun generateToolTipCall(locale: Locale, dateFormat: String, call: SimpleCall?, siteURL: String, userTimeZone: TimeZone): String? {
+    fun generateToolTipCall(locale: Locale, dateFormat: String, call: SimpleCall?, siteURL: String, userTimeZone: ZoneId): String? {
         if (call == null)
             return generateTooltipNull(locale)
         try {
@@ -591,7 +592,7 @@ object CrmTooltipGenerator {
 
     @JvmStatic
     fun generateToolTipCrmTask(locale: Locale, dateFormat: String, task: SimpleCrmTask?, siteURL: String,
-                               userTimeZone: TimeZone): String? {
+                               userTimeZone: ZoneId): String? {
         if (task == null)
             return generateTooltipNull(locale)
 

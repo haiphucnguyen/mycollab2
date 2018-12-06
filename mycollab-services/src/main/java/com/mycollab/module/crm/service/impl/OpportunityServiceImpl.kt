@@ -37,6 +37,7 @@ import com.mycollab.module.crm.service.OpportunityService
 import com.mycollab.spring.AppContextUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -66,7 +67,7 @@ class OpportunityServiceImpl(private val opportunityMapper: OpportunityMapper,
             val associateOpportunity = ContactOpportunity()
             associateOpportunity.opportunityid = record.id
             associateOpportunity.contactid = (record.extraData as SimpleContact).id
-            associateOpportunity.createdtime = GregorianCalendar().time
+            associateOpportunity.createdtime = LocalDateTime.now()
             val contactService = AppContextUtil.getSpringBean(ContactService::class.java)
             contactService.saveContactOpportunityRelationship(listOf(associateOpportunity),
                     record.saccountid)

@@ -55,7 +55,10 @@ import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -131,7 +134,8 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
             final CheckBox overdueSelection = new CheckBox(UserUIContext.getMessage(StatusI18nEnum.Overdue), false);
             overdueSelection.addValueChangeListener(valueChangeEvent -> {
                 if (overdueSelection.getValue()) {
-                    searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
+                    searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS().toLocalDate(),
+                            DateSearchField.LESS_THAN));
                 } else {
                     searchCriteria.setDueDate(null);
                 }

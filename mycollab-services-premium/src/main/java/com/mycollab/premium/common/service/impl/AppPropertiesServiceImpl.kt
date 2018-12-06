@@ -3,7 +3,6 @@ package com.mycollab.premium.common.service.impl
 import com.mycollab.common.service.AppPropertiesService
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.core.utils.FileUtils
-import org.joda.time.LocalDateTime
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Service
@@ -11,6 +10,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -23,8 +23,9 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
 
     private lateinit var properties: Properties
 
+    // TODO: would get the miliseconds of now
     override val sysId: String
-        get() = properties.getProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+        get() = properties.getProperty("id", UUID.randomUUID().toString() + LocalDateTime.now())
 
     override val startDate: Date
         get() {
@@ -55,7 +56,8 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")
             } else {
-                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+                // TODO: would get the miliseconds of now
+//                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
                 properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")

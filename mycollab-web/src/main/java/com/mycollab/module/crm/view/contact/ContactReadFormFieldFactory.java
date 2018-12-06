@@ -73,7 +73,8 @@ public class ContactReadFormFieldFactory extends AbstractBeanFieldGroupViewField
                 return new DefaultViewField(UserUIContext.getMessage(GenericI18Enum.ACTION_YES));
             }
         } else if (propertyId.equals("birthday")) {
-            return new DateViewField(contact.getBirthday());
+//            return new DateViewField(contact.getBirthday());
+            throw new MyCollabException("Implement this feature");
         } else if (propertyId.equals("firstname")) {
             final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
             String displayName = "";

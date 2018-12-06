@@ -41,6 +41,7 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.ui.ComponentContainer;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -145,9 +146,9 @@ public class CampaignReadViewImpl extends AbstractPreviewItemComp<SimpleCampaign
 
         tabSheet.selectTab(CrmTypeConstants.DETAIL);
 
-        Date now = new GregorianCalendar().getTime();
+        LocalDateTime now = LocalDateTime.now();
         String status = beanItem.getStatus();
-        if (!"Completed".equals(status) && (beanItem.getEnddate() != null && beanItem.getEnddate().before(now))) {
+        if (!"Completed".equals(status) && (beanItem.getEnddate() != null && beanItem.getEnddate().isBefore(now))) {
             previewLayout.addTitleStyleName(WebThemes.LABEL_OVERDUE);
         }
     }

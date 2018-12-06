@@ -52,6 +52,8 @@ import com.vaadin.ui.Label;
 import org.apache.commons.lang3.time.DateUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -101,7 +103,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
         List<ProjectActivityStream> currentListData = projectActivityStreamService.getProjectActivityStreams((BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
         this.listContainer.removeAllComponents();
-        Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
+        LocalDate currentDate = LocalDate.of(2100, 1, 1);
 
         CssLayout currentFeedBlock = new CssLayout();
         AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
@@ -116,9 +118,9 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
                     }
                 }
 
-                Date itemCreatedDate = activityStream.getCreatedtime();
+                LocalDate itemCreatedDate = activityStream.getCreatedtime().toLocalDate();
 
-                if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
+                if (!currentDate.isEqual(itemCreatedDate)) {
                     currentFeedBlock = new CssLayout();
                     currentFeedBlock.setStyleName("feed-block");
                     feedBlocksPut(currentDate, itemCreatedDate, currentFeedBlock);
@@ -207,20 +209,15 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         return div.write();
     }
 
-    protected void feedBlocksPut(Date currentDate, Date nextDate, ComponentContainer currentBlock) {
+    protected void feedBlocksPut(LocalDate currentDate, LocalDate nextDate, ComponentContainer currentBlock) {
         MHorizontalLayout blockWrapper = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName
                 ("feed-block-wrap");
 
         blockWrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(currentDate);
 
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(nextDate);
-
-        if (cal1.get(Calendar.YEAR) != cal2.get(Calendar.YEAR)) {
-            int currentYear = cal2.get(Calendar.YEAR);
-            Label yearLbl = new Label("<div>" + String.valueOf(currentYear) + "</div>", ContentMode.HTML);
+        if (currentDate.getYear() != nextDate.getYear()) {
+            int currentYear = nextDate.getYear();
+            Label yearLbl = new Label("<div>" + currentYear + "</div>", ContentMode.HTML);
             yearLbl.setStyleName("year-lbl");
             yearLbl.setWidthUndefined();
             listContainer.addComponent(yearLbl);

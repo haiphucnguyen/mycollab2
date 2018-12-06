@@ -101,7 +101,7 @@ abstract class AbstractResourceMovingWindow extends MWindow {
                     externalMapFolder.setName(externalDrive.getFoldername());
 
                     Calendar cal = GregorianCalendar.getInstance();
-                    cal.setTime(externalDrive.getCreatedtime());
+//                    cal.setTime(externalDrive.getCreatedtime());
 
                     externalMapFolder.setCreated(cal);
                     expandFolder.addChild(externalMapFolder);

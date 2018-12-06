@@ -34,7 +34,7 @@ import com.mycollab.module.crm.service.ContactService
 import com.mycollab.spring.AppContextUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd.
@@ -72,7 +72,7 @@ class ContactServiceImpl(private val contactMapper: ContactMapper,
                     .andContactidEqualTo(assoOpportunity.contactid)
                     .andOpportunityidEqualTo(assoOpportunity.opportunityid)
             if (contactOpportunityMapper.countByExample(ex) == 0L) {
-                assoOpportunity.createdtime = GregorianCalendar().time
+                assoOpportunity.createdtime = LocalDateTime.now()
                 contactOpportunityMapper.insert(assoOpportunity)
             } else {
                 contactOpportunityMapper.updateByExampleSelective(assoOpportunity, ex)
@@ -87,7 +87,7 @@ class ContactServiceImpl(private val contactMapper: ContactMapper,
                     .andContactidEqualTo(associateCase.contactid)
                     .andCaseidEqualTo(associateCase.caseid)
             if (contactCaseMapper.countByExample(ex) == 0L) {
-                associateCase.createdtime = GregorianCalendar().time
+                associateCase.createdtime = LocalDateTime.now()
                 contactCaseMapper.insert(associateCase)
             }
         }
@@ -120,7 +120,7 @@ class ContactServiceImpl(private val contactMapper: ContactMapper,
             val associateContact = CampaignContact()
             associateContact.campaignid = (record.extraData as SimpleCampaign).id
             associateContact.contactid = record.id
-            associateContact.createdtime = GregorianCalendar().time
+            associateContact.createdtime = LocalDateTime.now()
 
             val campaignService = AppContextUtil.getSpringBean(CampaignService::class.java)
             campaignService.saveCampaignContactRelationship(listOf(associateContact), record.saccountid)
@@ -128,14 +128,14 @@ class ContactServiceImpl(private val contactMapper: ContactMapper,
             val associateContact = ContactOpportunity()
             associateContact.contactid = record.id
             associateContact.opportunityid = (record.extraData as SimpleOpportunity).id
-            associateContact.createdtime = GregorianCalendar().time
+            associateContact.createdtime = LocalDateTime.now()
 
             this.saveContactOpportunityRelationship(listOf(associateContact), record.saccountid)
         } else if (record.extraData != null && record.extraData is SimpleCase) {
             val associateCase = ContactCase()
             associateCase.contactid = record.id
             associateCase.caseid = (record.extraData as SimpleCase).id
-            associateCase.createdtime = GregorianCalendar().time
+            associateCase.createdtime = LocalDateTime.now()
 
             this.saveContactCaseRelationship(listOf(associateCase), record.saccountid)
         }

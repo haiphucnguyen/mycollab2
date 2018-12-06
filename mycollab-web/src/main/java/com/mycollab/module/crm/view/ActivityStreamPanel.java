@@ -25,6 +25,7 @@ import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.common.service.ActivityStreamService;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
@@ -52,13 +53,9 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -157,15 +154,15 @@ public class ActivityStreamPanel extends CssLayout {
             List<SimpleActivityStream> currentListData = (List<SimpleActivityStream>) activityStreamService.findPageableListByCriteria(
                     (BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
             listContainer.removeAllComponents();
-            Date currentDate = new GregorianCalendar(2100, 1, 1).getTime();
+            LocalDateTime currentDate = LocalDateTime.of(2100, 1, 1, 0, 0, 0);
 
             CssLayout currentFeedBlock = new CssLayout();
             AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
             try {
                 for (SimpleActivityStream activityStream : currentListData) {
-                    Date itemCreatedDate = activityStream.getCreatedtime();
+                    LocalDateTime itemCreatedDate = activityStream.getCreatedtime();
 
-                    if (!DateUtils.isSameDay(currentDate, itemCreatedDate)) {
+                    if (!(currentDate.getYear() == itemCreatedDate.getYear())) {
                         currentFeedBlock = new CssLayout();
                         currentFeedBlock.setStyleName("feed-block");
                         feedBlocksPut(currentDate, itemCreatedDate, currentFeedBlock);
@@ -275,25 +272,20 @@ public class ActivityStreamPanel extends CssLayout {
             return div.write();
         }
 
-        private void feedBlocksPut(Date currentDate, Date nextDate, CssLayout currentBlock) {
+        private void feedBlocksPut(LocalDateTime currentDate, LocalDateTime nextDate, CssLayout currentBlock) {
             MHorizontalLayout blockWrapper = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("feed-block-wrap");
 
             blockWrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            Calendar cal1 = Calendar.getInstance();
-            cal1.setTime(currentDate);
 
-            Calendar cal2 = Calendar.getInstance();
-            cal2.setTime(nextDate);
-
-            if (cal1.get(Calendar.YEAR) != cal2.get(Calendar.YEAR)) {
-                int currentYear = cal2.get(Calendar.YEAR);
-                Label yearLbl = ELabel.html("<div>" + String.valueOf(currentYear) + "</div>").withStyleName
+            if (currentDate.getYear() != nextDate.getYear()) {
+                int currentYear = nextDate.getYear();
+                Label yearLbl = ELabel.html("<div>" + currentYear + "</div>").withStyleName
                         ("year-lbl").withUndefinedWidth();
                 listContainer.addComponent(yearLbl);
             } else {
                 blockWrapper.setMargin(new MarginInfo(true, false, false, false));
             }
-            Label dateLbl = new Label(DateFormatUtils.format(nextDate, "dd/MM"));
+            Label dateLbl = new Label(DateTimeUtils.formatDate(nextDate, "dd/MM", AppUI.getDefaultLocale()));
             dateLbl.setSizeUndefined();
             dateLbl.setStyleName("date-lbl");
             blockWrapper.with(dateLbl, currentBlock).expand(currentBlock);

@@ -30,8 +30,8 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
-import org.joda.time.LocalDate;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -68,8 +68,8 @@ public class BugCustomizeReportOutputWindow extends CustomizeReportOutputWindow<
     protected Object[] buildSampleData() {
         return new Object[]{"Bug A", "Virtual Environment", OptionI18nEnum.Priority.High.name(),
                 BugSeverity.Major.name(), StatusI18nEnum.Open.name(), BugResolution.None.name(),
-                "John Adam", UserUIContext.formatDate(new LocalDate().minusDays(2).toDate()), UserUIContext.formatDate(new
-                LocalDate().plusDays(1).toDate()), UserUIContext.formatDate(new LocalDate().plusDays(2).toDate()),
+                "John Adam", UserUIContext.formatDate(LocalDateTime.now().minusDays(2)), UserUIContext.formatDate(
+                LocalDateTime.now().plusDays(1)), UserUIContext.formatDate(LocalDateTime.now().plusDays(2)),
                 "Will Smith", "Project Execution", "10", "2"};
     }
 }

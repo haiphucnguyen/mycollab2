@@ -48,6 +48,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -181,7 +182,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                     ContactOpportunity associateContact = new ContactOpportunity();
                     associateContact.setContactid(contact.getId());
                     associateContact.setOpportunityid(opportunity.getId());
-                    associateContact.setCreatedtime(new GregorianCalendar().getTime());
+                    associateContact.setCreatedtime(LocalDateTime.now());
                     associateContacts.add(associateContact);
                 }
 
@@ -208,7 +209,7 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                             OpportunityLead associateLead = new OpportunityLead();
                             associateLead.setLeadid(lead.getId());
                             associateLead.setOpportunityid(opportunity.getId());
-                            associateLead.setCreatedtime(new GregorianCalendar().getTime());
+                            associateLead.setCreatedtime(LocalDateTime.now());
                             associateLeads.add(associateLead);
                         }
 

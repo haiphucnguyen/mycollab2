@@ -83,7 +83,7 @@ class TraceableCreateAspect(private var activityStreamService: ActivityStreamSer
             activity.module = ClassInfoMap.getModule(cls)
             activity.type = ClassInfoMap.getType(cls)
             activity.typeid = PropertyUtils.getProperty(bean, traceableAnnotation.idField).toString()
-            activity.createdtime = GregorianCalendar().time
+            activity.createdtime = LocalDateTime.now()
             activity.action = action
             activity.saccountid = PropertyUtils.getProperty(bean, "saccountid") as Int
             activity.createduser = username

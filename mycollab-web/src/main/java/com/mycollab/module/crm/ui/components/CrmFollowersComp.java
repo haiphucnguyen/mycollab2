@@ -51,8 +51,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static com.mycollab.vaadin.AsyncInvoker.PageCommand;
@@ -204,7 +204,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
             List<MonitorItem> items = new ArrayList<>(unsavedUsers.size());
             for (SimpleUser member : unsavedUsers) {
                 MonitorItem item = new MonitorItem();
-                item.setMonitorDate(new GregorianCalendar().getTime());
+                item.setMonitorDate(LocalDateTime.now());
                 item.setSaccountid(AppUI.getAccountId());
                 item.setType(type);
                 item.setTypeid(typeId);

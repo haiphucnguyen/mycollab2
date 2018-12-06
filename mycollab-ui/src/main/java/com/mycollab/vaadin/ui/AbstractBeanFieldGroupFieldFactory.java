@@ -97,7 +97,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 }
 
                 if (formField instanceof DateField && !(formField instanceof PopupDateFieldExt)) {
-                    ((DateField) formField).setZoneId(UserUIContext.getUserTimeZone().toZoneId());
+                    ((DateField) formField).setZoneId(UserUIContext.getUserTimeZone());
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
                 attachForm.attachField(bindField, formField);
@@ -134,7 +134,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 }
 
                 if (formField instanceof DateField) {
-                    ((DateField) formField).setZoneId(UserUIContext.getUserTimeZone().toZoneId());
+                    ((DateField) formField).setZoneId(UserUIContext.getUserTimeZone());
                     ((DateField) formField).setDateFormat(AppUI.getDateFormat());
                 }
 

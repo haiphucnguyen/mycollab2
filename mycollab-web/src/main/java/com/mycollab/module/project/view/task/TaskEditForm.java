@@ -48,8 +48,8 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -108,7 +108,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                         List<MonitorItem> monitorItems = new ArrayList<>();
                         for (String follower : followers) {
                             MonitorItem monitorItem = new MonitorItem();
-                            monitorItem.setMonitorDate(new GregorianCalendar().getTime());
+                            monitorItem.setMonitorDate(LocalDateTime.now());
                             monitorItem.setSaccountid(AppUI.getAccountId());
                             monitorItem.setType(ProjectTypeConstants.TASK);
                             monitorItem.setTypeid(taskId);

@@ -20,7 +20,6 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.ResourceNotFoundException;
 import com.mycollab.core.SecureAccessException;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.crm.CrmLinkGenerator;
 import com.mycollab.module.crm.CrmTypeConstants;
 import com.mycollab.module.crm.domain.*;
@@ -31,22 +30,23 @@ import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.crm.service.ContactService;
 import com.mycollab.module.crm.view.CrmGenericPresenter;
 import com.mycollab.module.crm.view.CrmModule;
-import com.mycollab.vaadin.reporting.FormReportLayout;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
+import com.mycollab.vaadin.reporting.FormReportLayout;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.AbstractRelatedListHandler;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
@@ -187,7 +187,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                         AccountLead assoLead = new AccountLead();
                         assoLead.setAccountid(account.getId());
                         assoLead.setLeadid(contact.getId());
-                        assoLead.setCreatetime(new GregorianCalendar().getTime());
+                        assoLead.setCreatetime(LocalDateTime.now());
                         associateLeads.add(assoLead);
                     }
 

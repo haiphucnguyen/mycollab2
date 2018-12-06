@@ -10,6 +10,7 @@ import com.mycollab.db.persistence.service.DefaultCrudService
 import com.mycollab.module.project.service.ProjectGenericItemService
 import com.mycollab.pro.common.dao.FavoriteItemMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -31,7 +32,7 @@ class FavoriteItemServiceImpl(private val favoriteItemMapper: FavoriteItemMapper
         if (count > 0) {
             favoriteItemMapper.deleteByExample(ex)
         } else {
-            val now = GregorianCalendar().time
+            val now = LocalDateTime.now()
             item.lastupdatedtime = now
             item.createdtime = now
             favoriteItemMapper.insert(item)

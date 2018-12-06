@@ -26,10 +26,9 @@ import com.mycollab.pro.module.project.dao.StandupReportMapper
 import com.mycollab.pro.module.project.dao.StandupReportMapperExt
 import org.apache.commons.collections.CollectionUtils
 import org.apache.ibatis.session.RowBounds
-import org.joda.time.LocalDate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.time.LocalDate
 
 /**
  * @author MyCollab Ltd.
@@ -51,11 +50,11 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
     override fun findById(standupId: Int, sAccountId: Int): SimpleStandupReport? =
             standupReportMapperExt.findReportById(standupId)
 
-    override fun findStandupReportByDateUser(projectId: Int, username: String, onDate: Date, sAccountId: Int): SimpleStandupReport? {
+    override fun findStandupReportByDateUser(projectId: Int, username: String, onDate: LocalDate, sAccountId: Int): SimpleStandupReport? {
         val criteria = StandupReportSearchCriteria()
         criteria.projectIds = SetSearchField(projectId)
         criteria.logBy = StringSearchField.and(username)
-        criteria.onDate = DateSearchField(onDate)
+        criteria.onDate = DateSearchField(onDate, DateSearchField.EQUAL)
         val reports = standupReportMapperExt.findPageableListByCriteria(criteria, RowBounds(0, Integer.MAX_VALUE))
 
         return if (CollectionUtils.isNotEmpty(reports)) {
@@ -80,13 +79,13 @@ class StandupReportServiceImpl(private val standupReportMapper: StandupReportMap
         asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectActivityStreamService::class.java)))
     }
 
-    override fun findUsersNotDoReportYet(projectId: Int, onDate: Date, @CacheKey sAccountId: Int): List<SimpleUser> =
-            standupReportMapperExt.findUsersNotDoReportYet(projectId, LocalDate(onDate).toDate())
+    override fun findUsersNotDoReportYet(projectId: Int, onDate: LocalDate, @CacheKey sAccountId: Int): List<SimpleUser> =
+            standupReportMapperExt.findUsersNotDoReportYet(projectId, onDate)
 
-    override fun getProjectReportsStatistic(projectIds: List<Int>, onDate: Date, searchRequest: SearchRequest): List<StandupReportStatistic> =
-            standupReportMapperExt.getProjectReportsStatistic(projectIds, LocalDate(onDate).toDate(),
+    override fun getProjectReportsStatistic(projectIds: List<Int>, onDate: LocalDate, searchRequest: SearchRequest): List<StandupReportStatistic> =
+            standupReportMapperExt.getProjectReportsStatistic(projectIds, onDate,
                     RowBounds((searchRequest.currentPage - 1) * searchRequest.numberOfItems,
-                    searchRequest.numberOfItems))
+                            searchRequest.numberOfItems))
 
     companion object {
         init {

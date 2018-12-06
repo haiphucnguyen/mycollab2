@@ -97,8 +97,8 @@ class FileDownloadWindow extends MWindow {
         final Label size = new Label(FileUtils.getVolumeDisplay(content.getSize()));
         infoLayout.addComponent(size, UserUIContext.getMessage(FileI18nEnum.OPT_SIZE), 0, 2);
 
-        ELabel dateCreate = new ELabel().prettyDateTime(content.getCreated().getTime());
-        infoLayout.addComponent(dateCreate, UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME), 0, 3);
+//        ELabel dateCreate = new ELabel().prettyDateTime(content.getCreated().getTime());
+//        infoLayout.addComponent(dateCreate, UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME), 0, 3);
 
         layout.addComponent(infoLayout.getLayout());
 

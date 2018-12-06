@@ -35,6 +35,7 @@ import com.mycollab.module.crm.service.CampaignService
 import com.mycollab.spring.AppContextUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -64,8 +65,7 @@ class AccountServiceImpl(private val accountMapper: AccountMapper,
             val assoAccount = CampaignAccount()
             assoAccount.accountid = record.id
             assoAccount.campaignid = (record.extraData as SimpleCampaign).id
-            assoAccount.createdtime = GregorianCalendar().time
-
+            assoAccount.createdtime = LocalDateTime.now()
             val campaignService = AppContextUtil.getSpringBean(CampaignService::class.java)
             campaignService.saveCampaignAccountRelationship(listOf(assoAccount), record.saccountid)
         }
@@ -78,7 +78,7 @@ class AccountServiceImpl(private val accountMapper: AccountMapper,
             ex.createCriteria().andAccountidEqualTo(associateLead.accountid)
                     .andLeadidEqualTo(associateLead.leadid)
             if (accountLeadMapper.countByExample(ex) == 0L) {
-                associateLead.createtime = GregorianCalendar().time
+                associateLead.createtime = LocalDateTime.now()
                 accountLeadMapper.insert(associateLead)
             }
         }

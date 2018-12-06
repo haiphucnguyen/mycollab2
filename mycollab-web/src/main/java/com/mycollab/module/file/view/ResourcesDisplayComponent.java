@@ -366,11 +366,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // If renameResource is dropbox renameResource then we can not
             // define the created date so we do not need to display\
             if (resource.getCreated() != null) {
-                ELabel createdTimeLbl = ELabel.html(VaadinIcons.CLOCK.getHtml() + " " + UserUIContext.formatPrettyTime
-                        (resource.getCreated().getTime()))
-                        .withDescription(UserUIContext.formatDateTime(resource.getCreated().getTime()))
-                        .withStyleName(UIConstants.META_INFO);
-                moreInfoAboutResLayout.addComponent(createdTimeLbl);
+//                ELabel createdTimeLbl = ELabel.html(VaadinIcons.CLOCK.getHtml() + " " + UserUIContext.formatPrettyTime
+//                        (resource.getCreated().getTime()))
+//                        .withDescription(UserUIContext.formatDateTime(resource.getCreated().getTime()))
+//                        .withStyleName(UIConstants.META_INFO);
+//                moreInfoAboutResLayout.addComponent(createdTimeLbl);
             }
 
             if (resource instanceof Content) {
