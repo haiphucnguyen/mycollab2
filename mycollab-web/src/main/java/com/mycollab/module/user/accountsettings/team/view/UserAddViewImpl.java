@@ -349,12 +349,6 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
                         permissionMap, RolePermissionCollections.PROJECT_PERMISSION_ARR));
 
-                permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE),
-                        permissionMap, RolePermissionCollections.CRM_PERMISSIONS_ARR));
-
-                permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
-                        permissionMap, RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
-
                 permissionLayout.addComponent(constructPermissionSectionView(UserUIContext.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
                         permissionMap, RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
             }

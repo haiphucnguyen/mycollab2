@@ -168,24 +168,6 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
                 }
             });
 
-            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_CRM), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
-                }
-            });
-
-            serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
-                }
-            });
-
 
             serviceMenu.addService(UserUIContext.getMessage(GenericI18Enum.MODULE_PEOPLE), new Button.ClickListener() {
                 @Override

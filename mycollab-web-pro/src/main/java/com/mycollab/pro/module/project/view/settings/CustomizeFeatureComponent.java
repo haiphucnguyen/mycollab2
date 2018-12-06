@@ -73,12 +73,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
-        final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
-                customizeView.getDisplayfile());
-        rightColLayout.addComponent(displayFileSelection);
-
         final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
@@ -105,7 +99,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
             customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
             customizeView.setDisplayticket(displayTicketSelection.getSelected());
             customizeView.setDisplaypage(displayPageSelection.getSelected());
-            customizeView.setDisplayfile(displayFileSelection.getSelected());
             customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
             customizeView.setDisplaystandup(displayStandupSelection.getSelected());
             customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());

@@ -114,18 +114,6 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
         }).withIcon(VaadinIcons.TASKS);
         modulePopupContent.addOption(projectModuleBtn);
 
-        MButton crmModuleBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.MODULE_CRM), clickEvent -> {
-            modulePopup.setPopupVisible(false);
-            EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
-        }).withIcon(VaadinIcons.MONEY);
-        modulePopupContent.addOption(crmModuleBtn);
-
-        MButton fileModuleBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), clickEvent -> {
-            modulePopup.setPopupVisible(false);
-            EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
-        }).withIcon(VaadinIcons.SUITCASE);
-        modulePopupContent.addOption(fileModuleBtn);
-
         MButton peopleBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.MODULE_PEOPLE), clickEvent -> {
             modulePopup.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));

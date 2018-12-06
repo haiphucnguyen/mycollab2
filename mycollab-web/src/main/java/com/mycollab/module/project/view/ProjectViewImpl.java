@@ -31,7 +31,6 @@ import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.file.FilePresenter;
 import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
@@ -102,7 +101,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private MilestonePresenter milestonesPresenter;
         private TicketPresenter ticketPresenter;
         private PagePresenter pagePresenter;
-        private FilePresenter filePresenter;
         private IFinancePresenter financePresenter;
         private UserSettingPresenter userPresenter;
 
@@ -124,8 +122,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectTypeConstants.TICKET.equals(caption)) {
                     ticketPresenter.go(ProjectViewImpl.this, null);
-                } else if (ProjectTypeConstants.FILE.equals(caption)) {
-                    filePresenter.go(ProjectViewImpl.this, new FileScreenData.GotoDashboard());
                 } else if (ProjectTypeConstants.PAGE.equals(caption)) {
                     pagePresenter.go(ProjectViewImpl.this,
                             new PageScreenData.Search(PathUtils.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
@@ -223,15 +219,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 myProjectTab.removeTab(ProjectTypeConstants.PAGE);
             }
 
-            if (CurrentProjectVariables.hasFileFeature()) {
-                myProjectTab.addTab(constructProjectFileComponent(), ProjectTypeConstants.FILE, 7,
-                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
-                        ProjectLinkGenerator.generateFileDashboardLink(prjId),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE));
-            } else {
-                myProjectTab.removeTab(ProjectTypeConstants.FILE);
-            }
-
             if ((CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature())
                     && !SiteConfiguration.isCommunityEdition()) {
                 myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
@@ -283,11 +270,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private Component constructTaskDashboardComponent() {
             ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
             return ticketPresenter.getView();
-        }
-
-        private Component constructProjectFileComponent() {
-            filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
-            return filePresenter.getView();
         }
     }
 

@@ -1,11 +1,11 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.form.view.builder.DynaSectionBuilder;
 import com.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
-import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
@@ -13,8 +13,8 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.DoubleField;
-import com.vaadin.ui.Component;
 import com.vaadin.data.HasValue;
+import com.vaadin.ui.Component;
 
 /**
  * @author MyCollab Ltd
@@ -98,7 +98,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
             if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
             } else if (Project.Field.accountid.equalTo(propertyId)) {
-                return new AccountSelectionField();
+                throw new MyCollabException("Need implement");
             } else if (Project.Field.targetbudget.equalTo(propertyId)
                     || Project.Field.defaultbillingrate.equalTo(propertyId)
                     || Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {

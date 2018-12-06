@@ -36,7 +36,6 @@ object ProjectAssetsManager {
             ProjectTypeConstants.BUG to VaadinIcons.BUG,
             ProjectTypeConstants.BUG_COMPONENT to VaadinIcons.CUBE,
             ProjectTypeConstants.BUG_VERSION to VaadinIcons.BUG,
-            ProjectTypeConstants.FILE to VaadinIcons.BRIEFCASE,
             ProjectTypeConstants.RISK to VaadinIcons.SHIELD,
             ProjectTypeConstants.FINANCE to VaadinIcons.MONEY,
             ProjectTypeConstants.TIME to VaadinIcons.CLOCK,
