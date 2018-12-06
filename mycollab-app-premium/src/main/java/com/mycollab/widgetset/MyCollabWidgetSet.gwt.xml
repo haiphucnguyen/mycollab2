@@ -5,9 +5,6 @@
 <module>
 
     <!-- WS Compiler: manually edited -->
-    <generate-with class="PremiumOptimizedConnectorBundleLoaderFactory">
-        <when-type-assignable class="com.vaadin.client.metadata.ConnectorBundleLoader" />
-    </generate-with>
 
     <inherits name="com.vaadin.addon.contextmenu.WidgetSet" />
 

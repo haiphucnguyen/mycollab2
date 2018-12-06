@@ -91,7 +91,7 @@
             <artifactId>mycollab-web-premium</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+<!--
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
@@ -103,12 +103,7 @@
             <artifactId>vaadin-client</artifactId>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        -->
     </dependencies>
     <build>
         <plugins>
