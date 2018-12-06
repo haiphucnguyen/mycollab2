@@ -12,13 +12,13 @@ import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearch
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.ondemand.module.support.SupportLinkGenerator
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.joda.time.DateTime
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import java.time.LocalDate
 
 /**
  * @author MyCollab Ltd
@@ -34,8 +34,8 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val searchCriteria = BillingAccountSearchCriteria()
-        val now = DateTime()
-        searchCriteria.registerTimeDuration = RangeDateSearchField(now.minusDays(7).toDate(), now.minusDays(6).toDate())
+        val now = LocalDate.now()
+        searchCriteria.registerTimeDuration = RangeDateSearchField(now.minusDays(7), now.minusDays(6))
         searchCriteria.statuses = SetSearchField(AccountStatusConstants.TRIAL)
         val accounts = billingService.findPageableListByCriteria(BasicSearchRequest(searchCriteria))
         accounts.forEach { account ->

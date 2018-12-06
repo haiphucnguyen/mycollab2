@@ -22,6 +22,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
@@ -30,12 +31,13 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd
  * @since 5.3.0
  */
+// TODO
 class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReportWithBLOBs> {
     private StandupReportService standupReportService;
     private AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
-    private Date onDate;
+    private LocalDate onDate;
 
-    StandupAddWindow(StandupReportStatistic standupReportStatistic, Date onDate) {
+    StandupAddWindow(StandupReportStatistic standupReportStatistic, LocalDate onDate) {
         this.withModal(true).withClosable(true).withResizable(false).withCenter().withWidth(UIUtils.getBrowserWidth() + "px")
                 .withHeight(UIUtils.getBrowserHeight() + "px");
 
@@ -104,7 +106,8 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
     class FormLayoutFactory extends StandupReportFormLayoutFactory {
 
         FormLayoutFactory() {
-            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
+//            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
+            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, ""));
         }
 
         private ComponentContainer createButtonControls() {

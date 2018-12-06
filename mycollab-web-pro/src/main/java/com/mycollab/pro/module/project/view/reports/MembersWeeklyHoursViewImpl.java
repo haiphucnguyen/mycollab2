@@ -1,18 +1,13 @@
 package com.mycollab.pro.module.project.view.reports;
 
-import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.domain.SimpleProject;
-import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.ProjectReportI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.module.project.ui.ProjectAssetsUtil;
-import com.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -21,24 +16,20 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import org.apache.commons.collections.CollectionUtils;
-import org.joda.time.DateTime;
-import org.vaadin.alump.distributionbar.DistributionBar;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,48 +89,49 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         with(searchResultLayout);
     }
 
-    private void buildHourlyProjectsReport(Collection<SimpleProject> selectedProjects, Date dateInWeek) {
+    private void buildHourlyProjectsReport(Collection<SimpleProject> selectedProjects, LocalDateTime dateInWeek) {
         searchResultLayout.removeAllComponents();
-        for (SimpleProject project : selectedProjects) {
-            MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
-            Component projectLogo = ProjectAssetsUtil.projectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 32);
-            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
-            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
-            contentLayout.with(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl).withFullWidth());
-            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-            DateTime now = new DateTime(dateInWeek);
-            Date start = now.dayOfWeek().withMinimumValue().toDate();
-            Date end = now.dayOfWeek().withMaximumValue().toDate();
-            List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),
-                    AppUI.getAccountId(), start, end);
-
-            for (SimpleProjectMember member : members) {
-                MHorizontalLayout memberLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true));
-                ProjectMemberLink assignUserLink = new ProjectMemberLink(member.getProjectid(), member.getUsername(),
-                        member.getMemberAvatarId(), member.getDisplayName());
-                assignUserLink.setWidth("120px");
-                memberLayout.with(assignUserLink);
-                Double billableHours = member.getTotalBillableLogTime();
-                Double nonBillableHours = member.getTotalNonBillableLogTime();
-                DistributionBar memberBarDist = new DistributionBar(3);
-                memberBarDist.setZeroSizedVisible(false);
-
-                memberBarDist.setPartTooltip(0, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
-                memberBarDist.setPartSize(0, member.getTotalBillableLogTime());
-                memberBarDist.setPartTooltip(1, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
-                memberBarDist.setPartSize(1, member.getTotalNonBillableLogTime());
-                if ((billableHours + nonBillableHours) > 40) {
-                    memberBarDist.setPartSize(2, 0);
-                    memberBarDist.setWidth((billableHours + nonBillableHours) * 10 + "px");
-                } else {
-                    memberBarDist.setPartSize(2, 40 - (billableHours + nonBillableHours));
-                    memberBarDist.setWidth("400px");
-                }
-                memberBarDist.setPartTooltip(2, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS));
-                memberLayout.with(memberBarDist);
-                contentLayout.with(memberLayout);
-            }
-            searchResultLayout.with(contentLayout);
-        }
+        throw new MyCollabException("Need re-implemented");
+//        for (SimpleProject project : selectedProjects) {
+//            MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
+//            Component projectLogo = ProjectAssetsUtil.projectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 32);
+//            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
+//            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+//            contentLayout.with(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl).withFullWidth());
+//            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+//            DateTime now = new DateTime(dateInWeek);
+//            Date start = now.dayOfWeek().withMinimumValue().toDate();
+//            Date end = now.dayOfWeek().withMaximumValue().toDate();
+//            List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),
+//                    AppUI.getAccountId(), start, end);
+//
+//            for (SimpleProjectMember member : members) {
+//                MHorizontalLayout memberLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true));
+//                ProjectMemberLink assignUserLink = new ProjectMemberLink(member.getProjectid(), member.getUsername(),
+//                        member.getMemberAvatarId(), member.getDisplayName());
+//                assignUserLink.setWidth("120px");
+//                memberLayout.with(assignUserLink);
+//                Double billableHours = member.getTotalBillableLogTime();
+//                Double nonBillableHours = member.getTotalNonBillableLogTime();
+//                DistributionBar memberBarDist = new DistributionBar(3);
+//                memberBarDist.setZeroSizedVisible(false);
+//
+//                memberBarDist.setPartTooltip(0, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
+//                memberBarDist.setPartSize(0, member.getTotalBillableLogTime());
+//                memberBarDist.setPartTooltip(1, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
+//                memberBarDist.setPartSize(1, member.getTotalNonBillableLogTime());
+//                if ((billableHours + nonBillableHours) > 40) {
+//                    memberBarDist.setPartSize(2, 0);
+//                    memberBarDist.setWidth((billableHours + nonBillableHours) * 10 + "px");
+//                } else {
+//                    memberBarDist.setPartSize(2, 40 - (billableHours + nonBillableHours));
+//                    memberBarDist.setWidth("400px");
+//                }
+//                memberBarDist.setPartTooltip(2, UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAIN_HOURS));
+//                memberLayout.with(memberBarDist);
+//                contentLayout.with(memberLayout);
+//            }
+//            searchResultLayout.with(contentLayout);
+//        }
     }
 }

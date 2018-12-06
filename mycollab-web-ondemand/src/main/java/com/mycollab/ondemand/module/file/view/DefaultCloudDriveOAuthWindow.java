@@ -133,7 +133,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends MWindow {
                 }
                 ExternalDrive externalDrive = new ExternalDrive();
                 externalDrive.setAccesstoken(cloudDriveInfo.getAccessToken());
-                externalDrive.setCreatedtime(new GregorianCalendar().getTime());
+//                externalDrive.setCreatedtime(new GregorianCalendar().getTime());
                 externalDrive.setFoldername(name);
                 externalDrive.setOwner(UserUIContext.getUsername());
                 externalDrive.setStoragename(getStorageName());

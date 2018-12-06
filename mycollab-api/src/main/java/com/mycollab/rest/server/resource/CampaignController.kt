@@ -65,7 +65,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                 val ex = CommunityLeadExample()
                 ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)
                         .andVersionEqualTo(Version.getVersion())
-                if (communityLeadMapper.countByExample(ex) == 0) {
+                if (communityLeadMapper.countByExample(ex) == 0L) {
                     communityLeadMapper.insert(communityLead)
                 }
 

@@ -24,6 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class StandupMissingComp extends MVerticalLayout {
         this.with(header, bodyWrap).withFullWidth();
     }
 
-    public void search(Integer projectId, Date date) {
+    public void search(Integer projectId, LocalDate date) {
         bodyWrap.removeAllComponents();
         StandupReportService standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         List<SimpleUser> someGuys = standupReportService.findUsersNotDoReportYet(projectId, date, AppUI.getAccountId());

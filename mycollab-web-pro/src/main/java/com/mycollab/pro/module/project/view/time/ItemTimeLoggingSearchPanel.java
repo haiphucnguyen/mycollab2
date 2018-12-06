@@ -24,6 +24,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -98,7 +100,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.setSpacing(true);
             gridLayout.setMargin(true);
 
-            Date[] boundWeekDays = DateTimeUtils.getBounceDatesOfWeek(new Date());
+            LocalDate[] boundWeekDays = DateTimeUtils.getBounceDatesOfWeek(LocalDate.now());
             startDateField = new PopupDateFieldExt();
 //            startDateField.setResolution(Resolution.DAY);
 //            startDateField.setValue(boundWeekDays[0]);

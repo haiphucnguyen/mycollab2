@@ -17,9 +17,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.quartz.JobExecutionException;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -48,9 +47,8 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));
 
-        GregorianCalendar currentTime = new GregorianCalendar();
-        currentTime.add(Calendar.DATE, -26);
-        account.setCreatedtime(currentTime.getTime());
+        LocalDateTime day = LocalDateTime.now().minusDays(26);
+        account.setCreatedtime(day);
 
         List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
         when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
@@ -74,9 +72,8 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));
 
-        GregorianCalendar currentTime = new GregorianCalendar();
-        currentTime.add(Calendar.DATE, -30);
-        account.setCreatedtime(currentTime.getTime());
+        LocalDateTime day = LocalDateTime.now().minusDays(30);
+        account.setCreatedtime(day);
 
         List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
         when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
@@ -100,9 +97,8 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         SimpleUser owner = new SimpleUser();
         account.setOwners(Collections.singletonList(owner));
 
-        GregorianCalendar currentTime = new GregorianCalendar();
-        currentTime.add(Calendar.DATE, -35);
-        account.setCreatedtime(currentTime.getTime());
+        LocalDateTime day = LocalDateTime.now().minusDays(35);
+        account.setCreatedtime(day);
 
         List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
         when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);

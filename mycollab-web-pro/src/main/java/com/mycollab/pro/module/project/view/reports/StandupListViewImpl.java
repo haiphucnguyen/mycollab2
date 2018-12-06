@@ -34,6 +34,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -53,14 +54,14 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     private StandupPerProjectView standupPerProjectView;
     private List<Integer> projectIds;
     private StandupReportStatistic selectedProject = null;
-    private Date onDate = new GregorianCalendar().getTime();
+    private LocalDate onDate = LocalDate.now();
 
     private ApplicationEventListener<StandUpEvent.DisplayStandupInProject> displayStandupHandler = new
             ApplicationEventListener<StandUpEvent.DisplayStandupInProject>() {
                 @Override
                 @Subscribe
                 public void handle(StandUpEvent.DisplayStandupInProject event) {
-                    Integer projectId = (Integer) event.getData();
+                    Integer projectId = event.getData();
                     standupPerProjectView.displayReports(projectId, onDate);
                 }
             };
@@ -86,7 +87,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     }
 
     @Override
-    public void display(List<Integer> projectIds, Date date) {
+    public void display(List<Integer> projectIds, LocalDate date) {
         this.projectIds = projectIds;
         this.onDate = date;
 //        standupCalendar.setValue(date);
@@ -128,7 +129,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     private class ProjectListComp extends AbstractBeanPagedList<StandupReportStatistic> {
         private StandupReportService standupReportService;
         private List<Integer> projectIds;
-        private Date onDate;
+        private LocalDate onDate;
 
         ProjectListComp() {
             super(new ProjectRowHandler(), 10);
@@ -152,7 +153,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             };
         }
 
-        int display(List<Integer> projectIds, Date date) {
+        int display(List<Integer> projectIds, LocalDate date) {
             this.projectIds = projectIds;
             this.onDate = date;
             doSearch();
@@ -206,7 +207,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
         private BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
         private StandupMissingComp standupMissingComp;
 
-        void displayReports(Integer projectId, Date onDate) {
+        void displayReports(Integer projectId, LocalDate onDate) {
             removeAllComponents();
             reportInDay = new BeanList<>(AppContextUtil.getSpringBean(StandupReportService.class),
                     new StandupReportRowDisplay());

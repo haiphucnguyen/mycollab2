@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view.reports;
 
 import com.mycollab.vaadin.mvp.PageView;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -11,8 +11,7 @@ import java.util.List;
  */
 public interface StandupListView extends PageView {
     /**
-     *
      * @param projectKeys
      */
-    void display(List<Integer> projectKeys, Date date);
+    void display(List<Integer> projectKeys, LocalDate date);
 }

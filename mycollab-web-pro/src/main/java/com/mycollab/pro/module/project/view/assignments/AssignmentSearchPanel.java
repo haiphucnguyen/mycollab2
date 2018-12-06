@@ -16,10 +16,11 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import org.joda.time.LocalDate;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.time.LocalDateTime;
 
 import static com.mycollab.vaadin.web.ui.WebThemes.BUTTON_ACTION;
 
@@ -54,8 +55,7 @@ public class AssignmentSearchPanel extends DefaultGenericSearchPanel<ProjectTick
     protected Component buildExtraControls() {
         if (isCreateAssignment) {
             return new MButton(UserUIContext.getMessage(TicketI18nEnum.NEW),
-                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(new
-                            LocalDate().toDate(), CurrentProjectVariables.getProjectId(), null, true))).withIcon(VaadinIcons.PLUS).withStyleName(BUTTON_ACTION);
+                    clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class).createNewTicketWindow(LocalDateTime.now(), CurrentProjectVariables.getProjectId(), null, true))).withIcon(VaadinIcons.PLUS).withStyleName(BUTTON_ACTION);
         }
         return null;
     }

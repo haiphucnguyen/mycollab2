@@ -9,11 +9,11 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
-import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import org.joda.time.LocalDate;
+import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -43,7 +43,7 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Object[] buildSampleData() {
-        return new Object[]{"Meeting", "John Adams", "2", UserUIContext.formatDate(new LocalDate().minusDays(2).toDate()
+        return new Object[]{"Meeting", "John Adams", "2", UserUIContext.formatDate(LocalDateTime.now().minusDays(2)
         ), UserUIContext.getMessage(SecurityI18nEnum.YES), UserUIContext.getMessage(SecurityI18nEnum.NO), "MyCollab"};
     }
 }

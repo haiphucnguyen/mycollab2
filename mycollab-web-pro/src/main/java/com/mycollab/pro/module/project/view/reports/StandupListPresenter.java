@@ -14,6 +14,7 @@ import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> {
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
         if (CollectionUtils.isNotEmpty(projectKeys)) {
-            Date date = (Date) data.getParams();
+            LocalDate date = (LocalDate) data.getParams();
             view.display(projectKeys, date);
             ReportBreadcrumb breadCrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
             breadCrumb.gotoStandupList(date);

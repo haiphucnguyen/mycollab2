@@ -52,8 +52,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * @author MyCollab Ltd
@@ -88,10 +87,9 @@ public class MainViewImpl extends AbstractMainView {
         }
 
         SimpleUser user = UserUIContext.getUser();
-        GregorianCalendar tenDaysAgo = new GregorianCalendar();
-        tenDaysAgo.add(Calendar.DATE, -10);
+        LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
 
-        if (!Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
+        if (!Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().toLocalDate().isBefore(tenDaysAgo)) {
             UI.getCurrent().addWindow(new AdRequestWindow(user));
         }
 

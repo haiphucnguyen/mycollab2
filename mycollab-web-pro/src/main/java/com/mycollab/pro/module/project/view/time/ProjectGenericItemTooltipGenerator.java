@@ -18,6 +18,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 
+import java.time.ZoneId;
 import java.util.TimeZone;
 
 /**
@@ -30,7 +31,7 @@ class ProjectGenericItemTooltipGenerator {
     ProjectGenericItemTooltipGenerator(String type, int typeId) {
         html = "";
         Integer sAccountId = AppUI.getAccountId();
-        TimeZone timeZone = UserUIContext.getUserTimeZone();
+        ZoneId timeZone = UserUIContext.getUserTimeZone();
         String siteURL = AppUI.getSiteUrl();
 
         if (ProjectTypeConstants.BUG.equals(type)) {

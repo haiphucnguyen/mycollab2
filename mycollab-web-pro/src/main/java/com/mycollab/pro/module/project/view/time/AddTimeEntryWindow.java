@@ -36,7 +36,9 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -46,7 +48,7 @@ import java.util.*;
 public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableComp {
     private static final long serialVersionUID = 1L;
 
-    private Date selectedDate;
+    private LocalDate selectedDate;
     private WeeklyCalendarFieldExp weekSelectionCalendar;
     private CheckBox isBillableCheckBox;
     private CheckBox isOvertimeCheckBox;
@@ -63,7 +65,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         this.withModal(true).withResizable(false).withCenter();
 
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-        selectedDate = new GregorianCalendar().getTime();
+        selectedDate = LocalDate.now();
 
         MVerticalLayout content = new MVerticalLayout();
         GridLayout grid = new GridLayout(3, 2);
@@ -173,9 +175,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     }
 
     private void updateTimeTableHeader() {
-        Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(monday);
+        LocalDate monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
 
 //        timeInputTable.setColumnHeader(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), UserUIContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
 //                DateTimeUtils.formatDate(calendar.getTime(), AppUI.getShortDateFormat(), UserUIContext.getUserLocale())));
@@ -212,49 +212,41 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             throw new UserInvalidInputException(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_MEMBER_NOT_NULL));
         }
 
-        Date monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(monday);
+        LocalDate monday = DateTimeUtils.getBounceDatesOfWeek(selectedDate)[0];
 
         List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
-        ItemTimeLogging timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user);
-        if (timeLogging != null) {
-            timeLoggings.add(buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), calendar, user));
-        }
-
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), calendar, user);
+        ItemTimeLogging timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_MONDAY), monday, user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_TUESDAY), monday.plusDays(1), user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_WEDNESDAY), monday.plusDays(2), user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_THURSDAY), monday.plusDays(3), user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_FRIDAY), monday.plusDays(4), user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
 
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), calendar, user);
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SATURDAY), monday.plusDays(5), user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
+
+        timeLogging = buildItemTimeLogging(UserUIContext.getMessage(DayI18nEnum.OPT_SUNDAY), monday.plusDays(6), user);
         if (timeLogging != null) {
             timeLoggings.add(timeLogging);
         }
@@ -277,7 +269,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
     }
 
-    private ItemTimeLogging buildItemTimeLogging(String headerId, Calendar calendar, SimpleProjectMember logForMember) {
+    private ItemTimeLogging buildItemTimeLogging(String headerId, LocalDate calendar, SimpleProjectMember logForMember) {
         return null;
 //        Item timeEntries = timeInputTable.getItem("timeEntry");
 //        Property<?> itemProperty = timeEntries.getItemProperty(headerId);

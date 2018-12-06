@@ -139,7 +139,7 @@
                     <dependency>
                         <groupId>com.mycollab</groupId>
                         <artifactId>mycollab-tool</artifactId>
-                        <version>1.0.3</version>
+                        <version>1.0.4</version>
                     </dependency>
                 </dependencies>
                 <!--

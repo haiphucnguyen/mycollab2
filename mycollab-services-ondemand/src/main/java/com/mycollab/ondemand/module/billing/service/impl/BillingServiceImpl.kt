@@ -18,17 +18,16 @@ import com.mycollab.ondemand.module.billing.ExistedSubDomainException
 import com.mycollab.ondemand.module.billing.dao.BillingAccountMapperExt2
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample
-import com.mycollab.ondemand.module.billing.domain.SimpleBillingAccount2
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.esb.DeleteAccountEvent
 import com.mycollab.ondemand.module.billing.esb.DeleteSubscriptionEvent
 import com.mycollab.ondemand.module.billing.esb.UpdateBillingPlanEvent
 import com.mycollab.ondemand.module.billing.service.BillingService
 import org.apache.ibatis.session.RowBounds
-import org.joda.time.DateTime
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -75,13 +74,13 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         }
 
         val billingPlan = billingPlanMapper.selectByPrimaryKey(billingPlanId)
-        val now = DateTime()
+        val now = LocalDateTime.now()
         // Save billing account
         val billingAccount = BillingAccount()
         billingAccount.billingplanid = billingPlan.id
-        billingAccount.createdtime = now.toDate()
-        billingAccount.trialfrom = now.toDate()
-        billingAccount.trialto = now.plusDays(30).toDate()
+        billingAccount.createdtime = now
+        billingAccount.trialfrom = now
+        billingAccount.trialto = now.plusDays(30)
         billingAccount.status = AccountStatusConstants.TRIAL
         billingAccount.subdomain = subDomain
         billingAccount.displayemailpublicly = true

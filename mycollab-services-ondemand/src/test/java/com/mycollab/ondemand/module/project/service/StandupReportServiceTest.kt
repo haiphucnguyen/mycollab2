@@ -12,7 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import java.util.*
+import java.time.LocalDate
 
 @RunWith(SpringJUnit4ClassRunner::class)
 class StandupReportServiceTest : IntegrationServiceTest() {
@@ -25,8 +25,8 @@ class StandupReportServiceTest : IntegrationServiceTest() {
         val criteria = StandupReportSearchCriteria()
         criteria.projectIds = SetSearchField(1)
         criteria.logBy = StringSearchField.and("hainguyen")
-        val d = GregorianCalendar(2013, 2, 13).time
-        criteria.onDate = DateSearchField(d)
+        val d = LocalDate.of(2013, 2, 13);
+        criteria.onDate = DateSearchField(d, DateSearchField.EQUAL)
         criteria.saccountid = NumberSearchField(1)
         val reports = reportService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleStandupReport>
         assertThat(reports.size).isEqualTo(1)
@@ -36,7 +36,7 @@ class StandupReportServiceTest : IntegrationServiceTest() {
     @Test
     @DataSet
     fun testFindUsersNotDoReportYet() {
-        val d = GregorianCalendar(2013, 2, 13).time
+        val d = LocalDate.of(2013, 2, 13)
         val users = reportService.findUsersNotDoReportYet(1, d, 1)
         assertThat(users.size).isEqualTo(1)
         assertThat(users[0].username).isEqualTo("linhduong")

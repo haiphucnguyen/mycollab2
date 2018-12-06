@@ -63,6 +63,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -457,7 +458,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public MWindow createNewTicketWindow(Date date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
+    public MWindow createNewTicketWindow(LocalDateTime date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
         return new NewTicketWindow(date, prjId, milestoneId, isIncludeMilestone);
     }
 
@@ -467,7 +468,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         private boolean isIncludeMilestone;
         private Integer selectedProjectId;
 
-        NewTicketWindow(Date date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
+        NewTicketWindow(LocalDateTime date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
             this.selectedProjectId = projectId;
             this.isIncludeMilestone = isIncludeMilestone;

@@ -17,6 +17,7 @@ import com.vaadin.ui.Button;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -36,7 +37,7 @@ public class ReportBreadcrumb extends MHorizontalLayout implements CacheableComp
         AppUI.addFragment("project/reports", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS));
     }
 
-    public void gotoStandupList(Date onDate) {
+    public void gotoStandupList(LocalDate onDate) {
         removeAllComponents();
         this.addComponent(new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));

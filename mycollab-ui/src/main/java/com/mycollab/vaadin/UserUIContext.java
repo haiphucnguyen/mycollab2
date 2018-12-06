@@ -326,6 +326,10 @@ public class UserUIContext implements Serializable {
         }
     }
 
+    public static String formatDate(LocalDate date) {
+        return "Implemented";
+    }
+
     /**
      * @param date is the UTC date value
      * @return
@@ -344,6 +348,10 @@ public class UserUIContext implements Serializable {
      */
     public static String formatDate(LocalDateTime date, String textIfDateIsNull) {
         return date == null ? textIfDateIsNull : formatDate(date);
+    }
+
+    public static String formatPrettyTime(LocalDate date) {
+        return "Implemented";
     }
 
     public static String formatPrettyTime(LocalDateTime date) {

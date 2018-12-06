@@ -21,8 +21,8 @@ import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -64,7 +64,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
         unsavedMembers.forEach(member -> {
             MonitorItem item = new MonitorItem();
             item.setExtratypeid(CurrentProjectVariables.getProjectId());
-            item.setMonitorDate(new GregorianCalendar().getTime());
+            item.setMonitorDate(LocalDateTime.now());
             item.setSaccountid(AppUI.getAccountId());
             item.setType(type);
             item.setTypeid(typeId);

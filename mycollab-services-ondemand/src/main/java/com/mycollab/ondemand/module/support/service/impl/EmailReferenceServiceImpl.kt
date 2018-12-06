@@ -19,7 +19,7 @@ class EmailReferenceServiceImpl(private val emailReferenceMapper: EmailReference
     override fun save(email: String) {
         val ex = EmailReferenceExample()
         ex.createCriteria().andEmailEqualTo(email)
-        if (emailReferenceMapper.countByExample(ex) == 0) {
+        if (emailReferenceMapper.countByExample(ex) == 0L) {
             val emailReference = EmailReference()
             emailReference.createdtime = GregorianCalendar().time
             emailReference.email = email

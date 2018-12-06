@@ -19,6 +19,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import org.jsoup.Jsoup;
 
+import java.time.ZoneId;
 import java.util.TimeZone;
 
 /**
@@ -30,7 +31,7 @@ public class GenericTaskDetailMapper {
 
     public GenericTaskDetailMapper(String type, int typeId) {
         int sAccountId = AppUI.getAccountId();
-        TimeZone timeZone = UserUIContext.getUserTimeZone();
+        ZoneId timeZone = UserUIContext.getUserTimeZone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = AppContextUtil.getSpringBean(BugService.class);

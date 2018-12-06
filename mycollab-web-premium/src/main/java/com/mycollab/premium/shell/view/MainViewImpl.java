@@ -33,8 +33,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -74,12 +72,13 @@ public class MainViewImpl extends AbstractMainView {
                 accountLayout.addComponent(buyPremiumBtn);
             }
         } else if (licenseInfo.isTrial()) {
-            Duration dur = new Duration(new DateTime(), new DateTime(licenseInfo.getExpireDate()));
-            int days = dur.toStandardDays().getDays();
-            MButton buyPremiumBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.TRIAL_NOTIFICATION, days),
-                    clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
-                    .withIcon(VaadinIcons.CART_O).withStyleName("ad");
-            accountLayout.addComponent(buyPremiumBtn);
+            // TODO
+//            Duration dur = new Duration(new DateTime(), new DateTime(licenseInfo.getExpireDate()));
+//            int days = dur.toStandardDays().getDays();
+//            MButton buyPremiumBtn = new MButton(UserUIContext.getMessage(LicenseI18nEnum.TRIAL_NOTIFICATION, days),
+//                    clickEvent -> UI.getCurrent().addWindow(new BuyPremiumSoftwareWindow()))
+//                    .withIcon(VaadinIcons.CART_O).withStyleName("ad");
+//            accountLayout.addComponent(buyPremiumBtn);
         }
 
         NotificationComponent notificationComponent = new NotificationComponent();
