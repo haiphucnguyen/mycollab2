@@ -26,8 +26,8 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
 
@@ -67,13 +67,13 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
                 properties.load(FileInputStream(sysFile))
                 val startDate = properties.getProperty("startdate")
                 if (startDate == null) {
-                    properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
+                    properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(LocalDate.now()))
                 }
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")
             } else {
                 properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli())
-                properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(GregorianCalendar().time))
+                properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(LocalDate.now()))
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")
             }

@@ -10,9 +10,9 @@ import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory
-import org.joda.time.DateTime
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -51,7 +51,7 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
             subscription.billingid = Integer.parseInt(arr[1])
             subscription.subreference = orderId
             subscription.subscriptioncustomerurl = ""
-            subscription.createdtime = DateTime().toDate()
+            subscription.createdtime = LocalDateTime.now()
             subscription.status = "Active"
             subscription.company = customerCompany
             subscription.contactname = customerName
@@ -62,9 +62,9 @@ class BankwireSubscriptionManagerController(private val subscriptionMapper: Bill
             val subscriptionHistory = BillingSubscriptionHistory()
             subscriptionHistory.subscriptionid = subscription.id
             subscriptionHistory.orderid = orderId
-            subscriptionHistory.createdtime = DateTime().toDate()
+            subscriptionHistory.createdtime = LocalDateTime.now()
             subscriptionHistory.status = "Success"
-            subscriptionHistory.expireddate = DateTime().plusYears(1).toDate()
+            subscriptionHistory.expireddate = LocalDateTime.now().plusYears(1)
             subscriptionHistory.productname = orderProductNames
             subscriptionHistory.totalprice = java.lang.Double.parseDouble(orderSubTotalUSD)
             subscriptionHistoryMapper.insert(subscriptionHistory)

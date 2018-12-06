@@ -129,7 +129,7 @@
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
+                <version>1.3.7</version>
                 <dependencies>
                     <dependency>
                         <groupId>mysql</groupId>
@@ -142,7 +142,7 @@
                         <version>1.0.4</version>
                     </dependency>
                 </dependencies>
-                <!--
+<!--
                 <executions>
                     <execution>
                         <id>Support Artifacts Generator</id>

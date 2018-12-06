@@ -79,7 +79,7 @@ public class DateTimeUtils {
         return null;
     }
 
-    public static String formatDateToW3C(Date date) {
+    public static String formatDateToW3C(LocalDate date) {
         if (date != null) {
             String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
             SimpleDateFormat formatter = new SimpleDateFormat(formatW3C);

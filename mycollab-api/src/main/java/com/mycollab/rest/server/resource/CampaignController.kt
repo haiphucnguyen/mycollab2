@@ -6,15 +6,15 @@ import com.mycollab.core.Version
 import com.mycollab.core.utils.FileUtils
 import com.mycollab.module.mail.service.ExtMailService
 import com.mycollab.module.mail.service.IContentGenerator
+import com.mycollab.ondemand.configuration.EditionInfo
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLead
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
-import com.mycollab.ondemand.configuration.EditionInfo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.joda.time.LocalDate
 import org.springframework.web.bind.annotation.*
 import java.io.IOException
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -58,7 +58,7 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
                 communityLead.role = role
                 communityLead.phone = phone
                 communityLead.country = country
-                communityLead.registerdate = LocalDate().toDate()
+                communityLead.registerdate = LocalDateTime.now()
                 communityLead.version = Version.getVersion()
                 communityLead.edition = edition
 

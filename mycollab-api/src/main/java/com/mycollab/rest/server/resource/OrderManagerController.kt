@@ -46,7 +46,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
                         @RequestParam(value = "test", required = false) test: String,
                         @RequestParam(value = "subscriptionReference", required = false) subscriptionReference: String): String {
         LOG.info("Generate license email: $email company: $company")
-        val now = LocalDate.now()
+        val now = LocalDateTime.now()
         val proEditionInfo = ProEditionInfo()
         proEditionInfo.internalproductname = internalProductName
         proEditionInfo.email = email
@@ -66,9 +66,9 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
             licenseInfo.maxUsers = 9999
         }
 
-        licenseInfo.issueDate = now
+        licenseInfo.issueDate = now.toLocalDate()
         licenseInfo.licenseOrg = MoreObjects.firstNonNull(company, "Default")
-        licenseInfo.expireDate = now.plusYears(1)
+        licenseInfo.expireDate = now.toLocalDate().plusYears(1)
         val license = encode(licenseInfo)
         val result = StringBuilder()
         result.append("Mime-Version: 1.0\n")
@@ -126,8 +126,8 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
         val info = LicenseInfo()
         info.customerId = "0"
         info.licenseType = LicenseType.PRO_TRIAL
-        info.expireDate = LocalDate().plusDays(30).toDate()
-        info.issueDate = LocalDate().toDate()
+        info.expireDate = LocalDate.now().plusDays(30)
+        info.issueDate = LocalDate.now()
         info.licenseOrg = "MyCollab"
         info.maxUsers = 30
         return encode(info)
