@@ -5,7 +5,7 @@
     <name>mycollab-deployer-premium</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-deployer-premium</artifactId>
-    <version>6.0.0</version>
+    <version>7.0.0</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>

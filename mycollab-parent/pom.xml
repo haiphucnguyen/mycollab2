@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>6.0.0</version>
+    <version>7.0.0</version>
     <packaging>pom</packaging>
     <!-- Inherit defaults from Spring Boot -->
     <parent>

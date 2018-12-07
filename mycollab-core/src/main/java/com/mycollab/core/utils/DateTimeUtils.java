@@ -71,7 +71,8 @@ public class DateTimeUtils {
     public static LocalDateTime parseDateByW3C(String strDate) {
         if (strDate != null && !strDate.equals("")) {
             try {
-                return LocalDateTime.parse(strDate);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+SS:nn");
+                return LocalDateTime.parse(strDate, formatter);
             } catch (DateTimeParseException e) {
                 LOG.error("Error while parse date", e);
             }
