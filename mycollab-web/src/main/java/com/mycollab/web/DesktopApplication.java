@@ -43,9 +43,12 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
+import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
+import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.UI;
@@ -70,6 +73,9 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(Version.THEME_VERSION)
 @Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
+@SpringUI
+@Viewport("width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+@Title("MyCollab - Online project management")
 public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
@@ -110,9 +116,7 @@ public class DesktopApplication extends AppUI {
         mainWindowContainer = new MainWindowContainer();
         this.setContent(mainWindowContainer);
 
-        getPage().setTitle("MyCollab - Online project management");
-
-        getPage().addUriFragmentChangedListener(uriFragmentChangedEvent -> enter(uriFragmentChangedEvent.getUriFragment()));
+        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getUri()));
 
         String userAgent = request.getHeader("user-agent");
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
