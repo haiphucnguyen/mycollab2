@@ -83,7 +83,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
     }
 
     @Override
-    public void addModule(IDesktopModule module) {
+    public void setContent(IDesktopModule module) {
         headerLayout.removeComponent("serviceMenu");
         ModuleHelper.setCurrentModule(module);
         bodyLayout.removeAllComponents();

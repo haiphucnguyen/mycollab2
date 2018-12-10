@@ -26,5 +26,5 @@ import com.mycollab.web.IDesktopModule
 interface MainView : PageView {
     fun display()
 
-    fun addModule(module: IDesktopModule)
+    fun setContent(module: IDesktopModule)
 }

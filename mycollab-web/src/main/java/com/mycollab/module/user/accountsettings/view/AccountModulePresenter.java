@@ -39,7 +39,7 @@ public class AccountModulePresenter extends AbstractPresenter<AccountModule> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         UserUIContext.updateLastModuleVisit(ModuleNameConstants.ACCOUNT);
         MainView mainView = (MainView) container;
-        mainView.addModule(view);
+        mainView.setContent(view);
 
         String[] params = (String[]) data.getParams();
         if (params == null || params.length == 0) {

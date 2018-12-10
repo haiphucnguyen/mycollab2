@@ -46,6 +46,8 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.spring.annotation.SpringUI;
@@ -76,6 +78,7 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
 @SpringUI
 @Viewport("width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 @Title("MyCollab - Online project management")
+@PushStateNavigation
 public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);

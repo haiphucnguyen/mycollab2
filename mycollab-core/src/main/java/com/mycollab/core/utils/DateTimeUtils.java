@@ -166,9 +166,15 @@ public class DateTimeUtils {
      * the second is the end week date
      */
     public static LocalDate[] getBounceDatesOfWeek(LocalDate date) {
-        LocalDate begin = date.with(WeekFields.ISO.dayOfWeek(), 1);
-        LocalDate end = date.with(WeekFields.ISO.dayOfWeek(), 7);
-        return new LocalDate[]{begin, end};
+        return new LocalDate[]{getFirstDayOfWeek(date), getLastDayOfWeek(date)};
+    }
+
+    public static LocalDate getFirstDayOfWeek(LocalDate date) {
+        return date.with(WeekFields.ISO.dayOfWeek(), 1);
+    }
+
+    public static LocalDate getLastDayOfWeek(LocalDate date) {
+        return date.with(WeekFields.ISO.dayOfWeek(), 7);
     }
 
     public static LocalDate min(LocalDate... values) {
