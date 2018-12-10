@@ -18,7 +18,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd

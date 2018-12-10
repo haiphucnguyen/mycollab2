@@ -39,6 +39,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.Locale;
 
@@ -313,32 +314,16 @@ public class UserUIContext implements Serializable {
         if (date == null) {
             return "";
         } else {
-            // TODO
-            return "Implemented";
-//            DateTime jodaDate = new DateTime(date).toDateTime(DateTimeZone.forTimeZone(UserUIContext.getUserTimeZone()));
-//            if (jodaDate.getHourOfDay() > 0 || jodaDate.getMinuteOfHour() > 0) {
-//                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateTimeFormat()).withLocale(UserUIContext.getUserLocale());
-//                return formatter.print(jodaDate);
-//            } else {
-//                DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getDateFormat()).withLocale(UserUIContext.getUserLocale());
-//                return formatter.print(jodaDate);
-//            }
+            return DateTimeUtils.formatDate(date, AppUI.getDateTimeFormat(), UserUIContext.getUserLocale(), UserUIContext.getUserTimeZone());
         }
     }
 
-    public static String formatDate(LocalDate date) {
-        return "Implemented";
-    }
-
-    /**
-     * @param date is the UTC date value
-     * @return
-     */
-    public static String formatDate(LocalDateTime date) {
-        // TODO
-//        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(),
-//                UserUIContext.getUserTimeZone());
-        return "Implemented";
+    public static String formatDate(TemporalAccessor date) {
+        if (date == null) {
+            return "";
+        } else {
+            return DateTimeUtils.formatDate(date, AppUI.getDateFormat(), UserUIContext.getUserLocale(), UserUIContext.getUserTimeZone());
+        }
     }
 
     /**
@@ -355,14 +340,12 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatPrettyTime(LocalDateTime date) {
-        return DateTimeUtils.getPrettyDateValue(date, getUserLocale());
+        return DateTimeUtils.getPrettyDateValue(date, getUserTimeZone(), getUserLocale());
     }
 
     public static String formatShortDate(LocalDate date) {
-        // TODO
-//        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
-//                UserUIContext.getUserTimeZone());
-        return "Implemented";
+        return date == null ? "" : DateTimeUtils.formatDate(date, AppUI.getShortDateFormat(), UserUIContext.getUserLocale(),
+                UserUIContext.getUserTimeZone());
     }
 
     public static String formatDuration(LocalDateTime date) {
