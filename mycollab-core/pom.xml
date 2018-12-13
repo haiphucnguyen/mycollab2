@@ -85,12 +85,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.ocpsoft.prettytime</groupId>
-            <artifactId>prettytime</artifactId>
-            <version>4.0.1.Final</version>
-        </dependency>
-
-        <dependency>
             <groupId>uk.com.robust-it</groupId>
             <artifactId>cloning</artifactId>
             <version>1.9.10</version>

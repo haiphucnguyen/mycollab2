@@ -17,6 +17,7 @@
 package com.mycollab.vaadin.mvp
 
 import com.mycollab.vaadin.event.ViewEvent
+import com.vaadin.navigator.View
 import com.vaadin.ui.HasComponents
 import com.vaadin.util.ReflectTools
 import java.io.Serializable
@@ -26,7 +27,7 @@ import java.util.*
  * @author MyCollab Ltd.
  * @since 1.0
  */
-interface PageView : HasComponents, CacheableComponent {
+interface PageView : HasComponents, CacheableComponent, View {
 
     fun <E> addViewListener(listener: ViewListener<E>)
 

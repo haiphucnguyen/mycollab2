@@ -19,49 +19,36 @@ package com.mycollab.web;
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.configuration.ServerConfiguration;
-import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.*;
-import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.billing.UsageExceedBillingPlanException;
-import com.mycollab.module.user.dao.UserAccountMapper;
-import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.domain.SimpleUser;
-import com.mycollab.module.user.domain.UserAccount;
-import com.mycollab.module.user.domain.UserAccountExample;
-import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.shell.event.ShellEvent;
-import com.mycollab.shell.view.*;
+import com.mycollab.shell.view.MainWindowContainer;
+import com.mycollab.shell.view.ShellUrlResolver;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.*;
-import com.mycollab.vaadin.mvp.ControllerRegistry;
-import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
+import com.vaadin.spring.navigator.SpringViewProvider;
+import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.util.BrowserCookie;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -75,10 +62,8 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(Version.THEME_VERSION)
 @Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
-@SpringUI
 @Viewport("width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
-@Title("MyCollab - Online project management")
-@PushStateNavigation
+@SpringUI
 public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
@@ -88,8 +73,11 @@ public class DesktopApplication extends AppUI {
 
     private static List<String> ipLists = new ArrayList<>();
 
-    private MainWindowContainer mainWindowContainer;
+    private CssLayout mainWindowContainer;
     private BroadcastReceiverService broadcastReceiverService;
+
+    @Autowired
+    private SpringViewProvider viewProvider;
 
     @Override
     protected void init(final VaadinRequest request) {
@@ -116,15 +104,20 @@ public class DesktopApplication extends AppUI {
 
         EventBusFactory.getInstance().register(new ShellErrorHandler());
 
+
         mainWindowContainer = new MainWindowContainer();
         this.setContent(mainWindowContainer);
 
-        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getUri()));
+//        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getUri()));
 
         String userAgent = request.getHeader("user-agent");
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
             NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
+
+        Navigator navigator = new Navigator(this, mainWindowContainer);
+        navigator.addProvider(viewProvider);
+        getUI().setNavigator(navigator);
     }
 
     @Override
@@ -218,7 +211,7 @@ public class DesktopApplication extends AppUI {
         SecureAccessException secureAccessException = getExceptionType(e, SecureAccessException.class);
         if (secureAccessException != null) {
             NotificationUtil.showWarningNotification("You can not access the specific resource");
-//            EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+            EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
             return;
         }
 
@@ -308,42 +301,42 @@ public class DesktopApplication extends AppUI {
     }
 
     public void afterDoLogin(SimpleUser user) {
-        BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
-
-        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
-        LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
-                user.getUsername(), user.getDisplayName()));
-        UserUIContext.getInstance().setSessionVariables(user, billingAccount);
-
-        UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
-        UserAccount userAccount = new UserAccount();
-        userAccount.setLastaccessedtime(LocalDateTime.now());
-        UserAccountExample ex = new UserAccountExample();
-        ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
-        userAccountMapper.updateByExampleSelective(userAccount, ex);
-        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
-        broadcastReceiverService.registerApp(this);
-        Broadcaster.register(broadcastReceiverService);
+//        BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
+//
+//        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
+//        LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
+//                user.getUsername(), user.getDisplayName()));
+//        UserUIContext.getInstance().setSessionVariables(user, billingAccount);
+//
+//        UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
+//        UserAccount userAccount = new UserAccount();
+//        userAccount.setLastaccessedtime(LocalDateTime.now());
+//        UserAccountExample ex = new UserAccountExample();
+//        ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
+//        userAccountMapper.updateByExampleSelective(userAccount, ex);
+//        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
+//        broadcastReceiverService.registerApp(this);
+//        Broadcaster.register(broadcastReceiverService);
+        getUI().getNavigator().navigateTo("login");
     }
 
     public void redirectToLoginView() {
-        clearSession();
-
-        AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
-        // clear cookie remember username/password if any
-        this.unsetRememberPassword();
-
-        ControllerRegistry.addController(new ShellController(mainWindowContainer));
-        LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
-        LoginView loginView = presenter.getView();
-
-        mainWindowContainer.setStyleName("loginView");
-
-        if (loginView.getParent() == null || loginView.getParent() == mainWindowContainer) {
-            mainWindowContainer.setContent(loginView);
-        } else {
-            presenter.go(mainWindowContainer, null);
-        }
+//        clearSession();
+//
+//        AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
+//        // clear cookie remember username/password if any
+//        this.unsetRememberPassword();
+//
+//        ControllerRegistry.addController(new ShellController(mainWindowContainer));
+//        LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
+//        LoginView loginView = presenter.getView();
+//
+//        if (loginView.getParent() == null || loginView.getParent() == mainWindowContainer) {
+//            mainWindowContainer.setContent(loginView);
+//        } else {
+//            presenter.go(mainWindowContainer, null);
+//        }
+        getUI().getNavigator().navigateTo("login");
     }
 
     private void rememberAccount(String username, String password) {

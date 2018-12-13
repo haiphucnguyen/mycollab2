@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.vaadin
+package com.mycollab.web
 
-import com.vaadin.server.DeploymentConfiguration
-import com.vaadin.server.VaadinServlet
-import java.util.*
+import com.vaadin.annotations.VaadinServletConfiguration
+import com.vaadin.spring.server.SpringVaadinServlet
 import javax.servlet.ServletException
 import javax.servlet.annotation.WebInitParam
 import javax.servlet.annotation.WebServlet
@@ -33,15 +32,10 @@ import javax.servlet.annotation.WebServlet
             (WebInitParam(name = "resourceCacheTime", value = "8640000")),
             (WebInitParam(name = "maxIdleTime", value = "10000")),
             (WebInitParam(name = "org.atmosphere.websocket.maxIdleTime", value = "86400000"))])
-class AppServlet : VaadinServlet() {
+@VaadinServletConfiguration(ui = DesktopApplication::class, productionMode = true)
+class AppServlet : SpringVaadinServlet() {
 
-    private val uiProvider = AppUIProvider()
     private val bootstrapListener = AppBootstrapListener()
-
-    override fun createDeploymentConfiguration(initParameters: Properties): DeploymentConfiguration {
-        initParameters.setProperty("productionMode", "true")
-        return super.createDeploymentConfiguration(initParameters)
-    }
 
     @Throws(ServletException::class)
     override fun servletInitialized() {
@@ -49,7 +43,6 @@ class AppServlet : VaadinServlet() {
 
         service.addSessionInitListener { sessionInitEvent ->
             sessionInitEvent.session.addBootstrapListener(bootstrapListener)
-            sessionInitEvent.session.addUIProvider(uiProvider)
         }
     }
 }

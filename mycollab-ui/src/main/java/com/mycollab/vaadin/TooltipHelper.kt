@@ -21,8 +21,7 @@ package com.mycollab.vaadin
  * @since 4.6.0
  */
 object TooltipHelper {
-    @JvmField
-    val TOOLTIP_ID = "mycollabtip"
+    const val TOOLTIP_ID = "mycollabtip"
 
     @JvmStatic
     fun userHoverJsFunction(username: String): String {

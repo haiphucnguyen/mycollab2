@@ -38,18 +38,23 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.Registration;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 @ViewComponent
+@SpringView(name = "login")
 public class LoginViewImpl extends AbstractVerticalPageView implements LoginView {
     private static final long serialVersionUID = 1L;
 
-    public LoginViewImpl() {
+    @PostConstruct
+    void init() {
         this.setStyleName("loginView");
         this.withSpacing(true);
         this.setSizeFull();

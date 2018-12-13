@@ -74,7 +74,7 @@ public class DefaultServerRunner {
     }
 
     @SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class, FlywayAutoConfiguration.class},
-            scanBasePackages = "com.mycollab.**.spring, com.mycollab.**.configuration, com.mycollab.**.servlet")
+            scanBasePackages = "com.mycollab.**.spring, com.mycollab.**.configuration, com.mycollab.**.servlet, com.mycollab.web, com.mycollab.**.view")
     static class MainApp {
     }
 }

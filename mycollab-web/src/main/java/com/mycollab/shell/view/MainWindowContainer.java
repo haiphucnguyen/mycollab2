@@ -36,6 +36,7 @@ import org.vaadin.viritin.util.BrowserCookie;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+
 public class MainWindowContainer extends CssLayout {
     private static final long serialVersionUID = 1L;
 

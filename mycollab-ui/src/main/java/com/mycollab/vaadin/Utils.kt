@@ -32,11 +32,4 @@ object Utils {
             else -> servletRequest.serverName
         }
     }
-
-    @JvmStatic fun isTablet(request: VaadinRequest): Boolean = try {
-        val userAgent = request.getHeader("user-agent").toLowerCase()
-        userAgent.contains("ipad")
-    } catch (e: Exception) {
-        false
-    }
 }
