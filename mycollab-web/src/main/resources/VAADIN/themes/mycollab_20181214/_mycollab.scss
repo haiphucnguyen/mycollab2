@@ -18,6 +18,8 @@ $v-font-size--small: $font-small;
 $v-line-height--header:1.5em;
 
 @import "../valo/valo";
+@import "../../../VAADIN/addons/app-layout/app-layout.scss";
+
 
 @import "global";
 @import "shared";
@@ -64,6 +66,8 @@ $v-line-height--header:1.5em;
   @include mycollab-project;
   @include gantt;
   @include alump-dbar;
+  @include app-layout;
+
 
   /**
    * "optional-" prefix means that the style is not necessarily used, it can be left blank

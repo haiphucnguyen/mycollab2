@@ -34,6 +34,7 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
@@ -60,6 +61,7 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  * @since 1.0
  */
 @Theme(Version.THEME_VERSION)
+@Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
 @SpringUI
 @PreserveOnRefresh
 @PushStateNavigation

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -19,44 +19,42 @@ package com.mycollab.module.project.view.milestone;
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.db.arguments.SearchCriteria;
-import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
-import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.UserDashboardView;
-import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.spring.annotation.PrototypeScope;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.4
  */
+@SpringComponent
+@PrototypeScope
 public class AllMilestoneTimelineWidget extends MVerticalLayout {
     private List<SimpleMilestone> milestones;
     private CssLayout timelineContainer;
+
+    @Autowired
+    private AllMilestoneTimelinePresenter allMilestoneTimelinePresenter;
 
     public void display() {
         this.withMargin(new MarginInfo(false, false, true, false)).withStyleName("tm-container").withFullWidth();
@@ -72,23 +70,17 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
         final CheckBox includeClosedMilestone = new CheckBox(UserUIContext.getMessage(MilestoneStatus.Closed));
         includeClosedMilestone.setValue(false);
 
-        includeNoDateSet.addValueChangeListener(valueChangeEvent -> displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue()));
-        includeClosedMilestone.addValueChangeListener(valueChangeEvent -> displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue()));
+        includeNoDateSet.addValueChangeListener(event -> displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue()));
+        includeClosedMilestone.addValueChangeListener(event -> displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue()));
         headerLayout.with(titleLbl, includeNoDateSet, includeClosedMilestone).expand(titleLbl).withAlign(includeNoDateSet, Alignment
                 .MIDDLE_RIGHT).withAlign(includeClosedMilestone, Alignment.MIDDLE_RIGHT);
-
-        MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-        UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
-        searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvolvedProjectKeys()));
-        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
-        MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
-        milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
 
         this.addComponent(headerLayout);
         timelineContainer = new CssLayout();
         timelineContainer.setWidth("100%");
         this.addComponent(timelineContainer);
         timelineContainer.addStyleName("tm-wrapper");
+        milestones = allMilestoneTimelinePresenter.getMilestones();
         displayTimelines(false, false);
     }
 
