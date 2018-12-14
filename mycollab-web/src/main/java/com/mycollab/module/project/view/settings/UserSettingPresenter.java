@@ -20,7 +20,7 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.ClassUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.*;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.*;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -41,7 +41,7 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.MEMBER);
 
         AbstractPresenter<?> presenter;

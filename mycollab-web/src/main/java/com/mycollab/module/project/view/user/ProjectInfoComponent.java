@@ -39,7 +39,7 @@ import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.shell.event.ShellEvent;
@@ -156,7 +156,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         } else {
             SearchTextField searchField = new SearchTextField() {
                 public void doSearch(String value) {
-                    ProjectView prjView = UIUtils.getRoot(this, ProjectView.class);
+                    ProjectLegacyView prjView = UIUtils.getRoot(this, ProjectLegacyView.class);
                     if (prjView != null) {
                         prjView.displaySearchResult(value);
                     }

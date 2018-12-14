@@ -43,12 +43,15 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.spring.annotation.PrototypeScope;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -56,21 +59,23 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@SpringComponent
+@PrototypeScope
 public class ActivityStreamComponent extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     private static Logger LOG = LoggerFactory.getLogger(ActivityStreamComponent.class);
 
-    private final ProjectActivityStreamPagedList2 activityStreamList;
+    private ProjectActivityStreamPagedList2 activityStreamList;
 
-    public ActivityStreamComponent() {
+    @PostConstruct
+    public void init() {
         this.activityStreamList = new ProjectActivityStreamPagedList2();
+        this.addComponent(activityStreamList);
     }
 
     public void showFeeds(List<Integer> prjKeys) {
-        this.removeAllComponents();
         if (CollectionUtils.isNotEmpty(prjKeys)) {
-            this.addComponent(activityStreamList);
             ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
             searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
             searchCriteria.setExtraTypeIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
@@ -134,7 +139,7 @@ public class ActivityStreamComponent extends CssLayout {
                         currentDate = itemCreatedDate;
                     }
 
-                    StringBuilder content = new StringBuilder("");
+                    StringBuilder content = new StringBuilder();
 
                     // --------------Item hidden div tooltip----------------
                     String type = ProjectLocalizationTypeMap.getType(activityStream.getType());

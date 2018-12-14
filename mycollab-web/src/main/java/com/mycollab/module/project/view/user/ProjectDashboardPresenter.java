@@ -43,7 +43,7 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.DASHBOARD);
 
         ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

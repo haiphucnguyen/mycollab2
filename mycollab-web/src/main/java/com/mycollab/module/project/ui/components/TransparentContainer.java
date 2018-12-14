@@ -17,7 +17,7 @@
 package com.mycollab.module.project.ui.components;
 
 import com.mycollab.core.MyCollabException;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
 import com.mycollab.vaadin.ui.UIUtils;
 
@@ -28,7 +28,7 @@ import com.mycollab.vaadin.ui.UIUtils;
 public class TransparentContainer extends AbstractSingleContainerPageView {
 
     public void navigateToContainer(String viewId) {
-        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
+        ProjectLegacyView projectView = UIUtils.getRoot(this, ProjectLegacyView.class);
         if (projectView != null) {
             projectView.gotoSubView(viewId);
         } else {

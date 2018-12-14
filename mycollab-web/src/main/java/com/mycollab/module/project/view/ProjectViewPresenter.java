@@ -35,11 +35,11 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectView> {
+public class ProjectViewPresenter extends ProjectGenericPresenter<ProjectLegacyView> {
     private static final long serialVersionUID = 1L;
 
     public ProjectViewPresenter() {
-        super(ProjectView.class);
+        super(ProjectLegacyView.class);
     }
 
     @Override

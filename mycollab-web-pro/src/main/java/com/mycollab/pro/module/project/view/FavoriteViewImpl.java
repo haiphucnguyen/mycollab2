@@ -23,7 +23,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.mycollab.module.project.view.IFavoriteView;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.bug.BugDefaultFormLayoutFactory;
 import com.mycollab.module.project.view.bug.BugPreviewForm;
 import com.mycollab.module.project.view.milestone.MilestoneDefaultFormLayoutFactory;
@@ -56,7 +56,6 @@ import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
@@ -191,7 +190,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
     }
 
     private void setProjectNavigatorVisibility(boolean visibility) {
-        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        ProjectLegacyView view = UIUtils.getRoot(this, ProjectLegacyView.class);
         if (view != null) {
             view.setNavigatorVisibility(visibility);
         }

@@ -3,7 +3,7 @@ package com.mycollab.pro.module.project.view.time;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.InvoiceScreenData;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.mycollab.module.project.view.time.IFinanceContainer;
@@ -26,7 +26,7 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
         AbstractPresenter presenter;
 

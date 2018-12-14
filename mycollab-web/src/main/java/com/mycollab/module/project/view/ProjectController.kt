@@ -54,7 +54,7 @@ import com.mycollab.vaadin.mvp.PresenterResolver
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class ProjectController(val projectView: ProjectView) : AbstractController() {
+class ProjectController(val projectView: ProjectLegacyView) : AbstractController() {
     init {
         bindProjectEvents()
         bindTicketEvents()

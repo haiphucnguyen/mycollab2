@@ -21,7 +21,7 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.MessageScreenData;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -43,7 +43,7 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
-            ProjectView projectViewContainer = (ProjectView) container;
+            ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
             projectViewContainer.gotoSubView(ProjectTypeConstants.MESSAGE);
 
             if (data instanceof MessageScreenData.Read) {

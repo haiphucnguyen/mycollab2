@@ -6,5 +6,5 @@ import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name = StandupMeetingView.VIEW_NAME)
 public class StandupMeetingView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "project/reports";
+    public static final String VIEW_NAME = "dashboard/standup";
 }

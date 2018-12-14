@@ -18,7 +18,7 @@ package com.mycollab.module.project.view.milestone;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -39,7 +39,7 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.MILESTONE);
 
         IPresenter presenter;

@@ -61,7 +61,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @since 1.0
  */
 @ViewComponent
-public class ProjectViewImpl extends AbstractVerticalPageView implements ProjectView {
+public class ProjectLegacyViewImpl extends AbstractVerticalPageView implements ProjectLegacyView {
     private ProjectViewWrap viewWrap;
 
     @Override
@@ -117,23 +117,23 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
                 String caption = ((TabImpl) tab).getTabId();
                 if (ProjectTypeConstants.MESSAGE.equals(caption)) {
-                    messagePresenter.go(ProjectViewImpl.this, null);
+                    messagePresenter.go(ProjectLegacyViewImpl.this, null);
                 } else if (ProjectTypeConstants.MILESTONE.equals(caption)) {
-                    milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
+                    milestonesPresenter.go(ProjectLegacyViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectTypeConstants.TICKET.equals(caption)) {
-                    ticketPresenter.go(ProjectViewImpl.this, null);
+                    ticketPresenter.go(ProjectLegacyViewImpl.this, null);
                 } else if (ProjectTypeConstants.PAGE.equals(caption)) {
-                    pagePresenter.go(ProjectViewImpl.this,
+                    pagePresenter.go(ProjectLegacyViewImpl.this,
                             new PageScreenData.Search(PathUtils.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
                 } else if (ProjectTypeConstants.DASHBOARD.equals(caption)) {
-                    dashboardPresenter.go(ProjectViewImpl.this, null);
+                    dashboardPresenter.go(ProjectLegacyViewImpl.this, null);
                 } else if (ProjectTypeConstants.MEMBER.equals(caption)) {
                     ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
                     criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
-                    userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
+                    userPresenter.go(ProjectLegacyViewImpl.this, new ProjectMemberScreenData.Search(criteria));
                 } else if (ProjectTypeConstants.FINANCE.equals(caption)) {
-                    financePresenter.go(ProjectViewImpl.this, null);
+                    financePresenter.go(ProjectLegacyViewImpl.this, null);
                 }
             });
 
@@ -164,7 +164,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         }
 
         void displaySearchResult(String value) {
-            dashboardPresenter.go(ProjectViewImpl.this, new ProjectScreenData.SearchItem(value));
+            dashboardPresenter.go(ProjectLegacyViewImpl.this, new ProjectScreenData.SearchItem(value));
         }
 
         void setNavigatorVisibility(boolean visibility) {

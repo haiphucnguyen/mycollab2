@@ -23,7 +23,7 @@ import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.service.BugService;
@@ -208,7 +208,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     }
 
     private void setProjectNavigatorVisibility(boolean visibility) {
-        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        ProjectLegacyView view = UIUtils.getRoot(this, ProjectLegacyView.class);
         if (view != null) {
             view.setNavigatorVisibility(visibility);
         }

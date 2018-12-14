@@ -24,7 +24,7 @@ import com.vaadin.ui.Component
  * @author MyCollab Ltd.
  * @since 1.0
  */
-interface ProjectView : PageView {
+interface ProjectLegacyView : PageView {
 
     fun initView(project: SimpleProject)
 

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,35 +31,42 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.Depot;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.spring.annotation.PrototypeScope;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@SpringComponent
+@PrototypeScope
 public class TicketOverdueWidget extends Depot {
     private static final long serialVersionUID = 1L;
 
+    @Autowired
+    private TicketOverduePresenter ticketOverduePresenter;
+
     private TicketOverduePagedList ticketOverdueComponent;
-    private ProjectTicketSearchCriteria searchCriteria;
+
 
     public TicketOverdueWidget() {
         super(UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS) + " (0)", new CssLayout());
+    }
+
+    @PostConstruct
+    public void init() {
+        ticketOverduePresenter.initView(this);
 
         final CheckBox myItemsOnly = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
         myItemsOnly.addValueChangeListener(valueChangeEvent -> {
-            if (searchCriteria != null) {
-                boolean selectMyItemsOnly = myItemsOnly.getValue();
-                if (selectMyItemsOnly) {
-                    searchCriteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
-                } else {
-                    searchCriteria.setAssignUser(null);
-                }
-                ticketOverdueComponent.setSearchCriteria(searchCriteria);
-            }
+            boolean selectMyItemsOnly = myItemsOnly.getValue();
+            ticketOverduePresenter.displayOverdueTickets(selectMyItemsOnly);
         });
 
         this.addHeaderElement(myItemsOnly);
@@ -68,21 +75,15 @@ public class TicketOverdueWidget extends Depot {
         bodyContent.addComponent(ticketOverdueComponent);
     }
 
-    public void showTicketsByStatus(List<Integer> prjKeys) {
-        searchCriteria = new ProjectTicketSearchCriteria();
-        searchCriteria.setProjectIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
-        searchCriteria.setOpenned(new SearchField());
-        searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS().toLocalDate(),
-                DateSearchField.LESS_THAN));
-        updateSearchResult();
+    public void showUnresolvedTickets(List<Integer> prjKeys) {
+        ticketOverduePresenter.showUnresolvedTickets(prjKeys);
     }
 
-    private void updateSearchResult() {
-        ticketOverdueComponent.setSearchCriteria(searchCriteria);
-        setTitle(String.format("%s (%d)", UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS), ticketOverdueComponent.getTotalCount()));
+    TicketOverduePagedList getOverdueTicketList() {
+        return ticketOverdueComponent;
     }
 
-    private static class TicketOverduePagedList extends DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
+    static class TicketOverduePagedList extends DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
 
         TicketOverduePagedList() {
             super(AppContextUtil.getSpringBean(ProjectTicketService.class), new TicketRowDisplayHandler(true), 10);

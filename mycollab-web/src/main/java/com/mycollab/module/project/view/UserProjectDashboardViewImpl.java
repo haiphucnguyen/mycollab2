@@ -101,7 +101,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
             activityStreamComponent.showFeeds(prjKeys);
             milestoneTimelineWidget.display();
             myProjectListComponent.displayDefaultProjectsList();
-            ticketOverdueWidget.showTicketsByStatus(prjKeys);
+            ticketOverdueWidget.showUnresolvedTickets(prjKeys);
             unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();
             unresolvedAssignmentNextWeekWidget.displayUnresolvedAssignmentsNextWeek();
         } else {

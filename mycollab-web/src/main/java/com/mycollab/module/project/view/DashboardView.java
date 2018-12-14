@@ -33,7 +33,6 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @SpringView(name = DashboardView.VIEW_NAME)
-@MenuCaption("Dashboard")
 public class DashboardView extends MVerticalLayout implements View {
     public static final String VIEW_NAME = "project/dashboard";
 
@@ -57,8 +56,8 @@ public class DashboardView extends MVerticalLayout implements View {
             ResponsiveRow row = new ResponsiveRow();
 
             AllMilestoneTimelineWidget milestoneTimelineWidget = AppContextUtil.getSpringBean(AllMilestoneTimelineWidget.class);
-            TicketOverdueWidget ticketOverdueWidget = new TicketOverdueWidget();
-            ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
+            TicketOverdueWidget ticketOverdueWidget = AppContextUtil.getSpringBean(TicketOverdueWidget.class);
+            ActivityStreamComponent activityStreamComponent = AppContextUtil.getSpringBean(ActivityStreamComponent.class);
             UserUnresolvedTicketWidget unresolvedAssignmentThisWeekWidget = AppContextUtil.getSpringBean(UserUnresolvedTicketWidget.class);
             UserUnresolvedTicketWidget unresolvedAssignmentNextWeekWidget = AppContextUtil.getSpringBean(UserUnresolvedTicketWidget.class);
 
@@ -90,7 +89,7 @@ public class DashboardView extends MVerticalLayout implements View {
             activityStreamComponent.showFeeds(prjKeys);
             milestoneTimelineWidget.display();
             myProjectListComponent.displayDefaultProjectsList();
-            ticketOverdueWidget.showTicketsByStatus(prjKeys);
+            ticketOverdueWidget.showUnresolvedTickets(prjKeys);
             unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();
             unresolvedAssignmentNextWeekWidget.displayUnresolvedAssignmentsNextWeek();
         } else {

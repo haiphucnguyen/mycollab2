@@ -19,7 +19,7 @@ package com.mycollab.module.project.view.ticket;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.ClassUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.TaskScreenData;
 import com.mycollab.module.project.view.parameters.TicketScreenData;
 import com.mycollab.module.project.view.task.TaskAddPresenter;
@@ -43,7 +43,7 @@ public class TicketPresenter extends AbstractPresenter<TicketContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
 
         IPresenter<?> presenter;

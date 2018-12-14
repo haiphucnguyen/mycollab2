@@ -9,6 +9,9 @@ import com.github.appreciated.app.layout.builder.entities.DefaultNotificationHol
 import com.github.appreciated.app.layout.builder.factories.DefaultSpringNavigationElementInfoProducer;
 import com.github.appreciated.app.layout.component.MenuHeader;
 import com.github.appreciated.app.layout.component.button.AppBarNotificationButton;
+import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.server.ThemeResource;
@@ -23,7 +26,7 @@ import static com.github.appreciated.app.layout.builder.Section.HEADER;
 
 @SpringView(name = ProjectMainView.VIEW_NAME)
 public class ProjectMainView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "project";
+    public static final String VIEW_NAME = "dashboard";
 
     DefaultNotificationHolder notifications = new DefaultNotificationHolder();
     DefaultBadgeHolder badge = new DefaultBadgeHolder();
@@ -55,10 +58,11 @@ public class ProjectMainView extends VerticalLayout implements View {
                 .addToAppBar(new AppBarNotificationButton(notifications, true))
                 .withDesign(AppLayoutDesign.MATERIAL)
                 .add(new MenuHeader("Version 7.0.0", new ThemeResource("logo.png")), HEADER)
-                .add("Dashboard", VaadinIcons.CLIPBOARD, DashboardView.class)
+                .add(UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), VaadinIcons.CLIPBOARD, DashboardView.class)
+                .add(UserUIContext.getMessage(ProjectI18nEnum.LIST), VaadinIcons.BUILDING_O, MyProjectsView.class)
                 .add(CDISubmenuBuilder.get("Reports", VaadinIcons.PLUS)
-                        .add(StandupMeetingView.class)
-                        .add(TimeLogView.class)
+                        .add("Standup", StandupMeetingView.class)
+                        .add("Timelog", TimeLogView.class)
                         .build())
                 .add(FavoriteView.class)
                 .build());

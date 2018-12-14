@@ -18,7 +18,7 @@ package com.mycollab.module.project.view.page;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.PageScreenData;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -38,7 +38,7 @@ public class PagePresenter extends AbstractPresenter<PageContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         projectViewContainer.gotoSubView(ProjectTypeConstants.PAGE);
 
         AbstractPresenter presenter;

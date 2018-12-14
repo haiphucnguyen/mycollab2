@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.ProjectLegacyView;
 import com.mycollab.module.project.view.parameters.RiskScreenData;
 import com.mycollab.module.project.view.risk.IRiskContainer;
 import com.mycollab.module.project.view.risk.IRiskPresenter;
@@ -25,7 +25,7 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
+        ProjectLegacyView projectViewContainer = (ProjectLegacyView) container;
         TicketContainer ticketContainer = (TicketContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.TICKET);
         ticketContainer.setContent(view);
 

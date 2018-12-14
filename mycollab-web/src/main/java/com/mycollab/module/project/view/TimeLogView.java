@@ -6,5 +6,5 @@ import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name = TimeLogView.VIEW_NAME)
 public class TimeLogView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "project/timelog";
+    public static final String VIEW_NAME = "dashboard/timelog";
 }
