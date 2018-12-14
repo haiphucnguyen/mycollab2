@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view;
+package com.mycollab.web;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
@@ -36,11 +36,14 @@ import com.mycollab.vaadin.web.ui.TimeZoneSelectionField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.mycollab.web.DesktopApplication;
+import com.vaadin.navigator.View;
+import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -49,8 +52,13 @@ import java.util.TimeZone;
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-class SetupNewInstanceView extends MVerticalLayout {
-    SetupNewInstanceView() {
+@SpringView (name = SetupNewInstanceView.VIEW_NAME)
+class SetupNewInstanceView extends MVerticalLayout implements View {
+
+    public static final String VIEW_NAME = "setup";
+
+    @PostConstruct
+    public void init() {
         this.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         MHorizontalLayout content = new MHorizontalLayout().withFullHeight();
         this.with(content);
@@ -127,7 +135,7 @@ class SetupNewInstanceView extends MVerticalLayout {
             billingAccountService.createDefaultAccountData(adminName, password, timezoneDbId, language, true,
                     createSampleDataSelection.getValue(), AppUI.getAccountId());
 
-            ((DesktopApplication) UI.getCurrent()).doLogin(adminName, password, false);
+            getUI().getNavigator().navigateTo(LoginView.VIEW_NAME);
         }).withStyleName(WebThemes.BUTTON_ACTION);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(createSampleDataSelection, installBtn).alignAll(Alignment.MIDDLE_RIGHT);

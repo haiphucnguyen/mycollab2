@@ -35,11 +35,5 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.vaadin.spring.addons</groupId>
-            <artifactId>vaadin-spring-addon-eventbus</artifactId>
-            <version>0.0.7.RELEASE</version>
-        </dependency>
-
     </dependencies>
 </project>

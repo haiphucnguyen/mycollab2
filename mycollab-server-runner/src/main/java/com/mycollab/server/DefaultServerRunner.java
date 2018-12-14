@@ -25,7 +25,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.vaadin.spring.events.annotation.EnableEventBus;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -69,7 +68,6 @@ public class DefaultServerRunner {
 
     @SpringBootApplication(exclude = {FreeMarkerAutoConfiguration.class, FlywayAutoConfiguration.class, DataSourceAutoConfiguration.class},
             scanBasePackages = "com.mycollab.installation")
-    @EnableEventBus
     static class SetupApp {
     }
 

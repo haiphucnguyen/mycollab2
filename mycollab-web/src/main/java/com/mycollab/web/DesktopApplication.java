@@ -26,7 +26,6 @@ import com.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.shell.event.ShellEvent;
-import com.mycollab.shell.view.MainWindowContainer;
 import com.mycollab.shell.view.ShellUrlResolver;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.*;
@@ -34,19 +33,18 @@ import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Viewport;
-import com.vaadin.annotations.Widgetset;
-import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.navigator.SpringViewProvider;
+import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.spring.events.EventBus.UIEventBus;
 import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.ArrayList;
@@ -61,27 +59,30 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  * @since 1.0
  */
 @Theme(Version.THEME_VERSION)
-@Widgetset("com.mycollab.widgetset.MyCollabWidgetSet")
-@Viewport("width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 @SpringUI
+@PushStateNavigation
 public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
 
-    public static final String ACCOUNT_COOKIE = "mycollab";
-    public static final String TEMP_ACCOUNT_COOKIE = "temp_account_mycollab";
+
 
     private static List<String> ipLists = new ArrayList<>();
 
-    private CssLayout mainWindowContainer;
+    @Autowired
+    private MainView mainView;
+
+    @Autowired
     private BroadcastReceiverService broadcastReceiverService;
 
     @Autowired
-    private SpringViewProvider viewProvider;
+    private SpringNavigator springNavigator;
+
+    @Autowired
+    private UIEventBus eventBus;
 
     @Override
     protected void init(final VaadinRequest request) {
-        broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
 
         ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
         if (serverConfiguration.isPush()) {
@@ -104,9 +105,7 @@ public class DesktopApplication extends AppUI {
 
         EventBusFactory.getInstance().register(new ShellErrorHandler());
 
-
-        mainWindowContainer = new MainWindowContainer();
-        this.setContent(mainWindowContainer);
+        this.setContent(mainView);
 
 //        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getUri()));
 
@@ -115,9 +114,10 @@ public class DesktopApplication extends AppUI {
             NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
 
-        Navigator navigator = new Navigator(this, mainWindowContainer);
-        navigator.addProvider(viewProvider);
-        getUI().setNavigator(navigator);
+        springNavigator.setErrorView(ErrorView.class);
+        getUI().setNavigator(springNavigator);
+
+        mainView.setDefaultView();
     }
 
     @Override
@@ -285,75 +285,6 @@ public class DesktopApplication extends AppUI {
     public void detach() {
         Broadcaster.unregister(broadcastReceiverService);
         super.detach();
-    }
-
-    public void doLogin(String username, String password, boolean isRememberPassword) {
-        UserService userService = AppContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.authentication(username, password, AppUI.getSubDomain(), false);
-
-        if (isRememberPassword) {
-            rememberAccount(username, password);
-        } else {
-            rememberTempAccount(username, password);
-        }
-
-        afterDoLogin(user);
-    }
-
-    public void afterDoLogin(SimpleUser user) {
-//        BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
-//
-//        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
-//        LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
-//                user.getUsername(), user.getDisplayName()));
-//        UserUIContext.getInstance().setSessionVariables(user, billingAccount);
-//
-//        UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
-//        UserAccount userAccount = new UserAccount();
-//        userAccount.setLastaccessedtime(LocalDateTime.now());
-//        UserAccountExample ex = new UserAccountExample();
-//        ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
-//        userAccountMapper.updateByExampleSelective(userAccount, ex);
-//        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
-//        broadcastReceiverService.registerApp(this);
-//        Broadcaster.register(broadcastReceiverService);
-        getUI().getNavigator().navigateTo("login");
-    }
-
-    public void redirectToLoginView() {
-//        clearSession();
-//
-//        AppUI.addFragment("", LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale(), ShellI18nEnum.OPT_LOGIN_PAGE));
-//        // clear cookie remember username/password if any
-//        this.unsetRememberPassword();
-//
-//        ControllerRegistry.addController(new ShellController(mainWindowContainer));
-//        LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
-//        LoginView loginView = presenter.getView();
-//
-//        if (loginView.getParent() == null || loginView.getParent() == mainWindowContainer) {
-//            mainWindowContainer.setContent(loginView);
-//        } else {
-//            presenter.go(mainWindowContainer, null);
-//        }
-        getUI().getNavigator().navigateTo("login");
-    }
-
-    private void rememberAccount(String username, String password) {
-        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
-        BrowserCookie.setCookie(ACCOUNT_COOKIE, storeVal);
-    }
-
-    private void rememberTempAccount(String username, String password) {
-        String storeVal = username + "$" + EnDecryptHelper.encryptText(password);
-        String setCookieVal = String.format("var now = new Date(); now.setTime(now.getTime() + 1 * 1800 * 1000); " +
-                "document.cookie = \"%s=%s; expires=\" + now.toUTCString() + \"; path=/\";", TEMP_ACCOUNT_COOKIE, storeVal);
-        JavaScript.getCurrent().execute(setCookieVal);
-    }
-
-    private void unsetRememberPassword() {
-        BrowserCookie.setCookie(ACCOUNT_COOKIE, "");
-        BrowserCookie.setCookie(TEMP_ACCOUNT_COOKIE, "");
     }
 
     public UserUIContext getAssociateContext() {

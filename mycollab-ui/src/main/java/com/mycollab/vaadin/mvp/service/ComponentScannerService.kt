@@ -45,20 +45,20 @@ class ComponentScannerService : InitializingBean {
     private val cachePresenterClasses = mutableMapOf<Class<*>, Class<*>>()
 
     override fun afterPropertiesSet() {
-        val provider = ClassPathScanningCandidateComponentProvider(false)
-        provider.addIncludeFilter(AnnotationTypeFilter(ViewComponent::class.java))
-        provider.addIncludeFilter(AssignableTypeFilter(IPresenter::class.java))
-        LOG.info("Started resolving view and presenter classes")
-        val candidateComponents = provider.findCandidateComponents("com.mycollab.**.view")
-        candidateComponents.forEach {
-            val cls = ClassUtils.resolveClassName(it.beanClassName!!, ClassUtils.getDefaultClassLoader())
-            when {
-                cls.getAnnotation(ViewComponent::class.java) != null -> viewClasses.add(cls)
-                IPresenter::class.java.isAssignableFrom(cls) -> presenterClasses.add(cls as Class<IPresenter<PageView>>)
-            }
-        }
-
-        LOG.info("Resolved view and presenter classes $this that has ${viewClasses.size} view classes and ${presenterClasses.size} presenter classes")
+//        val provider = ClassPathScanningCandidateComponentProvider(false)
+//        provider.addIncludeFilter(AnnotationTypeFilter(ViewComponent::class.java))
+//        provider.addIncludeFilter(AssignableTypeFilter(IPresenter::class.java))
+//        LOG.info("Started resolving view and presenter classes")
+//        val candidateComponents = provider.findCandidateComponents("com.mycollab.**.view")
+//        candidateComponents.forEach {
+//            val cls = ClassUtils.resolveClassName(it.beanClassName!!, ClassUtils.getDefaultClassLoader())
+//            when {
+//                cls.getAnnotation(ViewComponent::class.java) != null -> viewClasses.add(cls)
+//                IPresenter::class.java.isAssignableFrom(cls) -> presenterClasses.add(cls as Class<IPresenter<PageView>>)
+//            }
+//        }
+//
+//        LOG.info("Resolved view and presenter classes $this that has ${viewClasses.size} view classes and ${presenterClasses.size} presenter classes")
     }
 
     fun getViewImplCls(viewClass: Class<*>): Class<*>? {

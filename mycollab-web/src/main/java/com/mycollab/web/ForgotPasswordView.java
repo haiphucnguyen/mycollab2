@@ -14,33 +14,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view;
+package com.mycollab.web;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
-import com.mycollab.core.utils.StringUtils;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.service.UserService;
-import com.mycollab.shell.event.ShellEvent;
-import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Resource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.TextField;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -51,15 +46,28 @@ import javax.annotation.PostConstruct;
  * @since 1.0
  */
 @ViewComponent
-@SpringView(name="logout")
-public class ForgotPasswordViewImpl extends MVerticalLayout implements View {
+@SpringView(name = ForgotPasswordView.VIEW_NAME)
+public class ForgotPasswordView extends MVerticalLayout implements View {
     private static final long serialVersionUID = 1L;
 
+    public static final String VIEW_NAME = "logout";
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private ForgotPasswordPresenter forgotPasswordPresenter;
 
     @PostConstruct
     public void init() {
         this.addComponent(new ForgotPwdForm());
+        forgotPasswordPresenter.initView(this);
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        getUI().getPage().setTitle(UserUIContext.getMessage(ShellI18nEnum.OPT_FORGOT_PASSWORD_VIEW_TITLE));
+        forgotPasswordPresenter.checkMailSetup();
     }
 
     private class ForgotPwdForm extends CustomComponent {
@@ -82,26 +90,12 @@ public class ForgotPasswordViewImpl extends MVerticalLayout implements View {
 
             MButton sendEmail = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_RESET_PASSWORD), clickEvent -> {
                 String username = nameOrEmailField.getValue();
-                if (StringUtils.isValidEmail(username)) {
-                    UserService userService = AppContextUtil.getSpringBean(UserService.class);
-                    User user = userService.findUserByUserName(username);
-
-                    if (user == null) {
-                        NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.ERROR_USER_IS_NOT_EXISTED, username));
-                    } else {
-                        userService.requestToResetPassword(user.getUsername());
-                        NotificationUtil.showNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.OPT_SUCCESS),
-                                LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.OPT_EMAIL_SENDER_NOTIFICATION));
-                        EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
-                    }
-                } else {
-                    NotificationUtil.showErrorNotification(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ErrorI18nEnum.NOT_VALID_EMAIL, username));
-                }
+                forgotPasswordPresenter.sendForgotPassword(username);
             }).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(ShortcutAction.KeyCode.ENTER);
             customLayout.addComponent(sendEmail, "loginButton");
 
             MButton memoBackBtn = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.BUTTON_IGNORE_RESET_PASSWORD),
-                    clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null)))
+                    clickEvent -> forgotPasswordPresenter.backToLoginView())
                     .withStyleName(WebThemes.BUTTON_LINK);
             customLayout.addComponent(memoBackBtn, "forgotLink");
 

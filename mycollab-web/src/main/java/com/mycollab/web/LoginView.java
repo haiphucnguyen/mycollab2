@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.shell.view;
+package com.mycollab.web;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -23,23 +23,19 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ExceptionUtils;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.user.event.UserEvent;
-import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.web.CustomLayoutExt;
-import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.Registration;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
 
 import javax.annotation.PostConstruct;
@@ -49,9 +45,14 @@ import javax.annotation.PostConstruct;
  * @since 1.0
  */
 @ViewComponent
-@SpringView(name = "login")
-public class LoginViewImpl extends AbstractVerticalPageView implements LoginView {
+@SpringView(name = LoginView.VIEW_NAME)
+public class LoginView extends AbstractVerticalPageView implements View {
     private static final long serialVersionUID = 1L;
+
+    public static final String VIEW_NAME = "login";
+
+    @Autowired
+    private LoginPresenter loginPresenter;
 
     @PostConstruct
     void init() {
@@ -59,6 +60,12 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
         this.withSpacing(true);
         this.setSizeFull();
         this.addComponent(new LoginFormContainer());
+        loginPresenter.initView(this);
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        loginPresenter.registerLoginByCookie();
     }
 
     class LoginFormContainer extends LoginForm {
@@ -74,8 +81,7 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
                 String password = loginEvent.getLoginParameter("password");
                 try {
                     custom.removeComponent("customErrorMsg");
-                    LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
-                            username, password, rememberMe.getValue())));
+                    loginPresenter.login(username, password, rememberMe.getValue());
                 } catch (MyCollabException e) {
                     custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
                 } catch (Exception e) {
@@ -109,7 +115,7 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
             custom.addComponent(loginBtn, "loginButton");
 
             MButton forgotPasswordBtn = new MButton(LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
-                    ShellI18nEnum.BUTTON_FORGOT_PASSWORD), clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null)))
+                    ShellI18nEnum.BUTTON_FORGOT_PASSWORD), clickEvent -> getUI().getNavigator().navigateTo(ForgotPasswordView.VIEW_NAME))
                     .withStyleName(WebThemes.BUTTON_LINK);
             custom.addComponent(forgotPasswordBtn, "forgotLink");
 
