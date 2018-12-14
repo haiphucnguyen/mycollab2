@@ -32,6 +32,7 @@ import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.service.BroadcastReceiverService;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.*;
@@ -60,12 +61,11 @@ import static com.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(Version.THEME_VERSION)
 @SpringUI
+@PreserveOnRefresh
 @PushStateNavigation
 public class DesktopApplication extends AppUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
-
-
 
     private static List<String> ipLists = new ArrayList<>();
 
@@ -83,6 +83,8 @@ public class DesktopApplication extends AppUI {
 
     @Override
     protected void init(final VaadinRequest request) {
+        springNavigator.setErrorView(ErrorView.class);
+        getUI().setNavigator(springNavigator);
 
         ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
         if (serverConfiguration.isPush()) {
@@ -113,9 +115,6 @@ public class DesktopApplication extends AppUI {
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
             NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
-
-        springNavigator.setErrorView(ErrorView.class);
-        getUI().setNavigator(springNavigator);
 
         mainView.setDefaultView();
     }

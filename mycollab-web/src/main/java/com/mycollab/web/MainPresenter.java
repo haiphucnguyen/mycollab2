@@ -3,12 +3,14 @@ package com.mycollab.web;
 import com.mycollab.module.user.service.BillingAccountService;
 import com.mycollab.vaadin.AppUI;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.ViewScope;
+import com.vaadin.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
+
 @SpringComponent
-@ViewScope
-public class MainPresenter {
+@UIScope
+public class MainPresenter implements Serializable {
 
     private MainView view;
 

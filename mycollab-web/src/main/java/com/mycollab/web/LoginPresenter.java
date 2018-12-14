@@ -19,6 +19,7 @@ package com.mycollab.web;
 import com.mycollab.configuration.EnDecryptHelper;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.module.project.view.ProjectMainView;
 import com.mycollab.module.user.dao.UserAccountMapper;
 import com.mycollab.module.user.domain.SimpleBillingAccount;
 import com.mycollab.module.user.domain.SimpleUser;
@@ -112,6 +113,8 @@ public class LoginPresenter extends Presenter<LoginView> {
         UserAccountExample ex = new UserAccountExample();
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
+
+        view.getUI().getNavigator().navigateTo(ProjectMainView.VIEW_NAME);
     }
 
     private void authenticateWithTempCookieValue() {
