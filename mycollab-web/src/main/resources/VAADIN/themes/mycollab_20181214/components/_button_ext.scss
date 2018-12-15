@@ -155,32 +155,23 @@
     }
   }
 
-  /* Toogle button groups */
-  .v-buttongroup {
-    .v-button {
-      &.v-button-middle {
-        border-radius: 0px;
-        border-left: 1px solid $my-separator-color;
-      }
-      &.v-button-left {
-        border-radius: $v-border-radius 0px 0px $v-border-radius;
-        border-right: none;
-      }
-      &.v-button-right {
-        border-radius: 0px $v-border-radius $v-border-radius 0px;
-        border-left: 1px solid $my-separator-color;
-      }
-    }
-  }
-
   /* Button group style */
-  .v-buttongroup.toggle-btn-group .v-button {
-    &.selected .v-button-wrap .v-button-caption {
-      color: white;
+  .toggle-btn-group  {
+    .v-button {
+      border-radius: 0px;
     }
-    &.btn-group-default {
-      color: white;
+    .v-button:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
     }
-    color: white;
+
+    .v-button:last-child {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
 }

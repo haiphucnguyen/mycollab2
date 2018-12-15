@@ -16255,31 +16255,22 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	color: #a3a3a3;
 }
 
-.v-buttongroup .v-button.v-button-middle {
+.toggle-btn-group .v-button {
 	border-radius: 0px;
-	border-left: 1px solid #e5e5e5;
 }
 
-.v-buttongroup .v-button.v-button-left {
-	border-radius: 4px 0px 0px 4px;
-	border-right: none;
+.toggle-btn-group .v-button:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 }
 
-.v-buttongroup .v-button.v-button-right {
-	border-radius: 0px 4px 4px 0px;
-	border-left: 1px solid #e5e5e5;
-}
-
-.v-buttongroup.toggle-btn-group .v-button {
-	color: white;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
-	color: white;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.btn-group-default {
-	color: white;
+.toggle-btn-group .v-button:last-child {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 .v-icon .black {

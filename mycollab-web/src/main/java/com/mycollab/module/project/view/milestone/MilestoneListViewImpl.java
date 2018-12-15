@@ -61,7 +61,6 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class MilestoneListViewImpl extends AbstractLazyPageView implements MilestoneListView {
     private static final long serialVersionUID = 1L;

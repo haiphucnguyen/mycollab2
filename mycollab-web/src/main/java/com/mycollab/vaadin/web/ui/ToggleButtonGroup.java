@@ -18,20 +18,18 @@ package com.mycollab.vaadin.web.ui;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.CssLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
-// TODO
-public class ToggleButtonGroup extends HorizontalLayout {
+public class ToggleButtonGroup extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     private Button selectedBtn;
 
     public ToggleButtonGroup() {
-        setSpacing(false);
         this.addStyleName("toggle-btn-group");
     }
 
