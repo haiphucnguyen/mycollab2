@@ -66,7 +66,6 @@ open class ProjectUrlResolver : UrlResolver() {
         this.addSubResolver("component", ComponentUrlResolver())
         this.addSubResolver("version", VersionUrlResolver())
         this.addSubResolver("roadmap", RoadmapUrlResolver())
-        this.addSubResolver("calendar", CalendarUrlResolver())
         this.addSubResolver("client", ClientUrlResolver())
         return this
     }
@@ -141,16 +140,6 @@ open class ProjectUrlResolver : UrlResolver() {
             } else {
                 val projectId = UrlTokenizer(params[0]).getInt()
                 val chain = PageActionChain(ProjectScreenData.Goto(projectId), MilestoneScreenData.Roadmap())
-                EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
-            }
-        }
-    }
-
-    private class CalendarUrlResolver : ProjectUrlResolver() {
-        override fun handlePage(vararg params: String) {
-            if (params.isNotEmpty()) {
-                val projectId = UrlTokenizer(params[0]).getInt()
-                val chain = PageActionChain(ProjectScreenData.Goto(projectId), ProjectScreenData.GotoCalendarView())
                 EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
             }
         }

@@ -40,8 +40,6 @@ object ProjectEvent {
 
     class TimeLoggingChangedEvent(source: Any) : ApplicationEvent(source)
 
-    class GotoCalendarView(source: Any) : ApplicationEvent(source)
-
     class GotoDashboard(source: Any, val data: Any?) : ApplicationEvent(source)
 
     class GotoUserDashboard(source: Any, val data: Any?) : ApplicationEvent(source)

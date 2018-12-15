@@ -37,6 +37,4 @@ object ProjectScreenData {
     class SearchItem(params: String) : ScreenData<String>(params)
 
     class GotoReportConsole : ScreenData<Any>(null)
-
-    class GotoCalendarView : ScreenData<Any>(null)
 }
