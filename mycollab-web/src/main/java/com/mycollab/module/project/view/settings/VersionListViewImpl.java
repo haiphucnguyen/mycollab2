@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.settings;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -35,8 +35,8 @@ import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -54,7 +54,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
 
     private final VersionSearchPanel versionSearchPanel;
     private SelectionOptionButton selectOptionButton;
-    private DefaultPagedGrid<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
+    private DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
     private VerticalLayout versionListLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
@@ -68,14 +68,14 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedGrid<>(AppContextUtil.getSpringBean(VersionService.class),
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(VersionService.class),
                 SimpleVersion.class,
-                new GridFieldMeta(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
-                Arrays.asList(new GridFieldMeta(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                        new GridFieldMeta(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
-                        new GridFieldMeta(GenericI18Enum.FORM_DESCRIPTION, "description", 2 * WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                        new GridFieldMeta(GenericI18Enum.FORM_DUE_DATE, "duedate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
-                        new GridFieldMeta(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
+                new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
+                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 2 * WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_DUE_DATE, "duedate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
 //        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
 //            final SimpleVersion version = gridItem.getBeanByIndex(itemId);
@@ -192,7 +192,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     }
 
     @Override
-    public AbstractPagedGrid<VersionSearchCriteria, SimpleVersion> getPagedBeanGrid() {
+    public AbstractPagedBeanTable<VersionSearchCriteria, SimpleVersion> getPagedBeanGrid() {
         return this.tableItem;
     }
 }

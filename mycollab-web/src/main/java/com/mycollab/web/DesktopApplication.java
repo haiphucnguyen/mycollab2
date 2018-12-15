@@ -116,7 +116,7 @@ public class DesktopApplication extends AppUI {
         mainWindowContainer = new MainWindowContainer();
         this.setContent(mainWindowContainer);
 
-        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getUri()));
+        getPage().addPopStateListener((Page.PopStateListener) event -> enter(event.getPage().getUriFragment()));
 
         String userAgent = request.getHeader("user-agent");
         if (isInNotSupportedBrowserList(userAgent.toLowerCase())) {
@@ -215,7 +215,7 @@ public class DesktopApplication extends AppUI {
         SecureAccessException secureAccessException = getExceptionType(e, SecureAccessException.class);
         if (secureAccessException != null) {
             NotificationUtil.showWarningNotification("You can not access the specific resource");
-//            EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+            EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
             return;
         }
 

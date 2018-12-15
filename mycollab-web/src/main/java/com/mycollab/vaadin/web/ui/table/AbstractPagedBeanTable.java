@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.web.ui.table;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.domain.CustomViewStore;
 import com.mycollab.common.domain.NullCustomViewStore;
 import com.mycollab.common.json.FieldDefAnalyzer;
@@ -28,9 +28,15 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
-import com.vaadin.data.ValueProvider;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
-import com.vaadin.ui.renderers.AbstractRenderer;
+import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.util.BeanItem;
+import com.vaadin.v7.data.util.BeanItemContainer;
+import com.vaadin.v7.ui.Table;
+import com.vaadin.v7.ui.Table.ColumnGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
@@ -46,10 +52,10 @@ import static com.mycollab.vaadin.web.ui.WebThemes.SCROLLABLE_CONTAINER;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends VerticalLayout implements IPagedGrid<S, B> {
+public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extends VerticalLayout implements IPagedTable<S, B> {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractPagedGrid.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractPagedBeanTable.class);
 
     private int displayNumItems = BasicSearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
     private Collection<B> currentListData;
@@ -63,35 +69,36 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     private int currentViewCount;
     protected int totalCount;
 
-    //    protected Table gridItem;
+    protected Table tableItem;
     private HorizontalLayout controlBarWrapper;
 
     private Set<SelectableItemHandler<B>> selectableHandlers;
     private Set<PageableHandler> pageableHandlers;
 
     protected Class<B> type;
-    protected Grid<B> gridItem;
 
-    private GridFieldMeta requiredColumn;
-    private List<GridFieldMeta> displayColumns;
-    private List<GridFieldMeta> defaultSelectedColumns;
+    private TableViewField requiredColumn;
+    private List<TableViewField> displayColumns;
+    private List<TableViewField> defaultSelectedColumns;
 
-    public AbstractPagedGrid(Class<B> type, List<GridFieldMeta> displayColumns) {
+    private final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
+
+    public AbstractPagedBeanTable(Class<B> type, List<TableViewField> displayColumns) {
         this(type, null, displayColumns);
     }
 
-    public AbstractPagedGrid(Class<B> type, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
+    public AbstractPagedBeanTable(Class<B> type, TableViewField requiredColumn, List<TableViewField> displayColumns) {
         this(type, null, requiredColumn, displayColumns);
     }
 
-    public AbstractPagedGrid(Class<B> type, String viewId, GridFieldMeta requiredColumn, List<GridFieldMeta> displayColumns) {
+    public AbstractPagedBeanTable(Class<B> type, String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
         if (viewId != null) {
             CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
             CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(AppUI.getAccountId(),
                     UserUIContext.getUsername(), viewId);
             if (!(viewLayoutDef instanceof NullCustomViewStore)) {
                 try {
-                    this.displayColumns = FieldDefAnalyzer.toGridFields(viewLayoutDef.getViewinfo());
+                    this.displayColumns = FieldDefAnalyzer.toTableFields(viewLayoutDef.getViewinfo());
                 } catch (Exception e) {
                     LOG.error("Error", e);
                     this.displayColumns = displayColumns;
@@ -107,43 +114,41 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         this.requiredColumn = requiredColumn;
         this.type = type;
         addStyleName(SCROLLABLE_CONTAINER);
-
-        gridItem = new Grid<>();
-        gridItem.setWidth("100%");
     }
 
-    public void setDisplayColumns(List<GridFieldMeta> viewFields) {
+    public void setDisplayColumns(List<TableViewField> viewFields) {
         this.displayColumns = viewFields;
-        setDisplayColumns();
+        displayTableColumns();
+        this.markAsDirty();
     }
 
-    private void setDisplayColumns() {
+    private void displayTableColumns() {
         Set<String> visibleColumnsCol = new LinkedHashSet<>();
         Set<String> columnHeadersCol = new LinkedHashSet<>();
 
-//        if (requiredColumn != null) {
-//            visibleColumnsCol.add(requiredColumn.getField());
-//            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
-//            gridItem.getColumn(requiredColumn.getField()).setWidth(requiredColumn.getDefaultWidth());
-//        }
+        if (requiredColumn != null) {
+            visibleColumnsCol.add(requiredColumn.getField());
+            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
+            tableItem.setColumnWidth(requiredColumn.getField(), requiredColumn.getDefaultWidth());
+        }
 
         for (int i = 0; i < displayColumns.size(); i++) {
-            GridFieldMeta viewField = displayColumns.get(i);
+            TableViewField viewField = displayColumns.get(i);
             visibleColumnsCol.add(viewField.getField());
             columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
 
-//            if (i == 0) {
-//                gridItem.getColumn(viewField.getField()).setExpandRatio(1);
-//            } else {
-//                gridItem.getColumn(viewField.getField()).setWidth(viewField.getDefaultWidth());
-//            }
+            if (i == 0) {
+                tableItem.setColumnExpandRatio(viewField.getField(), 1.0f);
+            } else {
+                tableItem.setColumnWidth(viewField.getField(), viewField.getDefaultWidth());
+            }
         }
 
         String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
         String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
 
-//        gridItem.setVisibleColumns(visibleColumns);
-//        gridItem.setColumnHeaders(columnHeaders);
+        tableItem.setVisibleColumns(visibleColumns);
+        tableItem.setColumnHeaders(columnHeaders);
     }
 
     @Override
@@ -182,7 +187,7 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     public void setCurrentDataList(Collection<B> list) {
         currentListData = list;
         currentViewCount = list.size();
-        createGrid();
+        createTable();
     }
 
     @Override
@@ -195,12 +200,8 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     }
 
     @Override
-    public <V> Grid.Column addGeneratedColumn(ValueProvider<B, V> valueProvider, AbstractRenderer renderer) {
-        return gridItem.addColumn(valueProvider).setRenderer(renderer);
-    }
-
-    public <V> Grid.Column addGeneratedColumn(ValueProvider<B, V> valueProvider) {
-        return gridItem.addColumn(valueProvider);
+    public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
+        this.columnGenerators.put(id, generatedColumn);
     }
 
     @Override
@@ -216,8 +217,14 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
 
     @Override
     public B getBeanByIndex(final Object itemId) {
-//        return (B)gridItem.getDataProvider().get(itemId);
-        return null;
+        final Container container = tableItem.getContainerDataSource();
+        final BeanItem<B> item = (BeanItem<B>) container.getItem(itemId);
+        return item == null ? null : item.getBean();
+    }
+
+    @Override
+    public void refresh() {
+        doSearch();
     }
 
     private void pageChange(final int currentPage) {
@@ -326,70 +333,84 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         currentListData = queryCurrentData();
         currentViewCount = currentListData.size();
 
-        createGrid();
+        createTable();
     }
 
-    private void createGrid() {
-        gridItem.setItems(currentListData);
+    private void createTable() {
+        tableItem = new Table();
+        tableItem.setWidth("100%");
+        tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
+        tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
+        tableItem.setSortEnabled(false);
 
         // set column generator
+        for (Map.Entry<Object, ColumnGenerator> entry : columnGenerators.entrySet()) {
+            tableItem.addGeneratedColumn(entry.getKey(), entry.getValue());
+        }
 
-//        gridItem.addHeaderClickListener(headerClickEvent -> {
-//            String propertyId = (String) headerClickEvent.getPropertyId();
-//
-//            if (propertyId.equals("selected")) {
-//                return;
-//            }
-//
-//            if (searchRequest != null) {
-//                S searchCriteria = searchRequest.getSearchCriteria();
-//                if (sortColumnId == null) {
-//                    sortColumnId = propertyId;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-//                    isAscending = false;
-//                } else if (propertyId.equals(sortColumnId)) {
-//                    isAscending = !isAscending;
-//                    String direction = (isAscending) ? SearchCriteria.ASC : SearchCriteria.DESC;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, direction)));
-//                } else {
-//                    sortColumnId = propertyId;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-//                    isAscending = false;
-//                }
-//
-//                setSearchCriteria(searchCriteria);
-//            }
-//        });
+        if (StringUtils.isNotBlank((String) sortColumnId)) {
+            tableItem.setColumnIcon(sortColumnId, isAscending ? FontAwesome.CARET_DOWN : FontAwesome.CARET_UP);
+        }
 
-//        setDisplayColumns();
+        tableItem.addHeaderClickListener(headerClickEvent -> {
+            String propertyId = (String) headerClickEvent.getPropertyId();
+
+            if (propertyId.equals("selected")) {
+                return;
+            }
+
+            if (searchRequest != null) {
+                S searchCriteria = searchRequest.getSearchCriteria();
+                if (sortColumnId == null) {
+                    sortColumnId = propertyId;
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
+                    isAscending = false;
+                } else if (propertyId.equals(sortColumnId)) {
+                    isAscending = !isAscending;
+                    String direction = (isAscending) ? SearchCriteria.ASC : SearchCriteria.DESC;
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, direction)));
+                } else {
+                    sortColumnId = propertyId;
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
+                    isAscending = false;
+                }
+
+                setSearchCriteria(searchCriteria);
+            }
+        });
+
+        BeanItemContainer<B> container = new BeanItemContainer<>(type, currentListData);
+        tableItem.setPageLength(0);
+        tableItem.setContainerDataSource(container);
+        displayTableColumns();
 
         if (this.getComponentCount() > 0) {
             final Component component0 = this.getComponent(0);
-            if (component0 instanceof Grid) {
-                this.replaceComponent(component0, gridItem);
+            if (component0 instanceof Table) {
+                this.replaceComponent(component0, tableItem);
             } else {
-                this.addComponent(gridItem, 0);
+                this.addComponent(tableItem, 0);
             }
         } else {
-            this.addComponent(gridItem, 0);
+            this.addComponent(tableItem, 0);
         }
-        this.setExpandRatio(gridItem, 1);
+        this.setExpandRatio(tableItem, 1);
     }
 
-    public List<GridFieldMeta> getDefaultSelectedColumns() {
+    public Table getTable() {
+        return tableItem;
+    }
+
+    public List<TableViewField> getDefaultSelectedColumns() {
         return defaultSelectedColumns;
     }
 
-    public Grid<B> getGrid() {
-        return gridItem;
-    }
-
     @Override
-    public List<GridFieldMeta> getDisplayColumns() {
+    public List<TableViewField> getDisplayColumns() {
         return displayColumns;
     }
 
-//    public Object[] getVisibleColumns() {
-//        return gridItem.getVisibleColumns();
-//    }
+    public Object[] getVisibleColumns() {
+        return tableItem.getVisibleColumns();
+    }
 }

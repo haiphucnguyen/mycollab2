@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.settings;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -35,8 +35,8 @@ import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.SelectionOptionButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -54,7 +54,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
 
     private ProjectRoleSearchPanel searchPanel;
     private SelectionOptionButton selectOptionButton;
-    private DefaultPagedGrid<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
+    private DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
     private VerticalLayout listLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
@@ -69,10 +69,10 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedGrid<>(AppContextUtil.getSpringBean(ProjectRoleService.class),
-                SimpleProjectRole.class, new GridFieldMeta(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
-                Arrays.asList(new GridFieldMeta(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                        new GridFieldMeta(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)));
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ProjectRoleService.class),
+                SimpleProjectRole.class, new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
+                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)));
 
 //        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
 //            final SimpleProjectRole role = gridItem.getBeanByIndex(itemId);
@@ -156,7 +156,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedGrid<ProjectRoleSearchCriteria, SimpleProjectRole> getPagedBeanGrid() {
+    public AbstractPagedBeanTable<ProjectRoleSearchCriteria, SimpleProjectRole> getPagedBeanGrid() {
         return this.tableItem;
     }
 }

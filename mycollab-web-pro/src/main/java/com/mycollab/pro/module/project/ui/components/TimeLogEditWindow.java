@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.ui.components;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -17,7 +17,7 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
@@ -31,7 +31,6 @@ import org.vaadin.viritin.layouts.MWindow;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd.
@@ -44,7 +43,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     protected ItemTimeLoggingService itemTimeLoggingService;
     protected V bean;
 
-    private DefaultPagedGrid<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
+    private DefaultPagedBeanTable<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 
     private MVerticalLayout content;
     private HorizontalLayout headerPanel;
@@ -81,9 +80,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         constructSpentTimeEntryPanel();
         constructRemainTimeEntryPanel();
 
-        tableItem = new DefaultPagedGrid<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
                 Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
-                        TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new GridFieldMeta(null, "id",
+                        TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new TableViewField(null, "id",
                                 WebUIConstants.TABLE_CONTROL_WIDTH)));
 
 //        gridItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {

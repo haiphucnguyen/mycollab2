@@ -26,7 +26,7 @@ import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FieldSelection;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
@@ -48,7 +48,7 @@ public class BugSelectionWindow extends MWindow {
         this.withWidth("900px").withModal(true).withResizable(false).withCenter();
         this.fieldSelection = fieldSelection;
 
-        final DefaultPagedGrid<BugService, BugSearchCriteria, SimpleBug> tableItem = createBugTable();
+        final DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> tableItem = createBugTable();
         BugSearchCriteria baseCriteria = new BugSearchCriteria();
         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         tableItem.setSearchCriteria(baseCriteria);
@@ -62,8 +62,8 @@ public class BugSelectionWindow extends MWindow {
         this.setContent(new MVerticalLayout(bugSearchPanel, tableItem));
     }
 
-    private DefaultPagedGrid<BugService, BugSearchCriteria, SimpleBug> createBugTable() {
-        final DefaultPagedGrid<BugService, BugSearchCriteria, SimpleBug> tableItem = new BugTableDisplay(
+    private DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> createBugTable() {
+        final DefaultPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> tableItem = new BugBeanTableDisplay(
                 Arrays.asList(BugTableFieldDef.summary, BugTableFieldDef.severity, BugTableFieldDef.resolution));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);

@@ -16,7 +16,7 @@
  */
 package com.mycollab.vaadin.web.ui.table;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.CustomViewStoreService;
 import com.mycollab.spring.AppContextUtil;
@@ -32,17 +32,16 @@ import java.util.Collection;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-// TODO
 public abstract class CustomizedGridWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
     private CustomViewStoreService customViewStoreService;
     private ListBuilder listBuilder;
-    private AbstractPagedGrid<?, ?> tableItem;
+    private AbstractPagedBeanTable<?, ?> tableItem;
 
     protected String viewId;
 
-    public CustomizedGridWindow(final String viewId, final AbstractPagedGrid<?, ?> table) {
+    public CustomizedGridWindow(final String viewId, final AbstractPagedBeanTable<?, ?> table) {
         super(UserUIContext.getMessage(GenericI18Enum.OPT_CUSTOMIZE_VIEW));
         this.viewId = viewId;
         this.withWidth("400px").withModal(true).withResizable(false).withCenter();
@@ -60,20 +59,20 @@ public abstract class CustomizedGridWindow extends MWindow {
         listBuilder.setRightColumnCaption(UserUIContext.getMessage(GenericI18Enum.OPT_VIEW_COLUMNS));
 //        listBuilder.setWidth(100, Sizeable.Unit.PERCENTAGE);
 //        listBuilder.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
-//        final BeanItemContainer<GridFieldMeta> container = new BeanItemContainer<>(GridFieldMeta.class, this.getAvailableColumns());
+//        final BeanItemContainer<TableViewField> container = new BeanItemContainer<>(TableViewField.class, this.getAvailableColumns());
 //        listBuilder.setContainerDataSource(container);
 //        getAvailableColumns().forEach(field -> listBuilder.setItemCaption(field, UserUIContext.getMessage(field.getDescKey())));
 //        this.setSelectedViewColumns();
 //        contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 //
 //        MButton restoreLink = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
-//            List<GridFieldMeta> defaultSelectedColumns = gridItem.getDefaultSelectedColumns();
+//            List<TableViewField> defaultSelectedColumns = gridItem.getDefaultSelectedColumns();
 //            if (defaultSelectedColumns != null) {
-//                final List<GridFieldMeta> selectedColumns = new ArrayList<>();
-//                final Collection<GridFieldMeta> itemIds = container.getItemIds();
+//                final List<TableViewField> selectedColumns = new ArrayList<>();
+//                final Collection<TableViewField> itemIds = container.getItemIds();
 //
-//                for (GridFieldMeta column : defaultSelectedColumns) {
-//                    for (final GridFieldMeta viewField : itemIds) {
+//                for (TableViewField column : defaultSelectedColumns) {
+//                    for (final TableViewField viewField : itemIds) {
 //                        if (column.getField().equals(viewField.getField())) {
 //                            selectedColumns.add(viewField);
 //                        }
@@ -86,7 +85,7 @@ public abstract class CustomizedGridWindow extends MWindow {
 //        contentLayout.with(restoreLink).withAlign(restoreLink, Alignment.TOP_RIGHT);
 //
 //        final MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
-//            List<GridFieldMeta> selectedColumns = (List<GridFieldMeta>) listBuilder.getValue();
+//            List<TableViewField> selectedColumns = (List<TableViewField>) listBuilder.getValue();
 //            table.setDisplayColumns(selectedColumns);
 //            // Save custom table view def
 //            CustomViewStore viewDef = new CustomViewStore();
@@ -108,12 +107,12 @@ public abstract class CustomizedGridWindow extends MWindow {
 //    private void setSelectedViewColumns() {
 //        final Collection<String> viewColumnIds = this.getViewColumns();
 //
-//        final BeanItemContainer<GridFieldMeta> container = (BeanItemContainer<GridFieldMeta>) listBuilder.getContainerDataSource();
-//        final Collection<GridFieldMeta> itemIds = container.getItemIds();
-//        final List<GridFieldMeta> selectedColumns = new ArrayList<>();
+//        final BeanItemContainer<TableViewField> container = (BeanItemContainer<TableViewField>) listBuilder.getContainerDataSource();
+//        final Collection<TableViewField> itemIds = container.getItemIds();
+//        final List<TableViewField> selectedColumns = new ArrayList<>();
 //
 //        for (String viewColumnId : viewColumnIds) {
-//            for (final GridFieldMeta viewField : itemIds) {
+//            for (final TableViewField viewField : itemIds) {
 //                if (viewColumnId.equals(viewField.getField())) {
 //                    selectedColumns.add(viewField);
 //                }
@@ -123,7 +122,7 @@ public abstract class CustomizedGridWindow extends MWindow {
 //        listBuilder.setValue(selectedColumns);
     }
 
-    abstract protected Collection<GridFieldMeta> getAvailableColumns();
+    abstract protected Collection<TableViewField> getAvailableColumns();
 
     private Collection<String> getViewColumns() {
 //        Object[] visibleColumns = gridItem.getVisibleColumns();

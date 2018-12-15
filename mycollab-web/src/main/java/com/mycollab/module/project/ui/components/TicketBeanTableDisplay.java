@@ -16,12 +16,12 @@
  */
 package com.mycollab.module.project.ui.components;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.table.DefaultPagedGrid;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 
 import java.util.List;
 
@@ -30,10 +30,10 @@ import java.util.List;
  * @since 1.0
  */
 // TODO
-public class TicketTableDisplay extends DefaultPagedGrid<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
+public class TicketBeanTableDisplay extends DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> {
     private static final long serialVersionUID = 1L;
 
-    public TicketTableDisplay(List<GridFieldMeta> displayColumns) {
+    public TicketBeanTableDisplay(List<TableViewField> displayColumns) {
         super(AppContextUtil.getSpringBean(ProjectTicketService.class), ProjectTicket.class, displayColumns);
 
 //        addGeneratedColumn("name", (source, itemId, columnId) -> {

@@ -34,7 +34,7 @@ public class FollowingTicketPresenter extends AbstractPresenter<FollowingTicketV
 
     @Override
     protected void viewAttached() {
-        view.getSearchHandlers().addSearchHandler(criteria -> view.getPagedBeanGrid().setSearchCriteria(criteria));
+        view.getSearchHandlers().addSearchHandler(criteria -> view.getPagedBeanBeanGrid().setSearchCriteria(criteria));
     }
 
     @Override

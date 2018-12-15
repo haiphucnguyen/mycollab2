@@ -1,31 +1,29 @@
 /**
  * Copyright © MyCollab
- * <p>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p>
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * <p>
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.mycollab.vaadin.web.ui.table;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.vaadin.event.ApplicationEvent;
 import com.mycollab.vaadin.event.HasPageableHandlers;
 import com.mycollab.vaadin.event.HasSelectableItemHandlers;
-import com.vaadin.data.ValueProvider;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.renderers.AbstractRenderer;
 import com.vaadin.util.ReflectTools;
+import com.vaadin.v7.ui.Table;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -37,30 +35,28 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-// TODO
-public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableItemHandlers<B>, HasPageableHandlers, Component {
+public interface IPagedTable<S extends SearchCriteria, T> extends HasSelectableItemHandlers<T>, HasPageableHandlers, Component {
 
     int setSearchCriteria(S searchCriteria);
 
-    Collection<B> getCurrentDataList();
+    Collection<T> getCurrentDataList();
 
-    @Deprecated
     void addTableListener(TableClickListener listener);
 
-    <V> Grid.Column addGeneratedColumn(ValueProvider<B, V> id, AbstractRenderer renderer);
+    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
 
-    List<GridFieldMeta> getDisplayColumns();
+    List<TableViewField> getDisplayColumns();
 
-    B getBeanByIndex(Object itemId);
+    T getBeanByIndex(Object itemId);
 
-    @Deprecated
+    void refresh();
+
     interface TableClickListener extends EventListener, Serializable {
         Method itemClickMethod = ReflectTools.findMethod(TableClickListener.class, "itemClick", TableClickEvent.class);
 
         void itemClick(TableClickEvent event);
     }
 
-    @Deprecated
     class TableClickEvent extends ApplicationEvent {
         public static final String TABLE_CLICK_IDENTIFIER = "tableClickEvent";
 
@@ -68,7 +64,7 @@ public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableIt
         private String fieldName;
         private Object data;
 
-        public TableClickEvent(IPagedGrid source, Object data, String fieldName) {
+        public TableClickEvent(IPagedTable source, Object data, String fieldName) {
             super(source);
             this.data = data;
             this.fieldName = fieldName;

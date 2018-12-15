@@ -1,13 +1,13 @@
 package com.mycollab.pro.module.project.ui.components;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.pro.module.project.view.time.TimeTrackingTableDisplay;
+import com.mycollab.pro.module.project.view.time.TimeTrackingBeanTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.table.IPagedGrid.TableClickListener;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -26,13 +26,13 @@ import java.util.List;
 public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    protected List<GridFieldMeta> visibleFields;
+    protected List<TableViewField> visibleFields;
     protected TableClickListener tableClickListener;
 
     private String currentItemSearchCriteria = "";
     private List<SimpleItemTimeLogging> itemEntries;
 
-    public AbstractTimeTrackingDisplayComp(List<GridFieldMeta> fields, TableClickListener tableClickListener) {
+    public AbstractTimeTrackingDisplayComp(List<TableViewField> fields, TableClickListener tableClickListener) {
         super();
 
         this.visibleFields = fields;
@@ -68,10 +68,10 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             super();
         }
 
-        public TimeLoggingBockLayout(List<GridFieldMeta> visibleFields, TableClickListener tableClickListener,
+        public TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
                                      List<SimpleItemTimeLogging> timeLoggingEntries) {
             withMargin(new MarginInfo(true, false, true, false));
-            TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
+            TimeTrackingBeanTableDisplay table = new TimeTrackingBeanTableDisplay(visibleFields);
             table.addTableListener(tableClickListener);
             table.setCurrentDataList(timeLoggingEntries);
             addComponent(table);

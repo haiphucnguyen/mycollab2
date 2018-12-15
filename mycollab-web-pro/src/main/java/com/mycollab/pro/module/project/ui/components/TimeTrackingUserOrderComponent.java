@@ -1,9 +1,9 @@
 package com.mycollab.pro.module.project.ui.components;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.mycollab.vaadin.web.ui.table.IPagedGrid.TableClickListener;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class TimeTrackingUserOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
 
-    public TimeTrackingUserOrderComponent(List<GridFieldMeta> fields, TableClickListener tableClickListener) {
+    public TimeTrackingUserOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }

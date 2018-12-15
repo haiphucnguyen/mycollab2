@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.reports;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.db.query.VariableInjector;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -28,14 +28,14 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
     }
 
     @Override
-    protected Collection<GridFieldMeta> getDefaultColumns() {
+    protected Collection<TableViewField> getDefaultColumns() {
         return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
                 TimeTableFieldDef.project);
     }
 
     @Override
-    protected Collection<GridFieldMeta> getAvailableColumns() {
+    protected Collection<TableViewField> getAvailableColumns() {
         return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
                 TimeTableFieldDef.project);

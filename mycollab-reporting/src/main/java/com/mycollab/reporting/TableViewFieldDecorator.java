@@ -16,7 +16,7 @@
  */
 package com.mycollab.reporting;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.reporting.expression.PrimaryTypeFieldExpression;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 
@@ -26,12 +26,12 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class GridFieldMetaDecorator extends GridFieldMeta {
-    private GridFieldMeta tableField;
+public class TableViewFieldDecorator extends TableViewField {
+    private TableViewField tableField;
 
     private ComponentBuilder componentBuilder;
 
-    GridFieldMetaDecorator(GridFieldMeta tableField) {
+    TableViewFieldDecorator(TableViewField tableField) {
         super(null, "", -1);
         this.tableField = tableField;
     }

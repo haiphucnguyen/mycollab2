@@ -1,10 +1,10 @@
 package com.mycollab.pro.module.project.ui.components;
 
-import com.mycollab.common.GridFieldMeta;
+import com.mycollab.common.TableViewField;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.web.ui.table.IPagedGrid.TableClickListener;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
 //    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale
 //            (UserUIContext.getUserLocale());
 
-    public TimeTrackingDateOrderComponent(List<GridFieldMeta> fields, TableClickListener tableClickListener) {
+    public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }

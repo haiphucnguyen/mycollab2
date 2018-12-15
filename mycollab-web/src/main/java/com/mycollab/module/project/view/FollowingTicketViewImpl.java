@@ -35,7 +35,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.SplitButton;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.AbstractPagedGrid;
+import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
@@ -54,7 +54,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
     private static final long serialVersionUID = 1L;
 
     private SplitButton exportButtonControl;
-    private FollowingTicketTableDisplay ticketTable;
+    private FollowingTicketBeanTableDisplay ticketTable;
     private FollowingTicketSearchPanel searchPanel;
 
     public FollowingTicketViewImpl() {
@@ -96,7 +96,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
         searchPanel = new FollowingTicketSearchPanel();
         this.addComponent(searchPanel);
 
-        this.ticketTable = new FollowingTicketTableDisplay();
+        this.ticketTable = new FollowingTicketBeanTableDisplay();
         this.ticketTable.setMargin(new MarginInfo(true, false, false, false));
         this.addComponent(this.ticketTable);
     }
@@ -130,7 +130,7 @@ public class FollowingTicketViewImpl extends AbstractVerticalPageView implements
     }
 
     @Override
-    public AbstractPagedGrid<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanGrid() {
+    public AbstractPagedBeanTable<FollowingTicketSearchCriteria, FollowingTicket> getPagedBeanBeanGrid() {
         return this.ticketTable;
     }
 }
