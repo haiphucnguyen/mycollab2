@@ -100,10 +100,10 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         bodyLayout.removeAllComponents();
         bodyLayout.with(module).expand(module);
 
-        MHorizontalLayout serviceMenu = module.buildMenu();
-        if (serviceMenu != null) {
-            headerLayout.addComponent(serviceMenu, "serviceMenu");
-        }
+//        MHorizontalLayout serviceMenu = module.buildMenu();
+//        if (serviceMenu != null) {
+//            headerLayout.addComponent(serviceMenu, "serviceMenu");
+//        }
     }
 
     private CustomLayout createMainMenu() {

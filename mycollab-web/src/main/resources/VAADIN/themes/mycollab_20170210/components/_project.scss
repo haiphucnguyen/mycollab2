@@ -39,25 +39,6 @@
     box-shadow: inset 5px 0px 0px 0px #47bbdd;
   }
 
-  /* My Project List */
-  .myprojectlist {
-    .contentWrapper {
-      border-top: 1px solid $my-separator-color;
-    }
-    .projectblock {
-      padding: 10px;
-      border-bottom: 1px solid $my-separator-color;
-      border-right: 1px solid $my-separator-color;
-      border-left: 1px solid $my-separator-color;
-      &:hover {
-        @include hover-effect;
-      }
-      &.projectlink-wrapper-archived {
-        background-color: lightgray;
-      }
-    }
-  }
-
   .instruction-box {
     background-color: $my-block-background-color;
     padding: 10px;

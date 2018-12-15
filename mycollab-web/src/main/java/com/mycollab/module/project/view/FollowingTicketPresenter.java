@@ -39,7 +39,8 @@ public class FollowingTicketPresenter extends AbstractPresenter<FollowingTicketV
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ((ComponentContainer) container).addComponent(view);
+        ProjectModule projectModule = (ProjectModule) container;
+        projectModule.gotoSubView("FollowingTickets");
         view.displayTickets();
     }
 }

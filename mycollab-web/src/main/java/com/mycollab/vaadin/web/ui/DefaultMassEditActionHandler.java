@@ -88,7 +88,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
         }, exportType.getDefaultFileName());
     }
 
-    protected abstract void onSelectExtra(String id);
+    protected void onSelectExtra(String id) {}
 
     protected abstract Class<?> getReportModelClassType();
 

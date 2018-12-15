@@ -24,7 +24,7 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectModule projectModule = (ProjectModule) container;
-        projectModule.setContent(view);
+        projectModule.gotoSubView("Reports");
 
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);

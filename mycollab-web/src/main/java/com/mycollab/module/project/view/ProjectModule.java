@@ -17,29 +17,21 @@
 package com.mycollab.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.event.ClientEvent;
-import com.mycollab.module.project.event.ProjectEvent;
-import com.mycollab.module.project.event.ReportEvent;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.i18n.TicketI18nEnum;
-import com.mycollab.module.project.ui.ProjectAssetsManager;
-import com.mycollab.module.project.view.service.TicketComponentFactory;
-import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.module.project.view.client.IClientPresenter;
+import com.mycollab.module.project.view.reports.IReportPresenter;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.*;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
+import com.mycollab.vaadin.mvp.ControllerRegistry;
+import com.mycollab.vaadin.mvp.PresenterResolver;
+import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
-import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.viritin.button.MButton;
+import com.vaadin.ui.HasComponents;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -50,7 +42,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ProjectModule extends AbstractSingleContainerPageView implements IDesktopModule {
     private static final long serialVersionUID = 1L;
 
-    private MHorizontalLayout serviceMenuContainer;
     private VerticalTabsheet tabSheet;
 
     private UserProjectDashboardPresenter userProjectDashboardPresenter;
@@ -58,6 +49,10 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
     private FollowingTicketPresenter followingTicketPresenter;
 
     private ProjectListPresenter projectListPresenter;
+
+    private IReportPresenter reportPresenter;
+
+//    private IClientPresenter clientPresenter;
 
     public ProjectModule() {
         addStyleName("module");
@@ -82,6 +77,15 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         tabSheet.addTab(constructProjectsViewComponent(), "Projects",
                 UserUIContext.getMessage(ProjectI18nEnum.LIST), VaadinIcons.BUILDING_O);
 
+        tabSheet.addTab(constructFollowingTicketsComponent(), "FollowingTickets",
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), VaadinIcons.EYE);
+
+        tabSheet.addTab(constructReportViewComponent(), "Reports",
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
+
+//        tabSheet.addTab(constructClientViewComponent(), "Clients",
+//                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
+
         tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
 
@@ -93,6 +97,13 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
                     userProjectDashboardPresenter.go(ProjectModule.this, null);
                 } else if ("Projects".equals(tabId)) {
                     projectListPresenter.go(ProjectModule.this, null);
+                } else if ("FollowingTickets".equals(tabId)) {
+                    followingTicketPresenter.go(ProjectModule.this, null);
+                } else if ("Reports".equals(tabId)) {
+                    reportPresenter.go(ProjectModule.this, null);
+//                } else if ("Clients".equals(tabId)) {
+//                    clientPresenter.go(ProjectModule.this, null);
+//                }
                 }
             }
         });
@@ -113,56 +124,15 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         return projectListPresenter.getView();
     }
 
-    @Override
-    public MHorizontalLayout buildMenu() {
-        if (serviceMenuContainer == null) {
-            serviceMenuContainer = new MHorizontalLayout().withHeight("45px").withMargin(new MarginInfo(false, true,
-                    false, true)).withStyleName("service-menu");
-            serviceMenuContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-
-            MButton boardBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_BOARD), clickEvent ->
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoUserDashboard(this, null))
-            );
-            serviceMenuContainer.with(boardBtn);
-
-            if (!SiteConfiguration.isCommunityEdition()) {
-                MButton clientBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_CLIENTS), clickEvent -> {
-                    EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
-                });
-
-                MButton reportBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), clickEvent -> {
-                    EventBusFactory.getInstance().post(new ReportEvent.GotoConsole(this));
-                });
-                serviceMenuContainer.with(clientBtn, reportBtn);
-            }
-
-            PopupButton newBtn = new PopupButton(UserUIContext.getMessage(GenericI18Enum.ACTION_NEW));
-            newBtn.addStyleName("add-btn-popup");
-            newBtn.setIcon(VaadinIcons.PLUS_CIRCLE);
-            OptionPopupContent contentLayout = new OptionPopupContent();
-
-            if (UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-                MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
-                    UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
-                    newBtn.setPopupVisible(false);
-                }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-                contentLayout.addOption(newPrjButton);
-            }
-
-            MButton newTicketButton = new MButton(UserUIContext.getMessage(TicketI18nEnum.SINGLE), clickEvent -> {
-                UI.getCurrent().addWindow(AppContextUtil.getSpringBean(TicketComponentFactory.class)
-                        .createNewTicketWindow(null, null, null, false));
-                newBtn.setPopupVisible(false);
-            }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
-            contentLayout.addOption(newTicketButton);
-
-            newBtn.setContent(contentLayout);
-
-            serviceMenuContainer.with(newBtn).withAlign(newBtn, Alignment.MIDDLE_LEFT);
-        }
-
-        return serviceMenuContainer;
+    private HasComponents constructReportViewComponent() {
+        reportPresenter = PresenterResolver.getPresenter(IReportPresenter.class);
+        return reportPresenter.getView();
     }
+
+//    private HasComponents constructClientViewComponent() {
+//        clientPresenter = PresenterResolver.getPresenter(IClientPresenter.class);
+//        return clientPresenter.getView();
+//    }
 
     public void gotoSubView(String viewId) {
         tabSheet.selectTab(viewId);
