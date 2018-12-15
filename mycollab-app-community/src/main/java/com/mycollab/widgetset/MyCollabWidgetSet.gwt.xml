@@ -21,4 +21,6 @@
     <inherits name="org.tepi.listbuilder.WidgetSet" />
 
     <inherits name="org.vaadin.easyuploads.Widgetset" />
+
+    <inherits name="org.vaadin.alump.ckeditor.WidgetSet" />
 </module>

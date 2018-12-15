@@ -40,6 +40,7 @@ import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 
@@ -47,7 +48,6 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements ProjectRoleListView {
     private static final long serialVersionUID = 1L;
@@ -60,9 +60,8 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     private Label selectedItemsNumberLabel = new Label();
 
     public ProjectRoleListViewImpl() {
-        this.setMargin(new MarginInfo(false, true, true, true));
         searchPanel = new ProjectRoleSearchPanel();
-        listLayout = new VerticalLayout();
+        listLayout = new MVerticalLayout().withSpacing(false);
         with(searchPanel, listLayout);
 
         this.generateDisplayTable();
@@ -103,11 +102,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     }
 
     private ComponentContainer constructTableActionControls() {
-        CssLayout layoutWrapper = new CssLayout();
-        layoutWrapper.setWidth("100%");
-        MHorizontalLayout layout = new MHorizontalLayout();
-        layoutWrapper.addStyleName(WebThemes.TABLE_ACTION_CONTROLS);
-        layoutWrapper.addComponent(layout);
+        MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.TABLE_ACTION_CONTROLS).withFullWidth();
 
         selectOptionButton = new SelectionOptionButton(this.tableItem);
         layout.addComponent(this.selectOptionButton);
@@ -123,7 +118,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
 
         layout.with(this.tableActionControls, this.selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel,
                 Alignment.MIDDLE_LEFT);
-        return layoutWrapper;
+        return layout;
     }
 
     @Override

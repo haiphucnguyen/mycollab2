@@ -92,6 +92,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     }
 
     public AbstractPagedBeanTable(Class<B> type, String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
+        this.setMargin(false);
         if (viewId != null) {
             CustomViewStoreService customViewStoreService = AppContextUtil.getSpringBean(CustomViewStoreService.class);
             CustomViewStore viewLayoutDef = customViewStoreService.getViewLayoutDef(AppUI.getAccountId(),

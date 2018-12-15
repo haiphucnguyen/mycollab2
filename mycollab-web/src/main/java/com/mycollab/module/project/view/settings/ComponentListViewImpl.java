@@ -45,6 +45,7 @@ import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 
@@ -69,7 +70,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         this.componentSearchPanel = new ComponentSearchPanel();
         this.addComponent(this.componentSearchPanel);
 
-        componentListLayout = new VerticalLayout();
+        componentListLayout = new MVerticalLayout().withMargin(false).withSpacing(false);
         this.addComponent(componentListLayout);
 
         this.generateDisplayTable();
@@ -137,12 +138,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
     }
 
     private ComponentContainer constructTableActionControls() {
-        final CssLayout layoutWrapper = new CssLayout();
-        layoutWrapper.setWidth("100%");
-
-        MHorizontalLayout layout = new MHorizontalLayout();
-        layoutWrapper.addStyleName(WebThemes.TABLE_ACTION_CONTROLS);
-        layoutWrapper.addComponent(layout);
+        MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.TABLE_ACTION_CONTROLS).withFullWidth();
 
         this.selectOptionButton = new SelectionOptionButton(tableItem);
         layout.addComponent(this.selectOptionButton);
@@ -159,7 +155,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
 
         layout.with(tableActionControls, selectedItemsNumberLabel)
                 .withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
-        return layoutWrapper;
+        return layout;
     }
 
     @Override

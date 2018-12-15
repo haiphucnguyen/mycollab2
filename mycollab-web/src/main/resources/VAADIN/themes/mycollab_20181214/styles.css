@@ -17745,6 +17745,7 @@ div.v-button.token-field .v-button-wrap {
 .border-list {
 	border: 1px solid #e5e5e5;
 	width: 100%;
+	padding: 0px;
 }
 
 .border-list .row {
