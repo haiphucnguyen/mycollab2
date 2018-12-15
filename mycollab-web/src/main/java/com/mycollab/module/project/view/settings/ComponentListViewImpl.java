@@ -18,13 +18,18 @@ package com.mycollab.module.project.view.settings;
 
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.i18n.ComponentI18nEnum;
+import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.mycollab.module.tracker.service.ComponentService;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasMassItemActionHandler;
 import com.mycollab.vaadin.event.HasSearchHandlers;
@@ -33,9 +38,8 @@ import com.mycollab.vaadin.event.HasSelectionOptionHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
-import com.mycollab.vaadin.web.ui.SelectionOptionButton;
-import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
@@ -48,7 +52,6 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class ComponentListViewImpl extends AbstractVerticalPageView implements ComponentListView {
     private static final long serialVersionUID = 1L;
@@ -82,47 +85,46 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
                         new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
-//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleComponent component = gridItem.getBeanByIndex(itemId);
-//            CheckBoxDecor cb = new CheckBoxDecor("", component.isSelected());
-//            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(component));
-//            component.setExtraData(cb);
-//            return cb;
-//        });
-//
-//        gridItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
-//            LabelLink b = new LabelLink(bugComponent.getName(), ProjectLinkGenerator
-//                    .generateBugComponentPreviewLink(bugComponent.getProjectid(), bugComponent.getId()));
-//            if (bugComponent.getStatus() != null && bugComponent.getStatus().equals(StatusI18nEnum.Closed.name())) {
-//                b.addStyleName(WebThemes.LINK_COMPLETED);
-//            }
-//            b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(),
-//                    bugComponent, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
-//            return b;
-//        });
+        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+            final SimpleComponent component = tableItem.getBeanByIndex(itemId);
+            CheckBoxDecor cb = new CheckBoxDecor("", component.isSelected());
+            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(component));
+            component.setExtraData(cb);
+            return cb;
+        });
 
-//        gridItem.addGeneratedColumn("userLeadFullName", (source, itemId, columnId) -> {
-//            SimpleComponent component = gridItem.getBeanByIndex(itemId);
-//            return new ProjectUserLink(component.getProjectid(), component.getUserlead(),
-//                    component.getUserLeadAvatarId(), component.getUserLeadFullName());
-//        });
-//
-//        gridItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
-//            return new ProgressBarIndicator(bugComponent.getNumBugs(), bugComponent.getNumOpenBugs(), false);
-//        });
-//
-//        gridItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
-//            SimpleComponent bugComponent = gridItem.getBeanByIndex(itemId);
-//            return ELabel.i18n(bugComponent.getStatus(), StatusI18nEnum.class);
-//        });
-//
-//        gridItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
-//            SimpleComponent version = gridItem.getBeanByIndex(itemId);
-//            return ELabel.richText(version.getDescription());
-//        });
+        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
+            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+            LabelLink b = new LabelLink(bugComponent.getName(), ProjectLinkGenerator
+                    .generateBugComponentPreviewLink(bugComponent.getProjectid(), bugComponent.getId()));
+            if (bugComponent.getStatus() != null && bugComponent.getStatus().equals(StatusI18nEnum.Closed.name())) {
+                b.addStyleName(WebThemes.LINK_COMPLETED);
+            }
+            b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(),
+                    bugComponent, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone()));
+            return b;
+        });
+
+        tableItem.addGeneratedColumn("userLeadFullName", (source, itemId, columnId) -> {
+            SimpleComponent component = tableItem.getBeanByIndex(itemId);
+            return new ProjectUserLink(component.getProjectid(), component.getUserlead(),
+                    component.getUserLeadAvatarId(), component.getUserLeadFullName());
+        });
+
+        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+            return new ProgressBarIndicator(bugComponent.getNumBugs(), bugComponent.getNumOpenBugs(), false);
+        });
+
+        tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
+            SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+            return ELabel.i18n(bugComponent.getStatus(), StatusI18nEnum.class);
+        });
+
+        tableItem.addGeneratedColumn("description", (source, itemId, columnId) -> {
+            SimpleComponent version = tableItem.getBeanByIndex(itemId);
+            return ELabel.richText(version.getDescription());
+        });
 
         tableItem.setWidth("100%");
         componentListLayout.addComponent(constructTableActionControls());

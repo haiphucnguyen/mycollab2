@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController
  * @since 5.1.2
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = ["/user"])
 class UserController(private val billingService: BillingService) {
 
-    @RequestMapping(value = "/subdomains/{username:.+}", method = [(RequestMethod.GET)])
+    @RequestMapping(value = ["/subdomains/{username:.+}"], method = [(RequestMethod.GET)])
     fun retrieveSubdomainsOfUser(@PathVariable("username") username: String): Array<String> {
         val subDomains = billingService.getSubDomainsOfUser(username)
         val result: Array<String>

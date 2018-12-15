@@ -19,7 +19,9 @@ package com.mycollab.module.project.view.settings;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.domain.ProjectRole;
 import com.mycollab.module.project.domain.SimpleProjectRole;
 import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.mycollab.module.project.service.ProjectRoleService;
@@ -32,9 +34,7 @@ import com.mycollab.vaadin.event.HasSelectionOptionHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
-import com.mycollab.vaadin.web.ui.SelectionOptionButton;
-import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.WebUIConstants;
+import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
@@ -74,20 +74,19 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
                 Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)));
 
-//        gridItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-//            final SimpleProjectRole role = gridItem.getBeanByIndex(itemId);
-//            CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
-//            cb.setImmediate(true);
-//            cb.addValueChangeListener(valueChangeEvent -> gridItem.fireSelectItemEvent(role));
-//            role.setExtraData(cb);
-//            return cb;
-//        });
-//
-//        gridItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
-//            ProjectRole role = gridItem.getBeanByIndex(itemId);
-//            return new LabelLink(role.getRolename(),
-//                    ProjectLinkGenerator.generateRolePreviewLink(role.getProjectid(), role.getId()));
-//        });
+        tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
+            final SimpleProjectRole role = tableItem.getBeanByIndex(itemId);
+            CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
+            cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(role));
+            role.setExtraData(cb);
+            return cb;
+        });
+
+        tableItem.addGeneratedColumn("rolename", (source, itemId, columnId) -> {
+            ProjectRole role = tableItem.getBeanByIndex(itemId);
+            return new LabelLink(role.getRolename(),
+                    ProjectLinkGenerator.generateRolePreviewLink(role.getProjectid(), role.getId()));
+        });
 
         listLayout.addComponent(this.constructTableActionControls());
         listLayout.addComponent(this.tableItem);

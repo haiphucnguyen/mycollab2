@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 @RestController
 class LiveInstanceMonitorController(private val liveInstanceMapper: LiveInstanceMapper) {
 
-    @RequestMapping(value = "/checkInstance", method = [(RequestMethod.POST)])
+    @RequestMapping(value = ["/checkInstance"], method = [(RequestMethod.POST)])
     @CrossOrigin
     fun checkInstance(@RequestBody instance: LiveInstance): String {
         val sysId = instance.sysid

@@ -177,9 +177,4 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
         return previewForm;
     }
 
-    @Override
-    public void addViewListener(ViewListener listener) {
-
-    }
-
 }

@@ -23,21 +23,18 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ExceptionUtils;
 import com.mycollab.i18n.LocalizationHelper;
-import com.mycollab.module.user.event.UserEvent;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
-import com.vaadin.data.validator.StringLengthValidator;
+import com.mycollab.web.DesktopApplication;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.Registration;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 
@@ -69,8 +66,7 @@ public class LoginViewImpl extends AbstractVerticalPageView implements LoginView
                 String password = loginEvent.getLoginParameter("password");
                 try {
                     custom.removeComponent("customErrorMsg");
-                    LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
-                            username, password, rememberMe.getValue())));
+                    ((DesktopApplication) UI.getCurrent()).doLogin(username, password, rememberMe.getValue());
                 } catch (MyCollabException e) {
                     custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
                 } catch (Exception e) {

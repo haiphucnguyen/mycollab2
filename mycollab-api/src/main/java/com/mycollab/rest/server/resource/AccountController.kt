@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*
  * @since 5.1.2
  */
 @RestController
-@RequestMapping(value = "/account")
+@RequestMapping(value = ["/account"])
 @Api
 class AccountController(private var billingService: BillingService,
                         private var emailReferenceService: EmailReferenceService,
                         private var deploymentMode: IDeploymentMode) {
 
     @CrossOrigin(origins = ["https://*.mycollab.com", "https://mycollab.com", "https://www.mycollab.com"])
-    @RequestMapping(value = "signUp", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
+    @RequestMapping(value = ["signUp"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     fun signUp(@RequestParam("subDomain") subDomain: String, @RequestParam("planId") planId: Int,
                @RequestParam("password") password: String, @RequestParam("email") email: String,
                @RequestParam("timezone") timezoneId: String, @RequestParam("isEmailVerified") isEmailVerified: Boolean?): String {

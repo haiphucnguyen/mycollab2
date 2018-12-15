@@ -28,7 +28,7 @@ class DownloadVerifyController(private val communityLeadMapper: CommunityLeadMap
                                private val editionInfo: EditionInfo,
                                private val emailReferenceService: EmailReferenceService) {
 
-    @RequestMapping(value = "/download/verify", method = [RequestMethod.GET])
+    @RequestMapping(value = ["/download/verify"], method = [RequestMethod.GET])
     fun verifyAndDownload(@RequestParam("email") email: String,
                           @RequestParam("edition", required = false) edition: String?): ResponseEntity<Resource> {
 

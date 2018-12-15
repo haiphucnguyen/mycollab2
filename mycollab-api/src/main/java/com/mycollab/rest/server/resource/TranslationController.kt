@@ -14,10 +14,10 @@ import java.util.*
  * @since 5.4.3
  */
 @RestController
-@RequestMapping(value = "/localization")
+@RequestMapping(value = ["/localization"])
 class TranslationController {
 
-    @RequestMapping(value = "translations", method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_OCTET_STREAM_VALUE)])
+    @RequestMapping(value = ["translations"], method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_OCTET_STREAM_VALUE)])
     @ResponseBody
     fun retrieveAllTranslations(): ResponseEntity<*> {
         val plainCreds = "haiphucnguyen@gmail.com:=5EqGRN5Y=<%`tbX"
