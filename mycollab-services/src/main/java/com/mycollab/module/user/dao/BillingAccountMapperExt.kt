@@ -25,4 +25,6 @@ interface BillingAccountMapperExt {
     fun getBillingAccountById(accountId: Int): SimpleBillingAccount?
 
     fun getAccountByDomain(domainName: String): SimpleBillingAccount?
+
+    fun getAccountsByUsername(username: String): List<SimpleBillingAccount>
 }

@@ -42,7 +42,7 @@ Server address that you and your team will access MyCollab via browser. For inst
 
 >\#====================================================
 
-**db.driverClassName**: Value must be *com.mysql.jdbc.Driver*
+**db.driverClassName**: Value must be *com.mysql.cj.jdbc.Driver*
 
 **db.url**: The format string must be *jdbc:mysql://{database server}/{database schema}?useUnicode=true&characterEncoding=utf-8&autoReconnect=true*. Where:
 
@@ -118,7 +118,7 @@ Below is the full example of mycollab.properties we use in our development works
 
 >\#**DATABASE CONFIGURATION**
 
->db.driverClassName=com.mysql.jdbc.Driver
+>db.driverClassName=com.mysql.cj.jdbc.Driver
 
 >db.url=jdbc:mysql://localhost/mycollab_live?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
 

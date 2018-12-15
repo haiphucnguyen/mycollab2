@@ -38,6 +38,11 @@
         WHERE s_account.subdomain = #{domainName}
     </select>
 
+    <select id="getAccountsByUsername" resultMap="SimpleBillingAccountResult" parameterType="java.lang.String">
+        <include refid="selectBillingAccount" />
+        WHERE EXISTS(SELECT * FROM s_user_account WHERE s_user_account.accountId=s_account.id AND  s_user_account.username=#{username} )
+    </select>
+
     <select id="getDefaultAccountByDomain" resultMap="SimpleBillingAccountResult">
         <include refid="selectBillingAccount" />
         LIMIT 1

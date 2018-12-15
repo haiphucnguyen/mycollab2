@@ -35,7 +35,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -229,7 +228,7 @@ public class UserDashboardViewImpl extends AbstractVerticalPageView implements U
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
             MButton createNewBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
-                UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
+                UI.getCurrent().addWindow(AppContextUtil.getSpringBean(AbstractProjectAddWindow.class));
                 close();
             }).withStyleName(WebThemes.BUTTON_ACTION);
 

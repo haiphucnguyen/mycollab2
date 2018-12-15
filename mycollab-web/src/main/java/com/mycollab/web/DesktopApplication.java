@@ -49,6 +49,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.spring.events.EventBus.UIEventBus;
 import org.vaadin.viritin.util.BrowserCookie;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -88,6 +89,8 @@ public class DesktopApplication extends AppUI {
         springNavigator.setErrorView(ErrorView.class);
         getUI().setNavigator(springNavigator);
 
+        getPage().addPopStateListener( e -> enter() );
+
         ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
         if (serverConfiguration.isPush()) {
             getPushConfiguration().setPushMode(PushMode.MANUAL);
@@ -118,7 +121,7 @@ public class DesktopApplication extends AppUI {
             NotificationUtil.showWarningNotification(UserUIContext.getMessage(ErrorI18nEnum.BROWSER_OUT_UP_DATE));
         }
 
-        mainView.setDefaultView();
+        enter();
     }
 
     @Override
@@ -270,9 +273,14 @@ public class DesktopApplication extends AppUI {
         opener.extend(okBtn);
     }
 
-    private void enter(String newFragmentUrl) {
-        ShellUrlResolver.ROOT.resolveFragment(newFragmentUrl);
+    void enter() {
+        URI location = getPage().getLocation();
+        mainView.setDefaultView();
     }
+
+//    private void enter(String newFragmentUrl) {
+//        ShellUrlResolver.ROOT.resolveFragment(newFragmentUrl);
+//    }
 
     private void clearSession() {
         if (getCurrentContext() != null) {

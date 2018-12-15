@@ -29,7 +29,6 @@ public class ProjectMainView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "dashboard";
 
     DefaultNotificationHolder notifications = new DefaultNotificationHolder();
-    DefaultBadgeHolder badge = new DefaultBadgeHolder();
 
     @Autowired
     private ProjectMainPresenter projectMainPresenter;
@@ -58,7 +57,7 @@ public class ProjectMainView extends VerticalLayout implements View {
                 .addToAppBar(new AppBarNotificationButton(notifications, true))
                 .withDesign(AppLayoutDesign.MATERIAL)
                 .add(new MenuHeader("Version 7.0.0", new ThemeResource("logo.png")), HEADER)
-                .add(UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), VaadinIcons.CLIPBOARD, DashboardView.class)
+                .add(UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), VaadinIcons.CLIPBOARD, WorksView.class)
                 .add(UserUIContext.getMessage(ProjectI18nEnum.LIST), VaadinIcons.BUILDING_O, MyProjectsView.class)
                 .add(CDISubmenuBuilder.get("Reports", VaadinIcons.PLUS)
                         .add("Standup", StandupMeetingView.class)

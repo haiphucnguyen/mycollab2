@@ -9,6 +9,7 @@ import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
+import com.mycollab.module.project.view.AbstractProjectAddWindow.FormWizardStep;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -20,7 +21,7 @@ import com.vaadin.ui.Component;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardStep {
+class ProjectBillingAccountStep implements FormWizardStep {
     private Project project;
     private AdvancedEditBeanForm<Project> editForm;
     private EditFormFieldFactory editFormFieldFactory;
@@ -98,7 +99,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
             if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
             } else if (Project.Field.accountid.equalTo(propertyId)) {
-                throw new MyCollabException("Need implement");
+//                throw new MyCollabException("Need implement");
             } else if (Project.Field.targetbudget.equalTo(propertyId)
                     || Project.Field.defaultbillingrate.equalTo(propertyId)
                     || Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {

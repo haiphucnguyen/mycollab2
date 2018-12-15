@@ -107,7 +107,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
             if (UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
                 MButton newPrjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.SINGLE), clickEvent -> {
-                    UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
+//                    UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class));
                     newBtn.setPopupVisible(false);
                 }).withIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
                 contentLayout.addOption(newPrjButton);

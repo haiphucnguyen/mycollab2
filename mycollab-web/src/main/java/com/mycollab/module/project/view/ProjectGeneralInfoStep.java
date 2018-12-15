@@ -25,6 +25,7 @@ import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.module.project.view.AbstractProjectAddWindow.FormWizardStep;
 import com.mycollab.module.user.ui.components.ActiveUserComboBox;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -42,7 +43,7 @@ import com.vaadin.ui.TextField;
  * @since 5.3.5
  */
 // TODO
-public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWizardStep {
+public class ProjectGeneralInfoStep implements FormWizardStep {
     private Project project;
     private AdvancedEditBeanForm<Project> editForm;
     private EditFormFieldFactory editFormFieldFactory;

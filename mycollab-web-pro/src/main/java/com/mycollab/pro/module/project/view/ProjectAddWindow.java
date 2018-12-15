@@ -21,6 +21,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,6 +30,7 @@ import org.vaadin.teemu.wizards.event.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import javax.annotation.PostConstruct;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.Set;
@@ -37,7 +39,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent
+@SpringComponent
 public class ProjectAddWindow extends AbstractProjectAddWindow implements WizardProgressListener {
     private static final long serialVersionUID = 1L;
 
@@ -47,11 +49,15 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     private ProjectCustomizeFeatureStep customizeFeatureStep;
 
     public ProjectAddWindow() {
-        this(new Project());
+        super(new Project());
     }
 
-    public ProjectAddWindow(Project valuePrj) {
-        super(valuePrj);
+    @PostConstruct
+    public void init() {
+        this.addAttachListener(event -> constructUI());
+    }
+
+    private void constructUI() {
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
         setContent(contentLayout);
 
@@ -66,6 +72,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
         wizard.addListener(this);
         contentLayout.with(wizard).withAlign(wizard, Alignment.TOP_CENTER);
     }
+
 
     @Override
     public void activeStepChanged(WizardStepActivationEvent wizardStepActivationEvent) {

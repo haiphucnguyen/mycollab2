@@ -58,7 +58,7 @@ class InstallationServlet : HttpServlet() {
         val dbUrl = "jdbc:mysql://$databaseServer/$databaseName?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&rewriteBatchedStatements=true&useCompression=true&useServerPrepStmts=false&verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true"
 
 //        try {
-//            Class.forName("com.mysql.jdbc.Driver")
+//            Class.forName("com.mysql.cj.jdbc.Driver")
 //        } catch (e: ClassNotFoundException) {
 //            LOG.error("Can not load mysql driver", e)
 //            return

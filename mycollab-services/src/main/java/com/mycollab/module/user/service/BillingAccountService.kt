@@ -39,6 +39,9 @@ interface BillingAccountService : ICrudService<Int, BillingAccount> {
     fun getAccountById(@CacheKey accountId: Int): BillingAccount?
 
     @Cacheable
+    fun getAccountsByUsername(username: String): List<SimpleBillingAccount>
+
+    @Cacheable
     fun getTotalActiveUsersInAccount(@CacheKey accountId: Int): Int
 
     fun createDefaultAccountData(username: String, password: String, timezoneId: String, language: String, isEmailVerified: Boolean?,

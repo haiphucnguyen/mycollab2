@@ -43,7 +43,7 @@ public class TestDbConfiguration {
     }
 
     public String getDriverClassName() {
-        return props.getProperty("db.driverClassName", "com.mysql.jdbc.Driver");
+        return props.getProperty("db.driverClassName", "com.mysql.cj.jdbc.Driver");
     }
 
     public String getJdbcUrl() {

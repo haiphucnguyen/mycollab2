@@ -28,27 +28,36 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
-import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.ui.Alignment;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-@ViewComponent
+@SpringComponent
 public class ProjectAddWindow extends AbstractProjectAddWindow {
 
     private ProjectGeneralInfoStep projectInfo;
 
     public ProjectAddWindow() {
         super(new Project());
+    }
 
+    @PostConstruct
+    public void init() {
+        addAttachListener(event -> constructUI());
+    }
+
+    private void constructUI() {
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
         setContent(contentLayout);
         projectInfo = new ProjectGeneralInfoStep(project);

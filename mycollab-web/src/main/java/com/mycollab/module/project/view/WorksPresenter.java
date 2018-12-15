@@ -12,7 +12,7 @@ import java.util.List;
 
 @SpringComponent
 @ViewScope
-public class DashboardPresenter extends Presenter<DashboardView> {
+public class WorksPresenter extends Presenter<WorksView> {
 
     @Autowired
     private ProjectService projectService;

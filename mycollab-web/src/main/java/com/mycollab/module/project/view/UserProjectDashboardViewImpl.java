@@ -27,6 +27,7 @@ import com.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.mycollab.module.project.view.user.MyProjectListComponent;
 import com.mycollab.module.project.view.user.UserUnresolvedTicketWidget;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -109,7 +110,7 @@ public class UserProjectDashboardViewImpl extends AbstractVerticalPageView imple
             this.with(ELabel.h2(UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE)).withUndefinedWidth());
             if (UserUIContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
                 MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
-                        clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
+                        clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(AbstractProjectAddWindow.class)))
                         .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS);
                 with(newProjectBtn);
             }

@@ -67,6 +67,8 @@ class BillingAccountServiceImpl(private val billingAccountMapper: BillingAccount
         throw UserInvalidInputException("The domain ${record.subdomain} is already used")
     }
 
+    override fun getAccountsByUsername(username: String): List<SimpleBillingAccount>  = billingAccountMapperExt.getAccountsByUsername(username)
+
     override fun getAccountByDomain(domain: String): SimpleBillingAccount? =
             if (deploymentMode.isDemandEdition) {
                 billingAccountMapperExt.getAccountByDomain(domain)

@@ -30,7 +30,7 @@ object ProjectLinkGenerator {
 
     @JvmStatic
     fun generateProjectLink(projectId: Int): String =
-            "${URL_PREFIX_PARAM}project/dashboard/${GenericLinkUtils.encodeParam(projectId)}"
+            "project?id=${GenericLinkUtils.encodeParam(projectId)}"
 
     @JvmStatic
     fun generateProjectFullLink(siteUrl: String, projectId: Int): String =

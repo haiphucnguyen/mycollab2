@@ -38,7 +38,7 @@ class DatabaseValidateServlet : HttpServlet() {
         val databaseServer = request.getParameter("databaseServer")
 
         try {
-            Class.forName("com.mysql.jdbc.Driver")
+            Class.forName("com.mysql.cj.jdbc.Driver")
         } catch (e: ClassNotFoundException) {
             LOG.error("Can not load mysql driver", e)
         }

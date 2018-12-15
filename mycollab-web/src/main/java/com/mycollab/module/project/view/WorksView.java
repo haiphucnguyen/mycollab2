@@ -1,6 +1,5 @@
 package com.mycollab.module.project.view;
 
-import com.github.appreciated.app.layout.annotations.MenuCaption;
 import com.jarektoro.responsivelayout.ResponsiveColumn;
 import com.jarektoro.responsivelayout.ResponsiveLayout;
 import com.jarektoro.responsivelayout.ResponsiveRow;
@@ -14,7 +13,6 @@ import com.mycollab.module.project.view.user.UserUnresolvedTicketWidget;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -32,21 +30,21 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-@SpringView(name = DashboardView.VIEW_NAME)
-public class DashboardView extends MVerticalLayout implements View {
-    public static final String VIEW_NAME = "project/dashboard";
+@SpringView(name = WorksView.VIEW_NAME)
+public class WorksView extends MVerticalLayout implements View {
+    public static final String VIEW_NAME = "works";
 
     @Autowired
-    private DashboardPresenter dashboardPresenter;
+    private WorksPresenter worksPresenter;
 
     @PostConstruct
     public void init() {
-        dashboardPresenter.initView(this);
+        worksPresenter.initView(this);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        List<Integer> prjKeys = dashboardPresenter.getProjectKeys();
+        List<Integer> prjKeys = worksPresenter.getProjectKeys();
         if (CollectionUtils.isNotEmpty(prjKeys)) {
             ResponsiveLayout contentWrapper = new ResponsiveLayout(ResponsiveLayout.ContainerType.FIXED);
             contentWrapper.setSizeFull();
@@ -97,7 +95,7 @@ public class DashboardView extends MVerticalLayout implements View {
             this.with(ELabel.h2(UserUIContext.getMessage(GenericI18Enum.VIEW_NO_ITEM_TITLE)).withUndefinedWidth());
             if (UserUIContext.canWrite(RolePermissionCollections.CREATE_NEW_PROJECT)) {
                 MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW),
-                        clickEvent -> UI.getCurrent().addWindow(ViewManager.getCacheComponent(AbstractProjectAddWindow.class)))
+                        clickEvent -> UI.getCurrent().addWindow(AppContextUtil.getSpringBean(AbstractProjectAddWindow.class)))
                         .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS);
                 with(newProjectBtn);
             }

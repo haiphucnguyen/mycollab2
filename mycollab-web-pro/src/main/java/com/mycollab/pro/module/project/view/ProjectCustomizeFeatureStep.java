@@ -7,6 +7,7 @@ import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
+import com.mycollab.module.project.view.AbstractProjectAddWindow.FormWizardStep;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -18,7 +19,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizardStep {
+class ProjectCustomizeFeatureStep implements FormWizardStep {
     private Project project;
     private FeatureSelectionBox displayMsgSelection, displayPhaseSelection,
             displayTicketSelection, displayPageSelection,
@@ -27,6 +28,10 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
 
     ProjectCustomizeFeatureStep(Project project) {
         this.project = project;
+    }
+
+    public ProjectCustomizeFeatureStep() {
+        super();
     }
 
     @Override
