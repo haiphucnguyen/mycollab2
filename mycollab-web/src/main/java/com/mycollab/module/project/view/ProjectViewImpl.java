@@ -141,7 +141,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             contentWrapper.addStyleName("main-content");
 
             MVerticalLayout topPanel = new MVerticalLayout(new ProjectInfoComponent(project)).withSpacing(false).
-                    withMargin(new MarginInfo(false, true, false, true)).
+                    withMargin(false).
                     withFullWidth().withStyleName("top-panel").withUndefinedHeight().withFullWidth();
             contentWrapper.addComponentAsFirst(topPanel);
 

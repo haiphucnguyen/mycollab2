@@ -41,13 +41,11 @@ import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -110,24 +108,23 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         headerLayout = CustomLayoutExt.createLayout("topNavigation");
         headerLayout.setStyleName("topNavigation");
         headerLayout.setHeight("100%");
-        headerLayout.setWidth("90px");
-
-        final PopupButton modulePopup = new PopupButton("");
-        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150));
-        modulePopup.setDirection(Alignment.BOTTOM_LEFT);
-        OptionPopupContent modulePopupContent = new OptionPopupContent();
-        modulePopup.setContent(modulePopupContent);
-
-        headerLayout.addComponent(new MHorizontalLayout(modulePopup).alignAll(Alignment.MIDDLE_LEFT).withFullHeight(), "mainLogo");
+        headerLayout.setWidth("70px");
 
         accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false)).withHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-//        buildAccountMenuLayout();
 
-        headerLayout.addComponent(new MButton("M", event -> EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{}))), "mainLogo");
+
+        MButton navProjectBtn = new MButton("M", event -> EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{})));
+        MButton createBtn = new MButton("").withIcon(VaadinIcons.PLUS);
+        MButton searchBtn = new MButton("").withIcon(VaadinIcons.SEARCH);
+
+        MVerticalLayout actionControls = new MVerticalLayout(navProjectBtn, createBtn, searchBtn);
+        headerLayout.addComponent(actionControls, "actionControls");
+
 
         Resource userAvatarRes = UserAvatarControlFactory.createAvatarResource(UserUIContext.getUserAvatarId(), 24);
         final PopupButton accountMenu = new PopupButton("");
+        accountMenu.setDirection(Alignment.BOTTOM_RIGHT);
         accountMenu.setIcon(userAvatarRes);
         accountMenu.setDescription(UserUIContext.getUserDisplayName());
 

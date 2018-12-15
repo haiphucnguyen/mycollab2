@@ -97,7 +97,6 @@ object ProjectPresenterDataMapper {
     private val projectMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
             ProjectScreenData.GotoTagList::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.GotoFavorite::class.java to ProjectDashboardPresenter::class.java,
-            ProjectScreenData.GotoGanttChart::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.GotoCalendarView::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.GotoReportConsole::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.SearchItem::class.java to UserProjectDashboardPresenter::class.java,

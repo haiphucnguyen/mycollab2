@@ -50,7 +50,6 @@ open class ProjectUrlResolver : UrlResolver() {
         this.addSubResolver("edit", ProjectEditUrlResolver())
         this.addSubResolver("tag", ProjectTagUrlResolver())
         this.addSubResolver("favorite", ProjectFavoriteUrlResolver())
-        this.addSubResolver("gantt", GanttUrlResolver())
         this.addSubResolver("reports", ReportUrlResolver())
         this.addSubResolver("message", MessageUrlResolver())
         this.addSubResolver("milestone", MilestoneUrlResolver())
@@ -154,14 +153,6 @@ open class ProjectUrlResolver : UrlResolver() {
                 val chain = PageActionChain(ProjectScreenData.Goto(projectId), ProjectScreenData.GotoCalendarView())
                 EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
             }
-        }
-    }
-
-    private class GanttUrlResolver : ProjectUrlResolver() {
-        override fun handlePage(vararg params: String) {
-            val projectId = UrlTokenizer(params[0]).getInt()
-            val chain = PageActionChain(ProjectScreenData.Goto(projectId), ProjectScreenData.GotoGanttChart())
-            EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
         }
     }
 }

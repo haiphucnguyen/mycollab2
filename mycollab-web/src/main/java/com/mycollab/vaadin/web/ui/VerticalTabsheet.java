@@ -40,7 +40,6 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-// TODO
 public class VerticalTabsheet extends CustomComponent {
     private static final long serialVersionUID = 1L;
 
@@ -63,7 +62,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     public VerticalTabsheet() {
         CssLayout contentLayout = new CssLayout();
-//        new Restrain(contentLayout).setMinHeight("100%");
+        contentLayout.setHeight("100%");
 
         navigatorWrapper = new CssLayout();
         navigatorWrapper.setStyleName("navigator-wrap");
@@ -72,11 +71,9 @@ public class VerticalTabsheet extends CustomComponent {
 
         contentWrapper = new VerticalLayout();
         contentWrapper.setStyleName("container-wrap");
-//        new Restrain(contentWrapper).setMinHeight("100%");
 
         tabContainer = new VerticalLayout();
         contentWrapper.addComponent(tabContainer);
-//        new Restrain(tabContainer).setMinHeight("100%");
 
         contentLayout.addComponent(navigatorWrapper);
         contentLayout.addComponent(contentWrapper);

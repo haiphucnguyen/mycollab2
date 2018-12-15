@@ -65,9 +65,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         } else if (data instanceof ProjectScreenData.SearchItem) {
             ProjectSearchItemPresenter presenter = PresenterResolver.getPresenter(ProjectSearchItemPresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof ProjectScreenData.GotoGanttChart) {
-            IGanttChartPresenter presenter = PresenterResolver.getPresenter(IGanttChartPresenter.class);
-            presenter.go(view, data);
         } else if (data instanceof ProjectScreenData.GotoCalendarView) {
             ICalendarPresenter presenter = PresenterResolver.getPresenter(ICalendarPresenter.class);
             presenter.go(view, data);

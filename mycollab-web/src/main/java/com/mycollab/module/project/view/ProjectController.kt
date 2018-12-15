@@ -105,15 +105,6 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             }
         })
 
-        this.register(object : ApplicationEventListener<ProjectEvent.GotoGanttChart> {
-            @Subscribe
-            override fun handle(event: ProjectEvent.GotoGanttChart) {
-                val data = ProjectScreenData.GotoGanttChart()
-                val presenter = PresenterResolver.getPresenter(ProjectDashboardPresenter::class.java)
-                presenter.go(projectView, data)
-            }
-        })
-
         this.register(object : ApplicationEventListener<ProjectEvent.GotoDashboard> {
             @Subscribe
             override fun handle(event: ProjectEvent.GotoDashboard) {

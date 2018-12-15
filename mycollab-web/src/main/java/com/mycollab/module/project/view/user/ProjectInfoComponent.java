@@ -132,12 +132,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(this)))
                     .withIcon(VaadinIcons.CALENDAR).withStyleName(WebThemes.BUTTON_SMALL_PADDING, WebThemes.BUTTON_LINK);
             footer.addComponents(eventBtn);
-
-            MButton ganttChartBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_GANTT_CHART),
-                    clickEvent -> EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null)))
-                    .withIcon(VaadinIcons.BAR_CHART).withStyleName(WebThemes.BUTTON_SMALL_PADDING,
-                            WebThemes.BUTTON_LINK);
-            footer.addComponents(ganttChartBtn);
         }
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);

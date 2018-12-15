@@ -19,10 +19,9 @@ public class ProjectSettingViewImpl extends AbstractVerticalPageView implements 
 
     public ProjectSettingViewImpl() {
         this.setWidth("100%");
-        this.setSpacing(true);
         this.addStyleName("readview-layout");
 
-        mainBody = new MHorizontalLayout().withMargin(true).withFullWidth();
+        mainBody = new MHorizontalLayout().withMargin(false).withFullWidth();
         this.addComponent(mainBody);
     }
 

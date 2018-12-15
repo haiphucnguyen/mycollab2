@@ -29,10 +29,8 @@ $v-line-height--header:1.5em;
 @import "components/icons";
 @import "components/form";
 @import "components/tabsheet";
-@import "components/crm";
 @import "components/document";
 @import "components/project";
-@import "components/gantt";
 @import "components/alump_dbar";
 
 /* This font-face declaration must be outside your theme mixin. */
@@ -59,10 +57,8 @@ $v-line-height--header:1.5em;
   @include mycollab-tooltip;
   @include mycollab-shared;
   @include mycollab-form;
-  @include mycollab-crm;
   @include mycollab-document;
   @include mycollab-project;
-  @include gantt;
   @include alump-dbar;
 
   /**
@@ -168,66 +164,17 @@ $v-line-height--header:1.5em;
 
   /* Top Menu */
   .topNavigation {
-    height: 45px;
-    #mainLogo {
-      float: left;
-      width: 169px;
-      height: 100%;
-      margin: 0;
-      padding: 0px 15px;
-      display: block;
-      border-right: 1px solid $my-separator-color;
+    .actionMenuContainer {
+      position: absolute;
+      top: 10px;
     }
     .serviceMenuContainer {
-      float: left;
-      .service-menu {
-        padding: 8px 12px;
-        background: none !important;
-        border: none;
-        text-shadow: none;
-        .v-button-wrap {
-          padding: 0px 10px;
-        }
-        &.v-buttongroup .v-button {
-          padding: 3px 12px;
-          &:focus {
-            background: none;
-          }
-          &.selected, &:hover {
-            border-radius: $v-border-radius;
-          }
-        }
-      }
+
     }
 
-    .v-button {
-      border-radius: $v-border-radius;
-      font-weight: $my-font-weight-bold;
-      background-color: #fff;
-      .v-button-wrap {
-        padding: 2px 5px 2px 0px;
-        .v-icon {
-          padding-left: 5px;
-        }
-      }
-    }
-
-    .v-button.ad {
-      color: black;
-      font-weight: normal;
-      background-color: #fff;
-      .v-icon {
-        color: green;
-      }
-    }
-
-    .subDomain {
-      font-size: $font-normal;
-      padding: 0 6px 0 3px;
-      font-weight: $my-font-weight-bold;
-    }
     .accountMenuContainer {
-      float: right;
+      position: absolute;
+      bottom: 10px;
       .v-button.v-popupbutton,  .v-button.v-popupbutton.v-pressed {
         background-color: transparent;
         .v-button-wrap {
@@ -238,9 +185,7 @@ $v-line-height--header:1.5em;
             font-weight: $my-font-weight-bold;
           }
           .v-popup-indicator::before {
-            content:'\f0dd';
-            font-size: 15px;
-            opacity: 1;
+            visibility: hidden
           }
         }
       }

@@ -42,8 +42,6 @@ object ProjectEvent {
 
     class GotoCalendarView(source: Any) : ApplicationEvent(source)
 
-    class GotoGanttChart(source: Any, val data: Any?) : ApplicationEvent(source)
-
     class GotoDashboard(source: Any, val data: Any?) : ApplicationEvent(source)
 
     class GotoUserDashboard(source: Any, val data: Any?) : ApplicationEvent(source)

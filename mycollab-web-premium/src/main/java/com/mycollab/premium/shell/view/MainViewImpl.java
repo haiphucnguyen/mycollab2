@@ -1,17 +1,12 @@
 package com.mycollab.premium.shell.view;
 
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.LicenseI18nEnum;
-import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
 import com.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.license.LicenseInfo;
 import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.module.mail.service.ExtMailService;
-import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
-import com.mycollab.module.user.ui.SettingAssetsManager;
-import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.premium.shell.view.components.BuyPremiumSoftwareWindow;
 import com.mycollab.premium.shell.view.components.LicenseActivationWindow;
 import com.mycollab.pro.vaadin.web.ui.NotificationComponent;
@@ -22,18 +17,9 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.mvp.ViewManager;
-import com.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
-import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.BrowserWindowOpener;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
-import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 

@@ -344,6 +344,7 @@
     border: solid 1px $my-separator-color;
     @include my-box-shadow;
     max-width: 800px;
+    padding: 0px;
     .action-wrap {
       width: 100%;
       .v-button-action {
