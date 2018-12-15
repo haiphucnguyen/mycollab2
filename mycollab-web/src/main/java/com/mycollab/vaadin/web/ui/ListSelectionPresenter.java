@@ -82,7 +82,7 @@ public abstract class ListSelectionPresenter<V extends IListView<S, B>, S extend
 
                 @Override
                 public void onDeSelect() {
-                    Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentDataList();
+                    Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentData();
                     isSelectAll = false;
                     currentDataList.forEach(item -> {
                         item.setSelected(false);
@@ -111,7 +111,7 @@ public abstract class ListSelectionPresenter<V extends IListView<S, B>, S extend
     }
 
     private void selectAllItemsInCurrentPage() {
-        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentDataList();
+        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentData();
         currentDataList.forEach(item -> {
             item.setSelected(true);
             CheckBoxDecor checkBox = (CheckBoxDecor) item.getExtraData();
@@ -127,7 +127,7 @@ public abstract class ListSelectionPresenter<V extends IListView<S, B>, S extend
     }
 
     protected void checkWhetherEnableTableActionControl() {
-        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentDataList();
+        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentData();
         int countItems = 0;
         for (B item : currentDataList) {
             if (item.isSelected()) {
@@ -143,7 +143,7 @@ public abstract class ListSelectionPresenter<V extends IListView<S, B>, S extend
 
     List<B> getSelectedItems() {
         List<B> items = new ArrayList<>();
-        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentDataList();
+        Collection<B> currentDataList = view.getPagedBeanGrid().getCurrentData();
         items.addAll(currentDataList.stream().filter(ValuedBean::isSelected).collect(Collectors.toList()));
         return items;
     }

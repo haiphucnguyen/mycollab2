@@ -42,7 +42,7 @@ public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableIt
 
     int setSearchCriteria(S searchCriteria);
 
-    Collection<B> getCurrentDataList();
+    Collection<B> getCurrentData();
 
     @Deprecated
     void addTableListener(TableClickListener listener);
@@ -50,8 +50,6 @@ public interface IPagedGrid<S extends SearchCriteria, B> extends HasSelectableIt
     <V> Grid.Column addGeneratedColumn(ValueProvider<B, V> id, AbstractRenderer renderer);
 
     List<GridFieldMeta> getDisplayColumns();
-
-    B getBeanByIndex(Object itemId);
 
     @Deprecated
     interface TableClickListener extends EventListener, Serializable {

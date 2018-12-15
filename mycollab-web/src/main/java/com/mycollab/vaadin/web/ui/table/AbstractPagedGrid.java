@@ -55,9 +55,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     private Collection<B> currentListData;
     protected BasicSearchRequest<S> searchRequest;
 
-    private boolean isAscending = true;
-    private Object sortColumnId;
-
     private int currentPage = 1;
     private int totalPage = 1;
     private int currentViewCount;
@@ -109,41 +106,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         addStyleName(SCROLLABLE_CONTAINER);
 
         gridItem = new Grid<>();
-        gridItem.setWidth("100%");
-    }
-
-    public void setDisplayColumns(List<GridFieldMeta> viewFields) {
-        this.displayColumns = viewFields;
-        setDisplayColumns();
-    }
-
-    private void setDisplayColumns() {
-        Set<String> visibleColumnsCol = new LinkedHashSet<>();
-        Set<String> columnHeadersCol = new LinkedHashSet<>();
-
-//        if (requiredColumn != null) {
-//            visibleColumnsCol.add(requiredColumn.getField());
-//            columnHeadersCol.add(UserUIContext.getMessage(requiredColumn.getDescKey()));
-//            gridItem.getColumn(requiredColumn.getField()).setWidth(requiredColumn.getDefaultWidth());
-//        }
-
-        for (int i = 0; i < displayColumns.size(); i++) {
-            GridFieldMeta viewField = displayColumns.get(i);
-            visibleColumnsCol.add(viewField.getField());
-            columnHeadersCol.add(UserUIContext.getMessage(viewField.getDescKey()));
-
-//            if (i == 0) {
-//                gridItem.getColumn(viewField.getField()).setExpandRatio(1);
-//            } else {
-//                gridItem.getColumn(viewField.getField()).setWidth(viewField.getDefaultWidth());
-//            }
-        }
-
-        String[] visibleColumns = visibleColumnsCol.toArray(new String[visibleColumnsCol.size()]);
-        String[] columnHeaders = columnHeadersCol.toArray(new String[columnHeadersCol.size()]);
-
-//        gridItem.setVisibleColumns(visibleColumns);
-//        gridItem.setColumnHeaders(columnHeaders);
     }
 
     @Override
@@ -158,7 +120,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     public int currentViewCount() {
         return this.currentViewCount;
     }
-
 
     @Override
     public int totalItemsCount() {
@@ -175,11 +136,11 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     }
 
     @Override
-    public Collection<B> getCurrentDataList() {
+    public Collection<B> getCurrentData() {
         return currentListData;
     }
 
-    public void setCurrentDataList(Collection<B> list) {
+    public void setCurrentData(Collection<B> list) {
         currentListData = list;
         currentViewCount = list.size();
         createGrid();
@@ -188,10 +149,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     @Override
     public void addTableListener(TableClickListener listener) {
         addListener(TableClickEvent.TABLE_CLICK_IDENTIFIER, TableClickEvent.class, listener, TableClickListener.itemClickMethod);
-    }
-
-    protected void fireTableEvent(TableClickEvent event) {
-        fireEvent(event);
     }
 
     @Override
@@ -212,12 +169,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
 
     public void setDisplayNumItems(int displayNumItems) {
         this.displayNumItems = displayNumItems;
-    }
-
-    @Override
-    public B getBeanByIndex(final Object itemId) {
-//        return (B)gridItem.getDataProvider().get(itemId);
-        return null;
     }
 
     private void pageChange(final int currentPage) {
@@ -332,37 +283,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     private void createGrid() {
         gridItem.setItems(currentListData);
 
-        // set column generator
-
-//        gridItem.addHeaderClickListener(headerClickEvent -> {
-//            String propertyId = (String) headerClickEvent.getPropertyId();
-//
-//            if (propertyId.equals("selected")) {
-//                return;
-//            }
-//
-//            if (searchRequest != null) {
-//                S searchCriteria = searchRequest.getSearchCriteria();
-//                if (sortColumnId == null) {
-//                    sortColumnId = propertyId;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-//                    isAscending = false;
-//                } else if (propertyId.equals(sortColumnId)) {
-//                    isAscending = !isAscending;
-//                    String direction = (isAscending) ? SearchCriteria.ASC : SearchCriteria.DESC;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, direction)));
-//                } else {
-//                    sortColumnId = propertyId;
-//                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(propertyId, SearchCriteria.DESC)));
-//                    isAscending = false;
-//                }
-//
-//                setSearchCriteria(searchCriteria);
-//            }
-//        });
-
-//        setDisplayColumns();
-
         if (this.getComponentCount() > 0) {
             final Component component0 = this.getComponent(0);
             if (component0 instanceof Grid) {
@@ -376,10 +296,6 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
         this.setExpandRatio(gridItem, 1);
     }
 
-    public List<GridFieldMeta> getDefaultSelectedColumns() {
-        return defaultSelectedColumns;
-    }
-
     public Grid<B> getGrid() {
         return gridItem;
     }
@@ -388,8 +304,4 @@ public abstract class AbstractPagedGrid<S extends SearchCriteria, B> extends Ver
     public List<GridFieldMeta> getDisplayColumns() {
         return displayColumns;
     }
-
-//    public Object[] getVisibleColumns() {
-//        return gridItem.getVisibleColumns();
-//    }
 }

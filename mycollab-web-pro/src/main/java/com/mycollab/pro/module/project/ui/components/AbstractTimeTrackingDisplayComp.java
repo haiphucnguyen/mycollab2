@@ -73,7 +73,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             withMargin(new MarginInfo(true, false, true, false));
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
             table.addTableListener(tableClickListener);
-            table.setCurrentDataList(timeLoggingEntries);
+            table.setCurrentData(timeLoggingEntries);
             addComponent(table);
 
             double billableHours = 0, nonBillableHours = 0, cost = 0;
