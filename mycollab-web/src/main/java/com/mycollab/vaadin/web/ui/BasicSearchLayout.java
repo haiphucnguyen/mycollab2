@@ -19,6 +19,7 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * @author MyCollab Ltd
@@ -52,7 +53,7 @@ abstract public class BasicSearchLayout<S extends SearchCriteria> extends Search
         header.addComponent(c);
     }
 
-    private ComponentContainer constructHeader() {
+    private HorizontalLayout constructHeader() {
         return ((DefaultGenericSearchPanel)searchPanel).constructHeader();
     }
 

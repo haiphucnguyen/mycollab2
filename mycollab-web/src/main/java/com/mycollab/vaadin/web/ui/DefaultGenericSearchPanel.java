@@ -24,6 +24,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -62,7 +63,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
         return null;
     }
 
-    protected ComponentContainer constructHeader() {
+    HorizontalLayout constructHeader() {
         if (header == null) {
             headerText = buildSearchTitle();
             if (headerText != null) {
@@ -70,7 +71,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
                 header = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
 
                 header.with(headerText, rightComponent).withAlign(headerText, Alignment.MIDDLE_LEFT)
-                        .withAlign(rightComponent, Alignment.MIDDLE_RIGHT).expand(headerText);
+                        .withAlign(rightComponent, Alignment.MIDDLE_RIGHT);
             }
 
             Component extraControls = buildExtraControls();

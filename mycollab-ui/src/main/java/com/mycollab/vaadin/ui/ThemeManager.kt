@@ -147,6 +147,8 @@ object ThemeManager {
             extraStyles.append(".v-button.v-button-block {color:#${accountTheme.actionbtntext};}")
 
             extraStyles.append(".v-context-menu-container .v-context-menu .v-context-submenu:hover {color:#${accountTheme.actionbtntext};}")
+
+            extraStyles.append(".toggle-btn-group .v-button.btn-group-default {color:#${accountTheme.actionbtntext};}")
         }
 
         /* Option Buttons */
@@ -155,13 +157,13 @@ object ThemeManager {
             extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { background-color: #${accountTheme.optionbtn};}")
             extraStyles.append(".splitbutton:hover .v-button-graybtn, .v-button-graybtn:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
             //Set toggle button group background
-            extraStyles.append(".v-buttongroup.toggle-btn-group .v-button { background-color: #${accountTheme.optionbtn};}")
-            extraStyles.append(".v-buttongroup.toggle-btn-group .v-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
+            extraStyles.append(".toggle-btn-group .v-button { background-color: #${accountTheme.optionbtn};}")
+            extraStyles.append(".toggle-btn-group .v-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
         }
 
         if (accountTheme.optionbtntext != null) {
             extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { color: #${accountTheme.optionbtntext}; }")
-            extraStyles.append(".v-buttongroup.toggle-btn-group .v-button { color: #${accountTheme.optionbtntext}; }")
+            extraStyles.append(".toggle-btn-group .v-button { color: #${accountTheme.optionbtntext}; }")
         }
 
         /* Danger Buttons */

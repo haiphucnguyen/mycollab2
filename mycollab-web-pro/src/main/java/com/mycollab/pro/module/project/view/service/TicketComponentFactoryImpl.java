@@ -29,13 +29,12 @@ import com.mycollab.module.project.domain.Risk;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
-import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.i18n.TicketI18nEnum;
-import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
+import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
 import com.mycollab.module.project.ui.components.UserProjectComboBox;
@@ -43,6 +42,7 @@ import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
@@ -52,6 +52,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -271,12 +272,12 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     }
                 }
             };
-//            builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
-//                    .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
-//                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
-//                    .withValue(ticket.getStatus())
-//                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-//            return builder.build();
+            builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+                    .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
+                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                    .withValue(ticket.getStatus())
+                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+            return builder.build();
         } else if (ticket.isBug()) {
             return new BugStatusPopupView(ProjectTicket.buildBug(ticket));
         } else if (ticket.isRisk()) {
@@ -295,15 +296,14 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     }
                 }
             };
-//            builder.withBean(risk).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
-//                    .withField(new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed))
-//                    .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(ticket.getStatus())
-//                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
-//            return builder.build();
+            builder.withBean(risk).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
+                    .withField(new I18nValueComboBox(StatusI18nEnum.class, false, StatusI18nEnum.Open, StatusI18nEnum.Closed))
+                    .withService(AppContextUtil.getSpringBean(RiskService.class)).withValue(ticket.getStatus())
+                    .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+            return builder.build();
         } else {
             throw new MyCollabException("Not support");
         }
-        return null;
     }
 
     @Override

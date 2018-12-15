@@ -1,5 +1,5 @@
 /**
- * Copyright © MyCollab
+ * Copyright Â© MyCollab
  * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -16,6 +16,7 @@
  */
 package com.mycollab.core.utils;
 
+import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
@@ -95,13 +97,13 @@ public class DateTimeUtils {
         return formatDate(date, dateFormat, locale, userTimeZone);
     }
 
-    public static String getPrettyDateValue(LocalDateTime dateTime, Locale locale) {
+    public static String getPrettyDateValue(LocalDateTime dateTime, ZoneId zoneId, Locale locale) {
+
         if (dateTime == null) {
             return "";
         }
-//        PrettyTime p = new PrettyTime(locale);
-//        return p.format(dateTime);
-        return "Implemented";
+        PrettyTime p = new PrettyTime(locale);
+        return p.format(convertLocalDateTimeToDate(dateTime, zoneId));
     }
 
     public static String getPrettyDurationValue(LocalDateTime date, Locale locale) {
@@ -112,16 +114,19 @@ public class DateTimeUtils {
         return "Implemented";
     }
 
+    private static Date convertLocalDateTimeToDate(LocalDateTime localDT, ZoneId zoneId) {
+        return Date.from(localDT.atZone(zoneId).toInstant());
+    }
 
-    public static String formatDate(LocalDateTime date, String dateFormat, Locale locale) {
+
+    public static String formatDate(TemporalAccessor date, String dateFormat, Locale locale) {
         return formatDate(date, dateFormat, locale, null);
     }
 
-    public static String formatDate(LocalDateTime date, String dateFormat, Locale locale, ZoneId timezone) {
+    public static String formatDate(TemporalAccessor date, String dateFormat, Locale locale, ZoneId timezone) {
         if (date == null) {
             return "";
         }
-
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat).withLocale(locale);
         if (timezone != null) {
@@ -166,9 +171,15 @@ public class DateTimeUtils {
      * the second is the end week date
      */
     public static LocalDate[] getBounceDatesOfWeek(LocalDate date) {
-        LocalDate begin = date.with(WeekFields.ISO.dayOfWeek(), 1);
-        LocalDate end = date.with(WeekFields.ISO.dayOfWeek(), 7);
-        return new LocalDate[]{begin, end};
+        return new LocalDate[]{getFirstDayOfWeek(date), getLastDayOfWeek(date)};
+    }
+
+    public static LocalDate getFirstDayOfWeek(LocalDate date) {
+        return date.with(WeekFields.ISO.dayOfWeek(), 1);
+    }
+
+    public static LocalDate getLastDayOfWeek(LocalDate date) {
+        return date.with(WeekFields.ISO.dayOfWeek(), 7);
     }
 
     public static LocalDate min(LocalDate... values) {

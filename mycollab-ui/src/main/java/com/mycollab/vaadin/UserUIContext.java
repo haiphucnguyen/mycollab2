@@ -355,7 +355,7 @@ public class UserUIContext implements Serializable {
     }
 
     public static String formatPrettyTime(LocalDateTime date) {
-        return DateTimeUtils.getPrettyDateValue(date, getUserLocale());
+        return DateTimeUtils.getPrettyDateValue(date, getUserTimeZone(), getUserLocale());
     }
 
     public static String formatShortDate(LocalDate date) {
