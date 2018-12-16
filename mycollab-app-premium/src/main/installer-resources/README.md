@@ -40,6 +40,24 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 7.0.0
+-------------
+
+**Library Upgrades**
+
+* Java driver, Vaadin, Infinispan, etc.
+
+**Improvements & New Features**
+
+* Improve the overall performance
+* Remove the CRM, and File Management module
+* Support multiple database. Tested MyCollab with MySQL, MS SQL Server, Oracle, Postgre, and H2
+* New theme
+* Mobile friend-ly support
+* Upgrade the UI pages to Vaadin 8
+* Support java 8 date time
+* Reliable testing test cases
+
 Version 6.0.0
 -------------
 

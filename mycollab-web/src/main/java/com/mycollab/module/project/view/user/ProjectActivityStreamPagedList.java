@@ -76,7 +76,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
     }
 
     public int setSearchCriteria(final ActivityStreamSearchCriteria searchCriteria) {
-        listContainer.removeAllComponents();
+        this.removeAllComponents();
         searchRequest = new BasicSearchRequest<>(searchCriteria, currentPage, defaultNumberSearchItems);
         doSearch();
         return totalCount;
@@ -102,7 +102,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         }
 
         List<ProjectActivityStream> currentListData = projectActivityStreamService.getProjectActivityStreams((BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
-        this.listContainer.removeAllComponents();
+        this.removeAllComponents();
         LocalDate currentDate = LocalDate.of(2100, 1, 1);
 
         CssLayout currentFeedBlock = new CssLayout();
@@ -220,7 +220,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
             Label yearLbl = new Label("<div>" + currentYear + "</div>", ContentMode.HTML);
             yearLbl.setStyleName("year-lbl");
             yearLbl.setWidthUndefined();
-            listContainer.addComponent(yearLbl);
+            this.addComponent(yearLbl);
         } else {
             blockWrapper.setMargin(new MarginInfo(true, false, false, false));
         }
@@ -229,7 +229,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         dateLbl.setWidthUndefined();
         blockWrapper.with(dateLbl, currentBlock).expand(currentBlock);
 
-        this.listContainer.addComponent(blockWrapper);
+        this.addComponent(blockWrapper);
     }
 
     @Override

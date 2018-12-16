@@ -163,7 +163,6 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
                     .withAlign(riskSelection, Alignment.MIDDLE_LEFT).expand(spacingLbl1, spacingLbl2);
 
             assignmentsLayout = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectTicketService.class), new GenericTaskRowRenderer());
-            assignmentsLayout.setMargin(new MarginInfo(true, true, true, false));
             this.with(header, assignmentsLayout);
             searchCriteria = new ProjectTicketSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

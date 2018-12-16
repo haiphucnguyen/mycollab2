@@ -83,7 +83,7 @@ public class ActivityStreamComponent extends CssLayout {
         private static final long serialVersionUID = 1L;
 
         public int setSearchCriteria(final ActivityStreamSearchCriteria searchCriteria) {
-            listContainer.removeAllComponents();
+            this.removeAllComponents();
             searchRequest = new BasicSearchRequest<>(searchCriteria, currentPage, defaultNumberSearchItems);
             doSearch();
             return totalCount;
@@ -110,7 +110,7 @@ public class ActivityStreamComponent extends CssLayout {
 
             List<ProjectActivityStream> currentListData = projectActivityStreamService.getProjectActivityStreams(
                     (BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
-            listContainer.removeAllComponents();
+            this.removeAllComponents();
 
             LocalDate currentDate = LocalDate.of(2100, 1, 1);
             CssLayout currentFeedBlock = new CssLayout();

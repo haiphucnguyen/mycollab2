@@ -83,7 +83,7 @@ public class NotificationSettingWindow extends MWindow {
                 .withStyleName(WebThemes.BUTTON_OPTION);
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             try {
-                notification.setLevel((String) optionGroup.getValue());
+                notification.setLevel(optionGroup.getValue());
                 ProjectNotificationSettingService projectNotificationSettingService = AppContextUtil.getSpringBean(ProjectNotificationSettingService.class);
 
                 if (notification.getId() == null) {

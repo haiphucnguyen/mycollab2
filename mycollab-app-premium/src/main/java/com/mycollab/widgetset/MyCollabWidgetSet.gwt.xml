@@ -23,4 +23,8 @@
     <inherits name="org.vaadin.easyuploads.Widgetset" />
 
     <inherits name="org.vaadin.alump.ckeditor.WidgetSet" />
+
+    <inherits name="org.vaadin.sliderpanel.WidgetSet"/>
+
+    <inherits name="org.vaadin.cropper.WidgetSet" />
 </module>

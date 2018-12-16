@@ -23,13 +23,11 @@ import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.shell.event.ShellEvent;
-import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.ViewManager;
-import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.ModuleHelper;
@@ -43,6 +41,10 @@ import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.sliderpanel.SliderPanel;
+import org.vaadin.sliderpanel.SliderPanelBuilder;
+import org.vaadin.sliderpanel.client.SliderMode;
+import org.vaadin.sliderpanel.client.SliderTabPosition;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -88,7 +90,13 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         this.removeAllComponents();
         bodyLayout = new MHorizontalLayout().withSpacing(false).withStyleName("main-view").withId("main-body")
                 .withFullHeight().withFullWidth();
-        this.with(createMainMenu(), bodyLayout).expand(bodyLayout);
+        SliderPanel topSlider = new SliderPanelBuilder(new Label("A"))
+                .expanded(false)
+                .mode(SliderMode.LEFT)
+                .caption("Top Slider")
+                .tabPosition(SliderTabPosition.BEGINNING)
+                .build();
+        this.with(topSlider, createMainMenu(), bodyLayout).expand(bodyLayout);
     }
 
     @Override
@@ -97,11 +105,6 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         ModuleHelper.setCurrentModule(module);
         bodyLayout.removeAllComponents();
         bodyLayout.with(module).expand(module);
-
-//        MHorizontalLayout serviceMenu = module.buildMenu();
-//        if (serviceMenu != null) {
-//            headerLayout.addComponent(serviceMenu, "serviceMenu");
-//        }
     }
 
     private CustomLayout createMainMenu() {
