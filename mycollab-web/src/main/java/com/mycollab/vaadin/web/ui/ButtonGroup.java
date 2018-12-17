@@ -24,12 +24,12 @@ import com.vaadin.ui.CssLayout;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ToggleButtonGroup extends CssLayout {
+public class ButtonGroup extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     private Button selectedBtn;
 
-    public ToggleButtonGroup() {
+    public ButtonGroup() {
         this.addStyleName("toggle-btn-group");
     }
 
@@ -38,7 +38,7 @@ public class ToggleButtonGroup extends CssLayout {
         button.addClickListener(clickEvent -> {
             if (!clickEvent.getButton().equals(selectedBtn)) {
                 selectedBtn = clickEvent.getButton();
-                for (Component component : ToggleButtonGroup.this) {
+                for (Component component : ButtonGroup.this) {
                     component.removeStyleName(WebThemes.BTN_ACTIVE);
                 }
                 selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
@@ -47,8 +47,8 @@ public class ToggleButtonGroup extends CssLayout {
         return button;
     }
 
-    public ToggleButtonGroup withDefaultButton(Button button) {
-        for (Component component : ToggleButtonGroup.this) {
+    public ButtonGroup withDefaultButton(Button button) {
+        for (Component component : ButtonGroup.this) {
             Button currentBtn = (Button) component;
             if (currentBtn.equals(button)) {
                 selectedBtn = button;

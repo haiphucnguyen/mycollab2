@@ -37,13 +37,11 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.ui.SafeHtmlLabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.SortButton;
-import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
+import com.mycollab.vaadin.web.ui.ButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -117,7 +115,7 @@ public class PageListViewImpl extends AbstractVerticalPageView implements PageLi
         sortLbl.setSizeUndefined();
         headerLayout.with(sortLbl).withAlign(sortLbl, Alignment.MIDDLE_RIGHT);
 
-        ToggleButtonGroup sortGroup = new ToggleButtonGroup();
+        ButtonGroup sortGroup = new ButtonGroup();
 //        headerLayout.with(sortGroup).withAlign(sortGroup, Alignment.MIDDLE_RIGHT);
 
         SortButton sortDateBtn = new SortButton(UserUIContext.getMessage(PageI18nEnum.OPT_SORT_BY_DATE), clickEvent -> {

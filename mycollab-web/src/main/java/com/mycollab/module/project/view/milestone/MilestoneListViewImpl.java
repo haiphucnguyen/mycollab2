@@ -45,7 +45,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
-import com.mycollab.vaadin.web.ui.ToggleButtonGroup;
+import com.mycollab.vaadin.web.ui.ButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.icons.VaadinIcons;
@@ -182,7 +182,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
                 .withIcon(VaadinIcons.BULLETS).withWidth("100px");
 
 
-        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        ButtonGroup viewButtons = new ButtonGroup();
         viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(boardBtn);
 
