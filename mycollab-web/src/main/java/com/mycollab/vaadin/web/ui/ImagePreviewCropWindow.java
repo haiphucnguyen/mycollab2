@@ -102,10 +102,12 @@ public class ImagePreviewCropWindow extends MWindow {
         previewBox.with(previewBoxTitle).expand(previewBoxTitle);
 
         CssLayout cropBox = new CssLayout();
-        cropBox.setWidth("100%");
-        VerticalLayout currentPhotoBox = new VerticalLayout();
+        cropBox.setSizeFull();
         Resource resource = new ByteArrayImageResource(ImageUtil.convertImageToByteArray(originalImage), "image/png");
         Cropper cropField = new Cropper(resource);
+        cropField.setAspectRatio(1.0d);
+        cropField.setWidth("470px");
+        cropField.setHeight("470px");
         cropField.addCropSelectionChangedListener(valueChangeEvent -> {
             CropSelection newSelection = valueChangeEvent.getSelection();
             int x1 = newSelection.getX();
@@ -113,7 +115,7 @@ public class ImagePreviewCropWindow extends MWindow {
             int x2 = newSelection.getWidth();
             int y2 = newSelection.getHeight();
             if (x2 > x1 && y2 > y1) {
-                BufferedImage subImage = originalImage.getSubimage(x1, y1, (x2 - x1), (y2 - y1));
+                BufferedImage subImage = originalImage.getSubimage(x1, y1, x2, y2);
                 ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                 try {
                     ImageIO.write(subImage, "png", outStream);
@@ -124,10 +126,9 @@ public class ImagePreviewCropWindow extends MWindow {
                 }
             }
         });
-        currentPhotoBox.setWidth("520px");
-        currentPhotoBox.setHeight("470px");
-        currentPhotoBox.addComponent(cropField);
-        cropBox.addComponent(currentPhotoBox);
+        cropBox.setWidth("470px");
+        cropBox.setHeight("470px");
+        cropBox.addComponent(cropField);
 
         content.with(previewBox, ELabel.hr(), cropBox);
         displayPreviewImage();

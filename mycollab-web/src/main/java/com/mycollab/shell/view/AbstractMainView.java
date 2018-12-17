@@ -96,6 +96,7 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
                 .caption("Top Slider")
                 .tabPosition(SliderTabPosition.BEGINNING)
                 .build();
+        topSlider.expand();
         this.with(topSlider, createMainMenu(), bodyLayout).expand(bodyLayout);
     }
 

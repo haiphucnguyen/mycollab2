@@ -32,6 +32,8 @@ public class UploadImageField extends UploadField {
         this.imageSelectionCommand = imageSelectionCommand;
         this.addStyleName("upload-field");
         this.setSizeUndefined();
+        this.setReadOnly(true);
+        this.setClearButtonVisible(false);
     }
 
     @Override
