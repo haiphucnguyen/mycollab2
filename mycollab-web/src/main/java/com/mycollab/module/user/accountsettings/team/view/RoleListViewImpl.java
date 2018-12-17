@@ -36,6 +36,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 
@@ -49,7 +50,7 @@ public class RoleListViewImpl extends AbstractVerticalPageView implements RoleLi
 
     private RoleSearchPanel searchPanel;
     private SelectionOptionButton selectOptionButton;
-    private RoleBeanTableDisplay tableItem;
+    private RoleTableDisplay tableItem;
     private VerticalLayout listLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
@@ -58,13 +59,13 @@ public class RoleListViewImpl extends AbstractVerticalPageView implements RoleLi
         this.setMargin(new MarginInfo(false, true, false, true));
 
         searchPanel = new RoleSearchPanel();
-        listLayout = new VerticalLayout();
+        listLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         this.with(searchPanel, listLayout);
         this.generateDisplayTable();
     }
 
     private void generateDisplayTable() {
-        tableItem = new RoleBeanTableDisplay(RoleTableFieldDef.selected, Arrays.asList(
+        tableItem = new RoleTableDisplay(RoleTableFieldDef.selected, Arrays.asList(
                 RoleTableFieldDef.rolename, RoleTableFieldDef.isDefault, RoleTableFieldDef.description));
         listLayout.addComponent(constructTableActionControls());
         listLayout.addComponent(tableItem);

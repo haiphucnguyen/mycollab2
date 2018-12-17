@@ -25,11 +25,13 @@ import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -51,7 +53,7 @@ public class VerticalTabsheet extends CustomComponent {
     private CssLayout navigatorWrapper;
 
     private VerticalLayout tabContainer;
-    private VerticalLayout contentWrapper;
+    private CssLayout contentWrapper;
 
     private Map<String, Tab> compMap = new HashMap<>();
 
@@ -66,13 +68,14 @@ public class VerticalTabsheet extends CustomComponent {
 
         navigatorWrapper = new CssLayout();
         navigatorWrapper.setStyleName("navigator-wrap");
-        navigatorContainer = new VerticalLayout();
+
+        navigatorContainer = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         navigatorWrapper.addComponent(navigatorContainer);
 
-        contentWrapper = new VerticalLayout();
+        contentWrapper = new CssLayout();
         contentWrapper.setStyleName("container-wrap");
 
-        tabContainer = new VerticalLayout();
+        tabContainer = new MVerticalLayout().withSpacing(false).withMargin(false);
         contentWrapper.addComponent(tabContainer);
 
         contentLayout.addComponent(navigatorWrapper);
@@ -294,7 +297,7 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    public VerticalLayout getContentWrapper() {
+    public CssLayout getContentWrapper() {
         return this.contentWrapper;
     }
 

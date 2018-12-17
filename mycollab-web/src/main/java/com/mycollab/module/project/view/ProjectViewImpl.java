@@ -137,7 +137,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 }
             });
 
-            VerticalLayout contentWrapper = myProjectTab.getContentWrapper();
+            CssLayout contentWrapper = myProjectTab.getContentWrapper();
             contentWrapper.addStyleName("main-content");
 
             MVerticalLayout topPanel = new MVerticalLayout(new ProjectInfoComponent(project)).withSpacing(false).
@@ -233,8 +233,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                     ProjectLinkGenerator.generateUsersLink(prjId),
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
-
-            myProjectTab.addToggleNavigatorControl();
         }
 
         private Component constructProjectDashboardComponent() {

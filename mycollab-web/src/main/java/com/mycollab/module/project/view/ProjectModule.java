@@ -29,6 +29,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
@@ -62,8 +63,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         tabSheet = new VerticalTabsheet();
         tabSheet.setSizeFull();
         tabSheet.setNavigatorStyleName("sidebar-menu");
-        tabSheet.addToggleNavigatorControl();
-        VerticalLayout contentWrapper = tabSheet.getContentWrapper();
+        CssLayout contentWrapper = tabSheet.getContentWrapper();
         contentWrapper.addStyleName("main-content");
 
         this.buildComponents();

@@ -52,6 +52,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 
@@ -79,7 +80,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
         projectSearchPanel = new ProjectSearchPanel();
         with(projectSearchPanel);
 
-        bodyLayout = new VerticalLayout();
+        bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         this.addComponent(bodyLayout);
 
         generateDisplayTable();
