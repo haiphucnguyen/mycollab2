@@ -27,4 +27,6 @@
     <inherits name="org.vaadin.sliderpanel.WidgetSet"/>
 
     <inherits name="org.vaadin.cropper.WidgetSet" />
+
+    <inherits name="com.fo0.advancedtokenfield.AdvancedTokenField.WidgetSet"/>
 </module>

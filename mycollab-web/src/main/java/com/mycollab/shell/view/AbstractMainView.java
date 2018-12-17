@@ -41,10 +41,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.sliderpanel.SliderPanel;
-import org.vaadin.sliderpanel.SliderPanelBuilder;
-import org.vaadin.sliderpanel.client.SliderMode;
-import org.vaadin.sliderpanel.client.SliderTabPosition;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -90,14 +86,7 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         this.removeAllComponents();
         bodyLayout = new MHorizontalLayout().withSpacing(false).withStyleName("main-view").withId("main-body")
                 .withFullHeight().withFullWidth();
-        SliderPanel topSlider = new SliderPanelBuilder(new Label("A"))
-                .expanded(false)
-                .mode(SliderMode.LEFT)
-                .caption("Top Slider")
-                .tabPosition(SliderTabPosition.BEGINNING)
-                .build();
-        topSlider.expand();
-        this.with(topSlider, createMainMenu(), bodyLayout).expand(bodyLayout);
+        this.with(createMainMenu(), bodyLayout).expand(bodyLayout);
     }
 
     @Override
@@ -117,9 +106,8 @@ public abstract class AbstractMainView extends MHorizontalLayout implements Main
         accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false)).withHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-
         MButton navProjectBtn = new MButton("M", event -> EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{})));
-        MButton createBtn = new MButton("").withIcon(VaadinIcons.PLUS);
+        MButton createBtn = new MButton("", (Button.ClickListener) clickEvent -> EventBusFactory.getInstance().post(new ShellEvent.ShowAssociateAddActionsPerModule(this))).withIcon(VaadinIcons.PLUS);
         MButton searchBtn = new MButton("").withIcon(VaadinIcons.SEARCH);
 
         MVerticalLayout actionControls = new MVerticalLayout(navProjectBtn, createBtn, searchBtn);

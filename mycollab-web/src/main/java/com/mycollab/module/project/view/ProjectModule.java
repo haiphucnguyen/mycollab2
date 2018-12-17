@@ -16,24 +16,33 @@
  */
 package com.mycollab.module.project.view;
 
+import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
-import com.mycollab.module.project.view.client.IClientPresenter;
 import com.mycollab.module.project.view.reports.IReportPresenter;
+import com.mycollab.shell.event.ShellEvent.ShowAssociateAddActionsPerModule;
+import com.mycollab.shell.view.AbstractMainView;
+import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractSingleContainerPageView;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ViewComponent;
+import com.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.web.IDesktopModule;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.vaadin.ui.*;
+import org.vaadin.sliderpanel.SliderPanel;
+import org.vaadin.sliderpanel.SliderPanelBuilder;
+import org.vaadin.sliderpanel.client.SliderMode;
+import org.vaadin.sliderpanel.client.SliderTabPosition;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -55,6 +64,15 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
 //    private IClientPresenter clientPresenter;
 
+    private ApplicationEventListener<ShowAssociateAddActionsPerModule> showAddActionsHandler = new
+            ApplicationEventListener<ShowAssociateAddActionsPerModule>() {
+                @Override
+                @Subscribe
+                public void handle(ShowAssociateAddActionsPerModule event) {
+                    showProjectAddMenu();
+                }
+            };
+
     public ProjectModule() {
         addStyleName("module");
         setSizeFull();
@@ -68,6 +86,18 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
         this.buildComponents();
         this.setContent(tabSheet);
+    }
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(showAddActionsHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(showAddActionsHandler);
+        super.detach();
     }
 
     private void buildComponents() {
@@ -136,5 +166,28 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     public void gotoSubView(String viewId) {
         tabSheet.selectTab(viewId);
+    }
+
+    private void showProjectAddMenu() {
+        MButton newProjectBtn = new MButton("New Project");
+        MButton newTicketBtn = new MButton("New Ticket");
+        MButton newDocumentBtn = new MButton("New Page");
+
+        MVerticalLayout controlsLayout = new MVerticalLayout();
+        controlsLayout.with(new Embedded("", AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150)));
+        controlsLayout.with(newProjectBtn, newTicketBtn, newDocumentBtn);
+
+        SliderPanel topSlider = new SliderPanelBuilder(controlsLayout)
+                .expanded(false)
+                .flowInContent(true)
+                .mode(SliderMode.LEFT)
+                .caption("Top Slider")
+                .tabPosition(SliderTabPosition.BEGINNING)
+                .build();
+        topSlider.expand();
+
+        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
+        mainView.addComponent(topSlider, 0);
+
     }
 }

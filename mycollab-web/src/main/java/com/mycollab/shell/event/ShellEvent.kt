@@ -40,4 +40,6 @@ object ShellEvent {
     class NewNotification(source: Any, val data: Any) : ApplicationEvent(source)
 
     class AddQueryParam(source: Any, val data: Any?) : ApplicationEvent(source)
+
+    class ShowAssociateAddActionsPerModule(source: Any): ApplicationEvent(source)
 }

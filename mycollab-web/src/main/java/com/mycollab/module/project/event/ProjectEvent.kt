@@ -24,6 +24,7 @@ import com.mycollab.module.project.domain.ProjectGenericItem
  * @since 6.0.0
  */
 object ProjectEvent {
+
     class GotoAdd(source: Any, val data: Any?) : ApplicationEvent(source)
 
     class GotoEdit(source: Any, val data: Any?) : ApplicationEvent(source)
