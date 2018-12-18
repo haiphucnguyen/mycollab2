@@ -28,7 +28,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.PageableHandler;
 import com.mycollab.vaadin.event.SelectableItemHandler;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.v7.data.Container;
@@ -72,8 +72,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     protected Table tableItem;
     private HorizontalLayout controlBarWrapper;
 
-    private Set<SelectableItemHandler<B>> selectableHandlers;
-    private Set<PageableHandler> pageableHandlers;
+    private Set<SelectableItemHandler<B>> selectableHandlers = new HashSet<>();
+    private Set<PageableHandler> pageableHandlers = new HashSet<>();
 
     protected Class<B> type;
 
@@ -154,9 +154,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 
     @Override
     public void addSelectableItemHandler(final SelectableItemHandler<B> handler) {
-        if (selectableHandlers == null) {
-            selectableHandlers = new HashSet<>();
-        }
         selectableHandlers.add(handler);
     }
 
@@ -173,11 +170,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
 
     @Override
     public void addPageableHandler(final PageableHandler handler) {
-        if (pageableHandlers == null) {
-            pageableHandlers = new HashSet<>();
-        }
         pageableHandlers.add(handler);
-
     }
 
     @Override
@@ -233,17 +226,12 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
             this.currentPage = currentPage;
             searchRequest.setCurrentPage(currentPage);
             doSearch();
-
-            if (pageableHandlers != null) {
-                pageableHandlers.forEach(handler -> handler.move(currentPage));
-            }
+            pageableHandlers.forEach(handler -> handler.move(currentPage));
         }
     }
 
     public void fireSelectItemEvent(final B item) {
-        if (this.selectableHandlers != null) {
-            selectableHandlers.forEach(handler -> handler.onSelect(item));
-        }
+        selectableHandlers.forEach(handler -> handler.onSelect(item));
     }
 
     private ComponentContainer createPagingControls() {
@@ -350,7 +338,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         }
 
         if (StringUtils.isNotBlank((String) sortColumnId)) {
-            tableItem.setColumnIcon(sortColumnId, isAscending ? FontAwesome.CARET_DOWN : FontAwesome.CARET_UP);
+            tableItem.setColumnIcon(sortColumnId, isAscending ? VaadinIcons.CARET_DOWN : VaadinIcons.CARET_UP);
         }
 
         tableItem.addHeaderClickListener(headerClickEvent -> {

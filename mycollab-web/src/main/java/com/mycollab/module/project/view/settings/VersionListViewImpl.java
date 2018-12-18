@@ -43,7 +43,9 @@ import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -52,7 +54,6 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class VersionListViewImpl extends AbstractVerticalPageView implements VersionListView {
     private static final long serialVersionUID = 1L;
@@ -60,21 +61,20 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     private final VersionSearchPanel versionSearchPanel;
     private SelectionOptionButton selectOptionButton;
     private DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
-    private VerticalLayout versionListLayout;
+    private MVerticalLayout versionListLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
 
     public VersionListViewImpl() {
-        this.setMargin(new MarginInfo(false, true, true, true));
+        this.setMargin(new MarginInfo(false, true, false, true));
         this.versionSearchPanel = new VersionSearchPanel();
-        this.versionListLayout = new VerticalLayout();
+        this.versionListLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         this.with(versionSearchPanel, versionListLayout);
         this.generateDisplayTable();
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(VersionService.class),
-                SimpleVersion.class,
+        tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(VersionService.class), SimpleVersion.class,
                 new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
@@ -83,8 +83,8 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
                         new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
 
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
-            final SimpleVersion version = tableItem.getBeanByIndex(itemId);
-            final CheckBoxDecor cb = new CheckBoxDecor("", version.isSelected());
+            SimpleVersion version = tableItem.getBeanByIndex(itemId);
+            CheckBoxDecor cb = new CheckBoxDecor("", version.isSelected());
             cb.addValueChangeListener(valueChangeEvent -> tableItem.fireSelectItemEvent(version));
             version.setExtraData(cb);
             return cb;
@@ -136,14 +136,9 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     }
 
     private ComponentContainer constructTableActionControls() {
-        final CssLayout layoutWrapper = new CssLayout();
-        layoutWrapper.setWidth("100%");
-        MHorizontalLayout layout = new MHorizontalLayout();
-        layoutWrapper.addStyleName(WebThemes.TABLE_ACTION_CONTROLS);
-        layoutWrapper.addComponent(layout);
+        final MCssLayout layoutWrapper = new MCssLayout().withFullWidth().withStyleName(WebThemes.TABLE_ACTION_CONTROLS);
 
-        this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-        layout.addComponent(this.selectOptionButton);
+        selectOptionButton = new SelectionOptionButton(tableItem);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
@@ -156,7 +151,7 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
         tableActionControls.addDownloadExcelActionItem();
         tableActionControls.addDownloadCsvActionItem();
 
-        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
+        layoutWrapper.add(selectOptionButton, tableActionControls, selectedItemsNumberLabel);
         return layoutWrapper;
     }
 

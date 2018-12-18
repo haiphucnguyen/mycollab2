@@ -43,8 +43,10 @@ import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
@@ -138,10 +140,9 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
     }
 
     private ComponentContainer constructTableActionControls() {
-        MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.TABLE_ACTION_CONTROLS).withFullWidth();
+        MCssLayout layout = new MCssLayout().withStyleName(WebThemes.TABLE_ACTION_CONTROLS).withFullWidth();
 
-        this.selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(this.selectOptionButton);
+        selectOptionButton = new SelectionOptionButton(tableItem);
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
         if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
@@ -153,8 +154,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         tableActionControls.addDownloadExcelActionItem();
         tableActionControls.addDownloadCsvActionItem();
 
-        layout.with(tableActionControls, selectedItemsNumberLabel)
-                .withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
+        layout.add(selectOptionButton, tableActionControls, selectedItemsNumberLabel);
         return layout;
     }
 

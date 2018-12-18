@@ -60,7 +60,6 @@ import java.util.Arrays;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-// TODO
 @ViewComponent
 public class ProjectListViewImpl extends AbstractVerticalPageView implements ProjectListView {
     private ProjectSearchPanel projectSearchPanel;

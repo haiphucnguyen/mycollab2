@@ -24,10 +24,12 @@ import com.mycollab.vaadin.event.MassItemActionHandler
 import com.mycollab.vaadin.event.ViewItemAction
 import com.mycollab.vaadin.web.ui.ButtonGroup
 import com.mycollab.vaadin.web.ui.WebThemes
+import com.vaadin.icons.VaadinIcons
 import com.vaadin.server.FileDownloader
 import com.vaadin.server.FontAwesome
 import com.vaadin.server.Resource
 import com.vaadin.server.StreamResource
+import com.vaadin.shared.ui.MarginInfo
 import com.vaadin.ui.Button
 import org.vaadin.viritin.button.MButton
 import org.vaadin.viritin.layouts.MHorizontalLayout
@@ -40,6 +42,10 @@ import java.io.InputStream
 class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemActionHandler {
     private var actionHandler: MassItemActionHandler? = null
     private val groupMap = mutableMapOf<String, ButtonGroup>()
+
+    init {
+        this.margin = MarginInfo(false, true, false, true)
+    }
 
     /**
      *
@@ -65,15 +71,15 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
     }
 
     fun addDeleteActionItem() {
-        addActionItem(ViewItemAction.DELETE_ACTION, FontAwesome.TRASH_O, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
+        addActionItem(ViewItemAction.DELETE_ACTION, VaadinIcons.TRASH, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
     }
 
     fun addMailActionItem() {
-        addActionItem(ViewItemAction.MAIL_ACTION, FontAwesome.ENVELOPE_O, "mail", UserUIContext.getMessage(GenericI18Enum.BUTTON_MAIL))
+        addActionItem(ViewItemAction.MAIL_ACTION, VaadinIcons.ENVELOPE_O, "mail", UserUIContext.getMessage(GenericI18Enum.BUTTON_MAIL))
     }
 
     fun addMassUpdateActionItem() {
-        addActionItem(ViewItemAction.MASS_UPDATE_ACTION, FontAwesome.DATABASE, "update",
+        addActionItem(ViewItemAction.MASS_UPDATE_ACTION, VaadinIcons.DATABASE, "update",
                 UserUIContext.getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE))
     }
 
@@ -104,7 +110,7 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
         var group = groupMap[groupId]
         if (group == null) {
             group = ButtonGroup()
-            groupMap.put(groupId, group)
+            groupMap[groupId] = group
             this.addComponent(group)
         }
         val optionBtn = MButton("").withIcon(resource).withStyleName(WebThemes.BUTTON_ACTION, WebThemes.BUTTON_SMALL_PADDING)
