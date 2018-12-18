@@ -59,7 +59,6 @@ import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
  * @author MyCollab Ltd
  * @since 4.5.5
  */
-// TODO
 public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
     private static final long serialVersionUID = 1L;
     private SimpleBug bug;
