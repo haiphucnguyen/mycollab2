@@ -7,6 +7,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -19,7 +20,7 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
 //    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale
 //            (UserUIContext.getUserLocale());
 
-    public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
+    public TimeTrackingDateOrderComponent(Set<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }

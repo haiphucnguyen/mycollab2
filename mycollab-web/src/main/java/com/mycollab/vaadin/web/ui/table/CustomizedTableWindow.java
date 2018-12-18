@@ -73,7 +73,7 @@ public abstract class CustomizedTableWindow extends MWindow {
         contentLayout.with(listBuilder).withAlign(listBuilder, Alignment.TOP_CENTER);
 
         MButton restoreLink = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_RESET), clickEvent -> {
-            List<TableViewField> defaultSelectedColumns = tableItem.getDefaultSelectedColumns();
+            Set<TableViewField> defaultSelectedColumns = tableItem.getDefaultSelectedColumns();
             if (defaultSelectedColumns != null) {
                 final Set<TableViewField> selectedColumns = new HashSet<>();
                 final Collection<TableViewField> itemIds = ((ListDataProvider<TableViewField>) listBuilder.getDataProvider()).getItems();
@@ -93,13 +93,13 @@ public abstract class CustomizedTableWindow extends MWindow {
 
         final MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             Set<TableViewField> selectedColumns = (Set<TableViewField>) listBuilder.getValue();
-            table.setDisplayColumns(new ArrayList<>(selectedColumns));
+            table.setDisplayColumns(selectedColumns);
             // Save custom table view def
             CustomViewStore viewDef = new CustomViewStore();
             viewDef.setSaccountid(AppUI.getAccountId());
             viewDef.setCreateduser(UserUIContext.getUsername());
             viewDef.setViewid(viewId);
-            viewDef.setViewinfo(FieldDefAnalyzer.toJson(new ArrayList<>(selectedColumns)));
+            viewDef.setViewinfo(FieldDefAnalyzer.toJson(selectedColumns));
             customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
             close();
         }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);

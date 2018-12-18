@@ -63,7 +63,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
         return null;
     }
 
-    HorizontalLayout constructHeader() {
+    MHorizontalLayout constructHeader() {
         if (header == null) {
             headerText = buildSearchTitle();
             if (headerText != null) {

@@ -42,13 +42,14 @@ import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -76,11 +77,11 @@ public class VersionListViewImpl extends AbstractVerticalPageView implements Ver
     private void generateDisplayTable() {
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(VersionService.class), SimpleVersion.class,
                 new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
-                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                new HashSet<>(Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "name", WebUIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_STATUS, "status", WebUIConstants.TABLE_M_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 2 * WebUIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DUE_DATE, "duedate", WebUIConstants.TABLE_DATE_TIME_WIDTH),
-                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH)));
+                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", WebUIConstants.TABLE_M_LABEL_WIDTH))));
 
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             SimpleVersion version = tableItem.getBeanByIndex(itemId);

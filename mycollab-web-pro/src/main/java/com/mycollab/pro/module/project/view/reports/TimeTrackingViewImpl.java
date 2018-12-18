@@ -96,21 +96,21 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         }
     }
 
-    private List<TableViewField> getVisibleFields() {
+    private Set<TableViewField> getVisibleFields() {
         String groupBy = (String) groupField.getValue();
 
         if (groupBy.equals(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))) {
-            return Arrays.asList(TimeTableFieldDef.summary,
+            return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary,
                     TimeTableFieldDef.logForDate, TimeTableFieldDef.logUser,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime);
+                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime));
         } else if (groupBy.equals(UserUIContext.getMessage(DayI18nEnum.OPT_DATE))) {
-            return Arrays.asList(TimeTableFieldDef.summary,
+            return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary,
                     TimeTableFieldDef.logUser, TimeTableFieldDef.project,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime);
+                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime));
         } else if (groupBy.equals(UserUIContext.getMessage(UserI18nEnum.SINGLE))) {
-            return Arrays.asList(TimeTableFieldDef.summary,
+            return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary,
                     TimeTableFieldDef.logForDate, TimeTableFieldDef.project,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime);
+                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime));
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);
         }

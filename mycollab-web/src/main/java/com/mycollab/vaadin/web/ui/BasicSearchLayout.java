@@ -17,9 +17,11 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.db.arguments.SearchCriteria;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd
@@ -27,7 +29,8 @@ import com.vaadin.ui.HorizontalLayout;
  */
 abstract public class BasicSearchLayout<S extends SearchCriteria> extends SearchLayout<S> {
     private static final long serialVersionUID = 1L;
-    protected ComponentContainer header;
+
+    protected MHorizontalLayout header;
     protected ComponentContainer body;
 
     public BasicSearchLayout(DefaultGenericSearchPanel<S> parent) {
@@ -46,14 +49,14 @@ abstract public class BasicSearchLayout<S extends SearchCriteria> extends Search
     }
 
     @Override
-    protected void addHeaderRight(Component c) {
+    protected void addHeaderRight(Component component) {
         if (header == null)
             return;
 
-        header.addComponent(c);
+        header.with(component).withAlign(component, Alignment.MIDDLE_RIGHT);
     }
 
-    private HorizontalLayout constructHeader() {
+    private MHorizontalLayout constructHeader() {
         return ((DefaultGenericSearchPanel)searchPanel).constructHeader();
     }
 

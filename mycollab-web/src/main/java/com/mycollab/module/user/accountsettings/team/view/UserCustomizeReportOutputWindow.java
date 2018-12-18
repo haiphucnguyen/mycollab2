@@ -30,7 +30,8 @@ import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd
@@ -43,17 +44,17 @@ public class UserCustomizeReportOutputWindow extends CustomizeReportOutputWindow
     }
 
     @Override
-    protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
+    protected Set<TableViewField> getDefaultColumns() {
+        return new HashSet<>(Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
                 UserTableFieldDef.email, UserTableFieldDef.birthday,
-                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company);
+                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company));
     }
 
     @Override
-    protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
+    protected Set<TableViewField> getAvailableColumns() {
+        return new HashSet<>(Arrays.asList(UserTableFieldDef.displayName, UserTableFieldDef.roleName,
                 UserTableFieldDef.email, UserTableFieldDef.birthday,
-                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company);
+                UserTableFieldDef.officePhone, UserTableFieldDef.homePhone, UserTableFieldDef.company));
     }
 
     @Override

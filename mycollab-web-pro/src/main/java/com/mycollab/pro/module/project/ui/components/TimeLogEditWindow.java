@@ -3,13 +3,16 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.arguments.ValuedBean;
+import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
+import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
@@ -31,6 +34,7 @@ import org.vaadin.viritin.layouts.MWindow;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -81,53 +85,53 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         constructRemainTimeEntryPanel();
 
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
-                Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
+                new HashSet<>(Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
                         TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new TableViewField(null, "id",
-                                WebUIConstants.TABLE_CONTROL_WIDTH)));
+                                WebUIConstants.TABLE_CONTROL_WIDTH))));
 
-//        gridItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
-//            final SimpleItemTimeLogging timeLoggingItem = gridItem.getBeanByIndex(itemId);
-//
-//            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
-//                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
-//        });
-//
-//        gridItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
-//            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
-//        });
-//
-//        gridItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging itemTimeLogging = gridItem.getBeanByIndex(itemId);
-//            return new Label(itemTimeLogging.getLogvalue() + "");
-//        });
-//
-//        gridItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
-//            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
-//            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
-//            return icon;
-//        });
-//
-//        gridItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
-//            SimpleItemTimeLogging monitorItem = gridItem.getBeanByIndex(itemId);
-//            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
-//            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
-//            return icon;
-//        });
-//
-//        gridItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
-//            final SimpleItemTimeLogging itemTimeLogging = gridItem.getBeanByIndex(itemId);
-//            MButton deleteBtn = new MButton("", clickEvent -> {
-//                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
-//                loadTimeValue();
-//                hasTimeChange = true;
-//            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
-//            itemTimeLogging.setExtraData(deleteBtn);
-//
-//            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
-//            return deleteBtn;
-//        });
+        tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
+            final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
+
+            return new ProjectUserLink(timeLoggingItem.getProjectid(), timeLoggingItem.getLoguser(),
+                    timeLoggingItem.getLogUserAvatarId(), timeLoggingItem.getLogUserFullName());
+        });
+
+        tableItem.addGeneratedColumn("logforday", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            return new Label(UserUIContext.formatDate(monitorItem.getLogforday()));
+        });
+
+        tableItem.addGeneratedColumn("logvalue", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+            return new Label(itemTimeLogging.getLogvalue() + "");
+        });
+
+        tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
+            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
+            return icon;
+        });
+
+        tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
+            SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
+            icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
+            return icon;
+        });
+
+        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+            final SimpleItemTimeLogging itemTimeLogging = tableItem.getBeanByIndex(itemId);
+            MButton deleteBtn = new MButton("", clickEvent -> {
+                itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
+                loadTimeValue();
+                hasTimeChange = true;
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+            itemTimeLogging.setExtraData(deleteBtn);
+
+            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            return deleteBtn;
+        });
 
         tableItem.setWidth("100%");
         content.addComponent(tableItem);

@@ -44,19 +44,19 @@ import org.vaadin.viritin.button.MButton;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 public class FollowingTicketBeanTableDisplay extends DefaultPagedBeanTable<ProjectFollowingTicketService, FollowingTicketSearchCriteria, FollowingTicket> {
     private static final long serialVersionUID = 1L;
 
     public FollowingTicketBeanTableDisplay() {
-        super(AppContextUtil.getSpringBean(ProjectFollowingTicketService.class),
-                FollowingTicket.class, Arrays.asList(FollowingTicketFieldDef.summary,
-                        FollowingTicketFieldDef.project, FollowingTicketFieldDef.assignee, FollowingTicketFieldDef.createdDate));
+        super(AppContextUtil.getSpringBean(ProjectFollowingTicketService.class), FollowingTicket.class,
+                new HashSet<>(Arrays.asList(FollowingTicketFieldDef.summary,
+                        FollowingTicketFieldDef.project, FollowingTicketFieldDef.assignee, FollowingTicketFieldDef.createdDate)));
 
         this.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final FollowingTicket ticket = getBeanByIndex(itemId);

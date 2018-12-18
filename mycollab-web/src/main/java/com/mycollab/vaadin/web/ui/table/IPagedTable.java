@@ -30,6 +30,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -45,7 +46,7 @@ public interface IPagedTable<S extends SearchCriteria, T> extends HasSelectableI
 
     void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
 
-    List<TableViewField> getDisplayColumns();
+    Set<TableViewField> getDisplayColumns();
 
     T getBeanByIndex(Object itemId);
 

@@ -31,7 +31,8 @@ import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd
@@ -44,16 +45,16 @@ public class MilestoneCustomizeReportOutputWindow extends CustomizeReportOutputW
     }
 
     @Override
-    protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
-                MilestoneTableFieldDef.endDate, MilestoneTableFieldDef.status, MilestoneTableFieldDef.assignee);
+    protected Set<TableViewField> getDefaultColumns() {
+        return new HashSet<>(Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
+                MilestoneTableFieldDef.endDate, MilestoneTableFieldDef.status, MilestoneTableFieldDef.assignee));
     }
 
     @Override
-    protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
+    protected Set<TableViewField> getAvailableColumns() {
+        return new HashSet<>(Arrays.asList(MilestoneTableFieldDef.milestoneName, MilestoneTableFieldDef.startDate,
                 MilestoneTableFieldDef.endDate, MilestoneTableFieldDef.status, MilestoneTableFieldDef.assignee,
-                MilestoneTableFieldDef.billableHours, MilestoneTableFieldDef.nonBillableHours);
+                MilestoneTableFieldDef.billableHours, MilestoneTableFieldDef.nonBillableHours));
     }
 
     @Override

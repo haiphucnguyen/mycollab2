@@ -8,7 +8,7 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
-import com.mycollab.module.project.ui.components.TicketBeanTableDisplay;
+import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
@@ -22,6 +22,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -30,7 +31,7 @@ import java.util.Arrays;
 class ProjectTicketSelectionWindow extends MWindow {
     private static final long serialVersionUID = 1L;
 
-    private TicketBeanTableDisplay ticketTableDisplay;
+    private TicketTableDisplay ticketTableDisplay;
     private TextField nameField;
     private ProjectTicketSearchCriteria searchCriteria;
 
@@ -38,7 +39,7 @@ class ProjectTicketSelectionWindow extends MWindow {
         super(UserUIContext.getMessage(TicketI18nEnum.OPT_SELECT_TICKET));
         this.withCenter().withResizable(false).withModal(true).withWidth("800px");
         MVerticalLayout content = new MVerticalLayout();
-        ticketTableDisplay = new TicketBeanTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser));
+        ticketTableDisplay = new TicketTableDisplay(new HashSet<>(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser)));
         ticketTableDisplay.setDisplayNumItems(10);
         ticketTableDisplay.addTableListener(event -> {
             final ProjectTicket task = (ProjectTicket) event.getData();

@@ -15,7 +15,8 @@ import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd
@@ -28,17 +29,17 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
     }
 
     @Override
-    protected Collection<TableViewField> getDefaultColumns() {
-        return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+    protected Set<TableViewField> getDefaultColumns() {
+        return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                TimeTableFieldDef.project);
+                TimeTableFieldDef.project));
     }
 
     @Override
-    protected Collection<TableViewField> getAvailableColumns() {
-        return Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+    protected Set<TableViewField> getAvailableColumns() {
+        return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                TimeTableFieldDef.project);
+                TimeTableFieldDef.project));
     }
 
     @Override
