@@ -1,26 +1,26 @@
 package com.mycollab.ondemand.module.support.service
 
-import com.mycollab.db.arguments.DateSearchField
+import com.google.common.collect.Collections2
 import com.mycollab.db.arguments.BasicSearchRequest
+import com.mycollab.db.arguments.DateSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.ondemand.module.billing.domain.criteria.BillingAccountSearchCriteria
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
-import com.google.common.collect.Collections2
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
+import com.mycollab.test.rule.DbUnitInitializerRule
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDate
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class BillingAccountExtServiceTest : IntegrationServiceTest() {
     @Autowired
     private lateinit var billingService: BillingService

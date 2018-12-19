@@ -3,7 +3,7 @@ package com.mycollab.schedule.email;
 import com.mycollab.module.mail.service.ExtMailService;
 import com.mycollab.module.mail.service.IContentGenerator;
 import com.mycollab.module.user.service.BillingAccountService;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.quartz.JobExecutionContext;
@@ -26,7 +26,7 @@ public class GenericJobTest {
     @Mock
     protected BillingAccountService billingAccountService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }

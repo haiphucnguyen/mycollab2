@@ -1,6 +1,6 @@
 package com.mycollab.module.servlet;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -22,7 +22,7 @@ public class GenericServletTest {
     @Mock
     protected HttpServletResponse response;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         when(response.getLocale()).thenReturn(Locale.US);

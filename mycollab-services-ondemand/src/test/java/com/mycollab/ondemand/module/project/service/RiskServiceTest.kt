@@ -10,15 +10,15 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
+import com.mycollab.test.rule.DbUnitInitializerRule
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.tuple
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class RiskServiceTest : IntegrationServiceTest() {
 
     @Autowired

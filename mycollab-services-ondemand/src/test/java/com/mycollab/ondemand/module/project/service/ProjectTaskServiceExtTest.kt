@@ -4,15 +4,16 @@ import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.mycollab.module.project.domain.Task
 import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
-import org.junit.Test
-import org.junit.runner.RunWith
+import com.mycollab.test.rule.DbUnitInitializerRule
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class ProjectTaskServiceExtTest : IntegrationServiceTest() {
 
     @Autowired

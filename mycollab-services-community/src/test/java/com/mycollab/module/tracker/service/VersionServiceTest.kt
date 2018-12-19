@@ -23,23 +23,19 @@ import com.mycollab.module.tracker.domain.SimpleVersion
 import com.mycollab.module.tracker.domain.Version
 import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria
 import com.mycollab.test.DataSet
+import com.mycollab.test.rule.DbUnitInitializerRule
 import com.mycollab.test.spring.IntegrationServiceTest
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
-import java.text.DateFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.GregorianCalendar
-
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.tuple
-import java.time.LocalDate
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class VersionServiceTest : IntegrationServiceTest() {
 
     @Autowired

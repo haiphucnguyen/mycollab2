@@ -26,13 +26,13 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
     override val sysId: String
         get() = properties.getProperty("id", "${UUID.randomUUID()}${LocalDateTime().millisOfSecond}")
 
-    override val startDate: Date
+    override val startDate: LocalDate
         get() {
             return try {
                 val dateValue = properties.getProperty("startdate")
                 DateTimeUtils.convertDateByString(dateValue, "yyyy-MM-dd'T'HH:mm:ss")
             } catch (e: Exception) {
-                GregorianCalendar().time
+                LocalDate.now()
             }
         }
 

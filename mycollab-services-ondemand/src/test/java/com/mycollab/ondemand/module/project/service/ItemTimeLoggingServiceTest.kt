@@ -9,19 +9,17 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.service.ItemTimeLoggingService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
-import org.junit.Test
-import org.junit.runner.RunWith
+import com.mycollab.test.rule.DbUnitInitializerRule
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.tuple
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-
-import java.text.DateFormat
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.tuple
-
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class ItemTimeLoggingServiceTest : IntegrationServiceTest() {
 
     @Autowired

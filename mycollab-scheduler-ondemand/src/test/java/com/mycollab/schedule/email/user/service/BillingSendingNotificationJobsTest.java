@@ -8,9 +8,8 @@ import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.ondemand.module.billing.service.BillingService;
 import com.mycollab.ondemand.schedule.jobs.BillingSendingNotificationJob;
 import com.mycollab.schedule.email.GenericJobTest;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -36,11 +35,6 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
     @Mock
     private IDeploymentMode deploymentMode;
 
-    @Before
-    public void initTest() {
-
-    }
-
     @Test
     public void testSendEmailForAccountExceed25days() throws JobExecutionException {
         BillingAccountWithOwners account = new BillingAccountWithOwners();
@@ -60,8 +54,8 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         ArgumentCaptor<String> strArgument = ArgumentCaptor.forClass(String.class);
 
         verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
-        Assert.assertEquals("", strArgument.getValue());
-        Assert.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME,
+        Assertions.assertEquals("", strArgument.getValue());
+        Assertions.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME,
                 billingAccountArgument.getValue().getReminderstatus());
     }
 
@@ -85,8 +79,8 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
         ArgumentCaptor<String> strArgument = ArgumentCaptor.forClass(String.class);
 
         verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
-        Assert.assertEquals("", strArgument.getValue());
-        Assert.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME,
+        Assertions.assertEquals("", strArgument.getValue());
+        Assertions.assertEquals(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME,
                 billingAccountArgument.getValue().getReminderstatus());
     }
 
@@ -114,11 +108,11 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 //        ArgumentCaptor<String> strArgument = ArgumentCaptor.forClass(String.class);
 //
 //        verify(billingAccountService).updateSelectiveWithSession(billingAccountArgument.capture(), strArgument.capture());
-//        Assert.assertEquals("", strArgument.getValue());
-//        Assert.assertEquals(
+//        Assertions.assertEquals("", strArgument.getValue());
+//        Assertions.assertEquals(
 //                AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN,
 //                billingAccountArgument.getValue().getReminderstatus());
-//        Assert.assertEquals(new Integer(1), billingAccountArgument.getValue()
+//        Assertions.assertEquals(new Integer(1), billingAccountArgument.getValue()
 //                .getBillingplanid());
     }
 }
