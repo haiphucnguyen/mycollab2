@@ -20,8 +20,8 @@ import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,10 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.WeekFields;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Utility class to process date instance
@@ -49,16 +46,13 @@ public class DateTimeUtils {
         return LocalDate.now().atStartOfDay();
     }
 
-    public static Date convertDateByString(String strDate, String format) {
+    public static LocalDate convertDateByString(String strDate, String format) {
         if (!StringUtils.isBlank(strDate)) {
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat(format);
-                return formatter.parse(strDate);
-            } catch (ParseException e) {
-                LOG.error("Error while parse date", e);
-            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+            return LocalDate.parse(strDate, formatter);
+        } else {
+            throw new IllegalArgumentException("Date string must be not null");
         }
-        return new Date();
     }
 
     public static String convertToStringWithUserTimeZone(String dateVal, String dateFormat, Locale locale, ZoneId userTimeZone) {
@@ -71,7 +65,7 @@ public class DateTimeUtils {
      * @return
      */
     public static LocalDateTime parseDateByW3C(String strDate) {
-        if (strDate != null && !strDate.equals("")) {
+        if (!StringUtils.isNotBlank(strDate)) {
             try {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
                 return LocalDateTime.parse(strDate, formatter);
@@ -155,14 +149,7 @@ public class DateTimeUtils {
      * @return
      */
     public static LocalDateTime convertTimeFromUTCToSystemTimezone(long timeInMillis) {
-        LocalDateTime dt = LocalDateTime.now();
-        ZoneId systemTimeZone = ZoneId.systemDefault();
-
-        // TODO
-//        dt = dt.withMillis(DateTimeZone.getDefault().getOffset(timeInMillis) + timeInMillis);
-//        dt = dt.withZone(utcZone);
-//        return dt.toDate();
-        return LocalDateTime.now();
+        return Instant.ofEpochMilli(timeInMillis).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
@@ -183,23 +170,11 @@ public class DateTimeUtils {
     }
 
     public static LocalDate min(LocalDate... values) {
-        LocalDate minVal = values[0];
-        for (int i = 1; i < values.length; i++) {
-            if (minVal.isAfter(values[i])) {
-                minVal = values[i];
-            }
-        }
-        return minVal;
+        return Arrays.stream(values).min(LocalDate::compareTo).get();
     }
 
     public static LocalDate max(LocalDate... values) {
-        LocalDate max = values[0];
-        for (int i = 1; i < values.length; i++) {
-            if (max.isBefore(values[i])) {
-                max = values[i];
-            }
-        }
-        return max;
+        return Arrays.stream(values).max(LocalDate::compareTo).get();
     }
 
     public static String getCurrentYear() {
