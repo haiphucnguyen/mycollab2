@@ -34,7 +34,7 @@ class RelayEmailNotificationServiceTest : IntegrationServiceTest() {
 
     @Test
     @DataSet
-    fun testRemoveItems() {
+    fun getFindItems() {
         val criteria = RelayEmailNotificationSearchCriteria()
         val items = relayEmailNotificationService.findPageableListByCriteria(BasicSearchRequest(
                 criteria, 0, Integer.MAX_VALUE))

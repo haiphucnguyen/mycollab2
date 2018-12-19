@@ -55,12 +55,11 @@ class ComponentServiceTest : IntegrationServiceTest() {
 
         assertThat(components.size).isEqualTo(4)
         assertThat<SimpleComponent>(components).extracting("id", "description", "status",
-                "name", "numBugs", "numOpenBugs", "userLeadFullName",
-                "lastupdatedtime").contains(
-                tuple(1, "aaaaaaa", "Open", "com 1", 1, 1, "Nguyen Hai", dateformat.parse("2014-10-02 06:45:22")),
-                tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1, "Nghiem Le", dateformat.parse("2014-10-02 07:45:22")),
-                tuple(3, "ccccccc", "Closed", "com 3", 1, 1, "Nguyen Hai", dateformat.parse("2014-10-03 06:45:22")),
-                tuple(4, "ddddddd", "Open", "com 4", 0, 0, "Nghiem Le", dateformat.parse("2014-10-02 06:32:22")))
+                "name", "numBugs", "numOpenBugs", "userLeadFullName").contains(
+                tuple(1, "aaaaaaa", "Open", "com 1", 1, 1, "Nguyen Hai"),
+                tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1, "Nghiem Le"),
+                tuple(3, "ccccccc", "Closed", "com 3", 1, 1, "Nguyen Hai"),
+                tuple(4, "ddddddd", "Open", "com 4", 0, 0, "Nghiem Le"))
     }
 
     @DataSet
@@ -97,9 +96,5 @@ class ComponentServiceTest : IntegrationServiceTest() {
         assertThat<SimpleComponent>(components).extracting("id", "description", "status",
                 "name", "numBugs", "numOpenBugs").contains(
                 tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1))
-    }
-
-    companion object {
-        private val dateformat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
     }
 }
