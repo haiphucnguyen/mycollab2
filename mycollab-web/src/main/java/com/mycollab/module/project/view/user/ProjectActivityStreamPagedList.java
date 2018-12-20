@@ -99,7 +99,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
             }
         }
 
-        List<ProjectActivityStream> currentListData = projectActivityStreamService.getProjectActivityStreams((BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
+        List<ProjectActivityStream> projectActivities = projectActivityStreamService.getProjectActivityStreams((BasicSearchRequest<ActivityStreamSearchCriteria>) searchRequest);
         this.removeAllComponents();
         LocalDate currentDate = LocalDate.of(2100, 1, 1);
 
@@ -107,16 +107,16 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
         AuditLogRegistry auditLogRegistry = AppContextUtil.getSpringBean(AuditLogRegistry.class);
 
         try {
-            for (ProjectActivityStream activityStream : currentListData) {
-                if (ProjectTypeConstants.PAGE.equals(activityStream.getType())) {
+            for (ProjectActivityStream activity : projectActivities) {
+                if (ProjectTypeConstants.PAGE.equals(activity.getType())) {
                     ProjectPageService pageService = AppContextUtil.getSpringBean(ProjectPageService.class);
-                    Page page = pageService.getPage(activityStream.getTypeid(), UserUIContext.getUsername());
+                    Page page = pageService.getPage(activity.getTypeid(), UserUIContext.getUsername());
                     if (page != null) {
-                        activityStream.setNamefield(page.getSubject());
+                        activity.setNamefield(page.getSubject());
                     }
                 }
 
-                LocalDate itemCreatedDate = activityStream.getCreatedtime().toLocalDate();
+                LocalDate itemCreatedDate = activity.getCreatedtime().toLocalDate();
 
                 if (!currentDate.isEqual(itemCreatedDate)) {
                     currentFeedBlock = new CssLayout();
@@ -125,27 +125,27 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
                     currentDate = itemCreatedDate;
                 }
                 StringBuilder content = new StringBuilder();
-                String itemType = ProjectLocalizationTypeMap.getType(activityStream.getType());
-                String assigneeParam = buildAssigneeValue(activityStream);
-                String itemParam = buildItemValue(activityStream);
+                String itemType = ProjectLocalizationTypeMap.getType(activity.getType());
+                String assigneeParam = buildAssigneeValue(activity);
+                String itemParam = buildItemValue(activity);
 
-                if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+                if (ActivityStreamConstants.ACTION_CREATE.equals(activity.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
-                } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activity.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
-                    if (activityStream.getAssoAuditLog() != null) {
-                        content.append(auditLogRegistry.generatorDetailChangeOfActivity(activityStream));
+                    if (activity.getAssoAuditLog() != null) {
+                        content.append(auditLogRegistry.generatorDetailChangeOfActivity(activity));
                     }
-                } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activity.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
-                    if (activityStream.getAssoAuditLog() != null) {
+                    if (activity.getAssoAuditLog() != null) {
                         content.append("<ul><li>\"").append(
-                                StringUtils.trimHtmlTags(activityStream.getAssoAuditLog().getChangeset(), 200)).append("\"</li></ul>");
+                                StringUtils.trimHtmlTags(activity.getAssoAuditLog().getChangeset(), 200)).append("\"</li></ul>");
                     }
-                } else if (ActivityStreamConstants.ACTION_DELETE.equals(activityStream.getAction())) {
+                } else if (ActivityStreamConstants.ACTION_DELETE.equals(activity.getAction())) {
                     content.append(UserUIContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_DELETE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                 }
@@ -229,8 +229,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
     @Override
     protected MHorizontalLayout createPageControls() {
         this.controlBarWrapper = new MHorizontalLayout().withFullHeight().withStyleName("page-controls");
-        ButtonGroup controlBtns = new ButtonGroup();
-        controlBtns.setStyleName(WebThemes.BUTTON_ACTION);
+
         MButton prevBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER), clickEvent -> pageChange(currentPage - 1))
                 .withWidth("64px").withStyleName(WebThemes.BUTTON_ACTION);
         if (currentPage == 1) {
@@ -243,8 +242,8 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
             nextBtn.setEnabled(false);
         }
 
-        controlBtns.addButton(prevBtn);
-        controlBtns.addButton(nextBtn);
+        ButtonGroup controlBtns = new ButtonGroup(prevBtn, nextBtn);
+        controlBtns.setStyleName(WebThemes.BUTTON_ACTION);
 
         controlBarWrapper.addComponent(controlBtns);
         return controlBarWrapper;
