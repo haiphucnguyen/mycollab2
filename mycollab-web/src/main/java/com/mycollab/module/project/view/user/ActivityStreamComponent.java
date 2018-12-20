@@ -254,15 +254,6 @@ public class ActivityStreamComponent extends CssLayout {
         @Override
         protected QueryHandler<ProjectActivityStream> buildQueryHandler() {
             return new QueryHandler<ProjectActivityStream>() {
-                @Override
-                public int queryTotalCount() {
-                    return 0;
-                }
-
-                @Override
-                public List<ProjectActivityStream> queryCurrentData() {
-                    return null;
-                }
             };
         }
     }

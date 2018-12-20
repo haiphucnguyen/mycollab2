@@ -22,6 +22,7 @@ import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.ActivityStreamConstants;
 import com.mycollab.common.domain.SimpleActivityStream;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
@@ -39,9 +40,11 @@ import com.mycollab.module.project.ui.ProjectLocalizationTypeMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
+import com.mycollab.vaadin.web.ui.ButtonGroup;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
@@ -49,21 +52,16 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
-import org.apache.commons.lang3.time.DateUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<ProjectActivityStream> {
     private static final long serialVersionUID = 1L;
 
@@ -217,16 +215,12 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
 
         if (currentDate.getYear() != nextDate.getYear()) {
             int currentYear = nextDate.getYear();
-            Label yearLbl = new Label("<div>" + currentYear + "</div>", ContentMode.HTML);
-            yearLbl.setStyleName("year-lbl");
-            yearLbl.setWidthUndefined();
+            ELabel yearLbl = ELabel.html("<div>" + currentYear + "</div>").withStyleName("year-lbl").withUndefinedWidth();
             this.addComponent(yearLbl);
         } else {
             blockWrapper.setMargin(new MarginInfo(true, false, false, false));
         }
-        Label dateLbl = new Label(UserUIContext.formatShortDate(nextDate));
-        dateLbl.setStyleName("date-lbl");
-        dateLbl.setWidthUndefined();
+        ELabel dateLbl = new ELabel(UserUIContext.formatShortDate(nextDate)).withStyleName("date-lbl").withUndefinedWidth();
         blockWrapper.with(dateLbl, currentBlock).expand(currentBlock);
 
         this.addComponent(blockWrapper);
@@ -235,39 +229,30 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Projec
     @Override
     protected MHorizontalLayout createPageControls() {
         this.controlBarWrapper = new MHorizontalLayout().withFullHeight().withStyleName("page-controls");
-//        ButtonGroup controlBtns = new ButtonGroup();
-//        controlBtns.setStyleName(WebThemes.BUTTON_ACTION);
-//        MButton prevBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER), clickEvent -> pageChange(currentPage - 1))
-//                .withWidth("64px").withStyleName(WebThemes.BUTTON_ACTION);
-//        if (currentPage == 1) {
-//            prevBtn.setEnabled(false);
-//        }
-//
-//        MButton nextBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER), clickEvent -> pageChange(currentPage + 1))
-//                .withWidth("64px").withStyleName(WebThemes.BUTTON_ACTION);
-//        if (currentPage == totalPage) {
-//            nextBtn.setEnabled(false);
-//        }
-//
-//        controlBtns.addButton(prevBtn);
-//        controlBtns.addButton(nextBtn);
-//
-//        controlBarWrapper.addComponent(controlBtns);
+        ButtonGroup controlBtns = new ButtonGroup();
+        controlBtns.setStyleName(WebThemes.BUTTON_ACTION);
+        MButton prevBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER), clickEvent -> pageChange(currentPage - 1))
+                .withWidth("64px").withStyleName(WebThemes.BUTTON_ACTION);
+        if (currentPage == 1) {
+            prevBtn.setEnabled(false);
+        }
+
+        MButton nextBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER), clickEvent -> pageChange(currentPage + 1))
+                .withWidth("64px").withStyleName(WebThemes.BUTTON_ACTION);
+        if (currentPage == totalPage) {
+            nextBtn.setEnabled(false);
+        }
+
+        controlBtns.addButton(prevBtn);
+        controlBtns.addButton(nextBtn);
+
+        controlBarWrapper.addComponent(controlBtns);
         return controlBarWrapper;
     }
 
     @Override
     protected QueryHandler<ProjectActivityStream> buildQueryHandler() {
         return new QueryHandler<ProjectActivityStream>() {
-            @Override
-            public int queryTotalCount() {
-                return 0;
-            }
-
-            @Override
-            public List<ProjectActivityStream> queryCurrentData() {
-                return null;
-            }
         };
     }
 }

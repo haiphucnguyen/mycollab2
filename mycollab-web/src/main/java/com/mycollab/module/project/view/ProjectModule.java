@@ -86,6 +86,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
         this.buildComponents();
         this.setContent(tabSheet);
+
     }
 
     @Override
