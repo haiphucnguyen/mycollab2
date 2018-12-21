@@ -81,7 +81,7 @@
         values
         <foreach collection="monitors" item="monitorItem" separator=",">
             (
-            #{monitorItem.id}, #{monitorItem.user}, #{monitorItem.createdTime}, #{monitorItem.type},
+            #{monitorItem.id}, #{monitorItem.user}, #{monitorItem.createdtime}, #{monitorItem.type},
             #{monitorItem.typeid}, #{monitorItem.extratypeid}, #{monitorItem.saccountid}
             )
         </foreach>
