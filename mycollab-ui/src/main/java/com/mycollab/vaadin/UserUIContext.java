@@ -39,6 +39,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 
 /**
@@ -360,7 +361,7 @@ public class UserUIContext implements Serializable {
                 UserUIContext.getUserTimeZone());
     }
 
-    public static String formatDuration(LocalDateTime date) {
+    public static String formatDuration(TemporalAccessor date) {
         return DateTimeUtils.getPrettyDurationValue(date, getUserLocale());
     }
 

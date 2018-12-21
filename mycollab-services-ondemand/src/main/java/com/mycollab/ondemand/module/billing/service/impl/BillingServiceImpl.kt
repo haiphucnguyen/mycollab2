@@ -27,6 +27,7 @@ import org.apache.ibatis.session.RowBounds
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -74,13 +75,13 @@ class BillingServiceImpl(private val billingAccountMapperExt2: BillingAccountMap
         }
 
         val billingPlan = billingPlanMapper.selectByPrimaryKey(billingPlanId)
-        val now = LocalDateTime.now()
+        val nowDate = LocalDate.now()
         // Save billing account
         val billingAccount = BillingAccount()
         billingAccount.billingplanid = billingPlan.id
-        billingAccount.createdtime = now
-        billingAccount.trialfrom = now
-        billingAccount.trialto = now.plusDays(30)
+        billingAccount.createdtime = LocalDateTime.now()
+        billingAccount.trialfrom = nowDate
+        billingAccount.trialto = nowDate.plusDays(30)
         billingAccount.status = AccountStatusConstants.TRIAL
         billingAccount.subdomain = subDomain
         billingAccount.displayemailpublicly = true

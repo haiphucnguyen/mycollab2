@@ -49,15 +49,15 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         this.timeLogging = timeLogging;
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
-        dateField = new PopupDateFieldExt(timeLogging.getLogforday());
-        dateField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
+//        dateField = new PopupDateFieldExt(timeLogging.getLogforday());
+//        dateField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
 
         timeField = new DoubleField();
         timeField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_HOURS));
         timeField.setValue(timeLogging.getLogvalue());
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
-        projectMemberSelectionBox.setValue(timeLogging.getLoguser());
+//        projectMemberSelectionBox.setValue(timeLogging.getLoguser());
         projectMemberSelectionBox.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
         isBillableCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));

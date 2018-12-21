@@ -13,6 +13,7 @@ import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.core.MyCollabException;
+import com.mycollab.core.SecureAccessException;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -23,29 +24,29 @@ import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
-import com.mycollab.module.project.domain.ItemTimeLogging;
-import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.module.project.domain.Risk;
-import com.mycollab.module.project.domain.Task;
+import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.ProjectEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
-import com.mycollab.module.project.service.ItemTimeLoggingService;
-import com.mycollab.module.project.service.ProjectTaskService;
-import com.mycollab.module.project.service.ProjectTicketService;
-import com.mycollab.module.project.service.RiskService;
+import com.mycollab.module.project.service.*;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.ui.components.UserProjectComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
+import com.mycollab.module.project.view.bug.BugEditForm;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
+import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.mycollab.module.project.view.task.TaskEditForm;
 import com.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
+import com.mycollab.pro.module.project.view.risk.RiskEditForm;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -64,8 +65,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -167,8 +168,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-//        builder.withBean(ticket).withBindProperty("dueDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-//                .withField(new PopupDateFieldExt()).withValue(ticket.getDueDate());
+        builder.withBean(ticket).withBindProperty("dueDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
+                .withField(new PopupDateFieldExt()).withValue(ticket.getDueDate());
         return builder.build();
     }
 
@@ -196,10 +197,10 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(ticket);
             }
         };
-//        builder.withBean(ticket).withBindProperty("priority").withDescription(ticket.getPriority())
-//                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))
-//                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
-//                .withField(new PriorityComboBox()).withValue(ticket.getPriority());
+        builder.withBean(ticket).withBindProperty("priority").withDescription(ticket.getPriority())
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
+                .withField(new PriorityComboBox()).withValue(ticket.getPriority());
         return builder.build();
     }
 
@@ -229,22 +230,22 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 return ticket.getAssignUserFullName();
             }
         };
-//        builder.withBean(ticket).withBindProperty("assignUser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
-//                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-//                .withValue(ticket.getAssignUser());
+        builder.withBean(ticket).withBindProperty("assignUser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withValue(ticket.getAssignUser());
         return builder.build();
     }
 
     @Override
     public AbstractComponent createBillableHoursPopupField(ProjectTicket ticket) {
-        TicketBillableHoursPopupField view = new TicketBillableHoursPopupField(ticket, true);
+        NewTicketWindow.TicketBillableHoursPopupField view = new NewTicketWindow.TicketBillableHoursPopupField(ticket, true);
         view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
         return view;
     }
 
     @Override
     public AbstractComponent createNonBillableHoursPopupField(ProjectTicket ticket) {
-        TicketBillableHoursPopupField view = new TicketBillableHoursPopupField(ticket, false);
+        NewTicketWindow.TicketBillableHoursPopupField view = new NewTicketWindow.TicketBillableHoursPopupField(ticket, false);
         view.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
         return view;
     }
@@ -458,53 +459,37 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public MWindow createNewTicketWindow(LocalDateTime date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
+    public MWindow createNewTicketWindow(LocalDate date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
         return new NewTicketWindow(date, prjId, milestoneId, isIncludeMilestone);
     }
 
     private static class NewTicketWindow extends MWindow {
-        private ComboBox typeSelection;
+        private ComboBox<String> typeSelection;
         private CssLayout formLayout;
         private boolean isIncludeMilestone;
-        private Integer selectedProjectId;
+        private SimpleProject selectedProject;
 
-        NewTicketWindow(LocalDateTime date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
+        NewTicketWindow(LocalDate date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
-            this.selectedProjectId = projectId;
             this.isIncludeMilestone = isIncludeMilestone;
             this.addStyleName("noscrollable-container");
             MVerticalLayout content = new MVerticalLayout();
             withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
 
             UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
-//            projectListSelect.setEmptySelectionAllowed(false);
-//            if (projectId != null) {
-//                projectListSelect.setValue(projectId);
-//            } else {
-//                if (CollectionUtils.isNotEmpty(projectListSelect.getItemIds())) {
-//                    selectedProjectId = (Integer) projectListSelect.getItemIds().iterator().next();
-//                    projectListSelect.select(selectedProjectId);
-//                } else {
-//                    throw new SecureAccessException();
-//                }
-//            }
-//
-//            typeSelection = new ComboBox();
-//            typeSelection.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+            projectListSelect.setEmptySelectionAllowed(false);
+            selectedProject = projectListSelect.setSelectedProjectById(projectId);
+
+            typeSelection = new ComboBox<String>();
 
             projectListSelect.addValueChangeListener(valueChangeEvent -> {
-                selectedProjectId = (Integer) projectListSelect.getValue();
+                selectedProject = projectListSelect.getValue();
                 loadAssociateTicketTypePerProject();
             });
 
             loadAssociateTicketTypePerProject();
-//            typeSelection.setEmptySelectionAllowed(false);
-//            if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
-//                typeSelection.select(typeSelection.getItemIds().iterator().next());
-//            } else {
-//                throw new SecureAccessException();
-//            }
-//            typeSelection.addValueChangeListener(valueChangeEvent -> doChange(date, milestoneId));
+            typeSelection.setEmptySelectionAllowed(false);
+            typeSelection.addValueChangeListener(event -> doChange(date, milestoneId));
 
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
             formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
@@ -512,166 +497,177 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             formLayout = new CssLayout();
             formLayout.setWidth("100%");
             content.with(formLayoutHelper.getLayout(), formLayout);
-//            doChange(date, milestoneId);
+            doChange(date, milestoneId);
         }
 
         private void loadAssociateTicketTypePerProject() {
-//            typeSelection.removeAllItems();
-//            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-//            SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProjectId, AppUI.getAccountId());
-//            if (member != null) {
-//                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.TASKS)) {
-//                    typeSelection.addItem(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-//                    typeSelection.setItemIcon(UserUIContext.getMessage(TaskI18nEnum.SINGLE),
-//                            ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-//                }
-//
-//                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.BUGS)) {
-//                    typeSelection.addItem(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-//                    typeSelection.setItemIcon(UserUIContext.getMessage(BugI18nEnum.SINGLE),
-//                            ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-//                }
-//
-//                if (isIncludeMilestone && (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
-//                    typeSelection.addItem(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
-//                    typeSelection.setItemIcon(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE),
-//                            ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
-//                }
-//
-//                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.RISKS)) {
-//                    typeSelection.addItem(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
-//                    typeSelection.setItemIcon(UserUIContext.getMessage(RiskI18nEnum.SINGLE),
-//                            ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
-//                }
-//                if (CollectionUtils.isNotEmpty(typeSelection.getItemIds())) {
-//                    typeSelection.select(typeSelection.getItemIds().iterator().next());
-//                }
-        }
-    }
+            typeSelection.clear();
+            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+            SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProject.getId(), AppUI.getAccountId());
+            List<String> ticketTypes = new ArrayList<>();
+            if (member != null) {
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    ticketTypes.add(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+                }
 
-    private void doChange(Date dateValue, final Integer milestoneId) {
-//            formLayout.removeAllComponents();
-//            String value = (String) typeSelection.getValue();
-//            if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(value)) {
-//                SimpleTask task = new SimpleTask();
-//                task.setProjectid(selectedProjectId);
-//                task.setMilestoneid(milestoneId);
-//                task.setSaccountid(AppUI.getAccountId());
-//                task.setCreateduser(UserUIContext.getUsername());
-//                task.setStartdate(dateValue);
-//                TaskEditForm editForm = new TaskEditForm() {
-//                    @Override
-//                    protected void postExecution() {
-//                        close();
-//                    }
-//                };
-//                editForm.setBean(task);
-//                formLayout.addComponent(editForm);
-//            } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(value)) {
-//                SimpleBug bug = new SimpleBug();
-//                bug.setProjectid(selectedProjectId);
-//                bug.setSaccountid(AppUI.getAccountId());
-//                bug.setStartdate(dateValue);
-//                bug.setMilestoneid(milestoneId);
-//                bug.setCreateduser(UserUIContext.getUsername());
-//                BugEditForm editForm = new BugEditForm() {
-//                    @Override
-//                    protected void postExecution() {
-//                        close();
-//                    }
-//                };
-//                editForm.setBean(bug);
-//                formLayout.addComponent(editForm);
-//            } else if (UserUIContext.getMessage(RiskI18nEnum.SINGLE).equals(value)) {
-//                SimpleRisk risk = new SimpleRisk();
-//                risk.setSaccountid(AppUI.getAccountId());
-//                risk.setProjectid(selectedProjectId);
-//                risk.setStartdate(dateValue);
-//                risk.setCreateduser(UserUIContext.getUsername());
-//                risk.setMilestoneid(milestoneId);
-//                RiskEditForm editForm = new RiskEditForm() {
-//                    @Override
-//                    protected void postExecution() {
-//                        close();
-//                    }
-//                };
-//                editForm.setBean(risk);
-//                formLayout.addComponent(editForm);
-//            }
-    }
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    ticketTypes.add(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+                }
 
-    private static class TicketBillableHoursPopupField extends LazyPopupView {
-        private TextField timeInput = new TextField();
-        private PopupDateFieldExt dateField;
-        private ProjectTicket ticket;
-        private boolean isBillable;
+                if (isIncludeMilestone && (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
+                    ticketTypes.add(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
+                }
 
-        TicketBillableHoursPopupField(ProjectTicket ticket, boolean isBillable) {
-            super("");
-            this.ticket = ticket;
-            this.isBillable = isBillable;
-            if (isBillable) {
-                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + ticket.getBillableHours());
-            } else {
-                this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + ticket.getNonBillableHours());
-            }
-        }
+                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                    ticketTypes.add(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+                }
 
-        @Override
-        protected void doShow() {
-            MVerticalLayout layout = getWrapContent();
-            layout.removeAllComponents();
-            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-                timeInput.setValue("");
-                timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
-                String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
-                        UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
-                Label headerLbl = ELabel.h3(title);
-                dateField = new PopupDateFieldExt();
-//                dateField.setValue(new GregorianCalendar().getTime());
-                layout.with(headerLbl, timeInput);
-                layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
-            } else {
-                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
-            }
-        }
+                if (ticketTypes.size() > 0) {
+                    typeSelection.setValue(ticketTypes.get(0));
+                    typeSelection.setItemIconGenerator((IconGenerator<String>) item -> {
+                        if (item.equals(UserUIContext.getMessage(TaskI18nEnum.SINGLE))) {
+                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK);
+                        } else if (item.equals(UserUIContext.getMessage(BugI18nEnum.SINGLE))) {
+                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG);
+                        } else if (item.equals(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))) {
+                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
+                        } else if (item.equals(UserUIContext.getMessage(RiskI18nEnum.SINGLE))) {
+                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK);
+                        } else {
+                            throw new IllegalArgumentException();
+                        }
+                    });
 
-        @Override
-        protected void doHide() {
-            String timeVal = timeInput.getValue();
-            if (StringUtils.isNotBlank(timeVal)) {
-                Long delta = HumanTime.eval(timeVal).getDelta();
-//                Date date = dateField.getValue();
-                if (delta > 0) {
-                    ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
-                    ItemTimeLogging timeLogging = new ItemTimeLogging();
-                    timeLogging.setCreateduser(UserUIContext.getUsername());
-                    timeLogging.setIsbillable(isBillable);
-                    timeLogging.setLoguser(UserUIContext.getUsername());
-//                    timeLogging.setLogforday(date);
-                    timeLogging.setLogvalue(hours);
-                    timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-                    timeLogging.setType(ticket.getType());
-                    timeLogging.setTypeid(ticket.getTypeId());
-                    timeLogging.setSaccountid(AppUI.getAccountId());
-                    timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
-
-                    // load hours again
-                    ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                    searchCriteria.setBillable(new BooleanSearchField(isBillable));
-                    searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.setType(StringSearchField.and(ticket.getType()));
-                    searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
-                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
-                    if (isBillable) {
-                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
-                    } else {
-                        this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
-                    }
                 } else {
-                    NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
+                    throw new SecureAccessException();
+                }
+            }
+        }
+
+        private void doChange(LocalDate dateValue, final Integer milestoneId) {
+            formLayout.removeAllComponents();
+            String value = typeSelection.getValue();
+            if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(value)) {
+                SimpleTask task = new SimpleTask();
+                task.setProjectid(selectedProject.getId());
+                task.setMilestoneid(milestoneId);
+                task.setSaccountid(AppUI.getAccountId());
+                task.setCreateduser(UserUIContext.getUsername());
+                task.setStartdate(dateValue);
+                TaskEditForm editForm = new TaskEditForm() {
+                    @Override
+                    protected void postExecution() {
+                        close();
+                    }
+                };
+                editForm.setBean(task);
+                formLayout.addComponent(editForm);
+            } else if (UserUIContext.getMessage(BugI18nEnum.SINGLE).equals(value)) {
+                SimpleBug bug = new SimpleBug();
+                bug.setProjectid(selectedProject.getId());
+                bug.setSaccountid(AppUI.getAccountId());
+                bug.setStartdate(dateValue);
+                bug.setMilestoneid(milestoneId);
+                bug.setCreateduser(UserUIContext.getUsername());
+                BugEditForm editForm = new BugEditForm() {
+                    @Override
+                    protected void postExecution() {
+                        close();
+                    }
+                };
+                editForm.setBean(bug);
+                formLayout.addComponent(editForm);
+            } else if (UserUIContext.getMessage(RiskI18nEnum.SINGLE).equals(value)) {
+                SimpleRisk risk = new SimpleRisk();
+                risk.setSaccountid(AppUI.getAccountId());
+                risk.setProjectid(selectedProject.getId());
+                risk.setStartdate(dateValue);
+                risk.setCreateduser(UserUIContext.getUsername());
+                risk.setMilestoneid(milestoneId);
+                RiskEditForm editForm = new RiskEditForm() {
+                    @Override
+                    protected void postExecution() {
+                        close();
+                    }
+                };
+                editForm.setBean(risk);
+                formLayout.addComponent(editForm);
+            }
+        }
+
+        private static class TicketBillableHoursPopupField extends LazyPopupView {
+            private TextField timeInput = new TextField();
+            private PopupDateFieldExt dateField;
+            private ProjectTicket ticket;
+            private boolean isBillable;
+
+            TicketBillableHoursPopupField(ProjectTicket ticket, boolean isBillable) {
+                super("");
+                this.ticket = ticket;
+                this.isBillable = isBillable;
+                if (isBillable) {
+                    this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + ticket.getBillableHours());
+                } else {
+                    this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + ticket.getNonBillableHours());
+                }
+            }
+
+            @Override
+            protected void doShow() {
+                MVerticalLayout layout = getWrapContent();
+                layout.removeAllComponents();
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+                    timeInput.setValue("");
+                    timeInput.setDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TIME_FORMAT));
+                    String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
+                            UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
+                    Label headerLbl = ELabel.h3(title);
+                    dateField = new PopupDateFieldExt();
+//                dateField.setValue(new GregorianCalendar().getTime());
+                    layout.with(headerLbl, timeInput);
+                    layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
+                } else {
+                    layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+                }
+            }
+
+            @Override
+            protected void doHide() {
+                String timeVal = timeInput.getValue();
+                if (StringUtils.isNotBlank(timeVal)) {
+                    Long delta = HumanTime.eval(timeVal).getDelta();
+//                Date date = dateField.getValue();
+                    if (delta > 0) {
+                        ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                        Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                        ItemTimeLogging timeLogging = new ItemTimeLogging();
+                        timeLogging.setCreateduser(UserUIContext.getUsername());
+                        timeLogging.setIsbillable(isBillable);
+                        timeLogging.setLoguser(UserUIContext.getUsername());
+//                    timeLogging.setLogforday(date);
+                        timeLogging.setLogvalue(hours);
+                        timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+                        timeLogging.setType(ticket.getType());
+                        timeLogging.setTypeid(ticket.getTypeId());
+                        timeLogging.setSaccountid(AppUI.getAccountId());
+                        timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
+                        EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
+
+                        // load hours again
+                        ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+                        searchCriteria.setBillable(new BooleanSearchField(isBillable));
+                        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                        searchCriteria.setType(StringSearchField.and(ticket.getType()));
+                        searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
+                        Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                        if (isBillable) {
+                            this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
+                        } else {
+                            this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
+                        }
+                    } else {
+                        NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));
+                    }
                 }
             }
         }
