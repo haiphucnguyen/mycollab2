@@ -30,7 +30,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -54,7 +53,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                 @Override
                 @Subscribe
                 public void handle(InvoiceEvent.NewInvoiceAdded event) {
-                    SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
+                    SimpleInvoice newInvoice = event.getData();
                     insertNewInvoiceAdded(newInvoice);
                 }
             };
@@ -64,7 +63,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                 @Override
                 @Subscribe
                 public void handle(InvoiceEvent.InvoiceUpdateAdded event) {
-                    SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
+                    SimpleInvoice newInvoice = event.getData();
                     updateInvoiceAdded(newInvoice);
                 }
             };
@@ -74,7 +73,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                 @Override
                 @Subscribe
                 public void handle(InvoiceEvent.InvoiceDelete event) {
-                    SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
+                    SimpleInvoice newInvoice = event.getData();
                     displayInvoices(invoiceStatus);
                 }
             };
@@ -182,8 +181,6 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         InvoiceListComp() {
             super(AppContextUtil.getSpringBean(InvoiceService.class), new InvoiceRowDisplayHandler(), Integer.MAX_VALUE);
             setWidth("300px");
-//            new Restrain(this).setMinHeight("50px").setMaxHeight((Page.getCurrent()
-//                    .getBrowserWindowHeight() - 320) + "px");
             addStyleName(WebThemes.BORDER_LIST);
         }
 
@@ -234,9 +231,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                     @Subscribe
                     public void handle(InvoiceEvent.DisplayInvoiceView event) {
                         SimpleInvoice invoice = event.getData();
-                        if (invoice != null) {
-                            showInvoice(invoice);
-                        }
+                        showInvoice(invoice);
                     }
                 };
 
