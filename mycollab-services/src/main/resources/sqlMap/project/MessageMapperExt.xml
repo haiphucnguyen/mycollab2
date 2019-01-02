@@ -44,7 +44,7 @@
     <sql id="selectMessage">
         <![CDATA[
           SELECT m_prj_message.id, m_prj_message.category, m_prj_message.title, m_prj_message.message,
-          m_prj_message.posteddate, m_prj_message.createdUser, m_prj_message.projectId,
+          m_prj_message.createdTime, m_prj_message.createdUser, m_prj_message.projectId,
               (SELECT count(*)
                     FROM m_comment 
                     WHERE m_comment.type='Project-Message' AND m_comment.typeId=m_prj_message.id) AS commentsCount,
@@ -76,7 +76,7 @@
             #end
         #end
 
-        ORDER BY m_prj_message.isStick DESC, m_prj_message.posteddate DESC
+        ORDER BY m_prj_message.isStick DESC, m_prj_message.createdTime DESC
     </select>
 
     <select id="findMessageById" parameterType="java.lang.Integer"

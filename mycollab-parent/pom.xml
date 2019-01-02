@@ -314,6 +314,12 @@
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>
         </repository>
+
+        <repository>
+            <id>kotlin</id>
+            <name>Kotlin Exposed Repository</name>
+            <url>http://dl.bintray.com/kotlin/exposed</url>
+        </repository>
     </repositories>
 
     <profiles>

@@ -41,7 +41,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author MyCollab Ltd.
- * @since 4.5.2
+ * @since 7.0.0
  */
 public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallback {
     private static final Logger LOG = LoggerFactory.getLogger(DbUnitInitializerRule.class);
@@ -116,8 +116,8 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
         public IDatabaseConnection getConnection() throws Exception {
             IDatabaseConnection connection = super.getConnection();
             DatabaseConfig config = connection.getConfig();
-            config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, true);
-            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
+            config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
+//            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
             return connection;
         }
     }

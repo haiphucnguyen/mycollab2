@@ -46,6 +46,8 @@ public class DbMigrationRunner {
     @PostConstruct
     public void migrate() {
         try {
+            String dbProductName = dataSource.getConnection().getMetaData().getDatabaseProductName();
+            System.out.println("PRO: " + dbProductName);
             String[] locations = deploymentMode.isDemandEdition() ? new String[]{"db/migration", "db/migration2"} : new String[]{"db/migration"};
             Flyway flyway = Flyway.configure().baselineOnMigrate(true).dataSource(dataSource).validateOnMigrate(false).locations(locations).load();
             flyway.migrate();
