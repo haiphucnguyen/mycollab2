@@ -41,10 +41,5 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>exposed</artifactId>
-            <version>0.11.2</version>
-        </dependency>
     </dependencies>
 </project>
