@@ -20,6 +20,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.jackrabbit.core.persistence.PMContext;
 import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
+import org.apache.jackrabbit.core.persistence.pool.PostgreSQLPersistenceManager;
 
 /**
  * Customize db persistence of jackrabbit
@@ -27,7 +28,7 @@ import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
+public class BundleDbPersistenceManagerExt extends PostgreSQLPersistenceManager {
 
     /**
      * {@inheritDoc}

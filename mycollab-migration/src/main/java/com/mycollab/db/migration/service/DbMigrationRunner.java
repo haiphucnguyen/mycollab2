@@ -50,6 +50,8 @@ public class DbMigrationRunner {
 
             if (dbProductName.equals("H2")) {
                 locations = new String[]{"db/migration/h2"};
+            } else if (dbProductName.equals("PostgreSQL")) {
+                locations = new String[]{"db/migration/postgresql"};
             } else {
                 locations = deploymentMode.isDemandEdition() ? new String[]{"db/migration/mysql", "db/migration2"} : new String[]{"db/migration/mysql"};
             }

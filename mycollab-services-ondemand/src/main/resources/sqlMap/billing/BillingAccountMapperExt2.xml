@@ -37,7 +37,7 @@
 
     <sql id="selectBillingAccount">
         <![CDATA[
-        SELECT s_account.id, s_account.subdomain, s_account.createdTime,
+        SELECT s_account.id, s_account.subDomain, s_account.createdTime,
             (SELECT COUNT(*) FROM m_prj_project WHERE m_prj_project.sAccountId = s_account.id) AS numProjects,
             (SELECT COUNT(*) FROM s_user_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numUsers,
             (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime,
@@ -71,7 +71,7 @@
 
     <select id="findSubDomainsOfUser" resultType="java.lang.String" parameterType="java.lang.String">
         <![CDATA[
-        SELECT DISTINCT s_account.subdomain
+        SELECT DISTINCT s_account.subDomain
             FROM s_account, s_user_account
             WHERE s_user_account.username=#{username, jdbcType=VARCHAR} AND s_user_account.accountId=s_account.id
         ]]>
@@ -88,9 +88,9 @@
 
     <select id="findTrialAccountsWithOwners" resultMap="BillingAccountWithOwnersResult">
         <![CDATA[
-        SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,s_account.subdomain,
+        SELECT s_account.id, s_account.createdTime, s_account.billingPlanId,s_account.subDomain,
             s_account.accountName, s_account.status,
-            s_account.reminderStatus, s_account.sitename, s_account.logoPath, s_account.defaultTimezone,
+            s_account.reminderStatus, s_account.siteName, s_account.logoPath, s_account.defaultTimezone,
             s_account.defaultCurrencyId, s_account.defaultYYMMDDFormat, s_account.defaultMMDDFormat,
             s_account.defaultHumanDateFormat, s_account.defaultLanguageTag, s_account.displayEmailPublicly,
             s_account.trialFrom, s_account.trialTo,

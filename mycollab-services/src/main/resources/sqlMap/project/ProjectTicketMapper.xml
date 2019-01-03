@@ -531,7 +531,7 @@
 
     <select id="getAccountsHasOverdueAssignments" parameterType="com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria"
             resultMap="com.mycollab.module.user.dao.BillingAccountMapper.BaseResultMap" lang="velocity">
-        SELECT s_account.id, s_account.subdomain
+        SELECT s_account.id, s_account.subDomain
         FROM s_account
         WHERE
           EXISTS (

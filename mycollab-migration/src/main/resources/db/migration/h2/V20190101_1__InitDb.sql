@@ -268,9 +268,9 @@ CREATE TABLE `s_account` (
   `billingPlanId` int(11) DEFAULT NULL,
   `accountName` varchar(100)   DEFAULT NULL,
   `status` varchar(45)   NOT NULL,
-  `subdomain` varchar(45)   DEFAULT NULL,
+  `subDomain` varchar(45)   DEFAULT NULL,
   `reminderStatus` varchar(45)   DEFAULT NULL,
-  `sitename` varchar(255)  DEFAULT NULL,
+  `siteName` varchar(255)  DEFAULT NULL,
   `logoPath` varchar(255)  DEFAULT NULL,
   `defaultTimezone` varchar(45)  DEFAULT NULL,
   `faviconPath` varchar(225)  DEFAULT NULL,
@@ -337,9 +337,9 @@ CREATE TABLE `m_audit_log` (
   KEY `FK_m_audit_log_2` (`sAccountId`),
   KEY `FK_m_audit_log_1` (`createdUser`),
   KEY `FK_m_audit_log_3_idx` (`activityLogId`),
-  KEY `INDEX_m_audit_log_4` (`type`) USING BTREE,
-  KEY `INDEX_m_audit_log_5` (`typeid`) USING BTREE,
-  KEY `INDEX_m_audit_log_6` (`module`) USING BTREE,
+  KEY `INDEX_m_audit_log_4` (`type`) ,
+  KEY `INDEX_m_audit_log_5` (`typeid`) ,
+  KEY `INDEX_m_audit_log_6` (`module`) ,
   CONSTRAINT `FK_m_audit_log_1` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_m_audit_log_2` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_audit_log_3` FOREIGN KEY (`activityLogId`) REFERENCES `s_activitystream` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -474,8 +474,8 @@ CREATE TABLE `m_form_custom_field_value` (
   `multipick4` text  ,
   `multipick5` text  ,
   PRIMARY KEY (`id`),
-  KEY `INDEX_m_form_custom_field_value_1` (`module`) USING BTREE,
-  KEY `INDEX_m_form_custom_field_value_2` (`typeid`) USING BTREE
+  KEY `INDEX_m_form_custom_field_value_1` (`module`) ,
+  KEY `INDEX_m_form_custom_field_value_2` (`typeid`) 
 ) ;
 
 
@@ -535,16 +535,16 @@ DROP TABLE IF EXISTS `m_monitor_item`;
 
 CREATE TABLE `m_monitor_item` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user` varchar(45)   NOT NULL,
+  `username` varchar(45)   NOT NULL,
   `createdTime` datetime NOT NULL,
   `type` varchar(45)   NOT NULL,
   `typeId` int(10) unsigned NOT NULL,
   `extraTypeId` int(10) unsigned DEFAULT NULL,
   `sAccountId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_m_monitor_item_1` (`user`),
+  KEY `FK_m_monitor_item_1` (`username`),
   KEY `FK_m_monitor_item_2_idx` (`sAccountId`),
-  CONSTRAINT `FK_m_monitor_item_1` FOREIGN KEY (`user`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_monitor_item_1` FOREIGN KEY (`username`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_monitor_item_2` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
@@ -744,7 +744,7 @@ DROP TABLE IF EXISTS `m_prj_kanban_board`;
 
 
 CREATE TABLE `m_prj_kanban_board` (
-  `id` int(11) unsigned NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255)  NOT NULL,
   `projectId` int(10) unsigned NOT NULL,
   `sAccountId` int(11) NOT NULL,
@@ -1147,9 +1147,9 @@ CREATE TABLE `m_tracker_bug_related_item` (
   `typeId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ m_tracker_bug_related_item_1` (`bugId`),
-  KEY `INDEX_m_tracker_bug_related_item_2` (`type`) USING BTREE,
-  KEY `INDEX_m_tracker_bug_related_item_3` (`typeId`) USING BTREE,
-  CONSTRAINT `FK_ m_tracker_bug_related_item_1` FOREIGN KEY (`bugId`) REFERENCES `m_tracker_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `INDEX_m_tracker_bug_related_item_2` (`type`) ,
+  KEY `INDEX_m_tracker_bug_related_item_3` (`typeId`) ,
+  CONSTRAINT `FK_m_tracker_bug_related_item_1` FOREIGN KEY (`bugId`) REFERENCES `m_tracker_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
@@ -1355,7 +1355,7 @@ CREATE TABLE `s_billing_subscription_history` (
   `productName` varchar(100)  NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_ s_billing_subscription_history_1_idx` (`subscriptionId`),
-  CONSTRAINT `FK_ s_billing_subscription_history_1` FOREIGN KEY (`subscriptionId`) REFERENCES `s_billing_subscription` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_s_billing_subscription_history_1` FOREIGN KEY (`subscriptionId`) REFERENCES `s_billing_subscription` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 

@@ -39,7 +39,7 @@
                 ${searchCriteria.subdomain.operation} 
                 EXISTS (SELECT 1
                     FROM s_account, s_user_account AS user_account 
-                    WHERE s_account.subdomain=@{searchCriteria.subdomain.value} 
+                    WHERE s_account.subDomain=@{searchCriteria.subdomain.value}
                         AND  user_account.accountId=s_account.id 
                         AND user_account.username=s_user.username
                 LIMIT 1)
@@ -89,7 +89,7 @@
                 ${searchCriteria.subdomain.operation} 
                 EXISTS (SELECT 1
                     FROM s_account, s_user_account AS user_account 
-                    WHERE s_account.subdomain=@{searchCriteria.subdomain.value} 
+                    WHERE s_account.subDomain=@{searchCriteria.subdomain.value}
                         AND  user_account.accountId=s_account.id 
                         AND user_account.username=s_user.username
                 LIMIT 1)
@@ -120,7 +120,7 @@
             s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact,
             s_user.password, s_user.avatarId, s_user.status, s_user.requestAd,
             s_user.YYMMDDFormat, s_user.humanDateFormat, s_user.MMDDFormat,
-            s_account.subdomain AS subdomain, s_account.defaultYYMMDDFormat AS dateFormat,
+            s_account.subDomain AS subDomain, s_account.defaultYYMMDDFormat AS dateFormat,
             s_account.defaultMMDDFormat AS shortDateFormat, s_account.defaultHumanDateFormat AS longDateFormat,
             s_account.displayEmailPublicly AS showEmailPublicly,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')),  s_user.lastname) AS  displayName,
