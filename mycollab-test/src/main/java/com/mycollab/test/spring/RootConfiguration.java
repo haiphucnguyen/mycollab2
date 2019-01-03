@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 @Configuration
@@ -13,5 +14,6 @@ import org.springframework.stereotype.Controller;
         "com.mycollab.**.jobs", "com.mycollab.**.aspect", "com.mycollab.**.esb",
         "com.mycollab.**.configuration"},
         excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})})
+@Profile("test")
 public class RootConfiguration {
 }

@@ -33,17 +33,17 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
      * {@inheritDoc}
      */
     public void init(PMContext context) throws Exception {
-        HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
-        setDriver(dbConf.getDriverClassName());
-        setUser(dbConf.getUsername());
-        setPassword(dbConf.getPassword());
-        setUrl(dbConf.getJdbcUrl());
+        HikariDataSource ds = AppContextUtil.getSpringBean(HikariDataSource.class);
+        setDriver(ds.getDriverClassName());
+        setUser(ds.getUsername());
+        setPassword(ds.getPassword());
+        setUrl(ds.getJdbcUrl());
 
         if (getSchemaObjectPrefix() == null) {
             setSchemaObjectPrefix("ecm_p_workspace");
         }
 
-        setDatabaseType(DbUtil.getSchemaType(dbConf.getDriverClassName()));
+        setDatabaseType(DbUtil.getSchemaType(ds.getDriverClassName()));
         super.init(context);
     }
 }

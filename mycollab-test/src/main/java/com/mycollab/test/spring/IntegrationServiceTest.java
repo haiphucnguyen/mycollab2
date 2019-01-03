@@ -30,6 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @SpringBootTest(classes = RootConfiguration.class)
 @ContextConfiguration(initializers = DbUnitInitializerRule.Initializer.class)
+@ActiveProfiles(profiles = "test")
 public class IntegrationServiceTest {
 
     @MockBean

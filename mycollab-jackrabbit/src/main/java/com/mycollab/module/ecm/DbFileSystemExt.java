@@ -29,11 +29,11 @@ import org.apache.jackrabbit.core.fs.db.DbFileSystem;
 public class DbFileSystemExt extends DbFileSystem {
 
     public DbFileSystemExt() {
-        HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
-        this.schema = DbUtil.getSchemaType(dbConf.getDriverClassName());
-        this.driver = dbConf.getDriverClassName();
-        this.user = dbConf.getUsername();
-        this.password = dbConf.getPassword();
-        this.url = dbConf.getJdbcUrl();
+        HikariDataSource ds = AppContextUtil.getSpringBean(HikariDataSource.class);
+        this.schema = DbUtil.getSchemaType(ds.getDriverClassName());
+        this.driver = ds.getDriverClassName();
+        this.user = ds.getUsername();
+        this.password = ds.getPassword();
+        this.url = ds.getJdbcUrl();
     }
 }

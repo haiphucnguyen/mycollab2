@@ -27,11 +27,11 @@ import org.apache.jackrabbit.core.journal.DatabaseJournal;
 public class ContentDatabaseJournal extends DatabaseJournal {
 
     public ContentDatabaseJournal() {
-        HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
-        setDriver(dbConf.getDriverClassName());
-        setUser(dbConf.getUsername());
-        setPassword(dbConf.getPassword());
-        setUrl(dbConf.getJdbcUrl());
-        setDatabaseType(DbUtil.getSchemaType(dbConf.getDriverClassName()));
+        HikariDataSource ds = AppContextUtil.getSpringBean(HikariDataSource.class);
+        setDriver(ds.getDriverClassName());
+        setUser(ds.getUsername());
+        setPassword(ds.getPassword());
+        setUrl(ds.getJdbcUrl());
+        setDatabaseType(DbUtil.getSchemaType(ds.getDriverClassName()));
     }
 }

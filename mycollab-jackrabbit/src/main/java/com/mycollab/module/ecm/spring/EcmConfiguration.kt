@@ -20,6 +20,7 @@
 package com.mycollab.module.ecm.spring
 
 import com.mycollab.module.ecm.ContentSessionFactory
+import org.apache.jackrabbit.core.persistence.pool.PostgreSQLPersistenceManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.DependsOn
