@@ -32,5 +32,6 @@ public class ContentDatabaseJournal extends DatabaseJournal {
         setUser(dbConf.getUsername());
         setPassword(dbConf.getPassword());
         setUrl(dbConf.getJdbcUrl());
+        setDatabaseType(DbUtil.getSchemaType(dbConf.getDriverClassName()));
     }
 }

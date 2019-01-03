@@ -30,7 +30,7 @@ public class DbFileSystemExt extends DbFileSystem {
 
     public DbFileSystemExt() {
         HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
-        this.schema = dbConf.getSchema();
+        this.schema = DbUtil.getSchemaType(dbConf.getDriverClassName());
         this.driver = dbConf.getDriverClassName();
         this.user = dbConf.getUsername();
         this.password = dbConf.getPassword();

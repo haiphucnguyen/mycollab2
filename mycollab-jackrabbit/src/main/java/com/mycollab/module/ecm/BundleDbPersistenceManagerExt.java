@@ -42,6 +42,8 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
         if (getSchemaObjectPrefix() == null) {
             setSchemaObjectPrefix("ecm_p_workspace");
         }
+
+        setDatabaseType(DbUtil.getSchemaType(dbConf.getDriverClassName()));
         super.init(context);
     }
 }
