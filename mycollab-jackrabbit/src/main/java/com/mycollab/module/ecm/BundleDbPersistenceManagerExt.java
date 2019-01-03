@@ -16,8 +16,8 @@
  */
 package com.mycollab.module.ecm;
 
-import com.mycollab.configuration.DatabaseConfiguration;
 import com.mycollab.spring.AppContextUtil;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.jackrabbit.core.persistence.PMContext;
 import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
 
@@ -33,18 +33,14 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
      * {@inheritDoc}
      */
     public void init(PMContext context) throws Exception {
-        DatabaseConfiguration dbConf = AppContextUtil.getSpringBean(DatabaseConfiguration.class);
+        HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
         setDriver(dbConf.getDriverClassName());
         setUser(dbConf.getUsername());
         setPassword(dbConf.getPassword());
-        setUrl(dbConf.getUrl());
+        setUrl(dbConf.getJdbcUrl());
 
         if (getSchemaObjectPrefix() == null) {
             setSchemaObjectPrefix("ecm_p_workspace");
-        }
-
-        if (getDatabaseType() == null) {
-            setDatabaseType("mysql");
         }
         super.init(context);
     }

@@ -17,7 +17,7 @@
 package com.mycollab.test.rule;
 
 import com.mycollab.test.DataSet;
-import com.mycollab.test.TestDbConfiguration;
+import com.mycollab.test.DbConfiguration;
 import com.mycollab.test.TestException;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -25,13 +25,17 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.support.TestPropertySourceUtils;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,8 +52,15 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
 
     private IDatabaseTester databaseTester;
 
+    private static PostgreSQLContainer postgreSQLContainer;
+
+    static {
+        postgreSQLContainer = new PostgreSQLContainer<>();
+        postgreSQLContainer.start();
+    }
+
     @Override
-    public void beforeEach(ExtensionContext extensionContext) {
+    public void beforeEach(ExtensionContext extensionContext) throws Exception {
         Method requiredTestMethod = extensionContext.getRequiredTestMethod();
         if (requiredTestMethod.getAnnotation(DataSet.class) != null) {
             setUp(extensionContext.getRequiredTestClass());
@@ -57,7 +68,7 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
     }
 
     @Override
-    public void afterEach(ExtensionContext extensionContext) {
+    public void afterEach(ExtensionContext extensionContext) throws Exception {
         if (databaseTester != null) {
             try {
                 databaseTester.onTearDown();
@@ -95,8 +106,9 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
         }
 
         try {
-            TestDbConfiguration dbConf = new TestDbConfiguration();
-            databaseTester = new DbUnitTester(dbConf.getDriverClassName(), dbConf.getJdbcUrl(), dbConf.getUsername(),
+            DbConfiguration dbConf = new DbConfiguration(postgreSQLContainer.getDriverClassName(), postgreSQLContainer.getJdbcUrl(),
+                    postgreSQLContainer.getUsername(), postgreSQLContainer.getPassword());
+            databaseTester = new DbUnitTester(dbConf.getDriverCls(), dbConf.getJdbcUrl(), dbConf.getUsername(),
                     dbConf.getPassword());
             databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
             databaseTester.setDataSet(dataSet);
@@ -119,6 +131,20 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
             config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
 //            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
             return connection;
+        }
+    }
+
+    public static class Initializer
+            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+//            TestPropertyValues.of(
+//                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+//                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
+//                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
+//            ).applyTo(configurableApplicationContext.getEnvironment());
+            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext, "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl());
+            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext, "spring.datasource.username=" + postgreSQLContainer.getUsername());
+            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext, "spring.datasource.password=" + postgreSQLContainer.getPassword());
         }
     }
 }

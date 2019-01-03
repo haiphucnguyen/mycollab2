@@ -16,8 +16,8 @@
  */
 package com.mycollab.module.ecm;
 
-import com.mycollab.configuration.DatabaseConfiguration;
 import com.mycollab.spring.AppContextUtil;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.jackrabbit.core.fs.db.DbFileSystem;
 
 /**
@@ -29,11 +29,11 @@ import org.apache.jackrabbit.core.fs.db.DbFileSystem;
 public class DbFileSystemExt extends DbFileSystem {
 
     public DbFileSystemExt() {
-        DatabaseConfiguration dbConf = AppContextUtil.getSpringBean(DatabaseConfiguration.class);
-        this.schema = "mysql";
+        HikariDataSource dbConf = AppContextUtil.getSpringBean(HikariDataSource.class);
+        this.schema = dbConf.getSchema();
         this.driver = dbConf.getDriverClassName();
         this.user = dbConf.getUsername();
         this.password = dbConf.getPassword();
-        this.url = dbConf.getUrl();
+        this.url = dbConf.getJdbcUrl();
     }
 }

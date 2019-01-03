@@ -18,6 +18,8 @@ package com.mycollab.test.spring;
 
 import com.mycollab.configuration.ApplicationConfiguration;
 import com.mycollab.configuration.ServerConfiguration;
+import com.mycollab.test.rule.DbUnitInitializerRule;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,8 +28,8 @@ import org.springframework.test.context.ContextConfiguration;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ContextConfiguration(classes = RootConfigurationTest.class)
-@ActiveProfiles(profiles = "test")
+@SpringBootTest(classes = RootConfiguration.class)
+@ContextConfiguration(initializers = DbUnitInitializerRule.Initializer.class)
 public class IntegrationServiceTest {
 
     @MockBean
