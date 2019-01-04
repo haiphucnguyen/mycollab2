@@ -17,7 +17,7 @@
 package com.mycollab.test.rule;
 
 import com.mycollab.test.DataSet;
-import com.mycollab.test.DbConfiguration;
+import com.mycollab.test.TestDbConfiguration;
 import com.mycollab.test.TestException;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
@@ -25,17 +25,12 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.testcontainers.containers.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,16 +47,8 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
 
     private IDatabaseTester databaseTester;
 
-    private static JdbcDatabaseContainer dbContainer;
-
-    static {
-        dbContainer = new MySQLContainer();
-
-        dbContainer.start();
-    }
-
     @Override
-    public void beforeEach(ExtensionContext extensionContext) throws Exception {
+    public void beforeEach(ExtensionContext extensionContext) {
         Method requiredTestMethod = extensionContext.getRequiredTestMethod();
         if (requiredTestMethod.getAnnotation(DataSet.class) != null) {
             setUp(extensionContext.getRequiredTestClass());
@@ -69,7 +56,7 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
     }
 
     @Override
-    public void afterEach(ExtensionContext extensionContext) throws Exception {
+    public void afterEach(ExtensionContext extensionContext) {
         if (databaseTester != null) {
             try {
                 databaseTester.onTearDown();
@@ -107,10 +94,9 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
         }
 
         try {
-            DbConfiguration dbConf = new DbConfiguration(dbContainer.getDriverClassName(), dbContainer.getJdbcUrl(),
-                    dbContainer.getUsername(), dbContainer.getPassword());
-            databaseTester = new DbUnitTester(dbConf.getDriverCls(), dbConf.getJdbcUrl(), dbConf.getUsername(),
-                    dbConf.getPassword(), "test");
+            TestDbConfiguration dbConf = new TestDbConfiguration();
+            databaseTester = new DbUnitTester(dbConf.getDriverClassName(), dbConf.getJdbcUrl(), dbConf.getUsername(),
+                    dbConf.getPassword());
             databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
             databaseTester.setDataSet(dataSet);
             databaseTester.onSetup();
@@ -122,28 +108,16 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
     }
 
     private static class DbUnitTester extends JdbcDatabaseTester {
-        DbUnitTester(String driverClass, String connectionUrl, String username, String password, String schema) throws ClassNotFoundException {
-            super(driverClass, connectionUrl, username, password,schema);
+        DbUnitTester(String driverClass, String connectionUrl, String username, String password) throws ClassNotFoundException {
+            super(driverClass, connectionUrl, username, password);
         }
 
         public IDatabaseConnection getConnection() throws Exception {
             IDatabaseConnection connection = super.getConnection();
             DatabaseConfig config = connection.getConfig();
             config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
-            config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
-            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
+//            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
             return connection;
-        }
-    }
-
-    public static class Initializer
-            implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + dbContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + dbContainer.getUsername(),
-                    "spring.datasource.password=" + dbContainer.getPassword()
-            ).applyTo(configurableApplicationContext.getEnvironment());
         }
     }
 }

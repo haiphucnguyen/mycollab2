@@ -77,11 +77,11 @@
     </select>
 
     <insert id="saveMonitorItems">
-        insert into m_monitor_item (id, user, createdTime, type, typeId, extraTypeId, sAccountId)
+        insert into m_monitor_item (id, username, createdTime, type, typeId, extraTypeId, sAccountId)
         values
         <foreach collection="monitors" item="monitorItem" separator=",">
             (
-            #{monitorItem.id}, #{monitorItem.user}, #{monitorItem.createdtime}, #{monitorItem.type},
+            #{monitorItem.id}, #{monitorItem.username}, #{monitorItem.createdtime}, #{monitorItem.type},
             #{monitorItem.typeid}, #{monitorItem.extratypeid}, #{monitorItem.saccountid}
             )
         </foreach>

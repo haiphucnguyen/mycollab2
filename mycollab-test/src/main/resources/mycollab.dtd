@@ -89,7 +89,8 @@
     s_user_account*,
     s_user_permission*,
     s_user_tracking*,
-    s_widgets*)>
+    s_widgets*,
+    sys_config*)>
 
 <!ELEMENT ECM_JOURNALGLOBAL_REVISION EMPTY>
 <!ATTLIST ECM_JOURNALGLOBAL_REVISION
@@ -1264,5 +1265,13 @@
     queryText CDATA #IMPLIED
     createdUser CDATA #REQUIRED
     createdTime CDATA #REQUIRED
+>
+
+<!ELEMENT sys_config EMPTY>
+<!ATTLIST sys_config
+    variable CDATA #REQUIRED
+    value CDATA #IMPLIED
+    set_time CDATA #IMPLIED
+    set_by CDATA #IMPLIED
 >
 
