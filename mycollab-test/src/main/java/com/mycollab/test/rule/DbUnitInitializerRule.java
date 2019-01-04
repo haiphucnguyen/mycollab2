@@ -25,6 +25,7 @@ import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -34,10 +35,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +56,7 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
 
     static {
         dbContainer = new MySQLContainer();
+
         dbContainer.start();
     }
 
@@ -111,7 +110,7 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
             DbConfiguration dbConf = new DbConfiguration(dbContainer.getDriverClassName(), dbContainer.getJdbcUrl(),
                     dbContainer.getUsername(), dbContainer.getPassword());
             databaseTester = new DbUnitTester(dbConf.getDriverCls(), dbConf.getJdbcUrl(), dbConf.getUsername(),
-                    dbConf.getPassword());
+                    dbConf.getPassword(), "test");
             databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
             databaseTester.setDataSet(dataSet);
             databaseTester.onSetup();
@@ -123,15 +122,16 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
     }
 
     private static class DbUnitTester extends JdbcDatabaseTester {
-        DbUnitTester(String driverClass, String connectionUrl, String username, String password) throws ClassNotFoundException {
-            super(driverClass, connectionUrl, username, password);
+        DbUnitTester(String driverClass, String connectionUrl, String username, String password, String schema) throws ClassNotFoundException {
+            super(driverClass, connectionUrl, username, password,schema);
         }
 
         public IDatabaseConnection getConnection() throws Exception {
             IDatabaseConnection connection = super.getConnection();
             DatabaseConfig config = connection.getConfig();
             config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
-//            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
+            config.setProperty(DatabaseConfig.FEATURE_QUALIFIED_TABLE_NAMES, true);
+            config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new MySqlDataTypeFactory());
             return connection;
         }
     }

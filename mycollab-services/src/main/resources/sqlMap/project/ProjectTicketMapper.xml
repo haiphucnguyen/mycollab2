@@ -292,7 +292,7 @@
     <sql id="selectGenericTaskFromRisk">
     <![CDATA[
           SELECT mainTbl.name, mainTbl.description, mainTbl.assignUser,
-            concat(assignUserTbl.firstname, ' ', ' ')), assignUserTbl.lastname) AS assignUserFullName,
+            concat(assignUserTbl.firstname, ' ', assignUserTbl.lastname) AS assignUserFullName,
             assignUserTbl.avatarId as assignUserAvatarId,
             createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
             concat(createdUserTbl.firstname, ' ', createdUserTbl.lastname) AS createdUserFullName,
