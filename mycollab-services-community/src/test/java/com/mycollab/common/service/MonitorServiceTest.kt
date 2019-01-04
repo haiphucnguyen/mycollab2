@@ -30,6 +30,7 @@ import java.util.*
 
 @ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class MonitorServiceTest : IntegrationServiceTest() {
+
     @Autowired
     private lateinit var monitorItemService: MonitorItemService
 

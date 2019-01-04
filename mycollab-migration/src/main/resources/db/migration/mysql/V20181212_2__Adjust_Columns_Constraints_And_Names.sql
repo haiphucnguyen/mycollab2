@@ -56,3 +56,21 @@ ALTER TABLE `s_user` DROP COLUMN `middlename`;
 
 ALTER TABLE `s_user`
 CHANGE COLUMN `dateofbirth` `birthday` DATE NULL DEFAULT NULL ;
+
+ALTER TABLE `m_prj_role_permission`
+DROP FOREIGN KEY `FK_m_prj_role_permission_1`,
+DROP FOREIGN KEY `FK_m_prj_role_permission_2`;
+ALTER TABLE `m_prj_role_permission`
+CHANGE COLUMN `roleid` `roleId` INT(11) UNSIGNED NOT NULL ,
+CHANGE COLUMN `projectid` `projectId` INT(10) UNSIGNED NOT NULL ;
+ALTER TABLE `m_prj_role_permission`
+ADD CONSTRAINT `FK_m_prj_role_permission_1`
+  FOREIGN KEY (`roleId`)
+  REFERENCES `m_prj_role` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_m_prj_role_permission_2`
+  FOREIGN KEY (`projectId`)
+  REFERENCES `m_prj_project` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;

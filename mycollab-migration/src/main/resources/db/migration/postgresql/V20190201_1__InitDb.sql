@@ -835,9 +835,9 @@ DROP TABLE IF EXISTS m_prj_role_permission;
 
 CREATE TABLE m_prj_role_permission (
   id serial,
-  roleid integer NOT NULL,
+  roleId integer NOT NULL,
   roleVal text NOT NULL,
-  projectid integer NOT NULL,
+  projectId integer NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_m_prj_role_permission_1 FOREIGN KEY (roleid) REFERENCES m_prj_role (id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT FK_m_prj_role_permission_2 FOREIGN KEY (projectid) REFERENCES m_prj_project (id) ON DELETE CASCADE ON UPDATE CASCADE

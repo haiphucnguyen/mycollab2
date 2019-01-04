@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
-import java.util.*
 
 /**
  * @author MyCollab Ltd.
@@ -207,11 +206,11 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         val userAccounts = userAccountMapper.selectByExample(userAccountEx)
         if (userAccounts.size > 0) {
             val userAccount = userAccounts[0]
-            if (record.roleid == -1) {
+            if (record.roleId == -1) {
                 userAccount.roleid = null
                 userAccount.isaccountowner = true
             } else {
-                userAccount.roleid = record.roleid
+                userAccount.roleid = record.roleId
                 userAccount.isaccountowner = false
             }
 
@@ -266,9 +265,9 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
             LOG.debug("User $username login to system successfully!")
 
             if (user.isAccountOwner == null || (user.isAccountOwner != null && !user.isAccountOwner!!)) {
-                if (user.roleid != null) {
+                if (user.roleId != null) {
                     val ex = RolePermissionExample()
-                    ex.createCriteria().andRoleidEqualTo(user.roleid)
+                    ex.createCriteria().andRoleidEqualTo(user.roleId)
                     val roles = rolePermissionMapper.selectByExampleWithBLOBs(ex)
                     if (CollectionUtils.isNotEmpty(roles)) {
                         val rolePer = roles[0] as RolePermission

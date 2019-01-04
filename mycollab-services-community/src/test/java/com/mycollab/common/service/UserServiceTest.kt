@@ -32,6 +32,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class UserServiceTest : IntegrationServiceTest() {
+
     @Autowired
     private lateinit var userService: UserService
 
@@ -57,17 +58,13 @@ class UserServiceTest : IntegrationServiceTest() {
         userService.updateUserAccount(user, 1)
 
         val anotherUser = userService.findUserByUserNameInAccount("hannguyen@esofthead.com", 1)
-        assertThat(anotherUser!!.email).isEqualTo("hannguyen@esofthead.com")
-        assertThat(anotherUser.lastname).isEqualTo("Hai")
+        assertThat(anotherUser).extracting("email", "lastname").contains("hannguyen@esofthead.com", "Hai")
     }
 
     @DataSet
     @Test
     fun testFindUserByUsernameInAccount() {
         val user = userService.findUserByUserNameInAccount("hainguyen@esofthead.com", 1)
-        assertThat(user!!.username).isEqualTo("hainguyen@esofthead.com")
-        assertThat(user.accountId).isEqualTo(1)
-        assertThat(user.firstname).isEqualTo("Nguyen")
-        assertThat(user.lastname).isEqualTo("Hai")
+        assertThat(user).extracting("username", "accountId", "firstname", "lastname").contains("hainguyen@esofthead.com", 1, "Nguyen", "Hai")
     }
 }

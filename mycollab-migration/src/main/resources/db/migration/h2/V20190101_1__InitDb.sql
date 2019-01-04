@@ -936,9 +936,9 @@ DROP TABLE IF EXISTS `m_prj_role_permission`;
 
 CREATE TABLE `m_prj_role_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `roleid` int(11) unsigned NOT NULL,
+  `roleId` int(11) unsigned NOT NULL,
   `roleVal` text   NOT NULL,
-  `projectid` int(10) unsigned NOT NULL,
+  `projectId` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_role_permission_2` (`projectid`),
   KEY `FK_m_prj_role_permission_1` (`roleid`),
