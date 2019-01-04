@@ -224,7 +224,7 @@
     <select id="getProjectActivityStreams" parameterType="com.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria" resultMap="ActivityStreamResult" lang="velocity">
          (SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, m_tracker_bug.bugkey AS itemKey, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+               s_activitystream.module, concat(s_user.firstname, ' ', s_user.lastname) as createdUserFullName,
                s_user.avatarId AS createdUserAvatarId,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName,
                m_audit_log.id AS log_id, m_audit_log.object_class AS log_object_class, m_audit_log.createdTime AS log_createdTime, m_audit_log.createdUser AS log_createdUser,
@@ -265,7 +265,7 @@
         UNION
         (SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, m_prj_task.taskkey AS itemKey, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+               s_activitystream.module, concat(s_user.firstname, ' ', s_user.lastname) as createdUserFullName,
                s_user.avatarId AS createdUserAvatarId,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName,
                m_audit_log.id AS log_id, m_audit_log.object_class AS log_object_class, m_audit_log.createdTime AS log_createdTime, m_audit_log.createdUser AS log_createdUser,
@@ -307,7 +307,7 @@
         UNION
         (SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, null AS itemKey,
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+               s_activitystream.module, concat(s_user.firstname, ' ', s_user.lastname) as createdUserFullName,
                s_user.avatarId AS createdUserAvatarId,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName,
                m_audit_log.id AS log_id, m_audit_log.object_class AS log_object_class, m_audit_log.createdTime AS log_createdTime, m_audit_log.createdUser AS log_createdUser,
@@ -352,7 +352,7 @@
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, null AS itemKey,
           s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser,
           m_tracker_component.name AS nameField, s_activitystream.extraTypeId, s_activitystream.module,
-          concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+          concat(s_user.firstname, ' ', s_user.lastname) as createdUserFullName,
           s_user.avatarId AS createdUserAvatarId,
           s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName,
           m_prj_project.shortname AS projectShortName,
@@ -400,7 +400,7 @@
         (
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, null AS itemKey,
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, m_prj_risk.name AS nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
+               s_activitystream.module, concat(s_user.firstname, ' ', s_user.lastname) as createdUserFullName,
                s_user.avatarId AS createdUserAvatarId,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName,
                NULL AS log_id, NULL AS log_object_class, NULL AS log_posteddate, NULL AS log_posteduser, 
@@ -487,7 +487,7 @@
         s_relay_email_notification.changeComment,
         s_account.logoPath AS accountLogo,
         m_tracker_bug.projectId AS projectId,
-        concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
+        concat(changeUser.firstname, ' ', changeUser.lastname) as changeByUserFullName,
         notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
         notifier.username AS notifiers_username, notifier.timezone AS notifiers_timezone,
         notifier.email AS notifiers_email, notifier.language AS notifiers_language, s_relay_email_notification.sAccountId AS notifiers_accountId
@@ -605,7 +605,7 @@
         s_relay_email_notification.changeComment,
         s_account.logoPath AS accountLogo,
         m_tracker_version.projectId AS projectId,
-        concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
+        concat(changeUser.firstname, ' ', changeUser.lastname) as changeByUserFullName,
         NULL AS notifiers_firstname, NULL AS notifiers_lastname, NULL AS notifiers_username,
         NULL AS notifiers_timezone, NULL AS notifiers_email, NULL AS notifiers_language,
         NULL AS notifiers_accountId

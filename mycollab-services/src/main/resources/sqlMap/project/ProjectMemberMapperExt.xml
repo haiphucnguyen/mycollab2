@@ -99,7 +99,7 @@
             EXISTS(
             SELECT 1 FROM s_user
                 WHERE m_prj_member.username=s_user.username
-                    AND concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${searchCriteria.memberFullName.value}%'
+                    AND concat(s_user.firstname, ' ', s_user.lastname) LIKE '%${searchCriteria.memberFullName.value}%'
                 LIMIT 1
             )
         #end
@@ -171,7 +171,7 @@
             m_prj_member.isAdmin, m_prj_member.status, s_user.email as email,
             m_prj_member.billingRate, m_prj_member.overtimeBillingRate,
             m_prj_role.rolename, m_prj_member.sAccountId,
-            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')),  s_user.lastname) AS  memberFullName , s_user.avatarId AS memberAvatarId,
+            concat(s_user.firstname, ' ', s_user.lastname) AS  memberFullName , s_user.avatarId AS memberAvatarId,
             (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignUser=m_prj_member.username AND  m_tracker_bug.projectId=m_prj_member.projectId AND m_tracker_bug.status IN ('Open', 'InProgress', 'Reopenned')) AS numOpenBugs,
             (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_member.username AND m_prj_task.projectId=m_prj_member.projectId AND m_prj_task.status='Open') AS numOpenTasks,
             s_user_account.lastAccessedTime AS lastAccessTime, m_prj_project.name AS projectName,

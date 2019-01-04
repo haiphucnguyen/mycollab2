@@ -70,7 +70,7 @@
             #set($searchCriteria = $_parameter.searchCriteria)
             
             #ifnotnull($searchCriteria.displayName)
-                ${searchCriteria.displayName.operation} concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%'
+                ${searchCriteria.displayName.operation} concat(s_user.firstname, ' ', s_user.lastname) like '%${searchCriteria.displayName.value}%'
             #end
             
             #ifnotnull($searchCriteria.username)
@@ -127,7 +127,7 @@
             s_roles.rolename AS roleName,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId, 
             s_user_account.registerStatus, s_user_account.registeredTime, s_user_account.inviteUser, s_user_account.lastAccessedTime,
             s_user_account.lastModuleVisit,
-            concat(inviteUser.firstname, ' ', LTRIM(concat(IFNULL(inviteUser.middlename, ''), ' ')),  inviteUser.lastname) AS  inviteUserFullName
+            concat(inviteUser.firstname, ' ', inviteUser.lastname) AS  inviteUserFullName
         FROM s_user 
                 INNER JOIN s_user_account ON (s_user.username=s_user_account.username)
                 INNER JOIN s_account ON (s_user_account.accountId = s_account.id)
