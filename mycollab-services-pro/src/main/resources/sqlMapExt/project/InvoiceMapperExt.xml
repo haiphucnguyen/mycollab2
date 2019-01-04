@@ -43,9 +43,9 @@
             m_customer.website AS client_website, m_customer.phoneOffice AS client_phoneOffice,
             m_customer.fax AS client_fax, m_customer.billingAddress AS client_billingAddress, m_customer.city AS client_city,
             m_customer.postalCode AS client_postalCode, m_customer.state AS client_state,
-            concat(createUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createUserTbl.middlename, ''), ' ')), createUserTbl.lastname) AS createUserFullName,
+            concat(createUserTbl.firstname, ' ', createUserTbl.lastname) AS createUserFullName,
             createUserTbl.avatarId AS createUserAvatarId,
-            concat(assignUserTbl.firstname, ' ', LTRIM(concat(IFNULL(assignUserTbl.middlename, ''), ' ')), assignUserTbl.lastname) AS assignUserFullName,
+            concat(assignUserTbl.firstname, ' ', assignUserTbl.lastname) AS assignUserFullName,
             assignUserTbl.avatarId AS assignUserAvatarId
         FROM m_prj_invoice
             LEFT OUTER JOIN m_customer ON (m_customer.id = m_prj_invoice.clientId)

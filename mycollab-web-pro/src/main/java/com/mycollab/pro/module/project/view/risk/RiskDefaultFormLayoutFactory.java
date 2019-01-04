@@ -61,7 +61,7 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(GenericI18Enum.FORM_END_DATE)
                 .fieldIndex(10).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.probalitity)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.probability)
                 .displayName(RiskI18nEnum.FORM_PROBABILITY)
                 .fieldIndex(11).build());
 

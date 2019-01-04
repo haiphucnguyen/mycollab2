@@ -59,9 +59,9 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             }
             return new I18nValueComboBox(RiskConsequence.class, RiskConsequence.Catastrophic, RiskConsequence.Critical,
                     RiskConsequence.Marginal, RiskConsequence.Negligible);
-        } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-            if (risk.getProbalitity() == null) {
-                risk.setProbalitity(RiskProbability.Possible.name());
+        } else if (Risk.Field.probability.equalTo(propertyId)) {
+            if (risk.getProbability() == null) {
+                risk.setProbability(RiskProbability.Possible.name());
             }
             return new I18nValueComboBox(RiskProbability.class, RiskProbability.Certain, RiskProbability.Likely,
                     RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);

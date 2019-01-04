@@ -110,7 +110,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
         }
 
         userFormLayout.addComponent(ELabel.html(roleDiv.write()), UserUIContext.getMessage(UserI18nEnum.FORM_ROLE), 0, 0);
-        userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getDateofbirth())),
+        userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getBirthday())),
                 UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
 
         if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
@@ -182,8 +182,8 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
                         }
                     } else if (propertyId.equals("website")) {
                         return new UrlLinkViewField(user.getWebsite());
-                    } else if (propertyId.equals("dateofbirth")) {
-                        return new DateViewField(user.getDateofbirth());
+                    } else if (propertyId.equals("birthday")) {
+                        return new DateViewField(user.getBirthday());
                     } else if (propertyId.equals("timezone")) {
                         return new DefaultViewField(TimezoneVal.getDisplayName(UserUIContext.getUserLocale(), user.getTimezone()));
                     } else if (propertyId.equals("facebookaccount")) {

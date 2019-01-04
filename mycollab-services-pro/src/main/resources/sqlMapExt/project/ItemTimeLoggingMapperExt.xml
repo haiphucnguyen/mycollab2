@@ -62,7 +62,7 @@
                  m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
                  m_prj_task.id AS typeId, m_prj_time_logging.type, m_prj_task.taskkey AS extraTypeId,
                  s_user.avatarId AS logUserAvatarId,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                 concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                  m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                  m_prj_task.name,  m_prj_task.status, m_prj_task.dueDate, m_prj_task.percentagecomplete AS percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
@@ -103,7 +103,7 @@
                 m_prj_risk.id AS typeId, m_prj_time_logging.type,
                 NULL  AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
-                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                 m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                 m_prj_risk.name,  m_prj_risk.status, m_prj_risk.dueDate, NULL AS percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName

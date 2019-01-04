@@ -42,7 +42,7 @@ class MonitorServiceTest : IntegrationServiceTest() {
         mon1.type = ProjectTypeConstants.BUG
         mon1.typeid = 1
         mon1.extratypeid = 1
-        mon1.user = "hainguyen"
+        mon1.username = "hainguyen"
         val items = ArrayList<MonitorItem>()
         items.add(mon1)
         monitorItemService.saveMonitorItems(items)

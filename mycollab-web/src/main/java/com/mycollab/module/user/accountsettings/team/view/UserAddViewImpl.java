@@ -236,7 +236,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                     return basicInformationLayout.addComponent(field, UserUIContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
                 } else if (propertyId.equals("nickname")) {
                     return basicInformationLayout.addComponent(field, UserUIContext.getMessage(UserI18nEnum.FORM_NICK_NAME), 1, 0);
-                } else if (propertyId.equals("dateofbirth")) {
+                } else if (propertyId.equals("birthday")) {
                     return basicInformationLayout.addComponent(field, UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 1, 1);
                 } else if (propertyId.equals("email")) {
                     return basicInformationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 2);
@@ -284,7 +284,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                         User.Field.lastname.equalTo(propertyId)) {
 //                    return new MTextField().withNullRepresentation("").withRequired(true)
 //                            .withRequiredError("This field must be not null");
-                } else if (propertyId.equals("dateofbirth")) {
+                } else if (propertyId.equals("birthday")) {
                     return new DateField();
                 } else if (propertyId.equals("timezone")) {
                     return new TimeZoneSelectionField(false);

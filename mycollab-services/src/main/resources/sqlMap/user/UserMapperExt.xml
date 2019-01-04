@@ -24,7 +24,7 @@
             #set($searchCriteria = $_parameter.searchCriteria)
             
             #ifnotnull($searchCriteria.displayName)
-                ${searchCriteria.displayName.operation} concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${searchCriteria.displayName.value}%'
+                ${searchCriteria.displayName.operation} concat(s_user.firstname, ' ', s_user.lastname) like '%${searchCriteria.displayName.value}%'
             #end
             
             #ifnotnull($searchCriteria.username)
@@ -114,7 +114,7 @@
 
     <sql id="selectUser">
         <![CDATA[
-        SELECT DISTINCT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, s_user.nickname, s_user.dateofbirth, 
+        SELECT DISTINCT s_user.username, s_user.firstname, s_user.lastname, s_user.nickname, s_user.birthday,
             s_user.email, s_user.website, s_user.company,
             s_user.timezone, s_user.language, s_user.country, s_user.workPhone, s_user.homePhone,
             s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact,
@@ -123,7 +123,7 @@
             s_account.subDomain AS subDomain, s_account.defaultYYMMDDFormat AS dateFormat,
             s_account.defaultMMDDFormat AS shortDateFormat, s_account.defaultHumanDateFormat AS longDateFormat,
             s_account.displayEmailPublicly AS showEmailPublicly,
-            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')),  s_user.lastname) AS  displayName,
+            concat(s_user.firstname, ' ',  s_user.lastname) AS  displayName,
             s_roles.rolename AS roleName,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId, 
             s_user_account.registerStatus, s_user_account.registeredTime, s_user_account.inviteUser, s_user_account.lastAccessedTime,
             s_user_account.lastModuleVisit,

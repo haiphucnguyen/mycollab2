@@ -44,3 +44,15 @@ ADD CONSTRAINT `FK_m_monitor_item_1`
   REFERENCES `s_user` (`username`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
+ALTER TABLE `m_prj_risk`
+CHANGE COLUMN `dateraised` `raisedDate` DATE NULL DEFAULT NULL ,
+CHANGE COLUMN `percentagecomplete` `percentageComplete` DOUBLE NULL DEFAULT NULL ;
+
+ALTER TABLE `m_prj_risk`
+CHANGE COLUMN `probalitity` `probability` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NULL DEFAULT NULL ;
+
+ALTER TABLE `s_user` DROP COLUMN `middlename`;
+
+ALTER TABLE `s_user`
+CHANGE COLUMN `dateofbirth` `birthday` DATE NULL DEFAULT NULL ;

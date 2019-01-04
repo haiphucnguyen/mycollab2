@@ -69,7 +69,7 @@ class AccountColumnBuilderMapper : InitializingBean {
             }
         }
         map[SimpleUser.Field.roleid.name] = HyperlinkBuilderGenerator(roleNameExpr, roleHrefExpr)
-        map[User.Field.dateofbirth.name] = SimpleExpressionBuilderGenerator(DateExpression(User.Field.dateofbirth.name))
+        map[User.Field.birthday.name] = SimpleExpressionBuilderGenerator(DateExpression(User.Field.birthday.name))
         return map
     }
 

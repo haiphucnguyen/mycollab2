@@ -49,7 +49,7 @@
                     FROM m_comment 
                     WHERE m_comment.type='Project-Message' AND m_comment.typeId=m_prj_message.id) AS commentsCount,
               m_prj_message.createdTime, m_prj_message.lastUpdatedTime, m_prj_message.isStick,
-              concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS fullPostedUserName,
+              concat(s_user.firstname, ' ', s_user.lastname) AS fullPostedUserName,
               m_prj_project.name AS projectName, s_user.avatarId AS postedUserAvatarId, m_prj_message.sAccountId,
               m_prj_message.isStick
               FROM m_prj_message

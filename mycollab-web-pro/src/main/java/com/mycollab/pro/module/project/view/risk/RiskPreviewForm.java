@@ -21,10 +21,9 @@ import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.data.HasValue;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.ContentMode;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -83,8 +82,8 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
             } else if (Risk.Field.consequence.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getConsequence(), RiskConsequence.class);
-            } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getProbalitity(), RiskProbability.class);
+            } else if (Risk.Field.probability.equalTo(propertyId)) {
+                return new I18nFormViewField(risk.getProbability(), RiskProbability.class);
             }
 
             return null;
