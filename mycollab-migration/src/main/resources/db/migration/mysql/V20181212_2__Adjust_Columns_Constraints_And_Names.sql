@@ -21,7 +21,7 @@ ADD CONSTRAINT `FK_m_audit_log_1`
   ON UPDATE CASCADE;
 
 ALTER TABLE `s_account`
-ADD INDEX `FK_s_account_1_idx` (`billingPlanId` ASC) VISIBLE;
+ADD INDEX `FK_s_account_1_idx` (`billingPlanId` ASC);
 
 ALTER TABLE `s_account`
 ADD CONSTRAINT `FK_s_account_1`

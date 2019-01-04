@@ -34,6 +34,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.MSSQLServerContainer;
+import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.File;
@@ -51,11 +54,11 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
 
     private IDatabaseTester databaseTester;
 
-    private static PostgreSQLContainer postgreSQLContainer;
+    private static JdbcDatabaseContainer dbContainer;
 
     static {
-        postgreSQLContainer = new PostgreSQLContainer<>();
-        postgreSQLContainer.start();
+        dbContainer = new MySQLContainer();
+        dbContainer.start();
     }
 
     @Override
@@ -105,8 +108,8 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
         }
 
         try {
-            DbConfiguration dbConf = new DbConfiguration(postgreSQLContainer.getDriverClassName(), postgreSQLContainer.getJdbcUrl(),
-                    postgreSQLContainer.getUsername(), postgreSQLContainer.getPassword());
+            DbConfiguration dbConf = new DbConfiguration(dbContainer.getDriverClassName(), dbContainer.getJdbcUrl(),
+                    dbContainer.getUsername(), dbContainer.getPassword());
             databaseTester = new DbUnitTester(dbConf.getDriverCls(), dbConf.getJdbcUrl(), dbConf.getUsername(),
                     dbConf.getPassword());
             databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
@@ -137,9 +140,9 @@ public class DbUnitInitializerRule implements BeforeEachCallback, AfterEachCallb
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
+                    "spring.datasource.url=" + dbContainer.getJdbcUrl(),
+                    "spring.datasource.username=" + dbContainer.getUsername(),
+                    "spring.datasource.password=" + dbContainer.getPassword()
             ).applyTo(configurableApplicationContext.getEnvironment());
         }
     }

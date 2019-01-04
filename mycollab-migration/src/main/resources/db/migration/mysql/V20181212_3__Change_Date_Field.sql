@@ -52,7 +52,7 @@ CHANGE COLUMN `deadline` `deadline` DATE NULL DEFAULT NULL ;
 
 ALTER TABLE `m_prj_risk`
 DROP COLUMN `ganttIndex`,
-CHANGE COLUMN `dateraised` `dateraised` DATE NULL DEFAULT NULL ,
+CHANGE COLUMN `raisedDate` `raisedDate` DATE NULL DEFAULT NULL ,
 CHANGE COLUMN `dueDate` `dueDate` DATE NULL DEFAULT NULL ,
 CHANGE COLUMN `startDate` `startDate` DATE NULL DEFAULT NULL ,
 CHANGE COLUMN `endDate` `endDate` DATE NULL DEFAULT NULL ;
@@ -82,7 +82,7 @@ ADD COLUMN `lastUpdatedTime` DATETIME NULL AFTER `createdTime`;
 ALTER TABLE `m_tracker_bug` DROP COLUMN `ganttIndex`;
 
 ALTER TABLE `s_user`
-CHANGE COLUMN `dateofbirth` `dateofbirth` DATE NULL DEFAULT NULL ;
+CHANGE COLUMN `birthday` `birthday` DATE NULL DEFAULT NULL ;
 
 ALTER TABLE `m_tracker_version`
 CHANGE COLUMN `duedate` `duedate` DATE NULL DEFAULT NULL ;
