@@ -4,6 +4,7 @@ import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -97,7 +98,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoNext(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 criteria.setId(NumberSearchField.greaterThan(data.getId()));
                 Integer nextId = riskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -112,7 +113,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoPrevious(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = riskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
