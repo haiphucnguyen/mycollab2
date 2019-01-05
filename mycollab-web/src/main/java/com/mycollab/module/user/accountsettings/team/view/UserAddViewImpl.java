@@ -162,7 +162,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                         .fieldIndex(1).build());
                 mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(UserI18nEnum.FORM_LAST_NAME)
                         .fieldIndex(2).build());
-                mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(UserI18nEnum.FORM_ROLE)
+                mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleId).displayName(UserI18nEnum.FORM_ROLE)
                         .fieldIndex(3).build());
                 if (user.getUsername() == null) {
                     mainSection.fields(new TextDynaFieldBuilder().fieldName(User.Field.password).displayName
@@ -182,7 +182,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
 
             @Override
             protected HasValue<?> onCreateField(Object propertyId) {
-                if (SimpleUser.Field.roleid.equalTo(propertyId)) {
+                if (SimpleUser.Field.roleId.equalTo(propertyId)) {
                     return new AdminRoleSelectionField();
                 } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) ||
                         User.Field.lastname.equalTo(propertyId)) {
@@ -278,7 +278,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
 
             @Override
             protected HasValue<?> onCreateField(Object propertyId) {
-                if (SimpleUser.Field.roleid.equalTo(propertyId)) {
+                if (SimpleUser.Field.roleId.equalTo(propertyId)) {
                     return new AdminRoleSelectionField();
                 } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) ||
                         User.Field.lastname.equalTo(propertyId)) {

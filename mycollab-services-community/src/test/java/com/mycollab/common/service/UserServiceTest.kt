@@ -18,6 +18,7 @@ package com.mycollab.common.service
 
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
+import com.mycollab.db.arguments.StringSearchField
 import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria
 import com.mycollab.module.user.service.UserService
@@ -41,11 +42,14 @@ class UserServiceTest : IntegrationServiceTest() {
     fun testGetListUser() {
         val criteria = UserSearchCriteria()
         criteria.saccountid = NumberSearchField(1)
+        criteria.subDomain = StringSearchField.and("a")
         val users = userService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleUser>
         assertThat(users.size).isEqualTo(4)
         assertThat<SimpleUser>(users).extracting("username").contains(
                 "hainguyen@esofthead.com", "linhduong@esofthead.com",
                 "huynguyen@esofthead.com", "test@esofthead.com")
+
+        assertThat(userService.getTotalCount(criteria)).isEqualTo(4)
     }
 
     @DataSet

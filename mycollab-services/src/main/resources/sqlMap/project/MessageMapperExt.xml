@@ -19,10 +19,10 @@
                ${searchCriteria.id.operation}  m_prj_message.id = @{searchCriteria.id.value,jdbcType=NUMERIC}
             #end
             
-            #ifnotnull($searchCriteria.projectids)
-                ${searchCriteria.projectids.operation}
+            #ifnotnull($searchCriteria.projectIds)
+                ${searchCriteria.projectIds.operation}
                 m_prj_message.projectId IN
-                #repeat(${searchCriteria.projectids.values} $projectId "," "(" ")")
+                #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
                     @{projectId,jdbcType=NUMERIC}
                 #end
             #end

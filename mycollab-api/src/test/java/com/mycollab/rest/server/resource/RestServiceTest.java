@@ -1,7 +1,7 @@
 package com.mycollab.rest.server.resource;
 
 import com.jayway.restassured.RestAssured;
-import com.mycollab.test.spring.RootConfiguration;
+import com.mycollab.test.spring.RootConfigurationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-@ContextConfiguration(classes = {RootConfiguration.class})
+@ContextConfiguration(classes = {RootConfigurationTest.class})
 @ActiveProfiles(profiles = "test")
 public class RestServiceTest {
     static {

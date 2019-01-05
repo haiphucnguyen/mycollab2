@@ -227,7 +227,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
     private fun cloneProjectMessages(projectId: Int, newProjectId: Int, username: String) {
         LOG.info("Clone project messages")
         val searchCriteria = MessageSearchCriteria()
-        searchCriteria.projectids = SetSearchField(projectId)
+        searchCriteria.projectIds = SetSearchField(projectId)
         val messages = messageService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, Integer.MAX_VALUE)) as List<SimpleMessage>
         messages.forEach {
             it.id = null
@@ -239,7 +239,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
     private fun cloneProjectRisks(projectId: Int, newProjectId: Int, username: String) {
         LOG.info("Clone project risks")
         val searchCriteria = RiskSearchCriteria()
-        searchCriteria.projectId = NumberSearchField.equal(projectId)
+        searchCriteria.projectIds = SetSearchField(projectId)
         val risks = riskService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleRisk>
         risks.forEach {
             it.id = null

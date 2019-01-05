@@ -232,7 +232,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         criteria.saccountid = null
 
         if (deploymentMode.isDemandEdition) {
-            criteria.subdomain = StringSearchField.and(subDomain)
+            criteria.subDomain = StringSearchField.and(subDomain)
         }
 
         val users = findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleUser>
@@ -242,7 +242,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
             var user: SimpleUser? = null
             if (deploymentMode.isDemandEdition) {
                 for (testUser in users) {
-                    if (subDomain == testUser.subdomain) {
+                    if (subDomain == testUser.subDomain) {
                         user = testUser
                         break
                     }

@@ -37,7 +37,7 @@ class SimpleUser : User() {
     @NotBindable
     var isAccountOwner: Boolean? = null
 
-    var subdomain: String? = null
+    var subDomain: String? = null
     var accountId: Int? = null
     var registerstatus: String? = null
     var inviteUser: String? = null

@@ -74,3 +74,7 @@ ADD CONSTRAINT `FK_m_prj_role_permission_2`
   REFERENCES `m_prj_project` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
+ALTER TABLE `m_prj_role`
+CHANGE COLUMN `rolename` `roleName` VARCHAR(255) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL ;
+

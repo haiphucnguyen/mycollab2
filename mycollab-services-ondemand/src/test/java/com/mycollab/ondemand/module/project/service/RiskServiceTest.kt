@@ -56,6 +56,6 @@ class RiskServiceTest : IntegrationServiceTest() {
         val newId = riskService.saveWithSession(record, "hainguyen")
 
         val risk = riskService.findByPrimaryKey(newId, 1)
-        assertThat(risk!!.name).isEqualTo("New projectMember")
+        assertThat(risk).extracting("name", "description").contains("New projectMember", "aaa")
     }
 }

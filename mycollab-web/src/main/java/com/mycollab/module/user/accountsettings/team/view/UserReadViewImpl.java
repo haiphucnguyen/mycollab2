@@ -106,7 +106,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
         if (Boolean.TRUE.equals(user.isAccountOwner())) {
             roleDiv = new Div().appendText(UserUIContext.getMessage(RoleI18nEnum.OPT_ACCOUNT_OWNER));
         } else {
-            roleDiv = new A(AccountLinkGenerator.generateRoleLink(user.getRoleid())).appendText(user.getRoleName());
+            roleDiv = new A(AccountLinkGenerator.generateRoleLink(user.getRoleId())).appendText(user.getRoleName());
         }
 
         userFormLayout.addComponent(ELabel.html(roleDiv.write()), UserUIContext.getMessage(UserI18nEnum.FORM_ROLE), 0, 0);
@@ -178,7 +178,7 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
                         if (Boolean.TRUE.equals(user.isAccountOwner())) {
                             return new DefaultViewField(UserUIContext.getMessage(RoleI18nEnum.OPT_ACCOUNT_OWNER));
                         } else {
-                            return new LinkViewField(user.getRoleName(), AccountLinkGenerator.generateRoleLink(user.getRoleid()));
+                            return new LinkViewField(user.getRoleName(), AccountLinkGenerator.generateRoleLink(user.getRoleId()));
                         }
                     } else if (propertyId.equals("website")) {
                         return new UrlLinkViewField(user.getWebsite());

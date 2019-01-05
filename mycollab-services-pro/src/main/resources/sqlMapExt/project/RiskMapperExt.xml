@@ -27,9 +27,13 @@
         #ifnotnull($searchCriteria.name)
             ${searchCriteria.name.operation} m_prj_risk.name LIKE '%${searchCriteria.name.value}%'
         #end
-        
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_risk.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation}
+                m_prj_risk.projectId IN
+                #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                    @{projectId,jdbcType=NUMERIC}
+            #end
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)
@@ -60,8 +64,12 @@
             ${searchCriteria.name.operation} m_prj_risk.name LIKE '%${searchCriteria.name.value}%'
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_risk.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation}
+                m_prj_risk.projectId IN
+                #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                    @{projectId,jdbcType=NUMERIC}
+            #end
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)

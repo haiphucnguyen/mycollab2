@@ -35,11 +35,11 @@
                 ${searchCriteria.saccountid.operation} s_user_account.accountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
             #end
             
-            #ifnotnull($searchCriteria.subdomain)
-                ${searchCriteria.subdomain.operation} 
+            #ifnotnull($searchCriteria.subDomain)
+                ${searchCriteria.subDomain.operation}
                 EXISTS (SELECT 1
                     FROM s_account, s_user_account AS user_account 
-                    WHERE s_account.subDomain=@{searchCriteria.subdomain.value}
+                    WHERE s_account.subDomain=@{searchCriteria.subDomain.value}
                         AND  user_account.accountId=s_account.id 
                         AND user_account.username=s_user.username
                 LIMIT 1)
@@ -85,11 +85,11 @@
                         AND s_user_account.username=s_user.username LIMIT 1)
             #end
             
-            #ifnotnull($searchCriteria.subdomain)
-                ${searchCriteria.subdomain.operation} 
+            #ifnotnull($searchCriteria.subDomain)
+                ${searchCriteria.subDomain.operation}
                 EXISTS (SELECT 1
                     FROM s_account, s_user_account AS user_account 
-                    WHERE s_account.subDomain=@{searchCriteria.subdomain.value}
+                    WHERE s_account.subDomain=@{searchCriteria.subDomain.value}
                         AND  user_account.accountId=s_account.id 
                         AND user_account.username=s_user.username
                 LIMIT 1)
