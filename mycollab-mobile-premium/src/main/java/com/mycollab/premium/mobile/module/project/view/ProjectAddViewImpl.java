@@ -18,11 +18,13 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.vaadin.touchkit.ui.DatePicker;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.5
  */
+// TODO
 @ViewComponent
 public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> implements ProjectAddView {
     @Override
@@ -58,7 +60,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
 //                tf.setRequired(true);
                 return tf;
             } else if (Project.Field.homepage.equalTo(propertyId)) {
-                return new UrlField();
+//                return new UrlField();
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                 return new ProjectStatusListSelect();
             } else if (Project.Field.planstartdate.equalTo(propertyId) || Project.Field.planenddate.equalTo(propertyId)) {

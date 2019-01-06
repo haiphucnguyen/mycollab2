@@ -23,10 +23,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
-import com.vaadin.addon.touchkit.ui.NumberField;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
+import org.vaadin.touchkit.ui.DatePicker;
 import org.vaadin.viritin.fields.MTextField;
 
 /**
@@ -121,7 +120,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 //                return milestoneBox;
             } else if (BugWithBLOBs.Field.originalestimate.equalTo(propertyId) ||
                     BugWithBLOBs.Field.remainestimate.equalTo(propertyId)) {
-                return new NumberField();
+//                return new NumberField();
             }
 
             return null;

@@ -32,6 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -244,7 +245,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         return isOvertimeField.getValue();
     }
 
-    protected LocalDateTime forLogDate() {
+    protected LocalDate forLogDate() {
 //        Date date = forDateField.getValue();
 //        return (date != null) ? date : new GregorianCalendar().getTime();
         return null;

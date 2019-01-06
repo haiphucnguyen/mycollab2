@@ -19,12 +19,12 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.ViewEvent;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.addon.touchkit.ui.EmailField;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.touchkit.ui.EmailField;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 
 import java.util.Collections;
 
@@ -44,7 +44,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
     private VerticalComponentGroup permissionsPanel;
 
     public ProjectMemberInviteViewImpl() {
-        super();
         this.setCaption(UserUIContext.getMessage(ProjectMemberI18nEnum.NEW));
         constructUI();
     }

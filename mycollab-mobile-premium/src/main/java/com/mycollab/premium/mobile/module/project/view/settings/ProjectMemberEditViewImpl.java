@@ -25,11 +25,11 @@ import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
-import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Label;
+import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**

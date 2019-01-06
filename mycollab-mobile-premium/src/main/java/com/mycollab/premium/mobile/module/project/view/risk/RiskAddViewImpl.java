@@ -23,9 +23,9 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.TextArea;
+import org.vaadin.touchkit.ui.DatePicker;
 
 /**
  * @author MyCollab Ltd
