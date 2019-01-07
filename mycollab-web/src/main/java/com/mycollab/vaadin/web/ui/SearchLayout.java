@@ -38,6 +38,6 @@ abstract public class SearchLayout<S extends SearchCriteria> extends CustomCompo
 
     abstract protected S fillUpSearchCriteria();
 
-    abstract protected void addHeaderRight(Component c);
+//    abstract protected void addHeaderRight(Component c);
 
 }

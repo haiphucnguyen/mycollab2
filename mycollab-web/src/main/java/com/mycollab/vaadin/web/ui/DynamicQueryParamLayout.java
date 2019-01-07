@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,9 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -64,14 +66,6 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
         setCompositionRoot(layout);
     }
 
-    @Override
-    protected void addHeaderRight(Component c) {
-        if (header == null)
-            return;
-
-        header.with(c).withAlign(c, Alignment.MIDDLE_RIGHT);
-    }
-
     private HorizontalLayout createButtonControls() {
         MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                 .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH);
@@ -80,7 +74,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
                 .withStyleName(WebThemes.BUTTON_OPTION);
 
         MButton basicSearchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_BASIC_SEARCH),
-                clickEvent -> ((DefaultGenericSearchPanel<S>) searchPanel).moveToBasicSearchLayout())
+                clickEvent -> searchPanel.moveToBasicSearchLayout())
                 .withStyleName(WebThemes.BUTTON_LINK);
 
         return new MHorizontalLayout(searchBtn, clearBtn, basicSearchBtn).withMargin(new MarginInfo(false, true, false, true));

@@ -41,8 +41,8 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     private static final long serialVersionUID = 1L;
 
     private List<SearchHandler<S>> searchHandlers;
-    private MHorizontalLayout header;
-    private ComponentContainer headerText;
+    private MHorizontalLayout headerRightComp;
+    private ComponentContainer headerTitleComp;
 
     protected boolean canSwitchToAdvanceLayout;
     protected SearchLayout<S> searchLayout;
@@ -71,29 +71,23 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     }
 
     MHorizontalLayout constructHeader() {
-        if (header == null) {
-            headerText = buildSearchTitle();
-            if (headerText != null) {
-                MHorizontalLayout rightComponent = new MHorizontalLayout();
-                header = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
-
-                header.with(headerText, rightComponent).withAlign(headerText, Alignment.MIDDLE_LEFT)
-                        .withAlign(rightComponent, Alignment.MIDDLE_RIGHT);
-            }
-
-            Component extraControls = buildExtraControls();
-            if (extraControls != null) {
-                addHeaderRight(extraControls);
-            }
-            return header;
-        } else {
-            return header;
+        MHorizontalLayout headerComp = new MHorizontalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
+        headerRightComp = new MHorizontalLayout();
+        headerTitleComp = buildSearchTitle();
+        if (headerTitleComp != null) {
+            headerComp.with(headerTitleComp, headerRightComp).expand(headerRightComp);
         }
+
+        Component extraControls = buildExtraControls();
+        if (extraControls != null) {
+            addHeaderRight(extraControls);
+        }
+        return headerComp;
     }
 
     public void setTotalCountNumber(Integer countNumber) {
-        if (headerText instanceof HeaderWithIcon) {
-            ((HeaderWithIcon) headerText).appendToTitle(UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, countNumber));
+        if (headerTitleComp instanceof HeaderWithIcon) {
+            ((HeaderWithIcon) headerTitleComp).appendToTitle(UserUIContext.getMessage(GenericI18Enum.OPT_TOTAL_VALUE, countNumber));
         }
     }
 
@@ -121,7 +115,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     }
 
     public void addHeaderRight(Component component) {
-        searchLayout.addHeaderRight(component);
+        headerRightComp.with(component).withAlign(component, Alignment.MIDDLE_RIGHT);
     }
 
     public void callSearchAction() {

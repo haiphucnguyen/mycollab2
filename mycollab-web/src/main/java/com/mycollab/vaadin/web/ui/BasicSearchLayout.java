@@ -44,14 +44,6 @@ abstract public class BasicSearchLayout<S extends SearchCriteria> extends Search
         this.setCompositionRoot(layout);
     }
 
-    @Override
-    protected void addHeaderRight(Component component) {
-        if (header == null)
-            return;
-
-        header.with(component).withAlign(component, Alignment.MIDDLE_RIGHT);
-    }
-
     private MHorizontalLayout constructHeader() {
         return searchPanel.constructHeader();
     }
