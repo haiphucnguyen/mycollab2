@@ -193,7 +193,8 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
         rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, false, false));
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
-        this.with(ticketSearchPanel, mainLayout);
+
+        this.with(ticketSearchPanel, mainLayout).expand(mainLayout);
     }
 
     @Override

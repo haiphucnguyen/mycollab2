@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,6 +34,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.util.Arrays;
 
 /**
  * @author MyCollab Ltd.
@@ -104,7 +106,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             header.with(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
 
-        MCssLayout contentWrapper = new MCssLayout().withFullWidth().withStyleName(WebThemes.CONTENT_WRAPPER);
+        MCssLayout contentWrapper = new MCssLayout().withFullSize().withStyleName(WebThemes.CONTENT_WRAPPER);
 
         if (previewLayout == null)
             previewLayout = new DefaultReadViewLayout("");
@@ -113,10 +115,9 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
         if (isDisplaySideBar) {
             RightSidebarLayout bodyContainer = new RightSidebarLayout();
-            bodyContainer.setSizeFull();
 
-            bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullWidth();
-            bodyContainer.setContent(bodyContent);
+            bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullSize().withId("bodyContent");
+            bodyContainer.setContent(previewForm);
             sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
             bodyContainer.setSidebar(sidebarContent);
             previewLayout.addBody(bodyContainer);
@@ -124,7 +125,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             CssLayout bodyContainer = new CssLayout();
             bodyContainer.setSizeFull();
             bodyContainer.addStyleName("readview-body-wrap");
-            bodyContent = new MVerticalLayout().withSpacing(false).withFullWidth().withMargin(false).with(previewForm);
+            bodyContent = new MVerticalLayout().withSpacing(false).withFullSize().withMargin(false).with(previewForm);
             bodyContainer.addComponent(bodyContent);
             previewLayout.addBody(bodyContainer);
         }
@@ -180,11 +181,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewForm.setBean(item);
 
         if (favoriteBtn != null) {
-            if (isFavorite()) {
-                favoriteBtn.addStyleName("favorite-btn-selected");
-            } else {
-                favoriteBtn.addStyleName("favorite-btn");
-            }
+            String favStyle = isFavorite() ? "favorite-btn-selected" : "favorite-btn";
+            favoriteBtn.addStyleName(favStyle);
         }
 
         onPreviewItem();
@@ -207,9 +205,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public void addToSideBar(Component... components) {
-        for (Component component : components) {
-            sidebarContent.addComponent(component);
-        }
+        Arrays.stream(components).forEach(sidebarContent::addComponent);
     }
 
     public B getBeanItem() {

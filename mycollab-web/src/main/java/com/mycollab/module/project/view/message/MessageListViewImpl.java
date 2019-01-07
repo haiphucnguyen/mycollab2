@@ -20,6 +20,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.module.ecm.domain.Content;
@@ -57,7 +58,6 @@ import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -211,8 +211,7 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
         }
     }
 
-    private static class MessageSearchPanel extends GenericSearchPanel<MessageSearchCriteria> {
-        private MessageSearchCriteria messageSearchCriteria;
+    private static class MessageSearchPanel extends DefaultGenericSearchPanel<MessageSearchCriteria> {
         private TextField nameField;
 
         MessageSearchPanel() {
@@ -220,27 +219,30 @@ public class MessageListViewImpl extends AbstractVerticalPageView implements Mes
         }
 
         @Override
-        public void setTotalCountNumber(Integer totalCountNumber) {
+        protected SearchLayout<MessageSearchCriteria> createBasicSearchLayout() {
+            BasicSearchLayout layout = new BasicSearchLayout(MessageSearchPanel.this) {
+                @Override
+                public ComponentContainer constructBody() {
+                    nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+                            .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
-        }
+                    MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
+                            .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH)
+                            .withClickShortcut(ShortcutAction.KeyCode.ENTER);
+                    final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withUndefinedWidth()
+                            .withAlign(nameField, Alignment.MIDDLE_LEFT);
+                    return basicSearchBody;
+                }
 
-        private void createBasicSearchLayout() {
-            nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
-                    .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
-
-            MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> doSearch())
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH)
-                    .withClickShortcut(ShortcutAction.KeyCode.ENTER);
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout(nameField, searchBtn).withUndefinedWidth()
-                    .withAlign(nameField, Alignment.MIDDLE_LEFT);
-            this.setCompositionRoot(basicSearchBody);
-        }
-
-        private void doSearch() {
-            messageSearchCriteria = new MessageSearchCriteria();
-            messageSearchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            messageSearchCriteria.setMessage(StringSearchField.and(nameField.getValue()));
-            notifySearchHandler(messageSearchCriteria);
+                @Override
+                protected SearchCriteria fillUpSearchCriteria() {
+                    MessageSearchCriteria criteria = new MessageSearchCriteria();
+                    criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    criteria.setMessage(StringSearchField.and(nameField.getValue()));
+                    return criteria;
+                }
+            };
+            return layout;
         }
     }
 

@@ -164,17 +164,65 @@ $v-line-height--header:1.5em;
 
   /* Top Menu */
   .topNavigation {
-    .actionMenuContainer {
-      position: absolute;
-      top: 10px;
+    .mainLogo {
+      float: left;
+      width: 169px;
+      height: 100%;
+      margin: 0;
+      padding: 0px 15px;
+      display: block;
+      border-right: 1px solid $my-separator-color;
     }
     .serviceMenuContainer {
-
+      float: left;
+      .service-menu {
+        padding: 8px 12px;
+        background: none !important;
+        border: none;
+        text-shadow: none;
+        .v-button-wrap {
+          padding: 0px 10px;
+        }
+        &.v-buttongroup .v-button {
+          padding: 3px 12px;
+          &:focus {
+            background: none;
+          }
+          &.selected, &:hover {
+            border-radius: $v-border-radius;
+          }
+        }
+      }
     }
 
+    .v-button {
+      border-radius: $v-border-radius;
+      font-weight: $my-font-weight-bold;
+      background-color: #fff;
+      .v-button-wrap {
+        padding: 2px 5px 2px 0px;
+        .v-icon {
+          padding-left: 5px;
+        }
+      }
+    }
+
+    .v-button.ad {
+      color: black;
+      font-weight: normal;
+      background-color: #fff;
+      .v-icon {
+        color: green;
+      }
+    }
+
+    .subDomain {
+      font-size: $font-normal;
+      padding: 0 6px 0 3px;
+      font-weight: $my-font-weight-bold;
+    }
     .accountMenuContainer {
-      position: absolute;
-      bottom: 10px;
+      float: right;
       .v-button.v-popupbutton,  .v-button.v-popupbutton.v-pressed {
         background-color: transparent;
         .v-button-wrap {
@@ -185,7 +233,9 @@ $v-line-height--header:1.5em;
             font-weight: $my-font-weight-bold;
           }
           .v-popup-indicator::before {
-            visibility: hidden
+            content:'\f0dd';
+            font-size: 15px;
+            opacity: 1;
           }
         }
       }
@@ -1721,5 +1771,9 @@ $v-line-height--header:1.5em;
       /* NEW, Spec - Opera 12.1, Firefox 20+ */
       display: inline-block;
     }
+  }
+
+  .debugComp {
+    background-color: red;
   }
 }

@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,8 +27,8 @@ import com.mycollab.db.arguments.SearchField;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import static com.mycollab.common.i18n.QueryI18nEnum.CollectionI18nEnum.IN;
@@ -194,11 +194,11 @@ public class SearchFieldInfo<S extends SearchCriteria> implements Serializable {
             DateParam wrapParam = (DateParam) param;
             Object value = this.eval();
             if (value.getClass().isArray()) {
-                Date val1 = (Date) Array.get(value, 0);
-                Date val2 = (Date) Array.get(value, 1);
+                LocalDate val1 = (LocalDate) Array.get(value, 0);
+                LocalDate val2 = (LocalDate) Array.get(value, 1);
                 return wrapParam.buildSearchField(prefixOper, compareOper, val1, val2);
             } else {
-                return wrapParam.buildSearchField(prefixOper, compareOper, (Date) value);
+                return wrapParam.buildSearchField(prefixOper, compareOper, (LocalDate) value);
             }
         } else {
             throw new MyCollabException("Not support yet");

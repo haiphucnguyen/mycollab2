@@ -23,11 +23,10 @@ import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -43,10 +42,11 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     protected String type;
     private BuildCriterionComponent<S> buildCriterionComp;
-    private ComponentContainer header;
+    private MHorizontalLayout header;
 
     public DynamicQueryParamLayout(DefaultGenericSearchPanel<S> parent, String type) {
-        super(parent, "advancedSearch");
+        super(parent);
+        CustomLayout layout = CustomLayoutExt.createLayout("advancedSearch");
         this.type = type;
         header = constructHeader();
         buildCriterionComp = new BuildCriterionComponent<S>(this, getParamFields(), type) {
@@ -58,9 +58,10 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
             }
         };
 
-        this.addComponent(header, "advSearchHeader");
-        this.addComponent(buildCriterionComp, "advSearchBody");
-        this.addComponent(createButtonControls(), "advSearchFooter");
+        layout.addComponent(header, "advSearchHeader");
+        layout.addComponent(buildCriterionComp, "advSearchBody");
+        layout.addComponent(createButtonControls(), "advSearchFooter");
+        setCompositionRoot(layout);
     }
 
     @Override
@@ -68,7 +69,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
         if (header == null)
             return;
 
-        header.addComponent(c);
+        header.with(c).withAlign(c, Alignment.MIDDLE_RIGHT);
     }
 
     private HorizontalLayout createButtonControls() {
@@ -102,7 +103,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
     protected abstract Class<S> getType();
 
-    private ComponentContainer constructHeader() {
+    private MHorizontalLayout constructHeader() {
         return ((DefaultGenericSearchPanel) searchPanel).constructHeader();
     }
 

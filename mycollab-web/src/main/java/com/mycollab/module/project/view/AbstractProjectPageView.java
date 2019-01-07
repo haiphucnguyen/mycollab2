@@ -43,7 +43,6 @@ public class AbstractProjectPageView extends AbstractVerticalPageView {
 
         contentWrapper = new MCssLayout().withStyleName(WebThemes.CONTENT_WRAPPER);
         super.addComponent(contentWrapper);
-
     }
 
     private ComponentContainer constructHeader() {

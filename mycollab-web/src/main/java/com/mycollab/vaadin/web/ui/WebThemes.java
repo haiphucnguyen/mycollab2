@@ -49,7 +49,6 @@ public class WebThemes {
     public static final String LABEL_OVERDUE = "overdue";
     public static final String GRIDFORM_STANDARD = "colored-gridlayout";
     public static final String GRIDFORM_BORDERLESS = "borderless";
-    public static final String FORM = "form";
     public static final String FORM_SECTION = "section";
     public static final String ARROW_BTN = "arrow-btn";
     public static final String CURSOR_POINTER = "cursor_pointer";
