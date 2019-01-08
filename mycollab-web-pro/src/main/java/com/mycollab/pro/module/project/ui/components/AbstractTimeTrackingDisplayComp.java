@@ -27,13 +27,13 @@ import java.util.Set;
 public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    protected Set<TableViewField> visibleFields;
+    protected List<TableViewField> visibleFields;
     protected TableClickListener tableClickListener;
 
     private String currentItemSearchCriteria = "";
     private List<SimpleItemTimeLogging> itemEntries;
 
-     AbstractTimeTrackingDisplayComp(Set<TableViewField> fields, TableClickListener tableClickListener) {
+    AbstractTimeTrackingDisplayComp(List<TableViewField> fields, TableClickListener tableClickListener) {
         this.visibleFields = fields;
         this.tableClickListener = tableClickListener;
     }
@@ -63,12 +63,8 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     static class TimeLoggingBockLayout extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
-        public TimeLoggingBockLayout() {
-            super();
-        }
-
-        TimeLoggingBockLayout(Set<TableViewField> visibleFields, TableClickListener tableClickListener,
-                                     List<SimpleItemTimeLogging> timeLoggingEntries) {
+        TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
+                              List<SimpleItemTimeLogging> timeLoggingEntries) {
             withMargin(new MarginInfo(true, false, true, false));
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
             table.addTableListener(tableClickListener);

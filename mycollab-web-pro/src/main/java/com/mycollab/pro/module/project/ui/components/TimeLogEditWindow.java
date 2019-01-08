@@ -33,9 +33,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -58,7 +56,6 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private Label totalSpentTimeLbl;
     private DoubleField newTimeInputField;
     private CheckBox isBillableField, isOvertimeField;
-    private PopupDateFieldExt forDateField;
 
     private DoubleField remainTimeInputField;
     private Label remainTimeLbl;
@@ -86,9 +83,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         constructRemainTimeEntryPanel();
 
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
-                new HashSet<>(Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
+                Arrays.asList(TimeTableFieldDef.logUser, TimeTableFieldDef.logForDate, TimeTableFieldDef.logValue,
                         TimeTableFieldDef.billable, TimeTableFieldDef.overtime, new TableViewField(null, "id",
-                                WebUIConstants.TABLE_CONTROL_WIDTH))));
+                                WebUIConstants.TABLE_CONTROL_WIDTH)));
 
         tableItem.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {
             final SimpleItemTimeLogging timeLoggingItem = tableItem.getBeanByIndex(itemId);
@@ -156,7 +153,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         newTimeInputField = new DoubleField();
         newTimeInputField.setWidth("80px");
 
-        forDateField = new PopupDateFieldExt();
+        PopupDateFieldExt forDateField = new PopupDateFieldExt();
 //        forDateField.setValue(new GregorianCalendar().getTime());
 
         isBillableField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);

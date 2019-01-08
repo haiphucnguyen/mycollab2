@@ -20,7 +20,7 @@ import java.util.Set;
 public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
 
-    public TimeTrackingProjectOrderComponent(Set<TableViewField> fields, TableClickListener tableClickListener) {
+    public TimeTrackingProjectOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }

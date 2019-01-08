@@ -46,7 +46,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -214,16 +213,16 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
         if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupByState)) {
-            return new TimeTrackingDateOrderComponent(new HashSet<>(Arrays.asList(
+            return new TimeTrackingDateOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
                     TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                    TimeTableFieldDef.id)), tableClickListener);
+                    TimeTableFieldDef.id), tableClickListener);
 
         } else if (UserUIContext.getMessage(UserI18nEnum.SINGLE).equals(groupByState)) {
-            return new TimeTrackingUserOrderComponent(new HashSet<>(Arrays.asList(
+            return new TimeTrackingUserOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
                     TimeTableFieldDef.logValue, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                    TimeTableFieldDef.id)), tableClickListener);
+                    TimeTableFieldDef.id), tableClickListener);
         } else {
             throw new MyCollabException("Do not support view type: " + groupByState);
         }

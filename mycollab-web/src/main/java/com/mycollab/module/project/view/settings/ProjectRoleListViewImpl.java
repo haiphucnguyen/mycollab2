@@ -37,14 +37,13 @@ import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -72,8 +71,8 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     private void generateDisplayTable() {
         tableItem = new DefaultPagedBeanTable<>(AppContextUtil.getSpringBean(ProjectRoleService.class),
                 SimpleProjectRole.class, new TableViewField(null, "selected", WebUIConstants.TABLE_CONTROL_WIDTH),
-                new HashSet<>(Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
-                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH))));
+                Arrays.asList(new TableViewField(GenericI18Enum.FORM_NAME, "rolename", WebUIConstants.TABLE_EX_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", WebUIConstants.TABLE_EX_LABEL_WIDTH)));
 
         tableItem.addGeneratedColumn("selected", (source, itemId, columnId) -> {
             final SimpleProjectRole role = tableItem.getBeanByIndex(itemId);

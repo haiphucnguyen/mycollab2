@@ -6,7 +6,6 @@ import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -15,7 +14,7 @@ import java.util.Set;
 public class TimeTrackingUserOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
 
-    public TimeTrackingUserOrderComponent(Set<TableViewField> fields, TableClickListener tableClickListener) {
+    public TimeTrackingUserOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }

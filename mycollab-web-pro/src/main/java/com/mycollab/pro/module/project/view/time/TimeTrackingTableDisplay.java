@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -42,7 +42,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
 
     private static final Logger LOG = LoggerFactory.getLogger(TimeTrackingTableDisplay.class);
 
-    public TimeTrackingTableDisplay(Set<TableViewField> displayColumns) {
+    public TimeTrackingTableDisplay(List<TableViewField> displayColumns) {
         super(AppContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class, displayColumns);
 
         this.addGeneratedColumn("logUserFullName", (source, itemId, columnId) -> {

@@ -1,6 +1,7 @@
 package com.mycollab.rest.server.resource
 
 import com.google.common.base.MoreObjects
+import com.javax0.license3j.licensor.License
 import com.mycollab.configuration.EnDecryptHelper
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.DateTimeUtils
@@ -9,7 +10,6 @@ import com.mycollab.license.LicenseType
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample
-import com.verhas.licensor.License
 import io.swagger.annotations.Api
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*

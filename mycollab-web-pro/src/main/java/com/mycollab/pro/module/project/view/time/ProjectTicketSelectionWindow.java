@@ -22,7 +22,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  * @author MyCollab Ltd.
@@ -39,7 +38,7 @@ class ProjectTicketSelectionWindow extends MWindow {
         super(UserUIContext.getMessage(TicketI18nEnum.OPT_SELECT_TICKET));
         this.withCenter().withResizable(false).withModal(true).withWidth("800px");
         MVerticalLayout content = new MVerticalLayout();
-        ticketTableDisplay = new TicketTableDisplay(new HashSet<>(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser)));
+        ticketTableDisplay = new TicketTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name, GenericTaskTableFieldDef.assignUser));
         ticketTableDisplay.setDisplayNumItems(10);
         ticketTableDisplay.addTableListener(event -> {
             final ProjectTicket task = (ProjectTicket) event.getData();
