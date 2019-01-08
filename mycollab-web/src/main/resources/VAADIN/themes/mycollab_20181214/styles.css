@@ -17379,16 +17379,6 @@ div.v-window {
 	font-size: 1.2em;
 }
 
-.v-select-optiongroup-sortDirection .v-select-option {
-	display: inline-block;
-}
-
-.v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-	padding-right: 10px;
-	font-size: 14px;
-	color: black;
-}
-
 .floatControl {
 	z-index: 10;
 	border-bottom: 1px solid #e5e5e5;
@@ -17550,7 +17540,6 @@ div.v-csslayout.followers-container .v-checkbox {
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 	-ms-writing-mode: lr-tb;
-	padding: 0px 24px;
 }
 
 .v-csslayout.tag-block {
@@ -19425,11 +19414,6 @@ div.v-stylecalendar .weekdays TD {
 img.icon-btn {
 	cursor: pointer;
 	display: block;
-}
-
-.content-wrapper {
-	padding: 0px 24px;
-	width: 100%;
 }
 
 .activity-list {

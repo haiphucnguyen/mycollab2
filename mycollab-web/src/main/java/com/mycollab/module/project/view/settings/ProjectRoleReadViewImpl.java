@@ -71,7 +71,6 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
 
         CssLayout contentWrapper = new CssLayout();
         contentWrapper.setWidth("100%");
-        contentWrapper.setStyleName(WebThemes.CONTENT_WRAPPER);
 
         previewLayout = new DefaultReadViewLayout("");
         contentWrapper.addComponent(previewLayout);

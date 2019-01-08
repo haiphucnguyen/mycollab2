@@ -42,13 +42,4 @@
       @include section-header();
     }
   }
-
-  .v-select-optiongroup-sortDirection .v-select-option {
-    display: inline-block;
-    &.v-radiobutton {
-      padding-right: 10px;
-      font-size: $font-normal;
-      color: black;
-    }
-  }
 }

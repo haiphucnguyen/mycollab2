@@ -41,7 +41,7 @@ public class AbstractProjectPageView extends AbstractVerticalPageView {
         this.headerText = ELabel.h2(String.format("%s %s", icon.getHtml(), headerText));
         super.addComponent(constructHeader());
 
-        contentWrapper = new MCssLayout().withStyleName(WebThemes.CONTENT_WRAPPER);
+        contentWrapper = new MCssLayout();
         super.addComponent(contentWrapper);
     }
 

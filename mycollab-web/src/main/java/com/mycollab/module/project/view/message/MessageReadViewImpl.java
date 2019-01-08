@@ -70,7 +70,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
         header = new MHorizontalLayout().withMargin(true).withFullWidth();
         previewForm = new AdvancedPreviewBeanForm<>();
 
-        contentWrapper = new MCssLayout().withStyleName(WebThemes.CONTENT_WRAPPER);
+        contentWrapper = new MCssLayout();
         contentWrapper.addComponent(previewForm);
         contentWrapper.setWidth("900px");
         with(header, contentWrapper).expand(contentWrapper);

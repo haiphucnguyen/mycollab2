@@ -37,6 +37,7 @@ import com.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.mycollab.vaadin.web.ui.*;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -61,8 +62,10 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
     private Label selectedItemsNumberLabel = new Label();
 
     public ProjectRoleListViewImpl() {
+        this.setMargin(new MarginInfo(false, true, true, true));
         searchPanel = new ProjectRoleSearchPanel();
-        listLayout = new MVerticalLayout().withSpacing(false);
+
+        listLayout = new MVerticalLayout().withMargin(false).withSpacing(false);
         with(searchPanel, listLayout);
 
         this.generateDisplayTable();
@@ -88,6 +91,7 @@ public class ProjectRoleListViewImpl extends AbstractVerticalPageView implements
                     ProjectLinkGenerator.generateRolePreviewLink(role.getProjectid(), role.getId()));
         });
 
+        tableItem.setWidth("100%");
         listLayout.addComponent(this.constructTableActionControls());
         listLayout.addComponent(this.tableItem);
     }

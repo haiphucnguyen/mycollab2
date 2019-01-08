@@ -51,7 +51,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     protected AdvancedPreviewBeanForm<B> previewForm;
     protected ReadViewLayout previewLayout;
     protected MHorizontalLayout header;
-    private HorizontalLayout actionControls;
     private MVerticalLayout sidebarContent;
     private MVerticalLayout bodyContent;
     private MButton favoriteBtn;
@@ -99,12 +98,12 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
     private void initContent() {
         previewForm = initPreviewForm();
-        actionControls = createButtonControls();
+        HorizontalLayout actionControls = createButtonControls();
         if (actionControls != null) {
             header.with(actionControls).expand(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
 
-        MCssLayout contentWrapper = new MCssLayout().withFullSize().withStyleName(WebThemes.CONTENT_WRAPPER);
+        MCssLayout contentWrapper = new MCssLayout().withFullSize();
 
         if (previewLayout == null)
             previewLayout = new DefaultReadViewLayout("");
@@ -115,7 +114,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             RightSidebarLayout bodyContainer = new RightSidebarLayout();
 
             bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullSize().withId("bodyContent");
-            bodyContainer.setContent(previewForm);
+            bodyContainer.setContent(bodyContent);
             sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
             bodyContainer.setSidebar(sidebarContent);
             previewLayout.addBody(bodyContainer);
@@ -123,7 +122,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             CssLayout bodyContainer = new CssLayout();
             bodyContainer.setSizeFull();
             bodyContainer.addStyleName("readview-body-wrap");
-            bodyContent = new MVerticalLayout().withSpacing(false).withFullSize().withMargin(false).with(previewForm);
+            bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullSize();
             bodyContainer.addComponent(bodyContent);
             previewLayout.addBody(bodyContainer);
         }
