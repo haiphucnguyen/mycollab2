@@ -9,6 +9,7 @@ import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.esb.UpdateSubscriptionEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -17,7 +18,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.Page;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -63,7 +63,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                         AsyncEventBus eventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                         eventBus.post(event);
                         close();
-                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                        Utils.reloadPage();
                     }
                 }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
 

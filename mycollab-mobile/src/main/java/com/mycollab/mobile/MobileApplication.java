@@ -43,6 +43,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.mvp.ControllerRegistry;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.ui.NotificationUtil;
@@ -105,7 +106,7 @@ public class MobileApplication extends AppUI {
 
                 SessionExpireException sessionExpireException = (SessionExpireException) getExceptionType(e, SessionExpireException.class);
                 if (sessionExpireException != null) {
-                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                    Utils.reloadPage();
                     return;
                 }
 

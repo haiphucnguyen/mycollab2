@@ -16,7 +16,6 @@
  */
 package com.mycollab.module.project.view;
 
-import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
@@ -36,17 +35,11 @@ import com.mycollab.module.project.view.reports.IReportPresenter;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.user.ProjectPagedList;
 import com.mycollab.security.RolePermissionCollections;
-import com.mycollab.shell.event.ShellEvent.ShowAssociateAddActionsPerModule;
-import com.mycollab.shell.view.AbstractMainView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.ApplicationEventListener;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
-import com.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -55,13 +48,8 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.sliderpanel.SliderPanel;
-import org.vaadin.sliderpanel.SliderPanelBuilder;
-import org.vaadin.sliderpanel.client.SliderMode;
-import org.vaadin.sliderpanel.client.SliderTabPosition;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
 
@@ -87,17 +75,9 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
 //    private IClientPresenter clientPresenter;
 
-    private ApplicationEventListener<ShowAssociateAddActionsPerModule> showAddActionsHandler = new
-            ApplicationEventListener<ShowAssociateAddActionsPerModule>() {
-                @Override
-                @Subscribe
-                public void handle(ShowAssociateAddActionsPerModule event) {
-                    showProjectAddMenu();
-                }
-            };
-
     public ProjectModule() {
         addStyleName("module");
+        setSizeFull();
         ControllerRegistry.addController(new ProjectModuleController(this));
 
         tabSheet = new VerticalTabsheet();
@@ -112,18 +92,6 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     UserProjectDashboardPresenter getDashboardPresenter() {
         return userProjectDashboardPresenter;
-    }
-
-    @Override
-    public void attach() {
-        EventBusFactory.getInstance().register(showAddActionsHandler);
-        super.attach();
-    }
-
-    @Override
-    public void detach() {
-        EventBusFactory.getInstance().unregister(showAddActionsHandler);
-        super.detach();
     }
 
     private void buildComponents() {
@@ -192,29 +160,6 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     public void gotoSubView(String viewId) {
         tabSheet.selectTab(viewId);
-    }
-
-    private void showProjectAddMenu() {
-        MButton newProjectBtn = new MButton("New Project");
-        MButton newTicketBtn = new MButton("New Ticket");
-        MButton newDocumentBtn = new MButton("New Page");
-
-        MVerticalLayout controlsLayout = new MVerticalLayout();
-        controlsLayout.with(new Embedded("", AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150)));
-        controlsLayout.with(newProjectBtn, newTicketBtn, newDocumentBtn);
-
-        SliderPanel topSlider = new SliderPanelBuilder(controlsLayout)
-                .expanded(false)
-                .flowInContent(true)
-                .mode(SliderMode.LEFT)
-                .caption("Top Slider")
-                .tabPosition(SliderTabPosition.BEGINNING)
-                .build();
-        topSlider.expand();
-
-        AbstractMainView mainView = UIUtils.getRoot(this, AbstractMainView.class);
-        mainView.addComponent(topSlider, 0);
-
     }
 
     @Override

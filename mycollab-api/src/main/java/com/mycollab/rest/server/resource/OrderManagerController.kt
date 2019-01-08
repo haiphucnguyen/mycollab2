@@ -177,17 +177,17 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
             }
 
         }
-/*
+
         @JvmStatic
         fun main(args: Array<String>) {
             val licenseInfo = LicenseInfo()
             licenseInfo.customerId = "10"
-            licenseInfo.expireDate = DateTime().plusDays(365).toDate()
-            licenseInfo.issueDate = DateTime().toDate()
+            licenseInfo.expireDate = LocalDateTime.now().plusDays(365).toLocalDate()
+            licenseInfo.issueDate = LocalDateTime.now().toLocalDate()
             licenseInfo.maxUsers = 10
             licenseInfo.licenseType = LicenseType.PRO
             licenseInfo.licenseOrg = "On Call Computer Solutions"
             println(encode(licenseInfo))
-        } */
+        }
     }
 }

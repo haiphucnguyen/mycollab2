@@ -1844,6 +1844,11 @@ a.pending {
 	border-color: transparent transparent transparent #76B38A;
 }
 
+.upload-field .v-verticallayout {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
 .comment-attachment {
 	border-radius: 4px 4px 0px 0px;
 }
@@ -16570,6 +16575,11 @@ a.pending {
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
 	border-color: transparent transparent transparent #76B38A;
+}
+
+.upload-field .v-verticallayout {
+	padding-top: 0px;
+	padding-bottom: 0px;
 }
 
 .comment-attachment {
