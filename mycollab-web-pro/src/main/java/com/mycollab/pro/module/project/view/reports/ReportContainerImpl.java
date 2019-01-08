@@ -14,7 +14,6 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
@@ -38,7 +37,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
     @Override
     public void showDashboard() {
         body.removeAllComponents();
-        body.with(ELabel.h2(FontAwesome.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
+        body.with(ELabel.h2(VaadinIcons.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
         CssLayout content = new CssLayout();
         content.setStyleName(WebThemes.FLEX_DISPLAY);
 

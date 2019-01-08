@@ -111,6 +111,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.setSizeFull();
             myProjectTab.setNavigatorWidth("100%");
             myProjectTab.setNavigatorStyleName("sidebar-menu");
+            myProjectTab.addToggleNavigatorControl();
 
             myProjectTab.addSelectedTabChangeListener(selectedTabChangeEvent -> {
                 Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();

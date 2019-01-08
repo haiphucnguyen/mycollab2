@@ -48,7 +48,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -88,7 +87,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
             }
         };
         MButton newMilestoneBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
+                .withIcon(VaadinIcons.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return new MHorizontalLayout(searchBtn, newMilestoneBtn).alignAll(Alignment.TOP_RIGHT);
     }

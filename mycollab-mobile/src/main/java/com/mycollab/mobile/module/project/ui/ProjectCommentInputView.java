@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,7 +23,6 @@ import com.mycollab.common.service.CommentService;
 import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.mobile.ui.AbstractMobilePageView;
 import com.mycollab.mobile.ui.MobileAttachmentUtils;
-import com.mycollab.mobile.ui.TempFileFactory;
 import com.mycollab.mobile.ui.MobileUIConstants;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
@@ -33,13 +32,14 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.easyuploads.*;
+import org.vaadin.easyuploads.MultiUpload;
+import org.vaadin.easyuploads.MultiUploadHandler;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -48,7 +48,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -64,7 +67,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
     private String typeId;
     private Integer extraTypeId;
 
-//    private FileBuffer receiver;
+    //    private FileBuffer receiver;
     private MultiUpload uploadField;
     private Map<String, File> fileStores;
 
@@ -130,7 +133,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
         uploadSucceedLayout.with(uploadResult).expand(uploadResult);
 
         MButton removeAttachment = new MButton("", clickEvent -> statusWrapper.removeComponent(uploadSucceedLayout))
-                .withIcon(FontAwesome.TRASH_O).withStyleName(MobileUIConstants.BUTTON_LINK);
+                .withIcon(VaadinIcons.TRASH).withStyleName(MobileUIConstants.BUTTON_LINK);
         uploadSucceedLayout.addComponent(removeAttachment);
         return uploadSucceedLayout;
     }

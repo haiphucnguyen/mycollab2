@@ -61,7 +61,6 @@ import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -178,7 +177,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         VerticalLayout formControls = formControlsGenerator.createButtonControls(ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
                 | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED, ProjectRolePermissionCollections.BUGS);
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this,
-                beanItem))).withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                beanItem))).withIcon(VaadinIcons.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }
@@ -255,7 +254,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 }
             } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getSeverity())) {
-                    String severityLink = FontAwesome.STAR.getHtml() + " " + UserUIContext.getMessage(BugSeverity.class, beanItem.getSeverity());
+                    String severityLink = VaadinIcons.STAR.getHtml() + " " + UserUIContext.getMessage(BugSeverity.class, beanItem.getSeverity());
                     DefaultViewField lbPriority = new DefaultViewField(severityLink, ContentMode.HTML);
                     lbPriority.addStyleName("bug-severity-" + beanItem.getSeverity().toLowerCase());
                     return lbPriority;

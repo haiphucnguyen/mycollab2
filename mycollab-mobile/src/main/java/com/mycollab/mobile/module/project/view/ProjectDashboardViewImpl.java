@@ -35,7 +35,6 @@ import com.mycollab.vaadin.touchkit.NavigationBarQuickMenu;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.touchkit.ui.NavigationButton;
 import org.vaadin.touchkit.ui.VerticalComponentGroup;
@@ -115,20 +114,20 @@ public class ProjectDashboardViewImpl extends ProjectMobileMenuPageView implemen
 
         MHorizontalLayout metaInfo = new MHorizontalLayout();
 
-        Label projectMemberBtn = ELabel.html(FontAwesome.USERS.getHtml() + " " + currentProject.getNumActiveMembers())
+        Label projectMemberBtn = ELabel.html(VaadinIcons.USERS.getHtml() + " " + currentProject.getNumActiveMembers())
                 .withDescription(UserUIContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS)).withStyleName(UIConstants.META_INFO);
 
         metaInfo.addComponent(projectMemberBtn);
-        Label createdTimeLbl = ELabel.html(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext.formatPrettyTime
+        Label createdTimeLbl = ELabel.html(VaadinIcons.CLOCK.getHtml() + " " + UserUIContext.formatPrettyTime
                 (currentProject.getCreatedtime())).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME))
                 .withStyleName(UIConstants.META_INFO);
         metaInfo.addComponent(createdTimeLbl);
 
-        Label billableHoursLbl = ELabel.html(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, currentProject.getTotalBillableHours()))
+        Label billableHoursLbl = ELabel.html(VaadinIcons.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, currentProject.getTotalBillableHours()))
                 .withDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)).withStyleName(UIConstants.META_INFO);
         metaInfo.addComponent(billableHoursLbl);
 
-        Label nonBillableHoursLbl = ELabel.html(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
+        Label nonBillableHoursLbl = ELabel.html(VaadinIcons.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                 currentProject.getTotalNonBillableHours()))
                 .withDescription(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS)).withStyleName(UIConstants.META_INFO);
         metaInfo.addComponent(nonBillableHoursLbl);

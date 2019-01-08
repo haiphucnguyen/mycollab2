@@ -41,7 +41,6 @@ import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -154,7 +153,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         }
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, beanItem)))
-                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                .withIcon(VaadinIcons.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         return new MHorizontalLayout(editBtn, new NavigationBarQuickMenu(formControls));
     }

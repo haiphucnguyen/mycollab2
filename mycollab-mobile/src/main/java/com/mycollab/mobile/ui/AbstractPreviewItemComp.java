@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -70,9 +70,8 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView 
             this.setRightComponent(editBtn);
         } else if (buttonControls instanceof HorizontalLayout) {
             if (StringUtils.isNotBlank(getType()) && !SiteConfiguration.isCommunityEdition()) {
-                favoriteBtn = new MButton("", clickEvent -> toggleFavorite()).withIcon(FontAwesome.HEART).withStyleName
-                        (UIConstants.CIRCLE_BOX);
-                ((HorizontalLayout)buttonControls).addComponent(favoriteBtn, 0);
+                favoriteBtn = new MButton("", clickEvent -> toggleFavorite()).withIcon(VaadinIcons.HEART).withStyleName(UIConstants.CIRCLE_BOX);
+                ((HorizontalLayout) buttonControls).addComponent(favoriteBtn, 0);
             }
             this.setRightComponent(buttonControls);
         } else {

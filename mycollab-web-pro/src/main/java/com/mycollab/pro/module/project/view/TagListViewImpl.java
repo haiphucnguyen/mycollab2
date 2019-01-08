@@ -21,7 +21,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -61,7 +61,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
-        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
+        header.with(ELabel.h2(VaadinIcons.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
                 .withUndefinedWidth());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();

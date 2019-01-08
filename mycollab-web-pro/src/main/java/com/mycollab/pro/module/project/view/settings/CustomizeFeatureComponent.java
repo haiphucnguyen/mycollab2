@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.settings;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectCustomizeView;
@@ -11,11 +10,11 @@ import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.BlockWidget;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;

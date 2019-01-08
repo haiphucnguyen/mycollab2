@@ -40,7 +40,6 @@ import com.mycollab.vaadin.web.ui.MailFormWindow;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
@@ -155,7 +154,7 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
         fileDownloader.extend(exportBtn);
 
         final MButton exportMailBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT_MAIL))
-                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.MAIL_REPLY_ALL);
+                .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.REPLY_ALL);
         exportMailBtn.addClickListener(clickEvent -> {
             Collection<TableViewField> columns = (Collection<TableViewField>) listBuilder.getValue();
             SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>(

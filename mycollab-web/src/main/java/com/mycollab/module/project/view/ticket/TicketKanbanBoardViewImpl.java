@@ -45,7 +45,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.Not;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
@@ -105,9 +105,9 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST),
                 clickEvent -> EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null)))
-                .withIcon(FontAwesome.NAVICON).withWidth("100px");
+                .withIcon(VaadinIcons.ALIGN_JUSTIFY).withWidth("100px");
 
-        MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(FontAwesome.TH)
+        MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN)).withIcon(VaadinIcons.GRID_SMALL_O)
                 .withWidth("100px");
 
         groupWrapLayout.addComponent(new ButtonGroup(advanceDisplayBtn, kanbanBtn).withDefaultButton(kanbanBtn));
@@ -295,13 +295,14 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         private Label header;
 
         KanbanBlock(String stage) {
-            this.withFullHeight().withWidth("250px").withStyleName("kanban-block").withMargin(false);
+            this.withWidth("250px").withStyleName("kanban-block").withMargin(false);
             this.status = stage;
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
             JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
 
             dragLayoutContainer = new DDVerticalLayout();
+            dragLayoutContainer.setMargin(false);
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
             dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
@@ -368,7 +369,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     return new Not(VerticalLocationIs.MIDDLE);
                 }
             });
-//            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((UIUtils.getBrowserHeight() - 390) + "px");
 
             MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(false).withFullWidth().withStyleName("header");
             header = new Label(UserUIContext.getMessage(StatusI18nEnum.class, stage));

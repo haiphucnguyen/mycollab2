@@ -29,7 +29,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Image;
@@ -100,7 +99,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         BillingPlan currentBillingPlan = AppUI.getBillingAccount().getBillingPlan();
         MButton bankwireBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
-                .withIcon(FontAwesome.BANK).withStyleName(WebThemes.BUTTON_LINK);
+                .withIcon(VaadinIcons.PIGGY_BANK).withStyleName(WebThemes.BUTTON_LINK);
         ELabel conditionLbl = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
         this.with(layout, new MHorizontalLayout(bankWireTransfer, bankwireBtn).alignAll(Alignment.MIDDLE_CENTER)
                 .withMargin(new MarginInfo(true, false, false, false)), conditionLbl, ELabel.html(UserUIContext.getMessage(OPTION_BILLING_FAQ)));

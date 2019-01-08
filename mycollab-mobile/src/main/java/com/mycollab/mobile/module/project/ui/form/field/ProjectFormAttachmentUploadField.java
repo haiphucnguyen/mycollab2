@@ -33,7 +33,6 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.easyuploads.MultiFileUpload;
@@ -110,7 +109,7 @@ public class ProjectFormAttachmentUploadField extends MVerticalLayout {
             }
             fileStores.remove(fileName);
             rowWrap.removeComponent(fileAttachmentLayout);
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(MobileUIConstants.BUTTON_LINK);
+        }).withIcon(VaadinIcons.TRASH).withStyleName(MobileUIConstants.BUTTON_LINK);
 
         ELabel fileLbl = ELabel.html(fileName).withDescription(fileName).withStyleName(UIConstants.TEXT_ELLIPSIS);
         fileAttachmentLayout.with(ELabel.fontIcon(FileAssetsUtil.getFileIconResource(fileName)).withUndefinedWidth(),

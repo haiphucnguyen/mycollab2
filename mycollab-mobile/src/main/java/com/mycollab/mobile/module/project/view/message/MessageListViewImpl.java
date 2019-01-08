@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,32 +18,30 @@ package com.mycollab.mobile.module.project.view.message;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.mobile.module.project.event.MessageEvent;
 import com.mycollab.mobile.module.project.ui.AbstractListPageView;
-import com.mycollab.mobile.ui.SearchInputView;
-import com.mycollab.mobile.ui.SearchNavigationButton;
-import com.mycollab.mobile.ui.AbstractPagedBeanList;
-import com.mycollab.mobile.ui.DefaultPagedBeanList;
-import com.mycollab.mobile.ui.MobileAttachmentUtils;
-import com.mycollab.mobile.ui.SearchInputField;
+import com.mycollab.mobile.ui.*;
 import com.mycollab.module.ecm.domain.Content;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.AttachmentUtils;
-import com.mycollab.module.project.*;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleMessage;
 import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.mycollab.module.project.i18n.MessageI18nEnum;
 import com.mycollab.module.project.service.MessageService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -83,7 +81,7 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
             }
         };
         MButton newMessageBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null)))
-                .withIcon(FontAwesome.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
+                .withIcon(VaadinIcons.PLUS).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
         return new MHorizontalLayout(searchBtn, newMessageBtn).alignAll(Alignment.TOP_RIGHT);
     }

@@ -3,7 +3,6 @@ package com.mycollab.pro.module.project.view.time;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -13,13 +12,13 @@ import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -135,7 +134,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             ProjectTicketSelectionWindow selectionTicketWindow = new ProjectTicketSelectionWindow(
                     TimeTrackingEditViewWindow.this);
             UI.getCurrent().addWindow(selectionTicketWindow);
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.LINK);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.LINK);
 
         ticketLayout.addComponent(linkTicketBtn);
     }

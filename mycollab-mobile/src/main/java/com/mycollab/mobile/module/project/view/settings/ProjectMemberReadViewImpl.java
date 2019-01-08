@@ -45,7 +45,7 @@ import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.EmailViewField;
 import com.vaadin.data.HasValue;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.touchkit.ui.VerticalComponentGroup;
 import org.vaadin.viritin.button.MButton;
@@ -105,7 +105,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
     @Override
     protected ComponentContainer createButtonControls() {
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(this, beanItem)))
-                .withIcon(FontAwesome.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
+                .withIcon(VaadinIcons.EDIT).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
 
         MButton deleteBtn = new MButton("", clickEvent -> ConfirmDialog.show(UI.getCurrent(),
@@ -118,7 +118,7 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
                         projectMemberService.removeWithSession(beanItem, UserUIContext.getUsername(), AppUI.getAccountId());
                         EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, CurrentProjectVariables.getProjectId()));
                     }
-                })).withIcon(FontAwesome.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
+                })).withIcon(VaadinIcons.TRASH).withStyleName(UIConstants.CIRCLE_BOX)
                 .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.USERS));
 
         return new MHorizontalLayout(editBtn, deleteBtn);

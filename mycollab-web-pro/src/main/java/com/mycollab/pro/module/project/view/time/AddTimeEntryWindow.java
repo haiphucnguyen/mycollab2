@@ -25,7 +25,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
@@ -169,7 +168,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         MButton attachTicketBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.ACTION_LINK_TICKET), clickEvent -> {
             ProjectTicketSelectionWindow selectionTaskWindow = new ProjectTicketSelectionWindow(AddTimeEntryWindow.this);
             getUI().addWindow(selectionTaskWindow);
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.LINK);
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.LINK);
 
         ticketLayout.addComponent(attachTicketBtn);
     }

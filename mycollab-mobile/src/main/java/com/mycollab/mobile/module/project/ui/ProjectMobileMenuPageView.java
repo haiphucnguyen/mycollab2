@@ -27,7 +27,6 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import org.vaadin.viritin.button.MButton;
 
 /**
@@ -44,14 +43,14 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         MButton prjButton = new MButton(UserUIContext.getMessage(ProjectI18nEnum.LIST), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectList(this, null));
-        }).withIcon(FontAwesome.BUILDING);
+        }).withIcon(VaadinIcons.BUILDING);
         addMenuItem(prjButton);
 
         // Buttons with styling (slightly smaller with left-aligned text)
         MButton activityBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES), clickEvent -> {
             closeMenu();
             EventBusFactory.getInstance().post(new ProjectEvent.MyProjectActivities(this, CurrentProjectVariables.getProjectId()));
-        }).withIcon(FontAwesome.INBOX);
+        }).withIcon(VaadinIcons.INBOX);
         addMenuItem(activityBtn);
 
         // add more buttons for a more realistic look.
