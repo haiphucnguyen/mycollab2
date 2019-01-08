@@ -31,7 +31,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
@@ -86,7 +86,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)));
-        final ComboBox sortCombo = new ValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
+        final ComboBox sortCombo = new StringValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
                 UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING));
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
@@ -101,7 +101,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
-        ValueComboBox groupField = new ValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
+        StringValueComboBox groupField = new StringValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
                 UserUIContext.getMessage(UserI18nEnum.SINGLE));
         groupField.addValueChangeListener(valueChangeEvent -> groupByState = (String) groupField.getValue());
         groupByState = UserUIContext.getMessage(DayI18nEnum.OPT_DATE);

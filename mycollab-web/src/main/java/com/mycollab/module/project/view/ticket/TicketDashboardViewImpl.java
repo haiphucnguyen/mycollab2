@@ -55,7 +55,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.ButtonGroup;
-import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.vaadin.icons.VaadinIcons;
@@ -133,7 +133,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)));
-        final ComboBox sortCombo = new ValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
+        final ComboBox sortCombo = new StringValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
                 UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING));
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = (String) sortCombo.getValue();
@@ -148,7 +148,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
-        final ComboBox groupCombo = new ValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
+        final ComboBox groupCombo = new StringValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE),
                 UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME),
                 UserUIContext.getMessage(GenericI18Enum.OPT_PLAIN), UserUIContext.getMessage(GenericI18Enum.OPT_USER),
                 UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));

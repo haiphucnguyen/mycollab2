@@ -67,7 +67,7 @@ public class MessageReadViewImpl extends AbstractVerticalPageView implements Mes
     private CheckBox stickyCheck;
 
     public MessageReadViewImpl() {
-        header = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.HEADER_VIEW).withFullWidth();
+        header = new MHorizontalLayout().withMargin(true).withFullWidth();
         previewForm = new AdvancedPreviewBeanForm<>();
 
         contentWrapper = new MCssLayout().withStyleName(WebThemes.CONTENT_WRAPPER);

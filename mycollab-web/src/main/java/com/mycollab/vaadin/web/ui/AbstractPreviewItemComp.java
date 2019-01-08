@@ -83,12 +83,10 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         }
 
         if (SiteConfiguration.isCommunityEdition()) {
-            header.with(headerLbl).expand(headerLbl);
+            header.with(headerLbl);
         } else {
             favoriteBtn = new MButton("", clickEvent -> toggleFavorite()).withIcon(VaadinIcons.HEART);
-
-            Label spaceLbl = new Label();
-            header.with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);
+            header.with(new MCssLayout(headerLbl, favoriteBtn));
         }
 
         this.addComponent(header);
@@ -103,7 +101,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewForm = initPreviewForm();
         actionControls = createButtonControls();
         if (actionControls != null) {
-            header.with(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
+            header.with(actionControls).expand(actionControls).withAlign(actionControls, Alignment.TOP_RIGHT);
         }
 
         MCssLayout contentWrapper = new MCssLayout().withFullSize().withStyleName(WebThemes.CONTENT_WRAPPER);

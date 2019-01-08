@@ -120,7 +120,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         HeaderWithIcon headerText = ComponentUtils.headerH2(ProjectTypeConstants.MILESTONE,
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST));
 
-        MHorizontalLayout header = new MHorizontalLayout(headerText, createHeaderRight()).withStyleName(WebThemes.HEADER_VIEW).withMargin(true)
+        MHorizontalLayout header = new MHorizontalLayout(headerText, createHeaderRight()).withMargin(true)
                 .withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
 
         return header;

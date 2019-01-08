@@ -211,13 +211,11 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     private void initUI() {
         headerText = ELabel.h2("");
 
-        MHorizontalLayout headerComp = new MHorizontalLayout().withStyleName(WebThemes.HEADER_VIEW).withFullWidth().withMargin(true)
+        MHorizontalLayout headerComp = new MHorizontalLayout().withFullWidth().withMargin(true)
                 .with(headerText, createHeaderRight()).withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
         this.addComponent(headerComp);
         roadMapView = new MVerticalLayout().withSpacing(false);
         filterPanel = new MVerticalLayout().withWidth("250px").withStyleName(WebThemes.BOX);
-//        FloatingComponent floatingComponent = FloatingComponent.floatThis(filterPanel);
-//        floatingComponent.setContainerId("main-body");
 
         MHorizontalLayout bodyComp = new MHorizontalLayout(roadMapView, filterPanel).withFullWidth().expand(roadMapView);
         this.with(headerComp, bodyComp).expand(bodyComp);

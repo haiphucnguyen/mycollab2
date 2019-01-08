@@ -34,7 +34,7 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedTable;
 import com.vaadin.icons.VaadinIcons;
@@ -172,7 +172,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
                     (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
 
-            groupField = new ValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
+            groupField = new StringValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
                     .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
             selectionLayout.addComponent(groupField, 1, 1);
