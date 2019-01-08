@@ -91,7 +91,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             };
 
     public FavoriteViewImpl() {
-        addStyleName("hdr-view");
+        addStyleName(WebThemes.HEADER_VIEW);
     }
 
     @Override

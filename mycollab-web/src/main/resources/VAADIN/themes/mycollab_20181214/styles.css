@@ -1847,6 +1847,7 @@ a.pending {
 .upload-field .v-verticallayout {
 	padding-top: 0px;
 	padding-bottom: 0px;
+	padding-left: 0px;
 }
 
 .comment-attachment {
@@ -16580,6 +16581,7 @@ a.pending {
 .upload-field .v-verticallayout {
 	padding-top: 0px;
 	padding-bottom: 0px;
+	padding-left: 0px;
 }
 
 .comment-attachment {

@@ -75,7 +75,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             };
 
     public TimeTrackingListViewImpl() {
-        this.withMargin(false).withStyleName("hdr-view");
+        this.withMargin(false).withStyleName(WebThemes.HEADER_VIEW);
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 

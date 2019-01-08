@@ -72,7 +72,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         ELabel headerLbl = ELabel.h2("").withUndefinedWidth();
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth();
+        header = new MHorizontalLayout().withStyleName(WebThemes.HEADER_VIEW).withFullWidth();
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {

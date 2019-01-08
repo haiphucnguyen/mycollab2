@@ -233,7 +233,9 @@ public class VerticalTabsheet extends CustomComponent {
             clearTabSelection();
             selectedButton.addStyleName(TAB_SELECTED_STYLE);
             selectedComp = tab;
-            contentWrapper.removeAllComponents();
+            if (contentWrapper.getComponentCount() > 1) {
+                contentWrapper.removeComponent(contentWrapper.getComponent(contentWrapper.getComponentCount()-1));
+            }
             Component tabComponent = tab.getComponent();
             contentWrapper.addComponent(tabComponent);
             return tabComponent;

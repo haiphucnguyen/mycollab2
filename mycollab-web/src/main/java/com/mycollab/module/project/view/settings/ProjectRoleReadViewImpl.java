@@ -148,7 +148,7 @@ public class ProjectRoleReadViewImpl extends MVerticalLayout implements ProjectR
     }
 
     private ComponentContainer constructHeader() {
-        header = new MHorizontalLayout().withStyleName("hdr-view").withFullWidth().withMargin(true);
+        header = new MHorizontalLayout().withStyleName(WebThemes.HEADER_VIEW).withFullWidth().withMargin(true);
         header.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
         return header;
     }

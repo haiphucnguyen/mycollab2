@@ -29,7 +29,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
     private MVerticalLayout body;
 
     public ReportContainerImpl() {
-        this.addStyleName("hdr-view");
+        this.addStyleName(WebThemes.HEADER_VIEW);
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(breadcrumb, ELabel.hr(), body);
