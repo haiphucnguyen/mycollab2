@@ -166,12 +166,10 @@ $v-line-height--header:1.5em;
   .topNavigation {
     .mainLogo {
       float: left;
-      width: 169px;
-      height: 100%;
+      width: 200px;
       margin: 0;
-      padding: 0px 15px;
+      padding: 10px 15px;
       display: block;
-      border-right: 1px solid $my-separator-color;
     }
     .serviceMenuContainer {
       float: left;

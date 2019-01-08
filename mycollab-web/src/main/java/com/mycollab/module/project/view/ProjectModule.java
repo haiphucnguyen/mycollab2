@@ -98,7 +98,6 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     public ProjectModule() {
         addStyleName("module");
-        setSizeFull();
         ControllerRegistry.addController(new ProjectModuleController(this));
 
         tabSheet = new VerticalTabsheet();

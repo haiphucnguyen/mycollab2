@@ -25,5 +25,5 @@ import org.vaadin.viritin.layouts.MHorizontalLayout
  * @since 5.1.2
  */
 interface IDesktopModule : IModule, SingleComponentContainer {
-    fun buildMenu(): MHorizontalLayout
+    fun buildMenu(): MHorizontalLayout?
 }

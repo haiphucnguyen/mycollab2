@@ -37,8 +37,10 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Panel;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -49,7 +51,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
     private static final long serialVersionUID = 1L;
 
     private CustomLayout headerLayout;
-    private MHorizontalLayout bodyLayout;
+    private MCssLayout bodyLayout;
     protected MHorizontalLayout accountLayout;
 
     private ApplicationEventListener<ShellEvent.RefreshPage> pageRefreshHandler = new ApplicationEventListener<ShellEvent.RefreshPage>() {
@@ -80,7 +82,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
     @Override
     public void display() {
         this.removeAllComponents();
-        bodyLayout = new MHorizontalLayout().withSpacing(false).withStyleName("main-view").withId("main-body")
+        bodyLayout = new MCssLayout().withStyleName("main-view").withId("main-body")
                 .withFullHeight().withFullWidth();
         this.with(createTopMenu(), bodyLayout).expand(bodyLayout);
     }
@@ -90,7 +92,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
         headerLayout.removeComponent("serviceMenu");
         ModuleHelper.setCurrentModule(module);
         bodyLayout.removeAllComponents();
-        bodyLayout.with(module).expand(module);
+        bodyLayout.addComponent(module);
 
         MHorizontalLayout serviceMenu = module.buildMenu();
         if (serviceMenu != null) {
@@ -106,7 +108,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
 
         Resource logoResource = AccountAssetsResolver.createLogoResource(AppUI.getBillingAccount().getLogopath(), 150);
 
-        headerLayout.addComponent(new MHorizontalLayout(new Image("", logoResource)).alignAll(Alignment.MIDDLE_LEFT).withFullHeight(), "mainLogo");
+        headerLayout.addComponent(new Image("", logoResource), "mainLogo");
 
         accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false)).withHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
