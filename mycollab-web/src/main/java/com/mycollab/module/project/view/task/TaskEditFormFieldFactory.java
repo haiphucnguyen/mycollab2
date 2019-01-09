@@ -30,8 +30,8 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.data.HasValue;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.DoubleField;
 import org.vaadin.viritin.fields.MTextField;
@@ -108,13 +108,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if (Task.Field.originalestimate.equalTo(propertyId) || Task.Field.remainestimate.equalTo(propertyId)) {
             return new DoubleField();
         } else if (Task.Field.startdate.equalTo(propertyId)) {
-            final DateTimeOptionField startDateField = new DateTimeOptionField(true);
-            startDateField.addValueChangeListener(valueChangeEvent -> calculateDurationBaseOnStartAndEndDates());
-            return startDateField;
+            return new DateField();
         } else if (Task.Field.enddate.equalTo(propertyId)) {
-            DateTimeOptionField endDateField = new DateTimeOptionField(true);
-            endDateField.addValueChangeListener(valueChangeEvent -> calculateDurationBaseOnStartAndEndDates());
-            return endDateField;
+            return new DateField();
         } else if (Task.Field.id.equalTo(propertyId)) {
             Task beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
@@ -126,7 +122,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             }
             return attachmentUploadField;
         } else if (Task.Field.duedate.equalTo(propertyId)) {
-            return new DateTimeOptionField(true);
+            return new DateField();
         } else if (propertyId.equals("selected")) {
             return subscribersComp;
         }

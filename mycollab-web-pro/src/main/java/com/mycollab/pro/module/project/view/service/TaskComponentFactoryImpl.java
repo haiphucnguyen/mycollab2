@@ -51,8 +51,8 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
@@ -217,7 +217,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getDuedate()).withHasPermission(CurrentProjectVariables.canWrite
                 (ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -241,7 +241,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -265,7 +265,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

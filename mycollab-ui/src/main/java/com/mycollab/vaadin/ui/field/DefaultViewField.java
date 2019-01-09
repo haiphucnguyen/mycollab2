@@ -33,6 +33,7 @@ public final class DefaultViewField extends CustomField<String> {
     private String value;
 
     public DefaultViewField() {
+        this("");
     }
 
     public DefaultViewField(String value) {

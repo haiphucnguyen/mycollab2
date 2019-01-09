@@ -26,7 +26,6 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.validator.constraints.DateComparison;
 import com.vaadin.data.*;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
 import org.apache.commons.beanutils.BeanUtils;
@@ -126,10 +125,13 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 } else {
                     if (formField instanceof DummyCustomField) {
                         continue;
-                    } else if (!(formField instanceof CustomField)) {
-                        if (!isReadOnlyGroup) {
-                            binder.bind(formField, field.getName());
+                    } else {
+                        Binder.BindingBuilder<B, ?> bindingBuilder = binder.forField(formField);
+
+                        if (formField instanceof Converter) {
+                            bindingBuilder.withConverter((Converter) formField);
                         }
+                        bindingBuilder.bind(field.getName());
                     }
                 }
 

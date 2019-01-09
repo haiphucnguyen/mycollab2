@@ -49,7 +49,6 @@ import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -336,7 +335,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -358,7 +357,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             }
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -379,7 +378,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             }
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
