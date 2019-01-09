@@ -57,8 +57,8 @@ public class ProjectMemberSelectionField extends CustomField<String> {
     }
 
     @Override
-    protected void doSetValue(String s) {
-        System.out.println("Value: " + s);
+    protected void doSetValue(String value) {
+        System.out.println("Value: " + value);
     }
 
     @Override

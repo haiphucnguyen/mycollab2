@@ -16,12 +16,14 @@
  */
 package com.mycollab.vaadin.ui;
 
+import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.arguments.NotBindable;
 import com.mycollab.core.utils.ClassUtils;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
+import com.mycollab.validator.constraints.DateComparison;
 import com.vaadin.data.*;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
@@ -33,7 +35,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Path;
+import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -86,7 +91,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 } else {
                     if (formField instanceof DummyCustomField) {
                         continue;
-                    } else if (!(formField instanceof CustomField)) {
+                    } else {
                         Binder.BindingBuilder<B, ?> bindingBuilder = binder.forField(formField);
 
                         if (formField instanceof Converter) {
@@ -172,28 +177,31 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     .collect(Collectors.joining("<br>"));
         });
         Set<ConstraintViolation<B>> violations = validation.validate(attachForm.getBean());
-//        if (violations.size() > 0) {
-//            StringBuilder errorMsg = new StringBuilder();
-//
-//            for (ConstraintViolation violation : violations) {
-//                errorMsg.append(violation.getMessage()).append("<br/>");
-//                Path propertyPath = violation.getPropertyPath();
-//                if (propertyPath != null && !propertyPath.toString().equals("")) {
-//                    fieldGroup.getField(propertyPath.toString()).addStyleName("errorField");
-//                } else {
-//                    Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
-//                    if (validateAnno instanceof DateComparison) {
-//                        String firstDateField = ((DateComparison) validateAnno).firstDateField();
-//                        String lastDateField = ((DateComparison) validateAnno).lastDateField();
-//
+        if (violations.size() > 0) {
+            StringBuilder errorMsg = new StringBuilder();
+
+            for (ConstraintViolation violation : violations) {
+                errorMsg.append(violation.getMessage()).append("<br/>");
+
+                Path propertyPath = violation.getPropertyPath();
+                if (propertyPath != null && !propertyPath.toString().equals("")) {
+                    Optional<Binder.Binding<B, ?>> binding = binder.getBinding(propertyPath.toString());
+                    binder.getFields().forEach(field -> System.out.println(field));
+//                    binder.getField(propertyPath.toString()).addStyleName("errorField");
+                } else {
+                    Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
+                    if (validateAnno instanceof DateComparison) {
+                        String firstDateField = ((DateComparison) validateAnno).firstDateField();
+                        String lastDateField = ((DateComparison) validateAnno).lastDateField();
+
 //                        attachForm.getField(firstDateField).addStyleName("errorField");
 //                        fieldGroup.getField(lastDateField).addStyleName("errorField");
-//                    }
-//                }
-//
-//            }
-//            throw new FieldGroup.CommitException(errorMsg.toString());
-//        }
+                    }
+                }
+
+            }
+            throw new UserInvalidInputException(errorMsg.toString());
+        }
         return true;
     }
 

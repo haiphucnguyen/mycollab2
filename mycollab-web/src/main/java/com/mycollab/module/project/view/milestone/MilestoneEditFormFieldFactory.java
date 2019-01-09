@@ -38,7 +38,6 @@ import static com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus.*;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-// TODO
 public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleMilestone> {
     private static final long serialVersionUID = 1L;
 
@@ -103,6 +102,7 @@ public class MilestoneEditFormFieldFactory extends AbstractBeanFieldGroupEditFie
                         return VaadinIcons.MINUS_CIRCLE;
                 }
             });
+            this.setValue(InProgress);
         }
     }
 

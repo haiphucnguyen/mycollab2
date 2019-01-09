@@ -618,12 +618,6 @@
     border: 1px solid $my-separator-color;
   }
 
-  .v-panel-content {
-    border-style: solid;
-    border-width: 0px 1px 0px 1px;
-    border-color: $my-separator-color;
-  }
-
   /*Remove default background of combobox*/
   .v-filterselect-suggestpopup .gwt-MenuItem-selected {
      background-image: none;
