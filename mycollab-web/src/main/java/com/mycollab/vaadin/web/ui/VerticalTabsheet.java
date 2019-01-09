@@ -185,9 +185,9 @@ public class VerticalTabsheet extends CustomComponent {
             this.showTabsCaption();
 
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
-            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
             toggleBtn.setIcon(VaadinIcons.CLOSE_SMALL);
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
+            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
         }
     }
 

@@ -144,7 +144,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     withMargin(false).withFullWidth().withStyleName("top-panel").withUndefinedHeight().withFullWidth();
             contentWrapper.addComponentAsFirst(topPanel);
 
-            myProjectTab.setNavigatorWidth("250px");
+            myProjectTab.setNavigatorWidth("200px");
 
             buildComponents();
             this.addComponent(myProjectTab);

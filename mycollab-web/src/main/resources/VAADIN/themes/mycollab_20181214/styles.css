@@ -19789,6 +19789,8 @@ div.v-csslayout.rightsidebar-layout .content-wrap {
 	display: inline-block;
 }
 
-.debugComp {
-	background-color: red;
+.v-button.closed-button {
+	text-align: right;
+	padding-top: 5px;
+	padding-right: 5px;
 }
