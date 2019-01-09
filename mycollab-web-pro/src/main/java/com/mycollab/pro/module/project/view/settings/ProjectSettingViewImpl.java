@@ -18,7 +18,6 @@ public class ProjectSettingViewImpl extends AbstractVerticalPageView implements 
     private final MHorizontalLayout mainBody;
 
     public ProjectSettingViewImpl() {
-        this.setWidth("100%");
         this.addStyleName("readview-layout");
 
         mainBody = new MHorizontalLayout().withMargin(false).withFullWidth();
@@ -32,8 +31,8 @@ public class ProjectSettingViewImpl extends AbstractVerticalPageView implements 
         if (notification == null) {
             notification = new ProjectNotificationSetting();
         }
-        ProjectNotificationSettingViewComponent component = new ProjectNotificationSettingViewComponent(notification);
-        mainBody.addComponent(component);
-        mainBody.addComponent(new CustomizeFeatureComponent());
+
+        mainBody.with(new ProjectNotificationSettingViewComponent(notification),
+                new CustomizeFeatureComponent());
     }
 }

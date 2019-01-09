@@ -16,7 +16,6 @@ import com.mycollab.vaadin.web.ui.BlockWidget;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -25,10 +24,10 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class CustomizeFeatureComponent extends BlockWidget {
+class CustomizeFeatureComponent extends BlockWidget {
     private static final long serialVersionUID = 1L;
 
-    public CustomizeFeatureComponent() {
+    CustomizeFeatureComponent() {
         super(UserUIContext.getMessage(ProjectSettingI18nEnum.WIDGET_CUSTOMIZE_FEATURES));
         constructBody();
     }
@@ -36,13 +35,11 @@ public class CustomizeFeatureComponent extends BlockWidget {
     private void constructBody() {
         final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
 
-        MVerticalLayout body = new MVerticalLayout().withFullWidth();
+        MVerticalLayout body = new MVerticalLayout().withFullWidth().withMargin(false);
 
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
 
-        VerticalLayout leftColLayout = new VerticalLayout();
-        leftColLayout.setSpacing(true);
-        leftColLayout.setWidth("100%");
+        MVerticalLayout leftColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
         final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
