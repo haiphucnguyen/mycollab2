@@ -16,7 +16,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -29,7 +28,6 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
     private MVerticalLayout body;
 
     public ReportContainerImpl() {
-        this.addStyleName(WebThemes.HEADER_VIEW);
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(breadcrumb, ELabel.hr(), body).expand(body);

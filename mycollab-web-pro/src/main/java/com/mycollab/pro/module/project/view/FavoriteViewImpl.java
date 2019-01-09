@@ -90,10 +90,6 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 }
             };
 
-    public FavoriteViewImpl() {
-        addStyleName(WebThemes.HEADER_VIEW);
-    }
-
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(selectFavoriteHandler);

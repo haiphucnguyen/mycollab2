@@ -4,6 +4,8 @@ import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.db.arguments.SetSearchField;
+import com.mycollab.db.query.ConstantValueInjector;
+import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.Param;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -25,16 +27,13 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd
  * @since 2.0
  */
-// TODO
 class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggingSearchCriteria> {
     private static final long serialVersionUID = 1L;
 
@@ -102,11 +101,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             LocalDate[] boundWeekDays = DateTimeUtils.getBounceDatesOfWeek(LocalDate.now());
             startDateField = new PopupDateFieldExt();
-//            startDateField.setResolution(Resolution.DAY);
-//            startDateField.setValue(boundWeekDays[0]);
-//            endDateField = new PopupDateFieldExt();
-//            endDateField.setResolution(Resolution.DAY);
-//            endDateField.setValue(boundWeekDays[1]);
+            startDateField.setValue(boundWeekDays[0]);
+            endDateField = new PopupDateFieldExt();
+            endDateField.setValue(boundWeekDays[1]);
 
             Label dateStartLb = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.LOG_FOR_DATE)).withStyleName
                     (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px");
@@ -144,10 +141,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         protected ItemTimeLoggingSearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-//            Date fDate = startDateField.getValue();
-//            Date tDate = endDateField.getValue();
-//            searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-//                    ConstantValueInjector.valueOf(Date.class, new Date[]{fDate, tDate})));
+            LocalDate fDate = startDateField.getValue();
+            LocalDate tDate = endDateField.getValue();
+            searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+                    ConstantValueInjector.valueOf(LocalDate.class, new LocalDate[]{fDate, tDate})));
             Collection<String> selectedUsers = (Collection<String>) userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));

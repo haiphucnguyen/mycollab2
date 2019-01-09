@@ -107,11 +107,10 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();
             MHorizontalLayout header = new MHorizontalLayout(new MHorizontalLayout(invoiceIcon, statusComboBox), headerRightLayout).withSpacing(false)
-                    .withStyleName(WebThemes.HEADER_VIEW).withFullWidth().withMargin(true)
+                    .withMargin(true).withFullWidth()
                     .withAlign(headerRightLayout, Alignment.MIDDLE_RIGHT);
 
-            MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName(WebThemes.HEADER_VIEW);
-            bodyLayout.setId("invoice-body");
+            MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName("invoice-body");
             with(header, bodyLayout).expand(bodyLayout);
 
             invoiceListComp = new InvoiceListComp();
