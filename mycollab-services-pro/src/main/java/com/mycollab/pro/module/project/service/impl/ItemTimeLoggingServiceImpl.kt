@@ -89,8 +89,8 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
 
                         ps.setDouble(4, itemLogging.logvalue!!)
                         ps.setString(5, itemLogging.loguser)
-                        ps.setTimestamp(6, Timestamp(GregorianCalendar().time.time))
-                        ps.setTimestamp(7, Timestamp(GregorianCalendar().time.time))
+                        ps.setTimestamp(6, Timestamp(System.currentTimeMillis()))
+                        ps.setTimestamp(7, Timestamp(System.currentTimeMillis()))
                         ps.setInt(8, itemLogging.saccountid!!)
                         // TODO: fix issue
 //                        ps.setTimestamp(9, Timestamp(itemLogging.logforday.time))

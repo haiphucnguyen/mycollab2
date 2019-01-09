@@ -52,8 +52,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -243,7 +241,7 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 //            inputWrapper.addComponent(this.newTimeInputField);
 
             this.forDate = new DatePicker();
-            this.forDate.setValue(new GregorianCalendar().getTime());
+//            this.forDate.setValue(new GregorianCalendar().getTime());
             this.forDate.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.LOG_FOR_DATE));
             inputWrapper.addComponent(this.forDate);
 

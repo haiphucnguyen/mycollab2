@@ -3,14 +3,13 @@ package com.mycollab.ondemand.shell.view.components;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
-import com.mycollab.configuration.ServerConfiguration;
 import com.mycollab.core.Version;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
@@ -21,8 +20,7 @@ import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * @author MyCollab Ltd
@@ -46,7 +44,7 @@ public class AboutWindow extends AbstractAboutWindow {
                         .appendText("MyCollab")).appendChild(new Text(". MyCollab Commercial license"));
         Label licenseLbl = ELabel.html(licenseDiv.write());
         Label copyRightLbl = ELabel.html(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
-                new GregorianCalendar().get(Calendar.YEAR) + ""));
+                LocalDate.now().getYear() + ""));
         rightPanel.with(versionLbl, osLbl, licenseLbl, copyRightLbl)
                 .withAlign(copyRightLbl, Alignment.BOTTOM_LEFT);
         content.with(about, rightPanel).expand(rightPanel);

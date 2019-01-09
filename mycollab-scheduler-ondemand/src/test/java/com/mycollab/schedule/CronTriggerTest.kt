@@ -3,10 +3,8 @@ package com.mycollab.schedule
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.quartz.CronExpression
-
 import java.text.ParseException
-import java.util.Date
-import java.util.GregorianCalendar
+import java.util.*
 
 class CronTriggerTest {
 

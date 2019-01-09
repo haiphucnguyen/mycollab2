@@ -27,8 +27,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * @author MyCollab Ltd
@@ -91,7 +90,7 @@ public class AboutWindow extends AbstractAboutWindow {
         }
 
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
-                new GregorianCalendar().get(Calendar.YEAR) + ""), ContentMode.HTML);
+                LocalDate.now().getYear() + ""), ContentMode.HTML);
         rightPanel.with(copyRightLbl);
         content.with(about, rightPanel).expand(rightPanel);
     }
