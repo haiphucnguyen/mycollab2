@@ -75,6 +75,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
     public ProjectInfoComponent(SimpleProject project) {
         this.withMargin(false).withFullWidth();
+        setId("tab-content-header");
         Component projectIcon = ProjectAssetsUtil.editableProjectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 32);
         this.with(projectIcon).withAlign(projectIcon, Alignment.TOP_LEFT);
 

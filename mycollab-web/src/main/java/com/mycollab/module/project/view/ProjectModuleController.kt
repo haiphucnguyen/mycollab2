@@ -42,7 +42,7 @@ class ProjectModuleController(val container: ProjectModule) : AbstractController
     init {
         this.register(object : ApplicationEventListener<ProjectEvent.GotoUserDashboard> {
             @Subscribe override fun handle(event: ProjectEvent.GotoUserDashboard) {
-                val presenter = PresenterResolver.getPresenter(UserDashboardPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(UserProjectDashboardPresenter::class.java)
                 presenter.go(container, null)
             }
         })
