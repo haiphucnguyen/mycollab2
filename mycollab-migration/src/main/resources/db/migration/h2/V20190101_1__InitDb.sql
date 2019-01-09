@@ -1529,6 +1529,8 @@ CREATE TABLE `s_relay_email_notification` (
   `changeBy` varchar(45)   NOT NULL,
   `changeComment` text  ,
   `extraTypeId` int(11) DEFAULT NULL,
+  `createdTime` datetime DEFAULT NULL,
+  `lastUpdatedTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_s_relay_email_notification_1_idx` (`sAccountId`),
   KEY `FK_s_relay_email_notification_2` (`typeId`),

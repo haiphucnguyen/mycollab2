@@ -1389,6 +1389,8 @@ CREATE TABLE s_relay_email_notification (
   changeBy varchar(45) NOT NULL,
   changeComment text,
   extraTypeId integer DEFAULT NULL,
+  createdTime timestamp DEFAULT NULL,
+  lastUpdatedTime timestamp DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_s_relay_email_notification_1 FOREIGN KEY (sAccountId) REFERENCES s_account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;

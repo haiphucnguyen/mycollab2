@@ -1100,6 +1100,8 @@
     changeBy CDATA #REQUIRED
     changeComment CDATA #IMPLIED
     extraTypeId CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT s_role_permission EMPTY>

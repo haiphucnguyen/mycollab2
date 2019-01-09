@@ -105,3 +105,7 @@ CHANGE COLUMN `istemplate` `isTemplate` TINYINT(1) NULL DEFAULT NULL ;
 
 ALTER TABLE `m_prj_project`
 CHANGE COLUMN `shortname` `shortName` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL ;
+
+ALTER TABLE `s_relay_email_notification`
+ADD COLUMN `createdTime` DATETIME NULL,
+ADD COLUMN `lastUpdatedTime` DATETIME NULL;
