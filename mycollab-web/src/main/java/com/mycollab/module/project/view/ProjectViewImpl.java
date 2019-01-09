@@ -139,10 +139,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 
             CssLayout contentWrapper = myProjectTab.getContentWrapper();
             contentWrapper.addStyleName("main-content");
-
-            MVerticalLayout topPanel = new MVerticalLayout(new ProjectInfoComponent(project)).withSpacing(false).
-                    withMargin(false).withFullWidth().withStyleName("top-panel").withUndefinedHeight().withFullWidth();
-            contentWrapper.addComponentAsFirst(topPanel);
+            contentWrapper.addComponentAsFirst(new ProjectInfoComponent(project));
 
             myProjectTab.setNavigatorWidth("200px");
 

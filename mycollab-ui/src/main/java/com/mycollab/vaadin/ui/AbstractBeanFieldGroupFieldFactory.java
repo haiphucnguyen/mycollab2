@@ -76,6 +76,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
             Set<String> bindFields = dynaFormLayout.bindFields();
             for (String bindField : bindFields) {
                 HasValue<?> formField = onCreateField(bindField);
+                LOG.debug("Create field " + formField + " for " + bindField);
                 if (formField == null) {
                     if (isReadOnlyGroup) {
                         try {
@@ -98,6 +99,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                             bindingBuilder.withConverter((Converter) formField);
                         }
                         bindingBuilder.bind(bindField);
+                        LOG.debug("Bind field: " + bindField);
                     }
                 }
 
