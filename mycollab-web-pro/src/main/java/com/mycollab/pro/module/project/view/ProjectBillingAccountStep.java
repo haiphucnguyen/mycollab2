@@ -38,7 +38,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
         DynaForm defaultForm = new DynaForm();
         DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.clientid)
                 .displayName(ProjectI18nEnum.FORM_ACCOUNT_NAME)
                 .contextHelp(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP)
                 .fieldIndex(0).colSpan(true).build());
@@ -97,7 +97,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
         protected HasValue<?> onCreateField(final Object propertyId) {
             if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
-            } else if (Project.Field.accountid.equalTo(propertyId)) {
+            } else if (Project.Field.clientid.equalTo(propertyId)) {
                 throw new MyCollabException("Need implement");
             } else if (Project.Field.targetbudget.equalTo(propertyId)
                     || Project.Field.defaultbillingrate.equalTo(propertyId)

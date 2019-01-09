@@ -549,9 +549,9 @@ CREATE TABLE m_prj_project (
   id serial,
   name varchar(255) NOT NULL,
   createUser varchar(45) DEFAULT NULL,
-  accountId integer DEFAULT NULL,
+  clientId integer DEFAULT NULL,
   priority varchar(45) DEFAULT NULL,
-  shortname varchar(45) NOT NULL,
+  shortName varchar(45) NOT NULL,
   planStartDate date DEFAULT NULL,
   planEndDate date DEFAULT NULL,
   targetBudget numeric DEFAULT NULL,
@@ -562,7 +562,7 @@ CREATE TABLE m_prj_project (
   description text,
   defaultBillingRate numeric DEFAULT NULL,
   defaultOvertimeBillingRate numeric DEFAULT NULL,
-  currencyid varchar(4) DEFAULT NULL,
+  currencyId varchar(4) DEFAULT NULL,
   progress numeric DEFAULT NULL,
   sAccountId integer NOT NULL,
   createdTime timestamp DEFAULT NULL,
@@ -570,14 +570,15 @@ CREATE TABLE m_prj_project (
   avatarId varchar(100) DEFAULT NULL,
   contextAsk boolean DEFAULT '1',
   deadline date DEFAULT NULL,
-  ispublic boolean DEFAULT NULL,
-  istemplate boolean DEFAULT NULL,
+  isPublic boolean DEFAULT NULL,
+  isTemplate boolean DEFAULT NULL,
   memLead varchar(45) DEFAULT NULL,
   color varchar(6) DEFAULT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FK_m_prj_project_2 FOREIGN KEY (createUser) REFERENCES s_user (username) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT FK_m_prj_project_4 FOREIGN KEY (sAccountId) REFERENCES s_account (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT FK_m_prj_project_5 FOREIGN KEY (memLead) REFERENCES s_user (username) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT FK_m_prj_project_5 FOREIGN KEY (memLead) REFERENCES s_user (username) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT FK_m_prj_project_6 FOREIGN KEY (`clientId`) REFERENCES `m_customer` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ;
 
 --
