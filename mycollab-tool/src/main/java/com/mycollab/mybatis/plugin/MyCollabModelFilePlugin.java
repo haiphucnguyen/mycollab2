@@ -50,6 +50,17 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             enumFieldClass.addEnumConstant(field.getName());
         }
 
+        if (!introspectedColumn.isNullable()) {
+            if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
+                    || "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
+                topLevelClass.addImportedType("javax.validation.constraints.NotEmpty");
+                field.addAnnotation("@NotEmpty");
+            } else if (!introspectedColumn.isAutoIncrement() && !introspectedColumn.isGeneratedAlways() && !introspectedColumn.isGeneratedColumn()) {
+                topLevelClass.addImportedType("javax.validation.constraints.NotNull");
+                field.addAnnotation("@NotNull");
+            }
+        }
+
 
         if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
                 || "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {

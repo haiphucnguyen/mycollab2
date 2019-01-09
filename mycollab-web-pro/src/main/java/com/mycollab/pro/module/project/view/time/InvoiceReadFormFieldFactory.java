@@ -21,7 +21,7 @@ import com.vaadin.data.HasValue;
  * @since 5.2.10
  */
 public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleInvoice> {
-    public InvoiceReadFormFieldFactory(GenericBeanForm<SimpleInvoice> form) {
+    InvoiceReadFormFieldFactory(GenericBeanForm<SimpleInvoice> form) {
         super(form);
     }
 
@@ -31,7 +31,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
         if (Invoice.Field.currentid.equalTo(propertyId)) {
             return new CurrencyViewField(invoice.getCurrentid());
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
-            return new DateViewField(invoice.getIssuedate());
+            return new DateViewField();
         } else if (Invoice.Field.status.equalTo(propertyId)) {
             return new I18nFormViewField(invoice.getStatus(), OptionI18nEnum.InvoiceStatus.class);
         } else if (Invoice.Field.type.equalTo(propertyId)) {

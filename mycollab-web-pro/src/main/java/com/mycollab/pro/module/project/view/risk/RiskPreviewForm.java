@@ -63,11 +63,11 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             } else if (Risk.Field.duedate.equalTo(propertyId)) {
-                return new DateViewField(risk.getDuedate());
+                return new DateViewField();
             } else if (Risk.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField(risk.getStartdate());
+                return new DateViewField();
             } else if (Risk.Field.enddate.equalTo(propertyId)) {
-                return new DateViewField(risk.getEnddate());
+                return new DateViewField();
             } else if (Risk.Field.createduser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(risk.getProjectid(), risk.getCreateduser(),
                         risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());

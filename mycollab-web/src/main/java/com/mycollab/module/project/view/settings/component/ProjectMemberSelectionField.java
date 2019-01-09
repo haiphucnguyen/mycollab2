@@ -37,14 +37,6 @@ public class ProjectMemberSelectionField extends CustomField<String> {
 
     public ProjectMemberSelectionField() {
         memberSelectionBox = new ProjectMemberSelectionBox(true);
-        memberSelectionBox.addValueChangeListener(valueChangeEvent -> {
-            SimpleProjectMember value = memberSelectionBox.getValue();
-            if (value != null) {
-                setValue(value.getDisplayName());
-            } else {
-                setValue(null);
-            }
-        });
 
         assignToMeBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.ACTION_ASSIGN_TO_ME), clickEvent -> {
             memberSelectionBox.setSelectedUser(UserUIContext.getUser().getUsername());
@@ -58,7 +50,7 @@ public class ProjectMemberSelectionField extends CustomField<String> {
 
     @Override
     protected void doSetValue(String value) {
-        System.out.println("Value: " + value);
+        memberSelectionBox.setSelectedUser(value);
     }
 
     @Override

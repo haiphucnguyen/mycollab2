@@ -25,6 +25,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.validator.constraints.DateComparison;
 import com.vaadin.data.*;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
@@ -38,7 +39,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Path;
 import java.lang.annotation.Annotation;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,6 +67,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
     @Override
     public void setBean(B bean) {
         binder = new BeanValidationBinder<>((Class<B>) bean.getClass());
+
         IFormLayoutFactory layoutFactory = attachForm.getLayoutFactory();
         if (layoutFactory instanceof WrappedFormLayoutFactory) {
             layoutFactory = ((WrappedFormLayoutFactory) layoutFactory).getWrappedFactory();
@@ -76,16 +77,9 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
             Set<String> bindFields = dynaFormLayout.bindFields();
             for (String bindField : bindFields) {
                 HasValue<?> formField = onCreateField(bindField);
-                LOG.debug("Create field " + formField + " for " + bindField);
                 if (formField == null) {
                     if (isReadOnlyGroup) {
-                        try {
-                            String propertyValue = BeanUtils.getProperty(attachForm.getBean(), bindField);
-                            formField = new DefaultViewField(propertyValue);
-                        } catch (Exception e) {
-                            LOG.error("Error while get field value", e);
-                            formField = new DefaultViewField("Error");
-                        }
+                        formField = new DefaultViewField();
                     } else {
                         formField = new TextField();
                     }
@@ -99,7 +93,6 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                             bindingBuilder.withConverter((Converter) formField);
                         }
                         bindingBuilder.bind(bindField);
-                        LOG.debug("Bind field: " + bindField);
                     }
                 }
 
@@ -148,6 +141,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 attachForm.attachField(field.getName(), formField);
             }
         }
+        binder.readBean(bean);
     }
 
     @Override
@@ -187,8 +181,8 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
 
                 Path propertyPath = violation.getPropertyPath();
                 if (propertyPath != null && !propertyPath.toString().equals("")) {
-                    Optional<Binder.Binding<B, ?>> binding = binder.getBinding(propertyPath.toString());
-                    binder.getFields().forEach(field -> System.out.println(field));
+                    Binder.Binding<B, ?> binding = binder.getBinding(propertyPath.toString()).get();
+                    ((Component) binding.getField()).addStyleName("errorField");
 //                    binder.getField(propertyPath.toString()).addStyleName("errorField");
                 } else {
                     Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();

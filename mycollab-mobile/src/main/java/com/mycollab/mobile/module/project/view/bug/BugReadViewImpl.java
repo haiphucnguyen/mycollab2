@@ -219,11 +219,11 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         @Override
         protected HasValue<?> onCreateField(Object propertyId) {
             if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
-                return new DateViewField(beanItem.getDuedate());
+                return new DateViewField();
             } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField(beanItem.getStartdate());
+                return new DateViewField();
             } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
-                return new DateViewField(beanItem.getEnddate());
+                return new DateViewField();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink
                         (CurrentProjectVariables.getProjectId(), beanItem.getAssignuser(), beanItem.getAssignuserFullName(),
