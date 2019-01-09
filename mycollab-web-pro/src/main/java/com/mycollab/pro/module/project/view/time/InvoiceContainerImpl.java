@@ -39,6 +39,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Collections;
 
 import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
+import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus.*;
 
 /**
  * @author MyCollab Ltd
@@ -78,7 +79,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                 }
             };
 
-    private String invoiceStatus;
+    private InvoiceStatus invoiceStatus;
     private InvoiceListComp invoiceListComp;
     private InvoiceStatusComboBox statusComboBox;
 
@@ -117,10 +118,10 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             InvoiceReadView invoiceReadView = new InvoiceReadView();
             bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
             statusComboBox.addValueChangeListener(valueChangeEvent -> {
-                Object value = statusComboBox.getValue();
-                displayInvoices((String) value);
+                InvoiceStatus value = statusComboBox.getValue();
+                displayInvoices(value);
             });
-            displayInvoices(InvoiceStatus.All.name());
+            displayInvoices(All);
         } else {
             this.with(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION))).alignAll(Alignment.MIDDLE_CENTER);
         }
@@ -131,7 +132,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             SimpleInvoice invoice = new SimpleInvoice();
             invoice.setSaccountid(AppUI.getAccountId());
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
-            invoice.setStatus(InvoiceStatus.Scheduled.name());
+            invoice.setStatus(Scheduled.name());
             invoice.setCreateduser(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
         }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
@@ -139,12 +140,12 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         return new MHorizontalLayout(createBtn);
     }
 
-    private void displayInvoices(String status) {
+    private void displayInvoices(InvoiceStatus status) {
         invoiceStatus = status;
         InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
-        if (!InvoiceStatus.All.name().equals(status)) {
+        if (status != All) {
             searchCriteria.addExtraField(InvoiceSearchCriteria.p_status.buildPropertyParamInList(SearchField.AND,
-                    Collections.singletonList(status)));
+                    Collections.singletonList(status.name())));
         }
         searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds.buildPropertyParamInList(SearchField.AND,
                 Collections.singletonList(CurrentProjectVariables.getProjectId())));
@@ -163,7 +164,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     }
 
     private void insertNewInvoiceAdded(SimpleInvoice invoice) {
-        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(InvoiceStatus.All.name())) {
+        if (invoice.getStatus().equals(invoiceStatus.name()) || invoiceStatus.name().equals(All.name())) {
             Component newRow = invoiceListComp.insertRowAt(invoice, 0);
             EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
             invoiceListComp.setSelectedRow(newRow);
@@ -171,7 +172,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     }
 
     private void updateInvoiceAdded(SimpleInvoice invoice) {
-        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(InvoiceStatus.All.name())) {
+        if (invoice.getStatus().equals(invoiceStatus.name()) || invoiceStatus.name().equals(All.name())) {
             displayInvoices(invoiceStatus);
             EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
         }
@@ -197,11 +198,11 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                     .withStyleName(WebThemes.CURSOR_POINTER);
             InvoiceStatus invoiceStatus = InvoiceStatus.valueOf(invoice.getStatus());
             ELabel statusLbl = new ELabel(UserUIContext.getMessage(invoiceStatus)).withUndefinedWidth();
-            if (invoiceStatus == InvoiceStatus.Paid) {
+            if (invoiceStatus == Paid) {
                 statusLbl.withStyleName("invoice", "paid");
-            } else if (invoiceStatus == InvoiceStatus.Scheduled) {
+            } else if (invoiceStatus == Scheduled) {
                 statusLbl.withStyleName("invoice", "scheduled");
-            } else if (invoiceStatus == InvoiceStatus.Sent) {
+            } else if (invoiceStatus == Sent) {
                 statusLbl.withStyleName("invoice", "sent");
             }
             ELabel headerLbl = new ELabel(invoice.getNoid());
@@ -218,9 +219,9 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         }
     }
 
-    private static class InvoiceStatusComboBox extends I18nValueComboBox {
+    private static class InvoiceStatusComboBox extends I18nValueComboBox<InvoiceStatus> {
         InvoiceStatusComboBox() {
-            super(InvoiceStatus.class, InvoiceStatus.All, InvoiceStatus.Paid, InvoiceStatus.Sent, InvoiceStatus.Scheduled);
+            super(InvoiceStatus.class, All, Paid, Sent, Scheduled);
         }
     }
 

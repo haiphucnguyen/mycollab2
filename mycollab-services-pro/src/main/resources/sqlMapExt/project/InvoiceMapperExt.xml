@@ -7,7 +7,7 @@
         <result column="createUserAvatarId" jdbcType="VARCHAR" property="createUserAvatarId" />
         <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
         <result column="assignUserAvatarId" jdbcType="VARCHAR" property="assignUserAvatarId" />
-        <association property="client" resultMap="com.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+        <association property="client" resultMap="com.mycollab.common.dao.CustomerMapper.BaseResultMap"
                      columnPrefix="client_"/>
     </resultMap>
 

@@ -26,7 +26,7 @@ import com.vaadin.ui.CustomField;
  * @author MyCollab Ltd.
  * @since 4.5.3
  */
-public final class DefaultViewField extends CustomField<String> {
+public final class DefaultViewField extends CustomField<Object> {
     private static final long serialVersionUID = 1L;
 
     private ELabel label;
@@ -62,7 +62,7 @@ public final class DefaultViewField extends CustomField<String> {
     }
 
     @Override
-    protected void doSetValue(String value) {
+    protected void doSetValue(Object value) {
         System.out.println("Set value: " + value);
     }
 }
