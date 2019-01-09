@@ -128,7 +128,7 @@
     <sql id="selectSimpleProject">
         <![CDATA[
         SELECT m_prj_project.id, m_prj_project.name, m_prj_project.createUser,
-        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
+        m_prj_project.priority, m_prj_project.shortName, m_prj_project.planStartDate, m_prj_project.planEndDate,
         m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
         m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate,
         m_prj_project.defaultOvertimeBillingRate, m_prj_project.sAccountId,

@@ -121,6 +121,6 @@ class ProjectServiceTest : IntegrationServiceTest() {
     @Test
     fun testFindProjectWithCustomer() {
         val project = projectService.findById(3, 1)
-        assertThat(project).extracting("clientName", "clientid", "leadFullName").contains("a", 1, "Nguyen Hai")
+        assertThat(project).extracting("clientName", "clientid", "leadFullName", "shortname").contains("a", 1, "Nguyen Hai", "bbb")
     }
 }

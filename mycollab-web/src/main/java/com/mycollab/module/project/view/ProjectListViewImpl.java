@@ -67,7 +67,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
     private ProjectSearchPanel projectSearchPanel;
     private SelectionOptionButton selectOptionButton;
     private DefaultPagedBeanTable<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
-    private VerticalLayout bodyLayout;
+    private MVerticalLayout bodyLayout;
     private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
 
@@ -79,10 +79,9 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
     public void initContent() {
         removeAllComponents();
         projectSearchPanel = new ProjectSearchPanel();
-        with(projectSearchPanel);
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
-        this.addComponent(bodyLayout);
+        this.with(projectSearchPanel, bodyLayout).expand(bodyLayout);
 
         generateDisplayTable();
     }
@@ -162,8 +161,7 @@ public class ProjectListViewImpl extends AbstractVerticalPageView implements Pro
 
         tableItem.setWidth("100%");
 
-        bodyLayout.addComponent(constructTableActionControls());
-        bodyLayout.addComponent(tableItem);
+        bodyLayout.with(constructTableActionControls(), tableItem).expand(tableItem);
     }
 
     private ComponentContainer constructTableActionControls() {

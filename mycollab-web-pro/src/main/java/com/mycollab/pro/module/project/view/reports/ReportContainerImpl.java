@@ -17,6 +17,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -31,15 +32,14 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         this.addStyleName(WebThemes.HEADER_VIEW);
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
-        with(breadcrumb, ELabel.hr(), body);
+        with(breadcrumb, ELabel.hr(), body).expand(body);
     }
 
     @Override
     public void showDashboard() {
         body.removeAllComponents();
         body.with(ELabel.h2(VaadinIcons.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
-        CssLayout content = new CssLayout();
-        content.setStyleName(WebThemes.FLEX_DISPLAY);
+        MCssLayout content = new MCssLayout().withStyleName(WebThemes.FLEX_DISPLAY);
 
         MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -67,7 +67,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withUndefinedWidth());
         userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
-//        content.addComponent(userWorkloadReport);
+        content.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -79,7 +79,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
                 .withFullWidth());
         content.addComponent(timesheetReport);
 
-        body.with(content);
+        body.with(content).withAlign(content, Alignment.TOP_LEFT);
     }
 
     @Override
