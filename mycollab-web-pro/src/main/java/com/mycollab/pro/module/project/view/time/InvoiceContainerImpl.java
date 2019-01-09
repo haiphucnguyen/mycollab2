@@ -132,6 +132,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             invoice.setSaccountid(AppUI.getAccountId());
             invoice.setProjectid(CurrentProjectVariables.getProjectId());
             invoice.setStatus(InvoiceStatus.Scheduled.name());
+            invoice.setCreateduser(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
         }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));

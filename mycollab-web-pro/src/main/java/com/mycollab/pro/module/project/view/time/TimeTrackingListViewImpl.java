@@ -151,7 +151,6 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     }
 
     private void setTimeRange() {
-
         searchCriteria.setBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 

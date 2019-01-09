@@ -28,7 +28,7 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-public class InvoiceAddWindow extends MWindow {
+class InvoiceAddWindow extends MWindow {
     InvoiceAddWindow(final SimpleInvoice invoice) {
         if (invoice.getId() == null) {
             setCaption(UserUIContext.getMessage(InvoiceI18nEnum.NEW));

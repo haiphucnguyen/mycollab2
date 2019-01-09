@@ -9,6 +9,7 @@ import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.Param;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.ui.components.ComponentUtils;
@@ -27,8 +28,12 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.singletonList;
 
 /**
  * @author MyCollab Ltd
@@ -76,7 +81,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @Override
         protected Component buildSelectionComp(String fieldId) {
             if ("loguser".equals(fieldId)) {
-                return new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
+                return new ProjectMemberListSelect(singletonList(CurrentProjectVariables.getProjectId()));
             }
             return null;
         }
@@ -118,7 +123,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR,
                     WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
 
-            userField = new ProjectMemberListSelect(Arrays.asList(CurrentProjectVariables.getProjectId()));
+            userField = new ProjectMemberListSelect(singletonList(CurrentProjectVariables.getProjectId()));
             userField.setWidth("250px");
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
@@ -145,9 +150,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             LocalDate tDate = endDateField.getValue();
             searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                     ConstantValueInjector.valueOf(LocalDate.class, new LocalDate[]{fDate, tDate})));
-            Collection<String> selectedUsers = (Collection<String>) userField.getValue();
+            Set<SimpleProjectMember> selectedUsers = userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
-                searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
+                List<String> selectedUsernames = selectedUsers.stream().map(member -> member.getUsername()).collect(Collectors.toList());
+                searchCriteria.setLogUsers(new SetSearchField(selectedUsernames));
             }
 
             return searchCriteria;

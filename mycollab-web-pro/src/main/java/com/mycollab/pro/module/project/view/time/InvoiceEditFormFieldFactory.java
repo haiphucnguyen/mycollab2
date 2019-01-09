@@ -25,7 +25,6 @@ import org.vaadin.viritin.fields.MTextField;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-// TODO
 public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleInvoice> {
 
     private AttachmentUploadField attachmentUploadField;
