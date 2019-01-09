@@ -47,11 +47,8 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.v7.ui.OptionGroup;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -61,6 +58,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MMarginInfo;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -86,8 +84,8 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         @Override
         public int compare(Object o1, Object o2) {
             try {
-                Date createTime1 = (Date) PropertyUtils.getProperty(o1, "createdtime");
-                Date createTime2 = (Date) PropertyUtils.getProperty(o2, "createdtime");
+                LocalDateTime createTime1 = (LocalDateTime) PropertyUtils.getProperty(o1, "createdtime");
+                LocalDateTime createTime2 = (LocalDateTime) PropertyUtils.getProperty(o2, "createdtime");
                 return createTime1.compareTo(createTime2);
             } catch (Exception e) {
                 return 0;
@@ -101,11 +99,12 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         this.groupFormatter = AuditLogRegistry.getFieldGroupFormatterOfType(type);
         headerLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_CHANGE_HISTORY, 0));
 
-        final OptionGroup sortDirection = new OptionGroup();
-        sortDirection.addStyleName("sortDirection");
+        final RadioButtonGroup<String> sortDirection = new RadioButtonGroup<>();
+        sortDirection.addStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);
+
         String oldestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_OLDEST_FIRST);
         final String newestFirstDirection = UserUIContext.getMessage(GenericI18Enum.OPT_NEWEST_FIRST);
-        sortDirection.addItems(newestFirstDirection, oldestFirstDirection);
+        sortDirection.setItems(newestFirstDirection, oldestFirstDirection);
         sortDirection.setValue(newestFirstDirection);
         sortDirection.addValueChangeListener(valueChangeEvent -> {
             Object value = sortDirection.getValue();
