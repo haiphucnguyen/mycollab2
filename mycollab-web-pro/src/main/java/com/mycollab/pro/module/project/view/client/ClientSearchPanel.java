@@ -7,13 +7,17 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.Param;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
+import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -37,6 +41,15 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCri
     @Override
     protected HeaderWithIcon buildSearchTitle() {
         return ComponentUtils.headerH2(ProjectTypeConstants.CLIENT, UserUIContext.getMessage(ClientI18nEnum.LIST));
+    }
+
+    @Override
+    protected Component buildExtraControls() {
+        if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
+            return new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
+                    clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+        } else return null;
     }
 
     @Override

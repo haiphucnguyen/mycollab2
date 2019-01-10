@@ -1,5 +1,7 @@
 package com.mycollab.module.project.view;
 
+import com.mycollab.module.project.view.client.IClientPresenter;
+import com.mycollab.module.project.view.parameters.ClientScreenData;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.module.project.view.parameters.ReportScreenData;
 import com.mycollab.module.project.view.parameters.StandupScreenData;
@@ -29,6 +31,8 @@ public class BoardContainerPresenter extends AbstractPresenter<BoardContainer> {
                 || data instanceof ReportScreenData.GotoUserWorkload || data instanceof ReportScreenData.GotoTimesheet
                 || data instanceof StandupScreenData.Search) {
             presenter = PresenterResolver.getPresenter(IReportPresenter.class);
+        } else if (data instanceof ClientScreenData.Add || data instanceof ClientScreenData.Read || data instanceof ClientScreenData.Search) {
+            presenter = PresenterResolver.getPresenter(IClientPresenter.class);
         } else {
             presenter = PresenterResolver.getPresenter(UserProjectDashboardPresenter.class);
         }
