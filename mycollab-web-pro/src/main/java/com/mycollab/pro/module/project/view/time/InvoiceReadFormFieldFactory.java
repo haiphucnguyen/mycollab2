@@ -29,7 +29,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
     protected HasValue<?> onCreateField(Object propertyId) {
         SimpleInvoice invoice = attachForm.getBean();
         if (Invoice.Field.currentid.equalTo(propertyId)) {
-            return new CurrencyViewField(invoice.getCurrentid());
+            return new CurrencyViewField();
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
             return new DateViewField();
         } else if (Invoice.Field.status.equalTo(propertyId)) {
