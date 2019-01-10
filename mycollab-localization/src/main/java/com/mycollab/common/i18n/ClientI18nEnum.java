@@ -4,7 +4,7 @@ import ch.qos.cal10n.BaseName;
 import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
-@BaseName("crm-account")
+@BaseName("common-client")
 @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
 public enum ClientI18nEnum {
     LIST,
@@ -56,7 +56,7 @@ public enum ClientI18nEnum {
     M_VIEW_ACCOUNT_NAME_LOOKUP,
     M_TITLE_RELATED_ACCOUNTS;
 
-    @BaseName("crm-accounttype")
+    @BaseName("client-type")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum ClientType {
         Analyst,
@@ -71,7 +71,7 @@ public enum ClientI18nEnum {
         Other
     }
 
-    @BaseName("crm-accountindustry")
+    @BaseName("client-industry")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum ClientIndustry {
         Apparel,
