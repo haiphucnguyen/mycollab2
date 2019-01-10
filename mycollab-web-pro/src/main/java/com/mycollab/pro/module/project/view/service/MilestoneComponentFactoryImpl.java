@@ -85,7 +85,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             }
         };
 //        builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-//                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+//                .withField(new DateField()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
 //                .withValue(milestone.getStartdate())
 //                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -109,7 +109,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             }
         };
 //        builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-//                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+//                .withField(new DateField()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
 //                .withValue(milestone.getEnddate())
 //                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();

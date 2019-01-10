@@ -22,7 +22,7 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
+import com.mycollab.vaadin.web.ui.RangeDateField;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
@@ -48,7 +48,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     private static final long serialVersionUID = 1L;
 
     private LocalDate selectedDate;
-    private WeeklyCalendarFieldExp weekSelectionCalendar;
+    private RangeDateField weekSelectionCalendar;
     private CheckBox isBillableCheckBox;
     private CheckBox isOvertimeCheckBox;
     //    private Table timeInputTable;
@@ -78,7 +78,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
 
-        weekSelectionCalendar = new WeeklyCalendarFieldExp();
+        weekSelectionCalendar = new RangeDateField();
 //        weekSelectionCalendar.setWidth("200px");
 //
 //        weekSelectionCalendar.setValue(selectedDate);

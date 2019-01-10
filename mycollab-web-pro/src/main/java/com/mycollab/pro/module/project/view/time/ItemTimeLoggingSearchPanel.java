@@ -9,6 +9,7 @@ import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.Param;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectMember;
 import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -18,7 +19,6 @@ import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.HeaderWithIcon;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
@@ -28,7 +28,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -88,7 +87,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     }
 
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout<ItemTimeLoggingSearchCriteria> {
-        private PopupDateFieldExt startDateField, endDateField;
+        private DateField startDateField, endDateField;
 
         private ProjectMemberListSelect userField;
         private MVerticalLayout bodyWrap;
@@ -105,9 +104,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.setMargin(true);
 
             LocalDate[] boundWeekDays = DateTimeUtils.getBounceDatesOfWeek(LocalDate.now());
-            startDateField = new PopupDateFieldExt();
+            startDateField = new DateField();
             startDateField.setValue(boundWeekDays[0]);
-            endDateField = new PopupDateFieldExt();
+            endDateField = new DateField();
             endDateField.setValue(boundWeekDays[1]);
 
             Label dateStartLb = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.LOG_FOR_DATE)).withStyleName
@@ -152,8 +151,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                     ConstantValueInjector.valueOf(LocalDate.class, new LocalDate[]{fDate, tDate})));
             Set<SimpleProjectMember> selectedUsers = userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
-                List<String> selectedUsernames = selectedUsers.stream().map(member -> member.getUsername()).collect(Collectors.toList());
-                searchCriteria.setLogUsers(new SetSearchField(selectedUsernames));
+                List<String> selectedUsernames = selectedUsers.stream().map(ProjectMember::getUsername).collect(Collectors.toList());
+                searchCriteria.setLogUsers(new SetSearchField<>(selectedUsernames));
             }
 
             return searchCriteria;

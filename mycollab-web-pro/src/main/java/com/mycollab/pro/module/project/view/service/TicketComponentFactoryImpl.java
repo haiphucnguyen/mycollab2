@@ -107,7 +107,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         };
 //        builder.withBean(ticket).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-//                .withField(new PopupDateFieldExt()).withValue(ticket.getStartDate());
+//                .withField(new DateField()).withValue(ticket.getStartDate());
         return builder.build();
     }
 
@@ -138,7 +138,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         };
 //        builder.withBean(ticket).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-//                .withField(new PopupDateFieldExt()).withValue(ticket.getEndDate());
+//                .withField(new DateField()).withValue(ticket.getEndDate());
         return builder.build();
     }
 
@@ -169,7 +169,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         };
         builder.withBean(ticket).withBindProperty("dueDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new PopupDateFieldExt()).withValue(ticket.getDueDate());
+                .withField(new DateField()).withValue(ticket.getDueDate());
         return builder.build();
     }
 
@@ -597,7 +597,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
         private static class TicketBillableHoursPopupField extends LazyPopupView {
             private TextField timeInput = new TextField();
-            private PopupDateFieldExt dateField;
+            private DateField dateField;
             private ProjectTicket ticket;
             private boolean isBillable;
 
@@ -622,7 +622,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                     String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                             UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                     Label headerLbl = ELabel.h3(title);
-                    dateField = new PopupDateFieldExt();
+                    dateField = new DateField();
 //                dateField.setValue(new GregorianCalendar().getTime());
                     layout.with(headerLbl, timeInput);
                     layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);

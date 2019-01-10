@@ -45,7 +45,6 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -395,7 +394,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
     private static class BugBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private PopupDateFieldExt dateField;
+        private DateField dateField;
         private SimpleBug bug;
         private boolean isBillable;
 
@@ -420,7 +419,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
-                dateField = new PopupDateFieldExt();
+                dateField = new DateField();
 //                dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = ELabel.html(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));

@@ -262,15 +262,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             } else if (param instanceof DateParam) {
                 String compareItem = (String) compareSelectionBox.getValue();
                 if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
-                    PopupDateFieldExt field1 = new PopupDateFieldExt();
+                    DateField field1 = new DateField();
 //                    field1.setValue((Date) Array.get(searchFieldInfo.eval(), 0));
                     field1.setWidth(width);
-                    PopupDateFieldExt field2 = new PopupDateFieldExt();
+                    DateField field2 = new DateField();
 //                    field2.setValue((Date) Array.get(searchFieldInfo.eval(), 1));
                     field2.setWidth(width);
                     valueBox.with(field1, field2);
                 } else {
-                    PopupDateFieldExt field = new PopupDateFieldExt();
+                    DateField field = new DateField();
 //                    field.setValue((Date) searchFieldInfo.eval());
                     field.setWidth(width);
                     valueBox.addComponent(field);
@@ -375,11 +375,14 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 valueBox.addComponent(yesNoBox);
             } else if (field instanceof DateParam) {
                 if (DateParam.BETWEEN.equals(compareItem) || DateParam.NOT_BETWEEN.equals(compareItem)) {
-                    PopupDateFieldExt field1 = new PopupDateFieldExt().withWidth(width);
-                    PopupDateFieldExt field2 = new PopupDateFieldExt().withWidth(width);
+                    DateField field1 = new DateField();
+                    field1.setWidth(width);
+                    DateField field2 = new DateField();
+                    field2.setWidth(width);
                     valueBox.with(field1, field2);
                 } else {
-                    PopupDateFieldExt tempDateField = new PopupDateFieldExt().withWidth(width);
+                    DateField tempDateField = new DateField();
+                    tempDateField.setWidth(width);
                     valueBox.addComponent(tempDateField);
                 }
             } else if (field instanceof PropertyParam || field instanceof PropertyListParam || field instanceof CustomSqlParam

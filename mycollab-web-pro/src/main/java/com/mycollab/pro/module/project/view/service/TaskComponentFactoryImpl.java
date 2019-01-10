@@ -47,7 +47,6 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -66,7 +65,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-// TODO
 @Service
 public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
@@ -369,7 +367,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private PopupDateFieldExt dateField;
+        private DateField dateField;
         private SimpleTask task;
         private boolean isBillable;
 
@@ -394,7 +392,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
-                dateField = new PopupDateFieldExt();
+                dateField = new DateField();
 //                dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);

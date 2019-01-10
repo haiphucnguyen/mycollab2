@@ -12,9 +12,9 @@ import com.mycollab.pro.module.project.view.client.ClientSelectionField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.mycollab.vaadin.web.ui.DoubleField;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
+import org.vaadin.viritin.fields.DoubleField;
 
 /**
  * @author MyCollab Ltd

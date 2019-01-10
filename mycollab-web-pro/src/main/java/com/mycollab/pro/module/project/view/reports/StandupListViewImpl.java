@@ -46,7 +46,7 @@ import java.util.List;
 public class StandupListViewImpl extends AbstractVerticalPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
-    private PopupDateFieldExt standupCalendar = new PopupDateFieldExt();
+    private DateField standupCalendar = new DateField();
 
     private ProjectListComp projectListComp;
     private StandupPerProjectView standupPerProjectView;

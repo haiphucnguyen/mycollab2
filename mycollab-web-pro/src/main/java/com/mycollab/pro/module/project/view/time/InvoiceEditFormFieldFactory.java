@@ -13,12 +13,12 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextArea;
+import org.vaadin.viritin.fields.DoubleField;
 import org.vaadin.viritin.fields.MTextField;
 
 /**
@@ -42,28 +42,20 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
             return new ProjectMemberSelectionField();
         } else if (Invoice.Field.noid.equalTo(propertyId)) {
-            return new MTextField()/*.withRequired(true)
-                    .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                            UserUIContext.getMessage(InvoiceI18nEnum.FORM_NOID_FIELD)))*/;
+            return new MTextField().withRequiredIndicatorVisible(true);
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
-            PopupDateFieldExt field = new PopupDateFieldExt();
-//            field.setRequired(true);
-//            field.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-//                    UserUIContext.getMessage(InvoiceI18nEnum.FORM_ISSUE_DATE_FIELD)));
+            DateField field = new DateField();
+            field.setRequiredIndicatorVisible(true);
             return field;
         } else if (Invoice.Field.type.equalTo(propertyId)) {
             PricingTypeField field = new PricingTypeField();
             attachForm.getBean().setType(InvoiceI18nEnum.FIX_PRICE.name());
-//            field.setRequired(true);
+            field.setRequiredIndicatorVisible(true);
             return field;
         } else if (Invoice.Field.description.equalTo(propertyId)) {
             return new TextArea();
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
-            DoubleField field = new DoubleField();
-//            field.setRequired(true);
-//            field.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-//                    UserUIContext.getMessage(InvoiceI18nEnum.FORM_AMOUNT)));
-            return field;
+            return new DoubleField().withRequiredIndicatorVisible(true);
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {

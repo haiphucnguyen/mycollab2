@@ -5,8 +5,11 @@ import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.*;
+import com.mycollab.db.query.ConstantValueInjector;
+import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -33,7 +36,6 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedTable;
@@ -45,13 +47,14 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-// TODO
 @ViewComponent
 public class TimeTrackingViewImpl extends AbstractVerticalPageView implements TimeTrackingView {
     private static final long serialVersionUID = 1L;
@@ -60,7 +63,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
     private UserInvolvedProjectsListSelect projectField;
     private UserInvolvedProjectsMemberListSelect userField;
-    private PopupDateFieldExt fromDateField, toDateField;
+    private DateField fromDateField, toDateField;
     private ComboBox groupField, orderField;
     private ItemTimeLoggingSearchCriteria searchCriteria;
 
@@ -72,14 +75,6 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
     public TimeTrackingViewImpl() {
         this.setMargin(new MarginInfo(false, false, true, false));
-    }
-
-    private void initListSelectStyle(ListSelect listSelect) {
-        listSelect.setWidth("300px");
-//        listSelect.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-//        listSelect.setEmptySelectionAllowed(false);
-//        listSelect.setMultiSelect(true);
-        listSelect.setRows(4);
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
@@ -158,14 +153,13 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
-            fromDateField = new PopupDateFieldExt();
-//            fromDateField.setResolution(Resolution.DAY);
+            fromDateField = new DateField();
             selectionLayout.addComponent(fromDateField, 1, 0);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
-            toDateField = new PopupDateFieldExt();
+            toDateField = new DateField();
 //            toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
@@ -187,15 +181,13 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
                     .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
 
-            projectField = new UserInvolvedProjectsListSelect();
-            initListSelectStyle(projectField);
+            projectField = new UserInvolvedProjectsListSelect(projects);
             selectionLayout.addComponent(projectField, 5, 0, 5, 1);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
                     .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
 
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-            initListSelectStyle(userField);
             selectionLayout.addComponent(userField, 7, 0, 7, 1);
 
             MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
@@ -248,21 +240,21 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
-//        final Date fromDate = fromDateField.getValue();
-//        final Date toDate = toDateField.getValue();
-//        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-//                ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
+        final LocalDate fromDate = fromDateField.getValue();
+        final LocalDate toDate = toDateField.getValue();
+        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+                ConstantValueInjector.valueOf(Date.class, new LocalDate[]{fromDate, toDate})));
 
-        Collection<String> selectedUsers = (Collection<String>) userField.getValue();
+        Collection<String> selectedUsers = userField.getSelectedUsers();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
-            searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
+            searchCriteria.setLogUsers(new SetSearchField<>(selectedUsers));
         } else {
-            searchCriteria.setLogUsers(new SetSearchField(userField.getUsernames()));
+            searchCriteria.setLogUsers(new SetSearchField<>(userField.getAllUsersInInvolvedProjects()));
         }
 
-        Collection<Integer> selectedProjects = (Collection<Integer>) projectField.getValue();
-        if (CollectionUtils.isNotEmpty(selectedProjects)) {
-            searchCriteria.setProjectIds(new SetSearchField<>(selectedProjects));
+        Collection<Integer> selectedProjectsKey = projectField.getSelectedProjectsKey();
+        if (CollectionUtils.isNotEmpty(selectedProjectsKey)) {
+            searchCriteria.setProjectIds(new SetSearchField<>(selectedProjectsKey));
         } else {
             searchCriteria.setProjectIds(new SetSearchField<>(getProjectIds()));
         }
@@ -276,8 +268,8 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         searchCriteria.setBillable(null);
         Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
-//        totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-//                fromDate, toDate, totalHour, billableHour, nonBillableHours));
+        totalHoursLoggingLabel.setValue(UserUIContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+                fromDate, toDate, totalHour, billableHour, nonBillableHours));
 
         timeTrackingWrapper.removeAllComponents();
 
@@ -335,38 +327,37 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         return keys;
     }
 
-    private class UserInvolvedProjectsListSelect extends ListSelect {
+    private class UserInvolvedProjectsListSelect extends ListSelect<SimpleProject> {
         private static final long serialVersionUID = 1L;
 
-        UserInvolvedProjectsListSelect() {
-//            for (SimpleProject project : projects) {
-//                this.addItem(project.getId());
-//                this.setItemCaption(project.getId(), project.getName());
-//            }
+        UserInvolvedProjectsListSelect(List<SimpleProject> projects) {
+            this.setItems(projects);
+            this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
         }
 
+        Collection<Integer> getSelectedProjectsKey() {
+            Set<SimpleProject> selectedItems = getValue();
+            return selectedItems.stream().map(Project::getId).collect(Collectors.toList());
+        }
     }
 
-    private static class UserInvolvedProjectsMemberListSelect extends ListSelect {
+    private static class UserInvolvedProjectsMemberListSelect extends ListSelect<SimpleUser> {
         private static final long serialVersionUID = 1L;
 
         private List<SimpleUser> users;
 
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
             users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppUI.getAccountId());
-
-//            for (SimpleUser user : users) {
-//                this.addItem(user.getUsername());
-//                this.setItemCaption(user.getUsername(), user.getDisplayName());
-//            }
+            setItems(users);
+            setItemCaptionGenerator((ItemCaptionGenerator<SimpleUser>) user -> user.getDisplayName());
         }
 
-        List<String> getUsernames() {
-            List<String> keys = new ArrayList<>();
-            for (SimpleUser user : users) {
-                keys.add(user.getUsername());
-            }
-            return keys;
+        List<String> getSelectedUsers() {
+            return getValue().stream().map(SimpleUser::getUsername).collect(Collectors.toList());
+        }
+
+        List<String> getAllUsersInInvolvedProjects() {
+            return users.stream().map(SimpleUser::getUsername).collect(Collectors.toList());
         }
     }
 }

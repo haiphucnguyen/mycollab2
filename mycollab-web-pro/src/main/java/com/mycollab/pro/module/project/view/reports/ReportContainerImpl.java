@@ -53,9 +53,9 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         hoursWeeklyReport.addComponent(ELabel.fontIcon(VaadinIcons.CALENDAR_CLOCK).withStyleName("icon-38px"));
         A hoursWeeklyReportLink = new A(ProjectLinkGenerator.generateHoursWeeklyReportLink())
-                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT));
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withUndefinedWidth());
-        hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
+        hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT_HELP))
                 .withFullWidth());
         contentLayout.addComponent(hoursWeeklyReport);
 

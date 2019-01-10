@@ -15,12 +15,11 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.DoubleField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -29,7 +28,6 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-// TODO
 public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSelectableComp {
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +37,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private RichTextArea descArea;
     private ProjectTicket selectedTicket;
     private MHorizontalLayout ticketLayout;
-    private PopupDateFieldExt dateField;
+    private DateField dateField;
     private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
 
@@ -48,7 +46,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         this.timeLogging = timeLogging;
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
-//        dateField = new PopupDateFieldExt(timeLogging.getLogforday());
+//        dateField = new DateField(timeLogging.getLogforday());
 //        dateField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
 
         timeField = new DoubleField();

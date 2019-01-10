@@ -18,7 +18,6 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd
@@ -62,7 +61,7 @@ public class ReportBreadcrumb extends MHorizontalLayout implements CacheableComp
         removeAllComponents();
         this.addComponent(new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), new GotoReportsListener()).withStyleName(WebThemes.BUTTON_LINK));
         this.addComponent(new ELabel("/"));
-        this.addComponent(new MButton(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)).withStyleName(WebThemes.BUTTON_LINK));
+        this.addComponent(new MButton(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT)).withStyleName(WebThemes.BUTTON_LINK));
     }
 
     public void gotoUserWorkloadReport() {

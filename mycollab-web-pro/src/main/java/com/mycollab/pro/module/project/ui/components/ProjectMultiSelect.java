@@ -2,6 +2,7 @@ package com.mycollab.pro.module.project.ui.components;
 
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.ItemCaptionGenerator;
 import org.vaadin.addons.ComboBoxMultiselect;
 
 import java.util.List;
@@ -10,17 +11,13 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-// TODO
-public class ProjectMultiSelect extends ComboBoxMultiselect {
+public class ProjectMultiSelect extends ComboBoxMultiselect<SimpleProject> {
 
     public ProjectMultiSelect(List<SimpleProject> projects) {
-//        this.setWidth("200px");
-//        this.setTextInputAllowed(false);
-//        projects.forEach(project -> {
-//            this.addItem(project);
-//            this.setItemCaption(project, project.getName());
-//        });
-
-//        this.setItemStyleGenerator(((comboBoxMultiselect, o) -> UIConstants.TEXT_ELLIPSIS));
+        this.setWidth("200px");
+        this.setTextInputAllowed(false);
+        this.setItems(projects);
+        this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
+        this.setStyleGenerator(project -> UIConstants.TEXT_ELLIPSIS);
     }
 }
