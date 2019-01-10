@@ -22,16 +22,16 @@
                     accountId="1" registeredTime="2013-04-10 13:29:23"/>
 
     <m_prj_project id="1" name="a" sAccountId="1"
-                   shortname="aaa" projectStatus="Open"/>
+                   shortName="aaa" projectStatus="Open"/>
 
     <m_prj_project id="4" name="addd" sAccountId="1"
-                   shortname="aaa" projectStatus="Open"/>
+                   shortName="aaa" projectStatus="Open"/>
 
     <m_prj_project id="2" name="b" sAccountId="1"
-                   shortname="bbb" projectStatus="Open"/>
+                   shortName="bbb" projectStatus="Open"/>
 
     <m_prj_project id="3" name="a" sAccountId="2"
-                   shortname="aaa" projectStatus="Open"/>
+                   shortName="aaa" projectStatus="Open"/>
 
     <m_prj_task sAccountId="1" projectId="1" id="1" priority="Medium"
                 percentagecomplete="40" name="task1" taskkey="1"/>

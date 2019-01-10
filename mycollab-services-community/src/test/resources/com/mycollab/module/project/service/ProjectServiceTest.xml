@@ -18,7 +18,7 @@
                     registerStatus="Active" username="user2" accountId="1"
                     registeredTime="2013-04-10 13:29:23"/>
 
-    <m_customer id="1" accountName="a" sAccountId="1"/>
+    <m_client id="1" name="a" sAccountId="1"/>
 
     <m_prj_project id="1" name="A" priority="1" shortName="ddd"
                    projectStatus="Open" sAccountId="1"/>

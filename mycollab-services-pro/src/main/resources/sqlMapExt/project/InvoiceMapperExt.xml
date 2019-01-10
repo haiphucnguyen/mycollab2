@@ -39,16 +39,16 @@
             m_prj_invoice.assignUser, m_prj_invoice.amount, m_prj_invoice.currentId, m_prj_invoice.clientId,
             m_prj_invoice.contactUserFullName, m_prj_invoice.sAccountId, m_prj_invoice.status, m_prj_invoice.note,
             m_prj_invoice.type, m_prj_invoice.noId, m_prj_invoice.projectId, m_prj_invoice.description, m_prj_invoice.issuedate,
-            m_customer.id AS client_id, m_customer.accountName AS client_accountName,
-            m_customer.website AS client_website, m_customer.phoneOffice AS client_phoneOffice,
-            m_customer.fax AS client_fax, m_customer.billingAddress AS client_billingAddress, m_customer.city AS client_city,
-            m_customer.postalCode AS client_postalCode, m_customer.state AS client_state,
+            m_client.id AS client_id, m_client.accountName AS client_accountName,
+            m_client.website AS client_website, m_client.phoneOffice AS client_phoneOffice,
+            m_client.fax AS client_fax, m_client.billingAddress AS client_billingAddress, m_client.city AS client_city,
+            m_client.postalCode AS client_postalCode, m_client.state AS client_state,
             concat(createUserTbl.firstname, ' ', createUserTbl.lastname) AS createUserFullName,
             createUserTbl.avatarId AS createUserAvatarId,
             concat(assignUserTbl.firstname, ' ', assignUserTbl.lastname) AS assignUserFullName,
             assignUserTbl.avatarId AS assignUserAvatarId
         FROM m_prj_invoice
-            LEFT OUTER JOIN m_customer ON (m_customer.id = m_prj_invoice.clientId)
+            LEFT OUTER JOIN m_client ON (m_client.id = m_prj_invoice.clientId)
             LEFT OUTER JOIN s_user AS createUserTbl ON (m_prj_invoice.createdUser = createUserTbl.username)
             LEFT OUTER JOIN s_user AS assignUserTbl ON (m_prj_invoice.assignUser = assignUserTbl.username)
         ]]>
