@@ -48,6 +48,6 @@ public class VersionListSelect extends ListSelect<Version> {
         VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
         versions = (List<Version>) versionService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         this.setItems(versions);
-        this.setItemCaptionGenerator((ItemCaptionGenerator<Version>) version -> version.getName());
+        this.setItemCaptionGenerator((ItemCaptionGenerator<Version>) Version::getName);
     }
 }

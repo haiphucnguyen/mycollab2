@@ -62,8 +62,7 @@ public class I18nValueComboBox<T extends Enum<T>> extends ComboBox<T> implements
     @Override
     public T convertToPresentation(String value, ValueContext context) {
         if (value == null) {
-            T selectedValue = getValue();
-            return selectedValue;
+            return getValue();
         }
         return Enum.valueOf(eClass, value);
     }

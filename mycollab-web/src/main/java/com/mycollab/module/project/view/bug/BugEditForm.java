@@ -55,7 +55,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.4.3
  */
-// TODO
 public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
     @Override
     public void setBean(final SimpleBug item) {
@@ -77,7 +76,6 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
-//            new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
             layout.addComponent(gridLayout);
             layout.setExpandRatio(gridLayout, 1.0f);
 

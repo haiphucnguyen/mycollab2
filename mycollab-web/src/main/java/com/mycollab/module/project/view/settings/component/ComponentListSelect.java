@@ -46,6 +46,6 @@ public class ComponentListSelect extends ListSelect<Component> {
         ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
         List<Component> components = (List<Component>) componentService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
         this.setItems(components);
-        this.setItemCaptionGenerator((ItemCaptionGenerator<Component>)component -> component.getName());
+        this.setItemCaptionGenerator((ItemCaptionGenerator<Component>) Component::getName);
     }
 }

@@ -1,14 +1,14 @@
 package com.mycollab.premium.mobile.module.project.view.task;
 
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.mycollab.vaadin.ui.OptionValListSelect;
+import com.mycollab.vaadin.ui.AbstractOptionValListSelect;
 
 /**
  * @author MyCollab Ltd
  * @since 5.4.3
  */
 // TODO
-public class TaskStatusListSelect extends OptionValListSelect {
+public class TaskStatusListSelect extends AbstractOptionValListSelect {
 
     public TaskStatusListSelect() {
         super(StatusI18nEnum.class);

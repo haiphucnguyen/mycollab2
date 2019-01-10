@@ -74,7 +74,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         return attachmentUploadField;
     }
 
-    private static class PricingTypeField extends I18nValueComboBox {
+    private static class PricingTypeField extends I18nValueComboBox<InvoiceI18nEnum> {
         PricingTypeField() {
             super(InvoiceI18nEnum.class, InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL);
         }

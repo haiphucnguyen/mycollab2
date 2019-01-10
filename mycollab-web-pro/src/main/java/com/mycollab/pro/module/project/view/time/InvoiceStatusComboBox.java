@@ -8,8 +8,7 @@ import com.mycollab.vaadin.web.ui.I18nValueComboBox;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-// TODO
-public class InvoiceStatusComboBox extends I18nValueComboBox {
+public class InvoiceStatusComboBox extends I18nValueComboBox<InvoiceStatus> {
     public InvoiceStatusComboBox() {
         super(InvoiceStatus.class, OptionI18nEnum.invoiceStatuses);
     }

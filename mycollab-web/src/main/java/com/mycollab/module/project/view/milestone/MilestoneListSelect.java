@@ -19,10 +19,14 @@ package com.mycollab.module.project.view.milestone;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.domain.Milestone;
 import com.mycollab.module.project.domain.SimpleMilestone;
 import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.spring.AppContextUtil;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
 import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.ListSelect;
 
@@ -42,6 +46,6 @@ public class MilestoneListSelect extends ListSelect<SimpleMilestone> {
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         List<SimpleMilestone> milestones = (List<SimpleMilestone>) milestoneService.findPageableListByCriteria(new BasicSearchRequest<>(criteria));
         this.setItems(milestones);
-        this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleMilestone>) milestone -> milestone.getName());
+        this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleMilestone>) Milestone::getName);
     }
 }
