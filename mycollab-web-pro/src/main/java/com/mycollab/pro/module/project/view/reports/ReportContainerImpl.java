@@ -28,6 +28,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
     private MVerticalLayout body;
 
     public ReportContainerImpl() {
+        withMargin(true);
         ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
         body = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(breadcrumb, ELabel.hr(), body).expand(body);
@@ -37,7 +38,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
     public void showDashboard() {
         body.removeAllComponents();
         body.with(ELabel.h2(VaadinIcons.PIE_CHART.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS)));
-        MCssLayout content = new MCssLayout().withStyleName(WebThemes.FLEX_DISPLAY);
+        MCssLayout contentLayout = new MCssLayout().withStyleName(WebThemes.FLEX_DISPLAY);
 
         MVerticalLayout standupConsole = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         standupConsole.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -46,7 +47,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP));
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withUndefinedWidth());
         standupConsole.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
-        content.addComponent(standupConsole);
+        contentLayout.addComponent(standupConsole);
 
         MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -56,7 +57,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withUndefinedWidth());
         hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY_HELP))
                 .withFullWidth());
-        content.addComponent(hoursWeeklyReport);
+        contentLayout.addComponent(hoursWeeklyReport);
 
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -65,7 +66,7 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
                 .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withUndefinedWidth());
         userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
-        content.addComponent(userWorkloadReport);
+        contentLayout.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -75,9 +76,9 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withUndefinedWidth());
         timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
                 .withFullWidth());
-        content.addComponent(timesheetReport);
+        contentLayout.addComponent(timesheetReport);
 
-        body.with(content).withAlign(content, Alignment.TOP_LEFT);
+        body.with(contentLayout).expand(contentLayout).withAlign(contentLayout, Alignment.TOP_LEFT);
     }
 
     @Override

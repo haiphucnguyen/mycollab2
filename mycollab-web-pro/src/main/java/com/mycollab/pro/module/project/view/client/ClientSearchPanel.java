@@ -45,15 +45,6 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCri
     }
 
     @Override
-    protected Component buildExtraControls() {
-        if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
-            return new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
-                    clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
-                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        } else return null;
-    }
-
-    @Override
     protected BasicSearchLayout<ClientSearchCriteria> createBasicSearchLayout() {
         return new AccountBasicSearchLayout();
     }
@@ -98,7 +89,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCri
 
         @Override
         public ComponentContainer constructBody() {
-            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));

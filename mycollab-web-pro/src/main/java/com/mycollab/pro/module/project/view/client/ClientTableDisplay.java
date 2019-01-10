@@ -58,7 +58,7 @@ public class ClientTableDisplay extends DefaultPagedBeanTable<ClientService, Cli
             return ELabel.email(account.getEmail());
         });
 
-        addGeneratedColumn("accountname", (source, itemId, columnId) -> {
+        addGeneratedColumn("name", (source, itemId, columnId) -> {
             SimpleClient client = getBeanByIndex(itemId);
             A clientLink = new A(ProjectLinkGenerator.generateClientPreviewLink(client.getId())).appendText(client.getName());
             clientLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.CLIENT,

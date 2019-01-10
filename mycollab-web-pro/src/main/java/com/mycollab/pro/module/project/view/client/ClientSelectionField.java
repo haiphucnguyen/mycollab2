@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.common.domain.Client;
-import com.mycollab.common.domain.SimpleClient;
 import com.mycollab.common.service.ClientService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -20,20 +19,11 @@ public class ClientSelectionField extends CustomField<Integer> implements FieldS
     private static final long serialVersionUID = 1L;
 
     private TextField clientNameField = new TextField();
-    private Client account = null;
+    private Client client = null;
 
     private void clearValue() {
         clientNameField.setValue("");
-        this.account = null;
-    }
-
-    private void setAccountByVal(Integer accountId) {
-        ClientService accountService = AppContextUtil.getSpringBean(ClientService.class);
-        SimpleClient account = accountService.findById(accountId, AppUI.getAccountId());
-        if (account != null) {
-            this.account = account;
-            clientNameField.setValue(account.getName());
-        }
+        this.client = null;
     }
 
     @Override
@@ -59,16 +49,21 @@ public class ClientSelectionField extends CustomField<Integer> implements FieldS
 
     @Override
     public void fireValueChange(Client data) {
-
+        this.client = data;
+        clientNameField.setValue(client.getName());
     }
 
     @Override
     protected void doSetValue(Integer value) {
-
+        ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+        client = clientService.findById(value, AppUI.getAccountId());
+        if (client != null) {
+            clientNameField.setValue(client.getName());
+        }
     }
 
     @Override
     public Integer getValue() {
-        return null;
+        return (client != null) ? client.getId() : null;
     }
 }

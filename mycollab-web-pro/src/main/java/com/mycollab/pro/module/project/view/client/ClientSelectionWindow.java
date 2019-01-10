@@ -29,7 +29,7 @@ public class ClientSelectionWindow extends MWindow {
     public ClientSelectionWindow(FieldSelection<Client> fieldSelection) {
         super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(ClientI18nEnum.SINGLE)));
         this.fieldSelection = fieldSelection;
-        this.withModal(true).withResizable(false).withWidth("900px").withCenter();
+        this.withModal(true).withResizable(false).withWidth("1000px").withCenter();
     }
 
     public void show() {
@@ -48,7 +48,7 @@ public class ClientSelectionWindow extends MWindow {
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
 
-        tableItem.addGeneratedColumn("accountname", (source, itemId, columnId) -> {
+        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             final SimpleClient client = tableItem.getBeanByIndex(itemId);
 
             return new MButton(client.getName(), clickEvent -> {
