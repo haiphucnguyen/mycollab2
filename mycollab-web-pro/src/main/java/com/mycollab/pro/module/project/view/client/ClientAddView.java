@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.client;
 
-import com.mycollab.module.crm.domain.SimpleAccount;
+import com.mycollab.common.domain.SimpleClient;
 import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.PageView;
 
@@ -9,7 +9,7 @@ import com.mycollab.vaadin.mvp.PageView;
  * @since 5.2.9
  */
 public interface ClientAddView extends PageView {
-    void editItem(SimpleAccount item);
+    void editItem(SimpleClient item);
 
-    HasEditFormHandlers<SimpleAccount> getEditFormHandlers();
+    HasEditFormHandlers<SimpleClient> getEditFormHandlers();
 }

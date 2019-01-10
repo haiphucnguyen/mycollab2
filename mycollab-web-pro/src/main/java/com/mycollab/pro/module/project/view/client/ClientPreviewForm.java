@@ -1,9 +1,7 @@
 package com.mycollab.pro.module.project.view.client;
 
-import com.mycollab.module.crm.CrmTypeConstants;
-import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
-import com.mycollab.module.crm.view.account.AccountReadFormFieldFactory;
+import com.mycollab.common.domain.SimpleClient;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 
@@ -11,11 +9,11 @@ import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-public class ClientPreviewForm extends AdvancedPreviewBeanForm<SimpleAccount> {
+public class ClientPreviewForm extends AdvancedPreviewBeanForm<SimpleClient> {
     @Override
-    public void setBean(SimpleAccount bean) {
-        this.setFormLayoutFactory(new DefaultDynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm()));
-        this.setBeanFormFieldFactory(new AccountReadFormFieldFactory(this));
+    public void setBean(SimpleClient bean) {
+        this.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.CLIENT, ClientDefaultDynaFormLayoutFactory.getForm()));
+        this.setBeanFormFieldFactory(new ClientReadFormFieldFactory(this));
         super.setBean(bean);
     }
 }

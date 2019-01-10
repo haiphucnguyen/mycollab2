@@ -3,6 +3,8 @@ package com.mycollab.pro.module.project.view.client;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.mycollab.common.domain.SimpleClient;
+import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.BeanUtility;
 import com.mycollab.core.utils.NumberUtils;
@@ -10,18 +12,20 @@ import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.html.DivLessFormatter;
-import com.mycollab.module.crm.CrmTypeConstants;
-import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.ui.components.CrmFollowersComp;
-import com.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.mycollab.module.project.i18n.*;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.mycollab.module.project.i18n.ProjectI18nEnum;
+import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
+import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.components.DateInfoComp;
+import com.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGenerator;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
@@ -35,9 +39,10 @@ import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,30 +57,30 @@ import java.util.List;
  * @since 5.2.9
  */
 @ViewComponent
-public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> implements ClientReadView {
+public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> implements ClientReadView {
     private static Logger LOG = LoggerFactory.getLogger(ClientReadViewImpl.class);
 
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
-    private CrmFollowersComp<SimpleAccount> followerSheet;
+    private ProjectFollowersComp<SimpleClient> followerSheet;
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), FontAwesome.INSTITUTION);
+        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION);
     }
 
     @Override
     protected void initRelatedComponents() {
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new CrmFollowersComp<>(CrmTypeConstants.ACCOUNT, RolePermissionCollections.CRM_ACCOUNT);
+        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.CLIENT, RolePermissionCollections.CLIENT);
         addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         projectListComp = new ProjectListComp();
     }
 
     @Override
     protected String getType() {
-        return CrmTypeConstants.ACCOUNT;
+        return ProjectTypeConstants.CLIENT;
     }
 
     @Override
@@ -91,20 +96,20 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
         if (beanItem.getAvatarid() != null) {
             Img img = new Img("", StorageUtils.getEntityLogoPath(AppUI.getAccountId(), beanItem.getAvatarid(), 16))
                     .setCSSClass(UIConstants.CIRCLE_BOX);
-            return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE).appendText(beanItem.getAccountname()).write();
+            return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE).appendText(beanItem.getName()).write();
         } else {
-            return beanItem.getAccountname();
+            return beanItem.getName();
         }
     }
 
     @Override
-    protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
+    protected AdvancedPreviewBeanForm<SimpleClient> initPreviewForm() {
         return new ClientPreviewForm();
     }
 
     @Override
     protected HorizontalLayout createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
+        return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CLIENT);
     }
 
     @Override
@@ -113,23 +118,23 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
     }
 
     @Override
-    public HasPreviewFormHandlers<SimpleAccount> getPreviewFormHandlers() {
+    public HasPreviewFormHandlers<SimpleClient> getPreviewFormHandlers() {
         return previewForm;
     }
 
     @Override
-    public SimpleAccount getItem() {
+    public SimpleClient getItem() {
         return beanItem;
     }
 
     private static class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
-        void displayEntryPeople(SimpleAccount bean) {
+        void displayEntryPeople(SimpleClient bean) {
             this.removeAllComponents();
             this.withMargin(false);
 
-            Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
+            Label peopleInfoHeader = new Label(VaadinIcons.USER.getHtml() + " " +
                     UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
@@ -175,13 +180,13 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
 
         void displayProjects(final Integer accountId) {
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-            searchCriteria.setAccountId(NumberSearchField.equal(accountId));
+            searchCriteria.setSaccountid(NumberSearchField.equal(accountId));
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel(UserUIContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
             MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
                 Project project = new Project();
-                project.setAccountid(accountId);
+                project.setSaccountid(accountId);
                 UI.getCurrent().addWindow(new ProjectAddWindow(project));
             }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
@@ -228,7 +233,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
-            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO).withWidthUndefined();
+            ELabel prjInfo = ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             this.addComponent(prjInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();

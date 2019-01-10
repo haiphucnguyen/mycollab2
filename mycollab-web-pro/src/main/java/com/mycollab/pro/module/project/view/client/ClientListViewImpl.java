@@ -4,16 +4,15 @@ import com.google.common.base.MoreObjects;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.mycollab.common.domain.SimpleClient;
+import com.mycollab.common.domain.criteria.ClientSearchCriteria;
+import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.service.ClientService;
 import com.mycollab.db.arguments.BasicSearchRequest;
-import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.mycollab.module.crm.i18n.AccountI18nEnum;
-import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.event.ClientEvent;
-import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.security.RolePermissionCollections;
@@ -28,8 +27,8 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
@@ -58,27 +57,27 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
     }
 
     @Override
-    public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
+    public HasSearchHandlers<ClientSearchCriteria> getSearchHandlers() {
         return accountSearchPanel;
     }
 
     @Override
-    public void display(AccountSearchCriteria searchCriteria) {
+    public void display(ClientSearchCriteria searchCriteria) {
         content.removeAllComponents();
-        AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        List<SimpleAccount> clients = (List<SimpleAccount>) accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
-        for (SimpleAccount client : clients) {
+        ClientService accountService = AppContextUtil.getSpringBean(ClientService.class);
+        List<SimpleClient> clients = (List<SimpleClient>) accountService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
+        for (SimpleClient client : clients) {
             content.addComponent(generateClientBlock(client));
         }
     }
 
-    private Component generateClientBlock(final SimpleAccount client) {
-        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px").withHeightUndefined()
+    private Component generateClientBlock(final SimpleClient client) {
+        MVerticalLayout blockContent = new MVerticalLayout().withStyleName("member-block").withWidth("350px").withUndefinedWidth()
                 .withMargin(false).withSpacing(false);
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, client)))
-                .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
-                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+                .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_ICON_ONLY)
+                .withVisible(UserUIContext.canWrite(RolePermissionCollections.CLIENT));
 
         MButton deleteBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(),
@@ -88,14 +87,14 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
                     UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
-                            AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                            accountService.removeWithSession(client, UserUIContext.getUsername(), AppUI.getAccountId());
+                            ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+                            clientService.removeWithSession(client, UserUIContext.getUsername(), AppUI.getAccountId());
                             EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                         }
                     });
-        }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY)
-                .withVisible(UserUIContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
-        deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getAccountname()));
+        }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY)
+                .withVisible(UserUIContext.canAccess(RolePermissionCollections.CLIENT));
+        deleteBtn.setDescription(UserUIContext.getMessage(ClientI18nEnum.OPT_REMOVE_CLIENT, client.getName()));
 
         MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
         blockContent.addComponent(buttonControls);
@@ -106,15 +105,15 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
         blockTop.addComponent(clientAvatar);
 
         A clientLink = new A(ProjectLinkGenerator.generateClientPreviewLink(client.getId())).appendText(client
-                .getAccountname()).setTitle(client.getAccountname());
+                .getName()).setTitle(client.getName());
         ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
-        Div websiteDiv = new Div().appendText(UserUIContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +
+        Div websiteDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.FORM_WEBSITE) + ": " +
                 MoreObjects.firstNonNull(client.getWebsite(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
         clientInfo.addComponent(ELabel.html(websiteDiv.write()).withStyleName(UIConstants.META_INFO));
 
-        Div addressDiv = new Div().appendText(UserUIContext.getMessage(AccountI18nEnum.FORM_BILLING_ADDRESS) + ": "
+        Div addressDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.FORM_BILLING_ADDRESS) + ": "
                 + MoreObjects.firstNonNull(client.getBillingaddress(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
                 ", " + MoreObjects.firstNonNull(client.getCity(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)) +
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
