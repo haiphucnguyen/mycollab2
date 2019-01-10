@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.reports;
 
+import com.mycollab.module.project.view.BoardContainer;
 import com.mycollab.module.project.view.ProjectModule;
 import com.mycollab.module.project.view.parameters.ReportScreenData;
 import com.mycollab.module.project.view.parameters.StandupScreenData;
@@ -23,8 +24,8 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectModule projectModule = (ProjectModule) container;
-        projectModule.gotoSubView("Reports");
+        BoardContainer boardContainer = (BoardContainer) container;
+        boardContainer.gotoSubView("Reports");
 
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);

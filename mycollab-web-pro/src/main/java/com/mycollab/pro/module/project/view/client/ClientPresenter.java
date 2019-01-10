@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.core.MyCollabException;
+import com.mycollab.module.project.view.BoardContainer;
 import com.mycollab.module.project.view.ProjectModule;
 import com.mycollab.module.project.view.client.IClientContainer;
 import com.mycollab.module.project.view.client.IClientPresenter;
@@ -21,8 +22,8 @@ public class ClientPresenter extends AbstractPresenter<IClientContainer> impleme
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectModule prjContainer = (ProjectModule) container;
-        prjContainer.setContent(view);
+        BoardContainer boardContainer = (BoardContainer) container;
+        boardContainer.gotoSubView("Clients");
 
         AbstractPresenter presenter;
         if (data instanceof ClientScreenData.Search) {

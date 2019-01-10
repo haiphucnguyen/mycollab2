@@ -27,7 +27,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.*;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority;
 import com.mycollab.module.project.service.*;
@@ -651,7 +651,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                         timeLogging.setTypeid(ticket.getTypeId());
                         timeLogging.setSaccountid(AppUI.getAccountId());
                         timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                        EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
+                        EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(TicketBillableHoursPopupField.this));
 
                         // load hours again
                         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();

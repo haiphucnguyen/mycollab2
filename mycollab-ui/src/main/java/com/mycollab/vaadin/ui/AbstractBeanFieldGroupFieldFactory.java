@@ -48,11 +48,11 @@ import java.util.stream.Collectors;
 public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFieldGroupFieldFactory<B> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractBeanFieldGroupFieldFactory.class);
 
-    protected GenericBeanForm<B> attachForm;
     private BeanValidationBinder<B> binder;
-
     private boolean isReadOnlyGroup;
     private javax.validation.Validator validation;
+
+    protected GenericBeanForm<B> attachForm;
 
     public AbstractBeanFieldGroupFieldFactory(GenericBeanForm<B> form, boolean isValidateForm, boolean isReadOnlyGroup) {
         this.attachForm = form;
@@ -185,7 +185,6 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 if (propertyPath != null && !propertyPath.toString().equals("")) {
                     Binder.Binding<B, ?> binding = binder.getBinding(propertyPath.toString()).get();
                     ((Component) binding.getField()).addStyleName("errorField");
-//                    binder.getField(propertyPath.toString()).addStyleName("errorField");
                 } else {
                     Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
                     if (validateAnno instanceof DateComparison) {

@@ -23,7 +23,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -450,7 +450,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     timeLogging.setTypeid(bug.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
+                    EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();

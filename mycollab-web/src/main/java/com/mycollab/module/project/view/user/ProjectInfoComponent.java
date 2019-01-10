@@ -146,16 +146,11 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
         } else {
             SearchTextField searchField = new SearchTextField() {
-                public void doSearch(String value) {
+                protected void doSearch(String value) {
                     ProjectView prjView = UIUtils.getRoot(this, ProjectView.class);
                     if (prjView != null) {
                         prjView.displaySearchResult(value);
                     }
-                }
-
-                @Override
-                public void emptySearch() {
-
                 }
             };
 

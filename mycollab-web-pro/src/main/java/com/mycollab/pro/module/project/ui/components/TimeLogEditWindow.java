@@ -6,7 +6,7 @@ import com.mycollab.core.arguments.ValuedBean;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
@@ -39,7 +39,6 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 4.3.3
  */
-// TODO
 public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private static final long serialVersionUID = 1L;
 
@@ -71,7 +70,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         this.loadTimeValue();
         this.addCloseListener(closeEvent -> {
             if (hasTimeChange) {
-                EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
+                EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(TimeLogEditWindow.this));
             }
         });
     }

@@ -71,6 +71,6 @@ public class ActiveUserComboBox extends ComboBox<SimpleUser> implements Converte
 
     @Override
     public SimpleUser convertToPresentation(String value, ValueContext context) {
-        return users.stream().filter(user -> user.getUsername().equals(value)).findFirst().get();
+        return users.stream().filter(user -> user.getUsername().equals(value)).findFirst().orElse(null);
     }
 }

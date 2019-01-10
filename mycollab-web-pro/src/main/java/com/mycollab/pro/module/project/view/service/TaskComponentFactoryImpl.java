@@ -25,7 +25,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -423,7 +423,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     timeLogging.setTypeid(task.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
+                    EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
