@@ -59,11 +59,6 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
     private List<SimpleProject> projects;
 
-    public FollowingTicketSearchPanel() {
-        projects = AppContextUtil.getSpringBean(ProjectService.class)
-                .getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-    }
-
     @Override
     protected HeaderWithIcon buildSearchTitle() {
         return null;
@@ -193,6 +188,8 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
         private static final long serialVersionUID = 1L;
 
         UserInvolvedProjectsListSelect() {
+            projects = AppContextUtil.getSpringBean(ProjectService.class)
+                    .getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
             setItems(projects);
             setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) Project::getName);
         }

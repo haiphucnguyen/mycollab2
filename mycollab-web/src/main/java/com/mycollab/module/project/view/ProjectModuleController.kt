@@ -18,7 +18,6 @@ package com.mycollab.module.project.view
 
 import com.google.common.eventbus.Subscribe
 import com.mycollab.common.domain.SimpleClient
-import com.mycollab.common.domain.criteria.ClientSearchCriteria
 import com.mycollab.module.project.event.*
 import com.mycollab.module.project.view.parameters.ClientScreenData
 import com.mycollab.module.project.view.parameters.ProjectScreenData
@@ -73,8 +72,7 @@ class ProjectModuleController(val container: ProjectModule) : AbstractController
             @Subscribe
             override fun handle(event: ClientEvent.GotoList) {
                 val presenter = PresenterResolver.getPresenter(BoardContainerPresenter::class.java)
-                val searchCriteria = ClientSearchCriteria()
-                presenter.go(container, ClientScreenData.Search(searchCriteria))
+                presenter.go(container, ClientScreenData.Search(null))
             }
         })
 
@@ -108,7 +106,7 @@ class ProjectModuleController(val container: ProjectModule) : AbstractController
             @Subscribe
             override fun handle(event: ReportEvent.GotoConsole) {
                 val presenter = PresenterResolver.getPresenter(BoardContainerPresenter::class.java)
-                presenter.go(container, null)
+                presenter.go(container, ReportScreenData.GotoConsole())
             }
         })
 

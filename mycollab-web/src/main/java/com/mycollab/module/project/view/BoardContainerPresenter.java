@@ -1,6 +1,10 @@
 package com.mycollab.module.project.view;
 
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.mycollab.module.project.view.parameters.ReportScreenData;
+import com.mycollab.module.project.view.parameters.StandupScreenData;
+import com.mycollab.module.project.view.reports.IReportPresenter;
+import com.mycollab.vaadin.mvp.IPresenter;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -17,12 +21,16 @@ public class BoardContainerPresenter extends AbstractPresenter<BoardContainer> {
         ProjectModule module = (ProjectModule) container;
         module.setContent(getView());
 
-        AbstractPresenter<?> presenter;
+        IPresenter<?> presenter;
         if (data instanceof ProjectScreenData.GotoList) {
             presenter = PresenterResolver.getPresenter(ProjectListPresenter.class);
 
+        } else if (data instanceof ReportScreenData.GotoConsole || data instanceof ReportScreenData.GotoWeeklyTiming
+                || data instanceof ReportScreenData.GotoUserWorkload || data instanceof ReportScreenData.GotoTimesheet
+                || data instanceof StandupScreenData.Search) {
+            presenter = PresenterResolver.getPresenter(IReportPresenter.class);
         } else {
-            presenter = PresenterResolver.getPresenter(BoardContainerPresenter.class);
+            presenter = PresenterResolver.getPresenter(UserProjectDashboardPresenter.class);
         }
         presenter.go(view, data);
     }

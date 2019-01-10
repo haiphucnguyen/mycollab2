@@ -39,7 +39,7 @@
             m_prj_invoice.assignUser, m_prj_invoice.amount, m_prj_invoice.currentId, m_prj_invoice.clientId,
             m_prj_invoice.contactUserFullName, m_prj_invoice.sAccountId, m_prj_invoice.status, m_prj_invoice.note,
             m_prj_invoice.type, m_prj_invoice.noId, m_prj_invoice.projectId, m_prj_invoice.description, m_prj_invoice.issuedate,
-            m_client.id AS client_id, m_client.accountName AS client_accountName,
+            m_client.id AS client_id, m_client.name AS client_name,
             m_client.website AS client_website, m_client.phoneOffice AS client_phoneOffice,
             m_client.fax AS client_fax, m_client.billingAddress AS client_billingAddress, m_client.city AS client_city,
             m_client.postalCode AS client_postalCode, m_client.state AS client_state,

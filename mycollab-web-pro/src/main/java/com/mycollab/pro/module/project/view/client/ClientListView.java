@@ -9,6 +9,7 @@ import com.mycollab.vaadin.mvp.PageView;
  * @since 5.2.9
  */
 public interface ClientListView extends PageView {
+
     HasSearchHandlers<ClientSearchCriteria> getSearchHandlers();
 
     void display(ClientSearchCriteria searchCriteria);

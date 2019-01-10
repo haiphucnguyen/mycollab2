@@ -5,6 +5,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.client.IClientPresenter;
+import com.mycollab.module.project.view.parameters.ClientScreenData;
 import com.mycollab.module.project.view.reports.IReportPresenter;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageView;
@@ -57,7 +58,7 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
 
         this.addTab(constructClientViewComponent(), "Clients",
-                UserUIContext.getMessage(ClientI18nEnum.LIST), VaadinIcons.RETWEET);
+                UserUIContext.getMessage(ClientI18nEnum.LIST), VaadinIcons.COIN_PILES);
 
         this.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
@@ -75,7 +76,7 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
                 } else if ("Reports".equals(tabId)) {
                     reportPresenter.go(BoardContainer.this, null);
                 } else if ("Clients".equals(tabId)) {
-                    clientPresenter.go(BoardContainer.this, null);
+                    clientPresenter.go(BoardContainer.this, new ClientScreenData.Search(null));
                 }
             }
         });

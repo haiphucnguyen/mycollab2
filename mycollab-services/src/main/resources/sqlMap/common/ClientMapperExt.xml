@@ -149,7 +149,7 @@
 
     <sql id="selectSimpleAccount">
         <![CDATA[
-        SELECT m_client.id, m_client.accountName, m_client.website, m_client.phoneOffice, 
+        SELECT m_client.id, m_client.name, m_client.website, m_client.phoneOffice,
                m_client.fax, m_client.alternatePhone, m_client.annualRevenue, m_client.billingAddress, 
                m_client.city, m_client.postalCode, m_client.billingCountry, m_client.description, m_client.state, 
                m_client.email, m_client.ownership, m_client.shippingAddress, m_client.shippingCity, m_client.shippingPostalCode, 
@@ -158,10 +158,10 @@
                m_client.createdUser, m_client.sAccountId, m_client.assignUser, m_client.type, m_client.industry,
                m_client.avatarId,
                s_user.avatarId AS assignUserAvatarId, 
-               LTRIM(concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname)) as assignUserFullName,
+               LTRIM(concat(s_user.firstname, ' ', s_user.lastname)) as assignUserFullName,
                createdUserTabl.avatarId AS createdUserAvatarId,
-               LTRIM(concat(createdUserTabl.firstname, ' ', LTRIM(concat(IFNULL(createdUserTabl.middlename, ''), ' ')), createdUserTabl.lastname)) as createdUserFullName,
-               (SELECT COUNT(*) FROM m_prj_project WHERE m_client.id=m_prj_project.accountId) AS numProjects
+               LTRIM(concat(createdUserTabl.firstname, ' ', createdUserTabl.lastname)) as createdUserFullName,
+               (SELECT COUNT(*) FROM m_prj_project WHERE m_client.id=m_prj_project.clientId) AS numProjects
         FROM m_client
             LEFT OUTER JOIN s_user ON m_client.assignUser = s_user.username
             LEFT OUTER JOIN s_user AS createdUserTabl ON (m_client.createdUser = createdUserTabl.username)
@@ -176,7 +176,7 @@
                 ${orderField.field} ${orderField.direction},
             #end
         #end
-        m_client.lastUpdatedTime DESC, m_client.accountName ASC
+        m_client.lastUpdatedTime DESC, m_client.name ASC
         ]]>
     </sql>
 
