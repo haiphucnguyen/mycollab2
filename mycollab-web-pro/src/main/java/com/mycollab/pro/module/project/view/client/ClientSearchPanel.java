@@ -7,17 +7,13 @@ import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.Param;
 import com.mycollab.module.project.ProjectTypeConstants;
-import com.mycollab.module.project.event.ClientEvent;
 import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
-import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -32,11 +28,10 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-//            ClientSearchCriteria.p_accountName, ClientSearchCriteria.p_anyPhone, ClientSearchCriteria.p_website,
-//            ClientSearchCriteria.p_numemployees, ClientSearchCriteria.p_assignee, ClientSearchCriteria.p_industries,
-//            ClientSearchCriteria.p_types, ClientSearchCriteria.p_billingCountry,
-//            ClientSearchCriteria.p_shippingCountry, ClientSearchCriteria.p_anyCity, ClientSearchCriteria.p_createdtime,
-//            ClientSearchCriteria.p_lastupdatedtime
+            ClientSearchCriteria.p_name, ClientSearchCriteria.p_anyPhone, ClientSearchCriteria.p_website,
+            ClientSearchCriteria.p_numemployees, ClientSearchCriteria.p_assignee,
+            ClientSearchCriteria.p_anyCity, ClientSearchCriteria.p_createdtime,
+            ClientSearchCriteria.p_lastupdatedtime
     };
 
     @Override
