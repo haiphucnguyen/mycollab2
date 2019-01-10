@@ -31,6 +31,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.view.client.IClientPresenter;
 import com.mycollab.module.project.view.reports.IReportPresenter;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.module.project.view.user.ProjectPagedList;
@@ -73,7 +74,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
     private IReportPresenter reportPresenter;
 
-//    private IClientPresenter clientPresenter;
+    private IClientPresenter clientPresenter;
 
     public ProjectModule() {
         addStyleName("module");
@@ -108,8 +109,8 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         tabSheet.addTab(constructReportViewComponent(), "Reports",
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
 
-//        tabSheet.addTab(constructClientViewComponent(), "Clients",
-//                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
+        tabSheet.addTab(constructClientViewComponent(), "Clients",
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
 
         tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
@@ -126,9 +127,8 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
                     followingTicketPresenter.go(ProjectModule.this, null);
                 } else if ("Reports".equals(tabId)) {
                     reportPresenter.go(ProjectModule.this, null);
-//                } else if ("Clients".equals(tabId)) {
-//                    clientPresenter.go(ProjectModule.this, null);
-//                }
+                } else if ("Clients".equals(tabId)) {
+                    clientPresenter.go(ProjectModule.this, null);
                 }
             }
         });
@@ -154,10 +154,10 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
         return reportPresenter.getView();
     }
 
-//    private HasComponents constructClientViewComponent() {
-//        clientPresenter = PresenterResolver.getPresenter(IClientPresenter.class);
-//        return clientPresenter.getView();
-//    }
+    private HasComponents constructClientViewComponent() {
+        clientPresenter = PresenterResolver.getPresenter(IClientPresenter.class);
+        return clientPresenter.getView();
+    }
 
     public void gotoSubView(String viewId) {
         tabSheet.selectTab(viewId);

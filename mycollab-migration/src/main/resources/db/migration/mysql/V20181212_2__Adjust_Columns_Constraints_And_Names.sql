@@ -109,3 +109,6 @@ CHANGE COLUMN `shortname` `shortName` VARCHAR(45) CHARACTER SET 'utf8mb4' COLLAT
 ALTER TABLE `s_relay_email_notification`
 ADD COLUMN `createdTime` DATETIME NULL,
 ADD COLUMN `lastUpdatedTime` DATETIME NULL;
+
+ALTER TABLE `m_customer`
+CHANGE COLUMN `accountName` `name` VARCHAR(255) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci' NOT NULL , RENAME TO  `m_client` ;
