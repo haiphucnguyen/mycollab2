@@ -111,7 +111,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                     .withMargin(true).withFullWidth()
                     .withAlign(headerRightLayout, Alignment.MIDDLE_RIGHT);
 
-            MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName("invoice-body");
+            MHorizontalLayout bodyLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, true));
             with(header, bodyLayout).expand(bodyLayout);
 
             invoiceListComp = new InvoiceListComp();
@@ -150,7 +150,6 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds.buildPropertyParamInList(SearchField.AND,
                 Collections.singletonList(CurrentProjectVariables.getProjectId())));
         int count = invoiceListComp.setSearchCriteria(searchCriteria);
-//        statusComboBox.setItemCaption(status, status + " (" + count + ")");
         if (count > 0) {
             SimpleInvoice invoice = invoiceListComp.getItemAt(0);
             if (invoice != null) {
@@ -264,7 +263,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             headerLbl = ELabel.h2("");
 
-            PrintButton printBtn = new PrintButton();
+            PrintButton<SimpleInvoice> printBtn = new PrintButton<>();
             printBtn.setStyleName(WebThemes.BUTTON_OPTION);
             printBtn.setVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE));
             printBtn.doPrint(invoice, new FormReportLayout(ProjectTypeConstants.INVOICE, Invoice.Field.noid.name(),
@@ -272,8 +271,8 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
 
             MButton editBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                     clickEvent -> UI.getCurrent().addWindow(new InvoiceAddWindow(invoice)))
-                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.EDIT);
-            editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+                    .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.EDIT)
+                    .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
 
             MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE), clickEvent -> {
                 ConfirmDialogExt.show(UI.getCurrent(),
@@ -288,11 +287,11 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
                                 EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
                             }
                         });
-            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(VaadinIcons.TRASH);
-            deleteBtn.setVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
+            }).withStyleName(WebThemes.BUTTON_DANGER).withIcon(VaadinIcons.TRASH)
+                    .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(printBtn, editBtn, deleteBtn);
-            header.with(headerLbl, buttonControls).expand(headerLbl);
+            header.with(headerLbl, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             previewForm = new AdvancedPreviewBeanForm<>();
             addComponent(previewForm);
 
