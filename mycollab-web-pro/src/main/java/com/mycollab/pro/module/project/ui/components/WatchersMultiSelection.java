@@ -64,7 +64,6 @@ public class WatchersMultiSelection extends MVerticalLayout {
         unsavedMembers.forEach(member -> {
             MonitorItem item = new MonitorItem();
             item.setExtratypeid(CurrentProjectVariables.getProjectId());
-            item.setCreatedtime(LocalDateTime.now());
             item.setSaccountid(AppUI.getAccountId());
             item.setType(type);
             item.setTypeid(typeId);
