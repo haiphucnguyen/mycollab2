@@ -54,6 +54,16 @@ public class I18nValueComboBox<T extends Enum<T>> extends ComboBox<T> implements
         this.setItemCaptionGenerator((ItemCaptionGenerator<T>) o -> UserUIContext.getMessage(o));
     }
 
+    public void setValueByString(String value) {
+        T tValue = Enum.valueOf(eClass, value);
+        setValue(tValue);
+    }
+
+    public String getSelectedValueByString() {
+        T value = getValue();
+        return UserUIContext.getMessage(value);
+    }
+
     @Override
     public Result<String> convertToModel(T value, ValueContext context) {
         return Result.ok(value.name());

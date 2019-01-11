@@ -79,6 +79,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     Task.Field.parenttaskid.name());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
+            gridLayout.addStyleName("windowMaxHeight");
 
             MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                 if (validateForm()) {
@@ -127,7 +128,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
             MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn)
-                    .withMargin(new MarginInfo(true, true, true, false)).alignAll(Alignment.MIDDLE_RIGHT);
+                    .withMargin(new MarginInfo(true, false, false, false)).alignAll(Alignment.MIDDLE_RIGHT);
 
             layout.with(gridLayout, buttonControls).expand(gridLayout).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             return layout;

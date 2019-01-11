@@ -76,6 +76,7 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.BUG, BugDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
+            gridLayout.addStyleName("windowMaxHeight");
 
             MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                 if (validateForm()) {
@@ -126,7 +127,8 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, false, false, false));
+            MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn)
+                    .withMargin(new MarginInfo(true, false, false, false));
 
             layout.with(gridLayout, buttonControls).expand(gridLayout).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             return layout;
