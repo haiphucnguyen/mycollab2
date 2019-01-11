@@ -52,7 +52,10 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.PropertyChangedEvent;
+import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -393,11 +396,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                             UI.getCurrent().addWindow(bindCloseWindow(new ApproveInputWindow(beanItem)));
                         }).withStyleName(WebThemes.BUTTON_ACTION);
                         content.with(reopenBtn, approveNCloseBtn);
-                    } else if (StatusI18nEnum.Resolved.name().equals(beanItem.getStatus())) {
-                        MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                                clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
-                                .withStyleName(WebThemes.BUTTON_ACTION);
-                        content.with(reopenBtn);
                     }
                 }
             } else {
@@ -480,7 +478,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             projectListSelect.setEmptySelectionAllowed(false);
             selectedProject = projectListSelect.setSelectedProjectById(projectId);
 
-            typeSelection = new ComboBox<String>();
+            typeSelection = new ComboBox<>();
 
             projectListSelect.addValueChangeListener(valueChangeEvent -> {
                 selectedProject = projectListSelect.getValue();
@@ -523,6 +521,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 }
 
                 if (ticketTypes.size() > 0) {
+                    typeSelection.setItems(ticketTypes);
                     typeSelection.setValue(ticketTypes.get(0));
                     typeSelection.setItemIconGenerator((IconGenerator<String>) item -> {
                         if (item.equals(UserUIContext.getMessage(TaskI18nEnum.SINGLE))) {
@@ -623,7 +622,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                             UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                     Label headerLbl = ELabel.h3(title);
                     dateField = new DateField();
-//                dateField.setValue(new GregorianCalendar().getTime());
+                    dateField.setValue(LocalDate.now());
                     layout.with(headerLbl, timeInput);
                     layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
                 } else {
@@ -636,7 +635,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 String timeVal = timeInput.getValue();
                 if (StringUtils.isNotBlank(timeVal)) {
                     Long delta = HumanTime.eval(timeVal).getDelta();
-//                Date date = dateField.getValue();
+                    LocalDate date = dateField.getValue();
                     if (delta > 0) {
                         ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                         Double hours = delta.doubleValue() / (1000 * 60 * 60);
@@ -644,7 +643,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                         timeLogging.setCreateduser(UserUIContext.getUsername());
                         timeLogging.setIsbillable(isBillable);
                         timeLogging.setLoguser(UserUIContext.getUsername());
-//                    timeLogging.setLogforday(date);
+                        timeLogging.setLogforday(date);
                         timeLogging.setLogvalue(hours);
                         timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                         timeLogging.setType(ticket.getType());
