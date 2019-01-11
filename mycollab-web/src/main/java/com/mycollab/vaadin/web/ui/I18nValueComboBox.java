@@ -66,7 +66,7 @@ public class I18nValueComboBox<T extends Enum<T>> extends ComboBox<T> implements
 
     @Override
     public Result<String> convertToModel(T value, ValueContext context) {
-        return Result.ok(value.name());
+        return (value != null) ? Result.ok(value.name()) : Result.ok(null);
     }
 
     @Override

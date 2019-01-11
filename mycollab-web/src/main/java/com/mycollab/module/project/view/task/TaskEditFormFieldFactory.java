@@ -68,8 +68,6 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new RichTextArea();
         } else if (Task.Field.name.equalTo(propertyId)) {
             return new MTextField().withRequiredIndicatorVisible(true);
-//            .withRequiredError(UserUIContext
-//                    .getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
         } else if (Task.Field.status.equalTo(propertyId)) {
             return new TaskStatusComboBox();
         } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {

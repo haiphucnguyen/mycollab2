@@ -152,13 +152,13 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
             binder.writeBean(attachForm.getBean());
         } catch (ValidationException e) {
             List<BindingValidationStatus<?>> fieldValidationErrors = e.getFieldValidationErrors();
-//            String errorMessage = fieldValidationErrors.stream().filter(it-> it.getStatus() == BindingValidationStatus.Status.ERROR)
-//                    .map(BindingValidationStatus::getMessage)
-//                    // sanitize the individual error strings to avoid code injection
-//                    // since we are displaying the resulting string as HTML
-//                    .map(errorString -> Jsoup.clean(errorString, Whitelist.simpleText()))
-//                    .collect(Collectors.joining("<br>"));
-            return false;
+            String errorMessage = fieldValidationErrors.stream().filter(it-> it.getStatus() == BindingValidationStatus.Status.ERROR || it.getStatus() == BindingValidationStatus.Status.UNRESOLVED)
+                    .map(BindingValidationStatus::getMessage)
+                    // sanitize the individual error strings to avoid code injection
+                    // since we are displaying the resulting string as HTML
+                    .map(errorString -> Jsoup.clean(errorString.orElse(""), Whitelist.simpleText()))
+                    .collect(Collectors.joining("<br>"));
+            throw new UserInvalidInputException(errorMessage);
         }
         BinderValidationStatus<B> validate = binder.validate();
         BinderValidationStatusHandler<B> validationStatusHandler = binder.getValidationStatusHandler();
