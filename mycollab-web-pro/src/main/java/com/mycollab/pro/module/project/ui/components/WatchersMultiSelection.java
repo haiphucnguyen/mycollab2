@@ -29,7 +29,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-// TODO
 public class WatchersMultiSelection extends MVerticalLayout {
     private List<SimpleProjectMember> unsavedMembers = new ArrayList<>();
     private List<SimpleUser> followers;

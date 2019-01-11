@@ -30,5 +30,7 @@
 
     <inherits name="org.vaadin.cropper.WidgetSet" />
 
-    <inherits name="org.vaadin.WidgetSet"/>
+    <inherits name="com.fo0.advancedtokenfield.AdvancedTokenField.WidgetSet"/> <!--Plugin: AdvancedTokenField-->
+
+    <inherits name="org.vaadin.alump.searchdropdown.WidgetSet"/> <!--Plugin: SearchDropDown-->
 </module>
