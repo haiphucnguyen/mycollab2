@@ -18,7 +18,6 @@ package com.mycollab.module.project.service
 
 import com.mycollab.db.arguments.*
 import com.mycollab.module.project.domain.ProjectTicket
-import com.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
@@ -80,11 +79,11 @@ class ProjectTicketServiceTest : IntegrationServiceTest() {
         val criteria = ProjectTicketSearchCriteria()
         criteria.saccountid = NumberSearchField.equal(1)
         criteria.projectIds = SetSearchField(1)
-        criteria.isOpenned = SearchField()
+        criteria.open = SearchField()
         val from = LocalDate.of(2019, 1, 7)
         val to = from.plusDays(7)
         criteria.dateInRange = RangeDateSearchField(from, to)
-        val tickets = projectTicketService.findTicketsByCriteria(BasicSearchRequest(criteria))
+        val tickets = projectTicketService.findPageableListByCriteria(BasicSearchRequest(criteria))
         assertThat(tickets.size).isEqualTo(1)
     }
 }

@@ -120,9 +120,9 @@ class ProjectModuleController(val navManager: NavigationManager) : AbstractContr
             @Subscribe
             override fun handle(event: TicketEvent.GotoDashboard) {
                 val searchCriteria = ProjectTicketSearchCriteria()
-                searchCriteria.projectIds = SetSearchField<Int>(CurrentProjectVariables.projectId)
+                searchCriteria.projectIds = SetSearchField(CurrentProjectVariables.projectId)
                 searchCriteria.types = CurrentProjectVariables.restrictedTicketTypes
-                searchCriteria.isOpenned = SearchField()
+                searchCriteria.open = SearchField()
                 val data = TicketScreenData.GotoDashboard(searchCriteria)
                 val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
                 presenter.go(navManager, data)

@@ -20,14 +20,14 @@
     <m_prj_member id="2" username="linhduong" projectId="3" createdTime="2013-04-10 00:00:00" isAdmin="0" status="Active"
                   sAccountId="1"/>
 
-    <m_prj_milestone id="1" name="Milestone 1" projectId="1" sAccountId="1" status="Closed" startDate="2019-01-02"
-                     endDate="2019-02-02"/>
+    <m_prj_milestone id="1" name="Milestone 1" projectId="1" sAccountId="1" status="Closed" startDate="2018-12-28"
+                     endDate="2019-01-11"/>
 
     <m_prj_task id="1" name="Task 1" percentagecomplete="10" projectId="1" sAccountId="1" dueDate="2013-04-10 00:00:00"
                 priority="Medium"/>
 
     <m_prj_task id="2" name="Task 2" percentagecomplete="10" projectId="1" sAccountId="1" dueDate="2019-01-08"
-                priority="Medium"/>
+                priority="Medium" status="Open"/>
 
     <m_prj_task id="3" name="Task 3" percentagecomplete="10" projectId="2" sAccountId="1" dueDate="2013-04-10 00:00:00"
                 priority="Medium"/>
