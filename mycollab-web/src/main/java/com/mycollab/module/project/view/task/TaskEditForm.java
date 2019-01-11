@@ -44,9 +44,9 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -74,13 +74,11 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
         @Override
         public AbstractComponent getLayout() {
-            VerticalLayout layout = new VerticalLayout();
+            MVerticalLayout layout = new MVerticalLayout();
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
                     Task.Field.parenttaskid.name());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
-            layout.addComponent(gridLayout);
-            layout.setExpandRatio(gridLayout, 1.0f);
 
             MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                 if (validateForm()) {
@@ -131,8 +129,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
             MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn)
                     .withMargin(new MarginInfo(true, true, true, false)).alignAll(Alignment.MIDDLE_RIGHT);
 
-            layout.addComponent(buttonControls);
-            layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
+            layout.with(gridLayout, buttonControls).expand(gridLayout).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             return layout;
         }
 

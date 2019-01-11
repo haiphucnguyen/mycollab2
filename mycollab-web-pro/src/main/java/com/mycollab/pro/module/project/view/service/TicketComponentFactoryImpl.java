@@ -65,6 +65,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
@@ -463,7 +464,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
     private static class NewTicketWindow extends MWindow {
         private ComboBox<String> typeSelection;
-        private CssLayout formLayout;
+        private MCssLayout formLayout;
         private boolean isIncludeMilestone;
         private SimpleProject selectedProject;
 
@@ -492,8 +493,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
             formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
             formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 1);
-            formLayout = new CssLayout();
-            formLayout.setWidth("100%");
+            formLayout = new MCssLayout().withFullWidth();
             content.with(formLayoutHelper.getLayout(), formLayout);
             doChange(date, milestoneId);
         }

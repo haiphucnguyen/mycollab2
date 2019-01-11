@@ -52,6 +52,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
+
 //            new Restrain(gridLayout).setMaxHeight((UIUtils.getBrowserHeight() - 180) + "px");
             layout.addComponent(gridLayout);
             layout.setExpandRatio(gridLayout, 1.0f);
