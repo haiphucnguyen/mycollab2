@@ -673,8 +673,8 @@
     targetBudget CDATA #IMPLIED
     homePage CDATA #IMPLIED
     actualBudget CDATA #IMPLIED
-    projectType CDATA #IMPLIED
-    projectStatus CDATA #REQUIRED
+    type CDATA #IMPLIED
+    status CDATA #REQUIRED
     description CDATA #IMPLIED
     defaultBillingRate CDATA #IMPLIED
     defaultOvertimeBillingRate CDATA #IMPLIED

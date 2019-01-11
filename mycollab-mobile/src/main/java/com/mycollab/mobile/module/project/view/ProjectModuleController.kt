@@ -78,7 +78,7 @@ class ProjectModuleController(val navManager: NavigationManager) : AbstractContr
                 val presenter = PresenterResolver.getPresenter(UserProjectListPresenter::class.java)
                 val criteria = ProjectSearchCriteria()
                 criteria.involvedMember = StringSearchField.and(UserUIContext.getUsername())
-                criteria.projectStatuses = SetSearchField<String>(StatusI18nEnum.Open.name)
+                criteria.statuses = SetSearchField(StatusI18nEnum.Open.name)
                 presenter.go(navManager, ScreenData.Search(criteria))
             }
         })

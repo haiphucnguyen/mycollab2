@@ -61,7 +61,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
                 return tf;
             } else if (Project.Field.homepage.equalTo(propertyId)) {
 //                return new UrlField();
-            } else if (Project.Field.projectstatus.equalTo(propertyId)) {
+            } else if (Project.Field.status.equalTo(propertyId)) {
                 return new ProjectStatusListSelect();
             } else if (Project.Field.planstartdate.equalTo(propertyId) || Project.Field.planenddate.equalTo(propertyId)) {
                 return new DatePicker();
@@ -97,7 +97,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
             } else if (Project.Field.homepage.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 0, 2);
-            } else if (Project.Field.projectstatus.equalTo(propertyId)) {
+            } else if (Project.Field.status.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_STATUS), 0, 3);
             } else if (Project.Field.planstartdate.equalTo(propertyId)) {
                 return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE), 0, 4);

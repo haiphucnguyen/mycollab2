@@ -28,7 +28,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
         val billingPlan = billingService.findBillingPlan(sAccountId)
         val criteria = ProjectSearchCriteria()
         criteria.saccountid = NumberSearchField(sAccountId)
-        criteria.projectStatuses = SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name)
+        criteria.statuses = SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name)
         val numOfActiveProjects = projectMapperExt.getTotalCount(criteria)
 
         if (numOfActiveProjects >= billingPlan!!.numprojects) {

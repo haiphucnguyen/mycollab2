@@ -42,7 +42,6 @@ import org.vaadin.viritin.fields.MTextField;
  * @author MyCollab Ltd
  * @since 5.3.5
  */
-// TODO
 public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWizardStep {
     private Project project;
     private AdvancedEditBeanForm<Project> editForm;
@@ -72,7 +71,7 @@ public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWiza
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
                 (GenericI18Enum.FORM_START_DATE).fieldIndex(3).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.status).displayName
                 (GenericI18Enum.FORM_STATUS).fieldIndex(4).build());
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
@@ -124,11 +123,11 @@ public class ProjectGeneralInfoStep implements AbstractProjectAddWindow.FormWiza
         protected HasValue<?> onCreateField(final Object propertyId) {
             if (Project.Field.description.equalTo(propertyId)) {
                 return new RichTextArea();
-            } else if (Project.Field.projectstatus.equalTo(propertyId)) {
+            } else if (Project.Field.status.equalTo(propertyId)) {
                 ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
                 projectCombo.setRequiredIndicatorVisible(true);
-                if (project.getProjectstatus() == null) {
-                    project.setProjectstatus(StatusI18nEnum.Open.name());
+                if (project.getStatus() == null) {
+                    project.setStatus(StatusI18nEnum.Open.name());
                 }
                 return projectCombo;
             } else if (Project.Field.shortname.equalTo(propertyId)) {

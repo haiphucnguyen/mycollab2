@@ -43,7 +43,7 @@ import java.time.LocalDate;
  */
 public class ProjectUnresolvedTicketsWidget extends Depot {
     private ProjectTicketSearchCriteria searchCriteria;
-    private DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> taskList;
+    private DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> ticketList;
     private String title = "";
 
     public ProjectUnresolvedTicketsWidget() {
@@ -59,7 +59,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
             }
             updateSearchResult();
         });
-        taskList = new DefaultBeanPagedList(AppContextUtil.getSpringBean(ProjectTicketService.class),
+        ticketList = new DefaultBeanPagedList(AppContextUtil.getSpringBean(ProjectTicketService.class),
                 new TicketRowDisplayHandler(false), 10) {
             @Override
             protected String stringWhenEmptyList() {
@@ -67,7 +67,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
             }
         };
         addHeaderElement(myItemsSelection);
-        bodyContent.addComponent(taskList);
+        bodyContent.addComponent(ticketList);
     }
 
     public void displayUnresolvedAssignmentsThisWeek() {
@@ -96,7 +96,7 @@ public class ProjectUnresolvedTicketsWidget extends Depot {
     }
 
     private void updateSearchResult() {
-        taskList.setSearchCriteria(searchCriteria);
-        this.setTitle(String.format(title, taskList.getTotalCount()));
+        ticketList.setSearchCriteria(searchCriteria);
+        this.setTitle(String.format(title, ticketList.getTotalCount()));
     }
 }

@@ -192,11 +192,11 @@ public class ProjectAddViewImpl extends AbstractVerticalPageView implements Proj
                 final RichTextArea field = new RichTextArea();
                 field.setHeight("350px");
                 return field;
-            } else if (Project.Field.projectstatus.equalTo(propertyId)) {
+            } else if (Project.Field.status.equalTo(propertyId)) {
                 final ProjectStatusComboBox statusSelection = new ProjectStatusComboBox();
                 statusSelection.setRequiredIndicatorVisible(true);
-                if (project.getProjectstatus() == null) {
-                    project.setProjectstatus(StatusI18nEnum.Open.name());
+                if (project.getStatus() == null) {
+                    project.setStatus(StatusI18nEnum.Open.name());
                 }
                 return statusSelection;
             } else if (Project.Field.shortname.equalTo(propertyId)) {

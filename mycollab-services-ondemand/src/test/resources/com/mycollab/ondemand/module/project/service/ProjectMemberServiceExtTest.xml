@@ -12,8 +12,8 @@
         registerStatus="Active" username="hainguyen@esofthead.com"
         roleId="1" accountId="1" registeredTime="2013-04-10 13:29:23" />
 
-    <m_prj_project shortname="ABC" projectStatus="Active"
+    <m_prj_project shortName="ABC" status="Active"
         sAccountId="1" id="1" name="Test Project" />
 
-    <m_prj_role id="1" rolename="A" sAccountId="1" projectId="1"/>
+    <m_prj_role id="1" roleName="A" sAccountId="1" projectId="1"/>
 </dataset>

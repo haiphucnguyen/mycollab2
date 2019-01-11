@@ -9,15 +9,15 @@
     <s_user username="linhduong" firstname="Linh" lastname="Duong"
         email="linhduong@esofthead.com" />
 
-    <m_prj_project id="1" name="A" priority="1" shortname="ddd"
-        projectStatus="Open" sAccountId="1" />
+    <m_prj_project id="1" name="A" priority="1" shortName="ddd"
+        status="Open" sAccountId="1" />
 
     <m_prj_member status="Active" isAdmin="1" projectId="1"
-        sAccountId="1" joinDate="2013-03-13 15:59:44" username="hainguyen"
+        sAccountId="1" createdTime="2013-03-13 15:59:44" username="hainguyen"
         id="1" />
 
     <m_prj_member status="Active" isAdmin="0" projectId="1"
-        sAccountId="1" joinDate="2013-03-13 15:59:44" username="linhduong"
+        sAccountId="1" createdTime="2013-03-13 15:59:44" username="linhduong"
         id="2" />
 
     <m_prj_standup id="1" lastUpdatedTime="2013-03-13 15:59:44"

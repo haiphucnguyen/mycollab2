@@ -137,7 +137,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         if (project.isProjectArchived()) {
             MButton activeProjectBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.BUTTON_ACTIVE_PROJECT), clickEvent -> {
                 ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                project.setProjectstatus(StatusI18nEnum.Open.name());
+                project.setStatus(StatusI18nEnum.Open.name());
                 projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());
 
                 PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
@@ -218,7 +218,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                             confirmDialog -> {
                                 if (confirmDialog.isConfirmed()) {
                                     ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-                                    project.setProjectstatus(StatusI18nEnum.Archived.name());
+                                    project.setStatus(StatusI18nEnum.Archived.name());
                                     projectService.updateSelectiveWithSession(project, UserUIContext.getUsername());
 
                                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));

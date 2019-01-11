@@ -139,7 +139,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
 
             searchCriteria = new ProjectSearchCriteria();
             searchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
-            searchCriteria.setProjectStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
+            searchCriteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
 
             titleLbl = ELabel.h2(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
             OptionPopupContent contentLayout = new OptionPopupContent();
