@@ -5,24 +5,30 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.persistence.service.ICrudService;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
+import com.vaadin.data.BeanValidationBinder;
+import com.vaadin.data.Binder;
 import com.vaadin.data.HasValue;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
  */
-// TODO
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
     protected String description;
-    protected HasValue field;
+    protected HasValue<?> field;
     private boolean hasPermission = true;
     protected B bean;
     private String bindProperty;
-    //    private BeanFieldGroup fieldGroup;
+    private Binder binder;
     private ICrudService crudService;
 
     public PopupBeanFieldBuilder withValue(Object value) {
@@ -99,41 +105,31 @@ public abstract class PopupBeanFieldBuilder<B> {
 
         @Override
         protected void doHide() {
-//            try {
-//                if (fieldGroup.isModified()) {
-//                    fieldGroup.commit();
-//                    save();
-//                    this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
-//                    setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
-//                    BeanPopupView.this.setDescription(generateDescription());
-//                }
-//            } catch (FieldGroup.CommitException e) {
-//                throw new MyCollabException(e);
-//            }
+            if (binder.hasChanges()) {
+                save();
+                this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
+                setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
+                BeanPopupView.this.setDescription(generateDescription());
+            }
         }
 
         @Override
         protected void doShow() {
-//            BeanItem item = new BeanItem(bean);
-//            fieldGroup = new BeanFieldGroup(bean.getClass());
-//
-//            MVerticalLayout layout = getWrapContent();
-//            layout.removeAllComponents();
-//            Label headerLbl = ELabel.h3(caption);
-//            layout.with(headerLbl);
-//            layout.with(field);
+            MVerticalLayout layout = getWrapContent();
+            layout.removeAllComponents();
+            Label headerLbl = ELabel.h3(caption);
+            layout.with(headerLbl, (Component) field);
 //            if (field instanceof AbstractComponent) {
 //                new Restrain((AbstractComponent) field).setMaxWidth("600px");
 //            }
-//
-//            fieldGroup.setBuffered(true);
-//            fieldGroup.setItemDataSource(item);
-//            fieldGroup.bind(field, bindProperty);
-//            boolean checkPermission = isPermission();
-//            field.setVisible(checkPermission);
-//            if (!checkPermission) {
-//                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
-//            }
+
+            binder = new BeanValidationBinder(bean.getClass());
+            binder.bind(field, bindProperty);
+            boolean checkPermission = isPermission();
+            ((Component) field).setVisible(checkPermission);
+            if (!checkPermission) {
+                layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+            }
         }
     }
 }

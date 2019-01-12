@@ -44,6 +44,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -138,8 +139,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
             this.addComponent(headerWrapper);
 
-            CssLayout contentWrapper = new CssLayout();
-            contentWrapper.setWidth("100%");
+            MCssLayout contentWrapper = new MCssLayout().withFullWidth();
 
             MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebThemes.BOX);
             contentWrapper.addComponent(controlsPanel);
@@ -160,7 +160,6 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new DateField();
-//            toDateField.setResolution(Resolution.DAY);
             selectionLayout.addComponent(toDateField, 3, 0);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
@@ -168,14 +167,14 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
             groupField = new StringValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
                     .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
-            groupField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
+            groupField.addValueChangeListener(event -> searchTimeReporting());
             selectionLayout.addComponent(groupField, 1, 1);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
-            orderField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
+            orderField.addValueChangeListener(event -> searchTimeReporting());
             selectionLayout.addComponent(orderField, 3, 1);
 
             selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
@@ -203,11 +202,9 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
             contentWrapper.addComponent(this.timeTrackingWrapper);
 
-            Calendar date = new GregorianCalendar();
-            date.set(java.util.Calendar.DAY_OF_MONTH, 1);
-//            fromDateField.setValue(date.getTime());
-            date.add(java.util.Calendar.DAY_OF_MONTH, date.getActualMaximum(java.util.Calendar.DAY_OF_MONTH));
-//            toDateField.setValue(date.getTime());
+            LocalDate now = LocalDate.now();
+            fromDateField.setValue(now.withDayOfMonth(1));
+            toDateField.setValue(now.withDayOfMonth(now.lengthOfMonth()));
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
             searchTimeReporting();
         } else {

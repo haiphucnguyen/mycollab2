@@ -212,7 +212,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
                 } else if (propertyId.equals("skypecontact")) {
                     return new UrlLinkViewField(String.format("skype:%s?chat", user.getSkypecontact()), user.getSkypecontact());
                 } else if (User.Field.country.equalTo(propertyId)) {
-                    return new CountryViewField(user.getCountry());
+                    return new CountryViewField();
                 }
                 return null;
             }

@@ -110,8 +110,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-//        builder.withBean(ticket).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-//                .withField(new DateField()).withValue(ticket.getStartDate());
+        builder.withBean(ticket).withBindProperty("startDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
+                .withField(new DateField()).withValue(ticket.getStartDate());
         return builder.build();
     }
 
@@ -141,8 +141,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                 TicketComponentFactoryImpl.save(bean);
             }
         };
-//        builder.withBean(ticket).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-//                .withField(new DateField()).withValue(ticket.getEndDate());
+        builder.withBean(ticket).withBindProperty("endDate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
+                .withField(new DateField()).withValue(ticket.getEndDate());
         return builder.build();
     }
 

@@ -227,7 +227,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Risk.Field.description.equalTo(propertyId)) {
-                return new RichTextViewField(beanItem.getDescription());
+                return new RichTextViewField();
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             }

@@ -25,6 +25,7 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.AttachmentDisplayComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ProjectFormAttachmentDisplayField extends CustomField {
         List<Content> attachments = resourceService.getContents(AttachmentUtils.
                 getProjectEntityAttachmentPath(AppUI.getAccountId(), projectId, type, "" + typeId));
 
-        if (attachments.isEmpty()) {
+        if (CollectionUtils.isEmpty(attachments)) {
             return ELabel.html("&nbsp;");
         } else {
             return new AttachmentDisplayComponent(attachments);

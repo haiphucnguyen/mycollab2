@@ -228,7 +228,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         private ToggleBugSummaryField toggleBugSummaryField;
 
         void displayBugHeader(final SimpleBug bug) {
-            MVerticalLayout header = new VerticalRemoveInlineComponentMarker().withFullWidth().withMargin(false);
+            MVerticalLayout header = new VerticalRemoveInlineComponentMarker().withMargin(false).withFullWidth();
             toggleBugSummaryField = new ToggleBugSummaryField(bug);
             toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_H3);
             toggleBugSummaryField.addLabelStyleName(ValoTheme.LABEL_NO_MARGIN);

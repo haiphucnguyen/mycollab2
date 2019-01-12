@@ -32,11 +32,11 @@ public class ClientReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldF
         } else if (Client.Field.industry.equalTo(propertyId)) {
             return new I18nFormViewField(account.getIndustry(), ClientIndustry.class);
         } else if (Client.Field.description.equalTo(propertyId)) {
-            return new RichTextViewField(account.getDescription());
+            return new RichTextViewField();
         } else if (Client.Field.billingcountry.equalTo(propertyId)) {
-            return new CountryViewField(account.getBillingcountry());
+            return new CountryViewField();
         } else if (Client.Field.shippingcountry.equalTo(propertyId)) {
-            return new CountryViewField(account.getShippingcountry());
+            return new CountryViewField();
         }
 
         return null;

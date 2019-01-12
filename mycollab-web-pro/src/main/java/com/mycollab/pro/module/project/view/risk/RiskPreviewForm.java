@@ -51,7 +51,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
         protected HasValue<?> onCreateField(Object propertyId) {
             SimpleRisk risk = attachForm.getBean();
             if (Risk.Field.description.equalTo(propertyId)) {
-                return new RichTextViewField(risk.getDescription());
+                return new RichTextViewField();
             } else if (Risk.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(risk.getPriority())) {
                     VaadinIcons fontPriority = ProjectAssetsManager.getPriority(risk.getPriority());
@@ -62,11 +62,8 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 }
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
-            } else if (Risk.Field.duedate.equalTo(propertyId)) {
-                return new DateViewField();
-            } else if (Risk.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField();
-            } else if (Risk.Field.enddate.equalTo(propertyId)) {
+            } else if (Risk.Field.duedate.equalTo(propertyId) || Risk.Field.startdate.equalTo(propertyId)
+                    || Risk.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField();
             } else if (Risk.Field.createduser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(risk.getProjectid(), risk.getCreateduser(),
@@ -75,7 +72,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return new ProjectUserFormLinkField(risk.getProjectid(), risk.getAssignuser(),
                         risk.getAssignToUserAvatarId(), risk.getAssignedToUserFullName());
             } else if (Risk.Field.response.equalTo(propertyId)) {
-                return new RichTextViewField(risk.getResponse());
+                return new RichTextViewField();
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "", risk.getMilestoneName());
             } else if (Risk.Field.id.equalTo(propertyId)) {

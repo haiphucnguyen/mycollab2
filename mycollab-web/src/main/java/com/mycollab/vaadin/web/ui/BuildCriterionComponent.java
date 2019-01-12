@@ -414,22 +414,10 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         }
 
         private SearchFieldInfo buildSearchFieldInfo() {
-            String prefixOper = (operatorSelectionBox != null) ? (String) operatorSelectionBox.getValue() : "AND";
+            String prefixOper = (operatorSelectionBox != null) ? operatorSelectionBox.getValue() : "AND";
             Param param = (Param) fieldSelectionBox.getValue();
             QueryI18nEnum compareOper = compareSelectionBox.getValue();
-            Object value;
-            int componentCount = valueBox.getComponentCount();
-            if (componentCount == 1) {
-                HasValue<?> component = (HasValue<?>) valueBox.getComponent(0);
-                value = component.getValue();
-            } else if (componentCount > 1) {
-                value = new Object[componentCount];
-                for (int i = 0; i < componentCount; i++) {
-                    Array.set(value, i, ((HasValue<?>) valueBox.getComponent(i)).getValue());
-                }
-            } else {
-                return null;
-            }
+            Object value = constructObject(valueBox);
 
             if (value != null) {
                 if (value.getClass().isArray()) {
@@ -441,14 +429,33 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                         return null;
                     }
                 }
+                if (value instanceof Enum) {
+                    value = ((Enum)value).name();
+                }
                 return new SearchFieldInfo(prefixOper, param, compareOper.name(), ConstantValueInjector.valueOf(value));
+            } else {
+                return null;
+            }
+        }
+
+        private Object constructObject(AbstractOrderedLayout valueBox) {
+            int componentCount = valueBox.getComponentCount();
+            if (componentCount == 1) {
+                HasValue<?> component = (HasValue<?>) valueBox.getComponent(0);
+                return component.getValue();
+            } else if (componentCount > 1) {
+                Object[] value = new Object[componentCount];
+                for (int i = 0; i < componentCount; i++) {
+                    Array.set(value, i, ((HasValue<?>) valueBox.getComponent(i)).getValue());
+                }
+                return value;
             } else {
                 return null;
             }
         }
     }
 
-    private class SavedSearchResultComboBox extends ComboBox {
+    private class SavedSearchResultComboBox extends ComboBox<SaveSearchResult> {
         private static final long serialVersionUID = 1L;
 
         SavedSearchResultComboBox() {

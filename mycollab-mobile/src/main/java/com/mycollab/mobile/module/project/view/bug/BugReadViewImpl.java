@@ -218,11 +218,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         @Override
         protected HasValue<?> onCreateField(Object propertyId) {
-            if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
-                return new DateViewField();
-            } else if (BugWithBLOBs.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField();
-            } else if (BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
+            if (BugWithBLOBs.Field.duedate.equalTo(propertyId) || BugWithBLOBs.Field.startdate.equalTo(propertyId)
+                    || BugWithBLOBs.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField();
             } else if (BugWithBLOBs.Field.assignuser.equalTo(propertyId)) {
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink
@@ -238,10 +235,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     return new DefaultViewField("", ContentMode.HTML);
                 }
 
-            } else if (BugWithBLOBs.Field.environment.equalTo(propertyId)) {
-                return new RichTextViewField(beanItem.getEnvironment());
-            } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {
-                return new RichTextViewField(beanItem.getDescription());
+            } else if (BugWithBLOBs.Field.description.equalTo(propertyId) || BugWithBLOBs.Field.environment.equalTo(propertyId)) {
+                return new RichTextViewField();
             } else if (BugWithBLOBs.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {

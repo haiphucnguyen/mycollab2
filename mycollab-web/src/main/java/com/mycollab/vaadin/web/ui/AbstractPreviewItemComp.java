@@ -121,7 +121,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         } else {
             CssLayout bodyContainer = new CssLayout();
             bodyContainer.setSizeFull();
-            bodyContainer.addStyleName("readview-body-wrap");
             bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullSize();
             bodyContainer.addComponent(bodyContent);
             previewLayout.addBody(bodyContainer);

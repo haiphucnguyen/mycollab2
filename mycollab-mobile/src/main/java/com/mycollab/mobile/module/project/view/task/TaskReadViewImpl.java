@@ -239,7 +239,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 }
             } else if (Task.Field.description.equalTo(propertyId)) {
-                return new RichTextViewField(beanItem.getDescription());
+                return new RichTextViewField();
             } else if (Task.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             }
