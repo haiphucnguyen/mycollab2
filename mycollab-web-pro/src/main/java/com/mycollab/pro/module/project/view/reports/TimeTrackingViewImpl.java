@@ -139,82 +139,73 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
             this.addComponent(headerWrapper);
 
-            MCssLayout contentWrapper = new MCssLayout().withFullWidth();
+            MVerticalLayout contentLayout = new MVerticalLayout().withFullWidth();
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebThemes.BOX);
-            contentWrapper.addComponent(controlsPanel);
+            GridLayout searchLayout = new GridLayout(9, 2);
+            searchLayout.setSpacing(true);
+            searchLayout.setMargin(true);
+            searchLayout.setWidth("100%");
+            searchLayout.setStyleName(WebThemes.BOX);
+            searchLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
 
-            GridLayout selectionLayout = new GridLayout(9, 2);
-            selectionLayout.setSpacing(true);
-            selectionLayout.setMargin(true);
-            selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-            controlsPanel.addComponent(selectionLayout);
-
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
 
             fromDateField = new DateField();
-            selectionLayout.addComponent(fromDateField, 1, 0);
+            searchLayout.addComponent(fromDateField, 1, 0);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
 
             toDateField = new DateField();
-            selectionLayout.addComponent(toDateField, 3, 0);
+            searchLayout.addComponent(toDateField, 3, 0);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
                     (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
 
             groupField = new StringValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
                     .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(event -> searchTimeReporting());
-            selectionLayout.addComponent(groupField, 1, 1);
+            searchLayout.addComponent(groupField, 1, 1);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
                     .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
 
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(event -> searchTimeReporting());
-            selectionLayout.addComponent(orderField, 3, 1);
+            searchLayout.addComponent(orderField, 3, 1);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
                     .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
 
             projectField = new UserInvolvedProjectsListSelect(projects);
-            selectionLayout.addComponent(projectField, 5, 0, 5, 1);
+            searchLayout.addComponent(projectField, 5, 0, 5, 1);
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
+            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
                     .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
 
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-            selectionLayout.addComponent(userField, 7, 0, 7, 1);
+            searchLayout.addComponent(userField, 7, 0, 7, 1);
 
             MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
                     .withStyleName(WebThemes.BUTTON_ACTION);
 
-            selectionLayout.addComponent(queryBtn, 8, 0);
+            searchLayout.addComponent(queryBtn, 8, 0);
 
             totalHoursLoggingLabel = ELabel.h2("Total Hours Logging: 0 Hrs");
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
-            loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
-            contentWrapper.addComponent(loggingPanel);
 
             timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(false);
-            contentWrapper.addComponent(timeTrackingWrapper);
+
+            contentLayout.with(searchLayout, new MCssLayout(totalHoursLoggingLabel).withFullWidth(), timeTrackingWrapper).expand(timeTrackingWrapper);
 
             LocalDate now = LocalDate.now();
             fromDateField.setValue(now.withDayOfMonth(1));
             toDateField.setValue(now.withDayOfMonth(now.lengthOfMonth()));
-            this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
+
+            this.with(contentLayout).withAlign(contentLayout, Alignment.TOP_CENTER).expand(contentLayout);
             searchTimeReporting();
         } else {
-            MVerticalLayout contentWrapper = new MVerticalLayout();
-            contentWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-
-            Label infoLbl = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT));
-            infoLbl.setWidthUndefined();
-            contentWrapper.with(infoLbl);
-            this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
+            this.with(new MCssLayout(new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT))).withFullWidth());
         }
     }
 
@@ -271,6 +262,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         timeTrackingWrapper.removeAllComponents();
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
+
         timeTrackingWrapper.addComponent(timeDisplayComp);
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
