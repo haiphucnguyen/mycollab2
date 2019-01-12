@@ -22,7 +22,6 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
 
     public TimeTrackingProjectOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
-        this.setWidth("100%");
     }
 
     @Override
@@ -33,8 +32,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
             Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ").
                     appendChild(new A(ProjectLinkGenerator.generateProjectLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
             ELabel link = ELabel.h3(projectDiv.write());
-            addComponent(link);
-            addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
+            with(link, new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
     }
 

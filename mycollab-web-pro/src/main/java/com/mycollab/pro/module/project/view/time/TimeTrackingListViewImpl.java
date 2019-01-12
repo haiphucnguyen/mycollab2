@@ -36,13 +36,13 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickEvent;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,7 +59,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     private ItemTimeLoggingService itemTimeLoggingService;
     private ItemTimeLoggingSearchCriteria searchCriteria;
 
-    private VerticalLayout timeTrackingWrapper;
+    private MCssLayout contentLayout;
     private ELabel lbTimeRange;
 
     private String groupByState;
@@ -75,8 +75,8 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
             };
 
     public TimeTrackingListViewImpl() {
-        this.withMargin(true);
-        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
+        this.withMargin(true).withSpacing(true);
+
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         ItemTimeLoggingSearchPanel searchPanel = new ItemTimeLoggingSearchPanel();
@@ -103,7 +103,10 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)));
         StringValueComboBox groupField = new StringValueComboBox(false, UserUIContext.getMessage(DayI18nEnum.OPT_DATE),
                 UserUIContext.getMessage(UserI18nEnum.SINGLE));
-        groupField.addValueChangeListener(valueChangeEvent -> groupByState = (String) groupField.getValue());
+        groupField.addValueChangeListener(valueChangeEvent -> {
+            groupByState = groupField.getValue();
+            displayTimeEntries();
+        });
         groupByState = UserUIContext.getMessage(DayI18nEnum.OPT_DATE);
         groupWrapLayout.addComponent(groupField);
 
@@ -124,18 +127,10 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         groupWrapLayout.addComponent(createBtn);
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        this.addComponent(searchPanel);
-
-        final MHorizontalLayout headerLayout = new MHorizontalLayout().withFullWidth();
-        headerWrapper.addComponent(headerLayout);
-
         lbTimeRange = ELabel.h3("");
-        headerLayout.with(lbTimeRange).expand(lbTimeRange);
-        this.addComponent(headerWrapper);
 
-        timeTrackingWrapper = new VerticalLayout();
-        timeTrackingWrapper.setWidth("100%");
-        this.with(timeTrackingWrapper).expand(timeTrackingWrapper);
+        contentLayout = new MCssLayout().withFullWidth();
+        this.with(searchPanel, new MCssLayout(lbTimeRange).withFullWidth(), contentLayout).expand(contentLayout);
     }
 
     @Override
@@ -175,12 +170,12 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
     }
 
     private void displayNoPermissionMessage() {
-        timeTrackingWrapper.removeAllComponents();
-        timeTrackingWrapper.addComponent(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+        contentLayout.removeAllComponents();
+        contentLayout.addComponent(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
     }
 
     private void displayTimeEntries() {
-        timeTrackingWrapper.removeAllComponents();
+        contentLayout.removeAllComponents();
         setTimeRange();
 
         if (UserUIContext.getMessage(DayI18nEnum.OPT_DATE).equals(groupByState)) {
@@ -190,7 +185,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
         }
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
-        timeTrackingWrapper.addComponent(timeDisplayComp);
+        contentLayout.addComponent(timeDisplayComp);
 
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
@@ -199,11 +194,9 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
                 int pages = totalCount / 20;
                 for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleItemTimeLogging> itemTimeLoggings = (List<SimpleItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new
+                    List<SimpleItemTimeLogging> timeLoggings = (List<SimpleItemTimeLogging>) itemTimeLoggingService.findPageableListByCriteria(new
                             BasicSearchRequest<>(searchCriteria, page + 1, 20));
-                    for (SimpleItemTimeLogging item : itemTimeLoggings) {
-                        timeDisplayComp.insertItem(item);
-                    }
+                    timeLoggings.forEach(item -> timeDisplayComp.insertItem(item));
                 }
                 timeDisplayComp.flush();
             }

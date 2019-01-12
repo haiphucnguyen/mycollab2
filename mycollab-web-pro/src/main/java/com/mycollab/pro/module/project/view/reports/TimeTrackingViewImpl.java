@@ -199,8 +199,8 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 
-            timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
-            contentWrapper.addComponent(this.timeTrackingWrapper);
+            timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(false);
+            contentWrapper.addComponent(timeTrackingWrapper);
 
             LocalDate now = LocalDate.now();
             fromDateField.setValue(now.withDayOfMonth(1));

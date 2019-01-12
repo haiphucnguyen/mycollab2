@@ -16,7 +16,6 @@ public class TimeTrackingUserOrderComponent extends AbstractTimeTrackingDisplayC
 
     public TimeTrackingUserOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
-        this.setWidth("100%");
     }
 
     @Override

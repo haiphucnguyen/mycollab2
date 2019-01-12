@@ -24,7 +24,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 4.5.1
  */
-public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
+public abstract class AbstractTimeTrackingDisplayComp extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     protected List<TableViewField> visibleFields;
@@ -36,6 +36,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     AbstractTimeTrackingDisplayComp(List<TableViewField> fields, TableClickListener tableClickListener) {
         this.visibleFields = fields;
         this.tableClickListener = tableClickListener;
+        withMargin(false).withFullWidth();
     }
 
     public void insertItem(SimpleItemTimeLogging item) {
@@ -65,11 +66,12 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
         TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
                               List<SimpleItemTimeLogging> timeLoggingEntries) {
-            withMargin(new MarginInfo(true, false, true, false));
+            withMargin(false);
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
             table.addTableListener(tableClickListener);
             table.setCurrentDataList(timeLoggingEntries);
-            addComponent(table);
+
+            with(table);
 
             double billableHours = 0, nonBillableHours = 0, cost = 0;
             for (SimpleItemTimeLogging item : timeLoggingEntries) {
@@ -89,7 +91,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             }
 
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
-            with(summaryLayout);
+
             ELabel totalHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
                     .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
             ELabel totalBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
@@ -104,6 +106,8 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
                             .withStyleName(ValoTheme.LABEL_COLORED).withUndefinedWidth(),
                     ELabel.hr(), new ELabel(cost + "").withUndefinedWidth()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
             summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);
+
+            with(summaryLayout);
         }
     }
 }

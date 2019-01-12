@@ -75,6 +75,6 @@ object ProjectAssetsManager {
             temp = Priority.Medium.name
         }
         val icon = getPriority(temp)
-        return "<span class=\"priority-${temp.toLowerCase()} v-icon\" style=\"font-family: VaadinIcons;\">&#x${Integer.toHexString(icon.codepoint)};</span>"
+        return "<span class=\"priority-${temp.toLowerCase()} v-icon v-icon-${icon.name.toLowerCase()}\" style=\"font-family: Vaadin-Icons;\">&#x${Integer.toHexString(icon.codepoint)};</span>"
     }
 }

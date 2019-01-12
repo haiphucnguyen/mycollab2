@@ -49,6 +49,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private boolean hasTimeChange = false;
     private MButton addBtn;
     private Label totalSpentTimeLbl;
+    private DateField logDateField;
     private DoubleField newTimeInputField;
     private CheckBox isBillableField, isOvertimeField;
 
@@ -148,7 +149,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         newTimeInputField = new DoubleField();
         newTimeInputField.setWidth("80px");
 
-        DateField forDateField = new DateField();
+        logDateField = new DateField();
 
         isBillableField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
         isOvertimeField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
@@ -162,7 +163,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 newTimeInputField.setValue(0d);
             }
         }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
-        addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
+        addLayout.with(newTimeInputField, logDateField, isBillableField, isOvertimeField, addBtn);
     }
 
     private void constructRemainTimeEntryPanel() {
@@ -237,9 +238,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     }
 
     protected LocalDate forLogDate() {
-//        Date date = forDateField.getValue();
-//        return (date != null) ? date : new GregorianCalendar().getTime();
-        return null;
+        LocalDate date = logDateField.getValue();
+        return (date != null) ? date : LocalDate.now();
     }
 
     protected abstract void saveTimeInvest();

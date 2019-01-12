@@ -41,20 +41,19 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
 
-    public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
+    TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
         super(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
         this.timeLogging = timeLogging;
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();
 
-//        dateField = new DateField(timeLogging.getLogforday());
-//        dateField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
+        dateField = new DateField(UserUIContext.getMessage(DayI18nEnum.OPT_DATE), timeLogging.getLogforday());
 
         timeField = new DoubleField();
         timeField.setCaption(UserUIContext.getMessage(DayI18nEnum.OPT_HOURS));
         timeField.setValue(timeLogging.getLogvalue());
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
-//        projectMemberSelectionBox.setValue(timeLogging.getLoguser());
+        projectMemberSelectionBox.setSelectedUser(timeLogging.getLoguser());
         projectMemberSelectionBox.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
         isBillableCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
@@ -72,7 +71,6 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         descArea.setWidth("100%");
         content.addComponent(descArea);
 
-        HorizontalLayout footer = new HorizontalLayout();
         ticketLayout = new MHorizontalLayout();
         ticketLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createTicketLinkButton();
@@ -87,9 +85,6 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             updateTicketLink(tmpSelectedTicket);
         }
 
-        footer.addComponent(ticketLayout);
-
-
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
 
@@ -100,9 +95,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
 
-        footer.addComponent(controlsLayout);
-        footer.setSizeFull();
-        footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
+        MHorizontalLayout footer = new MHorizontalLayout(ticketLayout, controlsLayout).withAlign(controlsLayout, Alignment.TOP_RIGHT);
         content.addComponent(footer);
         this.setContent(content);
     }
