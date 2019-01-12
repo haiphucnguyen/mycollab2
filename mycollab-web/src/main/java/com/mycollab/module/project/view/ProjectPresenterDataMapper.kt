@@ -98,7 +98,6 @@ object ProjectPresenterDataMapper {
             ProjectScreenData.GotoTagList::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.GotoFavorite::class.java to ProjectDashboardPresenter::class.java,
             ProjectScreenData.GotoReportConsole::class.java to ProjectDashboardPresenter::class.java,
-            ProjectScreenData.SearchItem::class.java to UserProjectDashboardPresenter::class.java,
             ProjectScreenData.Edit::class.java to ProjectDashboardPresenter::class.java,
             ReportScreenData.GotoWeeklyTiming::class.java to ProjectDashboardPresenter::class.java)
 

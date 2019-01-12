@@ -61,9 +61,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         } else if (data instanceof ProjectScreenData.GotoFavorite) {
             IFavoritePresenter presenter = PresenterResolver.getPresenter(IFavoritePresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof ProjectScreenData.SearchItem) {
-            ProjectSearchItemPresenter presenter = PresenterResolver.getPresenter(ProjectSearchItemPresenter.class);
-            presenter.go(view, data);
         } else if (data instanceof ProjectScreenData.GotoReportConsole || data instanceof StandupScreenData.Search
                 || data instanceof ReportScreenData.GotoWeeklyTiming) {
             IReportPresenter presenter = PresenterResolver.getPresenter(IReportPresenter.class);

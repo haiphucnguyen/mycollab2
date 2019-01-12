@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,9 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
-import com.mycollab.module.project.view.parameters.*;
+import com.mycollab.module.project.view.parameters.MilestoneScreenData;
+import com.mycollab.module.project.view.parameters.PageScreenData;
+import com.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.mycollab.module.project.view.ticket.TicketPresenter;
 import com.mycollab.module.project.view.time.IFinancePresenter;
@@ -48,7 +50,6 @@ import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.Tab;
 import org.vaadin.viritin.button.MButton;
@@ -71,11 +72,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         ControllerRegistry.addController(new ProjectController(this));
 
         this.with(viewWrap).expand(viewWrap);
-    }
-
-    @Override
-    public void displaySearchResult(String value) {
-        viewWrap.displaySearchResult(value);
     }
 
     @Override
@@ -156,10 +152,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     UI.getCurrent().addWindow(new AskToAddMoreMembersWindow());
                 }
             }
-        }
-
-        void displaySearchResult(String value) {
-            dashboardPresenter.go(ProjectViewImpl.this, new ProjectScreenData.SearchItem(value));
         }
 
         void setNavigatorVisibility(boolean visibility) {

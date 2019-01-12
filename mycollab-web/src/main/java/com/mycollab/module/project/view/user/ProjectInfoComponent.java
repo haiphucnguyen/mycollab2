@@ -39,7 +39,6 @@ import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
-import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.shell.event.ShellEvent;
@@ -51,10 +50,8 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
@@ -145,14 +142,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             }).withStyleName(WebThemes.BUTTON_ACTION);
             topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
         } else {
-            SearchTextField searchField = new SearchTextField() {
-                protected void doSearch(String value) {
-                    ProjectView prjView = UIUtils.getRoot(this, ProjectView.class);
-                    if (prjView != null) {
-                        prjView.displaySearchResult(value);
-                    }
-                }
-            };
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.addStyleName(WebThemes.BOX);
@@ -253,8 +242,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             controlsBtn.setContent(popupButtonsControl);
             controlsBtn.setWidthUndefined();
 
-            topPanel.with(searchField, controlsBtn).withAlign(searchField, Alignment.TOP_RIGHT).withAlign(controlsBtn,
-                    Alignment.TOP_RIGHT);
+            topPanel.with(controlsBtn).withAlign(controlsBtn, Alignment.TOP_RIGHT);
         }
     }
 }
