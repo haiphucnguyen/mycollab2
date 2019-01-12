@@ -15,6 +15,7 @@
     }
     .sidebar-menu {
       padding: 0px;
+      transition: width 1s;
       .v-button-wrap .v-icon {
         font-size: $font-x-large;
       }

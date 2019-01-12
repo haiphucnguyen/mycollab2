@@ -178,6 +178,7 @@ public class VerticalTabsheet extends CustomComponent {
             toggleBtn.setIcon(VaadinIcons.ANGLE_DOUBLE_RIGHT);
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
+            toggleBtn.setWidth("65px");
             toggleBtn.setCaption("");
         } else {
             navigatorWrapper.setWidth("200px");
@@ -186,6 +187,7 @@ public class VerticalTabsheet extends CustomComponent {
 
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             toggleBtn.setIcon(VaadinIcons.CLOSE_SMALL);
+            toggleBtn.setWidth("200px");
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
         }
@@ -306,7 +308,7 @@ public class VerticalTabsheet extends CustomComponent {
 
         void hideCaption() {
             this.setCaption("");
-            this.setDescription(String.format("<div class=\"v-label-h3 no-margin\">%s</div>", caption));
+            this.setDescription(String.format("<div class=\"v-label-h3 no-margin\">%s</div>", caption), ContentMode.HTML);
         }
 
         void showCaption() {

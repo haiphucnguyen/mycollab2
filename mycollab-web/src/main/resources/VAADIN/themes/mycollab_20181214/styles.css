@@ -17403,6 +17403,7 @@ div.v-window {
 
 .project-view .sidebar-menu {
 	padding: 0px;
+	transition: width 1s;
 }
 
 .project-view .sidebar-menu .v-button-wrap .v-icon {
@@ -19298,6 +19299,7 @@ div.v-stylecalendar .weekdays TD {
 
 .vertical-tabsheet .navigator-wrap {
 	display: inline-block;
+	transition: width 1s;
 }
 
 .vertical-tabsheet .container-wrap {
@@ -19340,6 +19342,7 @@ div.v-stylecalendar .weekdays TD {
 
 .vertical-tabsheet .v-button-tab.tab-selected {
 	font-weight: 600;
+	transition: width 1s;
 }
 
 .v-radiobutton input[type="radio"] {
