@@ -69,7 +69,7 @@ public class VerticalTabsheet extends CustomComponent {
 
         contentWrapper = new MCssLayout().withStyleName("container-wrap").withFullSize();
 
-        this.setCompositionRoot(new MCssLayout(navigatorWrapper, contentWrapper).withFullSize());
+        this.setCompositionRoot(new MCssLayout(navigatorWrapper, contentWrapper).withFullWidth());
         this.setStyleName(TABSHEET_STYLE);
     }
 

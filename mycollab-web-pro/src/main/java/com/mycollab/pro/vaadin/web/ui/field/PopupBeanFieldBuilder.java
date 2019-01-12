@@ -119,9 +119,6 @@ public abstract class PopupBeanFieldBuilder<B> {
             layout.removeAllComponents();
             Label headerLbl = ELabel.h3(caption);
             layout.with(headerLbl, (Component) field);
-//            if (field instanceof AbstractComponent) {
-//                new Restrain((AbstractComponent) field).setMaxWidth("600px");
-//            }
 
             binder = new BeanValidationBinder(bean.getClass());
             binder.bind(field, bindProperty);

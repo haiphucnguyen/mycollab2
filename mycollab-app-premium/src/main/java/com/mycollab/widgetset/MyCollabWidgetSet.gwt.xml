@@ -33,4 +33,6 @@
     <inherits name="com.fo0.advancedtokenfield.AdvancedTokenField.WidgetSet"/> <!--Plugin: AdvancedTokenField-->
 
     <inherits name="org.vaadin.alump.searchdropdown.WidgetSet"/> <!--Plugin: SearchDropDown-->
+
+    <inherits name="org.vaadin.addons.stackpanel.WidgetSet"/>
 </module>

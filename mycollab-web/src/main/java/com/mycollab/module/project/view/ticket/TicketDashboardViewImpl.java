@@ -65,6 +65,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.addons.stackpanel.StackPanel;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -189,7 +190,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
-        rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, false, false));
+        rightColumn = new MVerticalLayout().withWidth("280px").withMargin(new MarginInfo(true, false, false, false));
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
 
         this.with(ticketSearchPanel, mainLayout).expand(mainLayout);
@@ -252,10 +253,12 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         rightColumn.removeAllComponents();
         UnresolvedTicketsByAssigneeWidget unresolvedTicketsByAssigneeWidget = new UnresolvedTicketsByAssigneeWidget();
         unresolvedTicketsByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
+        StackPanel.extend(unresolvedTicketsByAssigneeWidget);
         rightColumn.addComponent(unresolvedTicketsByAssigneeWidget);
 
         UnresolvedTicketByPriorityWidget unresolvedTicketByPriorityWidget = new UnresolvedTicketByPriorityWidget();
         unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
+        StackPanel.extend(unresolvedTicketByPriorityWidget);
         rightColumn.addComponent(unresolvedTicketByPriorityWidget);
     }
 

@@ -1729,7 +1729,7 @@ $v-line-height--header:1.5em;
   }
 
   /* Right Sidebar Layout */
-  div.v-csslayout.rightsidebar-layout {
+  .v-layout.rightsidebar-layout {
     @include flex-compatible;
     /* NEW, Spec - Opera 12.1, Firefox 20+ */
     -webkit-flex-direction: row;

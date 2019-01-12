@@ -62,6 +62,7 @@ public class ProjectModule extends AbstractSingleContainerPageView implements ID
     private MHorizontalLayout serviceMenuContainer;
 
     public ProjectModule() {
+        setId("project-module");
         addStyleName("module");
         setSizeFull();
         ControllerRegistry.addController(new ProjectModuleController(this));

@@ -1073,7 +1073,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "8.6.3";
+	content: "8.6.4";
 }
 
 .v-widget {
@@ -19745,7 +19745,7 @@ div.v-csslayout.bean-block.olive-block {
 	opacity: 1;
 }
 
-div.v-csslayout.rightsidebar-layout {
+.v-layout.rightsidebar-layout {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -19758,7 +19758,7 @@ div.v-csslayout.rightsidebar-layout {
 	-webkit-box-orient: horizontal;
 }
 
-div.v-csslayout.rightsidebar-layout .sidebar-wrap {
+.v-layout.rightsidebar-layout .sidebar-wrap {
 	display: inline-block;
 	font-size: 13px;
 	border-top: 1px solid #e5e5e5;
@@ -19766,7 +19766,7 @@ div.v-csslayout.rightsidebar-layout .sidebar-wrap {
 	border-right: 1px solid #e5e5e5;
 }
 
-div.v-csslayout.rightsidebar-layout .content-wrap {
+.v-layout.rightsidebar-layout .content-wrap {
 	border-top: 1px solid #e5e5e5;
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
