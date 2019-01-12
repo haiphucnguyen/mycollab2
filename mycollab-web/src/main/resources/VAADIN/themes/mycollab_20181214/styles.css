@@ -17336,19 +17336,11 @@ div.v-window {
 	padding-left: 0px;
 }
 
-.v-gridlayout.colored-gridlayout .v-gridlayout-slot {
-	border-bottom: 1px solid #e5e5e5;
-}
-
 .v-gridlayout.colored-gridlayout .gridform-field {
-	min-height: 43px;
+	padding-top: 10px !important;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption {
-	min-height: 39px;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
+.v-gridlayout.colored-gridlayout .gridform-caption span {
 	text-align: right;
 	color: #999;
 }

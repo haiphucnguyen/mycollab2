@@ -16,25 +16,33 @@
  */
 package com.mycollab.vaadin.web.ui.grid;
 
+import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
-import com.vaadin.ui.AbstractTextField;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.RichTextArea;
+import com.mycollab.web.CustomLayoutExt;
+import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.0.8
  */
-class GridCellWrapper extends MHorizontalLayout {
+public class GridCellWrapper extends CustomLayoutExt {
     private static final long serialVersionUID = 1L;
 
+    private String fieldWidth;
+    private Component field;
+
     GridCellWrapper() {
-        this.withMargin(true).withFullWidth().withStyleName("gridform-field");
+        super("gridCell");
+        this.setStyleName("gridform-field");
     }
 
-    public void addComponent(Component component) {
+    public void addCaption(Component component) {
+        addComponent(component, "caption");
+    }
+
+    public void addField(Component component) {
         if (!(component instanceof Button))
             component.setCaption(null);
 
@@ -44,6 +52,15 @@ class GridCellWrapper extends MHorizontalLayout {
             component.setWidth("100%");
         }
 
-        super.addComponent(component);
+        addComponent(component, "content");
+    }
+
+    public void setFieldWidth(String fieldWidth) {
+        this.fieldWidth = fieldWidth;
+    }
+
+    @Override
+    public void addComponent(Component component) {
+        throw new MyCollabException("Error");
     }
 }

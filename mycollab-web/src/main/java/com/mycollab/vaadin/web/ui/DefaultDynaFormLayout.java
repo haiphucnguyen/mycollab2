@@ -27,6 +27,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.IDynaFormLayout;
+import com.mycollab.vaadin.web.ui.grid.GridCellWrapper;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
@@ -91,7 +92,7 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
                     if (!excludeFields.contains(dynaField.getFieldName())) {
                         gridLayout.buildCell(UserUIContext.getMessage(dynaField.getDisplayName()),
                                 UserUIContext.getMessage(dynaField.getContextHelp()), 0,
-                                gridLayout.getRows() - 1, 2, "100%", Alignment.TOP_LEFT);
+                                gridLayout.getRows() - 1, 2, "100%");
                         if (j < section.getFieldCount() - 1) {
                             gridLayout.appendRow();
                         }
@@ -115,7 +116,7 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
                             }
                             gridLayout.buildCell(UserUIContext.getMessage(dynaField.getDisplayName()),
                                     UserUIContext.getMessage(dynaField.getContextHelp()), 0,
-                                    gridLayout.getRows() - 1, 2, "100%", Alignment.TOP_LEFT);
+                                    gridLayout.getRows() - 1, 2, "100%");
                             columnIndex = 0;
                             if (j < section.getFieldCount() - 1) {
                                 gridLayout.appendRow();
@@ -155,9 +156,9 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();
             GridFormLayoutHelper gridLayout = sectionMappings.get(section);
-            HorizontalLayout componentWrapper = gridLayout.getComponentWrapper(UserUIContext.getMessage(dynaField.getDisplayName()));
+            GridCellWrapper componentWrapper = gridLayout.getComponentWrapper(UserUIContext.getMessage(dynaField.getDisplayName()));
             if (componentWrapper != null) {
-                componentWrapper.addComponent((Component) field);
+                componentWrapper.addField((Component) field);
             }
             return field;
         }

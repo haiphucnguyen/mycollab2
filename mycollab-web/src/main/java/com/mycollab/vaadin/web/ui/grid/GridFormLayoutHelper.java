@@ -16,11 +16,11 @@
  */
 package com.mycollab.vaadin.web.ui.grid;
 
+import com.hp.gagawa.java.elements.Span;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import org.apache.commons.lang3.StringUtils;
@@ -38,39 +38,23 @@ public class GridFormLayoutHelper implements Serializable {
     private static final long serialVersionUID = 1L;
     private final GridLayout layout;
 
-    private String fieldControlWidth;
-    private String defaultCaptionWidth;
-    private final Alignment captionAlignment;
-
     private Map<String, GridCellWrapper> fieldCaptionMappings = new HashMap<>();
 
-    public GridFormLayoutHelper(int columns, int rows, String fieldControlWidth, String defaultCaptionWidth, Alignment captionAlignment) {
-        this.fieldControlWidth = fieldControlWidth;
-        this.defaultCaptionWidth = defaultCaptionWidth;
-        this.captionAlignment = captionAlignment;
+    public GridFormLayoutHelper(int columns, int rows) {
 
-        layout = new GridLayout(2 * columns, rows);
+        layout = new GridLayout(columns, rows);
         layout.setMargin(false);
         layout.setSpacing(false);
         layout.setRowExpandRatio(0, 0);
     }
 
     public static GridFormLayoutHelper defaultFormLayoutHelper(int columns, int rows) {
-        return defaultFormLayoutHelper(columns, rows, "167px");
-    }
-
-    public static GridFormLayoutHelper defaultFormLayoutHelper(int columns, int rows, String controlWidth) {
-        GridFormLayoutHelper helper = new GridFormLayoutHelper(columns, rows, "100%", controlWidth, Alignment.TOP_LEFT);
+        GridFormLayoutHelper helper = new GridFormLayoutHelper(columns, rows);
         helper.getLayout().setWidth("100%");
         helper.getLayout().setSpacing(false);
         helper.getLayout().setMargin(false);
         helper.getLayout().addStyleName(WebThemes.GRIDFORM_STANDARD);
         return helper;
-    }
-
-    public GridFormLayoutHelper withCaptionWidth(String width) {
-        this.defaultCaptionWidth = width;
-        return this;
     }
 
     public void appendRow() {
@@ -82,54 +66,54 @@ public class GridFormLayoutHelper implements Serializable {
     }
 
     public <T> T addComponent(T field, String caption, int columns, int rows, int colSpan, String width) {
-        return this.addComponent(field, caption, null, columns, rows, colSpan, width, captionAlignment);
-    }
-
-    public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int
-            colSpan, String width) {
-        return this.addComponent(field, caption, contextHelp, columns, rows, colSpan, width, captionAlignment);
+        return this.addComponent(field, caption, null, columns, rows, colSpan, width);
     }
 
     public <T> T addComponent(T field, String caption, int columns, int rows) {
-        return this.addComponent(field, caption, null, columns, rows, 1, fieldControlWidth, captionAlignment);
+        return this.addComponent(field, caption, null, columns, rows, 1, "100%");
     }
 
     public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows) {
-        return this.addComponent(field, caption, contextHelp, columns, rows, 1, fieldControlWidth, captionAlignment);
+        return this.addComponent(field, caption, contextHelp, columns, rows, 1, "100%");
     }
 
-    private <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
-        GridCellWrapper cell = buildCell(caption, contextHelp, columns, rows, colSpan, width, alignment);
-        cell.addComponent((Component) field);
+    public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan, String controlWidth) {
+        GridCellWrapper cell = buildCell(caption, contextHelp, columns, rows, colSpan, controlWidth);
+        cell.addField((Component) field);
         return field;
     }
 
     public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows) {
-        return buildCell(caption, contextHelp, columns, rows, 1, fieldControlWidth, captionAlignment);
+        return buildCell(caption, contextHelp, columns, rows, 1, "100%");
     }
 
-    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan, String width, Alignment alignment) {
+    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan, String controlWidth) {
+        GridCellWrapper cell = new GridCellWrapper();
+        cell.setFieldWidth(controlWidth);
+
         if (StringUtils.isNotBlank(caption)) {
+            Span captionSpan = new Span().appendText(caption);
+            if (StringUtils.isNotBlank(contextHelp)) {
+
+            }
             ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
             MHorizontalLayout captionWrapper = new MHorizontalLayout().withSpacing(false).withMargin(true)
-                    .withWidth(defaultCaptionWidth).withFullHeight().withStyleName("gridform-caption").with(captionLbl).expand(captionLbl)
-                    .withAlign(captionLbl, alignment);
+                    .withFullHeight().withStyleName("gridform-caption").with(captionLbl).expand(captionLbl);
             if (StringUtils.isNotBlank(contextHelp)) {
                 ELabel contextHelpLbl = ELabel.html("&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
                         .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();
                 captionWrapper.with(contextHelpLbl);
             }
-            layout.addComponent(captionWrapper, 2 * columns, rows);
+
+            cell.addCaption(ELabel.html(captionSpan.write()).withStyleName("gridform-caption"));
         }
-        GridCellWrapper fieldWrapper = new GridCellWrapper();
-        fieldWrapper.setWidth(width);
-        layout.addComponent(fieldWrapper, 2 * columns + 1, rows, 2 * (columns + colSpan - 1) + 1, rows);
-        layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+
+        layout.addComponent(cell, columns, rows, columns + colSpan - 1, rows);
 
         if (StringUtils.isNotBlank(caption)) {
-            fieldCaptionMappings.put(caption, fieldWrapper);
+            fieldCaptionMappings.put(caption, cell);
         }
-        return fieldWrapper;
+        return cell;
     }
 
     /**

@@ -95,9 +95,9 @@ public class UserReadViewImpl extends AbstractVerticalPageView implements UserRe
 
         GridFormLayoutHelper userFormLayout;
         if (UserUIContext.isAdmin()) {
-            userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6).withCaptionWidth("140px");
+            userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
         } else {
-            userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5).withCaptionWidth("140px");
+            userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5);
         }
         userFormLayout.getLayout().addStyleName(WebThemes.GRIDFORM_BORDERLESS);
         basicLayout.addComponent(userFormLayout.getLayout());

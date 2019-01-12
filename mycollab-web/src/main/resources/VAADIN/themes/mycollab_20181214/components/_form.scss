@@ -19,14 +19,13 @@
       @include margin-container(8px, 8px, 4px, 0px);
     }
     .v-gridlayout-slot {
-      border-bottom: 1px solid $my-separator-color;
+
     }
     .gridform-field {
-      min-height: 43px;
+        padding-top: 10px !important;
     }
     .gridform-caption {
-      min-height: 39px;
-      .v-label {
+      span {
         text-align: right;
         color: $my-meta-color;
       }
