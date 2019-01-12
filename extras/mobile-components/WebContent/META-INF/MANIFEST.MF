@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: SlideMenu
-Implementation-Version: 0.2
-Vaadin-Widgetsets: org.vaadin.thomas.slidemenu.SlidemenuWidgetset
-Vaadin-Package-Version: 1
-Class-Path: 
-

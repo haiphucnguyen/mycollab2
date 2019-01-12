@@ -40,7 +40,6 @@ import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -208,18 +207,18 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
         ProjectBlock(SimpleProject project) {
             this.setWidth("400px");
             this.addStyleName("entityblock");
-            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(FontAwesome
-                    .BUILDING_O.getHtml() + " " + project.getName()).setTitle(project.getName());
+            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(VaadinIcons.COIN_PILES.getHtml() + " " +
+                    project.getName()).setTitle(project.getName());
             ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
-            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers())
+            Div activeMembersDiv = new Div().appendText(VaadinIcons.USERS.getHtml() + " " + project.getNumActiveMembers())
                     .setTitle(UserUIContext.getMessage(ProjectMemberI18nEnum.OPT_ACTIVE_MEMBERS));
-            Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + UserUIContext
+            Div createdTimeDiv = new Div().appendText(VaadinIcons.CLOCK.getHtml() + " " + UserUIContext
                     .formatPrettyTime(project.getCreatedtime())).setTitle(UserUIContext.getMessage(GenericI18Enum.FORM_CREATED_TIME));
-            Div billableHoursDiv = new Div().appendText(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
+            Div billableHoursDiv = new Div().appendText(VaadinIcons.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
                     setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS));
-            Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
+            Div nonBillableHoursDiv = new Div().appendText(VaadinIcons.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours())).setTitle(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS));
             Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE, createdTimeDiv,
                     DivLessFormatter.EMPTY_SPACE, billableHoursDiv, DivLessFormatter.EMPTY_SPACE,

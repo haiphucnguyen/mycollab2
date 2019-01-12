@@ -51,7 +51,7 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
             formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
             AbstractComponent gridLayout = formLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
-            gridLayout.addStyleName("windowMaxHeight");
+            gridLayout.addStyleName("window-max-height");
 
             MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
                 if (validateForm()) {

@@ -62,7 +62,7 @@ public class VerticalTabsheet extends CustomComponent {
     private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
-        navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap").withFullHeight();
+        navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap", "content-height");
 
         navigatorContainer = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         navigatorWrapper.addComponent(navigatorContainer);
