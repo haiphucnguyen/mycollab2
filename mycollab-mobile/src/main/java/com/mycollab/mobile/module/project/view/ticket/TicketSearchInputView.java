@@ -49,7 +49,7 @@ public class TicketSearchInputView extends SearchInputView<ProjectTicketSearchCr
         super.onBecomingVisible();
         criteria = null;
         content = new MVerticalLayout().withMargin(false).withSpacing(false);
-        nameField = new MTextField().withFullWidth().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
+        nameField = new MTextField().withFullWidth().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
         content.with(nameField);
 
         content.with(FormSectionBuilder.build(UserUIContext.getMessage(GenericI18Enum.OPT_SHARED_TO_ME)).withStyleName("border-top"));

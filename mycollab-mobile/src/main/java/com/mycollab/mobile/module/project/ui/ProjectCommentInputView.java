@@ -88,7 +88,7 @@ public class ProjectCommentInputView extends AbstractMobilePageView {
 
         commentInput = new TextArea();
         commentInput.setWidth("100%");
-//        commentInput.setInputPrompt("---");
+        commentInput.setPlaceholder("---");
 
         MButton postBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
             final CommentWithBLOBs comment = new CommentWithBLOBs();

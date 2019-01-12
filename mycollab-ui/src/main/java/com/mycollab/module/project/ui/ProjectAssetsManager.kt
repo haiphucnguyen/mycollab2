@@ -51,9 +51,6 @@ object ProjectAssetsManager {
     fun getAsset(resId: String): VaadinIcons = resources[resId] ?: VaadinIcons.DASHBOARD
 
     @JvmStatic
-    fun toHexString(resId: String): String = "&#x${Integer.toHexString(resources[resId]!!.codepoint)}"
-
-    @JvmStatic
     fun getPriority(priority: String?): VaadinIcons =
             if (Priority.Urgent.name == priority || Priority.High.name == priority || Priority.Medium.name == priority || priority == null) {
                 VaadinIcons.ARROW_UP
@@ -66,6 +63,14 @@ object ProjectAssetsManager {
         MilestoneStatus.Closed.name -> VaadinIcons.MINUS_CIRCLE
         MilestoneStatus.InProgress.name -> VaadinIcons.CLOCK
         else -> VaadinIcons.SPINNER
+    }
+
+    @JvmStatic
+    fun toHtml(resId: String): String {
+        val icon = resources[resId]
+        return if (icon != null) {
+            "<span class=\"v-icon v-icon-${icon.name.toLowerCase()}\" style=\"font-family: Vaadin-Icons;\">&#x${Integer.toHexString(icon.codepoint)};</span>"
+        } else ""
     }
 
     @JvmStatic

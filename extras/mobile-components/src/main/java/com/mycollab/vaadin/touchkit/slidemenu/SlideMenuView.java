@@ -1,6 +1,6 @@
 package com.mycollab.vaadin.touchkit.slidemenu;
 
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -27,7 +27,7 @@ public class SlideMenuView extends NavigationView implements NavigationListener 
     public SlideMenuView() {
 
         menuButton = new Button();
-        menuButton.setIcon(FontAwesome.BARS);
+        menuButton.setIcon(VaadinIcons.ALIGN_JUSTIFY);
         menuButton.addClickListener(new ClickListener() {
 
             private static final long serialVersionUID = 6014031942527721065L;
@@ -55,7 +55,7 @@ public class SlideMenuView extends NavigationView implements NavigationListener 
     }
 
     /**
-     * Change the icon for the menu button. Default is {@link FontAwesome#BARS}
+     * Change the icon for the menu button. Default is {@link VaadinIcons#ALIGN_JUSTIFY}
      *
      * @param icon
      */

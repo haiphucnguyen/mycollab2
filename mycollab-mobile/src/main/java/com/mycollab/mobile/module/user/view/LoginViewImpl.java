@@ -20,6 +20,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.i18n.LocalizationHelper;
+import com.mycollab.mobile.MobileApplication;
 import com.mycollab.mobile.module.user.event.UserEvent;
 import com.mycollab.mobile.ui.AbstractMobileMainView;
 import com.mycollab.mobile.ui.MobileUIConstants;
@@ -62,14 +63,13 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
         contentLayout.addComponent(welcomeText);
 
         final EmailField emailField = new EmailField();
-//        new Dom(emailField).setAttribute("placeholder", LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
-//                GenericI18Enum.FORM_EMAIL));
+        emailField.setPlaceholder(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), GenericI18Enum.FORM_EMAIL));
         emailField.setWidth("100%");
         contentLayout.addComponent(emailField);
 
         final PasswordField pwdField = new PasswordField();
+        pwdField.setPlaceholder(LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.FORM_PASSWORD));
         pwdField.setWidth("100%");
-//        new Dom(pwdField).setAttribute("placeholder", LocalizationHelper.getMessage(AppUI.getDefaultLocale(), ShellI18nEnum.FORM_PASSWORD));
         contentLayout.addComponent(pwdField);
 
         final CheckBox rememberPassword = new CheckBox(LocalizationHelper.getMessage(AppUI.getDefaultLocale(),
@@ -81,6 +81,8 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
             try {
                 LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
                         emailField.getValue(), pwdField.getValue(), rememberPassword.getValue())));
+                ((MobileApplication) UI.getCurrent()).doLogin(emailField.getValue(),
+                        pwdField.getValue(), rememberPassword.getValue());
             } catch (Exception e) {
                 throw new MyCollabException(e);
             }

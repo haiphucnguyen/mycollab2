@@ -50,14 +50,14 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
 
         subjectField = new TextField();
         subjectField.setWidth("100%");
-//        subjectField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
+        subjectField.setPlaceholder(UserUIContext.getMessage(MessageI18nEnum.FORM_TITLE));
         contentLayout.addComponent(subjectField);
 
         contentLayout.addComponent(ELabel.hr());
 
         contentField = new TextArea();
         contentField.setWidth("100%");
-//        contentField.setInputPrompt(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
+        contentField.setPlaceholder(UserUIContext.getMessage(MessageI18nEnum.M_FORM_CONTENT_FIELD_PROMPT));
         contentLayout.addComponent(contentField);
 
         VerticalComponentGroup bottomRow = new VerticalComponentGroup();

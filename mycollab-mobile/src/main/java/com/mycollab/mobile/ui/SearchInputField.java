@@ -35,8 +35,7 @@ public abstract class SearchInputField<S extends SearchCriteria> extends TextFie
 
     public SearchInputField() {
         this.setStyleName("searchinputfield");
-//        Dom dom = new Dom(this);
-//        dom.setAttribute("placeholder", "Search");
+        this.setPlaceholder("Search");
 //        this.setTextChangeEventMode(TextChangeEventMode.TIMEOUT);
 //        this.setTextChangeTimeout(3000);
         this.addValueChangeListener(valueChangeEvent -> {

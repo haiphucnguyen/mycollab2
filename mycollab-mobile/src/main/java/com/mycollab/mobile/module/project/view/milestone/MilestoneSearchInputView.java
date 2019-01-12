@@ -37,7 +37,7 @@ public class MilestoneSearchInputView  extends SearchInputView<MilestoneSearchCr
     protected void onBecomingVisible() {
         super.onBecomingVisible();
         MVerticalLayout content = new MVerticalLayout();
-        nameField = new MTextField().withFullWidth().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
+        nameField = new MTextField().withFullWidth().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT));
         content.with(nameField);
 
         setContent(content);
