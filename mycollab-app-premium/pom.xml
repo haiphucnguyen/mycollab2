@@ -62,7 +62,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>com.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
@@ -74,7 +73,6 @@
             <artifactId>mycollab-mobile-premium</artifactId>
             <version>${project.version}</version>
         </dependency>
-        -->
 
         <dependency>
             <groupId>com.mycollab</groupId>

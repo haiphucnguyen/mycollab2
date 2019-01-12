@@ -33,7 +33,7 @@ public class AbstractMobileTabPageView extends TabBarView implements PageView {
     @Override
     public Tab addTab(Component tabContent, String caption, Resource icon) {
         Tab newTab = super.addTab(tabContent, caption, icon);
-        ((Button) newTab).setHtmlContentAllowed(true);
+        ((Button) newTab).setCaptionAsHtml(true);
         return newTab;
     }
 }

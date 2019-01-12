@@ -21,7 +21,6 @@ import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.event.SearchHandler;
 import com.vaadin.ui.TextField;
-import org.vaadin.resetbuttonfortextfield.ResetButtonForTextField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +46,11 @@ public abstract class SearchInputField<S extends SearchCriteria> extends TextFie
                 notifySearchHandler(searchCriteria);
             }
         });
-        ResetButtonForTextField resetBtn = ResetButtonForTextField.extend(this);
-        resetBtn.addResetButtonClickedListener(() -> {
-            final S searchCriteria = fillUpSearchCriteria(null);
-            notifySearchHandler(searchCriteria);
-        });
+//        ResetButtonForTextField resetBtn = ResetButtonForTextField.extend(this);
+//        resetBtn.addResetButtonClickedListener(() -> {
+//            final S searchCriteria = fillUpSearchCriteria(null);
+//            notifySearchHandler(searchCriteria);
+//        });
     }
 
     @Override

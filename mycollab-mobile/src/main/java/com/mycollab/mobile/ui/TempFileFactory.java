@@ -26,7 +26,7 @@ import java.io.IOException;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class TempFileFactory /*implements FileFactory*/ {
+public class TempFileFactory /*==implements FileFactory*/ {
 
     public File createFile(String fileName, String mimeType) {
         final String tempFileName = "upload_tmpfile_" + System.currentTimeMillis();
