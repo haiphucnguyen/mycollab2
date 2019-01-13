@@ -56,7 +56,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     private MButton favoriteBtn;
 
     public AbstractPreviewItemComp(String headerText, VaadinIcons iconResource) {
-        this(headerText, iconResource, null);
+        this(headerText, iconResource, null, false);
     }
 
     public AbstractPreviewItemComp(MHorizontalLayout customHeader, ReadViewLayout layout) {
@@ -68,8 +68,13 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, VaadinIcons iconResource, ReadViewLayout layout) {
+        this(headerText, iconResource, layout, true);
+    }
+
+    public AbstractPreviewItemComp(String headerText, VaadinIcons iconResource, ReadViewLayout layout, boolean isDisplaySideBar) {
         ELabel headerLbl = ELabel.h2("").withUndefinedWidth();
         this.previewLayout = layout;
+        this.isDisplaySideBar = isDisplaySideBar;
 
         header = new MHorizontalLayout().withFullWidth();
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);

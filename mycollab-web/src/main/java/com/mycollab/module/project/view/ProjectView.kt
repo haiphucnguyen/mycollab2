@@ -33,4 +33,6 @@ interface ProjectView : PageView {
     fun gotoSubView(name: String): Component
 
     fun setNavigatorVisibility(visibility: Boolean)
+
+    fun getRightbar(): ProjectRightBarContainer
 }

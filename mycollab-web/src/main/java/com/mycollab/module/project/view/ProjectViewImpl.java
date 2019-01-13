@@ -79,6 +79,10 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         viewWrap.setNavigatorVisibility(visibility);
     }
 
+    public ProjectRightBarContainer getRightbar() {
+        return viewWrap.rightBarContainer;
+    }
+
     @Override
     public Component gotoSubView(String viewId) {
         return viewWrap.gotoSubView(viewId);
@@ -89,7 +93,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         viewWrap.buildComponents();
     }
 
-    private class ProjectViewWrap extends AbstractCssPageView {
+    private class ProjectViewWrap extends MHorizontalLayout implements PageView {
+        private ProjectRightBarContainer rightBarContainer;
         private VerticalTabsheet myProjectTab;
 
         private ProjectDashboardPresenter dashboardPresenter;
@@ -140,7 +145,10 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.setNavigatorWidth("200px");
 
             buildComponents();
-            this.addComponent(myProjectTab);
+
+            rightBarContainer = new ProjectRightBarContainer(project);
+            rightBarContainer.setWidth("300px");
+            this.with(myProjectTab, rightBarContainer).expand(myProjectTab);
 
             if (project.getContextask() == null || project.getContextask()) {
                 ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();

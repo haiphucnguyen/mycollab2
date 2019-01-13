@@ -211,6 +211,7 @@ public enum GenericI18Enum {
     OPT_CHANGE_IMAGE,
     OPT_UPLOAD_IMAGE,
     OPT_FROM_TO,
+    OPT_DETAILS,
 
     M_BUTTON_BACK,
     M_BUTTON_SEND

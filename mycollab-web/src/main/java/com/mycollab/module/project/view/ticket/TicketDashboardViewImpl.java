@@ -40,6 +40,8 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.view.ProjectRightBarContainer;
+import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.spring.AppContextUtil;
@@ -53,6 +55,7 @@ import com.mycollab.vaadin.event.HasSelectionOptionHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.ButtonGroup;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.StringValueComboBox;
@@ -92,7 +95,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
 
     private TicketSearchPanel ticketSearchPanel;
     private MVerticalLayout wrapBody;
-    private VerticalLayout rightColumn;
     private TicketGroupOrderComponent ticketGroupOrderComponent;
 
     private ApplicationEventListener<TicketEvent.SearchRequest> searchHandler = new
@@ -134,6 +136,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         groupWrapLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)));
         final StringValueComboBox sortCombo = new StringValueComboBox(false, UserUIContext.getMessage(GenericI18Enum.OPT_SORT_DESCENDING),
                 UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING));
+        sortCombo.setWidth("130px");
         sortCombo.addValueChangeListener(valueChangeEvent -> {
             String sortValue = sortCombo.getValue();
             if (UserUIContext.getMessage(GenericI18Enum.OPT_SORT_ASCENDING).equals(sortValue)) {
@@ -157,6 +160,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
             groupByState = groupCombo.getValue();
             queryAndDisplayTickets();
         });
+        groupCombo.setWidth("130px");
 
         groupWrapLayout.addComponent(groupCombo);
 
@@ -179,7 +183,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
                 .withVisible(CurrentProjectVariables.canWriteTicket());
         groupWrapLayout.addComponent(newTicketBtn);
 
-
         MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST))
                 .withIcon(VaadinIcons.ALIGN_JUSTIFY).withWidth("100px");
 
@@ -190,8 +193,8 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
-        rightColumn = new MVerticalLayout().withWidth("280px").withMargin(new MarginInfo(true, false, false, false));
-        mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
+
+        mainLayout.with(wrapBody).expand(wrapBody);
 
         this.with(ticketSearchPanel, mainLayout).expand(mainLayout);
     }
@@ -250,16 +253,16 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     }
 
     private void displayTicketsStatistic() {
-        rightColumn.removeAllComponents();
+        ProjectRightBarContainer rightBar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
         UnresolvedTicketsByAssigneeWidget unresolvedTicketsByAssigneeWidget = new UnresolvedTicketsByAssigneeWidget();
         unresolvedTicketsByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
         StackPanel.extend(unresolvedTicketsByAssigneeWidget);
-        rightColumn.addComponent(unresolvedTicketsByAssigneeWidget);
 
         UnresolvedTicketByPriorityWidget unresolvedTicketByPriorityWidget = new UnresolvedTicketByPriorityWidget();
         unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         StackPanel.extend(unresolvedTicketByPriorityWidget);
-        rightColumn.addComponent(unresolvedTicketByPriorityWidget);
+
+        rightBar.addViewComponent(new MVerticalLayout(unresolvedTicketsByAssigneeWidget, unresolvedTicketByPriorityWidget).withMargin(false));
     }
 
     @Override
