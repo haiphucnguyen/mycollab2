@@ -45,6 +45,9 @@ import java.util.Map;
 public class VerticalTabsheet extends CustomComponent {
     private static final long serialVersionUID = 1L;
 
+    private static final String MAX_SIZE = "220px";
+    private static final String MIN_SIZE = "65px";
+
     private static final String TABSHEET_STYLE = "vertical-tabsheet";
     private static final String TAB_STYLE = "tab";
     private static final String TAB_SELECTED_STYLE = "tab-selected";
@@ -64,7 +67,7 @@ public class VerticalTabsheet extends CustomComponent {
     public VerticalTabsheet() {
         navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap", "content-height");
 
-        navigatorContainer = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
+        navigatorContainer = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         navigatorWrapper.addComponent(navigatorContainer);
 
         contentWrapper = new MCssLayout().withStyleName("container-wrap").withFullSize();
@@ -74,17 +77,11 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     private void hideTabsCaption() {
-        for (Component aNavigatorContainer : navigatorContainer) {
-            ButtonTabImpl comp = (ButtonTabImpl) aNavigatorContainer;
-            comp.hideCaption();
-        }
+        navigatorContainer.forEach(container -> ((ButtonTabImpl) container).hideCaption());
     }
 
     private void showTabsCaption() {
-        for (Component aNavigatorContainer : navigatorContainer) {
-            ButtonTabImpl comp = (ButtonTabImpl) aNavigatorContainer;
-            comp.showCaption();
-        }
+        navigatorContainer.forEach(container -> ((ButtonTabImpl) container).showCaption());
     }
 
     public void addTab(Component component, String id, String caption) {
@@ -118,7 +115,7 @@ public class VerticalTabsheet extends CustomComponent {
             });
 
             button.setIcon(resource);
-            button.withStyleName(TAB_STYLE, UIConstants.TEXT_ELLIPSIS).withWidth("90%");
+            button.withStyleName(TAB_STYLE, UIConstants.TEXT_ELLIPSIS).withFullWidth();
 
             if (button.getLevel() > 0) {
                 int insertIndex = 0;
@@ -170,24 +167,26 @@ public class VerticalTabsheet extends CustomComponent {
 
     public void setNavigatorVisibility(boolean visibility) {
         if (!visibility) {
-            navigatorWrapper.setWidth("65px");
-            navigatorContainer.setWidth("65px");
+            navigatorWrapper.setWidth(MIN_SIZE);
+            navigatorContainer.setWidth(MIN_SIZE);
             this.hideTabsCaption();
 
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
             toggleBtn.setIcon(VaadinIcons.ANGLE_DOUBLE_RIGHT);
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
+            toggleBtn.addStyleName("toggle-button");
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
             toggleBtn.setWidth("65px");
             toggleBtn.setCaption("");
         } else {
-            navigatorWrapper.setWidth("200px");
-            navigatorContainer.setWidth("200px");
+            navigatorWrapper.setWidth(MAX_SIZE);
+            navigatorContainer.setWidth(MAX_SIZE);
             this.showTabsCaption();
 
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
+            toggleBtn.addStyleName("toggle-button");
             toggleBtn.setIcon(VaadinIcons.CLOSE_SMALL);
-            toggleBtn.setWidth("200px");
+            toggleBtn.setWidth(MAX_SIZE);
             toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
             navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
         }
@@ -197,6 +196,7 @@ public class VerticalTabsheet extends CustomComponent {
         if (getButtonById("button") == null) {
             toggleBtn = new ButtonTabImpl("button", 0, "", "");
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
+            toggleBtn.addStyleName("toggle-button");
             toggleBtn.addClickListener(clickEvent -> {
                 retainVisibility = !retainVisibility;
                 setNavigatorVisibility(retainVisibility);
@@ -237,7 +237,7 @@ public class VerticalTabsheet extends CustomComponent {
             selectedComp = tab;
 
             // Hack for tab view has both header - content or content only
-            if (contentWrapper.getComponentCount()> 0 && "tab-content-header".equals(contentWrapper.getComponent(0).getId())) {
+            if (contentWrapper.getComponentCount() > 0 && "tab-content-header".equals(contentWrapper.getComponent(0).getId())) {
                 if (contentWrapper.getComponentCount() > 1) {
                     contentWrapper.removeComponent(contentWrapper.getComponent(contentWrapper.getComponentCount() - 1));
                 }

@@ -29,7 +29,6 @@ import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
@@ -102,7 +101,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
 
-        ProjectRightBarContainer rightbar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
         if (SiteConfiguration.isCommunityEdition()) {
             detailLayout.with(dateInfoComp, peopleInfoComp);
@@ -113,7 +112,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        rightbar.addViewComponent(detailPanel);
+        projectView.addComponentToRightbar(detailPanel);
     }
 
     @Override

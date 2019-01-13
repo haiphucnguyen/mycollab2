@@ -68,10 +68,11 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
     @Override
     public void initView(SimpleProject project) {
         removeAllComponents();
+        this.withFullWidth().withId("project-view");
         viewWrap = new ProjectViewWrap(project);
         ControllerRegistry.addController(new ProjectController(this));
 
-        this.with(viewWrap).expand(viewWrap);
+        this.with(viewWrap);
     }
 
     @Override
@@ -79,8 +80,12 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         viewWrap.setNavigatorVisibility(visibility);
     }
 
-    public ProjectRightBarContainer getRightbar() {
-        return viewWrap.rightBarContainer;
+    public void addComponentToRightbar(Component component) {
+        viewWrap.rightBarContainer.addViewComponent(component);
+    }
+
+    public void clearRightbar() {
+        viewWrap.rightBarContainer.clearViewComponents();
     }
 
     @Override
@@ -106,7 +111,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private UserSettingPresenter userPresenter;
 
         ProjectViewWrap(SimpleProject project) {
-            this.withFullSize().withStyleName("project-view");
+            this.withSpacing(false).withFullWidth().withStyleName("project-view").withId("project-view-wrap");
 
             myProjectTab = new VerticalTabsheet();
             myProjectTab.setSizeFull();
@@ -140,9 +145,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 
             CssLayout contentWrapper = myProjectTab.getContentWrapper();
             contentWrapper.addStyleName("main-content");
+            contentWrapper.addStyleName("content-height");
             contentWrapper.addComponentAsFirst(new ProjectInfoComponent(project));
-
-            myProjectTab.setNavigatorWidth("200px");
 
             buildComponents();
 

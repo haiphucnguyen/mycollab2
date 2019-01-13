@@ -1690,11 +1690,12 @@ a.pending {
 	color: #0083ce;
 }
 
-.v-button.v-button-link, .v-button.v-button-link:hover {
+.v-button.v-button-link {
 	color: #0083ce;
 }
 
 .v-button.v-button-link:hover {
+	color: #0083ce;
 	text-decoration: underline;
 }
 
@@ -1815,11 +1816,11 @@ a.pending {
 	padding: 3px 5px;
 	margin-right: 5px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 }
 
 .field-note:hover {
-	background-color: #66aa7c;
+	background-color: #3dae7d;
 }
 
 .arrow-btn {
@@ -1827,7 +1828,7 @@ a.pending {
 	text-align: center;
 	padding: 0 10px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 	position: relative;
 	display: inline-block;
 	margin-right: 10px;
@@ -1841,7 +1842,7 @@ a.pending {
 	height: 0px;
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
-	border-color: transparent transparent transparent #76B38A;
+	border-color: transparent transparent transparent #46be8a;
 }
 
 .upload-field .v-verticallayout {
@@ -2164,7 +2165,7 @@ div.v-window {
 	padding: 2px 5px;
 	margin-right: 5px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 	font-size: 13px;
 }
 
@@ -2173,7 +2174,7 @@ div.v-window {
 }
 
 .block:hover {
-	background-color: #589e6f;
+	background-color: #369b6f;
 }
 
 .wizard .wizard-progress-bar {
@@ -2211,7 +2212,7 @@ div.v-window {
 
 .v-csscheckbox-inner::before {
 	background-color: white !important;
-	color: #76B38A !important;
+	color: #46be8a !important;
 	height: 20px !important;
 	font-size: 16px !important;
 	line-height: 20px !important;
@@ -2546,12 +2547,12 @@ div.v-window {
 }
 
 .tm-container .tm-wrapper .timeline li.future .status {
-	border-top: 2px solid #76B38A;
+	border-top: 2px solid #46be8a;
 }
 
 .tm-container .tm-wrapper .timeline li.future .status:before {
 	content: "F";
-	background-color: #76B38A;
+	background-color: #46be8a;
 	color: white;
 	border: none;
 	transition: all 200ms ease-in;
@@ -16036,54 +16037,6 @@ button {
 	overflow: hidden;
 }
 
-.xbreadcrumbs {
-	background-color: transparent !important;
-}
-
-.xbreadcrumbs  > .v-slot:first-child > li {
-	padding-left: 0px;
-}
-
-.xbreadcrumbs li {
-	padding-bottom: 8px !important;
-}
-
-.xbreadcrumbs li  > div.xbreadcrumbbutton {
-	margin-top: 3px;
-	margin-top: 3px;
-}
-
-.xbreadcrumbs li  > div.xbreadcrumbbutton.v-button-xbreadcrumbbutton-home {
-	margin: 0px;
-	margin: 0px;
-}
-
-.xbreadcrumbs .v-link a span {
-	font-size: 13px !important;
-}
-
-.xbreadcrumbbutton {
-	height: 20px;
-}
-
-.xbreadcrumbbutton .v-button-caption {
-	font-size: 13px !important;
-	color: #333333 !important;
-}
-
-.v-button.v-button-link.xbreadcrumbbutton:hover {
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.v-button-xbreadcrumbbutton-home span.v-button-caption {
-	padding-left: 18px;
-}
-
-div.v-button-link.xbreadcrumbbutton .v-button-wrap {
-	padding: 0px;
-}
-
 .v-button {
 	box-shadow: none;
 	border: none;
@@ -16418,11 +16371,12 @@ a.pending {
 	color: #0083ce;
 }
 
-.v-button.v-button-link, .v-button.v-button-link:hover {
+.v-button.v-button-link {
 	color: #0083ce;
 }
 
 .v-button.v-button-link:hover {
+	color: #0083ce;
 	text-decoration: underline;
 }
 
@@ -16543,11 +16497,11 @@ a.pending {
 	padding: 3px 5px;
 	margin-right: 5px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 }
 
 .field-note:hover {
-	background-color: #66aa7c;
+	background-color: #3dae7d;
 }
 
 .arrow-btn {
@@ -16555,7 +16509,7 @@ a.pending {
 	text-align: center;
 	padding: 0 10px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 	position: relative;
 	display: inline-block;
 	margin-right: 10px;
@@ -16569,7 +16523,7 @@ a.pending {
 	height: 0px;
 	border-style: solid;
 	border-width: 10px 0 10px 10px;
-	border-color: transparent transparent transparent #76B38A;
+	border-color: transparent transparent transparent #46be8a;
 }
 
 .upload-field .v-verticallayout {
@@ -16892,7 +16846,7 @@ div.v-window {
 	padding: 2px 5px;
 	margin-right: 5px;
 	color: #ffffff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 	font-size: 13px;
 }
 
@@ -16901,7 +16855,7 @@ div.v-window {
 }
 
 .block:hover {
-	background-color: #589e6f;
+	background-color: #369b6f;
 }
 
 .wizard .wizard-progress-bar {
@@ -16939,7 +16893,7 @@ div.v-window {
 
 .v-csscheckbox-inner::before {
 	background-color: white !important;
-	color: #76B38A !important;
+	color: #46be8a !important;
 	height: 20px !important;
 	font-size: 16px !important;
 	line-height: 20px !important;
@@ -17274,12 +17228,12 @@ div.v-window {
 }
 
 .tm-container .tm-wrapper .timeline li.future .status {
-	border-top: 2px solid #76B38A;
+	border-top: 2px solid #46be8a;
 }
 
 .tm-container .tm-wrapper .timeline li.future .status:before {
 	content: "F";
-	background-color: #76B38A;
+	background-color: #46be8a;
 	color: white;
 	border: none;
 	transition: all 200ms ease-in;
@@ -17312,7 +17266,7 @@ div.v-window {
 
 .form .section {
 	padding: 12px 0px;
-	color: #006DAC;
+	color: #0083ce;
 	border-bottom: 1px solid #e5e5e5;
 }
 
@@ -17357,13 +17311,13 @@ div.v-window {
 	border: none !important;
 }
 
-.activity-comp .section {
+.section {
 	padding: 12px 0px;
-	color: #006DAC;
+	color: #0083ce;
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.activity-comp .section .v-label {
+.section .v-label {
 	font-size: 1.2em;
 }
 
@@ -17387,10 +17341,6 @@ div.v-window {
 	text-align: center;
 }
 
-.project-view {
-	display: block;
-}
-
 .project-view .main-content {
 	padding: 0px;
 	border-right: 1px solid #e5e5e5;
@@ -17399,6 +17349,9 @@ div.v-window {
 .project-view .main-content .top-panel {
 	border-bottom: 1px solid #e5e5e5;
 	padding: 12px 24px;
+}
+
+.project-view .project-right-bar {
 	background-color: #f9f9f9;
 }
 
@@ -17413,6 +17366,10 @@ div.v-window {
 
 .project-view .addViewLayout {
 	padding: 0px 30px 10px;
+}
+
+.project-view  > .v-expand {
+	display: flex;
 }
 
 .task {
@@ -17635,7 +17592,7 @@ div.v-button.token-field {
 	margin-bottom: 5px;
 	margin-right: 5px;
 	color: #fff;
-	background-color: #76B38A;
+	background-color: #46be8a;
 }
 
 div.v-button.token-field .v-button-wrap {
@@ -19097,10 +19054,6 @@ div.v-stylecalendar .weekdays TD {
 	margin-top: 15px;
 }
 
-.v-verticallayout .driveEditting {
-	background-color: #ddd;
-}
-
 .v-label > hr {
 	margin: 0px;
 }
@@ -19178,42 +19131,6 @@ div.v-stylecalendar .weekdays TD {
 .v-label > img {
 	display: inline-block;
 	vertical-align: bottom;
-}
-
-.CrmCustomViewHeader {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	background-color: #ffffff;
-	border: 1px solid #9d9d9d;
-}
-
-.CrmCustomViewHeader .headerTitle {
-	font-weight: 600;
-	color: #454545;
-	background-color: #e1e1e1;
-	border-bottom: 1px solid #9d9d9d;
-}
-
-.CrmCustomViewHeader .instructionLbl {
-	color: #5b5b5b;
-	font-style: italic;
-}
-
-.CrmCustomViewHeader .headerTitle.v-margin-top {
-	padding-top: 4px;
-}
-
-.CrmCustomViewHeader .headerTitle.v-margin-right {
-	padding-right: 10px;
-}
-
-.CrmCustomViewHeader .headerTitle.v-margin-bottom {
-	padding-bottom: 4px;
-}
-
-.CrmCustomViewHeader .headerTitle.v-margin-left {
-	padding-left: 15px;
 }
 
 .customFieldSection {
@@ -19303,6 +19220,10 @@ div.v-stylecalendar .weekdays TD {
 	transition: width 1s;
 }
 
+.vertical-tabsheet .navigator-wrap .toggle-button {
+	transition: width 1s;
+}
+
 .vertical-tabsheet .container-wrap {
 	-webkit-box-flex: 1;
 	-moz-box-flex: 1;
@@ -19316,10 +19237,11 @@ div.v-stylecalendar .weekdays TD {
 .vertical-tabsheet .v-button-tab {
 	border: none;
 	background: none no-repeat 0 0 transparent;
-	margin: 5px;
-	border-radius: 6px;
+	margin: 0px;
+	border-radius: 0px;
 	-webkit-box-shadow: none;
 	text-align: left;
+	height: 46px;
 }
 
 .vertical-tabsheet .v-button-tab .v-button-wrap {
@@ -19331,6 +19253,7 @@ div.v-stylecalendar .weekdays TD {
 
 .vertical-tabsheet .v-button-tab .v-button-wrap .v-icon {
 	margin-right: 8px;
+	margin-left: 8px;
 	font-size: 18px;
 	vertical-align: middle;
 }
@@ -19358,49 +19281,6 @@ div.v-stylecalendar .weekdays TD {
 
 .bean-list .v-verticallayout {
 	display: block;
-}
-
-.contactopp-list-header > .v-expand > .v-spacing {
-	width: 12px;
-}
-
-.contactopp-list .contactrole-row > .v-expand > .v-spacing {
-	width: 14px;
-}
-
-.contactopp-list-header {
-	border-bottom: 1px solid #e5e5e5;
-}
-
-.contactopp-list-header  > .v-expand > .v-slot:first-child .v-label {
-	border-left: none;
-	padding-left: 0px;
-}
-
-.contactopp-list-header .v-label {
-	font-weight: 600;
-	padding: 4px 0px 4px 12px;
-	border-left: 1px solid #e5e5e5;
-}
-
-.contactopp-list-body {
-	border-bottom: 1px solid #e5e5e5;
-}
-
-.contactopp-list-body.no-child {
-	border-bottom: none;
-}
-
-.contactrole-row.v-margin-top {
-	padding-top: 6px;
-}
-
-.contactrole-row.v-margin-bottom {
-	padding-bottom: 6px;
-}
-
-.contactrole-row.odd {
-	background-color: #d4dfef;
 }
 
 img.icon-btn {
@@ -19785,4 +19665,31 @@ div.v-csslayout.bean-block.olive-block {
 	text-align: right;
 	padding-top: 5px;
 	padding-right: 5px;
+}
+
+#linkToTop {
+	width: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	z-index: 999;
+	display: none;
+	cursor: pointer;
+	-moz-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	transform: rotate(270deg);
+	position: fixed;
+	bottom: 50px;
+	right: 0;
+	background-color: #DDD;
+	color: #555;
+	text-align: center;
+	font-size: 30px;
+	text-decoration: none;
+}
+
+#linkToTop:hover {
+	background-color: #DDF;
+	color: #000;
 }

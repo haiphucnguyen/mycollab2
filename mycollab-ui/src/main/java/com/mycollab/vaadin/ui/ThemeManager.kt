@@ -88,12 +88,14 @@ object ThemeManager {
         }
 
         if (accountTheme.vtabsheetbgselected != null) {
-            extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { background-color: #${accountTheme.vtabsheetbgselected}; }")
+            extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { background-color: #${accountTheme.vtabsheetbgselected};}")
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #${accountTheme.vtabsheetbgselected};}")
         }
 
         if (accountTheme.vtabsheettextselected != null) {
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { color: #${accountTheme.vtabsheettextselected}; }")
+            extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { box-shadow: inset 5px 0px 0px 0px #${accountTheme.vtabsheettextselected}; }")
+
             //Color while hover on sidebar menu
             extraStyles.append(".vertical-tabsheet .v-button-tab .v-button-wrap:hover {color: #${accountTheme.vtabsheettextselected}!important;}")
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover .v-button-wrap {color: #${accountTheme.vtabsheettextselected}!important;}")
@@ -171,6 +173,7 @@ object ThemeManager {
         if (accountTheme.dangerbtn != null) {
             extraStyles.append(".v-button.v-button-danger-button, .v-button-danger-button:focus { background-color: #${accountTheme.dangerbtn}; }")
             extraStyles.append(".v-button-danger-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.dangerbtn, 0.1)}; }")
+            extraStyles.append(".v-button.v-button-link.danger,.v-button.v-button-link.danger:hover { color: #${accountTheme.dangerbtn}; }")
             //Set style of popup content action
             extraStyles.append(".optionPopupContent .action-wrap.danger .v-button-action { color: #${accountTheme.dangerbtn}; }")
             extraStyles.append(".optionPopupContent .action-wrap.danger:hover {background-color: #${accountTheme.dangerbtn};}")

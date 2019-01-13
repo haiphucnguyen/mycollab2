@@ -43,8 +43,9 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
-            ProjectView projectViewContainer = (ProjectView) container;
-            projectViewContainer.gotoSubView(ProjectTypeConstants.MESSAGE);
+            ProjectView projectView = (ProjectView) container;
+            projectView.clearRightbar();
+            projectView.gotoSubView(ProjectTypeConstants.MESSAGE);
 
             if (data instanceof MessageScreenData.Read) {
                 MessageReadPresenter presenter = PresenterResolver.getPresenter(MessageReadPresenter.class);

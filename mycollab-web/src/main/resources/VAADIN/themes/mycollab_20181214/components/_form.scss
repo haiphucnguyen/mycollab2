@@ -1,6 +1,6 @@
 @mixin section-header() {
   padding: $my-space 0px;
-  color: $my-title-color;
+  color: $my-link-color;
   border-bottom: 1px solid $my-separator-color;
   .v-label {
     font-size: $v-font-size--h3;
@@ -37,9 +37,9 @@
   }
 
   /* Activity component style */
-  .activity-comp {
-    .section {
-      @include section-header();
-    }
+
+  .section {
+    @include section-header();
   }
+
 }

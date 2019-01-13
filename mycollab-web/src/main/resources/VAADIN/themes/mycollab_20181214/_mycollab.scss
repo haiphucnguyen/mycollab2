@@ -23,7 +23,6 @@ $v-line-height--header:1.5em;
 @import "shared";
 
 @import "components/account";
-@import "components/breadcrumb";
 @import "components/button_ext";
 @import "components/tooltip";
 @import "components/icons";
@@ -50,7 +49,6 @@ $v-line-height--header:1.5em;
   @include valo;
   @include mycollab-global;
   @include mycollab-account;
-  @include mycollab-breadcrumb;
   @include mycollab-button;
   @include mycollab-icons;
   @include mycollab-tabsheet;
@@ -1082,10 +1080,6 @@ $v-line-height--header:1.5em;
     }
   }
 
-  .v-verticallayout .driveEditting {
-    background-color: #ddd;
-  }
-
   /* reponsive wrapper */
 
   .v-label > hr {
@@ -1163,40 +1157,6 @@ $v-line-height--header:1.5em;
   .v-label > img {
     display: inline-block;
     vertical-align: bottom;
-  }
-
-  /* CRM Customize View */
-
-  .CrmCustomViewHeader {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: $my-background-color;
-    border: 1px solid rgb(157, 157, 157);
-    .headerTitle {
-      font-weight: $my-font-weight-bold;
-      color: rgb(69, 69, 69);
-      background-color: rgb(225, 225, 225);
-      border-bottom: 1px solid rgb(157, 157, 157);
-    }
-    .instructionLbl {
-      color: rgb(91, 91, 91);
-      font-style: italic;
-    }
-    .headerTitle {
-      &.v-margin-top {
-        padding-top: 4px;
-      }
-      &.v-margin-right {
-        padding-right: 10px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 4px;
-      }
-      &.v-margin-left {
-        padding-left: 15px;
-      }
-    }
   }
 
   /* Custom Field Settings Section */
@@ -1288,6 +1248,10 @@ $v-line-height--header:1.5em;
     .navigator-wrap {
       display: inline-block;
       transition: width 1s;
+
+      .toggle-button {
+        transition: width 1s;
+      }
     }
     .container-wrap {
       -webkit-box-flex: 1;
@@ -1307,10 +1271,11 @@ $v-line-height--header:1.5em;
     .v-button-tab {
       border: none;
       background: none no-repeat 0 0 transparent;
-      margin:5px;
-      border-radius: 6px;
+      margin:0px;
+      border-radius: 0px;
       -webkit-box-shadow: none;
       text-align: left;
+      height: 46px;
       .v-button-wrap {
         background: none no-repeat 0 0 transparent;
         background-image: none;
@@ -1318,6 +1283,7 @@ $v-line-height--header:1.5em;
         border: none;
         .v-icon {
           margin-right: 8px;
+          margin-left: 8px;
           font-size: $font-x-large;
           vertical-align: middle;
         }
@@ -1352,48 +1318,6 @@ $v-line-height--header:1.5em;
   /* Bean List fix */
   .bean-list .v-verticallayout {
     display: block;
-  }
-
-  /* Contact Role Edit */
-
-  .contactopp-list-header > .v-expand > .v-spacing {
-    width: 12px;
-  }
-
-  .contactopp-list .contactrole-row > .v-expand > .v-spacing {
-    width: 14px;
-  }
-
-  .contactopp-list-header {
-    border-bottom: 1px solid $my-separator-color;
-    > .v-expand > .v-slot:first-child .v-label {
-      border-left: none;
-      padding-left: 0px;
-    }
-    .v-label {
-      font-weight: $my-font-weight-bold;
-      padding: 4px 0px 4px 12px;
-      border-left: 1px solid $my-separator-color;
-    }
-  }
-
-  .contactopp-list-body {
-    &.no-child {
-      border-bottom: none;
-    }
-    border-bottom: 1px solid $my-separator-color;
-  }
-
-  .contactrole-row {
-    &.v-margin-top {
-      padding-top: 6px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 6px;
-    }
-    &.odd {
-      background-color: rgb(212, 223, 239);
-    }
   }
 
 
@@ -1768,5 +1692,31 @@ $v-line-height--header:1.5em;
     text-align: right;
     padding-top: 5px;
     padding-right: 5px;
+  }
+
+  #linkToTop {
+      width: 40px;
+      line-height: 40px;
+      overflow: hidden;
+      z-index: 999;
+      display: none;
+      cursor: pointer;
+      -moz-transform: rotate(270deg);
+      -webkit-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+      position: fixed;
+      bottom: 50px;
+      right: 0;
+      background-color: #DDD;
+      color: #555;
+      text-align: center;
+      font-size: 30px;
+      text-decoration: none;
+  }
+  #linkToTop:hover {
+      background-color: #DDF;
+      color: #000;
   }
 }

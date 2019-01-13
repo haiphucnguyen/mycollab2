@@ -4,15 +4,16 @@
   /* Project Page View */
 
   .project-view {
-    display: block;
     .main-content {
       padding: 0px;
       border-right: 1px solid $my-separator-color;
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
         padding: $my-space 2*$my-space;
-        background-color: $my-panel-background-color;
       }
+    }
+    .project-right-bar {
+      background-color: $my-block-background-color;
     }
     .sidebar-menu {
       padding: 0px;
@@ -23,6 +24,9 @@
     }
     .addViewLayout {
       padding: 0px 30px 10px;
+    }
+    >.v-expand {
+      display: flex;
     }
   }
 

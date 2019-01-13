@@ -24,6 +24,7 @@ import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
@@ -44,8 +45,10 @@ public class ProjectRightBarContainer extends MVerticalLayout {
     public ProjectRightBarContainer(SimpleProject project) {
         this.project = project;
 
+        this.setStyleName("project-right-bar");
+        this.setHeight("100%");
         modulePanel = new MVerticalLayout().withMargin(false);
-        this.with(buildProjectActionPanel(), modulePanel);
+        this.with(buildProjectActionPanel(), modulePanel).expand(modulePanel);
     }
 
     private Panel buildProjectActionPanel() {
@@ -142,13 +145,17 @@ public class ProjectRightBarContainer extends MVerticalLayout {
                                 EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                             }
                         });
-            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK);
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK, WebThemes.DANGER);
             projectActionLayout.with(deleteProjectBtn);
         }
 
         projectActionPanel.setContent(projectActionLayout);
         StackPanel.extend(projectActionPanel);
         return projectActionPanel;
+    }
+
+    public void clearViewComponents() {
+        modulePanel.removeAllComponents();
     }
 
     public void addViewComponent(Component component) {

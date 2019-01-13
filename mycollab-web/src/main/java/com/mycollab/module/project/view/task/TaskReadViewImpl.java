@@ -97,7 +97,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.TASK, ProjectRolePermissionCollections.TASKS);
 
-        ProjectRightBarContainer rightbar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
         if (SiteConfiguration.isCommunityEdition()) {
             detailLayout.with(dateInfoComp, peopleInfoComp, followerSheet);
@@ -108,7 +108,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        rightbar.addViewComponent(detailPanel);
+        projectView.addComponentToRightbar(detailPanel);
     }
 
     @Override

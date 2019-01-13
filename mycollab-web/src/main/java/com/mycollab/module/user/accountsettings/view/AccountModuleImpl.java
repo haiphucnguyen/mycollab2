@@ -81,6 +81,7 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
         tabSheet = new VerticalTabsheet();
         tabSheet.setSizeFull();
         tabSheet.setNavigatorStyleName("sidebar-menu");
+        tabSheet.addToggleNavigatorControl();
         CssLayout contentWrapper = tabSheet.getContentWrapper();
         contentWrapper.addComponentAsFirst(topPanel);
 

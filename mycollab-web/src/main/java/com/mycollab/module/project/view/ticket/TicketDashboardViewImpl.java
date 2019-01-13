@@ -40,7 +40,6 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.shell.event.ShellEvent;
@@ -65,7 +64,6 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.addons.stackpanel.StackPanel;
@@ -253,7 +251,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     }
 
     private void displayTicketsStatistic() {
-        ProjectRightBarContainer rightBar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView rightBar = UIUtils.getRoot(this, ProjectView.class);
         UnresolvedTicketsByAssigneeWidget unresolvedTicketsByAssigneeWidget = new UnresolvedTicketsByAssigneeWidget();
         unresolvedTicketsByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
         StackPanel.extend(unresolvedTicketsByAssigneeWidget);
@@ -262,7 +260,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         StackPanel.extend(unresolvedTicketByPriorityWidget);
 
-        rightBar.addViewComponent(new MVerticalLayout(unresolvedTicketsByAssigneeWidget, unresolvedTicketByPriorityWidget).withMargin(false));
+        rightBar.addComponentToRightbar(new MVerticalLayout(unresolvedTicketsByAssigneeWidget, unresolvedTicketByPriorityWidget).withMargin(false));
     }
 
     @Override

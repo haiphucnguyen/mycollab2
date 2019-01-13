@@ -95,7 +95,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
 
-        ProjectRightBarContainer rightbar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         if (SiteConfiguration.isCommunityEdition()) {
@@ -107,7 +107,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        rightbar.addViewComponent(detailPanel);
+        projectView.addComponentToRightbar(detailPanel);
     }
 
     @Override

@@ -31,12 +31,12 @@
     color: $my-link-color;
   }
 
-  .v-button.v-button-link, .v-button.v-button-link:hover {
+  .v-button.v-button-link {
     color: $my-link-color;
-  }
-
-  .v-button.v-button-link:hover {
-    text-decoration: underline;
+    &:hover {
+      color: $my-link-color;
+      text-decoration: underline;
+    }
   }
 
   .v-table-cell-wrapper {

@@ -28,7 +28,6 @@ import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGenerator;
 import com.mycollab.module.project.ui.components.TagViewComponent;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.tracker.domain.Version;
 import com.mycollab.module.tracker.service.VersionService;
@@ -78,7 +77,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
         activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION,
                 CurrentProjectVariables.getProjectId());
 
-        ProjectRightBarContainer rightbar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         dateInfoComp = new DateInfoComp();
@@ -91,7 +90,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        rightbar.addViewComponent(detailPanel);
+        projectView.addComponentToRightbar(detailPanel);
     }
 
     @Override

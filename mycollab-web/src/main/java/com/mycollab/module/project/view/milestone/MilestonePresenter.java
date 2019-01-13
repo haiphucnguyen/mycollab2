@@ -39,8 +39,9 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.MILESTONE);
+        ProjectView projectView = (ProjectView) container;
+        projectView.clearRightbar();
+        projectView.gotoSubView(ProjectTypeConstants.MILESTONE);
 
         IPresenter presenter;
         if (data instanceof MilestoneScreenData.Search) {

@@ -26,8 +26,9 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
+        ProjectView projectView = (ProjectView) container;
+        projectView.clearRightbar();
+        projectView.gotoSubView(ProjectTypeConstants.FINANCE);
         AbstractPresenter presenter;
 
         if (data instanceof TimeTrackingScreenData.Search) {

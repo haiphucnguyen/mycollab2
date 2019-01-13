@@ -224,10 +224,10 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         MHorizontalLayout bodyComp = new MHorizontalLayout(roadMapView).withFullWidth().withMargin(true).expand(roadMapView);
         this.with(headerComp, bodyComp).expand(bodyComp);
 
-        ProjectRightBarContainer rightbar = UIUtils.getRoot(this, ProjectView.class).getRightbar();
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         Panel filterPanel = new Panel("Filter by status", filterLayout);
         StackPanel.extend(filterPanel);
-        rightbar.addViewComponent(filterPanel);
+        projectView.addComponentToRightbar(filterPanel);
     }
 
     private HorizontalLayout createHeaderRight() {

@@ -41,8 +41,9 @@ public class UserSettingPresenter extends AbstractPresenter<UserSettingView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.MEMBER);
+        ProjectView projectView = (ProjectView) container;
+        projectView.clearRightbar();
+        projectView.gotoSubView(ProjectTypeConstants.MEMBER);
 
         AbstractPresenter<?> presenter;
         if (ClassUtils.instanceOf(data, ProjectRoleScreenData.Search.class, ProjectRoleScreenData.Add.class,

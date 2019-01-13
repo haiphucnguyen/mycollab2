@@ -30,6 +30,7 @@ public class WebThemes {
     public static final String BUTTON_OPTION = "option-button";
     public static final String BUTTON_DANGER = "danger-button";
     public static final String BUTTON_LINK = "link";
+    public static final String DANGER = "danger";
     public static final String LINK_COMPLETED = "completed";
     public static final String LINK_OVERDUE = "overdue";
     public static final String LINK_PENDING = "pending";
