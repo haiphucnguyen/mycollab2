@@ -82,7 +82,6 @@ public class AccountModuleImpl extends AbstractSingleContainerPageView implement
         tabSheet.setSizeFull();
         tabSheet.setNavigatorStyleName("sidebar-menu");
         CssLayout contentWrapper = tabSheet.getContentWrapper();
-        contentWrapper.addStyleName("main-content");
         contentWrapper.addComponentAsFirst(topPanel);
 
         this.buildComponents();

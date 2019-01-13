@@ -39,7 +39,6 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
         this.setNavigatorStyleName("sidebar-menu");
         this.setNavigatorWidth("200px");
         CssLayout contentWrapper = this.getContentWrapper();
-        contentWrapper.addStyleName("main-content");
 
         this.buildComponents();
     }

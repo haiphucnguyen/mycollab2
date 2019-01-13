@@ -124,11 +124,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             bodyContainer.setSidebar(sidebarContent);
             previewLayout.addBody(bodyContainer);
         } else {
-            CssLayout bodyContainer = new CssLayout();
-            bodyContainer.setSizeFull();
             bodyContent = new MVerticalLayout(previewForm).withSpacing(false).withMargin(false).withFullSize();
-            bodyContainer.addComponent(bodyContent);
-            previewLayout.addBody(bodyContainer);
+            previewLayout.addBody(bodyContent);
         }
 
         this.addComponent(contentWrapper);

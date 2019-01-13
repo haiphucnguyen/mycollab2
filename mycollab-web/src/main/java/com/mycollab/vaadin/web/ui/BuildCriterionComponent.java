@@ -195,15 +195,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             this.addComponent(indexLbl, 0, 0);
 
             if (index == 1) {
-                this.addComponent(ELabel.html("&nbsp;").withWidth("90px"), 1, 0);
+                this.addComponent(ELabel.html("&nbsp;").withWidth("80px"), 1, 0);
             } else {
                 operatorSelectionBox = new StringValueComboBox(false, SearchField.AND, SearchField.OR);
-                operatorSelectionBox.setWidth("90px");
+                operatorSelectionBox.setWidth("80px");
                 this.addComponent(operatorSelectionBox, 1, 0);
             }
             buildFieldSelectionBox();
 
-            valueBox = new MVerticalLayout().withMargin(false).withWidth("300px");
+            valueBox = new MVerticalLayout().withMargin(false).withWidth("250px");
             deleteBtn = new MButton("", event -> {
                 int compIndex = searchContainer.getComponentIndex(CriteriaSelectionLayout.this);
                 searchContainer.removeComponent(CriteriaSelectionLayout.this);
@@ -224,12 +224,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             indexLbl.setValue(index + "");
             if (index == 1) {
                 removeComponent(operatorSelectionBox);
-                this.addComponent(ELabel.html("&nbsp;").withWidth("90px"), 1, 0);
+                this.addComponent(ELabel.html("&nbsp;").withWidth("80px"), 1, 0);
             }
         }
 
         private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
-            String width = "300px";
+            String width = "250px";
             if (operatorSelectionBox != null) {
                 operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
             }
@@ -317,7 +317,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
         private void buildFieldSelectionBox() {
             fieldSelectionBox = new ComboBox();
-            fieldSelectionBox.setWidth("200px");
+            fieldSelectionBox.setWidth("160px");
             fieldSelectionBox.setItems(paramFields);
             fieldSelectionBox.setItemCaptionGenerator((ItemCaptionGenerator<Param>)item -> {
                 CacheParamMapper.ValueParam valueParam = CacheParamMapper.getValueParam(searchCategory, item.getId());
@@ -354,12 +354,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             });
 
             compareSelectionBox = new I18nValueComboBox(Enum.class, false);
-            compareSelectionBox.setWidth("150px");
+            compareSelectionBox.setWidth("130px");
             compareSelectionBox.addValueChangeListener(valueChangeEvent -> displayAssociateInputField((Param) fieldSelectionBox.getValue()));
         }
 
         private void displayAssociateInputField(Param field) {
-            String width = "300px";
+            String width = "250px";
             QueryI18nEnum compareItem =  compareSelectionBox.getValue();
             valueBox.removeAllComponents();
 
@@ -372,7 +372,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 tempTextField.setWidth(width);
                 valueBox.addComponent(tempTextField);
             } else if (field instanceof BooleanParam) {
-                I18nValueComboBox yesNoBox = new I18nValueComboBox(GenericI18Enum.class, GenericI18Enum.ACTION_YES, GenericI18Enum.ACTION_NO);
+                I18nValueComboBox yesNoBox = new I18nValueComboBox<>(GenericI18Enum.class, GenericI18Enum.ACTION_YES, GenericI18Enum.ACTION_NO);
                 yesNoBox.setWidth(width);
                 valueBox.addComponent(yesNoBox);
             } else if (field instanceof DateParam) {

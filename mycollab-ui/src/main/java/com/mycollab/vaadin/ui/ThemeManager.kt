@@ -104,8 +104,8 @@ object ThemeManager {
         /* Action Buttons */
 
         if (accountTheme.actionbtn != null) {
-            extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #${accountTheme.actionbtn}; }")
-            extraStyles.append(".splitbutton:hover .v-button.v-button-greenbtn, .v-button-greenbtn:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.actionbtn)}; }")
+            extraStyles.append(".v-button.v-button-action-button, .v-button-action-button:focus { background-color: #${accountTheme.actionbtn}; }")
+            extraStyles.append(".splitbutton:hover .v-button.v-button-action-button, .v-button-action-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.actionbtn)}; }")
             extraStyles.append(".upload-field .v-upload-immediate .v-button {background-color: #${accountTheme.actionbtn};}")
             extraStyles.append(".upload-field .v-upload-immediate .v-button:hover {background-color: ${ColorUtils.darkerColor("#" + accountTheme.actionbtn)};}")
             extraStyles.append(".optionPopupContent .action-wrap:hover {background-color: #${accountTheme.actionbtn}};")
@@ -129,7 +129,7 @@ object ThemeManager {
         }
 
         if (accountTheme.actionbtntext != null) {
-            extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { color: #${accountTheme.actionbtntext}; }")
+            extraStyles.append(".v-button.v-button-action-button, .v-button-action-button:focus { color: #${accountTheme.actionbtntext}; }")
 
             extraStyles.append(".upload-field .v-upload-immediate .v-button, .upload-field .v-upload-immediate .v-button:focus {color: #${accountTheme.actionbtntext};}")
 
@@ -154,30 +154,30 @@ object ThemeManager {
         /* Option Buttons */
 
         if (accountTheme.optionbtn != null) {
-            extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { background-color: #${accountTheme.optionbtn};}")
-            extraStyles.append(".splitbutton:hover .v-button-graybtn, .v-button-graybtn:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
+            extraStyles.append(".v-button.v-button-option-button, .v-button-option-button:focus { background-color: #${accountTheme.optionbtn};}")
+            extraStyles.append(".splitbutton:hover .v-button-option-button, .v-button-option-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
             //Set toggle button group background
             extraStyles.append(".toggle-btn-group .v-button { background-color: #${accountTheme.optionbtn};}")
             extraStyles.append(".toggle-btn-group .v-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.optionbtn)};}")
         }
 
         if (accountTheme.optionbtntext != null) {
-            extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { color: #${accountTheme.optionbtntext}; }")
+            extraStyles.append(".v-button.v-button-option-button, .v-button-option-button:focus { color: #${accountTheme.optionbtntext}; }")
             extraStyles.append(".toggle-btn-group .v-button { color: #${accountTheme.optionbtntext}; }")
         }
 
         /* Danger Buttons */
 
         if (accountTheme.dangerbtn != null) {
-            extraStyles.append(".v-button.v-button-redbtn, .v-button-redbtn:focus { background-color: #${accountTheme.dangerbtn}; }")
-            extraStyles.append(".v-button-redbtn:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.dangerbtn, 0.1)}; }")
+            extraStyles.append(".v-button.v-button-danger-button, .v-button-danger-button:focus { background-color: #${accountTheme.dangerbtn}; }")
+            extraStyles.append(".v-button-danger-button:hover { background-color: ${ColorUtils.darkerColor("#" + accountTheme.dangerbtn, 0.1)}; }")
             //Set style of popup content action
             extraStyles.append(".optionPopupContent .action-wrap.danger .v-button-action { color: #${accountTheme.dangerbtn}; }")
             extraStyles.append(".optionPopupContent .action-wrap.danger:hover {background-color: #${accountTheme.dangerbtn};}")
         }
 
         if (accountTheme.dangerbtntext != null) {
-            extraStyles.append(".v-button.v-button-redbtn, .v-button-redbtn:focus { color: #${accountTheme.dangerbtntext}; }")
+            extraStyles.append(".v-button.v-button-danger-button, .v-button-danger-button:focus { color: #${accountTheme.dangerbtntext}; }")
         }
 
         if (extraStyles.isNotBlank()) {
@@ -228,30 +228,30 @@ object ThemeManager {
 
         /* Action Buttons */
         if (accountTheme.actionbtn != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-greenbtn, .example-block .v-button-greenbtn:focus { background-color: #${accountTheme.actionbtn}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-action-button, .example-block .v-button-action-button:focus { background-color: #${accountTheme.actionbtn}; }")
         }
 
         if (accountTheme.actionbtntext != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-greenbtn, .example-block .v-button-greenbtn:focus { color: #${accountTheme.actionbtntext}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-action-button, .example-block .v-button-action-button:focus { color: #${accountTheme.actionbtntext}; }")
         }
 
         /* Option Buttons */
 
         if (accountTheme.optionbtn != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-graybtn, .example-block .v-button-graybtn:focus { background-color: #${accountTheme.optionbtn}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-option-button, .example-block .v-button-option-button:focus { background-color: #${accountTheme.optionbtn}; }")
         }
 
         if (accountTheme.optionbtntext != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-graybtn, .example-block .v-button-graybtn:focus { color: #${accountTheme.optionbtntext}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-option-button, .example-block .v-button-option-button:focus { color: #${accountTheme.optionbtntext}; }")
         }
 
         /* Danger Buttons */
         if (accountTheme.dangerbtn != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-redbtn, .example-block .v-button-redbtn:focus { background-color: #${accountTheme.dangerbtn}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-danger-button, .example-block .v-button-danger-button:focus { background-color: #${accountTheme.dangerbtn}; }")
         }
 
         if (accountTheme.dangerbtntext != null) {
-            demoExtraStyles.append(".example-block .v-button.v-button-redbtn, .example-block .v-button-redbtn:focus { color: #${accountTheme.dangerbtntext}; }")
+            demoExtraStyles.append(".example-block .v-button.v-button-danger-button, .example-block .v-button-danger-button:focus { color: #${accountTheme.dangerbtntext}; }")
         }
 
         if (demoExtraStyles.isNotBlank()) {

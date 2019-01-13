@@ -7,6 +7,7 @@
     display: block;
     .main-content {
       padding: 0px;
+      border-right: 1px solid $my-separator-color;
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
         padding: $my-space 2*$my-space;

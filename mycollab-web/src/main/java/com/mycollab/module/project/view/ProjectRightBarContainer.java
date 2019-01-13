@@ -49,7 +49,7 @@ public class ProjectRightBarContainer extends MVerticalLayout {
     }
 
     private Panel buildProjectActionPanel() {
-        Panel projectActionPanel = new Panel("Actions");
+        Panel projectActionPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_ACTIONS));
         MVerticalLayout projectActionLayout = new MVerticalLayout();
 
         if (project.isProjectArchived()) {
@@ -60,24 +60,24 @@ public class ProjectRightBarContainer extends MVerticalLayout {
 
                 PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-            }).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withStyleName(WebThemes.BUTTON_LINK);
             projectActionLayout.with(activeProjectBtn);
         }
 
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS)) {
             MButton inviteMemberBtn = new MButton(UserUIContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES), clickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null));
-            }).withIcon(VaadinIcons.PAPERPLANE);
+            }).withIcon(VaadinIcons.PAPERPLANE).withStyleName(WebThemes.BUTTON_LINK);
             projectActionLayout.with(inviteMemberBtn);
         }
 
         MButton settingBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS), clickEvent -> {
             EventBusFactory.getInstance().post(new ProjectNotificationEvent.GotoList(this, null));
-        }).withIcon(VaadinIcons.COG);
+        }).withIcon(VaadinIcons.COG).withStyleName(WebThemes.BUTTON_LINK);
         projectActionLayout.with(settingBtn);
 
         if (UserUIContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-            final MButton markProjectTemplateBtn = new MButton().withIcon(VaadinIcons.ANCHOR);
+            final MButton markProjectTemplateBtn = new MButton().withIcon(VaadinIcons.ANCHOR).withStyleName(WebThemes.BUTTON_LINK);
             markProjectTemplateBtn.addClickListener(clickEvent -> {
                 Boolean isTemplate = !MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
                 project.setIstemplate(isTemplate);
@@ -102,7 +102,7 @@ public class ProjectRightBarContainer extends MVerticalLayout {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
             MButton editProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.EDIT), clickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoEdit(ProjectRightBarContainer.this, project));
-            }).withIcon(VaadinIcons.EDIT);
+            }).withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK);
             projectActionLayout.with(editProjectBtn);
         }
 
@@ -123,7 +123,7 @@ public class ProjectRightBarContainer extends MVerticalLayout {
                                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                             }
                         });
-            }).withIcon(VaadinIcons.ARCHIVE);
+            }).withIcon(VaadinIcons.ARCHIVE).withStyleName(WebThemes.BUTTON_LINK);
             projectActionLayout.with(archiveProjectBtn);
         }
 
@@ -142,7 +142,7 @@ public class ProjectRightBarContainer extends MVerticalLayout {
                                 EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                             }
                         });
-            }).withIcon(VaadinIcons.TRASH);
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_LINK);
             projectActionLayout.with(deleteProjectBtn);
         }
 

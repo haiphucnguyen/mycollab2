@@ -16145,7 +16145,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	background-image: none;
 }
 
-.v-button.v-button-greenbtn {
+.v-button.v-button-action-button {
 	color: white;
 	font-weight: normal;
 	background-color: #1a8fcb;
@@ -17393,6 +17393,7 @@ div.v-window {
 
 .project-view .main-content {
 	padding: 0px;
+	border-right: 1px solid #e5e5e5;
 }
 
 .project-view .main-content .top-panel {
@@ -19091,7 +19092,7 @@ div.v-stylecalendar .weekdays TD {
 	font-weight: 600;
 }
 
-.billing-plan .greenbtn, .billing-plan .graybtn, .billing-plan .redbtn {
+.billing-plan .action-button, .billing-plan .option-button, .billing-plan .danger-button {
 	margin-bottom: 15px;
 	margin-top: 15px;
 }

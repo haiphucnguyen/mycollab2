@@ -192,7 +192,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         groupWrapLayout.addComponent(new ButtonGroup(advanceDisplayBtn, kanbanBtn).withDefaultButton(advanceDisplayBtn));
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
-        wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
+        wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
 
         mainLayout.with(wrapBody).expand(wrapBody);
 
