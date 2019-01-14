@@ -140,8 +140,6 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
 
             @Override
             public AbstractComponent getLayout() {
-                contactLayout.getLayout().setSpacing(true);
-                advancedInfoLayout.getLayout().setSpacing(true);
                 FormContainer layout = new FormContainer();
                 layout.addComponent(avatarAndPass);
 

@@ -48,7 +48,7 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.*;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
-import com.mycollab.vaadin.web.ui.VerticalTabsheet.TabImpl;
+import com.mycollab.vaadin.web.ui.VerticalTabsheet.ButtonTab;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.Tab;
@@ -120,8 +120,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             myProjectTab.addToggleNavigatorControl();
 
             myProjectTab.addSelectedTabChangeListener(selectedTabChangeEvent -> {
-                Tab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
-                String caption = ((TabImpl) tab).getTabId();
+                ButtonTab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
+                String caption = tab.getTabId();
                 if (ProjectTypeConstants.MESSAGE.equals(caption)) {
                     messagePresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectTypeConstants.MILESTONE.equals(caption)) {

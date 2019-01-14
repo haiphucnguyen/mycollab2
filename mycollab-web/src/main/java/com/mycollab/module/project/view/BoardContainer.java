@@ -64,8 +64,8 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
 
             @Override
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
-                TabSheet.Tab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
-                String tabId = ((VerticalTabsheet.TabImpl) tab).getTabId();
+                ButtonTab tab = ((VerticalTabsheet) event.getSource()).getSelectedTab();
+                String tabId = tab.getTabId();
                 if ("Dashboard".equals(tabId)) {
                     userProjectDashboardPresenter.go(BoardContainer.this, null);
                 } else if ("Projects".equals(tabId)) {

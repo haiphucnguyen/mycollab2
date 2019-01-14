@@ -17274,35 +17274,31 @@ div.v-window {
 	font-size: 1.2em;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-right, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 8px;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-bottom, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 4px;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-left, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 0px;
-}
-
-.v-gridlayout.colored-gridlayout .v-gridlayout-slot {
+.colored-gridlayout .rl-row {
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-field {
-	min-height: 43px;
+.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption {
+.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 4px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 0px;
+}
+
+.colored-gridlayout .gridform-caption {
 	min-height: 39px;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
+.colored-gridlayout .gridform-caption .v-label {
 	text-align: right;
 	color: #999;
 }

@@ -21,7 +21,6 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.ErrorMessage;
 import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.ContentMode;
@@ -29,7 +28,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
-import com.vaadin.ui.TabSheet.Tab;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -57,10 +55,10 @@ public class VerticalTabsheet extends CustomComponent {
 
     private MCssLayout contentWrapper;
 
-    private Map<String, Tab> compMap = new HashMap<>();
+    private Map<String, ButtonTab> compMap = new HashMap<>();
 
     private Component selectedButton = null;
-    private Tab selectedComp = null;
+    private ButtonTab selectedComp = null;
     private Button toggleBtn;
     private Boolean retainVisibility = true;
 
@@ -77,19 +75,15 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     private void hideTabsCaption() {
-        navigatorContainer.forEach(container -> ((ButtonTabImpl) container).hideCaption());
+        navigatorContainer.forEach(container -> ((ButtonTab) container).hideCaption());
     }
 
     private void showTabsCaption() {
-        navigatorContainer.forEach(container -> ((ButtonTabImpl) container).showCaption());
+        navigatorContainer.forEach(container -> ((ButtonTab) container).showCaption());
     }
 
     public void addTab(Component component, String id, String caption) {
         addTab(component, id, 0, caption, null, null);
-    }
-
-    public void addTab(Component component, String id, int level, String caption, String link) {
-        addTab(component, id, level, caption, link, null);
     }
 
     public void addTab(Component component, String id, String caption, Resource resource) {
@@ -98,7 +92,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     public void addTab(Component component, String id, int level, String caption, String link, Resource resource) {
         if (!hasTab(id)) {
-            final ButtonTabImpl button = new ButtonTabImpl(id, level, caption, link);
+            final ButtonTab button = new ButtonTab(id, level, caption, component, link);
 
             button.addClickListener(clickEvent -> {
                 if (!clickEvent.isCtrlKey() && !clickEvent.isMetaKey()) {
@@ -120,7 +114,7 @@ public class VerticalTabsheet extends CustomComponent {
             if (button.getLevel() > 0) {
                 int insertIndex = 0;
                 for (int i = 0; i < navigatorContainer.getComponentCount(); i++) {
-                    ButtonTabImpl buttonTmp = (ButtonTabImpl) navigatorContainer.getComponent(i);
+                    ButtonTab buttonTmp = (ButtonTab) navigatorContainer.getComponent(i);
                     if (buttonTmp.getLevel() > level) {
                         break;
                     } else {
@@ -134,8 +128,7 @@ public class VerticalTabsheet extends CustomComponent {
                 navigatorContainer.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
             }
 
-            TabImpl tabImpl = new TabImpl(id, caption, component);
-            compMap.put(id, tabImpl);
+            compMap.put(id, button);
         }
     }
 
@@ -144,19 +137,16 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     public void removeTab(String viewId) {
-        Tab tabImpl = compMap.get(viewId);
+        ButtonTab tabImpl = compMap.get(viewId);
         if (tabImpl != null) {
-            ButtonTabImpl button = getButtonById(viewId);
-            if (button != null) {
-                navigatorContainer.removeComponent(button);
-                compMap.remove(viewId);
-            }
+            navigatorContainer.removeComponent(tabImpl);
+            compMap.remove(viewId);
         }
     }
 
-    private ButtonTabImpl getButtonById(String viewId) {
+    private ButtonTab getButtonById(String viewId) {
         for (int i = 0; i < navigatorContainer.getComponentCount(); i++) {
-            ButtonTabImpl button = (ButtonTabImpl) navigatorContainer.getComponent(i);
+            ButtonTab button = (ButtonTab) navigatorContainer.getComponent(i);
             if (viewId.equals(button.getTabId())) {
                 return button;
             }
@@ -194,7 +184,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     public void addToggleNavigatorControl() {
         if (getButtonById("button") == null) {
-            toggleBtn = new ButtonTabImpl("button", 0, "", "");
+            toggleBtn = new ButtonTab("button", 0, "", null, "");
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             toggleBtn.addStyleName("toggle-button");
             toggleBtn.addClickListener(clickEvent -> {
@@ -228,10 +218,9 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     public Component selectTab(String viewId) {
-        Tab tab = compMap.get(viewId);
-        Button btn = getButtonById(viewId);
-        if (btn != null) {
-            selectedButton = btn;
+        ButtonTab tab = compMap.get(viewId);
+        if (tab != null) {
+            selectedButton = tab;
             clearTabSelection();
             selectedButton.addStyleName(TAB_SELECTED_STYLE);
             selectedComp = tab;
@@ -253,7 +242,7 @@ public class VerticalTabsheet extends CustomComponent {
         }
     }
 
-    public Tab getSelectedTab() {
+    public ButtonTab getSelectedTab() {
         return selectedComp;
     }
 
@@ -290,20 +279,22 @@ public class VerticalTabsheet extends CustomComponent {
         return this.navigatorWrapper;
     }
 
-    private static class ButtonTabImpl extends MButton {
+    public static class ButtonTab extends MButton {
         private static final long serialVersionUID = 1L;
 
         private String tabId;
         private int level;
         String link;
         private String caption;
+        private Component component;
 
-        ButtonTabImpl(String id, int level, String caption, String link) {
+        ButtonTab(String id, int level, String caption, Component component, String link) {
             super(caption);
             this.tabId = id;
             this.link = link;
             this.level = level;
             this.caption = caption;
+            this.component = component;
         }
 
         void hideCaption() {
@@ -316,159 +307,16 @@ public class VerticalTabsheet extends CustomComponent {
             this.setDescription("");
         }
 
-        String getTabId() {
+        public String getTabId() {
             return tabId;
         }
 
         public int getLevel() {
             return level;
         }
-    }
 
-    public static class TabImpl implements Tab {
-        private static final long serialVersionUID = 1L;
-
-        private String tabId;
-        private String caption;
-        private Component component;
-
-        TabImpl(String id, String caption, Component component) {
-            this.tabId = id;
-            this.caption = caption;
-            this.component = component;
-        }
-
-        @Override
-        public boolean isVisible() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setVisible(boolean visible) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public boolean isClosable() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setClosable(boolean closable) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public boolean isEnabled() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setEnabled(boolean enabled) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setCaption(String caption) {
-            this.caption = caption;
-
-        }
-
-        @Override
-        public String getCaption() {
-            return caption;
-        }
-
-        public String getTabId() {
-            return tabId;
-        }
-
-        @Override
-        public Resource getIcon() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setIcon(Resource icon) {
-            throw new MyCollabException("Do not support");
-
-        }
-
-        @Override
-        public String getDescription() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setDescription(String description) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setComponentError(ErrorMessage componentError) {
-            throw new MyCollabException("Do not support");
-
-        }
-
-        @Override
-        public ErrorMessage getComponentError() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
         public Component getComponent() {
             return component;
-        }
-
-        @Override
-        public void setStyleName(String styleName) {
-            component.setStyleName(styleName);
-        }
-
-        @Override
-        public String getStyleName() {
-            return component.getStyleName();
-        }
-
-        @Override
-        public void setDefaultFocusComponent(Focusable component) {
-            throw new MyCollabException("Do not support");
-
-        }
-
-        @Override
-        public Focusable getDefaultFocusComponent() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setIcon(Resource icon, String iconAltText) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public String getIconAlternateText() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setIconAlternateText(String iconAltText) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setId(String id) {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public String getId() {
-            throw new MyCollabException("Do not support");
-        }
-
-        @Override
-        public void setDescription(String s, ContentMode contentMode) {
-
         }
     }
 }

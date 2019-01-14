@@ -14,16 +14,14 @@
     }
   }
 
-  .v-gridlayout.colored-gridlayout {
+  .colored-gridlayout {
+    .rl-row {
+      border-bottom: 1px solid $my-separator-color;
+    }
     .gridform-caption, .gridform-field {
       @include margin-container(8px, 8px, 4px, 0px);
     }
-    .v-gridlayout-slot {
-      border-bottom: 1px solid $my-separator-color;
-    }
-    .gridform-field {
-      min-height: 43px;
-    }
+
     .gridform-caption {
       min-height: 39px;
       .v-label {
