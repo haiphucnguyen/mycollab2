@@ -19240,6 +19240,14 @@ div.v-stylecalendar .weekdays TD {
 	height: 46px;
 }
 
+.vertical-tabsheet .v-button-tab.child-tab.hide {
+	display: none;
+}
+
+.vertical-tabsheet .v-button-tab.child-tab .v-button-wrap {
+	margin-left: 12px;
+}
+
 .vertical-tabsheet .v-button-tab .v-button-wrap {
 	background: none no-repeat 0 0 transparent;
 	background-image: none;

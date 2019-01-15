@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Text;

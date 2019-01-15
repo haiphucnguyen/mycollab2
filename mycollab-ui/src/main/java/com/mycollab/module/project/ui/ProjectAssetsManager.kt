@@ -44,7 +44,8 @@ object ProjectAssetsManager {
             ProjectTypeConstants.STANDUP to VaadinIcons.CUBES,
             ProjectTypeConstants.MEMBER to VaadinIcons.USERS,
             ProjectTypeConstants.PROJECT to VaadinIcons.CALENDAR_O,
-            ProjectTypeConstants.CLIENT to VaadinIcons.COIN_PILES
+            ProjectTypeConstants.CLIENT to VaadinIcons.COIN_PILES,
+            ProjectTypeConstants.PROJECT_ROLE to VaadinIcons.CLIPBOARD_USER
     )
 
     @JvmStatic

@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -9,6 +9,7 @@ import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.event.TimeTrackingEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
+import com.mycollab.module.project.view.finance.ITimeTrackingContainer;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -41,7 +42,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
     private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
 
-    TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
+    TimeTrackingEditViewWindow(ITimeTrackingContainer view, SimpleItemTimeLogging timeLogging) {
         super(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
         this.timeLogging = timeLogging;
         this.withWidth("800px").withModal(true).withResizable(false).withCenter();

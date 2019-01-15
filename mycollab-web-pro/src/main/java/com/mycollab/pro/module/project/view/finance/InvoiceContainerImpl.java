@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.ErrorI18nEnum;
@@ -16,7 +16,7 @@ import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.service.InvoiceService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.mycollab.module.project.view.time.IInvoiceContainer;
+import com.mycollab.module.project.view.finance.IInvoiceContainer;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;

@@ -86,9 +86,9 @@ public class ProjectRoleListPresenter extends ListSelectionPresenter<ProjectRole
     @Override
     protected void deleteSelectedItems() {
         if (!isSelectAll) {
-            Collection<SimpleProjectRole> currentDataList = view.getPagedBeanGrid().getItems();
+            Collection<SimpleProjectRole> roles = view.getPagedBeanGrid().getItems();
             List<ProjectRole> keyList = new ArrayList<>();
-            for (ProjectRole item : currentDataList) {
+            for (ProjectRole item : roles) {
                 if (item.isSelected()) {
                     if (Boolean.TRUE.equals(item.getIssystemrole())) {
                         NotificationUtil.showErrorNotification(UserUIContext.

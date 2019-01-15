@@ -80,15 +80,6 @@ public class UserSettingViewImpl extends AbstractVerticalPageView implements Use
         myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum
                 .VIEW_SETTINGS), VaadinIcons.COG);
 
-        myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_SETTINGS), VaadinIcons.COG);
-
-        myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_SETTINGS), VaadinIcons.COG);
-
-        myProjectTab.addTab(settingPresenter.getView(), UserUIContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_SETTINGS), VaadinIcons.COG);
-
         myProjectTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
 

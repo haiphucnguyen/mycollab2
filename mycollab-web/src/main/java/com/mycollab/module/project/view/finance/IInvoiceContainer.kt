@@ -14,12 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.time
+package com.mycollab.module.project.view.finance
 
-import com.mycollab.vaadin.mvp.IPresenter
+import com.mycollab.vaadin.mvp.PageView
 
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.2.10
  */
-interface IFinancePresenter : IPresenter<IFinanceContainer>
+interface IInvoiceContainer : PageView {
+    fun display()
+}

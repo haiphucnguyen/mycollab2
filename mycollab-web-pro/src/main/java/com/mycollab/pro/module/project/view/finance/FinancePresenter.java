@@ -1,13 +1,12 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.module.project.CurrentProjectVariables;
-import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.parameters.InvoiceScreenData;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
-import com.mycollab.module.project.view.time.IFinanceContainer;
-import com.mycollab.module.project.view.time.IFinancePresenter;
+import com.mycollab.module.project.view.finance.IFinanceContainer;
+import com.mycollab.module.project.view.finance.IFinancePresenter;
 import com.mycollab.vaadin.mvp.PresenterResolver;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -28,11 +27,11 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
         projectView.clearRightbar();
-        projectView.gotoSubView(ProjectTypeConstants.FINANCE);
+        projectView.gotoSubView(ProjectView.FINANCE_ENTRY);
         AbstractPresenter presenter;
 
         if (data instanceof TimeTrackingScreenData.Search) {
-            presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+            presenter = PresenterResolver.getPresenter(TimeTrackingPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof InvoiceScreenData.GotoInvoiceList) {
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);

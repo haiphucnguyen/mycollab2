@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.DayI18nEnum;
@@ -20,6 +20,7 @@ import com.mycollab.module.project.event.TimeTrackingEvent;
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
+import com.mycollab.module.project.view.finance.ITimeTrackingContainer;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.pro.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.mycollab.pro.module.project.ui.components.TimeTrackingDateOrderComponent;
@@ -42,7 +43,6 @@ import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,7 +53,7 @@ import java.util.List;
  * @since 2.0
  */
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractVerticalPageView implements TimeTrackingListView {
+public class TimeTrackingContainerImpl extends AbstractVerticalPageView implements ITimeTrackingContainer {
     private static final long serialVersionUID = 3742030333599796165L;
 
     private ItemTimeLoggingService itemTimeLoggingService;
@@ -74,7 +74,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                 }
             };
 
-    public TimeTrackingListViewImpl() {
+    public TimeTrackingContainerImpl() {
         this.withMargin(true).withSpacing(true);
 
         itemTimeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
@@ -248,7 +248,7 @@ public class TimeTrackingListViewImpl extends AbstractVerticalPageView implement
                             }
                         });
             } else if ("edit".equals(event.getFieldName())) {
-                TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(TimeTrackingListViewImpl.this, itemLogging);
+                TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(TimeTrackingContainerImpl.this, itemLogging);
                 UI.getCurrent().addWindow(timeTrackingEdit);
             }
         }

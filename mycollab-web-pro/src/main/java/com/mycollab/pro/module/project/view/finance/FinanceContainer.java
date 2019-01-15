@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.DateParam;
@@ -10,7 +10,7 @@ import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
-import com.mycollab.module.project.view.time.IFinanceContainer;
+import com.mycollab.module.project.view.finance.IFinanceContainer;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PresenterResolver;
@@ -71,7 +71,7 @@ public class FinanceContainer extends AbstractVerticalPageView implements IFinan
 
     @Override
     public void showTimeView() {
-        TimeTrackingListPresenter timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+        TimeTrackingPresenter timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingPresenter.class);
         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,

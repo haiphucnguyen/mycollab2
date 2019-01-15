@@ -1,6 +1,6 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
-import com.mycollab.core.utils.DateTimeUtils;
+import com.mycollab.module.project.ProjectTooltipGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleStandupReport;
@@ -17,69 +17,55 @@ import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import org.jsoup.Jsoup;
 
 import java.time.ZoneId;
-import java.util.TimeZone;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.0.0
  */
-public class GenericTaskDetailMapper {
-    private String name;
+class ProjectGenericItemTooltipGenerator {
+    private String html;
 
-    public GenericTaskDetailMapper(String type, int typeId) {
-        int sAccountId = AppUI.getAccountId();
+    ProjectGenericItemTooltipGenerator(String type, int typeId) {
+        html = "";
+        Integer sAccountId = AppUI.getAccountId();
         ZoneId timeZone = UserUIContext.getUserTimeZone();
+        String siteURL = AppUI.getSiteUrl();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = service.findById(typeId, sAccountId);
-            if (bug != null) {
-                name = bug.getName();
-            }
+            html = ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    bug, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
-            if (task != null) {
-                name = task.getName();
-            }
+            html = ProjectTooltipGenerator.generateToolTipTask(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    task, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService service = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeId, sAccountId);
-            if (risk != null) {
-                name = risk.getName();
-            }
+            html = ProjectTooltipGenerator.generateToolTipRisk(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    risk, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
-            VersionService service = AppContextUtil
-                    .getSpringBean(VersionService.class);
+            VersionService service = AppContextUtil.getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
-            if (version != null) {
-                name = version.getName();
-            }
+            html = ProjectTooltipGenerator.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    version, siteURL, timeZone);
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
-            if (component != null) {
-                name = component.getName();
-            }
+            html = ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(), component, siteURL, timeZone);
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
             StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
-            if (standup != null) {
-                name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
-            }
+            html = ProjectTooltipGenerator.generateToolTipStandUp(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+                    standup, siteURL, timeZone);
         }
     }
 
-    public String getName() {
-        return name;
+    public String getContent() {
+        return html;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }

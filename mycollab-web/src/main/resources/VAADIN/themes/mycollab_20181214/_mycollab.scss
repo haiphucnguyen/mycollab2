@@ -1276,6 +1276,14 @@ $v-line-height--header:1.5em;
       -webkit-box-shadow: none;
       text-align: left;
       height: 46px;
+      &.child-tab {
+        &.hide {
+          display:none;
+        }
+        .v-button-wrap {
+          margin-left: 12px;
+        }
+      }
       .v-button-wrap {
         background: none no-repeat 0 0 transparent;
         background-image: none;

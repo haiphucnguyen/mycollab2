@@ -42,16 +42,13 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView(ProjectTypeConstants.DASHBOARD);
-
-        ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        ProjectView projectView = (ProjectView) container;
+        projectView.gotoSubView(ProjectView.SUMMARY_ENTRY, view);
 
         if (data instanceof ProjectScreenData.Edit) {
             if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT)) {
                 ProjectAddPresenter presenter = PresenterResolver.getPresenter(ProjectAddPresenter.class);
                 presenter.go(view, data);
-                breadcrumb.gotoProjectEdit();
             } else {
                 NotificationUtil.showMessagePermissionAlert();
             }
@@ -69,7 +66,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT)) {
                 ProjectSummaryPresenter presenter = PresenterResolver.getPresenter(ProjectSummaryPresenter.class);
                 presenter.go(view, data);
-                breadcrumb.gotoProjectDashboard();
             } else {
                 NotificationUtil.showMessagePermissionAlert();
             }

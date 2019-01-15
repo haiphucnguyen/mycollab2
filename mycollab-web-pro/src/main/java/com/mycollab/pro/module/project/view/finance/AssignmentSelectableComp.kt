@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time
+package com.mycollab.pro.module.project.view.finance
 
 import com.mycollab.module.project.domain.ProjectTicket
 

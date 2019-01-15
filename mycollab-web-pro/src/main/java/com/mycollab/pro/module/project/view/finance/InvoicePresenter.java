@@ -1,14 +1,12 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
-import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
-import com.mycollab.module.project.view.time.IInvoiceContainer;
-import com.mycollab.module.project.view.time.IInvoiceListPresenter;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.finance.IInvoiceContainer;
+import com.mycollab.module.project.view.finance.IInvoiceListPresenter;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
-import com.mycollab.vaadin.web.ui.TabSheetDecorator;
 import com.vaadin.ui.HasComponents;
 
 /**
@@ -22,10 +20,8 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        FinanceContainer timeContainer = (FinanceContainer) container;
-        TabSheetDecorator.WrappedTab contentLayout = (TabSheetDecorator.WrappedTab) timeContainer.gotoSubView(
-                UserUIContext.getMessage(InvoiceI18nEnum.LIST));
-        contentLayout.addView(view);
+        ProjectView projectView = (ProjectView) container;
+        projectView.gotoSubView(ProjectView.INVOICE_ENTRY, view);
         view.display();
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

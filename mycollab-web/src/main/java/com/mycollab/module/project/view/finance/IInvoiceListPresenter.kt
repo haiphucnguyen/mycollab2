@@ -14,22 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.time
+package com.mycollab.module.project.view.finance
 
-import com.mycollab.vaadin.web.ui.InitializingView
-import com.vaadin.ui.Component
+import com.mycollab.vaadin.mvp.IPresenter
 
 /**
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.2.10
  */
-interface IFinanceContainer : InitializingView {
-
-    override fun initContent()
-
-    fun gotoSubView(name: String): Component
-
-    fun showTimeView()
-
-    fun showInvoiceView()
-}
+interface IInvoiceListPresenter : IPresenter<IInvoiceContainer>

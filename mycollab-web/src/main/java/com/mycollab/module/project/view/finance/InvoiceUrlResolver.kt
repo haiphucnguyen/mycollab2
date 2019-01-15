@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.time
+package com.mycollab.module.project.view.finance
 
 import com.mycollab.common.UrlTokenizer
 import com.mycollab.vaadin.EventBusFactory

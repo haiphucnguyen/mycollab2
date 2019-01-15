@@ -24,7 +24,7 @@ import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.risk.IRiskPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
 import com.mycollab.module.project.view.ticket.TicketPresenter
-import com.mycollab.module.project.view.time.IFinancePresenter
+import com.mycollab.module.project.view.finance.IFinancePresenter
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.vaadin.mvp.IPresenter
 import com.mycollab.vaadin.mvp.ScreenData

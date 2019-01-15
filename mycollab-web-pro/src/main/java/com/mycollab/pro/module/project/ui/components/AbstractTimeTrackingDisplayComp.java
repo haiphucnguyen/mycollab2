@@ -3,14 +3,12 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.pro.module.project.view.time.TimeTrackingTableDisplay;
+import com.mycollab.pro.module.project.view.finance.TimeTrackingTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -18,7 +16,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author MyCollab Ltd.

@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.form.view.builder.DynaSectionBuilder;

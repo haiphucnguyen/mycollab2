@@ -38,7 +38,7 @@ import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.risk.IRiskPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
 import com.mycollab.module.project.view.ticket.TicketPresenter
-import com.mycollab.module.project.view.time.IInvoiceListPresenter
+import com.mycollab.module.project.view.finance.IInvoiceListPresenter
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.module.tracker.domain.Component
 import com.mycollab.module.tracker.domain.SimpleBug

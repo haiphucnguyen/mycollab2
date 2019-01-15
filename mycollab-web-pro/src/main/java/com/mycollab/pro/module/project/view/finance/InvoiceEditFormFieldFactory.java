@@ -1,6 +1,5 @@
-package com.mycollab.pro.module.project.view.time;
+package com.mycollab.pro.module.project.view.finance;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -9,7 +8,6 @@ import com.mycollab.module.project.domain.SimpleInvoice;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;

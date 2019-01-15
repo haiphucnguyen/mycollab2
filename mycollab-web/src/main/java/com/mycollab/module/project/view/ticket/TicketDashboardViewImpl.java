@@ -33,10 +33,8 @@ import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
-import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.query.TicketQueryInfo;
 import com.mycollab.module.project.service.ProjectTicketService;
@@ -55,7 +53,6 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.UIUtils;
-import com.mycollab.vaadin.web.ui.ButtonGroup;
 import com.mycollab.vaadin.web.ui.QueryParamHandler;
 import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -180,14 +177,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
                 .withVisible(CurrentProjectVariables.canWriteTicket());
         groupWrapLayout.addComponent(newTicketBtn);
-
-        MButton advanceDisplayBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_LIST))
-                .withIcon(VaadinIcons.ALIGN_JUSTIFY).withWidth("100px");
-
-        MButton kanbanBtn = new MButton(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), clickEvent ->
-                displayKanbanView()).withWidth("100px").withIcon(VaadinIcons.GRID_SMALL_O);
-
-        groupWrapLayout.addComponent(new ButtonGroup(advanceDisplayBtn, kanbanBtn).withDefaultButton(advanceDisplayBtn));
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
@@ -318,10 +307,6 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         List<ProjectTicket> tickets = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>
                 (baseCriteria, currentPage + 1, 100));
         ticketGroupOrderComponent.insertTickets(tickets);
-    }
-
-    private void displayKanbanView() {
-        EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
     }
 
     @Override
