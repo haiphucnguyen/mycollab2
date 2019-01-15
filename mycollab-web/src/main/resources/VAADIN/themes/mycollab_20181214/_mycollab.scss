@@ -1284,6 +1284,14 @@ $v-line-height--header:1.5em;
           margin-left: 12px;
         }
       }
+      &.collapsed-tab, &.un-collapsed-tab {
+        &::after {
+          content: '';
+          left: 200px;
+          top: 15px;
+          font-family: Vaadin-Icons;
+        }
+      }
       .v-button-wrap {
         background: none no-repeat 0 0 transparent;
         background-image: none;

@@ -24,6 +24,7 @@ import com.mycollab.module.user.service.AccountThemeService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.UserUIContext
+import com.vaadin.icons.VaadinIcons
 import com.vaadin.server.Page
 
 /**
@@ -189,6 +190,10 @@ object ThemeManager {
 
         Page.getCurrent().styles.add(".window-max-height{max-height: ${UIUtils.getBrowserHeight()-220}px;}")
         Page.getCurrent().styles.add(".content-height{min-height: ${UIUtils.getBrowserHeight()-45}px;}")
+        Page.getCurrent().styles.add(".vertical-tabsheet .v-button-tab.collapsed-tab::after{content: '${String(Character.toChars(VaadinIcons.ANGLE_RIGHT.codepoint))}';" +
+                "color: #${accountTheme.vtabsheettext};}")
+        Page.getCurrent().styles.add(".vertical-tabsheet .v-button-tab.un-collapsed-tab::after{content: '${String(Character.toChars(VaadinIcons.ANGLE_DOWN.codepoint))}';" +
+                "color: #${accountTheme.vtabsheettext};}")
     }
 
     @JvmStatic
