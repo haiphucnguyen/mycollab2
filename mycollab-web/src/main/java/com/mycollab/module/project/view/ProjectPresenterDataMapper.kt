@@ -18,13 +18,13 @@ package com.mycollab.module.project.view
 
 import com.mycollab.module.project.view.bug.BugPresenter
 import com.mycollab.module.project.view.message.MessagePresenter
-import com.mycollab.module.project.view.milestone.MilestonePresenter
 import com.mycollab.module.project.view.page.PagePresenter
 import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.risk.IRiskPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
 import com.mycollab.module.project.view.ticket.TicketPresenter
 import com.mycollab.module.project.view.finance.IFinancePresenter
+import com.mycollab.module.project.view.milestone.*
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.vaadin.mvp.IPresenter
 import com.mycollab.vaadin.mvp.ScreenData
@@ -35,11 +35,11 @@ import com.mycollab.vaadin.mvp.ScreenData
  */
 object ProjectPresenterDataMapper {
     private val milestoneMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            MilestoneScreenData.Read::class.java to MilestonePresenter::class.java,
-            MilestoneScreenData.Search::class.java to MilestonePresenter::class.java,
-            MilestoneScreenData.Add::class.java to MilestonePresenter::class.java,
-            MilestoneScreenData.Edit::class.java to MilestonePresenter::class.java,
-            MilestoneScreenData.Roadmap::class.java to MilestonePresenter::class.java
+            MilestoneScreenData.Read::class.java to MilestoneReadPresenter::class.java,
+            MilestoneScreenData.Search::class.java to MilestoneListPresenter::class.java,
+            MilestoneScreenData.Add::class.java to MilestoneAddPresenter::class.java,
+            MilestoneScreenData.Edit::class.java to MilestoneAddPresenter::class.java,
+            MilestoneScreenData.Roadmap::class.java to MilestoneRoadmapPresenter::class.java
     )
 
     private val messageMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(

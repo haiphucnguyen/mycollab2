@@ -31,14 +31,17 @@ import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria
 import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria
 import com.mycollab.module.project.event.*
 import com.mycollab.module.project.view.bug.BugPresenter
+import com.mycollab.module.project.view.finance.IInvoiceListPresenter
 import com.mycollab.module.project.view.message.MessagePresenter
-import com.mycollab.module.project.view.milestone.MilestonePresenter
+import com.mycollab.module.project.view.milestone.MilestoneAddPresenter
+import com.mycollab.module.project.view.milestone.MilestoneListPresenter
+import com.mycollab.module.project.view.milestone.MilestoneReadPresenter
+import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter
 import com.mycollab.module.project.view.page.PagePresenter
 import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.risk.IRiskPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
 import com.mycollab.module.project.view.ticket.TicketPresenter
-import com.mycollab.module.project.view.finance.IInvoiceListPresenter
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.module.tracker.domain.Component
 import com.mycollab.module.tracker.domain.SimpleBug
@@ -302,7 +305,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: MilestoneEvent.GotoAdd) {
                 val data = MilestoneScreenData.Add(SimpleMilestone())
-                val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(MilestoneAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -311,7 +314,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: MilestoneEvent.GotoRead) {
                 val data = MilestoneScreenData.Read(event.data as Int)
-                val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(MilestoneReadPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -321,7 +324,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             override fun handle(event: MilestoneEvent.GotoList) {
                 val criteria = MilestoneSearchCriteria()
                 criteria.projectIds = SetSearchField(CurrentProjectVariables.projectId)
-                val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(MilestoneListPresenter::class.java)
                 presenter.go(projectView, MilestoneScreenData.Search(criteria))
             }
         })
@@ -329,7 +332,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
         this.register(object : ApplicationEventListener<MilestoneEvent.GotoRoadmap> {
             @Subscribe
             override fun handle(event: MilestoneEvent.GotoRoadmap) {
-                val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(MilestoneRoadmapPresenter::class.java)
                 presenter.go(projectView, MilestoneScreenData.Roadmap())
             }
         })
@@ -338,7 +341,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: MilestoneEvent.GotoEdit) {
                 val data = MilestoneScreenData.Edit(event.data as Milestone)
-                val presenter = PresenterResolver.getPresenter(MilestonePresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(MilestoneAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })

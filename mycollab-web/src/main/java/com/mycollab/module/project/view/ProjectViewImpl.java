@@ -34,7 +34,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.finance.IInvoiceListPresenter;
 import com.mycollab.module.project.view.finance.ITimeTrackingPresenter;
 import com.mycollab.module.project.view.message.MessagePresenter;
-import com.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
 import com.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.mycollab.module.project.view.parameters.PageScreenData;
@@ -127,7 +127,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     MessagePresenter messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
                     messagePresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.MILESTONE_ENTRY.equals(tabId)) {
-                    MilestonePresenter milestonePresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
+                    MilestoneRoadmapPresenter milestonePresenter = PresenterResolver.getPresenter(MilestoneRoadmapPresenter.class);
                     milestonePresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectView.TICKET_ENTRY.equals(tabId)) {
                     TicketPresenter ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
@@ -152,8 +152,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 } else if (ProjectView.INVOICE_ENTRY.equals(tabId)) {
                     IInvoiceListPresenter invoicePresenter = PresenterResolver.getPresenter(IInvoiceListPresenter.class);
                     invoicePresenter.go(ProjectViewImpl.this, null);
-                }
-                else if (ProjectView.USERS_ENTRY.equals(tabId)) {
+                } else if (ProjectView.USERS_ENTRY.equals(tabId)) {
 //                    ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
 //                    criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
 //                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
