@@ -156,8 +156,7 @@ public class BugReadPresenter extends ProjectGenericPresenter<BugReadView> {
                 SimpleBug bug = bugService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (bug != null) {
                     BugContainer bugContainer = (BugContainer) container;
-                    bugContainer.removeAllComponents();
-                    bugContainer.addComponent(view);
+                    bugContainer.setContent(view);
                     view.previewItem(bug);
 
                     ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

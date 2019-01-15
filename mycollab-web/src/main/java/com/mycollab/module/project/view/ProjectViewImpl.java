@@ -109,9 +109,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private ProjectRightBarContainer rightBarContainer;
         private VerticalTabsheet myProjectTab;
 
-        private MilestonePresenter milestonesPresenter;
-        private TicketPresenter ticketPresenter;
-        private PagePresenter pagePresenter;
         private UserSettingPresenter userPresenter;
 
         ProjectViewWrap(SimpleProject project) {
@@ -130,10 +127,13 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     MessagePresenter messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
                     messagePresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.MILESTONE_ENTRY.equals(tabId)) {
-                    milestonesPresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
+                    MilestonePresenter milestonePresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
+                    milestonePresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectView.TICKET_ENTRY.equals(tabId)) {
+                    TicketPresenter ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
                     ticketPresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.PAGE_ENTRY.equals(tabId)) {
+                    PagePresenter pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
                     pagePresenter.go(ProjectViewImpl.this,
                             new PageScreenData.Search(PathUtils.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
                 } else if (ProjectView.SUMMARY_ENTRY.equals(tabId)) {
@@ -210,7 +210,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             }
 
             if (CurrentProjectVariables.hasPhaseFeature()) {
-                myProjectTab.addTab(constructProjectMilestoneComponent(), ProjectView.MILESTONE_ENTRY,
+                myProjectTab.addTab(null, ProjectView.MILESTONE_ENTRY,
                         UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                         ProjectLinkGenerator.generateMilestonesLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
@@ -219,7 +219,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             }
 
             if (CurrentProjectVariables.hasTicketFeature()) {
-                myProjectTab.addTab(constructTicketDashboardComponent(),
+                myProjectTab.addTab(null,
                         ProjectView.TICKET_ENTRY, UserUIContext.getMessage(TicketI18nEnum.LIST),
                         ProjectLinkGenerator.generateTicketDashboardLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
@@ -232,7 +232,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             }
 
             if (CurrentProjectVariables.hasPageFeature()) {
-                myProjectTab.addTab(constructProjectPageComponent(), ProjectView.PAGE_ENTRY,
+                myProjectTab.addTab(null, ProjectView.PAGE_ENTRY,
                         UserUIContext.getMessage(PageI18nEnum.LIST),
                         ProjectLinkGenerator.generateProjectLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE));
@@ -302,22 +302,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         private Component constructProjectUsers() {
             userPresenter = PresenterResolver.getPresenter(UserSettingPresenter.class);
             return userPresenter.getView();
-        }
-
-
-        private Component constructProjectPageComponent() {
-            pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
-            return pagePresenter.getView();
-        }
-
-        private Component constructProjectMilestoneComponent() {
-            milestonesPresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
-            return milestonesPresenter.getView();
-        }
-
-        private Component constructTicketDashboardComponent() {
-            ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
-            return ticketPresenter.getView();
         }
     }
 

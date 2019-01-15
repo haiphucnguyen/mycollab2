@@ -39,7 +39,7 @@ public class PagePresenter extends AbstractPresenter<PageContainer> {
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
         projectView.clearRightbar();
-        projectView.gotoSubView(ProjectView.PAGE_ENTRY);
+        projectView.gotoSubView(ProjectView.PAGE_ENTRY, view);
 
         AbstractPresenter presenter;
         if (data instanceof PageScreenData.Search) {

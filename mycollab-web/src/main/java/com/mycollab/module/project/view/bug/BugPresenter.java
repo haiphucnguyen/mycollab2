@@ -40,9 +40,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
-        TicketContainer ticketContainer = (TicketContainer) projectView.gotoSubView(ProjectView.TICKET_ENTRY);
-        ticketContainer.setContent(view);
-        view.removeAllComponents();
+        projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
 
         AbstractPresenter<?> presenter;
 
