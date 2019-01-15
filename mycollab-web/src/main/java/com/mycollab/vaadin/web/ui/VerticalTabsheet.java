@@ -321,11 +321,11 @@ public class VerticalTabsheet extends CustomComponent {
         });
     }
 
-    public CssLayout getContentWrapper() {
+    public MCssLayout getContentWrapper() {
         return this.contentWrapper;
     }
 
-    public CssLayout getNavigatorWrapper() {
+    public MCssLayout getNavigatorWrapper() {
         return this.navigatorWrapper;
     }
 

@@ -16,12 +16,13 @@
  */
 package com.mycollab.module.project.view.settings
 
-import com.mycollab.vaadin.mvp.AbstractVerticalPageView
-import com.mycollab.vaadin.mvp.ViewComponent
+import com.mycollab.module.project.domain.ProjectNotificationSetting
+import com.mycollab.vaadin.mvp.PageView
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 2.0
  */
-@ViewComponent
-class ProjectComponentContainer : AbstractVerticalPageView()
+interface ProjectCustomView : PageView {
+    fun showNotificationSettings(notification: ProjectNotificationSetting)
+}

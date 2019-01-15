@@ -33,17 +33,17 @@ import com.vaadin.ui.HasComponents;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ProjectSettingPresenter extends AbstractPresenter<ProjectSettingView> {
+public class ProjectCustomPresenter extends AbstractPresenter<ProjectCustomView> {
     private static final long serialVersionUID = 1L;
 
-    public ProjectSettingPresenter() {
-        super(ProjectSettingView.class);
+    public ProjectCustomPresenter() {
+        super(ProjectCustomView.class);
     }
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
-        projectView.gotoSubView(ProjectView.SETTING, view);
+        projectView.gotoSubView(ProjectView.CUSTOM_ENTRY, view);
 
         ProjectNotificationSettingService projectNotificationSettingService = AppContextUtil
                 .getSpringBean(ProjectNotificationSettingService.class);

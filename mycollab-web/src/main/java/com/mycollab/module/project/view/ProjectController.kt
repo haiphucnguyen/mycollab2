@@ -427,7 +427,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: ProjectNotificationEvent.GotoList) {
                 val data = ProjectSettingScreenData.ViewSettings()
-                val presenter = PresenterResolver.getPresenter(ProjectSettingPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(ProjectCustomPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })

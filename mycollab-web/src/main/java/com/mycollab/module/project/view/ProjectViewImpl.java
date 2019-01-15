@@ -39,12 +39,13 @@ import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
 import com.mycollab.module.project.view.parameters.*;
-import com.mycollab.module.project.view.settings.ProjectMemberListPresenter;
-import com.mycollab.module.project.view.settings.ProjectRoleListPresenter;
+import com.mycollab.module.project.view.settings.*;
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
 import com.mycollab.module.project.view.ticket.TicketDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectInfoComponent;
+import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
@@ -164,17 +165,23 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     ProjectRoleListPresenter presenter = PresenterResolver.getPresenter(ProjectRoleListPresenter.class);
                     presenter.go(ProjectViewImpl.this, new ProjectRoleScreenData.Search(criteria));
                 } else if (ProjectView.COMPONENT_ENTRY.equals(tabId)) {
-
+                    ComponentSearchCriteria criteria = new ComponentSearchCriteria();
+                    criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                    ComponentListPresenter presenter = PresenterResolver.getPresenter(ComponentListPresenter.class);
+                    presenter.go(ProjectViewImpl.this, new ComponentScreenData.Search(criteria));
                 } else if (ProjectView.VERSION_ENTRY.equals(tabId)) {
-
+                    VersionSearchCriteria criteria = new VersionSearchCriteria();
+                    criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                    VersionListPresenter presenter = PresenterResolver.getPresenter(VersionListPresenter.class);
+                    presenter.go(ProjectViewImpl.this, new VersionScreenData.Search(criteria));
                 } else if (ProjectView.CUSTOM_ENTRY.equals(tabId)) {
-
+                    ProjectCustomPresenter presenter = PresenterResolver.getPresenter(ProjectCustomPresenter.class);
+                    presenter.go(ProjectViewImpl.this, null);
                 }
             });
 
             CssLayout contentWrapper = myProjectTab.getContentWrapper();
-            contentWrapper.addStyleName("main-content");
-            contentWrapper.addStyleName("content-height");
+            withStyleName("main-content", "content-height");
             contentWrapper.addComponentAsFirst(new ProjectInfoComponent(project));
 
             buildComponents();

@@ -89,7 +89,7 @@ object ProjectPresenterDataMapper {
             ProjectRoleScreenData.Add::class.java to ProjectRoleAddPresenter::class.java,
             ProjectRoleScreenData.Read::class.java to ProjectRoleReadPresenter::class.java,
             ProjectRoleScreenData.Search::class.java to ProjectRoleListPresenter::class.java,
-            ProjectSettingScreenData.ViewSettings::class.java to ProjectSettingPresenter::class.java,
+            ProjectSettingScreenData.ViewSettings::class.java to ProjectCustomPresenter::class.java,
             ComponentScreenData.Add::class.java to ComponentAddPresenter::class.java,
             ComponentScreenData.Edit::class.java to ComponentAddPresenter::class.java,
             ComponentScreenData.Read::class.java to ComponentReadPresenter::class.java,
