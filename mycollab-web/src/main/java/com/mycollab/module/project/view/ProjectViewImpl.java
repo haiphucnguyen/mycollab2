@@ -55,8 +55,12 @@ import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet.ButtonTab;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -180,8 +184,8 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 }
             });
 
-            CssLayout contentWrapper = myProjectTab.getContentWrapper();
-            withStyleName("main-content", "content-height");
+            MCssLayout contentWrapper = myProjectTab.getContentWrapper();
+            contentWrapper.withStyleName("main-content", "content-height");
             contentWrapper.addComponentAsFirst(new ProjectInfoComponent(project));
 
             buildComponents();
