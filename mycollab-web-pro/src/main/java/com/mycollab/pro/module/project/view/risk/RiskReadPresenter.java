@@ -16,6 +16,9 @@ import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
+import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.risk.IRiskReadPresenter;
+import com.mycollab.module.project.view.risk.IRiskReadView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.AppUI;
@@ -39,11 +42,11 @@ import com.vaadin.ui.UI;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
+public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implements IRiskReadPresenter {
     private static final long serialVersionUID = 1L;
 
     public RiskReadPresenter() {
-        super(RiskReadView.class);
+        super(IRiskReadView.class);
     }
 
     @Override
@@ -132,9 +135,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (risk != null) {
-                    RiskContainer riskContainer = (RiskContainer) container;
-                    riskContainer.removeAllComponents();
-                    riskContainer.addComponent(view);
+                    ProjectView projectView = (ProjectView) container;
+                    projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
                     view.previewItem(risk);
 
                     ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

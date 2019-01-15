@@ -41,7 +41,7 @@ import com.mycollab.module.project.view.parameters.PageScreenData;
 import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
-import com.mycollab.module.project.view.ticket.TicketPresenter;
+import com.mycollab.module.project.view.ticket.TicketDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectInfoComponent;
 import com.mycollab.spring.AppContextUtil;
@@ -130,7 +130,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     MilestoneRoadmapPresenter milestonePresenter = PresenterResolver.getPresenter(MilestoneRoadmapPresenter.class);
                     milestonePresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
                 } else if (ProjectView.TICKET_ENTRY.equals(tabId)) {
-                    TicketPresenter ticketPresenter = PresenterResolver.getPresenter(TicketPresenter.class);
+                    TicketDashboardPresenter ticketPresenter = PresenterResolver.getPresenter(TicketDashboardPresenter.class);
                     ticketPresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.PAGE_ENTRY.equals(tabId)) {
                     PagePresenter pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);

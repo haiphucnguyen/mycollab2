@@ -1,6 +1,5 @@
 package com.mycollab.pro.module.project.view.risk;
 
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -11,8 +10,12 @@ import com.mycollab.module.project.event.RiskEvent;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
+import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.risk.IRiskAddPresenter;
+import com.mycollab.module.project.view.risk.IRiskAddView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.IEditFormHandler;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -29,11 +32,11 @@ import com.vaadin.ui.HasComponents;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
+public class RiskAddPresenter extends AbstractPresenter<IRiskAddView> implements IRiskAddPresenter {
     private static final long serialVersionUID = 1L;
 
     public RiskAddPresenter() {
-        super(RiskAddView.class);
+        super(IRiskAddView.class);
     }
 
     @Override
@@ -63,9 +66,9 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-            RiskContainer riskContainer = (RiskContainer) container;
-            riskContainer.removeAllComponents();
-            riskContainer.addComponent(view);
+            ProjectView projectView = (ProjectView) container;
+            projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
+
             SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
 

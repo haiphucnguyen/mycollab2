@@ -16,15 +16,23 @@
  */
 package com.mycollab.module.project.view
 
-import com.mycollab.module.project.view.bug.BugPresenter
+import com.mycollab.module.project.view.bug.BugAddPresenter
+import com.mycollab.module.project.view.bug.BugReadPresenter
+import com.mycollab.module.project.view.finance.IFinancePresenter
 import com.mycollab.module.project.view.message.MessagePresenter
+import com.mycollab.module.project.view.milestone.MilestoneAddPresenter
+import com.mycollab.module.project.view.milestone.MilestoneListPresenter
+import com.mycollab.module.project.view.milestone.MilestoneReadPresenter
+import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter
 import com.mycollab.module.project.view.page.PagePresenter
 import com.mycollab.module.project.view.parameters.*
-import com.mycollab.module.project.view.risk.IRiskPresenter
+import com.mycollab.module.project.view.risk.IRiskAddPresenter
+import com.mycollab.module.project.view.risk.IRiskReadPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
-import com.mycollab.module.project.view.ticket.TicketPresenter
-import com.mycollab.module.project.view.finance.IFinancePresenter
-import com.mycollab.module.project.view.milestone.*
+import com.mycollab.module.project.view.task.TaskAddPresenter
+import com.mycollab.module.project.view.task.TaskReadPresenter
+import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter
+import com.mycollab.module.project.view.ticket.TicketDashboardPresenter
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.vaadin.mvp.IPresenter
 import com.mycollab.vaadin.mvp.ScreenData
@@ -53,21 +61,21 @@ object ProjectPresenterDataMapper {
             PageScreenData.Search::class.java to PagePresenter::class.java)
 
     private val riskMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            RiskScreenData.Add::class.java to IRiskPresenter::class.java,
-            RiskScreenData.Edit::class.java to IRiskPresenter::class.java,
-            RiskScreenData.Read::class.java to IRiskPresenter::class.java)
+            RiskScreenData.Add::class.java to IRiskAddPresenter::class.java,
+            RiskScreenData.Edit::class.java to IRiskAddPresenter::class.java,
+            RiskScreenData.Read::class.java to IRiskReadPresenter::class.java)
 
     private val taskMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            TaskScreenData.Add::class.java to TicketPresenter::class.java,
-            TaskScreenData.Edit::class.java to TicketPresenter::class.java,
-            TaskScreenData.Read::class.java to TicketPresenter::class.java,
-            TicketScreenData.GotoDashboard::class.java to TicketPresenter::class.java,
-            TicketScreenData.GotoKanbanView::class.java to TicketPresenter::class.java)
+            TaskScreenData.Add::class.java to TaskAddPresenter::class.java,
+            TaskScreenData.Edit::class.java to TaskAddPresenter::class.java,
+            TaskScreenData.Read::class.java to TaskReadPresenter::class.java,
+            TicketScreenData.GotoDashboard::class.java to TicketDashboardPresenter::class.java,
+            TicketScreenData.GotoKanbanView::class.java to ITicketKanbanPresenter::class.java)
 
     private val trackerMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            BugScreenData.Read::class.java to BugPresenter::class.java,
-            BugScreenData.Add::class.java to BugPresenter::class.java,
-            BugScreenData.Edit::class.java to BugPresenter::class.java)
+            BugScreenData.Read::class.java to BugReadPresenter::class.java,
+            BugScreenData.Add::class.java to BugAddPresenter::class.java,
+            BugScreenData.Edit::class.java to BugAddPresenter::class.java)
 
     private val standupMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
             StandupScreenData.Search::class.java to ProjectDashboardPresenter::class.java)

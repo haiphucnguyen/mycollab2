@@ -5,6 +5,7 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.AbstractEditItemComp;
+import com.mycollab.module.project.view.risk.IRiskAddView;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -22,7 +23,7 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @since 1.0
  */
 @ViewComponent
-public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements RiskAddView {
+public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements IRiskAddView {
     private static final long serialVersionUID = 1L;
 
     @Override

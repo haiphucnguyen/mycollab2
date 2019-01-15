@@ -30,7 +30,8 @@ import com.mycollab.module.project.domain.criteria.MilestoneSearchCriteria
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria
 import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria
 import com.mycollab.module.project.event.*
-import com.mycollab.module.project.view.bug.BugPresenter
+import com.mycollab.module.project.view.bug.BugAddPresenter
+import com.mycollab.module.project.view.bug.BugReadPresenter
 import com.mycollab.module.project.view.finance.IInvoiceListPresenter
 import com.mycollab.module.project.view.message.MessagePresenter
 import com.mycollab.module.project.view.milestone.MilestoneAddPresenter
@@ -39,9 +40,13 @@ import com.mycollab.module.project.view.milestone.MilestoneReadPresenter
 import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter
 import com.mycollab.module.project.view.page.PagePresenter
 import com.mycollab.module.project.view.parameters.*
-import com.mycollab.module.project.view.risk.IRiskPresenter
+import com.mycollab.module.project.view.risk.IRiskAddPresenter
+import com.mycollab.module.project.view.risk.IRiskReadPresenter
 import com.mycollab.module.project.view.settings.UserSettingPresenter
-import com.mycollab.module.project.view.ticket.TicketPresenter
+import com.mycollab.module.project.view.task.TaskAddPresenter
+import com.mycollab.module.project.view.task.TaskReadPresenter
+import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter
+import com.mycollab.module.project.view.ticket.TicketDashboardPresenter
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.mycollab.module.tracker.domain.Component
 import com.mycollab.module.tracker.domain.SimpleBug
@@ -113,7 +118,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: TicketEvent.GotoDashboard) {
                 val data = TicketScreenData.GotoDashboard(event.data)
-                val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(TicketDashboardPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -124,7 +129,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: TaskEvent.GotoRead) {
                 val data = TaskScreenData.Read(event.data as Int)
-                val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(TaskReadPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -133,7 +138,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             override fun handle(event: TaskEvent.GotoAdd) {
                 val param = event.data
                 val data = if (param is SimpleTask) TaskScreenData.Add(param) else TaskScreenData.Add(SimpleTask())
-                val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(TaskAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -141,7 +146,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: TaskEvent.GotoEdit) {
                 val data = TaskScreenData.Edit(event.data as SimpleTask)
-                val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(TaskAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -150,7 +155,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: TaskEvent.GotoKanbanView) {
                 val data = TicketScreenData.GotoKanbanView()
-                val presenter = PresenterResolver.getPresenter(TicketPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(ITicketKanbanPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -162,7 +167,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             override fun handle(event: RiskEvent.GotoAdd) {
                 val param = event.data
                 val data = if (param is SimpleRisk) RiskScreenData.Add(param) else RiskScreenData.Add(SimpleRisk())
-                val presenter = PresenterResolver.getPresenter(IRiskPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(IRiskAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -171,7 +176,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: RiskEvent.GotoEdit) {
                 val data = RiskScreenData.Edit(event.data as Risk)
-                val presenter = PresenterResolver.getPresenter(IRiskPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(IRiskAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -179,7 +184,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: RiskEvent.GotoRead) {
                 val data = RiskScreenData.Read(event.data as Int)
-                val presenter = PresenterResolver.getPresenter(IRiskPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(IRiskReadPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -190,7 +195,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: BugEvent.GotoAdd) {
                 val data = BugScreenData.Add(SimpleBug())
-                val presenter = PresenterResolver.getPresenter(BugPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(BugAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -198,7 +203,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: BugEvent.GotoEdit) {
                 val data = BugScreenData.Edit(event.data as SimpleBug)
-                val presenter = PresenterResolver.getPresenter(BugPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(BugAddPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })
@@ -206,7 +211,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
             @Subscribe
             override fun handle(event: BugEvent.GotoRead) {
                 val data = BugScreenData.Read(event.data as Int)
-                val presenter = PresenterResolver.getPresenter(BugPresenter::class.java)
+                val presenter = PresenterResolver.getPresenter(BugReadPresenter::class.java)
                 presenter.go(projectView, data)
             }
         })

@@ -11,6 +11,7 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
+import com.mycollab.module.project.view.risk.IRiskReadView;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -36,7 +37,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implements RiskReadView {
+public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implements IRiskReadView {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
 
