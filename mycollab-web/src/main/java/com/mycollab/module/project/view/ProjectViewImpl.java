@@ -18,6 +18,7 @@ package com.mycollab.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
+import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.VariableInjector;
@@ -26,6 +27,7 @@ import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
+import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.mycollab.module.project.event.ProjectMemberEvent;
 import com.mycollab.module.project.i18n.*;
 import com.mycollab.module.project.service.ProjectMemberService;
@@ -36,10 +38,9 @@ import com.mycollab.module.project.view.finance.ITimeTrackingPresenter;
 import com.mycollab.module.project.view.message.MessagePresenter;
 import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter;
 import com.mycollab.module.project.view.page.PagePresenter;
-import com.mycollab.module.project.view.parameters.MilestoneScreenData;
-import com.mycollab.module.project.view.parameters.PageScreenData;
-import com.mycollab.module.project.view.parameters.TimeTrackingScreenData;
-import com.mycollab.module.project.view.settings.UserSettingPresenter;
+import com.mycollab.module.project.view.parameters.*;
+import com.mycollab.module.project.view.settings.ProjectMemberListPresenter;
+import com.mycollab.module.project.view.settings.ProjectRoleListPresenter;
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
 import com.mycollab.module.project.view.ticket.TicketDashboardPresenter;
 import com.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -82,11 +83,11 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
         viewWrap.setNavigatorVisibility(visibility);
     }
 
-    public void addComponentToRightbar(Component component) {
+    public void addComponentToRightBar(Component component) {
         viewWrap.rightBarContainer.addViewComponent(component);
     }
 
-    public void clearRightbar() {
+    public void clearRightBar() {
         viewWrap.rightBarContainer.clearViewComponents();
     }
 
@@ -97,6 +98,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
 
     @Override
     public Component gotoSubView(String viewId, Component viewDisplay) {
+        viewWrap.rightBarContainer.clearViewComponents();
         return viewWrap.gotoSubView(viewId, viewDisplay);
     }
 
@@ -108,8 +110,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
     private class ProjectViewWrap extends MHorizontalLayout implements PageView {
         private ProjectRightBarContainer rightBarContainer;
         private VerticalTabsheet myProjectTab;
-
-        private UserSettingPresenter userPresenter;
 
         ProjectViewWrap(SimpleProject project) {
             this.withSpacing(false).withFullWidth().withStyleName("project-view").withId("project-view-wrap");
@@ -153,10 +153,22 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     IInvoiceListPresenter invoicePresenter = PresenterResolver.getPresenter(IInvoiceListPresenter.class);
                     invoicePresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.USERS_ENTRY.equals(tabId)) {
-//                    ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-//                    criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-//                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
-//                    userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
+                    ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+                    criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    criteria.setStatuses(new SetSearchField<>(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET));
+                    ProjectMemberListPresenter presenter = PresenterResolver.getPresenter(ProjectMemberListPresenter.class);
+                    presenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
+                } else if (ProjectView.ROLE_ENTRY.equals(tabId)) {
+                    ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
+                    criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                    ProjectRoleListPresenter presenter = PresenterResolver.getPresenter(ProjectRoleListPresenter.class);
+                    presenter.go(ProjectViewImpl.this, new ProjectRoleScreenData.Search(criteria));
+                } else if (ProjectView.COMPONENT_ENTRY.equals(tabId)) {
+
+                } else if (ProjectView.VERSION_ENTRY.equals(tabId)) {
+
+                } else if (ProjectView.CUSTOM_ENTRY.equals(tabId)) {
+
                 }
             });
 
@@ -296,11 +308,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     ProjectLinkGenerator.generateUsersLink(prjId),
                     VaadinIcons.COG);
 
-        }
-
-        private Component constructProjectUsers() {
-            userPresenter = PresenterResolver.getPresenter(UserSettingPresenter.class);
-            return userPresenter.getView();
         }
     }
 

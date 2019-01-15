@@ -28,7 +28,6 @@ import com.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.tracker.domain.SimpleComponent;
 import com.mycollab.module.tracker.service.ComponentService;
@@ -107,7 +106,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        projectView.addComponentToRightbar(detailPanel);
+        projectView.addComponentToRightBar(detailPanel);
     }
 
     @Override

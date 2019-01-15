@@ -249,7 +249,7 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
         unresolvedTicketByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         StackPanel.extend(unresolvedTicketByPriorityWidget);
 
-        rightBar.addComponentToRightbar(new MVerticalLayout(unresolvedTicketsByAssigneeWidget, unresolvedTicketByPriorityWidget).withMargin(false));
+        rightBar.addComponentToRightBar(new MVerticalLayout(unresolvedTicketsByAssigneeWidget, unresolvedTicketByPriorityWidget).withMargin(false));
     }
 
     @Override

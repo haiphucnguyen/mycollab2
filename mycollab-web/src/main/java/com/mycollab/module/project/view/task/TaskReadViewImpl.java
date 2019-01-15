@@ -29,7 +29,6 @@ import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -51,7 +50,6 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.themes.ValoTheme;
-import javafx.scene.layout.StackPane;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,7 +106,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        projectView.addComponentToRightbar(detailPanel);
+        projectView.addComponentToRightBar(detailPanel);
     }
 
     @Override

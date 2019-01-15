@@ -36,9 +36,9 @@ interface ProjectView : PageView {
 
     fun setNavigatorVisibility(visibility: Boolean)
 
-    fun addComponentToRightbar(component: Component)
+    fun addComponentToRightBar(component: Component)
 
-    fun clearRightbar()
+    fun clearRightBar()
 
     companion object {
         @JvmField

@@ -47,7 +47,6 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.BlockRowRender;
 import com.mycollab.module.project.ui.components.IBlockContainer;
-import com.mycollab.module.project.view.ProjectRightBarContainer;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.service.MilestoneComponentFactory;
 import com.mycollab.module.project.view.ticket.ToggleTicketSummaryField;
@@ -227,7 +226,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         Panel filterPanel = new Panel("Filter by status", filterLayout);
         StackPanel.extend(filterPanel);
-        projectView.addComponentToRightbar(filterPanel);
+        projectView.addComponentToRightBar(filterPanel);
     }
 
     private HorizontalLayout createHeaderRight() {

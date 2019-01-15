@@ -38,7 +38,6 @@ public class PagePresenter extends AbstractPresenter<PageContainer> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
-        projectView.clearRightbar();
         projectView.gotoSubView(ProjectView.PAGE_ENTRY, view);
 
         AbstractPresenter presenter;

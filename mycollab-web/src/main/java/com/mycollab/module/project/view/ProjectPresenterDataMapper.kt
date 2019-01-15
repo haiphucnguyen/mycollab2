@@ -18,7 +18,8 @@ package com.mycollab.module.project.view
 
 import com.mycollab.module.project.view.bug.BugAddPresenter
 import com.mycollab.module.project.view.bug.BugReadPresenter
-import com.mycollab.module.project.view.finance.IFinancePresenter
+import com.mycollab.module.project.view.finance.IInvoiceListPresenter
+import com.mycollab.module.project.view.finance.ITimeTrackingPresenter
 import com.mycollab.module.project.view.message.MessagePresenter
 import com.mycollab.module.project.view.milestone.MilestoneAddPresenter
 import com.mycollab.module.project.view.milestone.MilestoneListPresenter
@@ -28,7 +29,7 @@ import com.mycollab.module.project.view.page.PagePresenter
 import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.risk.IRiskAddPresenter
 import com.mycollab.module.project.view.risk.IRiskReadPresenter
-import com.mycollab.module.project.view.settings.UserSettingPresenter
+import com.mycollab.module.project.view.settings.*
 import com.mycollab.module.project.view.task.TaskAddPresenter
 import com.mycollab.module.project.view.task.TaskReadPresenter
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter
@@ -81,26 +82,26 @@ object ProjectPresenterDataMapper {
             StandupScreenData.Search::class.java to ProjectDashboardPresenter::class.java)
 
     private val userMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            ProjectMemberScreenData.Add::class.java to UserSettingPresenter::class.java,
-            ProjectMemberScreenData.InviteProjectMembers::class.java to UserSettingPresenter::class.java,
-            ProjectMemberScreenData.Read::class.java to UserSettingPresenter::class.java,
-            ProjectMemberScreenData.Search::class.java to UserSettingPresenter::class.java,
-            ProjectRoleScreenData.Add::class.java to UserSettingPresenter::class.java,
-            ProjectRoleScreenData.Read::class.java to UserSettingPresenter::class.java,
-            ProjectRoleScreenData.Search::class.java to UserSettingPresenter::class.java,
-            ProjectSettingScreenData.ViewSettings::class.java to UserSettingPresenter::class.java,
-            ComponentScreenData.Add::class.java to UserSettingPresenter::class.java,
-            ComponentScreenData.Edit::class.java to UserSettingPresenter::class.java,
-            ComponentScreenData.Read::class.java to UserSettingPresenter::class.java,
-            ComponentScreenData.Search::class.java to UserSettingPresenter::class.java,
-            VersionScreenData.Add::class.java to UserSettingPresenter::class.java,
-            VersionScreenData.Edit::class.java to UserSettingPresenter::class.java,
-            VersionScreenData.Read::class.java to UserSettingPresenter::class.java,
-            VersionScreenData.Search::class.java to UserSettingPresenter::class.java)
+            ProjectMemberScreenData.Add::class.java to ProjectMemberEditPresenter::class.java,
+            ProjectMemberScreenData.InviteProjectMembers::class.java to ProjectMemberInvitePresenter::class.java,
+            ProjectMemberScreenData.Read::class.java to ProjectMemberReadPresenter::class.java,
+            ProjectMemberScreenData.Search::class.java to ProjectMemberListPresenter::class.java,
+            ProjectRoleScreenData.Add::class.java to ProjectRoleAddPresenter::class.java,
+            ProjectRoleScreenData.Read::class.java to ProjectRoleReadPresenter::class.java,
+            ProjectRoleScreenData.Search::class.java to ProjectRoleListPresenter::class.java,
+            ProjectSettingScreenData.ViewSettings::class.java to ProjectSettingPresenter::class.java,
+            ComponentScreenData.Add::class.java to ComponentAddPresenter::class.java,
+            ComponentScreenData.Edit::class.java to ComponentAddPresenter::class.java,
+            ComponentScreenData.Read::class.java to ComponentReadPresenter::class.java,
+            ComponentScreenData.Search::class.java to ComponentListPresenter::class.java,
+            VersionScreenData.Add::class.java to VersionAddPresenter::class.java,
+            VersionScreenData.Edit::class.java to VersionAddPresenter::class.java,
+            VersionScreenData.Read::class.java to VersionReadPresenter::class.java,
+            VersionScreenData.Search::class.java to VersionListPresenter::class.java)
 
     private val timeMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
-            TimeTrackingScreenData.Search::class.java to IFinancePresenter::class.java,
-            InvoiceScreenData.GotoInvoiceList::class.java to IFinancePresenter::class.java)
+            TimeTrackingScreenData.Search::class.java to ITimeTrackingPresenter::class.java,
+            InvoiceScreenData.GotoInvoiceList::class.java to IInvoiceListPresenter::class.java)
 
     private val projectMapper = mapOf<Class<out ScreenData<Any>>, Class<out IPresenter<*>>>(
             ProjectScreenData.GotoTagList::class.java to ProjectDashboardPresenter::class.java,

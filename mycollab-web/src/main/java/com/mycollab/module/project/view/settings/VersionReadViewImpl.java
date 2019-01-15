@@ -90,7 +90,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
 
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         StackPanel.extend(detailPanel);
-        projectView.addComponentToRightbar(detailPanel);
+        projectView.addComponentToRightBar(detailPanel);
     }
 
     @Override
