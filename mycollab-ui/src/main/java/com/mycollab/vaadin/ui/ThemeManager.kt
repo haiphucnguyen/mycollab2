@@ -96,6 +96,7 @@ object ThemeManager {
         if (accountTheme.vtabsheettextselected != null) {
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { color: #${accountTheme.vtabsheettextselected}; }")
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { box-shadow: inset 5px 0px 0px 0px #${accountTheme.vtabsheettextselected}; }")
+            extraStyles.append(".vertical-tabsheet .v-button-tab.group-tab-selected { box-shadow: inset 5px 0px 0px 0px #${accountTheme.vtabsheettextselected}; }")
 
             //Color while hover on sidebar menu
             extraStyles.append(".vertical-tabsheet .v-button-tab .v-button-wrap:hover {color: #${accountTheme.vtabsheettextselected}!important;}")
