@@ -41,6 +41,6 @@ public class UserProjectDashboardPresenter extends AbstractPresenter<UserProject
         boardContainer.gotoSubView("Dashboard", view);
         view.lazyLoadView();
 
-        AppUI.addFragment("project", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
+        AppUI.addFragment("project/dashboard", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
     }
 }
