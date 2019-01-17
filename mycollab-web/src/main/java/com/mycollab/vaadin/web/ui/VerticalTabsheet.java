@@ -69,7 +69,7 @@ public class VerticalTabsheet extends CustomComponent {
     private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
-        navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap", "content-height");
+        navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap");
 
         navigatorContainer = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         navigatorWrapper.addComponent(navigatorContainer);
@@ -101,7 +101,7 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     public void addTab(Component component, String id, String caption, String link, Resource resource) {
-        addTab(null, component, id, caption, null, resource);
+        addTab(null, component, id, caption, link, resource);
     }
 
     public void addTab(String parentId, Component component, String id, String caption, String link, Resource resource) {
@@ -135,17 +135,7 @@ public class VerticalTabsheet extends CustomComponent {
 
                     if (parentTab.getListeners(Button.ClickEvent.class).size() < 2) {
                         parentTab.addClickListener((Button.ClickListener) event -> {
-                            parentTab.collapsed = !parentTab.collapsed;
-                            String newStyleName = parentTab.collapsed ? "collapsed-tab" : "un-collapsed-tab";
-                            String oldStyleName = parentTab.collapsed ? "un-collapsed-tab" : "collapsed-tab";
-                            parentTab.removeStyleName(oldStyleName);
-                            parentTab.addStyleName(newStyleName);
-
-                            if (parentTab.collapsed) {
-                                parentTab.children.forEach(childTab -> childTab.addStyleName("hide"));
-                            } else {
-                                parentTab.children.forEach(childTab -> childTab.removeStyleName("hide"));
-                            }
+                            parentTab.toggleGroupTabDisplay();
                         });
                     }
                 } else {
@@ -292,12 +282,12 @@ public class VerticalTabsheet extends CustomComponent {
             }
 
             if (parentGroupTab != null) {
-                LOG.debug("Add parent id " + parentGroupTab.getTabId() + " style group selected");
                 parentGroupTab.addStyleName(GROUP_TAB_SELECTED_STYLE);
-                parentGroupTab.children.forEach(child -> {
-                    LOG.debug("Add tab id " + child.getTabId() + " style group selected");
-                    child.addStyleName(GROUP_TAB_SELECTED_STYLE);
-                });
+                parentGroupTab.children.forEach(child -> child.addStyleName(GROUP_TAB_SELECTED_STYLE));
+
+                if (parentGroupTab.collapsed) {
+                    parentGroupTab.toggleGroupTabDisplay();
+                }
             }
         }
     }
@@ -325,7 +315,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     private void clearTabSelection() {
         navigatorContainer.forEach(component -> {
-            LOG.debug("Clear selected css " + ((ButtonTab)component).getTabId());
+            LOG.debug("Clear selected css " + ((ButtonTab) component).getTabId());
             if (component.getStyleName().contains(TAB_SELECTED_STYLE)) {
                 component.removeStyleName(TAB_SELECTED_STYLE);
             }
@@ -400,6 +390,22 @@ public class VerticalTabsheet extends CustomComponent {
 
         public boolean hasChildTabs() {
             return (children != null) && children.size() > 0;
+        }
+
+        void toggleGroupTabDisplay() {
+            if (children != null) {
+                this.collapsed = !this.collapsed;
+                String newStyleName = this.collapsed ? "collapsed-tab" : "un-collapsed-tab";
+                String oldStyleName = this.collapsed ? "un-collapsed-tab" : "collapsed-tab";
+                this.removeStyleName(oldStyleName);
+                this.addStyleName(newStyleName);
+
+                if (this.collapsed) {
+                    this.children.forEach(childTab -> childTab.addStyleName("hide"));
+                } else {
+                    this.children.forEach(childTab -> childTab.removeStyleName("hide"));
+                }
+            }
         }
     }
 }

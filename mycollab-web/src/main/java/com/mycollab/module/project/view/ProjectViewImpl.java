@@ -247,6 +247,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
 
                 myProjectTab.addTab(ProjectView.TICKET_ENTRY, null, ProjectView.KANBAN_ENTRY,
+
                         UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), VaadinIcons.GRID_SMALL_O);
             } else {
                 myProjectTab.removeTab(ProjectView.TICKET_ENTRY);

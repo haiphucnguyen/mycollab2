@@ -2,16 +2,17 @@ package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
+import com.mycollab.module.user.accountsettings.view.AccountModule;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent.ResetTheme;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent.SaveTheme;
 import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.service.AccountThemeService;
+import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
@@ -73,8 +74,8 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
-        customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_THEME));
+        AccountModule accountModule = (AccountModule) container;
+        accountModule.gotoSubView(SettingUIConstants.THEME_CUSTOMIZE, view);
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {

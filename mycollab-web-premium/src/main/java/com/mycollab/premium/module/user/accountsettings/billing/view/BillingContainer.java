@@ -37,7 +37,8 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
         setContent(bodyLayout);
     }
 
-    void display() {
+    @Override
+    public void display() {
         bodyLayout.removeAllComponents();
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
