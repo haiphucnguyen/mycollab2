@@ -28,8 +28,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -46,8 +44,6 @@ import java.util.Map;
  */
 public class VerticalTabsheet extends CustomComponent {
     private static final long serialVersionUID = 1L;
-
-    private static Logger LOG = LoggerFactory.getLogger(VerticalTabsheet.class);
 
     private static final String MAX_SIZE = "220px";
     private static final String MIN_SIZE = "65px";
@@ -144,7 +140,6 @@ public class VerticalTabsheet extends CustomComponent {
             }
 
             compMap.put(id, tab);
-            LOG.debug("Put tab " + tab + " with id " + id);
         } else {
             throw new MyCollabException("Existing tab has id " + id);
         }
@@ -315,7 +310,6 @@ public class VerticalTabsheet extends CustomComponent {
 
     private void clearTabSelection() {
         navigatorContainer.forEach(component -> {
-            LOG.debug("Clear selected css " + ((ButtonTab) component).getTabId());
             if (component.getStyleName().contains(TAB_SELECTED_STYLE)) {
                 component.removeStyleName(TAB_SELECTED_STYLE);
             }

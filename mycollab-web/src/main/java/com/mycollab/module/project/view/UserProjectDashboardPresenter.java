@@ -38,7 +38,7 @@ public class UserProjectDashboardPresenter extends AbstractPresenter<UserProject
     @Override
     protected void onGo(HasComponents container, ScreenData data) {
         BoardContainer boardContainer = (BoardContainer) container;
-        boardContainer.gotoSubView("Dashboard");
+        boardContainer.gotoSubView("Dashboard", view);
         view.lazyLoadView();
 
         AppUI.addFragment("project", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));

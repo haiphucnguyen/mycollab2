@@ -23,7 +23,7 @@ public class ClientPresenter extends AbstractPresenter<IClientContainer> impleme
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         BoardContainer boardContainer = (BoardContainer) container;
-        boardContainer.gotoSubView("Clients");
+        boardContainer.gotoSubView("Clients", view);
 
         AbstractPresenter presenter;
         if (data instanceof ClientScreenData.Search) {
