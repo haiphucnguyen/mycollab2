@@ -54,7 +54,6 @@ public class VerticalTabsheet extends CustomComponent {
     private static final String GROUP_TAB_SELECTED_STYLE = "group-tab-selected";
 
     private VerticalLayout navigatorContainer;
-    private MCssLayout navigatorWrapper;
 
     private MCssLayout contentWrapper;
 
@@ -65,14 +64,13 @@ public class VerticalTabsheet extends CustomComponent {
     private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
-        navigatorWrapper = new MCssLayout().withStyleName("navigator-wrap");
 
-        navigatorContainer = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
-        navigatorWrapper.addComponent(navigatorContainer);
+        navigatorContainer = new MVerticalLayout().withStyleName("navigator-wrap").withId("navigation-container").withSpacing(false)
+                .withMargin(new MarginInfo(true, false, true, false));
 
         contentWrapper = new MCssLayout().withStyleName("container-wrap").withFullSize();
 
-        this.setCompositionRoot(new MCssLayout(navigatorWrapper, contentWrapper).withFullWidth());
+        this.setCompositionRoot(new MCssLayout(navigatorContainer, contentWrapper).withFullWidth());
         this.setStyleName(TABSHEET_STYLE);
     }
 
@@ -166,7 +164,6 @@ public class VerticalTabsheet extends CustomComponent {
 
     public void setNavigatorVisibility(boolean visibility) {
         if (!visibility) {
-            navigatorWrapper.setWidth(MIN_SIZE);
             navigatorContainer.setWidth(MIN_SIZE);
             this.hideTabsCaption();
 
@@ -178,7 +175,6 @@ public class VerticalTabsheet extends CustomComponent {
             toggleBtn.setWidth("65px");
             toggleBtn.setCaption("");
         } else {
-            navigatorWrapper.setWidth(MAX_SIZE);
             navigatorContainer.setWidth(MAX_SIZE);
             this.showTabsCaption();
 
@@ -299,10 +295,6 @@ public class VerticalTabsheet extends CustomComponent {
         navigatorContainer.forEach(comp -> comp.setWidth(width));
     }
 
-    public void setNavigatorStyleName(String styleName) {
-        navigatorContainer.setStyleName(styleName);
-    }
-
     private void clearTabSelection() {
         navigatorContainer.forEach(component -> {
             if (component.getStyleName().contains(TAB_SELECTED_STYLE)) {
@@ -317,10 +309,6 @@ public class VerticalTabsheet extends CustomComponent {
 
     public MCssLayout getContentWrapper() {
         return this.contentWrapper;
-    }
-
-    public MCssLayout getNavigatorWrapper() {
-        return this.navigatorWrapper;
     }
 
     public static class ButtonTab extends MButton {

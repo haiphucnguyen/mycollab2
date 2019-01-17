@@ -17351,15 +17351,6 @@ div.v-window {
 	background-color: #f9f9f9;
 }
 
-.project-view .sidebar-menu {
-	padding: 0px;
-	transition: width 1s;
-}
-
-.project-view .sidebar-menu .v-button-wrap .v-icon {
-	font-size: 18px;
-}
-
 .project-view .addViewLayout {
 	padding: 0px 30px 10px;
 }

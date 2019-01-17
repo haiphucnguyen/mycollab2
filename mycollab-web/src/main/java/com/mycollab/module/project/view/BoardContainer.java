@@ -26,7 +26,6 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
 
     public BoardContainer() {
         this.setSizeFull();
-        this.setNavigatorStyleName("sidebar-menu");
         MCssLayout contentWrapper = this.getContentWrapper();
         contentWrapper.withStyleName("content-height");
         addToggleNavigatorControl();
