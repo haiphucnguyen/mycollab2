@@ -216,9 +216,9 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         tabsheetDemo.getNavigatorWrapper().addStyleName("sidebar-menu");
         tabsheetDemo.setNavigatorWidth("250px");
 
-        tabsheetDemo.addTab(null, "dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
-        tabsheetDemo.addTab(null, "bugs", UserUIContext.getMessage(BugI18nEnum.LIST));
-        tabsheetDemo.addTab(null, "components", UserUIContext.getMessage(ComponentI18nEnum.LIST));
+        tabsheetDemo.addTab("dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
+        tabsheetDemo.addTab("bugs", UserUIContext.getMessage(BugI18nEnum.LIST));
+        tabsheetDemo.addTab("components", UserUIContext.getMessage(ComponentI18nEnum.LIST));
 
         tabsheetDemo.selectTab("dashboard");
         previewLayout.addComponent(tabsheetDemo);

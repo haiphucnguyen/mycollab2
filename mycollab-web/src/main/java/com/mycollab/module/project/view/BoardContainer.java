@@ -34,20 +34,15 @@ public class BoardContainer extends VerticalTabsheet implements PageView {
     }
 
     private void buildComponents() {
-        this.addTab(null, "Dashboard",
-                UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), VaadinIcons.DASHBOARD);
+        this.addTab("Dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD), VaadinIcons.DASHBOARD);
 
-        this.addTab(null, "Projects",
-                UserUIContext.getMessage(ProjectI18nEnum.LIST), VaadinIcons.BUILDING_O);
+        this.addTab("Projects", UserUIContext.getMessage(ProjectI18nEnum.LIST), VaadinIcons.BUILDING_O);
 
-        this.addTab(null, "FollowingTickets",
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), VaadinIcons.EYE);
+        this.addTab("FollowingTickets", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES), VaadinIcons.EYE);
 
-        this.addTab(null, "Reports",
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
+        this.addTab("Reports", UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_REPORTS), VaadinIcons.RETWEET);
 
-        this.addTab(null, "Clients",
-                UserUIContext.getMessage(ClientI18nEnum.LIST), VaadinIcons.COIN_PILES);
+        this.addTab("Clients", UserUIContext.getMessage(ClientI18nEnum.LIST), VaadinIcons.COIN_PILES);
 
         this.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;

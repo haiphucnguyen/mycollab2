@@ -84,25 +84,21 @@ public class VerticalTabsheet extends CustomComponent {
         navigatorContainer.forEach(container -> ((ButtonTab) container).showCaption());
     }
 
-    public void addTab(Component component, String id, String caption) {
-        addTab(null, component, id, caption, null, null);
+    public void addTab(String id, String caption) {
+        addTab(null, id, caption, null, null);
     }
 
-    public void addTab(Component component, String id, String caption, Resource resource) {
-        addTab(null, component, id, caption, null, resource);
+    public void addTab(String id, String caption, Resource resource) {
+        addTab(null, id, caption, null, resource);
     }
 
-    public void addTab(String parentId, Component component, String id, String caption, Resource resource) {
-        addTab(parentId, component, id, caption, null, resource);
+    public void addTab(String id, String caption, String link, Resource resource) {
+        addTab(null, id, caption, link, resource);
     }
 
-    public void addTab(Component component, String id, String caption, String link, Resource resource) {
-        addTab(null, component, id, caption, link, resource);
-    }
-
-    public void addTab(String parentId, Component component, String id, String caption, String link, Resource resource) {
+    public void addTab(String parentId, String id, String caption, String link, Resource resource) {
         if (!hasTab(id)) {
-            final ButtonTab tab = new ButtonTab(id, caption, component, link);
+            final ButtonTab tab = new ButtonTab(id, caption, link);
 
             tab.addClickListener(clickEvent -> {
                 if (!clickEvent.isCtrlKey() && !clickEvent.isMetaKey()) {
@@ -197,7 +193,7 @@ public class VerticalTabsheet extends CustomComponent {
 
     public void addToggleNavigatorControl() {
         if (getButtonById("button") == null) {
-            toggleBtn = new ButtonTab("button", "", null, "");
+            toggleBtn = new ButtonTab("button", "", "");
             toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
             toggleBtn.addStyleName("toggle-button");
             toggleBtn.addClickListener(clickEvent -> {
@@ -251,12 +247,11 @@ public class VerticalTabsheet extends CustomComponent {
                 contentWrapper.removeAllComponents();
             }
 
-            Component tabComponent = (viewDisplay != null) ? viewDisplay : tab.getComponent();
-            if (tabComponent != null) {
-                contentWrapper.addComponent(tabComponent);
+            if (viewDisplay != null) {
+                contentWrapper.addComponent(viewDisplay);
             }
 
-            return tabComponent;
+            return viewDisplay;
         } else {
             return null;
         }
@@ -334,18 +329,16 @@ public class VerticalTabsheet extends CustomComponent {
         private String tabId;
         String link;
         private String caption;
-        private Component component;
 
         private ButtonTab parentTab;
         private List<ButtonTab> children;
         private boolean collapsed = true;
 
-        ButtonTab(String id, String caption, Component component, String link) {
+        ButtonTab(String id, String caption, String link) {
             super(caption);
             this.tabId = id;
             this.link = link;
             this.caption = caption;
-            this.component = component;
         }
 
         void hideCaption() {
@@ -360,10 +353,6 @@ public class VerticalTabsheet extends CustomComponent {
 
         public String getTabId() {
             return tabId;
-        }
-
-        public Component getComponent() {
-            return component;
         }
 
         public void setParentTab(ButtonTab parentTab) {

@@ -246,9 +246,9 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                         ProjectLinkGenerator.generateTicketDashboardLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET));
 
-                myProjectTab.addTab(ProjectView.TICKET_ENTRY, null, ProjectView.KANBAN_ENTRY,
-
-                        UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN), VaadinIcons.GRID_SMALL_O);
+                myProjectTab.addTab(ProjectView.TICKET_ENTRY, ProjectView.KANBAN_ENTRY,
+                        UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_KANBAN),
+                        null, VaadinIcons.GRID_SMALL_O);
             } else {
                 myProjectTab.removeTab(ProjectView.TICKET_ENTRY);
                 myProjectTab.removeTab(ProjectView.KANBAN_ENTRY);
@@ -270,12 +270,12 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                         ProjectLinkGenerator.generateTimeReportLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.FINANCE));
 
-                myProjectTab.addTab(ProjectView.FINANCE_ENTRY, null, ProjectView.TIME_TRACKING_ENTRY,
-                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                myProjectTab.addTab(ProjectView.FINANCE_ENTRY, ProjectView.TIME_TRACKING_ENTRY,
+                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME), null,
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
 
-                myProjectTab.addTab(ProjectView.FINANCE_ENTRY, null, ProjectView.INVOICE_ENTRY,
-                        UserUIContext.getMessage(InvoiceI18nEnum.LIST),
+                myProjectTab.addTab(ProjectView.FINANCE_ENTRY, ProjectView.INVOICE_ENTRY,
+                        UserUIContext.getMessage(InvoiceI18nEnum.LIST), null,
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
             } else {
                 myProjectTab.removeTab(ProjectView.FINANCE_ENTRY);
@@ -288,34 +288,34 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
 
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.USERS)) {
-                myProjectTab.addTab(ProjectView.SETTING, null, ProjectView.USERS_ENTRY,
+                myProjectTab.addTab(ProjectView.SETTING, ProjectView.USERS_ENTRY,
                         UserUIContext.getMessage(ProjectMemberI18nEnum.LIST),
                         ProjectLinkGenerator.generateUsersLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
             }
 
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.ROLES)) {
-                myProjectTab.addTab(ProjectView.SETTING, null, ProjectView.ROLE_ENTRY,
+                myProjectTab.addTab(ProjectView.SETTING, ProjectView.ROLE_ENTRY,
                         UserUIContext.getMessage(ProjectRoleI18nEnum.LIST),
                         ProjectLinkGenerator.generateUsersLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT_ROLE));
             }
 
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
-                myProjectTab.addTab(ProjectView.SETTING, null, ProjectView.COMPONENT_ENTRY,
+                myProjectTab.addTab(ProjectView.SETTING, ProjectView.COMPONENT_ENTRY,
                         UserUIContext.getMessage(ComponentI18nEnum.LIST),
                         ProjectLinkGenerator.generateUsersLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
             }
 
             if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
-                myProjectTab.addTab(ProjectView.SETTING, null, ProjectView.VERSION_ENTRY,
+                myProjectTab.addTab(ProjectView.SETTING, ProjectView.VERSION_ENTRY,
                         UserUIContext.getMessage(VersionI18nEnum.LIST),
                         ProjectLinkGenerator.generateUsersLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
             }
 
-            myProjectTab.addTab(ProjectView.SETTING, null, ProjectView.CUSTOM_ENTRY,
+            myProjectTab.addTab(ProjectView.SETTING, ProjectView.CUSTOM_ENTRY,
                     UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS),
                     ProjectLinkGenerator.generateUsersLink(prjId),
                     VaadinIcons.COG);
