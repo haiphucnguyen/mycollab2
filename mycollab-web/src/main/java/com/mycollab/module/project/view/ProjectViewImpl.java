@@ -26,6 +26,7 @@ import com.mycollab.module.file.PathUtils;
 import com.mycollab.module.project.*;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.mycollab.module.project.event.ProjectMemberEvent;
@@ -35,9 +36,9 @@ import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.view.finance.IInvoiceListPresenter;
 import com.mycollab.module.project.view.finance.ITimeTrackingPresenter;
-import com.mycollab.module.project.view.message.MessagePresenter;
+import com.mycollab.module.project.view.message.MessageListPresenter;
 import com.mycollab.module.project.view.milestone.MilestoneRoadmapPresenter;
-import com.mycollab.module.project.view.page.PagePresenter;
+import com.mycollab.module.project.view.page.PageListPresenter;
 import com.mycollab.module.project.view.parameters.*;
 import com.mycollab.module.project.view.settings.*;
 import com.mycollab.module.project.view.ticket.ITicketKanbanPresenter;
@@ -97,11 +98,6 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
     }
 
     @Override
-    public Component gotoSubView(String viewId) {
-        return viewWrap.gotoSubView(viewId, null);
-    }
-
-    @Override
     public Component gotoSubView(String viewId, Component viewDisplay) {
         viewWrap.rightBarContainer.clearViewComponents();
         return viewWrap.gotoSubView(viewId, viewDisplay);
@@ -129,8 +125,10 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                 ButtonTab tab = ((VerticalTabsheet) selectedTabChangeEvent.getSource()).getSelectedTab();
                 String tabId = tab.getTabId();
                 if (ProjectView.MESSAGE_ENTRY.equals(tabId)) {
-                    MessagePresenter messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
-                    messagePresenter.go(ProjectViewImpl.this, null);
+                    MessageListPresenter messagePresenter = PresenterResolver.getPresenter(MessageListPresenter.class);
+                    MessageSearchCriteria criteria = new MessageSearchCriteria();
+                    criteria.setProjectIds(new SetSearchField<>(project.getId()));
+                    messagePresenter.go(ProjectViewImpl.this, new MessageScreenData.Search(criteria));
                 } else if (ProjectView.MILESTONE_ENTRY.equals(tabId)) {
                     MilestoneRoadmapPresenter milestonePresenter = PresenterResolver.getPresenter(MilestoneRoadmapPresenter.class);
                     milestonePresenter.go(ProjectViewImpl.this, new MilestoneScreenData.Roadmap());
@@ -138,7 +136,7 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
                     TicketDashboardPresenter ticketPresenter = PresenterResolver.getPresenter(TicketDashboardPresenter.class);
                     ticketPresenter.go(ProjectViewImpl.this, null);
                 } else if (ProjectView.PAGE_ENTRY.equals(tabId)) {
-                    PagePresenter pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
+                    PageListPresenter pagePresenter = PresenterResolver.getPresenter(PageListPresenter.class);
                     pagePresenter.go(ProjectViewImpl.this,
                             new PageScreenData.Search(PathUtils.getProjectDocumentPath(AppUI.getAccountId(), project.getId())));
                 } else if (ProjectView.SUMMARY_ENTRY.equals(tabId)) {
@@ -266,16 +264,17 @@ public class ProjectViewImpl extends AbstractVerticalPageView implements Project
             if ((CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature())
                     && !SiteConfiguration.isCommunityEdition()) {
                 myProjectTab.addTab(null, ProjectView.FINANCE_ENTRY,
-                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
-                        ProjectLinkGenerator.generateTimeReportLink(prjId),
+                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE), null,
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.FINANCE));
 
                 myProjectTab.addTab(ProjectView.FINANCE_ENTRY, ProjectView.TIME_TRACKING_ENTRY,
-                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME), null,
+                        UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                        ProjectLinkGenerator.generateTimeReportLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
 
                 myProjectTab.addTab(ProjectView.FINANCE_ENTRY, ProjectView.INVOICE_ENTRY,
-                        UserUIContext.getMessage(InvoiceI18nEnum.LIST), null,
+                        UserUIContext.getMessage(InvoiceI18nEnum.LIST),
+                        ProjectLinkGenerator.generateInvoiceListLink(prjId),
                         ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
             } else {
                 myProjectTab.removeTab(ProjectView.FINANCE_ENTRY);
