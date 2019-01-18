@@ -13,6 +13,7 @@
       }
     }
     .project-right-bar {
+
       background-color: $my-block-background-color;
     }
 
@@ -108,12 +109,6 @@
     padding: $my-space 2*$my-space;
     border-bottom: 1px solid $my-separator-color;
     background-color: $my-block-background-color;
-  }
-
-  .expand-button {
-    .v-button-wrap {
-      margin: 10px;
-    }
   }
 
   div.v-csslayout.followers-container {

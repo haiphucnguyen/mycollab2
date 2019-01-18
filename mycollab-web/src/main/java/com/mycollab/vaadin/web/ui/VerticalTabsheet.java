@@ -60,12 +60,12 @@ public class VerticalTabsheet extends CustomComponent {
     private Map<String, ButtonTab> compMap = new HashMap<>();
 
     private ButtonTab selectedComp = null;
-    private Button toggleBtn;
+    private Button toggleHideButton;
     private Boolean retainVisibility = true;
 
     public VerticalTabsheet() {
 
-        navigatorContainer = new MVerticalLayout().withStyleName("navigator-wrap").withId("navigation-container").withSpacing(false)
+        navigatorContainer = new MVerticalLayout().withStyleName("navigator-wrap").withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
 
         contentWrapper = new MCssLayout().withStyleName("container-wrap").withFullSize();
@@ -167,37 +167,37 @@ public class VerticalTabsheet extends CustomComponent {
             navigatorContainer.setWidth(MIN_SIZE);
             this.hideTabsCaption();
 
-            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
-            toggleBtn.setIcon(VaadinIcons.ANGLE_DOUBLE_RIGHT);
-            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
-            toggleBtn.addStyleName("toggle-button");
-            toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
-            toggleBtn.setWidth("65px");
-            toggleBtn.setCaption("");
+            navigatorContainer.setComponentAlignment(toggleHideButton, Alignment.MIDDLE_CENTER);
+            toggleHideButton.setIcon(VaadinIcons.ANGLE_DOUBLE_RIGHT);
+            toggleHideButton.setStyleName(WebThemes.BUTTON_ICON_ONLY + " expand-button");
+            toggleHideButton.addStyleName("toggle-button");
+            toggleHideButton.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_EXPAND_MENU));
+            toggleHideButton.setWidth("65px");
+            toggleHideButton.setCaption("");
         } else {
             navigatorContainer.setWidth(MAX_SIZE);
             this.showTabsCaption();
 
-            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
-            toggleBtn.addStyleName("toggle-button");
-            toggleBtn.setIcon(VaadinIcons.CLOSE_SMALL);
-            toggleBtn.setWidth(MAX_SIZE);
-            toggleBtn.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
-            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.MIDDLE_CENTER);
+            toggleHideButton.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
+            toggleHideButton.addStyleName("toggle-button");
+            toggleHideButton.setIcon(VaadinIcons.CLOSE_SMALL);
+            toggleHideButton.setWidth(MAX_SIZE);
+            toggleHideButton.setDescription(UserUIContext.getMessage(ShellI18nEnum.ACTION_COLLAPSE_MENU));
+            navigatorContainer.setComponentAlignment(toggleHideButton, Alignment.MIDDLE_CENTER);
         }
     }
 
     public void addToggleNavigatorControl() {
         if (getButtonById("button") == null) {
-            toggleBtn = new ButtonTab("button", "", "");
-            toggleBtn.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
-            toggleBtn.addStyleName("toggle-button");
-            toggleBtn.addClickListener(clickEvent -> {
+            toggleHideButton = new ButtonTab("button", "", "");
+            toggleHideButton.setStyleName(WebThemes.BUTTON_ICON_ONLY + " closed-button");
+            toggleHideButton.addStyleName("toggle-button");
+            toggleHideButton.addClickListener(clickEvent -> {
                 retainVisibility = !retainVisibility;
                 setNavigatorVisibility(retainVisibility);
             });
-            navigatorContainer.addComponent(toggleBtn, 0);
-            navigatorContainer.setComponentAlignment(toggleBtn, Alignment.TOP_RIGHT);
+            navigatorContainer.addComponent(toggleHideButton, 0);
+            navigatorContainer.setComponentAlignment(toggleHideButton, Alignment.TOP_RIGHT);
         }
 
         setNavigatorVisibility(retainVisibility);
