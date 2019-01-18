@@ -33,10 +33,10 @@ import javax.jcr.SimpleCredentials
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-@DependsOn("dbMigration")
 @Configuration
 class EcmConfiguration {
 
+    @DependsOn(value = ["dataSource"])
     @Bean
     fun repository(): RepositoryFactoryBean {
         val bean = RepositoryFactoryBean()
