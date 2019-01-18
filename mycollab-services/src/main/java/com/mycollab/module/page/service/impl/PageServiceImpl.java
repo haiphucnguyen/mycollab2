@@ -303,7 +303,7 @@ public class PageServiceImpl implements PageService {
                             node.getPrimaryNodeType().getName(), path));
                 }
             }
-            return new ArrayList<>();
+            return new ArrayList<Page>();
         });
     }
 
