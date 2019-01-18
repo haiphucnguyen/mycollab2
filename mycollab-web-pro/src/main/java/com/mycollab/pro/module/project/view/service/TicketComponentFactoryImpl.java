@@ -480,6 +480,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             selectedProject = projectListSelect.setSelectedProjectById(projectId);
 
             typeSelection = new ComboBox<>();
+            typeSelection.setWidth(WebThemes.FORM_CONTROL_WIDTH);
 
             projectListSelect.addValueChangeListener(valueChangeEvent -> {
                 selectedProject = projectListSelect.getValue();

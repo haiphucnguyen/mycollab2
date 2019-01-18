@@ -90,9 +90,6 @@ $v-line-height--header:1.5em;
   /* Alternate colors */
 
   @media screen and (min-width: 1024px) {
-    .projectDashboardView {
-      margin: 0px auto;
-    }
     .member-block {
       width: 290px;
       margin-right: 10px;
@@ -139,7 +136,7 @@ $v-line-height--header:1.5em;
   }
 
   .v-app {
-    background-color: #fff;
+    background-color: $my-panel-background-color;
   }
 
   .v-window-modalitycurtain {
@@ -706,6 +703,7 @@ $v-line-height--header:1.5em;
     overflow-x: hidden;
     position: relative;
     border-top: 1px solid $my-separator-color;
+    background-color: #ffffff;
   }
 
   div.v-csslayout.main-body {

@@ -15,6 +15,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.DateField;
@@ -55,18 +56,18 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 risk.setConsequence(RiskConsequence.Marginal.name());
             }
             return new I18nValueComboBox<>(RiskConsequence.class, RiskConsequence.Catastrophic, RiskConsequence.Critical,
-                    RiskConsequence.Marginal, RiskConsequence.Negligible);
+                    RiskConsequence.Marginal, RiskConsequence.Negligible).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Risk.Field.probability.equalTo(propertyId)) {
             if (risk.getProbability() == null) {
                 risk.setProbability(RiskProbability.Possible.name());
             }
             return new I18nValueComboBox<>(RiskProbability.class, RiskProbability.Certain, RiskProbability.Likely,
-                    RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
+                    RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Risk.Field.status.equalTo(propertyId)) {
             if (risk.getStatus() == null) {
                 risk.setStatus(StatusI18nEnum.Open.name());
             }
-            return new I18nValueComboBox<>(StatusI18nEnum.class, StatusI18nEnum.Open, StatusI18nEnum.Closed);
+            return new I18nValueComboBox<>(StatusI18nEnum.class, StatusI18nEnum.Open, StatusI18nEnum.Closed).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Risk.Field.priority.equalTo(propertyId)) {
             return new PriorityComboBox();
         } else if (Risk.Field.name.equalTo(propertyId)) {
