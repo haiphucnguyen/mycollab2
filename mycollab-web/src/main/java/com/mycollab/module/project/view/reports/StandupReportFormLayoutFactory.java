@@ -58,17 +58,8 @@ public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutF
         mainLayout.addComponent(layoutField);
         mainLayout.setExpandRatio(layoutField, 2.0f);
 
-        final VerticalLayout instructionLayout = new VerticalLayout();
-        instructionLayout.setStyleName("instruction-box");
-        instructionLayout.setSpacing(true);
-
-        final Label instruct1Lbl = new Label(UserUIContext.getMessage(StandupI18nEnum.HINT1_MSG));
-        instructionLayout.addComponent(instruct1Lbl);
-
-        final Label instruct1Lbl2 = new Label(UserUIContext.getMessage(StandupI18nEnum.HINT2_MG));
-        instructionLayout.addComponent(instruct1Lbl2);
-
-        instructionLayout.setWidth("300px");
+        MVerticalLayout instructionLayout = new MVerticalLayout(ELabel.html(UserUIContext.getMessage(StandupI18nEnum.HINT1_MSG)).withFullWidth(),
+                ELabel.html(UserUIContext.getMessage(StandupI18nEnum.HINT2_MG)).withFullWidth()).withStyleName("instruction-box").withWidth("300px");
 
         mainLayout.addComponent(instructionLayout);
         mainLayout.setExpandRatio(instructionLayout, 1.0f);

@@ -30,7 +30,6 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-// TODO
 class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReportWithBLOBs> {
     private StandupReportService standupReportService;
     private AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
@@ -105,8 +104,7 @@ class StandupAddWindow extends MWindow implements IEditFormHandler<StandupReport
     class FormLayoutFactory extends StandupReportFormLayoutFactory {
 
         FormLayoutFactory() {
-//            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
-            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, ""));
+            super(UserUIContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, UserUIContext.formatDate(onDate)));
         }
 
         private ComponentContainer createButtonControls() {

@@ -41,7 +41,6 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class StandupListViewImpl extends AbstractVerticalPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
@@ -67,7 +66,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     public StandupListViewImpl() {
         this.setMargin(new MarginInfo(false, false, true, false));
         standupCalendar.addValueChangeListener(valueChangeEvent -> {
-//            onDate = standupCalendar.getValue();
+            onDate = standupCalendar.getValue();
             showReports();
         });
     }
@@ -88,7 +87,7 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
     public void display(List<Integer> projectIds, LocalDate date) {
         this.projectIds = projectIds;
         this.onDate = date;
-//        standupCalendar.setValue(date);
+        standupCalendar.setValue(date);
     }
 
     private void showReports() {

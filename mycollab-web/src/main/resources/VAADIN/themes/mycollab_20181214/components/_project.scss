@@ -13,8 +13,11 @@
       }
     }
     .project-right-bar {
-
-      background-color: $my-block-background-color;
+      display: inline-block;
+      margin: $my-space;
+      .toggle-button {
+        text-align: left;
+      }
     }
 
     .addViewLayout {

@@ -1678,6 +1678,10 @@ a.pending {
 	color: #108e2a;
 }
 
+.hide-element {
+	display: none !important;
+}
+
 .v-window-closebox:before {
 	font-size: 35px;
 }
@@ -16359,6 +16363,10 @@ a.pending {
 	color: #108e2a;
 }
 
+.hide-element {
+	display: none !important;
+}
+
 .v-window-closebox:before {
 	font-size: 35px;
 }
@@ -17348,7 +17356,12 @@ div.v-window {
 }
 
 .project-view .project-right-bar {
-	background-color: #f9f9f9;
+	display: inline-block;
+	margin: 12px;
+}
+
+.project-view .project-right-bar .toggle-button {
+	text-align: left;
 }
 
 .project-view .addViewLayout {
@@ -17994,13 +18007,6 @@ html {
 * :focus, * :active {
 	outline: 0px none;
 	-moz-outline: 0px none;
-}
-
-@media screen and (min-width: 1024px) {
-	.member-block {
-		width: 290px;
-		margin-right: 10px;
-	}
 }
 
 button::-moz-focus-inner {
