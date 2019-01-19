@@ -703,28 +703,16 @@ $v-line-height--header:1.5em;
     overflow-x: hidden;
     position: relative;
     border-top: 1px solid $my-separator-color;
-    background-color: #ffffff;
+    background-color: $my-panel-background-color;
   }
 
   div.v-csslayout.main-body {
     @include flex-compatible;
   }
 
-  /* Footer */
-  .footer {
-    border-top: 1px solid $my-separator-color;
-    background-color: white;
-    color: #000;
-    font-size: $font-small;
-    a {
-      color: #000;
-    }
-  }
-  /* End Footer */
-
 
   /* Pie Chart Legend Box */
-  .legendBoxContent {
+  .legend-box {
     padding: 10px;
     background: #F5F5F5;
     border: 1px solid $my-separator-color;
@@ -1265,6 +1253,7 @@ $v-line-height--header:1.5em;
       flex: 1;
       /* NEW, Spec - Opera 12.1, Firefox 20+ */
       min-width: 0;
+      background-color: #ffffff;
     }
     .v-button-tab {
       border: none;
