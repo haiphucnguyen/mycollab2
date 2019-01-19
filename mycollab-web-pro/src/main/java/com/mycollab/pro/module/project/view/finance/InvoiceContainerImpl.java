@@ -47,7 +47,6 @@ import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus.*;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-// TODO
 @ViewComponent
 public class InvoiceContainerImpl extends AbstractVerticalPageView implements IInvoiceContainer {
 

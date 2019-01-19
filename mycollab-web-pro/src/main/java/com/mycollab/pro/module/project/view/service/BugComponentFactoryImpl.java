@@ -30,11 +30,14 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
+import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.view.bug.ApproveInputWindow;
 import com.mycollab.module.project.view.bug.ReOpenWindow;
 import com.mycollab.module.project.view.bug.ResolvedInputWindow;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.service.BugComponentFactory;
+import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
@@ -55,6 +58,7 @@ import org.springframework.stereotype.Service;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -63,7 +67,6 @@ import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-// TODO
 @Service
 public class BugComponentFactoryImpl implements BugComponentFactory {
 
@@ -80,11 +83,11 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 return bug.getPriority();
             }
         };
-//        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
-//                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
-//                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).withField(new PriorityComboBox())
-//                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
-//                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY)).withField(new PriorityComboBox())
+                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -114,10 +117,10 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 return bug.getAssignuserFullName();
             }
         };
-//        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.assignuser.name()).withDescription(bug.getAssignuserFullName())
-//                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-//                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
-//                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.assignuser.name()).withDescription(bug.getAssignuserFullName())
+                .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -302,10 +305,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-//                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
-//                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
-//                            StringUtils.trim(milestoneName, 20, true);
-                    return "";
+                    String milestoneName = ((MilestoneComboBox) field).getValue().getName();
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+                            StringUtils.trim(milestoneName, 20, true);
                 }
             }
         };
@@ -420,7 +422,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
                 dateField = new DateField();
-//                dateField.setValue(new GregorianCalendar().getTime());
+                dateField.setValue(LocalDate.now());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = ELabel.html(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
                 layout.with(dateCaption, dateField);
@@ -434,7 +436,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
                 Long delta = HumanTime.eval(timeVal).getDelta();
-//                Date date = dateField.getValue();
+                LocalDate date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
@@ -442,7 +444,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
                     timeLogging.setLoguser(UserUIContext.getUsername());
-//                    timeLogging.setLogforday(date);
+                    timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.BUG);

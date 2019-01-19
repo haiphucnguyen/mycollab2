@@ -21,8 +21,8 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.RangeDateField;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -64,7 +64,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-         ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
+        ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebThemes.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
         RangeDateField rangeDatesField = new RangeDateField();

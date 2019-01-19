@@ -4,7 +4,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.Invoice;
 import com.mycollab.module.project.domain.SimpleInvoice;
 import com.mycollab.module.project.i18n.InvoiceI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum;
+import com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
 import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
@@ -33,9 +33,9 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
         } else if (Invoice.Field.issuedate.equalTo(propertyId)) {
             return new DateViewField();
         } else if (Invoice.Field.status.equalTo(propertyId)) {
-            return new I18nFormViewField(invoice.getStatus(), OptionI18nEnum.InvoiceStatus.class);
+            return new I18nFormViewField(InvoiceStatus.class);
         } else if (Invoice.Field.type.equalTo(propertyId)) {
-            return new I18nFormViewField(invoice.getType(), InvoiceI18nEnum.class);
+            return new I18nFormViewField(InvoiceI18nEnum.class);
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
             return new ProjectUserFormLinkField(invoice.getProjectid(), invoice.getAssignuser(),
                     invoice.getAssignUserAvatarId(), invoice.getAssignUserFullName());

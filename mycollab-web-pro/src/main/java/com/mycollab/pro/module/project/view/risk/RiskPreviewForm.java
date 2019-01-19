@@ -61,7 +61,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                     return field;
                 }
             } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
+                return new I18nFormViewField(StatusI18nEnum.class).withStyleName(UIConstants.FIELD_NOTE);
             } else if (Risk.Field.duedate.equalTo(propertyId) || Risk.Field.startdate.equalTo(propertyId)
                     || Risk.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField();
@@ -78,9 +78,9 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
             } else if (Risk.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
             } else if (Risk.Field.consequence.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getConsequence(), RiskConsequence.class);
+                return new I18nFormViewField(RiskConsequence.class);
             } else if (Risk.Field.probability.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getProbability(), RiskProbability.class);
+                return new I18nFormViewField(RiskProbability.class);
             }
 
             return null;
