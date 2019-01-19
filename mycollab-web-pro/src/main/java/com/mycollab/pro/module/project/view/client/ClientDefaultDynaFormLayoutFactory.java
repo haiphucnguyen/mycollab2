@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.view.client;
 import com.mycollab.common.domain.Client;
 import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.form.view.builder.*;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
@@ -14,7 +15,7 @@ public class ClientDefaultDynaFormLayoutFactory {
         defaultForm = new DynaForm();
 
         // Build block account information
-        DynaSection accountSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).orderIndex(0)
+        DynaSection accountSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).orderIndex(0)
                 .header(ClientI18nEnum.SECTION_ACCOUNT_INFORMATION)
                 .build();
         accountSection.fields(new TextDynaFieldBuilder().fieldName(Client.Field.name)
@@ -57,7 +58,7 @@ public class ClientDefaultDynaFormLayoutFactory {
         defaultForm.sections(accountSection);
 
         // build block address
-        DynaSection addressSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN)
+        DynaSection addressSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN)
                 .header(ClientI18nEnum.SECTION_ADDRESS_INFORMATION).orderIndex(1).build();
         addressSection.fields(new TextDynaFieldBuilder().fieldIndex(0).fieldName(Client.Field.billingaddress)
                 .displayName(ClientI18nEnum.FORM_BILLING_ADDRESS).customField(false).build());
@@ -90,7 +91,7 @@ public class ClientDefaultDynaFormLayoutFactory {
         defaultForm.sections(addressSection);
 
         // build block description
-        DynaSection descSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.ONE_COLUMN)
+        DynaSection descSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN)
                 .header(ClientI18nEnum.SECTION_DESCRIPTION).orderIndex(2).build();
 
         descSection.fields(new TextDynaFieldBuilder().fieldIndex(0).fieldName(Client.Field.description).customField(false)

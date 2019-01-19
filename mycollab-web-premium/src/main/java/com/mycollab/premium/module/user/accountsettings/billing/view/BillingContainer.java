@@ -1,6 +1,7 @@
 package com.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.LicenseI18nEnum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.license.LicenseInfo;
 import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
@@ -54,7 +55,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
                         .withUndefinedWidth());
             }
-            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
             layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), UserUIContext.getMessage
                     (LicenseI18nEnum.FORM_ORGANIZATION), 0, 0);
             layoutHelper.addComponent(new Label(UserUIContext.formatDate(licenseInfo.getIssueDate())), UserUIContext

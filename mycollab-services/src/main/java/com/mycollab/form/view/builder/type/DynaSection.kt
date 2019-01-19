@@ -16,6 +16,7 @@
  */
 package com.mycollab.form.view.builder.type
 
+import com.mycollab.form.view.LayoutType
 import java.util.*
 
 /**

@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.form.view.builder.DynaSectionBuilder;
 import com.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.mycollab.form.view.builder.type.DynaForm;
@@ -36,7 +37,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
 
     private IDynaFormLayout buildFormLayout() {
         DynaForm defaultForm = new DynaForm();
-        DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
+        DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.clientid)
                 .displayName(ProjectI18nEnum.FORM_ACCOUNT_NAME)

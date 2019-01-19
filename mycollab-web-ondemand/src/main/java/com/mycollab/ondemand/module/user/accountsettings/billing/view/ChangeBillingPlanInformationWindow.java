@@ -3,6 +3,7 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
@@ -52,7 +53,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             @Override
             public AbstractComponent getLayout() {
                 VerticalLayout layout = new VerticalLayout();
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
                 layout.addComponent(informationLayout.getLayout());
 
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {

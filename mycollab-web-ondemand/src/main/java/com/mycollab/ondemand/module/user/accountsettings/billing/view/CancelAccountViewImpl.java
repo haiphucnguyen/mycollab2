@@ -1,6 +1,7 @@
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.domain.CustomerFeedbackWithBLOBs;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.file.service.AbstractStorageService;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -66,7 +67,7 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
         ELabel helpNoteLbl = ELabel.h3(UserUIContext.getMessage(BillingI18nEnum.OPT_FEEDBACK_TITLE)).withUndefinedWidth();
         innerLayout.with(helpNoteLbl);
 
-        GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+        GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
         layoutHelper.getLayout().setWidth("800px");
 
         final TextArea whyLeaving = new TextArea();

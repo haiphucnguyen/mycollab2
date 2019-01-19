@@ -17,6 +17,7 @@
 package com.mycollab.module.project.view.settings;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -38,7 +39,7 @@ public class ProjectRoleFormLayoutFactory extends AbstractFormLayoutFactory {
     public AbstractComponent getLayout() {
         final FormContainer layout = new FormContainer();
 
-        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
+        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.TWO_COLUMN);
         layout.addSection(UserUIContext.getMessage(RoleI18nEnum.SECTION_INFORMATION), informationLayout.getLayout());
         return layout;
     }

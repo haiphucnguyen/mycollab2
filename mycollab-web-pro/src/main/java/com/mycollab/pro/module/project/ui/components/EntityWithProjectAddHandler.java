@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.ui.components;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
@@ -55,7 +56,7 @@ public class EntityWithProjectAddHandler {
 
         ProjectSelectionLayout() {
             this.withMargin(false);
-            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
+            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
             projectCombo = new UserInvolvedProjectsSelection();
             layoutHelper.addComponent(projectCombo, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
 

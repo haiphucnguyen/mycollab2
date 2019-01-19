@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.view.finance;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.form.view.builder.DynaSectionBuilder;
 import com.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.mycollab.form.view.builder.type.DynaForm;
@@ -16,8 +17,7 @@ public class InvoiceDefaultFormLayoutFactory {
 
     public static DynaForm getForm() {
         DynaForm defaultForm = new DynaForm();
-        DynaSection mainSection = new DynaSectionBuilder().layoutType(
-                DynaSection.LayoutType.TWO_COLUMN).build();
+        DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Invoice.Field.noid).displayName(InvoiceI18nEnum.FORM_NOID_FIELD)
                 .contextHelp(InvoiceI18nEnum.FORM_NOID_FIELD_HELP)

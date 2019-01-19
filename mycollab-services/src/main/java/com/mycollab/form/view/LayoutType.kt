@@ -1,4 +1,4 @@
-package com.mycollab.vaadin.web.ui.grid
+package com.mycollab.form.view
 
 import com.mycollab.core.MyCollabException
 
@@ -18,6 +18,6 @@ enum class LayoutType {
             else -> throw MyCollabException("Do not convert layout type from value $value")
         }
 
-        fun toVal(type: LayoutType): Int = if (LayoutType.ONE_COLUMN == type) 1 else 2
+        fun toVal(type: LayoutType): Int = if (ONE_COLUMN == type) 1 else 2
     }
 }

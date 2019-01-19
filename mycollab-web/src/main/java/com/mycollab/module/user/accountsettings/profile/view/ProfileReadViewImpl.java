@@ -20,6 +20,7 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
 import com.mycollab.core.utils.TimezoneVal;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.i18n.LocalizationHelper;
 import com.mycollab.module.file.service.UserAvatarService;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
@@ -95,7 +96,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
         basicLayout.addComponent(userWrapper);
         basicLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
 
-        GridFormLayoutHelper userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5).withCaptionWidth("140px");
+        GridFormLayoutHelper userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN).withCaptionWidth("140px");
         userFormLayout.getLayout().addStyleName(WebThemes.GRIDFORM_BORDERLESS);
         userFormLayout.addComponent(new Label(UserUIContext.formatDate(user.getBirthday())),
                 UserUIContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 0);
@@ -135,8 +136,8 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
 
         private class FormLayoutFactory extends AbstractFormLayoutFactory {
 
-            private GridFormLayoutHelper contactLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5);
-            private GridFormLayoutHelper advancedInfoLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
+            private GridFormLayoutHelper contactLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
+            private GridFormLayoutHelper advancedInfoLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
 
             @Override
             public AbstractComponent getLayout() {

@@ -29,10 +29,10 @@ import com.mycollab.form.domain.FormSection
 import com.mycollab.form.domain.FormSectionExample
 import com.mycollab.form.domain.FormSectionField
 import com.mycollab.form.service.MasterFormService
+import com.mycollab.form.view.LayoutType
 import com.mycollab.form.view.builder.type.AbstractDynaField
 import com.mycollab.form.view.builder.type.DynaForm
 import com.mycollab.form.view.builder.type.DynaSection
-import com.mycollab.form.view.builder.type.DynaSection.LayoutType
 import org.apache.commons.collections.CollectionUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

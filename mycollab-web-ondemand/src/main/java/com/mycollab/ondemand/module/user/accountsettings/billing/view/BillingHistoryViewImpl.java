@@ -1,6 +1,7 @@
 package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionHistoryMapper;
@@ -59,7 +60,7 @@ public class BillingHistoryViewImpl extends AbstractLazyPageView implements Bill
             }
 
             headerLayout.with(changeBillingInfoBtn, updatePaymentMethodBtn);
-            GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
+            GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
             gridFormLayoutHelper.addComponent(new Label(subscription.getName()), UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             gridFormLayoutHelper.addComponent(new EmailViewField(subscription.getEmail()),
                     UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL), 0, 1);
