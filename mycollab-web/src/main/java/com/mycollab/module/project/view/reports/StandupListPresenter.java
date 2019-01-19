@@ -1,8 +1,6 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.module.project.view.reports.IReportContainer;
-import com.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -15,7 +13,6 @@ import com.vaadin.ui.HasComponents;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**

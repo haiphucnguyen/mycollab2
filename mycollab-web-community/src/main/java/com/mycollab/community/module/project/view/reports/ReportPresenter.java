@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.community.module.project.view.reports;
 
 import com.mycollab.module.project.view.BoardContainer;
 import com.mycollab.module.project.view.parameters.ReportScreenData;
@@ -12,7 +12,7 @@ import com.vaadin.ui.HasComponents;
 
 /**
  * @author MyCollab Ltd
- * @since 5.2.10
+ * @since 7.0.0
  */
 public class ReportPresenter extends AbstractPresenter<IReportContainer> implements IReportPresenter {
     public ReportPresenter() {
@@ -27,18 +27,11 @@ public class ReportPresenter extends AbstractPresenter<IReportContainer> impleme
         if (data instanceof StandupScreenData.Search) {
             StandupListPresenter presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof ReportScreenData.GotoWeeklyTiming) {
-            MembersWeeklyHoursPresenter presenter = PresenterResolver.getPresenter(MembersWeeklyHoursPresenter.class);
-            presenter.go(view, data);
-        } else if (data instanceof ReportScreenData.GotoTimesheet) {
-            TimeTrackingPresenter timeTrackingPresenter = PresenterResolver.getPresenter(TimeTrackingPresenter.class);
-            timeTrackingPresenter.go(view, data);
         } else if (data instanceof ReportScreenData.GotoUserWorkload) {
             UserWorkloadReportPresenter userWorkloadReportPresenter = PresenterResolver.getPresenter(UserWorkloadReportPresenter.class);
             userWorkloadReportPresenter.go(view, data);
         } else {
             view.showDashboard();
-
             ReportBreadcrumb breadcrumb = ViewManager.getCacheComponent(ReportBreadcrumb.class);
             breadcrumb.gotoReportDashboard();
         }

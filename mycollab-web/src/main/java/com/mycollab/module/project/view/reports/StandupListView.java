@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
 import com.mycollab.vaadin.mvp.PageView;
 

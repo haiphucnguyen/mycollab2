@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
 import com.mycollab.core.MyCollabException;
 import com.mycollab.vaadin.EventBusFactory;
@@ -23,7 +23,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEditFormControls;
 

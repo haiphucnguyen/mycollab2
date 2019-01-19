@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.community.module.project.view.reports;
 
 import com.hp.gagawa.java.elements.A;
 import com.mycollab.module.project.ProjectLinkGenerator;
@@ -21,7 +21,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
- * @since 5.2.10
+ * @since 7.0.0
  */
 @ViewComponent
 public class ReportContainerImpl extends AbstractVerticalPageView implements IReportContainer {
@@ -49,15 +49,6 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         standupConsole.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_STANDUP_HELP)).withFullWidth());
         contentLayout.addComponent(standupConsole);
 
-        MVerticalLayout hoursWeeklyReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
-        hoursWeeklyReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        hoursWeeklyReport.addComponent(ELabel.fontIcon(VaadinIcons.CALENDAR_CLOCK).withStyleName("icon-38px"));
-        A hoursWeeklyReportLink = new A(ProjectLinkGenerator.generateHoursWeeklyReportLink())
-                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT));
-        hoursWeeklyReport.addComponent(ELabel.h3(hoursWeeklyReportLink.write()).withUndefinedWidth());
-        hoursWeeklyReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT_HELP))
-                .withFullWidth());
-        contentLayout.addComponent(hoursWeeklyReport);
 
         MVerticalLayout userWorkloadReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -67,16 +58,6 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withUndefinedWidth());
         userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
         contentLayout.addComponent(userWorkloadReport);
-
-        MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");
-        timesheetReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        timesheetReport.addComponent(ELabel.fontIcon(VaadinIcons.CALENDAR_CLOCK).withStyleName("icon-38px"));
-        A timesheetReportLink = new A(ProjectLinkGenerator.generateTimesheetReportLink())
-                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET));
-        timesheetReport.addComponent(ELabel.h3(timesheetReportLink.write()).withUndefinedWidth());
-        timesheetReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TIMESHEET_HELP))
-                .withFullWidth());
-        contentLayout.addComponent(timesheetReport);
 
         body.with(contentLayout).expand(contentLayout).withAlign(contentLayout, Alignment.TOP_LEFT);
     }

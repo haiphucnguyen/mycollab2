@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.StandupI18nEnum;

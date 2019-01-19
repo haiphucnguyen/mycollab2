@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;

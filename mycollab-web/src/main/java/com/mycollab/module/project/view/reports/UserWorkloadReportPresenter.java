@@ -1,7 +1,5 @@
-package com.mycollab.pro.module.project.view.reports;
+package com.mycollab.module.project.view.reports;
 
-import com.mycollab.module.project.view.reports.IReportContainer;
-import com.mycollab.pro.module.project.view.ReportBreadcrumb;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;

@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.view;
+package com.mycollab.module.project.view.reports;
 
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.event.ReportEvent;
