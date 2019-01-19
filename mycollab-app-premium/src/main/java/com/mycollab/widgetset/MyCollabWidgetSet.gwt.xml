@@ -26,8 +26,6 @@
 
     <inherits name="org.vaadin.alump.ckeditor.WidgetSet" />
 
-    <inherits name="org.vaadin.sliderpanel.WidgetSet"/>
-
     <inherits name="org.vaadin.cropper.WidgetSet" />
 
     <inherits name="com.explicatis.ext_token_field.WidgetSet"/>

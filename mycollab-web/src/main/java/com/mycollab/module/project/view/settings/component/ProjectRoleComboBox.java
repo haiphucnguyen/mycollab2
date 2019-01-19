@@ -61,6 +61,8 @@ public class ProjectRoleComboBox extends ComboBox<SimpleProjectRole> implements 
         roles.add(ownerRole);
         this.setItems(roles);
 
+        this.setSelectedItem(roles.get(0));
+
         this.setEmptySelectionAllowed(false);
         this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProjectRole>) ProjectRole::getRolename);
     }

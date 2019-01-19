@@ -32,14 +32,13 @@ import com.vaadin.data.HasValue;
  * @since 1.0
  */
 public class ProjectRoleFormLayoutFactory extends AbstractFormLayoutFactory {
-    private static final long serialVersionUID = 1L;
     private GridFormLayoutHelper informationLayout;
 
     @Override
     public AbstractComponent getLayout() {
         final FormContainer layout = new FormContainer();
 
-        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.TWO_COLUMN);
+        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
         layout.addSection(UserUIContext.getMessage(RoleI18nEnum.SECTION_INFORMATION), informationLayout.getLayout());
         return layout;
     }
@@ -49,7 +48,7 @@ public class ProjectRoleFormLayoutFactory extends AbstractFormLayoutFactory {
         if (propertyId.equals("rolename")) {
             return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
         } else if (propertyId.equals("description")) {
-            return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 1, 2, "100%");
+            return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 1);
         }
         return null;
     }

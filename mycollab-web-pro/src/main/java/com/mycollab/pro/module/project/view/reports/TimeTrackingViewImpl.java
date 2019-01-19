@@ -1,5 +1,8 @@
 package com.mycollab.pro.module.project.view.reports;
 
+import com.jarektoro.responsivelayout.ResponsiveColumn;
+import com.jarektoro.responsivelayout.ResponsiveLayout;
+import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -135,74 +138,54 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                     .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
-            headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
-
-            this.addComponent(headerWrapper);
-
-            MVerticalLayout contentLayout = new MVerticalLayout().withFullWidth();
-
-            GridLayout searchLayout = new GridLayout(9, 2);
-            searchLayout.setSpacing(true);
-            searchLayout.setMargin(true);
-            searchLayout.setWidth("100%");
-            searchLayout.setStyleName(WebThemes.BOX);
-            searchLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
-
-            fromDateField = new DateField();
-            searchLayout.addComponent(fromDateField, 1, 0);
-
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
-
-            toDateField = new DateField();
-            searchLayout.addComponent(toDateField, 3, 0);
-
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
-                    (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
-
+            ELabel groupLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
             groupField = new StringValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
                     .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
             groupField.addValueChangeListener(event -> searchTimeReporting());
-            searchLayout.addComponent(groupField, 1, 1);
 
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
-
+            ELabel sortLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
             orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(event -> searchTimeReporting());
-            searchLayout.addComponent(orderField, 3, 1);
 
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
-                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
+            headerWrapper.with(titleLbl, new MHorizontalLayout(groupLbl, groupField, sortLbl, orderField, printBtn).alignAll(Alignment.MIDDLE_LEFT))
+                    .expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
 
+            this.addComponent(headerWrapper);
+
+            ResponsiveLayout searchLayout = new ResponsiveLayout();
+            ResponsiveRow row = searchLayout.addRow();
+
+            LocalDate now = LocalDate.now();
+
+            ELabel fromLbl = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            fromDateField = new DateField("", now.withDayOfMonth(1));
+
+            ELabel toLbl = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            toDateField = new DateField("", now.withDayOfMonth(now.lengthOfMonth()));
+
+            row.addColumn().withDisplayRules(12, 12, 6, 4)
+                    .withComponent(new MVerticalLayout(new MHorizontalLayout(fromLbl, fromDateField), new MHorizontalLayout(toLbl, toDateField)));
+
+            ELabel projectLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
             projectField = new UserInvolvedProjectsListSelect(projects);
-            searchLayout.addComponent(projectField, 5, 0, 5, 1);
+            projectField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            row.addColumn().withDisplayRules(12, 12, 6, 4).withComponent(new MHorizontalLayout(projectLbl, projectField));
 
-            searchLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
-                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
-
+            ELabel userLbl = new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-            searchLayout.addComponent(userField, 7, 0, 7, 1);
+            userField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            row.addColumn().withDisplayRules(12, 12, 6, 4).withComponent(new MHorizontalLayout(userLbl, userField));
 
             MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
                     .withStyleName(WebThemes.BUTTON_ACTION);
 
-            searchLayout.addComponent(queryBtn, 8, 0);
+            MVerticalLayout searchPanel = new MVerticalLayout(searchLayout, queryBtn).withStyleName(WebThemes.BOX).withAlign(queryBtn, Alignment.MIDDLE_CENTER);
 
             totalHoursLoggingLabel = ELabel.h2("Total Hours Logging: 0 Hrs");
 
             timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(false);
 
-            contentLayout.with(searchLayout, new MCssLayout(totalHoursLoggingLabel).withFullWidth(), timeTrackingWrapper).expand(timeTrackingWrapper);
-
-            LocalDate now = LocalDate.now();
-            fromDateField.setValue(now.withDayOfMonth(1));
-            toDateField.setValue(now.withDayOfMonth(now.lengthOfMonth()));
-
-            this.with(contentLayout).withAlign(contentLayout, Alignment.TOP_CENTER).expand(contentLayout);
+            this.with(searchPanel, new MCssLayout(totalHoursLoggingLabel).withFullWidth(), timeTrackingWrapper).expand(timeTrackingWrapper);
             searchTimeReporting();
         } else {
             this.with(new MCssLayout(new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT))).withFullWidth());
@@ -322,6 +305,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         UserInvolvedProjectsListSelect(List<SimpleProject> projects) {
             this.setItems(projects);
             this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
+            this.setRows(4);
         }
 
         Collection<Integer> getSelectedProjectsKey() {
@@ -339,6 +323,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppUI.getAccountId());
             setItems(users);
             setItemCaptionGenerator((ItemCaptionGenerator<SimpleUser>) user -> user.getDisplayName());
+            this.setRows(4);
         }
 
         List<String> getSelectedUsers() {

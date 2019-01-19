@@ -99,7 +99,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @Override
         public ComponentContainer constructBody() {
             bodyWrap = new MVerticalLayout();
-            GridLayout gridLayout = new GridLayout(6, 2);
+            GridLayout gridLayout = new GridLayout(2, 2);
             gridLayout.setSpacing(true);
             gridLayout.setMargin(true);
 
@@ -115,16 +115,14 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             Label dateEndLb = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes.META_COLOR,
                     WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px");
 
-            gridLayout.addComponent(dateStartLb, 0, 0);
-            gridLayout.addComponent(startDateField, 1, 0);
-            gridLayout.addComponent(dateEndLb, 2, 0);
-            gridLayout.addComponent(endDateField, 3, 0);
-            gridLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR,
-                    WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px"), 4, 0);
+            gridLayout.addComponent(new MHorizontalLayout(dateStartLb, startDateField), 0, 0);
+            gridLayout.addComponent(new MHorizontalLayout(dateEndLb, endDateField), 0, 1);
+            ELabel userSelectLbl = new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR,
+                    WebThemes.TEXT_ALIGN_RIGHT).withWidth("90px");
 
             userField = new ProjectMemberListSelect(singletonList(CurrentProjectVariables.getProjectId()));
-            userField.setWidth("250px");
-            gridLayout.addComponent(userField, 5, 0, 5, 1);
+            userField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            gridLayout.addComponent(new MHorizontalLayout(userSelectLbl, userField), 1, 0, 1, 1);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
                     .withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.SEARCH);
