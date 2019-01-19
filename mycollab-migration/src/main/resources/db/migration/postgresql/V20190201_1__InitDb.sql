@@ -330,7 +330,7 @@ DROP TABLE IF EXISTS m_client;
 
 CREATE TABLE m_client (
   id serial,
-  accountName varchar(255) NOT NULL,
+  name varchar(255) NOT NULL,
   website varchar(255) DEFAULT NULL,
   phoneOffice varchar(45) DEFAULT NULL,
   fax varchar(45) DEFAULT NULL,
