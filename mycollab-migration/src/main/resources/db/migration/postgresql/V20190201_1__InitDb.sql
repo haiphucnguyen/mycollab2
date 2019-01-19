@@ -477,7 +477,7 @@ CREATE TABLE m_monitor_item (
   username varchar(45) NOT NULL,
   createdTime timestamp NOT NULL,
   type varchar(45) NOT NULL,
-  typeId integer NOT NULL,
+  typeId varchar(100) NOT NULL,
   extraTypeId integer DEFAULT NULL,
   sAccountId integer NOT NULL,
   PRIMARY KEY (id),
