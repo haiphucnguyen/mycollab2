@@ -113,28 +113,35 @@ public class GridFormLayoutHelper implements Serializable {
         }
         ResponsiveRow responsiveRow = (ResponsiveRow) responsiveLayout.getComponent(rows);
 
-        if (columns == 0) {
-            if (responsiveRow.getComponentCount() == 0) {
-                ResponsiveColumn column = (colSpan == 1) ? new ResponsiveColumn(12, 12, 6, 6) : new ResponsiveColumn(12, 12, 12, 12);
-                column.setContent(fieldWrapper);
-                responsiveRow.addColumn(column);
-            } else {
-                ResponsiveColumn column = (ResponsiveColumn) responsiveRow.getComponent(0);
-                column.setContent(fieldWrapper);
-            }
-        } else if (columns == 1) {
-            int columnCount = responsiveRow.getComponentCount();
-            for (int i = 0; i < columns - columnCount + 1; i++) {
-                ResponsiveColumn column = new ResponsiveColumn(12, 12, 6, 6);
-                responsiveRow.addColumn(column);
-            }
-
-            ResponsiveColumn column = (ResponsiveColumn) responsiveRow.getComponent(columns);
+        if (layoutType == LayoutType.ONE_COLUMN) {
+            ResponsiveColumn column = new ResponsiveColumn(12, 12, 12, 12);
             column.setContent(fieldWrapper);
-
+            responsiveRow.addColumn(column);
         } else {
-            throw new MyCollabException("Not support form 2 columns only");
+            if (columns == 0) {
+                if (responsiveRow.getComponentCount() == 0) {
+                    ResponsiveColumn column = (colSpan == 1) ? new ResponsiveColumn(12, 12, 6, 6) : new ResponsiveColumn(12, 12, 12, 12);
+                    column.setContent(fieldWrapper);
+                    responsiveRow.addColumn(column);
+                } else {
+                    ResponsiveColumn column = (ResponsiveColumn) responsiveRow.getComponent(0);
+                    column.setContent(fieldWrapper);
+                }
+            } else if (columns == 1) {
+                int columnCount = responsiveRow.getComponentCount();
+                for (int i = 0; i < columns - columnCount + 1; i++) {
+                    ResponsiveColumn column = new ResponsiveColumn(12, 12, 6, 6);
+                    responsiveRow.addColumn(column);
+                }
+
+                ResponsiveColumn column = (ResponsiveColumn) responsiveRow.getComponent(columns);
+                column.setContent(fieldWrapper);
+
+            } else {
+                throw new MyCollabException("Not support form 2 columns only");
+            }
         }
+
 
         if (StringUtils.isNotBlank(caption)) {
             fieldCaptionMappings.put(caption, fieldWrapper);

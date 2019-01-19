@@ -157,6 +157,11 @@ $v-line-height--header:1.5em;
     }
   }
 
+  /* Hack because the Vaadin error, the required indicator may cause the layout break*/
+  .v-has-caption.v-caption-on-right {
+    padding-right: 0px !important;
+  }
+
   /* Top Menu */
   .topNavigation {
     .mainLogo {

@@ -18105,6 +18105,10 @@ input.v-textfield-pagedtable-pagefield {
 	border-right-style: none;
 }
 
+.v-has-caption.v-caption-on-right {
+	padding-right: 0px !important;
+}
+
 .topNavigation .mainLogo {
 	float: left;
 	width: 200px;

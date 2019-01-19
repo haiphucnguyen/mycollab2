@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.arguments.ValuedBean;
@@ -11,25 +12,25 @@ import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.RiskI18nEnum;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
+import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.risk.IRiskReadView;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.addons.stackpanel.StackPanel;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -73,12 +74,19 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
+
+        ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
+        MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
+
         if (SiteConfiguration.isCommunityEdition()) {
-            addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
+            detailLayout.with(dateInfoComp, peopleInfoComp, followerSheet);
         } else {
             timeLogComp = ViewManager.getCacheComponent(RiskTimeLogSheet.class);
-            addToSideBar(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
+            detailLayout.with(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
         }
+        Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
+        StackPanel.extend(detailPanel);
+        projectView.addComponentToRightBar(detailPanel);
     }
 
     @Override

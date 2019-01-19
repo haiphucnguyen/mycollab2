@@ -283,8 +283,7 @@ public class UserAddViewImpl extends AbstractVerticalPageView implements UserAdd
                     return new AdminRoleSelectionField();
                 } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) ||
                         User.Field.lastname.equalTo(propertyId)) {
-//                    return new MTextField().withNullRepresentation("").withRequired(true)
-//                            .withRequiredError("This field must be not null");
+                    return new MTextField().withRequiredIndicatorVisible(true);
                 } else if (propertyId.equals("birthday")) {
                     return new DateField();
                 } else if (propertyId.equals("timezone")) {

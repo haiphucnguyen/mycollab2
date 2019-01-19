@@ -196,6 +196,8 @@ public class RoleAddViewImpl extends AbstractVerticalPageView implements RoleAdd
                     return new RichTextArea();
                 } else if (propertyId.equals("rolename")) {
                     return new MTextField().withRequiredIndicatorVisible(true);
+                } else if (Role.Field.isdefault.equalTo(propertyId)) {
+                    return new CheckBox();
                 }
                 return null;
             }

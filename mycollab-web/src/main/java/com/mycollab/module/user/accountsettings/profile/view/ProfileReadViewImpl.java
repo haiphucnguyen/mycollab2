@@ -110,7 +110,7 @@ public class ProfileReadViewImpl extends AbstractVerticalPageView implements Pro
         MButton btnChangePassword = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHANGE),
                 clickEvent -> UI.getCurrent().addWindow(new PasswordChangeWindow(formItem.getBean())))
                 .withStyleName(WebThemes.BUTTON_LINK);
-        userFormLayout.addComponent(new MHorizontalLayout(new Label("***********"), btnChangePassword),
+        userFormLayout.addComponent(new CssLayout(new MHorizontalLayout(new ELabel("***********"), btnChangePassword).withAlign(btnChangePassword, Alignment.TOP_RIGHT)),
                 UserUIContext.getMessage(ShellI18nEnum.FORM_PASSWORD), 0, 4);
         basicLayout.addComponent(userFormLayout.getLayout());
 
