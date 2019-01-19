@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.finance;
 
+import com.google.common.collect.Sets;
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -37,6 +38,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
+import java.util.HashSet;
 
 import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus;
 import static com.mycollab.module.project.i18n.OptionI18nEnum.InvoiceStatus.*;
@@ -145,10 +147,10 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
         InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
         if (status != All) {
             searchCriteria.addExtraField(InvoiceSearchCriteria.p_status.buildPropertyParamInList(SearchField.AND,
-                    Collections.singletonList(status.name())));
+                    Sets.newHashSet(status.name())));
         }
         searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds.buildPropertyParamInList(SearchField.AND,
-                Collections.singletonList(CurrentProjectVariables.getProjectId())));
+                new HashSet<>(Collections.singletonList(CurrentProjectVariables.getProjectId()))));
         int count = invoiceListComp.setSearchCriteria(searchCriteria);
         if (count > 0) {
             SimpleInvoice invoice = invoiceListComp.getItemAt(0);

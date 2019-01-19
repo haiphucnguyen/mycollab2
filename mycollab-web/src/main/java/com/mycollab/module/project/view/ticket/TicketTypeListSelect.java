@@ -43,9 +43,9 @@ class TicketTypeListSelect extends ListSelect<String> {
             if (ProjectTypeConstants.TASK.equals(item)) {
                 return UserUIContext.getMessage(TaskI18nEnum.SINGLE);
             } else if (ProjectTypeConstants.BUG.equals(item)) {
-                UserUIContext.getMessage(BugI18nEnum.SINGLE);
+                return UserUIContext.getMessage(BugI18nEnum.SINGLE);
             } else if (ProjectTypeConstants.RISK.equals(item)) {
-                UserUIContext.getMessage(RiskI18nEnum.SINGLE);
+                return UserUIContext.getMessage(RiskI18nEnum.SINGLE);
             } else {
                 return "";
             }

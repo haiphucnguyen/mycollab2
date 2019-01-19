@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.reports;
 
+import com.google.common.collect.Sets;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.SecurityI18nEnum;
 import com.mycollab.db.query.VariableInjector;
@@ -30,16 +31,16 @@ public class TimesheetCustomizeReportOutputWindow extends CustomizeReportOutputW
 
     @Override
     protected Set<TableViewField> getDefaultColumns() {
-        return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+        return Sets.newHashSet(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                TimeTableFieldDef.project));
+                TimeTableFieldDef.project);
     }
 
     @Override
     protected Set<TableViewField> getAvailableColumns() {
-        return new HashSet<>(Arrays.asList(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
+        return Sets.newHashSet(TimeTableFieldDef.summary, TimeTableFieldDef.logUser, TimeTableFieldDef.logValue,
                 TimeTableFieldDef.logForDate, TimeTableFieldDef.billable, TimeTableFieldDef.overtime,
-                TimeTableFieldDef.project));
+                TimeTableFieldDef.project);
     }
 
     @Override

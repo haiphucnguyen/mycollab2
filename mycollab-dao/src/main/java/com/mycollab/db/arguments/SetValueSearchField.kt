@@ -20,7 +20,7 @@ package com.mycollab.db.arguments
  * @author MyCollab Ltd.
  * @since 4.0
  */
-class CollectionValueSearchField(oper: String, var queryCount: String?, var value: Collection<*>?) : SearchField() {
+class SetValueSearchField(oper: String, var queryCount: String?, var value: Set<*>?) : SearchField() {
     var querySelect: String? = null
 
     init {
