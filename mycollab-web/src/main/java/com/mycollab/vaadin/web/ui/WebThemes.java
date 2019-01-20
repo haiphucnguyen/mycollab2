@@ -63,4 +63,5 @@ public class WebThemes {
     public static final String BORDER_LIST = "border-list";
     public static final String BORDER_LIST_ROW = "row";
     public static final String HIDE_ELEMENT = "hide-element";
+    public static final String REQUIRED_FIELD_INDICATOR = "required-field-indicator";
 }

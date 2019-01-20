@@ -7,6 +7,19 @@
   }
 }
 
+/** Form
+* Custom required indicator. Remove the default required indicator and replace the new one
+**/
+.required-field-indicator::after {
+  content: ' (*Required)';
+  color: $my-meta-color;
+  font-size: small;
+}
+
+.v-required-field-indicator {
+  display: none !important;
+}
+
 @mixin mycollab-form {
   .form {
     .section {

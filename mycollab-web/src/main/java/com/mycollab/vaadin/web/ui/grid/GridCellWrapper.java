@@ -18,6 +18,7 @@ package com.mycollab.vaadin.web.ui.grid;
 
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
@@ -31,14 +32,19 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class GridCellWrapper extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
+    private Component captionComp;
     private MHorizontalLayout fieldWrapper;
 
-    GridCellWrapper(Component caption) {
+    GridCellWrapper(Component captionComp) {
+        this.captionComp = captionComp;
         fieldWrapper = new MHorizontalLayout().withFullWidth();
-        this.withSpacing(true).with(caption, fieldWrapper).withAlign(caption, Alignment.TOP_LEFT).withMargin(true).withFullWidth().withStyleName("gridform-field");
+        this.withSpacing(true).with(captionComp, fieldWrapper).withAlign(captionComp, Alignment.TOP_LEFT).withMargin(true).withFullWidth().withStyleName("gridform-field");
     }
 
     public void addField(Component field) {
+        if (field instanceof HasValue && ((HasValue)field).isRequiredIndicatorVisible()) {
+            captionComp.addStyleName(WebThemes.REQUIRED_FIELD_INDICATOR);
+        }
         fieldWrapper.removeAllComponents();
         field.setCaption(null);
 

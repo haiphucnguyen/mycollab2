@@ -1623,6 +1623,16 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
+.required-field-indicator::after {
+	content: " (*Required)";
+	color: #999;
+	font-size: small;
+}
+
+.v-required-field-indicator {
+	display: none !important;
+}
+
 @font-face {
 	font-family: "Vaadin-Icons";
 	src: url('fonts/Vaadin-Icons.eot');
