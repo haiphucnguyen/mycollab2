@@ -18,8 +18,9 @@ package com.mycollab.vaadin.web.ui.grid;
 
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.ui.*;
-import org.vaadin.viritin.fields.DoubleField;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -29,13 +30,11 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class GridCellWrapper extends MHorizontalLayout {
     private static final long serialVersionUID = 1L;
 
-    private String fieldWidth;
     private MHorizontalLayout fieldWrapper;
 
-    GridCellWrapper(Component caption, String fieldWidth) {
+    GridCellWrapper(Component caption) {
         fieldWrapper = new MHorizontalLayout();
         this.withSpacing(true).with(caption, fieldWrapper).expand(fieldWrapper).withAlign(caption, Alignment.TOP_RIGHT).withMargin(true).withFullWidth().withStyleName("gridform-field");
-        this.fieldWidth = fieldWidth;
     }
 
     public void addField(Component field) {
@@ -46,7 +45,7 @@ public class GridCellWrapper extends MHorizontalLayout {
             // continue
         } else if (field instanceof MultiSelectComp || field instanceof DateField) {
             field.setWidth(WebThemes.FORM_CONTROL_WIDTH);
-        } else  {
+        } else {
             field.setWidth("100%");
         }
         fieldWrapper.with(field);

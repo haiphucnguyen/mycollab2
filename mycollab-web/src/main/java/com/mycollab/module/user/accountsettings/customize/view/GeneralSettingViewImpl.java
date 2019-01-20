@@ -129,7 +129,7 @@ public class GeneralSettingViewImpl extends AbstractVerticalPageView implements 
 
         gridFormLayoutHelper.addComponent(new Label(UserUIContext.getMessage(LocalizationHelper.localizeYesNo(billingAccount.getDisplayemailpublicly()))),
                 UserUIContext.getMessage(AdminI18nEnum.FORM_SHOW_EMAIL_PUBLICLY),
-                UserUIContext.getMessage(AdminI18nEnum.FORM_SHOW_EMAIL_PUBLICLY_HELP), 0, 4, 2, "100%");
+                UserUIContext.getMessage(AdminI18nEnum.FORM_SHOW_EMAIL_PUBLICLY_HELP), 0, 4, 2);
 
 
         formContainer.addSection(new CssLayout(generalSettingHeader), gridFormLayoutHelper.getLayout());

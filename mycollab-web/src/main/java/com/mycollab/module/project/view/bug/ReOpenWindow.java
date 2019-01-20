@@ -155,7 +155,7 @@ public class ReOpenWindow extends MWindow {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS),
                             UserUIContext.getMessage(BugI18nEnum.FORM_AFFECTED_VERSIONS_HELP), 0, 1);
                 } else if (propertyId.equals("comment")) {
-                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.OPT_COMMENT), 0, 2, 2, "100%");
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.OPT_COMMENT), 0, 2, 2);
                 }
                 return null;
             }
