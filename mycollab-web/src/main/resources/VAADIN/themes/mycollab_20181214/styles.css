@@ -17282,32 +17282,24 @@ div.v-window {
 	font-size: 1.2em;
 }
 
-.colored-gridlayout .rl-row {
-	border-bottom: 1px solid #e5e5e5;
-}
-
 .colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
 	padding-top: 8px;
 }
 
 .colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 8px;
+	padding-right: 4px;
 }
 
 .colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 4px;
+	padding-bottom: 8px;
 }
 
 .colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 0px;
-}
-
-.colored-gridlayout .gridform-caption {
-	min-height: 39px;
+	padding-left: 4px;
 }
 
 .colored-gridlayout .gridform-caption .v-label {
-	text-align: right;
+	text-align: left;
 	color: #999;
 }
 

@@ -16,16 +16,15 @@
 
   .colored-gridlayout {
     .rl-row {
-      border-bottom: 1px solid $my-separator-color;
+
     }
     .gridform-caption, .gridform-field {
-      @include margin-container(8px, 8px, 4px, 0px);
+      @include margin-container(8px, 4px, 8px, 4px);
     }
 
     .gridform-caption {
-      min-height: 39px;
       .v-label {
-        text-align: right;
+        text-align: left;
         color: $my-meta-color;
       }
     }

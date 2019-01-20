@@ -28,6 +28,8 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.io.Serializable;
@@ -94,9 +96,9 @@ public class GridFormLayoutHelper implements Serializable {
     }
 
     public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan) {
-        ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
+        ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP, ValoTheme.LABEL_LARGE).withDescription(caption);
         MHorizontalLayout captionWrapper = new MHorizontalLayout(captionLbl).withSpacing(false).withMargin(new MarginInfo(false, true, false, false))
-                .withWidth(defaultCaptionWidth).withStyleName("gridform-caption").expand(captionLbl);
+                .withStyleName("gridform-caption");
         if (StringUtils.isNotBlank(contextHelp)) {
             ELabel contextHelpLbl = ELabel.html("&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
                     .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();

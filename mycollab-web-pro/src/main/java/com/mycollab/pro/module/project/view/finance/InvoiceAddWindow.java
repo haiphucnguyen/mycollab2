@@ -39,6 +39,7 @@ class InvoiceAddWindow extends MWindow {
         this.withWidth("800px").withModal(true).withResizable(false).withCenter().withContent(content);
         final AdvancedEditBeanForm<SimpleInvoice> editBeanForm = new AdvancedEditBeanForm<>();
         content.addComponent(editBeanForm);
+        editBeanForm.setStyleName(WebThemes.SCROLLABLE_CONTAINER);
         editBeanForm.setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.INVOICE,
                 InvoiceDefaultFormLayoutFactory.getForm()));
         final InvoiceEditFormFieldFactory invoiceEditFormFieldFactory = new InvoiceEditFormFieldFactory(editBeanForm);
@@ -66,7 +67,7 @@ class InvoiceAddWindow extends MWindow {
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
-        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, true, true, false));
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(new MarginInfo(true, false, true, false));
         content.addComponent(buttonControls);
         content.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
     }

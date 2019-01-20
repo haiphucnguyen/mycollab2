@@ -22,19 +22,20 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.0.8
  */
-public class GridCellWrapper extends MHorizontalLayout {
+public class GridCellWrapper extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     private MHorizontalLayout fieldWrapper;
 
     GridCellWrapper(Component caption) {
-        fieldWrapper = new MHorizontalLayout();
-        this.withSpacing(true).with(caption, fieldWrapper).expand(fieldWrapper).withAlign(caption, Alignment.TOP_RIGHT).withMargin(true).withFullWidth().withStyleName("gridform-field");
+        fieldWrapper = new MHorizontalLayout().withFullWidth();
+        this.withSpacing(true).with(caption, fieldWrapper).withAlign(caption, Alignment.TOP_LEFT).withMargin(true).withFullWidth().withStyleName("gridform-field");
     }
 
     public void addField(Component field) {

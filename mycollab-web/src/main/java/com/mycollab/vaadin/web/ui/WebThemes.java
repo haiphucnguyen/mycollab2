@@ -21,7 +21,7 @@ package com.mycollab.vaadin.web.ui;
  * @since 5.4.5
  */
 public class WebThemes {
-    public static final String FORM_CONTROL_WIDTH = "150px";
+    public static final String FORM_CONTROL_WIDTH = "200px";
 
     public static final String BOX = "box";
     public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
