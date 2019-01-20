@@ -120,7 +120,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     clickEvent -> {
                         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                         beanItem.setStatus(ReOpen.name());
-                        bugService.saveWithSession(beanItem, UserUIContext.getUsername());
+                        bugService.updateSelectiveWithSession(beanItem, UserUIContext.getUsername());
                         EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, beanItem.getId()));
                     })
                     .withStyleName(WebThemes.BUTTON_ACTION);
@@ -140,7 +140,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     clickEvent -> {
                         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                         beanItem.setStatus(InProgress.name());
-                        bugService.saveWithSession(beanItem, UserUIContext.getUsername());
+                        bugService.updateSelectiveWithSession(beanItem, UserUIContext.getUsername());
                         EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, beanItem.getId()));
                     })
                     .withStyleName(WebThemes.BUTTON_ACTION);

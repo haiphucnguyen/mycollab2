@@ -22,6 +22,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -55,6 +56,6 @@ public class GridCellWrapper extends MVerticalLayout {
         } else {
             field.setWidth("100%");
         }
-        fieldWrapper.with(field);
+        fieldWrapper.withComponent(field);
     }
 }

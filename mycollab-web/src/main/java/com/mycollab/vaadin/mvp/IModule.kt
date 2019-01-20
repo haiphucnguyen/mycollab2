@@ -16,8 +16,12 @@
  */
 package com.mycollab.vaadin.mvp
 
+import org.vaadin.viritin.layouts.MHorizontalLayout
+
 /**
  * @author MyCollab Ltd.
  * @since 2.0
  */
-interface IModule : PageView
+interface IModule : PageView {
+    fun buildMenu(): MHorizontalLayout?
+}
