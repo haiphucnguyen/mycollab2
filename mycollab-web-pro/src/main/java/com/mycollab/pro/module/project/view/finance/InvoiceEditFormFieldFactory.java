@@ -12,6 +12,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.DateField;
@@ -53,7 +54,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.description.equalTo(propertyId)) {
             return new TextArea();
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
-            return new DoubleField().withRequiredIndicatorVisible(true);
+            return new DoubleField().withRequiredIndicatorVisible(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Invoice.Field.id.equalTo(propertyId)) {
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
@@ -75,6 +76,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
     private static class PricingTypeField extends I18nValueComboBox<InvoiceI18nEnum> {
         PricingTypeField() {
             super(InvoiceI18nEnum.class, InvoiceI18nEnum.FIX_PRICE, InvoiceI18nEnum.TIME_MATERIAL);
+            this.setWidth(WebThemes.FORM_CONTROL_WIDTH);
         }
     }
 }

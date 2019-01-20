@@ -28,8 +28,6 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.io.Serializable;
@@ -46,31 +44,18 @@ public class GridFormLayoutHelper implements Serializable {
     private LayoutType layoutType;
     private ResponsiveLayout responsiveLayout;
 
-    private String defaultCaptionWidth;
-
     private Map<String, GridCellWrapper> fieldCaptionMappings = new HashMap<>();
 
-    public GridFormLayoutHelper(LayoutType layoutType, String defaultCaptionWidth) {
+    public GridFormLayoutHelper(LayoutType layoutType) {
         this.layoutType = layoutType;
-        this.defaultCaptionWidth = defaultCaptionWidth;
-
         responsiveLayout = new ResponsiveLayout(ResponsiveLayout.ContainerType.FIXED);
     }
 
     public static GridFormLayoutHelper defaultFormLayoutHelper(LayoutType layoutType) {
-        return defaultFormLayoutHelper(layoutType, "167px");
-    }
-
-    public static GridFormLayoutHelper defaultFormLayoutHelper(LayoutType layoutType, String captionWidth) {
-        GridFormLayoutHelper helper = new GridFormLayoutHelper(layoutType, captionWidth);
+        GridFormLayoutHelper helper = new GridFormLayoutHelper(layoutType);
         helper.getLayout().setWidth("100%");
         helper.getLayout().addStyleName(WebThemes.GRIDFORM_STANDARD);
         return helper;
-    }
-
-    public GridFormLayoutHelper withCaptionWidth(String width) {
-        this.defaultCaptionWidth = width;
-        return this;
     }
 
     public <T> T addComponent(T field, String caption, int columns, int rows, int colSpan) {
@@ -96,7 +81,7 @@ public class GridFormLayoutHelper implements Serializable {
     }
 
     public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan) {
-        ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP, ValoTheme.LABEL_LARGE).withDescription(caption);
+        ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
         MHorizontalLayout captionWrapper = new MHorizontalLayout(captionLbl).withSpacing(false).withMargin(new MarginInfo(false, true, false, false))
                 .withStyleName("gridform-caption");
         if (StringUtils.isNotBlank(contextHelp)) {

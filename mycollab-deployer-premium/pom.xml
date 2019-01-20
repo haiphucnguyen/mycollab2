@@ -35,7 +35,6 @@
         <module>../mycollab-server-runner</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-scheduler-premium</module>
-        <module>../mycollab-ui</module>
         <module>../mycollab-web</module>
         <module>../mycollab-web-pro</module>
         <module>../mycollab-web-premium</module>

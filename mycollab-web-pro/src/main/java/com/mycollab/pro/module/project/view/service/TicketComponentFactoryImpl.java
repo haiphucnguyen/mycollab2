@@ -472,9 +472,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         NewTicketWindow(LocalDate date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
             this.isIncludeMilestone = isIncludeMilestone;
-            this.addStyleName("noscrollable-container");
+            this.addStyleName(WebThemes.NO_SCROLLABLE_CONTAINER);
             MVerticalLayout content = new MVerticalLayout();
-            withModal(true).withResizable(false).withCenter().withWidth("1200px").withContent(content);
+            withModal(true).withResizable(false).withCenter().withWidth(WebThemes.WINDOW_FORM_WIDTH).withContent(content);
 
             UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
             projectListSelect.setEmptySelectionAllowed(false);
@@ -495,6 +495,8 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
             formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
             formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 1);
+            formLayoutHelper.getLayout().addStyleName(WebThemes.BORDER_BOTTOM);
+
             formLayout = new MCssLayout().withFullWidth();
             content.with(formLayoutHelper.getLayout(), formLayout);
             doChange(date, milestoneId);

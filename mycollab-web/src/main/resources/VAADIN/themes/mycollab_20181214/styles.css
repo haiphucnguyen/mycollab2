@@ -2459,11 +2459,11 @@ div.v-window {
 	overflow-y: auto;
 }
 
-.noscrollable-container {
+.no-scrollable-container {
 	overflow-y: hidden;
 }
 
-.noscrollable-container .v-window-contents > div {
+.no-scrollable-container .v-window-contents > div {
 	overflow-y: hidden;
 }
 
@@ -17144,11 +17144,11 @@ div.v-window {
 	overflow-y: auto;
 }
 
-.noscrollable-container {
+.no-scrollable-container {
 	overflow-y: hidden;
 }
 
-.noscrollable-container .v-window-contents > div {
+.no-scrollable-container .v-window-contents > div {
 	overflow-y: hidden;
 }
 
