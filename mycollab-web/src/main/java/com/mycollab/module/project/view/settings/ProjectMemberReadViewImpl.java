@@ -19,6 +19,8 @@ package com.mycollab.module.project.view.settings;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
+import com.jarektoro.responsivelayout.ResponsiveLayout;
+import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.mycollab.core.utils.DateTimeUtils;
@@ -77,7 +79,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
     private SimpleProjectMember beanItem;
     private AdvancedPreviewBeanForm<SimpleProjectMember> previewForm;
 
-    private MHorizontalLayout bottomLayout;
+    private ResponsiveLayout bottomLayout;
 
     public ProjectMemberReadViewImpl() {
         super(UserUIContext.getMessage(ProjectMemberI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
@@ -85,7 +87,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         previewForm = initPreviewForm();
         previewForm.setWidth("100%");
 
-        bottomLayout = new MHorizontalLayout().withMargin(true).withFullWidth();
+        bottomLayout = new ResponsiveLayout().withSpacing();
         this.addHeaderRightContent(createButtonControls());
         this.with(previewForm, bottomLayout);
     }
@@ -100,11 +102,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         return previewForm;
     }
 
-    public void previewItem(final SimpleProjectMember item) {
-        this.beanItem = item;
+    public void previewItem(final SimpleProjectMember projectMember) {
+        this.beanItem = projectMember;
         previewForm.setFormLayoutFactory(initFormLayoutFactory());
         previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
-        previewForm.setBean(item);
+        previewForm.setBean(projectMember);
         createBottomPanel();
     }
 
@@ -127,14 +129,15 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
     private void createBottomPanel() {
         bottomLayout.removeAllComponents();
-
-        MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
+        ResponsiveRow row = bottomLayout.addRow();
+        row.setMargin(true);
+        row.setSpacing(true);
         ProjectActivityStreamPagedList activityStreamList = new ProjectActivityStreamPagedList();
-        leftColumn.with(activityStreamList);
+        row.addColumn().withDisplayRules(12, 12, 12, 6).withComponent(activityStreamList);
 
         UserAssignmentWidget userAssignmentWidget = new UserAssignmentWidget();
         userAssignmentWidget.showOpenAssignments();
-        bottomLayout.with(leftColumn, userAssignmentWidget).expand(leftColumn);
+        row.addColumn().withDisplayRules(12, 12, 12, 6).withComponent(userAssignmentWidget);
 
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
@@ -160,10 +163,16 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         @Override
         public AbstractComponent getLayout() {
-            MHorizontalLayout blockContent = new MHorizontalLayout().withStyleName("member-block").withFullWidth();
+            ResponsiveLayout layout = new ResponsiveLayout();
+            layout.addStyleNames(WebThemes.BORDER_TOP, WebThemes.BORDER_BOTTOM);
+            layout.setWidth("100%");
+
+            ResponsiveRow row = layout.addRow();
+            row.setMargin(true);
+
             Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(beanItem.getMemberAvatarId(), 100);
             memberAvatar.addStyleName(UIConstants.CIRCLE_BOX);
-            blockContent.addComponent(memberAvatar);
+            row.addColumn().withDisplayRules(12, 12, 3, 2).withComponent(memberAvatar);
 
             MVerticalLayout memberInfo = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true));
 
@@ -212,9 +221,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             Label memberWorkStatus = ELabel.html(memberWorksInfo).withStyleName(UIConstants.META_INFO);
             memberInfo.addComponent(memberWorkStatus);
 
-            blockContent.with(memberInfo).expand(memberInfo);
+            row.addColumn().withDisplayRules(12, 12, 9, 10).withComponent(memberInfo);
 
-            return blockContent;
+            return layout;
         }
 
         @Override
@@ -253,11 +262,10 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         private static final long serialVersionUID = 1L;
 
         private ProjectTicketSearchCriteria searchCriteria;
-        private final DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> taskList;
+        private final DefaultBeanPagedList<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> ticketList;
 
         UserAssignmentWidget() {
             super(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, 0), new CssLayout());
-            this.setWidth("400px");
 
             final CheckBox overdueSelection = new CheckBox(UserUIContext.getMessage(StatusI18nEnum.Overdue));
             overdueSelection.addValueChangeListener(valueChangeEvent -> {
@@ -285,9 +293,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             addHeaderElement(overdueSelection);
             addHeaderElement(isOpenSelection);
 
-            taskList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectTicketService.class),
+            ticketList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectTicketService.class),
                     new TaskRowDisplayHandler(), 10);
-            bodyContent.addComponent(taskList);
+            bodyContent.addComponent(ticketList);
         }
 
         private void showOpenAssignments() {
@@ -299,8 +307,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
 
         private void updateSearchResult() {
-            taskList.setSearchCriteria(searchCriteria);
-            setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, taskList.getTotalCount()));
+            ticketList.setSearchCriteria(searchCriteria);
+            setTitle(UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_ASSIGNMENT_VALUE, ticketList.getTotalCount()));
         }
     }
 

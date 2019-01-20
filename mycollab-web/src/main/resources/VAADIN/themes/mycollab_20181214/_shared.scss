@@ -116,7 +116,6 @@
     }
   }
 
-
   .margin-top {
     margin-top: $my-space;
   }
@@ -127,6 +126,14 @@
 
   .margin-left {
     margin-left: 2*$my-space;
+  }
+
+  .margin-right {
+    margin-right: 2*$my-space;
+  }
+
+  .margin {
+    margin: $my-space 2*$my-space $my-space 2*$my-space;
   }
 
   .border-bottom {

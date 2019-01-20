@@ -62,19 +62,8 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractVerticalPageVie
         this(headerText, iconResource, null, false);
     }
 
-    public AbstractPreviewItemComp(MHorizontalLayout customHeader, ReadViewLayout layout) {
-        this.header = customHeader;
-        this.addComponent(header);
-        isDisplaySideBar = false;
-        this.previewLayout = layout;
-        initContent();
-    }
-
-    public AbstractPreviewItemComp(String headerText, VaadinIcons iconResource, ReadViewLayout layout) {
-        this(headerText, iconResource, layout, true);
-    }
-
     public AbstractPreviewItemComp(String headerText, VaadinIcons iconResource, ReadViewLayout layout, boolean isDisplaySideBar) {
+        this.setMargin(true);
         ELabel headerLbl = ELabel.h2("").withUndefinedWidth();
         this.previewLayout = layout;
         this.isDisplaySideBar = isDisplaySideBar;

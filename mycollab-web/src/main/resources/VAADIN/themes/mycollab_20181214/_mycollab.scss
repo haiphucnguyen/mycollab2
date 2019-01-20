@@ -731,13 +731,10 @@ $v-line-height--header:1.5em;
   .member-block {
     display: inline-block;
     background-color: $my-white-color;
-    margin-bottom: 15px;
-    font-size: $font-normal;
     vertical-align: top;
     width: 350px;
     margin-right: 10px;
     border: 1px solid $my-separator-color;
-    border-radius: 3px;
     padding: 5px 5px 10px 10px;
     &:hover {
       background-color: $my-block-background-color;

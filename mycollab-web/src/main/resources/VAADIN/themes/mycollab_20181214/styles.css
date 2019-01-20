@@ -1808,6 +1808,14 @@ a.pending {
 	margin-left: 24px;
 }
 
+.margin-right {
+	margin-right: 24px;
+}
+
+.margin {
+	margin: 12px 24px 12px 24px;
+}
+
 .border-bottom {
 	border-bottom: 1px solid #e5e5e5 !important;
 }
@@ -16493,6 +16501,14 @@ a.pending {
 	margin-left: 24px;
 }
 
+.margin-right {
+	margin-right: 24px;
+}
+
+.margin {
+	margin: 12px 24px 12px 24px;
+}
+
 .border-bottom {
 	border-bottom: 1px solid #e5e5e5 !important;
 }
@@ -18684,13 +18700,10 @@ div.v-csslayout.main-body {
 .member-block {
 	display: inline-block;
 	background-color: #ffffff;
-	margin-bottom: 15px;
-	font-size: 14px;
 	vertical-align: top;
 	width: 350px;
 	margin-right: 10px;
 	border: 1px solid #e5e5e5;
-	border-radius: 3px;
 	padding: 5px 5px 10px 10px;
 }
 
