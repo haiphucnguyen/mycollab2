@@ -140,7 +140,7 @@ public class ReOpenWindow extends MWindow {
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);
 
-                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, reOpenBtn).withMargin(new MarginInfo(true, true, false, false));
+                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, reOpenBtn);
 
                 layout.addComponent(controlsBtn);
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);

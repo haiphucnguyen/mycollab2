@@ -150,7 +150,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> postExecution())
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
-            final MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, resolveBtn).withMargin(new MarginInfo(true, true, false, false));
+            final MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, resolveBtn);
             layout.addComponent(controlsBtn);
             layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

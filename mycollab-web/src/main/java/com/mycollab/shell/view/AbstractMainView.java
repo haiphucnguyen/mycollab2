@@ -44,6 +44,7 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
 
     private CustomLayout headerLayout;
     private MCssLayout bodyLayout;
+    private IModule attachedModule;
     protected MHorizontalLayout accountLayout;
 
     private ApplicationEventListener<ShellEvent.RefreshPage> pageRefreshHandler = new ApplicationEventListener<ShellEvent.RefreshPage>() {
@@ -81,14 +82,17 @@ public abstract class AbstractMainView extends AbstractVerticalPageView implemen
 
     @Override
     public void addModule(IModule module) {
-        headerLayout.removeComponent("serviceMenu");
-        ModuleHelper.setCurrentModule(module);
-        bodyLayout.removeAllComponents();
-        bodyLayout.addComponent(module);
+        if (module != attachedModule) {
+            attachedModule = module;
+            headerLayout.removeComponent("serviceMenu");
+            ModuleHelper.setCurrentModule(module);
+            bodyLayout.removeAllComponents();
+            bodyLayout.addComponent(module);
 
-        MHorizontalLayout serviceMenu = module.buildMenu();
-        if (serviceMenu != null) {
-            headerLayout.addComponent(serviceMenu, "serviceMenu");
+            MHorizontalLayout serviceMenu = module.buildMenu();
+            if (serviceMenu != null) {
+                headerLayout.addComponent(serviceMenu, "serviceMenu");
+            }
         }
     }
 
