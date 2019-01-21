@@ -102,7 +102,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         projectMemberMapper.insert(projectMember)
 
         // add client role to project
-        val clientRole = createProjectRole(projectId, record.saccountid, "Client", "Default role for client")
+        val clientRole = createProjectRole(projectId, record.saccountid, "Client", "Default role for client", false)
 
         val clientRoleId = projectRoleService.saveWithSession(clientRole, username)
 
@@ -126,7 +126,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         // add consultant role to project
         LOG.debug("Add consultant role to project ${record.name}")
         val consultantRole = createProjectRole(projectId, record.saccountid, "Consultant",
-                "Default role for consultant")
+                "Default role for consultant", false)
         val consultantRoleId = projectRoleService.saveWithSession(consultantRole, username)
 
         val permissionMapConsultant = PermissionMap()
@@ -152,7 +152,7 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
 
         // add admin role to project
         LOG.debug("Add admin role to project ${record.name}")
-        val adminRole = createProjectRole(projectId, record.saccountid, "Admin", "Default role for admin")
+        val adminRole = createProjectRole(projectId, record.saccountid, "Admin", "Default role for admin", true)
         val adminRoleId = projectRoleService.saveWithSession(adminRole, username)
 
         val permissionMapAdmin = PermissionMap()
@@ -187,12 +187,13 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         }
     }
 
-    private fun createProjectRole(projectId: Int?, sAccountId: Int?, roleName: String, description: String): ProjectRole {
+    private fun createProjectRole(projectId: Int?, sAccountId: Int?, roleName: String, description: String, isSystemRole: Boolean): ProjectRole {
         val projectRole = ProjectRole()
         projectRole.projectid = projectId
         projectRole.saccountid = sAccountId
         projectRole.rolename = roleName
         projectRole.description = description
+        projectRole.issystemrole = isSystemRole;
         return projectRole
     }
 
