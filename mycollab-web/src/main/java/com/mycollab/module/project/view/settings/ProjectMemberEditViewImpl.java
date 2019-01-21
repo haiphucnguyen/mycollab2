@@ -107,8 +107,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                 return new DefaultViewField(beanItem.getMemberFullName());
             } else if (propertyId.equals("projectroleid")) {
                 return new ProjectRoleSelectionField();
-            } else if (propertyId.equals("isadmin")) {
-                return new DummyCustomField<Boolean>();
             } else if (ProjectMember.Field.billingrate.equalTo(propertyId) || ProjectMember.Field.overtimebillingrate.equalTo(propertyId)) {
                 return new DoubleField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
             }
@@ -188,8 +186,8 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
 
         @Override
         public Integer getValue() {
-             SimpleProjectRole role = roleComboBox.getSelectedItem().orElse(null);
-             return (role != null)? role.getId() : null;
+            SimpleProjectRole role = roleComboBox.getSelectedItem().orElse(null);
+            return (role != null) ? role.getId() : null;
         }
     }
 }
