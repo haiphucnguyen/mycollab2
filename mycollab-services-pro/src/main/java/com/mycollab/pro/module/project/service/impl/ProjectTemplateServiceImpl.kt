@@ -216,10 +216,8 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         members.forEach {
             it.id = null
             it.projectid = newProjectId
-            if (java.lang.Boolean.FALSE == it.isadmin) {
-                val newRoleId = mapRoleIds[it.projectroleid]
-                it.projectroleid = newRoleId
-            }
+            val newRoleId = mapRoleIds[it.projectroleid]
+            it.projectroleid = newRoleId
             projectMemberService.saveWithSession(it, username)
         }
     }

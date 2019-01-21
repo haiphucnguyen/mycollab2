@@ -33,7 +33,6 @@ import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
-import com.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
@@ -49,7 +48,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.*;
-import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.Depot;
@@ -58,7 +56,6 @@ import com.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -183,16 +180,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                             (ProjectRolePermissionCollections.USERS));
             memberInfo.addComponent(new MHorizontalLayout(memberLink, editNotificationBtn).alignAll(Alignment.MIDDLE_LEFT));
 
-            String memberRoleLinkPrefix = String.format("<a href=\"%s%s\"", AppUI.getSiteUrl(),
-                    ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
-            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
-            if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
-                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">%s</a>", memberRoleLinkPrefix,
-                        UserUIContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY)));
-            } else {
-                memberRole.setValue(memberRoleLinkPrefix + "style=\"color:gray;font-size:12px;\">" + beanItem.getRoleName() + "</a>");
-            }
-            memberInfo.addComponent(memberRole);
+            A roleLink = new A(ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid())).appendText(beanItem.getRoleName());
+            memberInfo.addComponent(ELabel.html(roleLink.write()).withStyleName(UIConstants.META_INFO).withFullWidth());
 
             if (Boolean.TRUE.equals(AppUI.showEmailPublicly())) {
                 Label memberEmailLabel = ELabel.html(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
@@ -244,12 +233,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         protected HasValue<?> onCreateField(final Object propertyId) {
             SimpleProjectMember projectMember = attachForm.getBean();
             if (propertyId.equals("projectroleid")) {
-                if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
-                    return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkGenerator.generateRolePreviewLink(
-                            projectMember.getProjectid(), projectMember.getProjectroleid()), null);
-                } else {
-                    return new DefaultViewField(UserUIContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY));
-                }
+                return new LinkViewField(attachForm.getBean().getRoleName(), ProjectLinkGenerator.generateRolePreviewLink(
+                        projectMember.getProjectid(), projectMember.getProjectroleid()), null);
             } else if (propertyId.equals("username")) {
                 return new UserLinkViewField(projectMember.getUsername(),
                         projectMember.getMemberAvatarId(), projectMember.getMemberFullName());

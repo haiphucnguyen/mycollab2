@@ -123,7 +123,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
             }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
-            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            deleteBtn.setVisible(CurrentProjectVariables.isSuperUser() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
             return deleteBtn;
         });
 

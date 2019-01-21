@@ -91,16 +91,6 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
         assertExistProjectShortnameInAccount(null, record.shortname, record.saccountid)
         val projectId = savePlainProject(record, username)
 
-        // Add the first user to project
-        val projectMember = ProjectMember()
-        projectMember.isadmin = java.lang.Boolean.TRUE
-        projectMember.status = ProjectMemberStatusConstants.ACTIVE
-        projectMember.createdtime = LocalDateTime.now()
-        projectMember.projectid = projectId
-        projectMember.username = username
-        projectMember.saccountid = record.saccountid
-        projectMemberMapper.insert(projectMember)
-
         // add client role to project
         val clientRole = createProjectRole(projectId, record.saccountid, "Client", "Default role for client", false)
 
@@ -167,6 +157,16 @@ class ProjectServiceImpl(private val projectMapper: ProjectMapper,
                     }
                 }
         projectRoleService.savePermission(projectId, adminRoleId, permissionMapAdmin, record.saccountid)
+
+        // Add the first user to project
+        val projectMember = ProjectMember()
+        projectMember.projectid = adminRoleId
+        projectMember.status = ProjectMemberStatusConstants.ACTIVE
+        projectMember.createdtime = LocalDateTime.now()
+        projectMember.projectid = projectId
+        projectMember.username = username
+        projectMember.saccountid = record.saccountid
+        projectMemberMapper.insert(projectMember)
 
         //Do async task to create some post data after project is created
         val event = AddProjectEvent(projectId, record.saccountid)

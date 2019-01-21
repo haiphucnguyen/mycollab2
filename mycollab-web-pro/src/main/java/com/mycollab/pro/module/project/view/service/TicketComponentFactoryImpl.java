@@ -508,19 +508,19 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProject.getId(), AppUI.getAccountId());
             List<String> ticketTypes = new ArrayList<>();
             if (member != null) {
-                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                if (member.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     ticketTypes.add(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
                 }
 
-                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                if (member.canWrite(ProjectRolePermissionCollections.BUGS)) {
                     ticketTypes.add(UserUIContext.getMessage(BugI18nEnum.SINGLE));
                 }
 
-                if (isIncludeMilestone && (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
+                if (isIncludeMilestone && (member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
                     ticketTypes.add(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
                 }
 
-                if (member.isProjectOwner() || member.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                if (member.canWrite(ProjectRolePermissionCollections.RISKS)) {
                     ticketTypes.add(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
                 }
 
