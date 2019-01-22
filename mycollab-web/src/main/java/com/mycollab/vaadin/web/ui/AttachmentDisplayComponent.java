@@ -51,11 +51,21 @@ import java.util.List;
 public class AttachmentDisplayComponent extends CssLayout {
     private static final long serialVersionUID = 1L;
 
+    private ResourceService resourceService = AppContextUtil.getSpringBean(ResourceService.class);
+
+    public AttachmentDisplayComponent() {
+
+    }
+
     public AttachmentDisplayComponent(List<Content> attachments) {
         attachments.forEach(this::addAttachmentRow);
     }
 
-    private void addAttachmentRow(final Content attachment) {
+    public void loadAttachments(String attachmentPath) {
+
+    }
+
+    private void addAttachmentRow(Content attachment) {
         String docName = attachment.getPath();
         int lastIndex = docName.lastIndexOf("/");
         if (lastIndex != -1) {
@@ -107,8 +117,7 @@ public class AttachmentDisplayComponent extends CssLayout {
                     UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
                     confirmDialog -> {
                         if (confirmDialog.isConfirmed()) {
-                            ResourceService attachmentService = AppContextUtil.getSpringBean(ResourceService.class);
-                            attachmentService.removeResource(attachment.getPath(), UserUIContext.getUsername(), true, AppUI.getAccountId());
+                            resourceService.removeResource(attachment.getPath(), UserUIContext.getUsername(), true, AppUI.getAccountId());
                             ((ComponentContainer) attachmentLayout.getParent()).removeComponent(attachmentLayout);
                         }
                     });

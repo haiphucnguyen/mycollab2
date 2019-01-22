@@ -75,7 +75,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 return new RichTextViewField();
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
                 return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "", risk.getMilestoneName());
-            } else if (Risk.Field.id.equalTo(propertyId)) {
+            } else if ("section-attachments".equals(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
             } else if (Risk.Field.consequence.equalTo(propertyId)) {
                 return new I18nFormViewField(RiskConsequence.class);

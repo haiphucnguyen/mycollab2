@@ -70,17 +70,17 @@ public class GridFormLayoutHelper implements Serializable {
         return this.addComponent(field, caption, contextHelp, columns, rows, 1);
     }
 
-    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows) {
-        return buildCell(caption, contextHelp, columns, rows, 1);
-    }
-
     public <T> T addComponent(T field, String caption, String contextHelp, int columns, int rows, int colSpan) {
-        GridCellWrapper cell = buildCell(caption, contextHelp, columns, rows, colSpan);
+        GridCellWrapper cell = buildCell(caption, caption, contextHelp, columns, rows, colSpan);
         cell.addField((Component) field);
         return field;
     }
 
-    public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan) {
+    public GridCellWrapper buildCell(String fieldId, String caption, String contextHelp, int columns, int rows) {
+        return buildCell(fieldId, caption, contextHelp, columns, rows, 1);
+    }
+
+    public GridCellWrapper buildCell(String fieldId, String caption, String contextHelp, int columns, int rows, int colSpan) {
         MHorizontalLayout captionWrapper = null;
         if (!caption.equals("")) {
             ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
@@ -92,7 +92,6 @@ public class GridFormLayoutHelper implements Serializable {
                 captionWrapper.with(contextHelpLbl);
             }
         }
-
 
         GridCellWrapper fieldWrapper = new GridCellWrapper(captionWrapper);
         int rowCount = responsiveLayout.getComponentCount();
@@ -130,20 +129,17 @@ public class GridFormLayoutHelper implements Serializable {
             }
         }
 
-
-        if (StringUtils.isNotBlank(caption)) {
-            fieldCaptionMappings.put(caption, fieldWrapper);
-        }
+        fieldCaptionMappings.put(fieldId, fieldWrapper);
         return fieldWrapper;
     }
 
     /**
-     * @param caption
+     * @param fieldId
      * @return null if it can not find the component wrapper associates with
      * <code>caption</code>
      */
-    public GridCellWrapper getComponentWrapper(String caption) {
-        return fieldCaptionMappings.get(caption);
+    public GridCellWrapper getComponentWrapper(String fieldId) {
+        return fieldCaptionMappings.get(fieldId);
     }
 
     public ResponsiveLayout getLayout() {

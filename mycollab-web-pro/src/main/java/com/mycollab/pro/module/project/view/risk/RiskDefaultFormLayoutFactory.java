@@ -76,12 +76,12 @@ public class RiskDefaultFormLayoutFactory {
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.response)
                 .displayName(RiskI18nEnum.FORM_RESPONSE)
                 .fieldIndex(14).colSpan(true).build());
-
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Risk.Field.id)
-                .displayName(GenericI18Enum.FORM_ATTACHMENTS)
-                .colSpan(true).fieldIndex(15).build());
-
         defaultForm.sections(mainSection);
+
+        DynaSection attachmentSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN).header(GenericI18Enum.FORM_ATTACHMENTS).build();
+        attachmentSection.fields(new TextDynaFieldBuilder().fieldName("section-attachments").fieldIndex(0).build());
+
+        defaultForm.sections(attachmentSection);
     }
 
     public static DynaForm getForm() {

@@ -74,7 +74,7 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new MTextField().withRequiredIndicatorVisible(true);
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
-        } else if (Risk.Field.id.equalTo(propertyId)) {
+        } else if ("section-attachments".equals(propertyId)) {
             Risk beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),

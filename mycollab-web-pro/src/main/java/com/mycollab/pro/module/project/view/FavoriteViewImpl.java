@@ -280,7 +280,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.name.name(),
-                                        TaskDefaultFormLayoutFactory.getForm(), Task.Field.name.name(), Task.Field.id.name(),
+                                        TaskDefaultFormLayoutFactory.getReadForm(), Task.Field.name.name(), Task.Field.id.name(),
                                         Task.Field.parenttaskid.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
@@ -316,7 +316,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         final PrintButton printBtn = new PrintButton();
                         printBtn.withListener(clickEvent ->
                                 printBtn.doPrint(milestone, new FormReportLayout(ProjectTypeConstants.MILESTONE, Milestone.Field.name.name(),
-                                        MilestoneDefaultFormLayoutFactory.getForm(), Milestone.Field.id.name()))
+                                        MilestoneDefaultFormLayoutFactory.getAddForm(), Milestone.Field.id.name()))
                         ).withStyleName(WebThemes.BUTTON_OPTION).withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT))
                                 .withVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES));
 
