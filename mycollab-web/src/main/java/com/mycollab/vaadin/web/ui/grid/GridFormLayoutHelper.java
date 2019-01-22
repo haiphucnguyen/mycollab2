@@ -81,14 +81,18 @@ public class GridFormLayoutHelper implements Serializable {
     }
 
     public GridCellWrapper buildCell(String caption, String contextHelp, int columns, int rows, int colSpan) {
-        ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
-        MHorizontalLayout captionWrapper = new MHorizontalLayout(captionLbl).withSpacing(false).withMargin(new MarginInfo(false, true, false, false))
-                .withStyleName("gridform-caption");
-        if (StringUtils.isNotBlank(contextHelp)) {
-            ELabel contextHelpLbl = ELabel.html("&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
-                    .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();
-            captionWrapper.with(contextHelpLbl);
+        MHorizontalLayout captionWrapper = null;
+        if (!caption.equals("")) {
+            ELabel captionLbl = new ELabel(caption).withStyleName(UIConstants.LABEL_WORD_WRAP).withDescription(caption);
+            captionWrapper = new MHorizontalLayout(captionLbl).withSpacing(false).withMargin(new MarginInfo(false, true, false, false))
+                    .withStyleName("gridform-caption");
+            if (StringUtils.isNotBlank(contextHelp)) {
+                ELabel contextHelpLbl = ELabel.html("&nbsp;" + VaadinIcons.QUESTION_CIRCLE.getHtml())
+                        .withStyleName(WebThemes.INLINE_HELP).withDescription(contextHelp).withUndefinedWidth();
+                captionWrapper.with(contextHelpLbl);
+            }
         }
+
 
         GridCellWrapper fieldWrapper = new GridCellWrapper(captionWrapper);
         int rowCount = responsiveLayout.getComponentCount();
