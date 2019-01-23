@@ -189,27 +189,6 @@
     }
   }
 
-  /* StandUp Report List */
-
-  .standup-block {
-    background-color: $my-background-color;
-    border: 1px solid $my-separator-color;
-    .report-content {
-      border-left: 1px solid $my-separator-color;
-    }
-  }
-
-  .v-label.standup-row-content {
-      padding: 0px 10px 10px 20px;
-      width: 100%;
-      ul, ol {
-        padding-left: 14px;
-        margin: 0px;
-      }
-    }
-
-  /* End StandUp Report List */
-
   /* Milestone View */
 
   .milestone-view {

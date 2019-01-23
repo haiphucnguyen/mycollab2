@@ -1824,6 +1824,14 @@ a.pending {
 	border-top: 1px solid #e5e5e5;
 }
 
+.border-left {
+	border-left: 1px solid #e5e5e5;
+}
+
+.border {
+	border: 1px solid #e5e5e5;
+}
+
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -16517,6 +16525,14 @@ a.pending {
 	border-top: 1px solid #e5e5e5;
 }
 
+.border-left {
+	border-left: 1px solid #e5e5e5;
+}
+
+.border {
+	border: 1px solid #e5e5e5;
+}
+
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -17576,25 +17592,6 @@ div.v-csslayout.followers-container .v-checkbox {
 	margin: 2px;
 }
 
-.standup-block {
-	background-color: #ffffff;
-	border: 1px solid #e5e5e5;
-}
-
-.standup-block .report-content {
-	border-left: 1px solid #e5e5e5;
-}
-
-.v-label.standup-row-content {
-	padding: 0px 10px 10px 20px;
-	width: 100%;
-}
-
-.v-label.standup-row-content ul, .v-label.standup-row-content ol {
-	padding-left: 14px;
-	margin: 0px;
-}
-
 .milestone-view {
 	padding: 0px 0px 30px;
 }
@@ -18056,7 +18053,7 @@ input.noBorderRight {
 	font-size: 15px;
 }
 
-.v-label.wordWrap {
+.v-label.word-wrap {
 	word-wrap: break-word;
 	white-space: normal;
 }
