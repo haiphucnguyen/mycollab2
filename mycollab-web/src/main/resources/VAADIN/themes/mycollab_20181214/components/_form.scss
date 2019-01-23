@@ -1,9 +1,9 @@
 @mixin section-header() {
-  padding: $my-space 0px;
+  padding: 0px;
   color: $my-link-color;
   border-bottom: 1px solid $my-separator-color;
-  .v-label {
-    font-size: $v-font-size--h3;
+  .v-label-h3 {
+    color: $my-link-color;
   }
 }
 
@@ -22,8 +22,17 @@
 
 @mixin mycollab-form {
   .form {
-    .section {
-      @include section-header();
+    .v-stackpanel.section {
+      border-style: none;
+      box-shadow: none;
+      .v-panel-caption {
+        border-style: none;
+        padding: 0px;
+        font-size: $v-font-size--h3;
+        > span {
+          color: $my-link-color;
+        }
+      }
     }
   }
 

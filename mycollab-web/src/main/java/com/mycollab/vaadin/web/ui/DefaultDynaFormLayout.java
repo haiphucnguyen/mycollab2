@@ -27,6 +27,7 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.FormContainer;
 import com.mycollab.vaadin.ui.IDynaFormLayout;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.grid.GridCellWrapper;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
@@ -34,7 +35,6 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.Panel;
-import org.vaadin.addons.stackpanel.StackPanel;
 
 import java.util.*;
 
@@ -80,7 +80,7 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
                 sectionContainer = new Panel(UserUIContext.getMessage(section.getHeader()));
                 sectionContainer.addStyleName(WebThemes.FORM_SECTION);
                 layout.addComponent(sectionContainer);
-                StackPanel.extend((Panel) sectionContainer);
+                UIUtils.makeStackPanel((Panel) sectionContainer);
             }
 
             GridFormLayoutHelper gridLayout;

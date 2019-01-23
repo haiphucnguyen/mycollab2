@@ -317,9 +317,6 @@ $v-line-height--header:1.5em;
       }
       @include margin-container(10px, 15px, 10px, 15px);
     }
-    .v-horizontallayout-search-comp .v-horizontallayout-margin {
-      padding: 0px;
-    }
   }
 
   /* End Basic Search Template */
@@ -339,13 +336,6 @@ $v-line-height--header:1.5em;
     > .v-csslayout {
       overflow-y: auto !important;
     }
-  }
-
-  .formView {
-    background: white;
-    width: 600px;
-    -moz-border-radius: 16px;
-    -webkit-border-radius: 16px;
   }
 
   #login-header {
@@ -586,14 +576,8 @@ $v-line-height--header:1.5em;
 
   .addViewLayout {
     .addViewBody {
-      background-color: #FFF;
+      background-color: #ffffff;
       margin-top: 10px;
-    }
-    .addViewTopControls {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      border-bottom: 1px solid $my-separator-color;
     }
   }
 
@@ -673,14 +657,6 @@ $v-line-height--header:1.5em;
   }
   /* End Activity Tabs */
 
-
-
-  /* End Activity Stream Channel*/
-  .activity-related-content .v-table-header-wrap {
-    border-top-width: 1px;
-  }
-  /* End New Table */
-
   /* Error Message */
 
   .v-form-errormessage .gwt-HTML {
@@ -759,71 +735,6 @@ $v-line-height--header:1.5em;
   }
 
   /* End Project Member Block */
-
-  /* Style calendar */
-
-  div.v-stylecalendar {
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 0px solid $my-separator-color;
-    background-color: white;
-  }
-
-  .v-stylecalendar {
-    .weekdays TD {
-      width: 211px;
-      background-color: #F4F4F4;
-    }
-    .week {
-      background-color: white;
-    }
-    tr.weekdays {
-      background-color: #F5F5F5;
-    }
-    .weeknumber, .day {
-      width: 211px;
-      border: 1px solid #CCCCCC;
-      background-color: #E1E1E1;
-      background-image: url('icons/grad-light-top.png');
-      background-repeat: repeat-x;
-      cursor: default;
-    }
-  }
-
-  div.v-stylecalendar .weekdays TD {
-    width: 131px;
-  }
-
-  .v-stylecalendar {
-    .weeknumber, .day {
-      width: 131px;
-    }
-    .weeknumber {
-      background-color: #d9d8cb;
-    }
-    .week {
-      .othermonth {
-        color: #e4e3da;
-        cursor: default;
-        background-color: #F5F5F5;
-        border: 1px solid #CCCCCC;
-      }
-      .today.red {
-        background-color: red;
-      }
-    }
-    .red {
-      background-color: #0C7AD3;
-      background-repeat: repeat-x;
-      color: $my-white-color;
-    }
-  }
-
-  /* End Style calendar */
 
   /* Richtext Editor */
 
