@@ -1,8 +1,10 @@
 package com.mycollab.pro.module.project.view.finance;
 
+import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.StringUtils;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -68,7 +70,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         MVerticalLayout content = new MVerticalLayout(grid, new Label(UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
 
         descArea = new RichTextArea();
-        descArea.setValue(timeLogging.getNote());
+        descArea.setValue((timeLogging.getNote() == null) ? "" : timeLogging.getNote());
         descArea.setWidth("100%");
         content.addComponent(descArea);
 
@@ -77,12 +79,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         createTicketLinkButton();
 
         if (timeLogging.getType() != null && timeLogging.getTypeid() != null) {
-            ProjectTicket tmpSelectedTicket = new ProjectTicket();
-            tmpSelectedTicket.setType(timeLogging.getType());
-            tmpSelectedTicket.setTypeId(timeLogging.getTypeid());
-            String name = new GenericTaskDetailMapper(tmpSelectedTicket.getType(), tmpSelectedTicket.getTypeId()).getName();
-
-            tmpSelectedTicket.setName(name);
+            ProjectTicket tmpSelectedTicket = GenericTicketDetailMapper.getTicket(timeLogging.getType(), timeLogging.getTypeid());
             updateTicketLink(tmpSelectedTicket);
         }
 
@@ -94,9 +91,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
             close();
         }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
-        MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
-
-        MHorizontalLayout footer = new MHorizontalLayout(ticketLayout, controlsLayout).withAlign(controlsLayout, Alignment.TOP_RIGHT);
+        MHorizontalLayout footer = new MHorizontalLayout(ticketLayout, new MHorizontalLayout(cancelBtn, saveBtn)).expand(ticketLayout);
         content.addComponent(footer);
         this.setContent(content);
     }
@@ -111,12 +106,14 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
                 createTicketLinkButton();
                 updateTicketLink(null);
             }).withIcon(VaadinIcons.UNLINK).withStyleName(WebThemes.BUTTON_DANGER);
-            ticketLayout.addComponent(detachTaskBtn);
 
-            ELabel linkTicketBtn = new ELabel(StringUtils.trim(ticket.getName(), 60, true))
+            A ticketLink = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + ""))
+                    .appendText(StringUtils.trim(ticket.getName(), 60, true));
+
+            ELabel linkTicketBtn = ELabel.html(ticketLink.write())
                     .withDescription(new ProjectGenericItemTooltipGenerator(ticket.getType(),
-                            ticket.getTypeId()).getContent());
-            ticketLayout.addComponent(linkTicketBtn);
+                            ticket.getTypeId()).getContent()).withFullWidth();
+            ticketLayout.with(detachTaskBtn, linkTicketBtn).expand(linkTicketBtn);
         }
     }
 
@@ -139,7 +136,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         if (user.getMemberAvatarId() != null) {
             timeLogging.setLogUserAvatarId(user.getMemberAvatarId());
         }
-//        timeLogging.setLogforday(dateField.getValue());
+        timeLogging.setLogforday(dateField.getValue());
         timeLogging.setLogvalue(timeField.getValue());
         timeLogging.setIsbillable(isBillableCheckBox.getValue());
         timeLogging.setIsovertime(isOvertimeCheckBox.getValue());

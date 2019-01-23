@@ -30,11 +30,11 @@ import com.mycollab.vaadin.ui.IDynaFormLayout;
 import com.mycollab.vaadin.web.ui.grid.GridCellWrapper;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import org.vaadin.viritin.layouts.MCssLayout;
+import com.vaadin.ui.HasComponents;
+import com.vaadin.ui.Panel;
+import org.vaadin.addons.stackpanel.StackPanel;
 
 import java.util.*;
 
@@ -74,11 +74,13 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
                 continue;
             }
 
+            HasComponents sectionContainer = null;
+
             if (section.getHeader() != null) {
-                Label header = new Label(UserUIContext.getMessage(section.getHeader()));
-                MCssLayout formSection = new MCssLayout(header).withStyleName(WebThemes.FORM_SECTION).withFullWidth();
-                formSection.addStyleName(WebThemes.HOVER_EFFECT_NOT_BOX);
-                layout.addComponent(formSection);
+                sectionContainer = new Panel(UserUIContext.getMessage(section.getHeader()));
+                sectionContainer.addStyleName(WebThemes.FORM_SECTION);
+                layout.addComponent(sectionContainer);
+                StackPanel.extend((Panel) sectionContainer);
             }
 
             GridFormLayoutHelper gridLayout;
@@ -148,7 +150,13 @@ public class DefaultDynaFormLayout implements IDynaFormLayout {
                 throw new MyCollabException("Does not support attachForm layout except 1 or 2 columns");
             }
 
-            layout.addComponent(gridLayout.getLayout());
+            if (sectionContainer != null) {
+                ((Panel) sectionContainer).setContent(gridLayout.getLayout());
+            } else {
+                sectionContainer = gridLayout.getLayout();
+            }
+
+            layout.addComponent(sectionContainer);
             sectionMappings.put(section, gridLayout);
         }
         return layout;

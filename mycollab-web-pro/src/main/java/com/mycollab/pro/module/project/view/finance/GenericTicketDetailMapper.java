@@ -1,7 +1,9 @@
 package com.mycollab.pro.module.project.view.finance;
 
+import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.SimpleTask;
@@ -25,10 +27,12 @@ import java.time.ZoneId;
  * @author MyCollab Ltd.
  * @since 4.0.0
  */
-public class GenericTaskDetailMapper {
-    private String name;
+public class GenericTicketDetailMapper {
 
-    public GenericTaskDetailMapper(String type, int typeId) {
+    public static ProjectTicket getTicket(String type, int typeId) {
+        ProjectTicket ticket = new ProjectTicket();
+        ticket.setType(type);
+        ticket.setTypeId(typeId);
         int sAccountId = AppUI.getAccountId();
         ZoneId timeZone = UserUIContext.getUserTimeZone();
 
@@ -36,49 +40,50 @@ public class GenericTaskDetailMapper {
             BugService service = AppContextUtil.getSpringBean(BugService.class);
             SimpleBug bug = service.findById(typeId, sAccountId);
             if (bug != null) {
-                name = bug.getName();
-            }
+                ticket.setName(bug.getName());
+                ticket.setProjectShortName(bug.getProjectShortName());
+            } else return null;
         } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
-                name = task.getName();
-            }
+                ticket.setName(task.getName());
+                ticket.setProjectShortName(task.getProjectShortname());
+            } else return null;
         } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService service = AppContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
-                name = risk.getName();
-            }
+                ticket.setName(risk.getName());
+                ticket.setProjectShortName(risk.getProjectShortName());
+            } else return null;
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = AppContextUtil
                     .getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
             if (version != null) {
-                name = version.getName();
-            }
+                ticket.setName(version.getName());
+                ticket.setProjectShortName(version.getProjectShortName());
+            } else return null;
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {
-                name = component.getName();
-            }
+                ticket.setName(component.getName());
+                ticket.setName(component.getProjectShortName());
+            } else return null;
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
             StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
-                name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
-                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html();
-            }
+                ticket.setName(Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
+                        standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html());
+                ticket.setProjectShortName(standup.getProjectShortName());
+            } else return null;
+        } else {
+            throw new MyCollabException("Not support type " + type);
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return ticket;
     }
 
 }
