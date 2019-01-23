@@ -268,15 +268,6 @@
     background: none no-repeat 0 0 #ffffff;
   }
 
-  .borderlessControl {
-    padding: 4px;
-    border-width: 1px 0px 0px 0px;
-    border-style: solid;
-    border-color: $my-separator-color;
-    border-radius: 0px;
-    background: none no-repeat 0 0 #ffffff;
-  }
-
   .v-button.buttonPaging {
     background-color: $my-background-color;
     border: 1px solid $my-separator-color;

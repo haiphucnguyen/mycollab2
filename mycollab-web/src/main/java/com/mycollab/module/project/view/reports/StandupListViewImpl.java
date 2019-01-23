@@ -95,11 +95,12 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
             MHorizontalLayout headerLayout = constructHeader();
             ELabel listLnl = ELabel.h3("Projects (" + projectIds.size() + ")");
             MHorizontalLayout favoriteListHeaderPanel = new MHorizontalLayout(listLnl).expand(listLnl).withMargin(new
-                    MarginInfo(false, true, false, true)).withStyleName(WebThemes.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
+                    MarginInfo(false, false, false, true)).withStyleName(WebThemes.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
             projectListComp = new ProjectListComp();
             MVerticalLayout projectListPanel = new MVerticalLayout(favoriteListHeaderPanel, projectListComp).withMargin(false).withSpacing(false).withWidth("300px");
 
             standupPerProjectView = new StandupPerProjectView();
+            standupPerProjectView.setMargin(new MarginInfo(false, false, false, true));
             MHorizontalLayout bodyLayout = new MHorizontalLayout(projectListPanel, standupPerProjectView).expand(standupPerProjectView);
             with(headerLayout, bodyLayout).expand(bodyLayout);
 
@@ -130,7 +131,6 @@ public class StandupListViewImpl extends AbstractVerticalPageView implements Sta
         ProjectListComp() {
             super(new ProjectRowHandler(), 10);
             addStyleName(WebThemes.BORDER_LIST);
-            setControlStyle("borderlessControl");
             standupReportService = AppContextUtil.getSpringBean(StandupReportService.class);
         }
 

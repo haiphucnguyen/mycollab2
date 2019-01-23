@@ -103,6 +103,10 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         super.detach();
     }
 
+    public FavoriteViewImpl() {
+        withMargin(true);
+    }
+
     @Override
     public void display() {
         removeAllComponents();
@@ -197,7 +201,6 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
         FavoriteListComp() {
             super(AppContextUtil.getSpringBean(ProjectGenericItemService.class), new AssignmentRowHandler(), 10);
             addStyleName(WebThemes.BORDER_LIST);
-            setControlStyle("borderlessControl");
         }
     }
 
