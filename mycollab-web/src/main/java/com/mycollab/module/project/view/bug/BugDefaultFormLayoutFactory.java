@@ -33,8 +33,8 @@ import com.mycollab.module.tracker.domain.SimpleBug;
  * @since 5.0.1
  */
 public class BugDefaultFormLayoutFactory {
-    public static DynaForm getForm() {
-        DynaForm defaultForm = new DynaForm();
+
+    private static DynaSection mainSection() {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         //Row 1
@@ -116,8 +116,14 @@ public class BugDefaultFormLayoutFactory {
         mainSection.fields(new TextDynaFieldBuilder().fieldName(SimpleBug.Field.selected)
                 .displayName(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS)
                 .contextHelp(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP).fieldIndex(16).colSpan(true).build());
+        return mainSection;
+    }
 
-        defaultForm.sections(mainSection);
-        return defaultForm;
+    public static DynaForm getReadForm() {
+        return new DynaForm(mainSection());
+    }
+
+    public static DynaForm getAddForm() {
+        return new DynaForm(mainSection());
     }
 }
