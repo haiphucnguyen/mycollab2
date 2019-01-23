@@ -79,7 +79,7 @@ public class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
             } else if (SimpleBug.Field.loguserFullName.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(beanItem.getProjectid(), beanItem.getCreateduser(),
                         beanItem.getLoguserAvatarId(), beanItem.getLoguserFullName());
-            } else if (BugWithBLOBs.Field.id.equalTo(propertyId)) {
+            } else if ("section-attachments".equals(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
                         beanItem.getProjectid(), ProjectTypeConstants.BUG, beanItem.getId());
             } else if (SimpleBug.Field.components.equalTo(propertyId)) {
