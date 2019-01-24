@@ -181,7 +181,7 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
     private static class InvoiceListComp extends DefaultBeanPagedList<InvoiceService, InvoiceSearchCriteria, SimpleInvoice> {
         InvoiceListComp() {
             super(AppContextUtil.getSpringBean(InvoiceService.class), new InvoiceRowDisplayHandler(), Integer.MAX_VALUE);
-            setWidth("300px");
+            setWidth("250px");
             addStyleName(WebThemes.BORDER_LIST);
         }
 

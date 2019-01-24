@@ -15,8 +15,7 @@ import com.mycollab.module.project.i18n.InvoiceI18nEnum;
  */
 public class InvoiceDefaultFormLayoutFactory {
 
-    public static DynaForm getForm() {
-        DynaForm defaultForm = new DynaForm();
+    private static DynaSection mainSection() {
         DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Invoice.Field.noid).displayName(InvoiceI18nEnum.FORM_NOID_FIELD)
@@ -52,10 +51,16 @@ public class InvoiceDefaultFormLayoutFactory {
         mainSection.fields(new TextDynaFieldBuilder().fieldName(Invoice.Field.description).displayName(GenericI18Enum.FORM_DESCRIPTION)
                 .fieldIndex(9).colSpan(true).build());
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Invoice.Field.id).displayName(GenericI18Enum.FORM_ATTACHMENTS)
-                .fieldIndex(10).colSpan(true).build());
+        return mainSection;
+    }
 
-        defaultForm.sections(mainSection);
-        return defaultForm;
+    private static DynaSection attachmentSection() {
+        DynaSection attachmentsSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN).header(GenericI18Enum.FORM_ATTACHMENTS).build();
+        attachmentsSection.fields(new TextDynaFieldBuilder().fieldName("section-attachments").fieldIndex(0).build());
+        return attachmentsSection;
+    }
+
+    public static DynaForm getForm() {
+        return new DynaForm(mainSection(), attachmentSection());
     }
 }

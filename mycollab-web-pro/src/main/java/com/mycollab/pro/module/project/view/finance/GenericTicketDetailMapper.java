@@ -41,6 +41,7 @@ public class GenericTicketDetailMapper {
             SimpleBug bug = service.findById(typeId, sAccountId);
             if (bug != null) {
                 ticket.setName(bug.getName());
+                ticket.setProjectId(bug.getProjectid());
                 ticket.setProjectShortName(bug.getProjectShortName());
             } else return null;
         } else if (ProjectTypeConstants.TASK.equals(type)) {
@@ -48,6 +49,7 @@ public class GenericTicketDetailMapper {
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
                 ticket.setName(task.getName());
+                ticket.setProjectId(task.getProjectid());
                 ticket.setProjectShortName(task.getProjectShortname());
             } else return null;
         } else if (ProjectTypeConstants.RISK.equals(type)) {
@@ -55,6 +57,7 @@ public class GenericTicketDetailMapper {
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
                 ticket.setName(risk.getName());
+                ticket.setProjectId(risk.getProjectid());
                 ticket.setProjectShortName(risk.getProjectShortName());
             } else return null;
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
@@ -63,6 +66,7 @@ public class GenericTicketDetailMapper {
             SimpleVersion version = service.findById(typeId, sAccountId);
             if (version != null) {
                 ticket.setName(version.getName());
+                ticket.setProjectId(version.getProjectid());
                 ticket.setProjectShortName(version.getProjectShortName());
             } else return null;
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
@@ -70,6 +74,7 @@ public class GenericTicketDetailMapper {
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {
                 ticket.setName(component.getName());
+                ticket.setProjectId(component.getProjectid());
                 ticket.setName(component.getProjectShortName());
             } else return null;
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
@@ -78,6 +83,7 @@ public class GenericTicketDetailMapper {
             if (standup != null) {
                 ticket.setName(Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
                         standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html());
+                ticket.setProjectId(standup.getProjectid());
                 ticket.setProjectShortName(standup.getProjectShortName());
             } else return null;
         } else {

@@ -60,10 +60,10 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         projectMemberSelectionBox.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
         isBillableCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
-        isBillableCheckBox.setValue(timeLogging.getIsbillable());
+        isBillableCheckBox.setValue((timeLogging.getIsbillable() == null) ? false : timeLogging.getIsbillable());
 
         isOvertimeCheckBox = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME));
-        isOvertimeCheckBox.setValue(timeLogging.getIsovertime());
+        isOvertimeCheckBox.setValue((timeLogging.getIsovertime() == null) ? false : timeLogging.getIsovertime());
 
         MHorizontalLayout grid = new MHorizontalLayout(projectMemberSelectionBox, dateField, timeField, isBillableCheckBox, isOvertimeCheckBox);
 

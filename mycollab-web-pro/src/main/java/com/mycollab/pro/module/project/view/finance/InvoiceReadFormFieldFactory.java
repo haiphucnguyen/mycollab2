@@ -41,7 +41,7 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
                     invoice.getAssignUserAvatarId(), invoice.getAssignUserFullName());
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
             return new DefaultViewField(invoice.getAmount() + "").withStyleName(UIConstants.FIELD_NOTE);
-        } else if (Invoice.Field.id.equalTo(propertyId)) {
+        } else if ("section-attachments".equals(propertyId)) {
             return new ProjectFormAttachmentDisplayField(invoice.getProjectid(), ProjectTypeConstants.INVOICE, invoice.getId());
         }
         return null;

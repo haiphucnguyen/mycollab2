@@ -55,7 +55,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             return new TextArea();
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
             return new DoubleField().withRequiredIndicatorVisible(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
-        } else if (Invoice.Field.id.equalTo(propertyId)) {
+        } else if ("section-attachments".equals(propertyId)) {
             Invoice beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
