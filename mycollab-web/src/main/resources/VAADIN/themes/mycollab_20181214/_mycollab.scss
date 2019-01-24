@@ -627,48 +627,12 @@ $v-line-height--header:1.5em;
 
   /* End Depot */
 
-  /* Activity Tabs */
-  .activityTabs {
-    margin-top: 15px;
-    .v-nativebutton-tab {
-      border: 0px;
-      background: none;
-      line-height: 30px;
-      border-bottom: 1px solid #AAA;
-      color: #666;
-      &:hover {
-        color: #222;
-      }
-      &.v-nativebutton-tab-selected {
-        background: none no-repeat left bottom #E6E6E6;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        border-left: 1px solid #AAA;
-        border-right: 1px solid #AAA;
-        border-top: 1px solid #AAA;
-        border-bottom: 0px;
-        color: #222;
-      }
-    }
-  }
-  /* End Activity Tabs */
-
   /* Error Message */
 
   .v-form-errormessage .gwt-HTML {
     text-align: center;
     color: red;
   }
-
-  /* Rating Stars */
-  .v-table-row-odd .v-ratingstars-wrapper-tiny .v-ratingstars-star {
-    background-image: url("icons/star_12x11.png");
-  }
-  /* End Rating Stars */
 
   /* End Filter Select */
 
@@ -1052,86 +1016,6 @@ $v-line-height--header:1.5em;
     vertical-align: bottom;
   }
 
-  /* Custom Field Settings Section */
-
-  .customFieldSection {
-    background-color: $my-background-color;
-    border: 1px solid rgb(157, 157, 157);
-    .header-wrapper {
-      background-color: rgb(225, 225, 225);
-      color: rgb(112, 112, 112);
-      border-bottom: 1px solid rgb(157, 157, 157);
-      padding: 7px 5px 7px 15px;
-    }
-  }
-
-  .v-verticallayout-customFieldSection .content-wrapper {
-    max-height: 450px;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding: 0;
-  }
-
-  .deleteSection .customFieldComponent {
-    opacity: 0.6;
-  }
-
-  .customFieldComponent {
-    padding: 8px 5px 8px 25px;
-    background: url('icons/16/symbol.png') no-repeat 5px 8px rgb(231, 231, 231);
-    border: 1px solid rgb(177, 177, 177);
-    border-radius: 3px;
-    color: rgb(91, 91, 91);
-    .isRequiredField {
-      color: rgb(255, 60, 31);
-    }
-    &.emptyField {
-      background: none no-repeat 0 0 transparent;
-      border: 1px dashed rgb(177, 177, 177);
-      border-radius: 5px;
-    }
-    .v-label img {
-      display: inline-block;
-      vertical-align: bottom;
-    }
-    .editFieldBtn {
-      visibility: hidden;
-    }
-  }
-
-  .deleteSection .customFieldComponent {
-    .editFieldBtn:active:focus, &:hover .editFieldBtn {
-      visibility: hidden;
-    }
-  }
-
-  .customFieldComponent {
-    .editFieldBtn {
-      &.v-button .v-icon {
-        margin: 0px;
-      }
-      &:active:focus {
-        visibility: visible;
-      }
-    }
-    &:hover .editFieldBtn {
-      visibility: visible;
-    }
-  }
-
-  /* Floating delete section */
-
-  .deleteSection {
-    position: fixed;
-  }
-
-  /* Create Custome Field Window */
-
-
-  .v-required-field-indicator {
-    width: 4px;
-  }
-
   /* VerticalTabsheet */
 
   .vertical-tabsheet {
@@ -1361,104 +1245,7 @@ $v-line-height--header:1.5em;
 
   /*Navigation Buttons styles */
 
-  /* Bean Block List */
 
-  div.v-csslayout.bean-block {
-    display: inline-block;
-    margin-bottom: 15px;
-    vertical-align: top;
-    margin-right: 10px;
-    border: 1px solid $my-separator-color;
-    border-radius: 2px;
-    padding: 5px 5px 10px 15px;
-    &:hover {
-      @include hover-effect;
-    }
-    .icon-wrap {
-      padding: 0px 10px 0px 0px;
-      .v-icon {
-        font-size: 48px;
-      }
-    }
-  }
-
-  /* End Bean Block List */
-
-
-  /* Opportunity Contact Role Edit */
-  .oppcontact-role-edit .addview-layout-body {
-    border: 1px solid $my-separator-color;
-  }
-
-  /* Bean Block Different Styles */
-
-  div.v-csslayout.bean-block.red-block, .list-note-block .note-label.red-block {
-    background-color: #ff9fa0;
-  }
-
-  div.v-csslayout.bean-block.cyan-block, .list-note-block .note-label.cyan-block {
-    background-color: #00FFFF;
-  }
-
-  div.v-csslayout.bean-block.blue-block, .list-note-block .note-label.blue-block {
-    background-color: #d5e0fe;
-  }
-
-  div.v-csslayout.bean-block.lightblue-block, .list-note-block .note-label.lightblue-block {
-    background-color: #ADD8E6;
-  }
-
-  div.v-csslayout.bean-block.purple-block, .list-note-block .note-label.purple-block {
-    background-color: #e3c9f6;
-  }
-
-  div.v-csslayout.bean-block.yellow-block, .list-note-block .note-label.yellow-block {
-    background-color: #fffdaa;
-  }
-
-  div.v-csslayout.bean-block.lime-block, .list-note-block .note-label.lime-block {
-    background-color: #00FF00;
-  }
-
-  div.v-csslayout.bean-block.magenta-block, .list-note-block .note-label.magenta-block {
-    background-color: #f3c8d9;
-  }
-
-  div.v-csslayout.bean-block.silver-block, .list-note-block .note-label.silver-block {
-    background-color: #C0C0C0;
-  }
-
-  div.v-csslayout.bean-block.gray-block, .list-note-block .note-label.gray-block {
-    background-color: #808080;
-  }
-
-  div.v-csslayout.bean-block.orange-block, .list-note-block .note-label.orange-block {
-    background-color: #FFA500;
-  }
-
-  div.v-csslayout.bean-block.brown-block, .list-note-block .note-label.brown-block {
-    background-color: #A52A2A;
-  }
-
-  div.v-csslayout.bean-block.maroon-block, .list-note-block .note-label.maroon-block {
-    background-color: #800000;
-  }
-
-  div.v-csslayout.bean-block.green-block, .list-note-block .note-label.green-block {
-    background-color: #008000;
-  }
-
-  div.v-csslayout.bean-block.olive-block {
-    background-color: #808000;
-  }
-
-  .list-note-block .note-label {
-    &.olive-block {
-      background-color: #808000;
-    }
-    padding: 3px 8px;
-    margin: 0px 10px 5px 0px;
-  }
 
   .v-colorpicker {
     border: 1px solid $my-separator-color;
@@ -1496,7 +1283,7 @@ $v-line-height--header:1.5em;
   }
 
   .info-hdr {
-    margin-top: 10px;
+    margin-top: $my-space;
     .v-label {
       font-size: $font-large;
     }
@@ -1509,7 +1296,7 @@ $v-line-height--header:1.5em;
   /* Feature Select Box */
 
   .feature-select-box {
-    background-color: #EEE;
+    background-color: $my-block-background-color;
   }
 
   /* Attachment Block */

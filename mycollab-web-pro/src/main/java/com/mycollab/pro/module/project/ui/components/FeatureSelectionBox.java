@@ -1,6 +1,7 @@
 package com.mycollab.pro.module.project.ui.components;
 
 import com.google.common.base.MoreObjects;
+import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.CheckBox;
@@ -18,7 +19,7 @@ public class FeatureSelectionBox extends MHorizontalLayout {
 
     public FeatureSelectionBox(VaadinIcons iconResource, String caption, Boolean selected) {
         this.withMargin(true).withFullWidth().withStyleName("feature-select-box");
-        Label captionLbl = new Label(iconResource.getHtml() + " " + caption, ContentMode.HTML);
+        Label captionLbl = ELabel.html(iconResource.getHtml() + " " + caption);
         checkbox = new CheckBox("", MoreObjects.firstNonNull(selected, Boolean.FALSE));
         this.with(captionLbl, checkbox).expand(captionLbl);
     }

@@ -16,6 +16,8 @@
  */
 package com.mycollab.module.project.view.settings;
 
+import com.mycollab.common.i18n.OptionI18nEnum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -76,10 +78,9 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
     private void save(Component item) {
         ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
 
-        SimpleProject project = CurrentProjectVariables.getProject();
         item.setSaccountid(AppUI.getAccountId());
-        item.setProjectid(project.getId());
-        item.setStatus("Open");
+        item.setProjectid(CurrentProjectVariables.getProject().getId());
+        item.setStatus(StatusI18nEnum.Open.name());
 
         if (item.getId() == null) {
             item.setCreateduser(UserUIContext.getUsername());
