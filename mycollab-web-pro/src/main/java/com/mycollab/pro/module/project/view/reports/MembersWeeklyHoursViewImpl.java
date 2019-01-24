@@ -12,7 +12,6 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ProjectMemberLink;
-import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -28,7 +27,9 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.ItemCaptionGenerator;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.addons.ComboBoxMultiselect;
 import org.vaadin.alump.distributionbar.DistributionBar;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
@@ -64,7 +65,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-        ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
+        ComboBoxMultiselect<SimpleProject> projectsSelection = buildMultiProjectsSelection(projects);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebThemes.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
         RangeDateField rangeDatesField = new RangeDateField();
@@ -92,6 +93,16 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
                 .withStyleName("alump-dbar-part-3")).withStyleName("alump-dbar"));
         searchResultLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
         with(searchResultLayout).expand(searchResultLayout);
+    }
+
+    private ComboBoxMultiselect<SimpleProject> buildMultiProjectsSelection(List<SimpleProject> projects) {
+        ComboBoxMultiselect<SimpleProject> projectsSelection = new ComboBoxMultiselect<>();
+        projectsSelection.setWidth("200px");
+        projectsSelection.setTextInputAllowed(false);
+        projectsSelection.setItems(projects);
+        projectsSelection.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
+        projectsSelection.setStyleGenerator(project -> UIConstants.TEXT_ELLIPSIS);
+        return projectsSelection;
     }
 
     private void buildHourlyProjectsReport(Collection<SimpleProject> selectedProjects, LocalDate start, LocalDate end) {

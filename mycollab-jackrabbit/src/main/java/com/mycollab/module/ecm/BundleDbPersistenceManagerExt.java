@@ -66,10 +66,6 @@ public class BundleDbPersistenceManagerExt implements PersistenceManager, Cachin
             wrapManager = new H2PersistenceManager();
         }
 
-//        if (getSchemaObjectPrefix() == null) {
-//            setSchemaObjectPrefix("ecm_p_workspace");
-//        }
-
         wrapManager.setDriver(ds.getDriverClassName());
         wrapManager.setUser(ds.getUsername());
         wrapManager.setPassword(ds.getPassword());
