@@ -70,14 +70,16 @@ public class RiskAddPresenter extends AbstractPresenter<IRiskAddView> implements
             projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
 
             SimpleRisk risk = (SimpleRisk) data.getParams();
-            view.editItem(risk);
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (risk.getId() == null) {
+                risk.setProjectid(CurrentProjectVariables.getProjectId());
+                risk.setSaccountid(AppUI.getAccountId());
                 breadCrumb.gotoRiskAdd();
             } else {
                 breadCrumb.gotoRiskEdit(risk);
             }
+            view.editItem(risk);
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
@@ -85,8 +87,6 @@ public class RiskAddPresenter extends AbstractPresenter<IRiskAddView> implements
 
     private int saveRisk(Risk risk) {
         RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-        risk.setProjectid(CurrentProjectVariables.getProjectId());
-        risk.setSaccountid(AppUI.getAccountId());
 
         if (risk.getId() == null) {
             riskService.saveWithSession(risk, UserUIContext.getUsername());

@@ -65,7 +65,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION);
+        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION, true);
     }
 
     @Override
@@ -108,7 +108,8 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
 
     @Override
     protected HorizontalLayout createButtonControls() {
-        return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CLIENT);
+
+        return null;
     }
 
     @Override
