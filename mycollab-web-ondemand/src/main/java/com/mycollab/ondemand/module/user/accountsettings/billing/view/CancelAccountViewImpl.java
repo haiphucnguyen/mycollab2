@@ -14,7 +14,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -49,7 +48,7 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
         Label headerMsg = ELabel.html(UserUIContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE));
 
         ELabel headerNote = new ELabel(UserUIContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
-                .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
+                .withStyleName(WebThemes.META_INFO).withUndefinedWidth();
 
         AbstractStorageService storageService = AppContextUtil.getSpringBean(AbstractStorageService.class);
         header.with(new Image(null, new ExternalResource(storageService.generateAssetRelativeLink(WebResourceIds._sad_face))),

@@ -47,7 +47,6 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -75,7 +74,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -85,7 +84,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 SimpleTask newTask = taskService.findById(task.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 

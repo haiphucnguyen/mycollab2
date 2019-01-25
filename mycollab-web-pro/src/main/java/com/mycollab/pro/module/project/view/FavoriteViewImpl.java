@@ -222,7 +222,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
             }).withStyleName("favorite-btn-selected", WebThemes.BUTTON_ICON_ONLY);
 
             ELabel headerLbl = ELabel.html(String.format("%s %s", ProjectAssetsManager.getAsset(item.getType()).getHtml(), item.getName()))
-                    .withFullWidth().withStyleName(UIConstants.TEXT_ELLIPSIS);
+                    .withFullWidth().withStyleName(WebThemes.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 EventBusFactory.getInstance().post(new ProjectEvent.SelectFavoriteItem(this, item));

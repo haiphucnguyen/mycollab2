@@ -24,7 +24,6 @@ import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -102,26 +101,26 @@ public class ClientListViewImpl extends AbstractVerticalPageView implements Clie
 
         A clientLink = new A(ProjectLinkGenerator.generateClientPreviewLink(client.getId())).appendText(client
                 .getName()).setTitle(client.getName());
-        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+        ELabel clientLinkLbl = ELabel.h3(clientLink.write()).withStyleName(WebThemes.TEXT_ELLIPSIS).withFullWidth();
 
         MVerticalLayout clientInfo = new MVerticalLayout().withMargin(false).with(clientLinkLbl, ELabel.hr());
         Div websiteDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.FORM_WEBSITE) + ": " +
                 MoreObjects.firstNonNull(client.getWebsite(), UserUIContext.getMessage(GenericI18Enum.OPT_UNDEFINED)));
-        clientInfo.addComponent(ELabel.html(websiteDiv.write()).withStyleName(UIConstants.META_INFO));
+        clientInfo.addComponent(ELabel.html(websiteDiv.write()).withStyleName(WebThemes.META_INFO));
 
         Div addressDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.FORM_BILLING_ADDRESS) + ": "
                 + MoreObjects.firstNonNull(client.getBillingaddress(), "") +
                 ", " + MoreObjects.firstNonNull(client.getCity(), "") +
                 ", " + MoreObjects.firstNonNull(client.getBillingcountry(), ""));
-        clientInfo.addComponent(ELabel.html(addressDiv.write()).withStyleName(UIConstants.META_INFO));
+        clientInfo.addComponent(ELabel.html(addressDiv.write()).withStyleName(WebThemes.META_INFO));
         Div assignUserDiv = new Div().appendText(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + " : ").
-                appendChild(new Img("", StorageUtils.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(UIConstants.CIRCLE_BOX),
+                appendChild(new Img("", StorageUtils.getAvatarPath(client.getAssignUserAvatarId(), 16)).setCSSClass(WebThemes.CIRCLE_BOX),
                         new A(AccountLinkGenerator.generateUserLink(client.getAssignuser())).
                                 appendText(client.getAssignUserFullName()));
-        clientInfo.addComponent(ELabel.html(assignUserDiv.write()).withStyleName(UIConstants.META_INFO,
-                UIConstants.TEXT_ELLIPSIS));
+        clientInfo.addComponent(ELabel.html(assignUserDiv.write()).withStyleName(WebThemes.META_INFO,
+                WebThemes.TEXT_ELLIPSIS));
         Div numProjectsDiv = new Div().appendText(UserUIContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, client.getNumProjects()));
-        clientInfo.addComponent(ELabel.html(numProjectsDiv.write()).withStyleName(UIConstants.META_INFO));
+        clientInfo.addComponent(ELabel.html(numProjectsDiv.write()).withStyleName(WebThemes.META_INFO));
 
         blockTop.with(clientInfo).expand(clientInfo);
         blockContent.addComponent(blockTop);

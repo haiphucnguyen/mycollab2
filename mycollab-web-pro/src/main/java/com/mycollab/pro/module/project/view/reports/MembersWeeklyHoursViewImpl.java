@@ -19,7 +19,6 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.RangeDateField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -101,7 +100,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
         projectsSelection.setTextInputAllowed(false);
         projectsSelection.setItems(projects);
         projectsSelection.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
-        projectsSelection.setStyleGenerator(project -> UIConstants.TEXT_ELLIPSIS);
+        projectsSelection.setStyleGenerator(project -> WebThemes.TEXT_ELLIPSIS);
         return projectsSelection;
     }
 
@@ -111,7 +110,7 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
             MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
             Component projectLogo = ProjectAssetsUtil.projectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 32);
             A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
-            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(WebThemes.TEXT_ELLIPSIS).withFullWidth();
             contentLayout.with(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl).withFullWidth());
             ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
             List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),

@@ -19,7 +19,6 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LabelLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
@@ -62,7 +61,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                             return ELabel.html(itemLogging.getNote());
                         } else {
                             Label timeTrackingLink = ELabel.html(buildItemValue(itemLogging)).withStyleName
-                                    (UIConstants.LABEL_WORD_WRAP).withFullWidth();
+                                    (WebThemes.LABEL_WORD_WRAP).withFullWidth();
 
                             if (ProjectTypeConstants.BUG.equals(type)) {
                                 if (StatusI18nEnum.Verified.name().equals(itemLogging.getStatus())) {

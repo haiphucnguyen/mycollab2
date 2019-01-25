@@ -6,7 +6,7 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.pro.module.project.view.finance.TimeTrackingTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.themes.ValoTheme;
@@ -90,11 +90,11 @@ public abstract class AbstractTimeTrackingDisplayComp extends MVerticalLayout {
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
 
             ELabel totalHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
-                    .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
+                    .withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             ELabel totalBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
-                    .withStyleName(UIConstants.META_INFO).withUndefinedWidth();
+                    .withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             ELabel totalNonBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE,
-                    nonBillableHours)).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
+                    nonBillableHours)).withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
                     totalNonBillableHoursLbl).withMargin(false);
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);

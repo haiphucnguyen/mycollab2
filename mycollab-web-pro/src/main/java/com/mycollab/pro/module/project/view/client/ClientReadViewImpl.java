@@ -25,7 +25,6 @@ import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.components.DateInfoComp;
 import com.mycollab.module.project.ui.components.ProjectFollowersComp;
-import com.mycollab.module.project.ui.components.ProjectPreviewFormControlsGenerator;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
@@ -34,7 +33,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractPreviewItemComp;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.UserLink;
@@ -94,7 +92,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
     protected String initFormTitle() {
         if (beanItem.getAvatarid() != null) {
             Img img = new Img("", StorageUtils.getEntityLogoPath(AppUI.getAccountId(), beanItem.getAvatarid(), 16))
-                    .setCSSClass(UIConstants.CIRCLE_BOX);
+                    .setCSSClass(WebThemes.CIRCLE_BOX);
             return new Div().appendChild(img).appendChild(DivLessFormatter.EMPTY_SPACE).appendText(beanItem.getName()).write();
         } else {
             return beanItem.getName();
@@ -210,7 +208,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
             this.addStyleName("entityblock");
             A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(VaadinIcons.COIN_PILES.getHtml() + " " +
                     project.getName()).setTitle(project.getName());
-            ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", UIConstants.TEXT_ELLIPSIS);
+            ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", WebThemes.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
             Div activeMembersDiv = new Div().appendText(VaadinIcons.USERS.getHtml() + " " + project.getNumActiveMembers())
@@ -233,7 +231,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE);
             }
             metaDiv.setCSSClass(WebThemes.FLEX_DISPLAY);
-            ELabel prjInfo = ELabel.html(metaDiv.write()).withStyleName(UIConstants.META_INFO).withUndefinedWidth();
+            ELabel prjInfo = ELabel.html(metaDiv.write()).withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             this.addComponent(prjInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();
@@ -242,10 +240,10 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
             if (totalAssignments > 0) {
                 progressInfoLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.OPT_PROJECT_TICKET,
                         (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
-                                * 100 / totalAssignments)).withStyleName(UIConstants.META_INFO);
+                                * 100 / totalAssignments)).withStyleName(WebThemes.META_INFO);
             } else {
                 progressInfoLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.OPT_NO_TICKET))
-                        .withStyleName(UIConstants.META_INFO);
+                        .withStyleName(WebThemes.META_INFO);
             }
             this.addComponent(progressInfoLbl);
         }

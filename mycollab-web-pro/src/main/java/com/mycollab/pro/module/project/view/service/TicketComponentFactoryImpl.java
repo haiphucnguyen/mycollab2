@@ -56,7 +56,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -216,7 +215,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(ticket.getAssignUserAvatarId(), 16);
                 Img img = new Img(ticket.getAssignUserFullName(), avatarLink).setTitle(ticket.getAssignUserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 

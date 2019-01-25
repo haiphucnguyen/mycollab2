@@ -23,7 +23,6 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -264,19 +263,19 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppUI.getAccountId());
 
         ELabel projectInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_NUM_PROJECTS,
-                numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(UIConstants.FIELD_NOTE);
+                numOfActiveProjects, currentBillingPlan.getNumprojects())).withStyleName(WebThemes.FIELD_NOTE);
 
         DriveInfoService driveInfoService = AppContextUtil.getSpringBean(DriveInfoService.class);
         usedStorageVolume = driveInfoService.getUsedStorageVolume(AppUI.getAccountId());
         String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
         ELabel storageInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_STORAGE,
                 usedStorageTxt, FileUtils.getVolumeDisplay(currentBillingPlan.getVolume())))
-                .withStyleName(UIConstants.FIELD_NOTE);
+                .withStyleName(WebThemes.FIELD_NOTE);
 
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
         numOfActiveUsers = billingAccountService.getTotalActiveUsersInAccount(AppUI.getAccountId());
         ELabel userInfo = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PLAN_USERS,
-                numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(UIConstants.FIELD_NOTE);
+                numOfActiveUsers, currentBillingPlan.getNumusers())).withStyleName(WebThemes.FIELD_NOTE);
 
         switchBillingModeLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
         switchBillingModeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);

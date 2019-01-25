@@ -18,7 +18,6 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -138,9 +137,9 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         public void setSelected(boolean isSelected) {
             if (isSelected) {
                 removeStyleName(WebThemes.BUTTON_OPTION);
-                addStyleName(UIConstants.BLOCK);
+                addStyleName(WebThemes.BLOCK);
             } else {
-                removeStyleName(UIConstants.BLOCK);
+                removeStyleName(WebThemes.BLOCK);
                 addStyleName(WebThemes.BUTTON_OPTION);
             }
         }

@@ -18,7 +18,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
@@ -39,7 +39,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
-                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
+                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(WebThemes.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
                 }
@@ -51,7 +51,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
-                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
+                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(WebThemes.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());
                 }

@@ -16,10 +16,10 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.CheckBoxDecor;
 import com.mycollab.vaadin.web.ui.UrlLink;
 import com.mycollab.vaadin.web.ui.UserLink;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
@@ -66,9 +66,9 @@ public class ClientTableDisplay extends DefaultPagedBeanTable<ClientService, Cli
             clientLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             A url;
             if (StringUtils.isNotBlank(client.getWebsite())) {
-                url = new A(client.getWebsite(), "_blank").appendText(client.getWebsite()).setCSSClass(UIConstants.META_INFO);
+                url = new A(client.getWebsite(), "_blank").appendText(client.getWebsite()).setCSSClass(WebThemes.META_INFO);
             } else {
-                url = new A("").appendText("").setCSSClass(UIConstants.META_INFO);
+                url = new A("").appendText("").setCSSClass(WebThemes.META_INFO);
             }
             Div accountDiv = new Div().appendChild(clientLink, new Br(), url);
             ELabel b = ELabel.html(accountDiv.write());
