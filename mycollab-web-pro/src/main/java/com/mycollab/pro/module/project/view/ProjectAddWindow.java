@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.event.ProjectEvent;
@@ -15,6 +14,7 @@ import com.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -45,10 +45,6 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     private ProjectGeneralInfoStep infoStep;
     private ProjectBillingAccountStep billingAccountStep;
     private ProjectCustomizeFeatureStep customizeFeatureStep;
-
-    public ProjectAddWindow() {
-        this(new Project());
-    }
 
     public ProjectAddWindow(Project valuePrj) {
         super(valuePrj);
@@ -138,9 +134,9 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
 
             if (!SiteConfiguration.isCommunityEdition()) {
                 MButton newProjectFromTemplateBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), clickEvent -> {
-                            close();
-                            UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
-                        }).withStyleName(WebThemes.BUTTON_ACTION);
+                    close();
+                    UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 footer.addComponent(newProjectFromTemplateBtn, 0);
             }
         }
