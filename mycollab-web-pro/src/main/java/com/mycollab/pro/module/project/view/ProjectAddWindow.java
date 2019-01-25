@@ -52,7 +52,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
 
     public ProjectAddWindow(Project valuePrj) {
         super(valuePrj);
-        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
+        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         setContent(contentLayout);
 
         wizard = new ProjectAddWizard();
@@ -134,7 +134,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             this.getBackButton().setStyleName(WebThemes.BUTTON_OPTION);
             this.getNextButton().setStyleName(WebThemes.BUTTON_ACTION);
             this.getFinishButton().setStyleName(WebThemes.BUTTON_ACTION);
-            footer.setMargin(new MarginInfo(true, true, false, false));
+            footer.setMargin(new MarginInfo(true, false, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
                 MButton newProjectFromTemplateBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), clickEvent -> {

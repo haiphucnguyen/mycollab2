@@ -2091,6 +2091,10 @@ div.v-window {
 	border: 1px solid #e5e5e5;
 }
 
+div.v-window .v-panel {
+	box-shadow: none;
+}
+
 .v-slot.v-slot-kanban-layout {
 	overflow: auto;
 	position: relative;
@@ -16783,6 +16787,10 @@ div.v-window {
 	border: 1px solid #e5e5e5;
 }
 
+div.v-window .v-panel {
+	box-shadow: none;
+}
+
 .v-slot.v-slot-kanban-layout {
 	overflow: auto;
 	position: relative;
@@ -18056,11 +18064,6 @@ input.noBorderRight {
 
 .v-app {
 	background-color: #f9f9f9;
-}
-
-.v-window-modalitycurtain {
-	background-color: #666;
-	opacity: 0.8;
 }
 
 input.v-textfield-pagedtable-pagefield {

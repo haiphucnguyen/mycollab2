@@ -13,6 +13,7 @@ import com.mycollab.pro.module.project.view.client.ClientSelectionField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.fields.DoubleField;
@@ -103,7 +104,7 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
             } else if (Project.Field.targetbudget.equalTo(propertyId)
                     || Project.Field.defaultbillingrate.equalTo(propertyId)
                     || Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                return new DoubleField();
+                return new DoubleField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
             }
             return null;
         }

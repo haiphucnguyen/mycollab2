@@ -403,6 +403,9 @@
   div.v-window {
     box-shadow: none;
     border: 1px solid $my-separator-color;
+    .v-panel {
+      box-shadow: none;
+    }
   }
 
   /* Kanban block */
