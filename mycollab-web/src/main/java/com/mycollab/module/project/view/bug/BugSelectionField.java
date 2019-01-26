@@ -20,7 +20,10 @@ import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomField;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.MTextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -29,7 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-public class BugSelectionField extends CustomField<SimpleBug> implements FieldSelection<SimpleBug> {
+public class BugSelectionField extends CustomField<Integer> implements FieldSelection<SimpleBug> {
     private SimpleBug selectedBug;
     private TextField bugField;
 
@@ -49,13 +52,13 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
     }
 
     @Override
-    protected void doSetValue(SimpleBug simpleBug) {
+    protected void doSetValue(Integer simpleBug) {
 
     }
 
     @Override
-    public SimpleBug getValue() {
-        return null;
+    public Integer getValue() {
+        return (selectedBug != null) ? selectedBug.getId() : null;
     }
 
     @Override
