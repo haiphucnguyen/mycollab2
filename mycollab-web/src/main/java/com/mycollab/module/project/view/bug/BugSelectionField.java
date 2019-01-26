@@ -39,7 +39,7 @@ public class BugSelectionField extends CustomField<SimpleBug> implements FieldSe
 
     @Override
     protected Component initContent() {
-        bugField = new MTextField().withReadOnly(true);
+        bugField = new MTextField().withReadOnly(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         MHorizontalLayout layout = new MHorizontalLayout();
         MButton browseBtn = new MButton(VaadinIcons.ELLIPSIS_H)
                 .withListener(clickEvent -> UI.getCurrent().addWindow(new BugSelectionWindow(BugSelectionField.this)))

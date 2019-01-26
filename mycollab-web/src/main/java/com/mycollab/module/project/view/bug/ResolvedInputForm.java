@@ -43,10 +43,8 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.data.Converter;
 import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
@@ -88,7 +86,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
 
         @Override
         public AbstractComponent getLayout() {
-             MVerticalLayout layout = new MVerticalLayout();
+            MVerticalLayout layout = new MVerticalLayout();
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.TWO_COLUMN);
             layout.addComponent(informationLayout.getLayout());
 
@@ -205,7 +203,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             return null;
         }
 
-        private class ResolutionField extends IgnoreBindingField {
+        private class ResolutionField extends CustomField<String> {
             private MHorizontalLayout layout;
             private BugResolutionComboBox resolutionComboBox;
 
@@ -233,13 +231,13 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
             }
 
             @Override
-            protected void doSetValue(Object value) {
-
+            protected void doSetValue(String value) {
+                resolutionComboBox.setValueByString(value);
             }
 
             @Override
-            public Object getValue() {
-                return null;
+            public String getValue() {
+                return resolutionComboBox.getValue().name();
             }
         }
     }
