@@ -2592,7 +2592,7 @@ div.v-window .v-panel {
 .v-filterselect-no-input [class*="input"] {
 	background-image: none !important;
 	box-shadow: none !important;
-	background-color: #fff;
+	background-color: #ffffff;
 }
 
 .milestone-box {
@@ -2606,6 +2606,11 @@ div.v-window .v-panel {
 .milestone-box:hover {
 	background-color: #f5f5f5;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+}
+
+.read-view-header {
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
 table {
@@ -17288,7 +17293,7 @@ div.v-window .v-panel {
 .v-filterselect-no-input [class*="input"] {
 	background-image: none !important;
 	box-shadow: none !important;
-	background-color: #fff;
+	background-color: #ffffff;
 }
 
 .milestone-box {
@@ -17302,6 +17307,11 @@ div.v-window .v-panel {
 .milestone-box:hover {
 	background-color: #f5f5f5;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+}
+
+.read-view-header {
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
 .form .v-stackpanel.section {
@@ -17380,7 +17390,7 @@ div.v-window .v-panel {
 
 .project-view .main-content .top-panel {
 	border-bottom: 1px solid #e5e5e5;
-	padding: 12px 24px;
+	padding: 12px 0px;
 }
 
 .project-view .project-right-bar {

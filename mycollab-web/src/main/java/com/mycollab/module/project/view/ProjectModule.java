@@ -140,9 +140,9 @@ public class ProjectModule extends AbstractModule {
 
             titleLbl = ELabel.h2(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0)).withFullWidth();
             OptionPopupContent contentLayout = new OptionPopupContent();
-            contentLayout.setWidth("500px");
+            contentLayout.setWidth("600px");
 
-            MHorizontalLayout popupHeader = new MHorizontalLayout(titleLbl).withMargin(false).withFullWidth().withStyleName(WebThemes.BORDER_BOTTOM);
+            MHorizontalLayout popupHeader = new MHorizontalLayout(titleLbl).withMargin(true).withFullWidth().withStyleName(WebThemes.BORDER_BOTTOM);
 
             contentLayout.addBlankOption(popupHeader);
             contentLayout.addBlankOption(projectList);
