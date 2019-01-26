@@ -46,10 +46,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.RadioButtonGroup;
 import com.vaadin.ui.UI;
-import com.vaadin.v7.ui.OptionGroup;
 import com.vaadin.v7.ui.Table;
 import org.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -100,10 +100,10 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
                     UserUIContext.getMessage(field.getDescKey()), null, Table.Align.LEFT);
             sampleTableDisplay.setColumnWidth(field.getField(), field.getDefaultWidth());
         }
-        sampleTableDisplay.setWidth("100%");
+
         sampleTableDisplay.addItem(buildSampleData(), 1);
         sampleTableDisplay.setPageLength(1);
-        contentLayout.with(sampleTableDisplay);
+        contentLayout.with(new MCssLayout(sampleTableDisplay).withStyleName(WebThemes.SCROLLABLE_CONTAINER).withFullWidth());
         filterColumns();
 
         listBuilder.addValueChangeListener(valueChangeEvent -> filterColumns());
@@ -211,5 +211,17 @@ public abstract class CustomizeReportOutputWindow<S extends SearchCriteria, B ex
 
     abstract protected Set<TableViewField> getAvailableColumns();
 
-    abstract protected Object[] buildSampleData();
+    abstract protected Map<String, String> getSampleMap();
+
+    private Object[] buildSampleData() {
+        Map<String, String> sampleMap = getSampleMap();
+        Object[] visibleColumns = sampleTableDisplay.getVisibleColumns();
+        if (visibleColumns != null && visibleColumns.length > 0) {
+            String[] sampleData = new String[visibleColumns.length];
+            for (int i = 0; i < visibleColumns.length; i++) {
+                sampleData[i] = sampleMap.get(visibleColumns[i].toString());
+            }
+            return sampleData;
+        } else return null;
+    }
 }
