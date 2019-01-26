@@ -25,7 +25,10 @@ import java.time.LocalDateTime
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-class TimesheetCustomizeReportOutputWindow(variableInjector: VariableInjector<ItemTimeLoggingSearchCriteria>) : CustomizeReportOutputWindow<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(ProjectTypeConstants.TIME, UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE), SimpleItemTimeLogging::class.java, AppContextUtil.getSpringBean(ItemTimeLoggingService::class.java), variableInjector) {
+class TimesheetCustomizeReportOutputWindow(variableInjector: VariableInjector<ItemTimeLoggingSearchCriteria>) :
+        CustomizeReportOutputWindow<ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging>(ProjectTypeConstants.TIME,
+                UserUIContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE), SimpleItemTimeLogging::class.java,
+                AppContextUtil.getSpringBean(ItemTimeLoggingService::class.java), variableInjector) {
 
     override fun getDefaultColumns(): Set<TableViewField> =
             newHashSet(summary, logUser, logValue, logForDate, billable, overtime, project)

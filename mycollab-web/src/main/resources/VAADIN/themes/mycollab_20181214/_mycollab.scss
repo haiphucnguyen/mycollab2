@@ -580,23 +580,20 @@ $v-line-height--header:1.5em;
 
   /* Depot */
 
-  .depotComp {
-    .depotHeader {
+  .depot {
+    .depot-header {
       cursor: pointer;
       width: 100%;
-      border-width: 1px 1px 1px 1px;
-      border-style: solid;
-      border-color: $my-separator-color;
+      border: 1px solid $my-separator-color;
       background-color: $my-block-background-color;
       border-radius: 0px;
-      padding-right: $my-space;
+      padding: $my-space/2 $my-space/2 $my-space/2 0px;
       .depot-title {
         padding: 0px $my-space;
         display: inline-flex;
-        font-size: 16px;
       }
     }
-    .depotContent {
+    .depot-content {
       padding: 0px;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -606,16 +603,14 @@ $v-line-height--header:1.5em;
         border-bottom: 1px solid $my-separator-color;
       }
       &.bordered {
-        border-color: $my-separator-color;
-        border-style: solid;
-        border-width: 0px 1px 1px 1px;
+        border: 1px solid $my-separator-color;
         @include margin-container(5px, 5px, 5px, 5px);
       }
     }
   }
 
-  .depotComp {
-    &.collapsed .depotContent {
+  .depot {
+    &.collapsed .depot-content {
       padding: 0px;
     }
   }

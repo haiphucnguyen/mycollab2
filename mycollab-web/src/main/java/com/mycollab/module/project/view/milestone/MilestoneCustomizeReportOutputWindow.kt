@@ -44,7 +44,10 @@ import java.time.LocalDateTime
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-class MilestoneCustomizeReportOutputWindow(variableInjector: VariableInjector<MilestoneSearchCriteria>) : CustomizeReportOutputWindow<MilestoneSearchCriteria, SimpleMilestone>(ProjectTypeConstants.MILESTONE, UserUIContext.getMessage(MilestoneI18nEnum.LIST), SimpleMilestone::class.java, AppContextUtil.getSpringBean(MilestoneService::class.java), variableInjector) {
+class MilestoneCustomizeReportOutputWindow(variableInjector: VariableInjector<MilestoneSearchCriteria>) :
+        CustomizeReportOutputWindow<MilestoneSearchCriteria, SimpleMilestone>(ProjectTypeConstants.MILESTONE,
+                UserUIContext.getMessage(MilestoneI18nEnum.LIST), SimpleMilestone::class.java,
+                AppContextUtil.getSpringBean(MilestoneService::class.java), variableInjector) {
 
     override fun getDefaultColumns(): Set<TableViewField> =
             newHashSet(milestoneName, startDate, endDate, status, assignee)

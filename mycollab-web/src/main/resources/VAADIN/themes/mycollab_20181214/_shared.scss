@@ -413,6 +413,7 @@
     overflow: auto;
     position: relative;
   }
+
   .kanban-layout {
     .kanban-block {
       cursor: move;
@@ -895,6 +896,10 @@
   .v-select-twincol select {
     background-color: $my-background-color;
     background-image: none !important;
+  }
+
+  .v-listbuilder .v-listbuilder-caption-right {
+    text-align: left !important;
   }
   /* End fix issue of twin list builder */
 }

@@ -43,7 +43,10 @@ import java.time.LocalDate
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-class UserCustomizeReportOutputWindow(variableInjector: VariableInjector<UserSearchCriteria>) : CustomizeReportOutputWindow<UserSearchCriteria, SimpleUser>(AdminTypeConstants.USER, UserUIContext.getMessage(UserI18nEnum.LIST), SimpleUser::class.java, AppContextUtil.getSpringBean(UserService::class.java), variableInjector) {
+class UserCustomizeReportOutputWindow(variableInjector: VariableInjector<UserSearchCriteria>) :
+        CustomizeReportOutputWindow<UserSearchCriteria, SimpleUser>(AdminTypeConstants.USER,
+                UserUIContext.getMessage(UserI18nEnum.LIST), SimpleUser::class.java,
+                AppContextUtil.getSpringBean(UserService::class.java), variableInjector) {
 
     override fun getDefaultColumns(): Set<TableViewField> =
             newHashSet(displayName, roleName, email, birthday, officePhone, homePhone, company)

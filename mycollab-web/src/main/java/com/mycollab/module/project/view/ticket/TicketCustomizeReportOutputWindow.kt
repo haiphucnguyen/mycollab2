@@ -48,7 +48,10 @@ import java.time.LocalDateTime
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-class TicketCustomizeReportOutputWindow(variableInjector: VariableInjector<ProjectTicketSearchCriteria>) : CustomizeReportOutputWindow<ProjectTicketSearchCriteria, ProjectTicket>(ProjectTypeConstants.TICKET, UserUIContext.getMessage(TicketI18nEnum.LIST), ProjectTicket::class.java, AppContextUtil.getSpringBean(ProjectTicketService::class.java), variableInjector) {
+class TicketCustomizeReportOutputWindow(variableInjector: VariableInjector<ProjectTicketSearchCriteria>) :
+        CustomizeReportOutputWindow<ProjectTicketSearchCriteria, ProjectTicket>(ProjectTypeConstants.TICKET,
+                UserUIContext.getMessage(TicketI18nEnum.LIST), ProjectTicket::class.java,
+                AppContextUtil.getSpringBean(ProjectTicketService::class.java), variableInjector) {
 
     override fun getSampleMap(): Map<String, String> = mapOf(
             name.field to "Task A",

@@ -44,7 +44,10 @@ import com.mycollab.vaadin.reporting.CustomizeReportOutputWindow
  * @author MyCollab Ltd
  * @since 5.3.4
  */
-class ProjectMemberCustomizeReportOutputWindow(variableInjector: VariableInjector<ProjectMemberSearchCriteria>) : CustomizeReportOutputWindow<ProjectMemberSearchCriteria, SimpleProjectMember>(ProjectTypeConstants.MEMBER, UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), SimpleProjectMember::class.java, AppContextUtil.getSpringBean(ProjectMemberService::class.java), variableInjector) {
+class ProjectMemberCustomizeReportOutputWindow(variableInjector: VariableInjector<ProjectMemberSearchCriteria>) :
+        CustomizeReportOutputWindow<ProjectMemberSearchCriteria, SimpleProjectMember>(ProjectTypeConstants.MEMBER,
+                UserUIContext.getMessage(ProjectMemberI18nEnum.LIST), SimpleProjectMember::class.java,
+                AppContextUtil.getSpringBean(ProjectMemberService::class.java), variableInjector) {
 
     override fun getDefaultColumns(): Set<TableViewField> =
             newHashSet(memberName, roleName, billingRate, overtimeRate)

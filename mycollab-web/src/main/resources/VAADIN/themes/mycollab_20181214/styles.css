@@ -2623,6 +2623,10 @@ div.v-window .v-panel {
 	background-image: none !important;
 }
 
+.v-listbuilder .v-listbuilder-caption-right {
+	text-align: left !important;
+}
+
 table {
 	table-layout: auto;
 	word-break: break-through;
@@ -17334,6 +17338,10 @@ div.v-window .v-panel {
 	background-image: none !important;
 }
 
+.v-listbuilder .v-listbuilder-caption-right {
+	text-align: left !important;
+}
+
 .form .v-stackpanel.section {
 	border-style: none;
 	box-shadow: none;
@@ -18565,24 +18573,21 @@ input.v-textfield-errorField {
 	margin-top: 10px;
 }
 
-.depotComp .depotHeader {
+.depot .depot-header {
 	cursor: pointer;
 	width: 100%;
-	border-width: 1px 1px 1px 1px;
-	border-style: solid;
-	border-color: #e5e5e5;
+	border: 1px solid #e5e5e5;
 	background-color: #f9f9f9;
 	border-radius: 0px;
-	padding-right: 12px;
+	padding: 6px 6px 6px 0px;
 }
 
-.depotComp .depotHeader .depot-title {
+.depot .depot-header .depot-title {
 	padding: 0px 12px;
 	display: inline-flex;
-	font-size: 16px;
 }
 
-.depotComp .depotContent {
+.depot .depot-content {
 	padding: 0px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -18590,33 +18595,31 @@ input.v-textfield-errorField {
 	display: block;
 }
 
-.depotComp .depotContent.empty {
+.depot .depot-content.empty {
 	border-bottom: 1px solid #e5e5e5;
 }
 
-.depotComp .depotContent.bordered {
-	border-color: #e5e5e5;
-	border-style: solid;
-	border-width: 0px 1px 1px 1px;
+.depot .depot-content.bordered {
+	border: 1px solid #e5e5e5;
 }
 
-.depotComp .depotContent.bordered.v-margin-top {
+.depot .depot-content.bordered.v-margin-top {
 	padding-top: 5px;
 }
 
-.depotComp .depotContent.bordered.v-margin-right {
+.depot .depot-content.bordered.v-margin-right {
 	padding-right: 5px;
 }
 
-.depotComp .depotContent.bordered.v-margin-bottom {
+.depot .depot-content.bordered.v-margin-bottom {
 	padding-bottom: 5px;
 }
 
-.depotComp .depotContent.bordered.v-margin-left {
+.depot .depot-content.bordered.v-margin-left {
 	padding-left: 5px;
 }
 
-.depotComp.collapsed .depotContent {
+.depot.collapsed .depot-content {
 	padding: 0px;
 }
 
