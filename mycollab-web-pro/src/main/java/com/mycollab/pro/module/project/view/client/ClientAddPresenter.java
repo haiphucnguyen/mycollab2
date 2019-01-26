@@ -62,8 +62,8 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
             if (data.getParams() instanceof SimpleClient) {
                 client = (SimpleClient) data.getParams();
             } else if (data.getParams() instanceof Integer) {
-                ClientService accountService = AppContextUtil.getSpringBean(ClientService.class);
-                client = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
+                ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+                client = clientService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
 
             if (client == null) {

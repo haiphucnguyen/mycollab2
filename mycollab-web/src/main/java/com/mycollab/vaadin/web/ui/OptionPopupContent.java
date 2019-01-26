@@ -18,6 +18,7 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -26,9 +27,7 @@ import com.vaadin.ui.*;
 public class OptionPopupContent extends CustomComponent {
 
     public OptionPopupContent() {
-        VerticalLayout root = new VerticalLayout();
-        root.setStyleName(WebThemes.OPTION_POPUP_CONTENT);
-        this.setCompositionRoot(root);
+        this.setCompositionRoot(new MVerticalLayout().withSpacing(false).withStyleName(WebThemes.OPTION_POPUP_CONTENT));
     }
 
     public void removeOptions() {

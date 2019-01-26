@@ -117,13 +117,13 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (UserUIContext.canRead(RolePermissionCollections.CLIENT)) {
-            ClientService accountService = AppContextUtil.getSpringBean(ClientService.class);
-            SimpleClient account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
-            if (account != null) {
+            ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+            SimpleClient client = clientService.findById((Integer) data.getParams(), AppUI.getAccountId());
+            if (client != null) {
                 ClientContainer clientContainer = (ClientContainer) container;
                 clientContainer.removeAllComponents();
                 clientContainer.addComponent(view);
-                view.previewItem(account);
+                view.previewItem(client);
             } else {
                 LOG.error("Can not find the account " + data.getParams());
                 NotificationUtil.showMessagePermissionAlert();

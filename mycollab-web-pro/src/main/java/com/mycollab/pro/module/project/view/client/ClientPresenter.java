@@ -28,7 +28,7 @@ public class ClientPresenter extends AbstractPresenter<IClientContainer> impleme
         AbstractPresenter presenter;
         if (data instanceof ClientScreenData.Search) {
             presenter = PresenterResolver.getPresenter(ClientListPresenter.class);
-        } else if (data instanceof ClientScreenData.Add || data instanceof ScreenData.Edit) {
+        } else if (data instanceof ClientScreenData.Add || data instanceof ClientScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(ClientAddPresenter.class);
         } else if (data instanceof ClientScreenData.Read) {
             presenter = PresenterResolver.getPresenter(ClientReadPresenter.class);

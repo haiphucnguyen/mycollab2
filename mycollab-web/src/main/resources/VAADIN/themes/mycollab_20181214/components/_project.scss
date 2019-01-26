@@ -245,21 +245,22 @@
     width: 100%;
     padding: 0px;
 
-    .row {
-      padding: $my-space;
-      border-bottom: 1px solid $my-separator-color;
-      &:last-child {
-        border-style: none;
-      }
-      &:hover {
-        @include hover-effect;
-      }
-    }
     .v-slot-row {
       border-bottom: 1px solid $my-separator-color;
       &:last-child {
         border-style: none;
       }
+    }
+  }
+
+  .row {
+    padding: $my-space;
+    border-bottom: 1px solid $my-separator-color;
+    &:last-child {
+      border-style: none;
+    }
+    &:hover {
+      @include hover-effect;
     }
   }
 

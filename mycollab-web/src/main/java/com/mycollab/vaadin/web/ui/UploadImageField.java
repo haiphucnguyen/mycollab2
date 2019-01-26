@@ -18,6 +18,7 @@ package com.mycollab.vaadin.web.ui;
 
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
+import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow.ImageSelectionCommand;
 import com.vaadin.ui.UI;
 import org.vaadin.easyuploads.UploadField;
 
@@ -26,9 +27,9 @@ import org.vaadin.easyuploads.UploadField;
  * @since 5.2.12
  */
 public class UploadImageField extends UploadField {
-    private ImagePreviewCropWindow.ImageSelectionCommand imageSelectionCommand;
+    private ImageSelectionCommand imageSelectionCommand;
 
-    public UploadImageField(ImagePreviewCropWindow.ImageSelectionCommand imageSelectionCommand) {
+    public UploadImageField(ImageSelectionCommand imageSelectionCommand) {
         this.imageSelectionCommand = imageSelectionCommand;
         this.addStyleName("upload-field");
         this.setSizeUndefined();

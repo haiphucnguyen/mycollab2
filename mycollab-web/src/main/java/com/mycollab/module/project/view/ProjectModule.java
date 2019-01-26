@@ -138,14 +138,12 @@ public class ProjectModule extends AbstractModule {
             searchCriteria.setInvolvedMember(StringSearchField.and(UserUIContext.getUsername()));
             searchCriteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
 
-            titleLbl = ELabel.h2(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
+            titleLbl = ELabel.h2(UserUIContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0)).withFullWidth();
             OptionPopupContent contentLayout = new OptionPopupContent();
-            contentLayout.setWidth("550px");
+            contentLayout.setWidth("500px");
 
-            MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
-                    .withFullWidth().withStyleName(WebThemes.BORDER_BOTTOM);
+            MHorizontalLayout popupHeader = new MHorizontalLayout(titleLbl).withMargin(false).withFullWidth().withStyleName(WebThemes.BORDER_BOTTOM);
 
-            popupHeader.with(titleLbl).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
             contentLayout.addBlankOption(popupHeader);
             contentLayout.addBlankOption(projectList);
             setContent(contentLayout);
