@@ -8,8 +8,10 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.CountryComboBox;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
+import org.vaadin.viritin.fields.IntegerField;
 import org.vaadin.viritin.fields.MTextField;
 
 public class ClientEditFormFieldFactory<B extends Client> extends AbstractBeanFieldGroupEditFieldFactory<B> {
@@ -17,10 +19,6 @@ public class ClientEditFormFieldFactory<B extends Client> extends AbstractBeanFi
 
     public ClientEditFormFieldFactory(GenericBeanForm<B> form) {
         super(form);
-    }
-
-    public ClientEditFormFieldFactory(GenericBeanForm<B> form, boolean isValidateForm) {
-        super(form, isValidateForm);
     }
 
     @Override
@@ -38,14 +36,23 @@ public class ClientEditFormFieldFactory<B extends Client> extends AbstractBeanFi
         } else if (Client.Field.billingcountry.equalTo(propertyId) || Client.Field.shippingcountry.equalTo(propertyId)) {
             return new CountryComboBox();
         } else if (Client.Field.name.equalTo(propertyId)) {
-            MTextField tf = new MTextField();
-//            if (isValidateForm) {
-//                tf.withNullRepresentation("").withRequired(true)
-//                        .withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.ERROR_USER_IS_NOT_EXISTED,
-//                                UserUIContext.getMessage(ClientI18nEnum.FORM_ACCOUNT_NAME)));
-//            }
-
-            return tf;
+            return new MTextField().withRequiredIndicatorVisible(true);
+        } else if (Client.Field.numemployees.equalTo(propertyId)) {
+            return new IntegerField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Client.Field.shippingpostalcode.equalTo(propertyId) ||
+                Client.Field.postalcode.equalTo(propertyId) ||
+                Client.Field.city.equalTo(propertyId) || Client.Field.shippingcity.equalTo(propertyId) ||
+                Client.Field.state.equalTo(propertyId) || Client.Field.shippingstate.equalTo(propertyId)) {
+            return new MTextField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Client.Field.phoneoffice.equalTo(propertyId) || Client.Field.fax.equalTo(propertyId)
+                || Client.Field.alternatephone.equalTo(propertyId)) {
+            return new MTextField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Client.Field.email.equalTo(propertyId) || Client.Field.website.equalTo(propertyId)) {
+            return new MTextField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Client.Field.ownership.equalTo(propertyId)) {
+            return new MTextField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Client.Field.annualrevenue.equalTo(propertyId)) {
+            return new MTextField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
         }
 
         return null;
@@ -60,6 +67,7 @@ public class ClientEditFormFieldFactory<B extends Client> extends AbstractBeanFi
                     ClientType.Integrator, ClientType.Investor, ClientType.Partner,
                     ClientType.Press, ClientType.Prospect, ClientType.Reseller,
                     ClientType.Other);
+            this.setWidth(WebThemes.FORM_CONTROL_WIDTH);
         }
     }
 
@@ -76,6 +84,7 @@ public class ClientEditFormFieldFactory<B extends Client> extends AbstractBeanFi
                     ClientIndustry.Machinery, ClientIndustry.Manufactory, ClientIndustry.Media,
                     ClientIndustry.Not_For_Profit, ClientIndustry.Retail, ClientIndustry.Shipping,
                     ClientIndustry.Technology, ClientIndustry.Telecommunications, ClientIndustry.Other);
+            this.setWidth(WebThemes.FORM_CONTROL_WIDTH);
         }
     }
 

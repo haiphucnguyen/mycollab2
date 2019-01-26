@@ -23,8 +23,7 @@ import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectService;
-import com.mycollab.module.project.ui.components.DateInfoComp;
-import com.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.pro.module.project.view.ProjectAddWindow;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
@@ -57,21 +56,14 @@ import java.util.List;
 public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> implements ClientReadView {
     private static Logger LOG = LoggerFactory.getLogger(ClientReadViewImpl.class);
 
-    private DateInfoComp dateInfoComp;
-    private PeopleInfoComp peopleInfoComp;
-    private ProjectFollowersComp<SimpleClient> followerSheet;
     private ProjectListComp projectListComp;
 
     public ClientReadViewImpl() {
-        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION, true);
+        super(UserUIContext.getMessage(ClientI18nEnum.SINGLE), VaadinIcons.INSTITUTION);
     }
 
     @Override
     protected void initRelatedComponents() {
-        dateInfoComp = new DateInfoComp();
-        peopleInfoComp = new PeopleInfoComp();
-        followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.CLIENT, RolePermissionCollections.CLIENT);
-        addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
         projectListComp = new ProjectListComp();
     }
 
@@ -82,9 +74,6 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
 
     @Override
     protected void onPreviewItem() {
-        dateInfoComp.displayEntryDateTime(beanItem);
-        peopleInfoComp.displayEntryPeople(beanItem);
-        followerSheet.displayFollowers(beanItem);
         projectListComp.displayProjects(beanItem.getId());
     }
 
@@ -106,8 +95,8 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
 
     @Override
     protected HorizontalLayout createButtonControls() {
-
-        return null;
+        ClientPreviewFormControlsGenerator generator = new ClientPreviewFormControlsGenerator(previewForm);
+        return generator.createButtonControls(RolePermissionCollections.CLIENT);
     }
 
     @Override
@@ -173,32 +162,24 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
 
     private static class ProjectListComp extends VerticalLayout {
         ProjectListComp() {
-            addStyleName("activity-comp");
+            setMargin(false);
         }
 
         void displayProjects(final Integer accountId) {
             ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-            searchCriteria.setSaccountid(NumberSearchField.equal(accountId));
+            searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
+            searchCriteria.setClientId(NumberSearchField.equal(accountId));
             ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
             int totalCount = projectService.getTotalCount(searchCriteria);
             ELabel headerLbl = new ELabel(UserUIContext.getMessage(ClientI18nEnum.OPT_NUM_PROJECTS, totalCount));
-            MButton newProjectBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.NEW), clickEvent -> {
-                Project project = new Project();
-                project.setSaccountid(accountId);
-                UI.getCurrent().addWindow(new ProjectAddWindow(project));
-            }).withStyleName(WebThemes.BUTTON_ACTION).withVisible(UserUIContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT));
 
-            MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(WebThemes.FORM_SECTION)
-                    .withFullWidth().with(headerLbl, newProjectBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
-                    .withAlign(newProjectBtn, Alignment.MIDDLE_RIGHT);
+            MHorizontalLayout headerPanel = new MHorizontalLayout(headerLbl).withMargin(false).withStyleName(WebThemes.FORM_SECTION).withFullWidth();
             this.addComponent(headerPanel);
             List<SimpleProject> projects = (List<SimpleProject>) projectService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria));
             CssLayout content = new CssLayout();
             content.setStyleName(WebThemes.FLEX_DISPLAY);
             this.addComponent(content);
-            for (SimpleProject project : projects) {
-                content.addComponent(new ProjectBlock(project));
-            }
+            projects.forEach(project -> content.addComponent(new ProjectBlock(project)));
         }
     }
 
@@ -206,7 +187,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleClient> im
         ProjectBlock(SimpleProject project) {
             this.setWidth("400px");
             this.addStyleName("entityblock");
-            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(VaadinIcons.COIN_PILES.getHtml() + " " +
+            A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " " +
                     project.getName()).setTitle(project.getName());
             ELabel headerLbl = ELabel.h3(projectDiv.write()).withStyleName("header", WebThemes.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);

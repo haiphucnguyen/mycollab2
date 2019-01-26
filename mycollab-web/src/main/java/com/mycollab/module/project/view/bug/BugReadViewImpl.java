@@ -95,7 +95,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     public BugReadViewImpl() {
         super(UserUIContext.getMessage(BugI18nEnum.DETAIL),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout(), false);
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), new BugPreviewFormLayout());
     }
 
     @Override
@@ -340,7 +340,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     public HasPreviewFormHandlers<SimpleBug> getPreviewFormHandlers() {
         return this.previewForm;
     }
-
 
     private static class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;

@@ -131,7 +131,7 @@ public class ProjectModule extends AbstractModule {
 
         SwitchProjectPopupButton() {
             super(UserUIContext.getMessage(ProjectI18nEnum.LIST));
-            addStyleName("myprojectlist add-btn-popup");
+            addStyleName("add-btn-popup");
             projectList = new ProjectPagedList();
 
             searchCriteria = new ProjectSearchCriteria();

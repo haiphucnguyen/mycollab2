@@ -56,6 +56,7 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         ClientContainer clientContainer = (ClientContainer) container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
+
         if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
             SimpleClient client = null;
             if (data.getParams() instanceof SimpleClient) {

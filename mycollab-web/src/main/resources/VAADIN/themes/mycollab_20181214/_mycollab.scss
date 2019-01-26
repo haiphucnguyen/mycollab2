@@ -1346,40 +1346,6 @@ $v-line-height--header:1.5em;
     }
   }
 
-  /* Right Sidebar Layout */
-  .v-layout.rightsidebar-layout {
-    @include flex-compatible;
-    /* NEW, Spec - Opera 12.1, Firefox 20+ */
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    margin-top: $my-space;
-    -webkit-box-orient: horizontal;
-    .sidebar-wrap {
-      display: inline-block;
-      font-size: $font-small;
-      border-top: 1px solid $my-separator-color;
-      border-left: 1px solid $my-separator-color;
-      border-right: 1px solid $my-separator-color;
-    }
-    .content-wrap {
-      border-top: 1px solid $my-separator-color;
-      -webkit-box-flex: 1;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 1;
-      /* OLD - Firefox 19- */
-      height: 100%;
-      /* For old syntax, otherwise collapses. */
-      -webkit-flex: 1;
-      /* Chrome */
-      -ms-flex: 1;
-      /* IE 10 */
-      flex: 1;
-      /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      display: inline-block;
-    }
-  }
-
   .v-button.closed-button {
     text-align: right;
     padding-top: 5px;

@@ -94,8 +94,7 @@ public class ClientDefaultDynaFormLayoutFactory {
         DynaSection descSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN)
                 .header(ClientI18nEnum.SECTION_DESCRIPTION).orderIndex(2).build();
 
-        descSection.fields(new TextDynaFieldBuilder().fieldIndex(0).fieldName(Client.Field.description).customField(false)
-                .displayName(GenericI18Enum.FORM_DESCRIPTION).build());
+        descSection.fields(new TextDynaFieldBuilder().fieldIndex(0).fieldName(Client.Field.description).customField(false).build());
         defaultForm.sections(descSection);
     }
 
