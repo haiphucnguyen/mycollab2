@@ -49,7 +49,7 @@ public class TicketCustomizeReportOutputWindow extends CustomizeReportOutputWind
     protected Object[] buildSampleData() {
         return new Object[]{"Task A", "Description 1", UserUIContext.formatDate(LocalDateTime.now().minusDays(2)),
                 UserUIContext.formatDate(LocalDateTime.now().plusDays(1)), UserUIContext.formatDate(LocalDateTime.now().plusDays(1)),
-                Priority.High.name(), "Will Smith", "Jonh Adam", "MVP", "3", "1"};
+                Priority.High.name(), "Will Smith", "John Adam", "MVP", "3", "1"};
     }
 
     @Override

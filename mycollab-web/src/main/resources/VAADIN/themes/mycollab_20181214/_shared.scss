@@ -885,4 +885,16 @@
     margin-top: $my-space;
     margin-bottom: $my-space;
   }
+
+  /* Fix issue of twin list builder */
+  .v-select-twincol-buttons .v-button {
+    position: relative !important;
+    top: 0px !important;
+  }
+
+  .v-select-twincol select {
+    background-color: $my-background-color;
+    background-image: none !important;
+  }
+  /* End fix issue of twin list builder */
 }

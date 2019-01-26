@@ -2613,6 +2613,16 @@ div.v-window .v-panel {
 	margin-bottom: 12px;
 }
 
+.v-select-twincol-buttons .v-button {
+	position: relative !important;
+	top: 0px !important;
+}
+
+.v-select-twincol select {
+	background-color: #ffffff;
+	background-image: none !important;
+}
+
 table {
 	table-layout: auto;
 	word-break: break-through;
@@ -17312,6 +17322,16 @@ div.v-window .v-panel {
 .read-view-header {
 	margin-top: 12px;
 	margin-bottom: 12px;
+}
+
+.v-select-twincol-buttons .v-button {
+	position: relative !important;
+	top: 0px !important;
+}
+
+.v-select-twincol select {
+	background-color: #ffffff;
+	background-image: none !important;
 }
 
 .form .v-stackpanel.section {
