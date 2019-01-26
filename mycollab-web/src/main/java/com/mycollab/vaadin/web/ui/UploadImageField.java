@@ -19,8 +19,8 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow.ImageSelectionCommand;
+import com.mycollab.vaadin.web.ui.utils.UploadField;
 import com.vaadin.ui.UI;
-import org.vaadin.easyuploads.UploadField;
 
 /**
  * @author MyCollab Ltd
@@ -40,6 +40,10 @@ public class UploadImageField extends UploadField {
     @Override
     protected void updateDisplayComponent() {
         byte[] imageData = this.getValue();
+
+        if (imageData == null || imageData.length == 0) {
+            return;
+        }
         String mimeType = this.getLastMimeType();
         if (mimeType.equals("image/jpeg") || mimeType.equals("image/jpg")) {
             imageData = ImageUtil.convertJpgToPngFormat(imageData);

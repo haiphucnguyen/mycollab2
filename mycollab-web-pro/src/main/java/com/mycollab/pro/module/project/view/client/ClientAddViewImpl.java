@@ -11,6 +11,7 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -70,6 +71,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
             ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
             client.setAvatarid(newLogoId);
             clientService.updateSelectiveWithSession(client, UserUIContext.getUsername());
+            Utils.reloadPage();
         }
 
         private Layout createButtonControls() {

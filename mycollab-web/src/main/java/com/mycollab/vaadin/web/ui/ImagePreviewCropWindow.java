@@ -78,7 +78,7 @@ public class ImagePreviewCropWindow extends MWindow {
 
         VerticalLayout previewBoxTitle = new VerticalLayout();
         previewBoxTitle.setMargin(new MarginInfo(false, true, false, true));
-        previewBoxTitle.addComponent(ELabel.html(UserUIContext.getMessage(ShellI18nEnum.OPT_IMAGE_EDIT_INSTRUCTION)));
+        previewBoxTitle.addComponent(ELabel.html(UserUIContext.getMessage(ShellI18nEnum.OPT_IMAGE_EDIT_INSTRUCTION)).withFullWidth());
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
