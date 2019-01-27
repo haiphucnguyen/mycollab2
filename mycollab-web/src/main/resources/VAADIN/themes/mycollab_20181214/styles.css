@@ -2619,6 +2619,10 @@ div.v-window .v-panel {
 	text-align: left !important;
 }
 
+.align-right {
+	float: right;
+}
+
 table {
 	table-layout: auto;
 	word-break: break-through;
@@ -17324,6 +17328,10 @@ div.v-window .v-panel {
 
 .v-listbuilder .v-listbuilder-caption-right {
 	text-align: left !important;
+}
+
+.align-right {
+	float: right;
 }
 
 .form .v-stackpanel.section {

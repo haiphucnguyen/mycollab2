@@ -491,9 +491,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             loadAssociateTicketTypePerProject();
             typeSelection.addValueChangeListener(event -> doChange(date, milestoneId));
 
-            GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
+            GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.TWO_COLUMN);
             formLayoutHelper.addComponent(projectListSelect, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), 0, 0);
-            formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 0, 1);
+            formLayoutHelper.addComponent(typeSelection, UserUIContext.getMessage(GenericI18Enum.FORM_TYPE), 1, 0);
             formLayoutHelper.getLayout().addStyleName(WebThemes.BORDER_BOTTOM);
 
             formLayout = new MCssLayout().withFullWidth();
