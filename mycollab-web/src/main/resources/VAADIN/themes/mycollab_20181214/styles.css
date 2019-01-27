@@ -2488,12 +2488,10 @@ div.v-window .v-panel {
 	overflow-y: hidden;
 }
 
-.tm-container {
-	border: 1px solid #e5e5e5;
-}
-
 .tm-container .tm-wrapper {
 	overflow-x: auto;
+	border: 1px solid #e5e5e5;
+	border-top: none;
 }
 
 .tm-container .tm-wrapper .timeline {
@@ -2581,12 +2579,6 @@ div.v-window .v-panel {
 	color: white;
 	border: none;
 	transition: all 200ms ease-in;
-}
-
-.stylecalendarfield {
-	border: 1px solid #e5e5e5 !important;
-	height: 30px;
-	font-size: 14px;
 }
 
 .v-filterselect-no-input [class*="input"] {
@@ -17203,12 +17195,10 @@ div.v-window .v-panel {
 	overflow-y: hidden;
 }
 
-.tm-container {
-	border: 1px solid #e5e5e5;
-}
-
 .tm-container .tm-wrapper {
 	overflow-x: auto;
+	border: 1px solid #e5e5e5;
+	border-top: none;
 }
 
 .tm-container .tm-wrapper .timeline {
@@ -17296,12 +17286,6 @@ div.v-window .v-panel {
 	color: white;
 	border: none;
 	transition: all 200ms ease-in;
-}
-
-.stylecalendarfield {
-	border: 1px solid #e5e5e5 !important;
-	height: 30px;
-	font-size: 14px;
 }
 
 .v-filterselect-no-input [class*="input"] {

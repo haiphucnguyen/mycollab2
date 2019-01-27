@@ -53,6 +53,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Collections;
 
@@ -129,7 +130,7 @@ class ProjectMembersWidget extends Depot {
             userAvatar.addStyleName(WebThemes.CIRCLE_BOX);
             layout.addComponent(userAvatar);
 
-            VerticalLayout content = new VerticalLayout();
+            MVerticalLayout content = new MVerticalLayout().withMargin(false);
             content.addComponent(ELabel.html(buildAssigneeValue(member)).withStyleName(WebThemes.TEXT_ELLIPSIS));
             layout.with(content).expand(content);
 
