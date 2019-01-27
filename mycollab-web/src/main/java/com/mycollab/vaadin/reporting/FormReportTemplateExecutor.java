@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
@@ -74,8 +75,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         @Override
         public int compare(Object o1, Object o2) {
             try {
-                Date createTime1 = (Date) PropertyUtils.getProperty(o1, "createdtime");
-                Date createTime2 = (Date) PropertyUtils.getProperty(o2, "createdtime");
+                LocalDateTime createTime1 = (LocalDateTime) PropertyUtils.getProperty(o1, "createdtime");
+                LocalDateTime createTime2 = (LocalDateTime) PropertyUtils.getProperty(o2, "createdtime");
                 return createTime1.compareTo(createTime2);
             } catch (Exception e) {
                 return 0;
