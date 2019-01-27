@@ -77,7 +77,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-// TODO
 @ViewComponent
 public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements MilestoneRoadmapView, IBlockContainer {
 
