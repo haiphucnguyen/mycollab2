@@ -75,12 +75,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     public PageReadViewImpl() {
         super(UserUIContext.getMessage(PageI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE), new PagePreviewFormLayout());
         pageService = AppContextUtil.getSpringBean(PageService.class);
-        constructHeader();
-    }
-
-    private void constructHeader() {
-        pageVersionsSelection = new PageVersionSelectionBox();
-        header.with(pageVersionsSelection).expand(pageVersionsSelection).withAlign(pageVersionsSelection, Alignment.MIDDLE_LEFT);
     }
 
     @Override
@@ -141,6 +135,9 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
         fileDownloader.extend(exportPdfBtn);
 
         pagesPreviewForm.insertToControlBlock(exportPdfBtn);
+
+        pageVersionsSelection = new PageVersionSelectionBox();
+        pagesPreviewForm.insertToControlBlock(pageVersionsSelection);
         return buttonControls;
     }
 
