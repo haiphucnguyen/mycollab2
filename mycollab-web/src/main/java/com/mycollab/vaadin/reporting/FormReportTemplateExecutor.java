@@ -17,13 +17,9 @@
 package com.mycollab.vaadin.reporting;
 
 import com.google.common.collect.Ordering;
-import com.mycollab.common.domain.AuditChangeItem;
-import com.mycollab.common.domain.SimpleAuditLog;
 import com.mycollab.common.domain.SimpleComment;
-import com.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.common.service.AuditLogService;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.BeanUtility;
@@ -31,26 +27,29 @@ import com.mycollab.core.utils.DateTimeUtils;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SearchCriteria;
+import com.mycollab.db.arguments.SearchCriteria.OrderField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.form.view.LayoutType;
 import com.mycollab.form.view.builder.type.AbstractDynaField;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
+import com.mycollab.i18n.LocalizationHelper;
+import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.reporting.ReportExportType;
 import com.mycollab.reporting.ReportTemplateExecutor;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.formatter.DefaultFieldDisplayHandler;
 import com.mycollab.vaadin.ui.formatter.FieldGroupFormatter;
 import com.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.component.*;
+import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.MultiPageListBuilder;
+import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +58,7 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
@@ -86,8 +86,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private JasperReportBuilder reportBuilder;
     private MultiPageListBuilder titleContent;
 
-    public FormReportTemplateExecutor(String reportTitle) {
-        super(UserUIContext.getUserTimeZone(), UserUIContext.getUserLocale(), reportTitle, ReportExportType.PDF);
+    public FormReportTemplateExecutor(String reportTitle, ZoneId zoneId, Locale locale) {
+        super(zoneId, locale, reportTitle, ReportExportType.PDF);
     }
 
     @Override
@@ -111,6 +111,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private void printForm() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
+        SimpleUser user = (SimpleUser) parameters.get("user");
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
         FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatterOfType(formReportLayout.getModuleName());
 
@@ -132,7 +133,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             }
 
             if (section.getHeader() != null) {
-                HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(UserUIContext.getMessage(section.getHeader()))
+                HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), section.getHeader()))
                         .setStyle(getReportStyles().getH3Style()));
                 titleContent.add(historyHeader, getReportStyles().line(), cmp.verticalGap(10));
             }
@@ -158,7 +159,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                         } catch (Exception e) {
                             LOG.error("Error while getting property {}", dynaField.getFieldName(), e);
                         }
-                        HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(UserUIContext.getMessage(dynaField.getDisplayName()))
+                        HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                         .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                 cmp.text(fieldGroupFormatter.getFieldDisplayHandler
                                         (dynaField.getFieldName()).getFormat().toString(value, false, "")));
@@ -187,7 +188,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
                         try {
                             if (dynaField.isColSpan()) {
-                                HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(UserUIContext.getMessage(dynaField.getDisplayName()))
+                                HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                                 .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                         cmp.text(fieldGroupFormatter.getFieldDisplayHandler
                                                 (dynaField.getFieldName()).getFormat().toString(value, false, "")));
@@ -195,13 +196,13 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                                 columnIndex = 0;
                             } else {
                                 if (columnIndex == 0) {
-                                    tmpRow = cmp.horizontalList().add(cmp.text(UserUIContext.getMessage(dynaField.getDisplayName()))
+                                    tmpRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                                     .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                             cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
                                                     .getFormat().toString(value, false, "")));
                                     titleContent.add(tmpRow);
                                 } else {
-                                    tmpRow.add(cmp.text(UserUIContext.getMessage(dynaField.getDisplayName())).setFixedWidth(FORM_CAPTION)
+                                    tmpRow.add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName())).setFixedWidth(FORM_CAPTION)
                                                     .setStyle(getReportStyles().getFormCaptionStyle()),
                                             cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
                                                     .getFormat().toString(value, false, "")));
@@ -226,9 +227,10 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private void printActivities() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
-        Integer typeId;
+        Integer typeId, saccountid;
         try {
             typeId = (Integer) PropertyUtils.getProperty(bean, "id");
+            saccountid = (Integer) PropertyUtils.getProperty(bean, "saccountid");
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("Error", e);
             return;
@@ -240,74 +242,24 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         final CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
         commentCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
         commentCriteria.setTypeId(StringSearchField.and(typeId + ""));
+        commentCriteria.setSaccountid(NumberSearchField.equal(saccountid));
+        commentCriteria.addOrderField(new OrderField("createdtime", SearchCriteria.DESC));
         final int commentCount = commentService.getTotalCount(commentCriteria);
-
-        AuditLogService auditLogService = AppContextUtil.getSpringBean(AuditLogService.class);
-        final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
-        logCriteria.setSaccountid(new NumberSearchField(AppUI.getAccountId()));
-        logCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
-        logCriteria.setTypeId(StringSearchField.and(typeId + ""));
-        final int logCount = auditLogService.getTotalCount(logCriteria);
-        int totalNums = commentCount + logCount;
-        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + totalNums + ")")
+        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + commentCount + ")")
                 .setStyle(getReportStyles().getH3Style()));
         titleContent.add(historyHeader, getReportStyles().line(), cmp.verticalGap(10));
 
         List<SimpleComment> comments = (List<SimpleComment>) commentService.findPageableListByCriteria(new BasicSearchRequest<>(commentCriteria));
-        List<SimpleAuditLog> auditLogs = (List<SimpleAuditLog>) auditLogService.findPageableListByCriteria(new BasicSearchRequest<>(logCriteria));
-        List activities = new ArrayList(commentCount + logCount);
-        activities.addAll(comments);
-        activities.addAll(auditLogs);
-        Collections.sort(activities, dateComparator.reverse());
-        for (Object activity : activities) {
-            if (activity instanceof SimpleComment) {
-                titleContent.add(buildCommentBlock((SimpleComment) activity), cmp.verticalGap(10));
-            } else if (activity instanceof SimpleAuditLog) {
-                ComponentBuilder component = buildAuditBlock((SimpleAuditLog) activity);
-                if (component != null) {
-                    titleContent.add(component, cmp.verticalGap(10));
-                }
-            } else {
-                LOG.error("Do not support activity " + activity);
-            }
-        }
+        Collections.sort(comments, dateComparator.reverse());
+        comments.forEach(comment -> titleContent.add(buildCommentBlock(comment), cmp.verticalGap(10)));
     }
 
     private ComponentBuilder buildCommentBlock(SimpleComment comment) {
-        TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(UserUIContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
-                UserUIContext.formatPrettyTime(comment.getCreatedtime())), Integer.MAX_VALUE)).setStyle(getReportStyles().getMetaInfoStyle());
+        TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(LocalizationHelper.getMessage(getLocale(), GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
+                DateTimeUtils.getPrettyDateValue(comment.getCreatedtime(), getTimeZone(), getLocale())), Integer.MAX_VALUE)).setStyle(getReportStyles().getMetaInfoStyle());
         HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
         return cmp.verticalList(infoHeader, cmp.text(StringUtils.trimHtmlTags(comment.getComment(), Integer.MAX_VALUE)))
                 .setStyle(getReportStyles().getBorderStyle());
-    }
-
-    private ComponentBuilder buildAuditBlock(SimpleAuditLog auditLog) {
-        List<AuditChangeItem> changeItems = auditLog.getChangeItems();
-        FormReportLayout formReportLayout = (FormReportLayout) getParameters().get("layout");
-        FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatterOfType(formReportLayout.getModuleName());
-        if (CollectionUtils.isNotEmpty(changeItems)) {
-            TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(UserUIContext.getMessage(
-                    GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(), UserUIContext.formatPrettyTime
-                            (auditLog.getCreatedtime())), Integer.MAX_VALUE)).setStyle(getReportStyles().getMetaInfoStyle());
-            HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
-            VerticalListBuilder block = cmp.verticalList().add(infoHeader).setStyle(getReportStyles().getBorderStyle());
-            for (AuditChangeItem item : changeItems) {
-                String fieldName = item.getField();
-
-                DefaultFieldDisplayHandler fieldDisplayHandler = fieldGroupFormatter.getFieldDisplayHandler(fieldName);
-                if (fieldDisplayHandler != null) {
-                    HorizontalListBuilder changeBlock = cmp.horizontalFlowList();
-                    TextFieldBuilder<String> fieldLbl = cmp.text(UserUIContext.getMessage(fieldDisplayHandler
-                            .getDisplayName())).setStyle(getReportStyles().getMetaInfoStyle());
-                    TextFieldBuilder<String> oldValue = cmp.text(fieldDisplayHandler.getFormat().toString(item.getOldvalue(), false, ""));
-                    TextFieldBuilder<String> newValue = cmp.text(fieldDisplayHandler.getFormat().toString(item.getNewvalue(), false, ""));
-                    changeBlock.add(fieldLbl, oldValue, cmp.text(" -> "), newValue);
-                    block.add(changeBlock);
-                }
-            }
-            return block;
-        }
-        return null;
     }
 
     @Override
