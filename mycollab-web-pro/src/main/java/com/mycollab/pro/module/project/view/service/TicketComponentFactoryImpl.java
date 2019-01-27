@@ -481,6 +481,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
             typeSelection = new ComboBox<>();
             typeSelection.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            typeSelection.setEmptySelectionAllowed(false);
 
             projectListSelect.addValueChangeListener(valueChangeEvent -> {
                 selectedProject = projectListSelect.getValue();
@@ -488,7 +489,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             });
 
             loadAssociateTicketTypePerProject();
-            typeSelection.setEmptySelectionAllowed(false);
             typeSelection.addValueChangeListener(event -> doChange(date, milestoneId));
 
             GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
@@ -539,9 +539,6 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                             throw new IllegalArgumentException();
                         }
                     });
-
-                } else {
-                    throw new SecureAccessException();
                 }
             }
         }

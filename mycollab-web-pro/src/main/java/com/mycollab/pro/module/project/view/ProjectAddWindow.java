@@ -46,6 +46,10 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     private ProjectBillingAccountStep billingAccountStep;
     private ProjectCustomizeFeatureStep customizeFeatureStep;
 
+    public ProjectAddWindow() {
+        this(new Project());
+    }
+
     public ProjectAddWindow(Project valuePrj) {
         super(valuePrj);
         MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
