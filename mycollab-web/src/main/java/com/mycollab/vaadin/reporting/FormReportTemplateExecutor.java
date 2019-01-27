@@ -165,7 +165,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                         HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                         .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                 cmp.text(fieldGroupFormatter.getFieldDisplayHandler
-                                        (dynaField.getFieldName()).getFormat().toString(value, false, "")));
+                                        (dynaField.getFieldName()).getFormat().toString(user, value, false, "")));
                         titleContent.add(newRow);
                     }
                 }
@@ -196,7 +196,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                                 HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                                 .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                         cmp.text(fieldGroupFormatter.getFieldDisplayHandler
-                                                (dynaField.getFieldName()).getFormat().toString(value, false, "")));
+                                                (dynaField.getFieldName()).getFormat().toString(user, value, false, "")));
                                 titleContent.add(newRow);
                                 columnIndex = 0;
                             } else {
@@ -204,13 +204,13 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                                     tmpRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                                     .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
                                             cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
-                                                    .getFormat().toString(value, false, "")));
+                                                    .getFormat().toString(user, value, false, "")));
                                     titleContent.add(tmpRow);
                                 } else {
                                     tmpRow.add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName())).setFixedWidth(FORM_CAPTION)
                                                     .setStyle(getReportStyles().getFormCaptionStyle()),
                                             cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
-                                                    .getFormat().toString(value, false, "")));
+                                                    .getFormat().toString(user, value, false, "")));
                                 }
 
                                 columnIndex++;
@@ -232,6 +232,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private void printActivities() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
+        SimpleUser user = (SimpleUser) parameters.get("user");
         Integer typeId, saccountid;
         try {
             typeId = (Integer) PropertyUtils.getProperty(bean, "id");
@@ -244,13 +245,13 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
 
         CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
-        final CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
+        CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
         commentCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
         commentCriteria.setTypeId(StringSearchField.and(typeId + ""));
         commentCriteria.setSaccountid(NumberSearchField.equal(saccountid));
         commentCriteria.addOrderField(new OrderField("createdtime", SearchCriteria.DESC));
-        final int commentCount = commentService.getTotalCount(commentCriteria);
-        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + commentCount + ")")
+        int commentCount = commentService.getTotalCount(commentCriteria);
+        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(user.getLocale(), GenericI18Enum.OPT_COMMENTS_VALUE, commentCount))
                 .setStyle(getReportStyles().getH3Style()));
         titleContent.add(historyHeader, getReportStyles().line(), cmp.verticalGap(10));
 

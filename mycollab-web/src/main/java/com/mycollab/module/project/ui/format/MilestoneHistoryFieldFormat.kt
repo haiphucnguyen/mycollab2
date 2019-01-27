@@ -20,8 +20,8 @@ import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.module.project.ProjectLinkBuilder
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.service.MilestoneService
+import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.spring.AppContextUtil
-import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.ui.formatter.HistoryFieldFormat
 import org.apache.commons.lang3.StringUtils
@@ -34,9 +34,9 @@ import org.slf4j.LoggerFactory
 class MilestoneHistoryFieldFormat : HistoryFieldFormat {
 
     override fun toString(value: String): String =
-            toString(value, true, UserUIContext.getMessage(GenericI18Enum.FORM_EMPTY))
+            toString(UserUIContext.getUser(), value, true, UserUIContext.getMessage(GenericI18Enum.FORM_EMPTY))
 
-    override fun toString(value: String, displayAsHtml: Boolean, msgIfBlank: String): String {
+    override fun toString(currentViewUser: SimpleUser, value: String, displayAsHtml: Boolean, msgIfBlank: String): String {
         if (StringUtils.isBlank(value)) {
             return msgIfBlank
         }
@@ -44,7 +44,7 @@ class MilestoneHistoryFieldFormat : HistoryFieldFormat {
         try {
             val milestoneId = Integer.parseInt(value)
             val milestoneService = AppContextUtil.getSpringBean(MilestoneService::class.java)
-            val milestone = milestoneService.findById(milestoneId, AppUI.accountId)
+            val milestone = milestoneService.findById(milestoneId, currentViewUser.accountId!!)
 
             if (milestone != null) {
                 return if (displayAsHtml) {

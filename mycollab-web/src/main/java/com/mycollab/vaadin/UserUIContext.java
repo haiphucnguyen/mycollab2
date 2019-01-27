@@ -169,8 +169,6 @@ public class UserUIContext implements Serializable {
 
     public static String getMessage(Class<? extends Enum> enumCls, String option, Object... objects) {
         try {
-            if (option == null)
-                return "";
             Enum key = Enum.valueOf(enumCls, option);
             return getMessage(key, objects);
         } catch (Exception e) {
