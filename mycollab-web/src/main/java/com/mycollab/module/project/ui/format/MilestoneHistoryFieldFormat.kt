@@ -17,7 +17,6 @@
 package com.mycollab.module.project.ui.format
 
 import com.mycollab.common.i18n.GenericI18Enum
-import com.mycollab.module.project.CurrentProjectVariables
 import com.mycollab.module.project.ProjectLinkBuilder
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.service.MilestoneService
@@ -49,7 +48,7 @@ class MilestoneHistoryFieldFormat : HistoryFieldFormat {
 
             if (milestone != null) {
                 return if (displayAsHtml) {
-                    ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(CurrentProjectVariables.shortName,
+                    ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(milestone.projectShortName,
                             milestone.projectid!!, milestone.name, ProjectTypeConstants.MILESTONE, milestone.id!!.toString())
                 } else milestone.name
             }

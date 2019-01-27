@@ -59,7 +59,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 import static net.sf.dynamicreports.report.builder.DynamicReports.report;
@@ -150,7 +153,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                         try {
                             Object tmpVal = PropertyUtils.getProperty(bean, dynaField.getFieldName());
                             if (tmpVal != null) {
-                                if (tmpVal instanceof Date) {
+                                if (tmpVal instanceof LocalDate) {
                                     value = DateTimeUtils.formatDateToW3C((LocalDate) tmpVal);
                                 } else {
                                     value = String.valueOf(tmpVal);
@@ -176,7 +179,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                         try {
                             Object tmpVal = PropertyUtils.getProperty(bean, dynaField.getFieldName());
                             if (tmpVal != null) {
-                                if (tmpVal instanceof Date) {
+                                if (tmpVal instanceof LocalDate) {
                                     value = DateTimeUtils.formatDateToW3C((LocalDate) tmpVal);
                                 } else {
                                     value = String.valueOf(tmpVal);
@@ -187,6 +190,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                         }
 
                         try {
+                            System.out.println("Field: " + dynaField.getFieldName() + " -- " + fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName()).getFormat());
+
                             if (dynaField.isColSpan()) {
                                 HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(LocalizationHelper.getMessage(getLocale(), dynaField.getDisplayName()))
                                                 .setFixedWidth(FORM_CAPTION).setStyle(getReportStyles().getFormCaptionStyle()),
