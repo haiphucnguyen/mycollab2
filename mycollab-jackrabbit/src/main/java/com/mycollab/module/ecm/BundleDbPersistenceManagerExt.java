@@ -20,6 +20,9 @@ import com.mycollab.spring.AppContextUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.jackrabbit.core.persistence.PMContext;
 import org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager;
+import org.apache.jackrabbit.core.util.db.ConnectionHelper;
+
+import javax.sql.DataSource;
 
 /**
  * Customize db persistence of jackrabbit
@@ -41,5 +44,10 @@ public class BundleDbPersistenceManagerExt extends BundleDbPersistenceManager {
 
         setDatabaseType(DbUtil.getSchemaType(ds.getDriverClassName()));
         super.init(context);
+    }
+
+    @Override
+    protected ConnectionHelper createConnectionHelper(DataSource dataSrc) throws Exception {
+        return new MySqlConnectionHelper(dataSrc);
     }
 }

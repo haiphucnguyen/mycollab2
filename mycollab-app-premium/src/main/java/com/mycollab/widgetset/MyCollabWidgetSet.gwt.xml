@@ -31,4 +31,6 @@
     <inherits name="com.explicatis.ext_token_field.WidgetSet"/>
 
     <inherits name="org.vaadin.addons.stackpanel.WidgetSet"/>
+
+    <inherits name="org.vaadin.alump.distributionbar.gwt.DistributionBarWidgetset"/>
 </module>

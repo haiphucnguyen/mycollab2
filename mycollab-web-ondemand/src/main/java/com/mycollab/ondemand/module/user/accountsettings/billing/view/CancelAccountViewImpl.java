@@ -21,6 +21,7 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -28,7 +29,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-// TODO
 @ViewComponent
 public class CancelAccountViewImpl extends AbstractVerticalPageView implements CancelAccountView {
     private static final long serialVersionUID = 1L;
@@ -57,8 +57,7 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
     }
 
     private CssLayout createBody() {
-        CssLayout layout = new CssLayout();
-        layout.setWidth("100%");
+        MCssLayout layout = new MCssLayout().withFullWidth();
 
         MVerticalLayout innerLayout = new MVerticalLayout();
         innerLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -72,13 +71,13 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
         final TextArea whyLeaving = new TextArea();
         layoutHelper.addComponent(whyLeaving, UserUIContext.getMessage(BillingI18nEnum.OPT_WHY_YOU_LEAVE), 0, 0);
 
-//        final OptionGroup optionGroupField = new OptionGroup();
-//        optionGroupField.addItem(UserUIContext.getMessage(BillingI18nEnum.OPT_CANCEL_AND_OPEN_NEW_ACCOUNT));
-//        optionGroupField.addItem(UserUIContext.getMessage(BillingI18nEnum.OPT_MISSING_IMPORTANT_FEATURE));
-//        optionGroupField.addItem(UserUIContext.getMessage(BillingI18nEnum.OPT_TOO_EXPENSIVE));
-//        optionGroupField.addItem(UserUIContext.getMessage(BillingI18nEnum.OPT_NONE_OF_ABOVE));
+        final RadioButtonGroup<String> optionGroupField = new RadioButtonGroup();
+        optionGroupField.setItems(UserUIContext.getMessage(BillingI18nEnum.OPT_CANCEL_AND_OPEN_NEW_ACCOUNT),
+                UserUIContext.getMessage(BillingI18nEnum.OPT_MISSING_IMPORTANT_FEATURE),
+                UserUIContext.getMessage(BillingI18nEnum.OPT_TOO_EXPENSIVE),
+                UserUIContext.getMessage(BillingI18nEnum.OPT_NONE_OF_ABOVE));
 
-//        layoutHelper.addComponent(optionGroupField, UserUIContext.getMessage(BillingI18nEnum.OPT_ANY_APPLY), 0, 1);
+        layoutHelper.addComponent(optionGroupField, UserUIContext.getMessage(BillingI18nEnum.OPT_ANY_APPLY), 0, 1);
 
         final TextArea alternativeTool = new TextArea();
         layoutHelper.addComponent(alternativeTool, UserUIContext.getMessage(BillingI18nEnum.OPT_CONSIDER_OTHER_TOOL), 0, 2);
@@ -95,11 +94,11 @@ public class CancelAccountViewImpl extends AbstractVerticalPageView implements C
             feedback.setSaccountid(AppUI.getAccountId());
             feedback.setOthertool(alternativeTool.getValue());
             feedback.setReasontoback(reasonToBack.getValue());
-//            if (optionGroupField.getValue() != null) {
-//                feedback.setReasontoleave(optionGroupField.getValue().toString() + ": " + whyLeavingMsg);
-//            } else {
-//                feedback.setReasontoleave(whyLeavingMsg);
-//            }
+            if (optionGroupField.getValue() != null) {
+                feedback.setReasontoleave(optionGroupField.getValue() + ": " + whyLeavingMsg);
+            } else {
+                feedback.setReasontoleave(whyLeavingMsg);
+            }
 
             BillingService billingService = AppContextUtil.getSpringBean(BillingService.class);
             billingService.cancelAccount(AppUI.getAccountId(), feedback);

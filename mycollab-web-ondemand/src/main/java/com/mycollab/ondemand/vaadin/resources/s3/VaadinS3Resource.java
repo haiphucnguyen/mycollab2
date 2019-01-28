@@ -60,7 +60,7 @@ public class VaadinS3Resource implements VaadinResource {
         @Override
         public InputStream getStream() {
             String fileName = extractFileName(documentPath);
-            //TODO : Work with S3
+            // TODO : Work with S3
             S3StorageServiceImpl storageConfiguration = null;// = (S3StorageServiceImpl) StorageFactory.getInstance();
             fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
             AmazonS3 s3Client = storageConfiguration.newS3Client();
