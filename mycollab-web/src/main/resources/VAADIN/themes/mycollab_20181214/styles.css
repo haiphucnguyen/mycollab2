@@ -1744,11 +1744,11 @@ a.pending {
 	color: #24a2e3 !important;
 }
 
-.cursor_pointer {
+.cursor-pointer {
 	cursor: pointer;
 }
 
-.cursor_move {
+.cursor-move {
 	cursor: move;
 }
 
@@ -16455,11 +16455,11 @@ a.pending {
 	color: #24a2e3 !important;
 }
 
-.cursor_pointer {
+.cursor-pointer {
 	cursor: pointer;
 }
 
-.cursor_move {
+.cursor-move {
 	cursor: move;
 }
 
