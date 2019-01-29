@@ -1,14 +1,22 @@
 package com.mycollab.module.project.view.ticket;
 
 import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
 import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
+import com.mycollab.html.DivLessFormatter;
+import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.Risk;
+import com.mycollab.module.project.domain.SimpleProjectMember;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.event.TicketEvent;
@@ -53,6 +61,7 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections4.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -74,7 +83,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     private ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
 
     private TicketSearchPanel searchPanel;
-    private DDHorizontalLayout kanbanLayout;
+    private MCssLayout kanbanLayout;
     private Map<Pair, KanbanBlock> kanbanBlocks;
     private ProjectTicketSearchCriteria baseCriteria;
 
@@ -127,41 +136,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         MHorizontalLayout controlLayout = new MHorizontalLayout(ELabel.html("Filter by: "), group)
                 .withDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
-        kanbanLayout = new DDHorizontalLayout();
-        kanbanLayout.setHeight("100%");
-        kanbanLayout.addStyleName("kanban-layout");
-        kanbanLayout.setSpacing(true);
-        kanbanLayout.setComponentHorizontalDropRatio(0.3f);
-        kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
-
-        // Enable dropping components
-        kanbanLayout.setDropHandler(new DropHandler() {
-            @Override
-            public void drop(DragAndDropEvent event) {
-                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
-
-                DDHorizontalLayout.HorizontalLayoutTargetDetails details = (DDHorizontalLayout.HorizontalLayoutTargetDetails) event
-                        .getTargetDetails();
-                Component dragComponent = transferable.getComponent();
-                if (dragComponent instanceof KanbanBlock) {
-                    KanbanBlock kanbanItem = (KanbanBlock) dragComponent;
-                    int newIndex = details.getOverIndex();
-                    if (details.getDropLocation() == HorizontalDropLocation.RIGHT) {
-                        kanbanLayout.addComponent(kanbanItem);
-                    } else if (newIndex == -1) {
-                        kanbanLayout.addComponent(kanbanItem, 0);
-                    } else {
-                        kanbanLayout.addComponent(kanbanItem, newIndex);
-                    }
-                }
-            }
-
-            @Override
-            public AcceptCriterion getAcceptCriterion() {
-                return new Not(VerticalLocationIs.MIDDLE);
-            }
-        });
-
+        kanbanLayout = new MCssLayout().withStyleName("kanban-layout", WebThemes.NO_SCROLLABLE_CONTAINER);
         this.with(searchPanel, controlLayout, kanbanLayout).expand(kanbanLayout);
     }
 
@@ -214,7 +189,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-
                 int totalTickets = ticketService.getTotalCount(searchCriteria);
                 searchPanel.setTotalCountNumber(totalTickets);
                 int pages = totalTickets / 50;
@@ -242,12 +216,19 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         List<SimpleUser> activeMembers = projectMemberService.getActiveUsersInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
 
         GridLayout gridLayout = new GridLayout(statuses.length + 1, activeMembers.size() + 1);
+        gridLayout.setSpacing(true);
         for (int i = 0; i < statuses.length; i++) {
-            gridLayout.addComponent(new ELabel(UserUIContext.getMessage(statuses[i])), i + 1, 0);
+            gridLayout.addComponent(new ELabel(""), i + 1, 0);
         }
 
         for (int i = 0; i < activeMembers.size(); i++) {
-            gridLayout.addComponent(new ELabel(activeMembers.get(i).getDisplayName()), 0, i + 1);
+            Img img = new Img("", StorageUtils.getAvatarPath(activeMembers.get(i).getAvatarid(), 32))
+                    .setCSSClass((WebThemes.CIRCLE_BOX));
+            SimpleUser member = activeMembers.get(i);
+            Div userDiv = new DivLessFormatter().appendChild(img, new A(ProjectLinkGenerator.generateProjectMemberLink(CurrentProjectVariables.getProjectId(), member.getUsername()))
+                    .appendText(member.getDisplayName()));
+            MVerticalLayout assigneeBox = new MVerticalLayout(ELabel.html(userDiv.write()).withFullWidth()).withMargin(true).withStyleName("assignee-block").withFullHeight().withWidth("250px");
+            gridLayout.addComponent(assigneeBox, 0, i + 1);
         }
 
         kanbanBlocks = new ConcurrentHashMap<>();
@@ -295,6 +276,8 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
             this.addComponent(footer);
         }
+
+
     }
 
     private class KanbanBlock extends MVerticalLayout implements IBlockContainer {
@@ -310,7 +293,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             this.withWidth("250px").withStyleName("kanban-block").withMargin(false);
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
-            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
+//            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
 
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setMargin(false);
@@ -350,19 +333,23 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                             if (ticket.isBug()) {
                                 BugWithBLOBs bug = ProjectTicket.buildBug(ticket);
                                 bug.setStatus(stage);
+                                bug.setAssignuser(assignee);
                                 BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                                 bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
                             } else if (ticket.isTask()) {
                                 Task task = ProjectTicket.buildTask(ticket);
                                 task.setStatus(stage);
+                                task.setAssignuser(assignee);
                                 ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
                                 taskService.updateSelectiveWithSession(task, UserUIContext.getUsername());
                             } else if (ticket.isRisk()) {
                                 Risk risk = ProjectTicket.buildRisk(ticket);
                                 risk.setStatus(stage);
+                                risk.setAssignuser(assignee);
                                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                                 riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
                             }
+
 
                             refresh();
 

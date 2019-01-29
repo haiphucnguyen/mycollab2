@@ -415,8 +415,13 @@
   }
 
   .kanban-layout {
+    .v-gridlayout-slot {
+      padding-bottom: 10px;
+    }
+    .assignee-block {
+      background-color: #ffffff;
+    }
     .kanban-block {
-      cursor: move;
       background-color: #fdde86;
       padding: 10px;
       .header {
