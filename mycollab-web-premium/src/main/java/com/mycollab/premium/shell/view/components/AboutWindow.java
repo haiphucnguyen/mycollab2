@@ -12,14 +12,12 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -42,7 +40,7 @@ public class AboutWindow extends AbstractAboutWindow {
         Image about = new Image("", new ExternalResource(StorageUtils.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
         ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", Version.getVersion())).withFullWidth();
-        ELabel javaNameLbl =  new ELabel(String.format("%s, %s", System.getProperty("java.vm.name"),
+        ELabel javaNameLbl = new ELabel(String.format("%s, %s", System.getProperty("java.vm.name"),
                 System.getProperty("java.runtime.version"))).withFullWidth();
         WebBrowser browser = Page.getCurrent().getWebBrowser();
         ELabel osLbl = new ELabel(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication())).withFullWidth();
@@ -87,7 +85,7 @@ public class AboutWindow extends AbstractAboutWindow {
             rightPanel.addComponent(new MHorizontalLayout(buyBtn, editLicenseBtn));
         }
 
-        ELabel copyRightLbl =  ELabel.html(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
+        ELabel copyRightLbl = ELabel.html(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
                 LocalDate.now().getYear() + "")).withFullWidth();
         rightPanel.with(copyRightLbl);
         content.with(about, rightPanel).expand(rightPanel);

@@ -3,6 +3,7 @@ package com.mycollab.module.project.view.ticket;
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.OptionI18nEnum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -29,7 +30,6 @@ import com.mycollab.module.tracker.service.BugService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.*;
-import com.mycollab.vaadin.AsyncInvoker.PageCommand;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -51,13 +51,14 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.apache.commons.collections4.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -74,7 +75,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
     private TicketSearchPanel searchPanel;
     private DDHorizontalLayout kanbanLayout;
-    private Map<String, KanbanBlock> kanbanBlocks;
+    private Map<Pair, KanbanBlock> kanbanBlocks;
     private ProjectTicketSearchCriteria baseCriteria;
 
     private StatusI18nEnum[] statuses = OptionI18nEnum.statuses;
@@ -206,57 +207,60 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         kanbanLayout.removeAllComponents();
-        kanbanBlocks = new ConcurrentHashMap<>();
 
         setProjectNavigatorVisibility(false);
         buildMembersBlock();
 
-//        AsyncInvoker.access(getUI(), new PageCommand() {
-//            @Override
-//            public void run() {
-//                Arrays.stream(statuses).forEach(status -> {
-//                    KanbanBlock block = new KanbanBlock(status.name());
-//                    kanbanBlocks.put(status.name(), block);
-//                    kanbanLayout.addComponent(block);
-//                });
-//                push();
-//
-//                int totalTickets = ticketService.getTotalCount(searchCriteria);
-//                searchPanel.setTotalCountNumber(totalTickets);
-//                int pages = totalTickets / 50;
-//                for (int page = 0; page < pages + 1; page++) {
-//                    List<ProjectTicket> tickets = (List<ProjectTicket>) ticketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
-//                    if (CollectionUtils.isNotEmpty(tickets)) {
-//                        tickets.forEach(ticket -> {
-//                            String status = ticket.getStatus();
-//                            KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-//                            if (kanbanBlock != null) {
-//                                kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
-//                            }
-//                        });
-//                        this.push();
-//                    }
-//                }
-//            }
-//        });
+        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
+            @Override
+            public void run() {
+
+                int totalTickets = ticketService.getTotalCount(searchCriteria);
+                searchPanel.setTotalCountNumber(totalTickets);
+                int pages = totalTickets / 50;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<ProjectTicket> tickets = (List<ProjectTicket>) ticketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
+                    if (CollectionUtils.isNotEmpty(tickets)) {
+                        tickets.forEach(ticket -> {
+                            String status = ticket.getStatus();
+                            String assignee = ticket.getAssignUser();
+                            Pair pair = new Pair(assignee, status);
+                            KanbanBlock kanbanBlock = kanbanBlocks.get(pair);
+                            if (kanbanBlock != null) {
+                                kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
+                            }
+                        });
+                        this.push();
+                    }
+                }
+            }
+        });
     }
 
     private void buildMembersBlock() {
         ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
         List<SimpleUser> activeMembers = projectMemberService.getActiveUsersInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
 
-        activeMembers.forEach(member ->
-                AsyncInvoker.access(getUI(), new PageCommand() {
-                    @Override
-                    public void run() {
-                        Arrays.stream(statuses).forEach(status -> {
-                            KanbanBlock block = new KanbanBlock(status.name());
-                            kanbanBlocks.put(status.name(), block);
-                            kanbanLayout.addComponent(block);
-                        });
-                        push();
-                    }
-                }));
+        GridLayout gridLayout = new GridLayout(statuses.length + 1, activeMembers.size() + 1);
+        for (int i = 0; i < statuses.length; i++) {
+            gridLayout.addComponent(new ELabel(UserUIContext.getMessage(statuses[i])), i + 1, 0);
+        }
+
+        for (int i = 0; i < activeMembers.size(); i++) {
+            gridLayout.addComponent(new ELabel(activeMembers.get(i).getDisplayName()), 0, i + 1);
+        }
+
+        kanbanBlocks = new ConcurrentHashMap<>();
+        for (int i = 0; i < statuses.length; i++) {
+            for (int j = 0; j < activeMembers.size(); j++) {
+                String assignee = activeMembers.get(j).getUsername();
+                String status = statuses[i].name();
+                KanbanBlock kanbanBlock = new KanbanBlock(assignee, status);
+                kanbanBlocks.put(new Pair(assignee, status), kanbanBlock);
+                gridLayout.addComponent(kanbanBlock, i+1, j+1);
+            }
+        }
+        kanbanLayout.addComponent(gridLayout);
     }
 
     private static class KanbanBlockItem extends BlockRowRender {
@@ -295,12 +299,15 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
     private class KanbanBlock extends MVerticalLayout implements IBlockContainer {
         private String status;
+        private String assignee;
+
         private DDVerticalLayout dragLayoutContainer;
         private Label header;
 
-        KanbanBlock(String stage) {
-            this.withWidth("250px").withStyleName("kanban-block").withMargin(false);
+        KanbanBlock(String assignee, String stage) {
             this.status = stage;
+            this.assignee = assignee;
+            this.withWidth("250px").withStyleName("kanban-block").withMargin(false);
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
             JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
@@ -397,6 +404,31 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
         @Override
         public void refresh() {
             header.setValue(String.format("%s (%d)", UserUIContext.getMessage(StatusI18nEnum.class, status), getTicketComponentCount()));
+        }
+    }
+
+    private static class Pair {
+        private String memberName;
+
+        private String status;
+
+        Pair(String memberName, String status) {
+            this.memberName = memberName;
+            this.status = status;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Pair pair = (Pair) o;
+            return memberName.equals(pair.memberName) &&
+                    status.equals(pair.status);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(memberName, status);
         }
     }
 }
