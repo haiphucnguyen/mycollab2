@@ -3,7 +3,6 @@ package com.mycollab.ondemand.common.service.impl
 import com.mycollab.common.service.AppPropertiesService
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.core.utils.FileUtils
-import org.joda.time.LocalDateTime
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Service
@@ -12,6 +11,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 /**
@@ -24,7 +25,7 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
     private lateinit var properties: Properties
 
     override val sysId: String
-        get() = properties.getProperty("id", "${UUID.randomUUID()}${LocalDateTime().millisOfSecond}")
+        get() = properties.getProperty("id", "${UUID.randomUUID()}${LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)}")
 
     override val startDate: LocalDate
         get() {
@@ -53,7 +54,7 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
                     properties.store(FileOutputStream(sysFile), "")
                 }
             } else {
-                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+                properties.setProperty("id", "${UUID.randomUUID()}${LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)}")
                 properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(LocalDate.now()))
                 properties.store(FileOutputStream(sysFile), "")
             }

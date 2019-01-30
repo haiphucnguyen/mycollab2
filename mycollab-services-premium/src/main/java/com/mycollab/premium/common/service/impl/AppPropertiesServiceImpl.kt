@@ -12,6 +12,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 
@@ -57,8 +59,7 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")
             } else {
-                // TODO: would get the miliseconds of now
-//                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime().millisOfSecond)
+                properties.setProperty("id", UUID.randomUUID().toString() + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
                 properties.setProperty("startdate", DateTimeUtils.formatDateToW3C(LocalDate.now()))
                 properties.setProperty("edition", edition)
                 properties.store(FileOutputStream(sysFile), "")

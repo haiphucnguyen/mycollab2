@@ -14,9 +14,6 @@ import com.mycollab.module.user.domain.BillingAccountWithOwners
 import com.mycollab.module.user.service.BillingAccountService
 import com.mycollab.ondemand.module.billing.service.BillingService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.joda.time.DateTime
-import org.joda.time.Duration
-import org.joda.time.format.DateTimeFormat
 import org.quartz.DisallowConcurrentExecution
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
@@ -25,6 +22,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -43,19 +43,19 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(BillingSendingNotificationJob::class.java)
         private const val DATE_REMIND_FOR_ENDING_TRIAL_1ST = 26
-        private const val NUM_DAY_FREE_TRIAL = 30
+        private const val NUM_DAY_FREE_TRIAL = 30L
     }
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
-        val now = DateTime()
+        val now = LocalDate.now()
 
         val trialAccountsWithOwners = billingService.trialAccountsWithOwners
         trialAccountsWithOwners.forEach {
             LOG.info("Send the trial account will come to end soon to ${it.accountname}")
-            val accountTrialFrom = DateTime(MoreObjects.firstNonNull(it.trialfrom, it.createdtime))
-            val accountTrialTo = DateTime(MoreObjects.firstNonNull(it.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL)))
-            val durationDays = Duration(now, accountTrialTo).standardDays
+            val accountTrialFrom = MoreObjects.firstNonNull(it.trialfrom, it.createdtime.toLocalDate())
+            val accountTrialTo = MoreObjects.firstNonNull(it.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL))
+            val durationDays = Period.between(now, accountTrialTo).days
 
             if (durationDays < (NUM_DAY_FREE_TRIAL - DATE_REMIND_FOR_ENDING_TRIAL_1ST) && (it.reminderstatus == null)) {
                 sendRemindEmailAskUpdateBillingAccount(it, DATE_REMIND_FOR_ENDING_TRIAL_1ST)
@@ -88,15 +88,15 @@ class BillingSendingNotificationJob(private val billingService: BillingService,
     }
 
     private fun sendRemindEmailAskUpdateBillingAccount(account: BillingAccountWithOwners, afterDay: Int) {
-        val df = DateTimeFormat.forPattern("MM/dd/yyyy")
+        val df = DateTimeFormatter.ofPattern("MM/dd/yyyy")
 
         account.owners.forEach {
             LOG.info("Send mail after $afterDay days for username ${it.username} , mail ${it.email}")
             contentGenerator.putVariable("account", account)
             val link = "${deploymentMode.getSiteUrl(account.subdomain)}${GenericLinkUtils.URL_PREFIX_PARAM}account/billing"
-            val accountTrialFrom = DateTime(MoreObjects.firstNonNull(account.trialfrom, account.createdtime))
-            val accountTrialTo = DateTime(MoreObjects.firstNonNull(account.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL)))
-            contentGenerator.putVariable("expireDay", df.print(accountTrialTo))
+            val accountTrialFrom = MoreObjects.firstNonNull(account.trialfrom, account.createdtime.toLocalDate())
+            val accountTrialTo = MoreObjects.firstNonNull(account.trialto, accountTrialFrom.plusDays(NUM_DAY_FREE_TRIAL))
+            contentGenerator.putVariable("expireDay", df.format(accountTrialTo))
             contentGenerator.putVariable("userName", it.lastname)
             contentGenerator.putVariable("link", link)
             extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,

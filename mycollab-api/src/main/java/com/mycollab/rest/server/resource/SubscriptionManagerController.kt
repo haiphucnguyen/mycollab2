@@ -16,11 +16,11 @@ import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionExample
 import com.mycollab.ondemand.module.billing.domain.BillingSubscriptionHistory
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -103,15 +103,14 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
                 subscriptionHistory.subscriptionid = subscription.id
                 var reference: String? = tempVariables[subscriptionReference]
                 if (reference == null) {
-                    reference = UUID.randomUUID().toString() + DateTime().millisOfSecond().get()
+                    reference = UUID.randomUUID().toString() + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
                 } else {
                     tempVariables.remove(subscriptionReference)
                 }
                 subscriptionHistory.orderid = reference
                 subscriptionHistory.createdtime = LocalDateTime.now()
                 subscriptionHistory.status = "Success"
-                // TODO
-//                subscriptionHistory.expireddate = dateFormatter.parseLocalDate(nextPeriodDate).toDate()
+                subscriptionHistory.expireddate = LocalDateTime.parse(nextPeriodDate, dateFormatter)
                 subscriptionHistory.productname = productName
                 subscriptionHistory.totalprice = java.lang.Double.parseDouble(totalPrice)
                 subscriptionHistoryMapper.insert(subscriptionHistory)
@@ -257,7 +256,7 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
     companion object {
         private val LOG = LoggerFactory.getLogger(SubscriptionManagerController::class.java)
 
-        private val dateFormatter = DateTimeFormat.forPattern("MMM d, yyyy")
+        private val dateFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
 
         private val tempVariables = WeakHashMap<String, String>()
     }

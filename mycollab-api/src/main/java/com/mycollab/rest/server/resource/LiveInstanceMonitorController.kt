@@ -3,7 +3,6 @@ package com.mycollab.rest.server.resource
 import com.mycollab.common.domain.LiveInstance
 import com.mycollab.common.domain.LiveInstanceExample
 import com.mycollab.pro.common.dao.LiveInstanceMapper
-import org.joda.time.DateTime
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 
