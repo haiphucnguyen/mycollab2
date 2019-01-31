@@ -49,13 +49,18 @@ class TagServiceImpl(private val tagMapper: TagMapper,
         return tagMapper.selectByExample(ex)
     }
 
-    override fun findTagsInProject(projectId: Int, @CacheKey accountId: Int): List<AggregateTag> {
+    override fun findAggregateTagsInProject(projectId: Int, @CacheKey accountId: Int): List<AggregateTag> {
         val searchCriteria = TagSearchCriteria()
         searchCriteria.saccountid = NumberSearchField.equal(accountId)
         searchCriteria.projectId = NumberSearchField.equal(projectId)
         return tagMapperExt.findPageableListByCriteria(searchCriteria, RowBounds(0, Integer.MAX_VALUE))
     }
 
-    override fun deleteByExample(example: TagExample): Int? =
-            tagMapper.deleteByExample(example)
+    override fun findTagsInProject(projectId: Int, accountId: Int): List<Tag> {
+        val ex = TagExample()
+        ex.createCriteria().andExtratypeidEqualTo(projectId).andSaccountidEqualTo(accountId)
+        return tagMapper.selectByExample(ex)
+    }
+
+    override fun deleteByExample(example: TagExample): Int? = tagMapper.deleteByExample(example)
 }

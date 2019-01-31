@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycollab.pro.module.project.dao.StandupReportMapper">
+<mapper namespace="com.mycollab.module.project.dao.StandupReportMapper">
   <resultMap id="BaseResultMap" type="com.mycollab.module.project.domain.StandupReport">
     <!--
       WARNING - @mbg.generated

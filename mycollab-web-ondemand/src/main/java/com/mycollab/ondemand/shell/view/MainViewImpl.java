@@ -39,6 +39,9 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 /**
  * @author MyCollab Ltd
  * @since 5.3.5
@@ -72,10 +75,10 @@ public class MainViewImpl extends AbstractMainView {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
-                DateTime trialFrom = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime()));
-                DateTime trialTo = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30)));
-                Duration dur = new Duration(new DateTime(), trialTo);
-                int daysLeft = dur.toStandardDays().getDays();
+                LocalDate trialFrom = MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime().toLocalDate());
+                LocalDate trialTo = MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30));
+                Period dur = Period.between(LocalDate.now(), trialTo);
+                int daysLeft = dur.getDays();
                 if (daysLeft < 0) {
                     trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
                     UserUIContext.getInstance().setIsValidAccount(false);

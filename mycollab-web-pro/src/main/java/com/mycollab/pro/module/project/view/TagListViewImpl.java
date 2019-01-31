@@ -101,7 +101,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         }
 
         void displayTagItems() {
-            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
+            List<AggregateTag> tags = tagService.findAggregateTagsInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
                 this.addComponent(new Label(UserUIContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
             } else {

@@ -1,12 +1,11 @@
-package com.mycollab.ondemand.module.project.service
+package com.mycollab.module.project.service
 
 import com.mycollab.db.arguments.*
 import com.mycollab.module.project.domain.SimpleStandupReport
 import com.mycollab.module.project.domain.criteria.StandupReportSearchCriteria
-import com.mycollab.module.project.service.StandupReportService
-import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
+import com.mycollab.test.spring.IntegrationServiceTest
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.tuple
 import org.junit.jupiter.api.Test
@@ -26,7 +25,7 @@ class StandupReportServiceTest : IntegrationServiceTest() {
         val criteria = StandupReportSearchCriteria()
         criteria.projectIds = SetSearchField(1)
         criteria.logBy = StringSearchField.and("hainguyen")
-        val d = LocalDate.of(2013, 2, 13);
+        val d = LocalDate.of(2013, 3, 13);
         criteria.onDate = DateSearchField(d, DateSearchField.EQUAL)
         criteria.saccountid = NumberSearchField(1)
         val reports = reportService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleStandupReport>
@@ -37,7 +36,7 @@ class StandupReportServiceTest : IntegrationServiceTest() {
     @Test
     @DataSet
     fun testFindUsersNotDoReportYet() {
-        val d = LocalDate.of(2013, 2, 13)
+        val d = LocalDate.of(2013, 3, 13)
         val users = reportService.findUsersNotDoReportYet(1, d, 1)
         assertThat(users.size).isEqualTo(1)
         assertThat(users[0].username).isEqualTo("linhduong")

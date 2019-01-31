@@ -1,4 +1,4 @@
-package com.mycollab.pro.module.project.dao
+package com.mycollab.module.project.dao
 
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.module.project.domain.SimpleStandupReport

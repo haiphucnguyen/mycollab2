@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mycollab.pro.module.project.dao.StandupReportMapperExt">
-    <resultMap extends="com.mycollab.pro.module.project.dao.StandupReportMapper.ResultMapWithBLOBs"
+<mapper namespace="com.mycollab.module.project.dao.StandupReportMapperExt">
+    <resultMap extends="com.mycollab.module.project.dao.StandupReportMapper.ResultMapWithBLOBs"
         id="StandupResult" type="com.mycollab.module.project.domain.SimpleStandupReport">
         <result column="logByFullName" property="logByFullName" jdbcType="VARCHAR" />
         <result column="logByAvatarId" property="logByAvatarId" jdbcType="VARCHAR" />
@@ -136,7 +136,7 @@
         <![CDATA[
         SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.avatarId
             FROM s_user, m_prj_member
-            WHERE m_prj_member.status = "Active"  AND m_prj_member.username = s_user.username AND
+            WHERE m_prj_member.status = 'Active'  AND m_prj_member.username = s_user.username AND
                 m_prj_member.projectId = @{_parameter.projectId} AND
             (SELECT COUNT(*) FROM m_prj_standup WHERE m_prj_standup.projectId = @{_parameter.projectId} AND
                 CAST(m_prj_standup.forday AS DATE) = @{_parameter.onDate}
