@@ -97,7 +97,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
 
     private class TagCloudComp extends CssLayout {
         TagCloudComp() {
-            this.setStyleName("tagcloud");
+            this.setStyleName("tag-cloud");
         }
 
         void displayTagItems() {
@@ -121,7 +121,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
 
         TagButton(final AggregateTag tag) {
             super(tag.getName() + " (" + tag.getCount() + ")");
-            this.setStyleName("tagbutton");
+            this.setStyleName("tag-button");
             this.addClickListener(clickEvent -> {
                 isSelected = !isSelected;
                 if (isSelected) {
