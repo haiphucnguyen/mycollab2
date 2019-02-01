@@ -22,6 +22,7 @@ import com.mycollab.module.billing.UserStatusConstants;
 import com.mycollab.module.user.accountsettings.view.AccountModule;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.domain.SimpleUser;
+import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.event.UserEvent;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.module.user.ui.SettingUIConstants;
@@ -87,7 +88,8 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
             user.setRegisterstatus(RegisterStatusConstants.NOT_LOG_IN_YET);
         }
 
-        if (user.getUsername() == null) {
+        User existingUser = userService.findUserByUserName(user.getUsername());
+        if (existingUser == null) {
             if (user.getPassword() == null) {
                 user.setPassword(RandomPasswordGenerator.generateRandomPassword());
             }

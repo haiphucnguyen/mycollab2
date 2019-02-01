@@ -105,7 +105,7 @@
                     </dependency>
                 </dependencies>
                 <executions>
-<!--
+
                     <execution>
                         <id>Project Artifacts Generator</id>
                         <phase>validate</phase>
@@ -185,7 +185,7 @@
                             <overwrite>true</overwrite>
                         </configuration>
                     </execution>
--->
+
                 </executions>
             </plugin>
         </plugins>
