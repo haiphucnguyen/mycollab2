@@ -47,7 +47,7 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     private ProjectCustomizeFeatureStep customizeFeatureStep;
 
     public ProjectAddWindow() {
-        this(new Project());
+        this(new Project().withSaccountid(AppUI.getAccountId()));
     }
 
     public ProjectAddWindow(Project valuePrj) {

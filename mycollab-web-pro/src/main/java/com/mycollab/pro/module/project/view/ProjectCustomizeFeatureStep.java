@@ -109,6 +109,7 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         features.setDisplaypage(getFeatureSelected(displayPageSelection));
         features.setDisplaystandup(getFeatureSelected(displayStandupSelection));
         features.setDisplaytimelogging(getFeatureSelected(displayTimeSelection));
+        features.setDisplayfile(false);
         ProjectCustomizeViewService projectCustomizeViewService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
         projectCustomizeViewService.saveWithSession(features, UserUIContext.getUsername());
     }
