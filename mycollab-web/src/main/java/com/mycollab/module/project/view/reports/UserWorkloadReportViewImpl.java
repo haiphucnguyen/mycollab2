@@ -9,9 +9,11 @@ import com.mycollab.vaadin.mvp.ViewComponent;
  */
 @ViewComponent
 public class UserWorkloadReportViewImpl extends AbstractVerticalPageView implements UserWorkloadReportView {
+
     @Override
     public void display() {
         removeAllComponents();
+
 
     }
 }

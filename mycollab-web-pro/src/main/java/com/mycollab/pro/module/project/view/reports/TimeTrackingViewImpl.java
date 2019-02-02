@@ -176,7 +176,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             userField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
             row.addColumn().withDisplayRules(12, 12, 6, 4).withComponent(new MHorizontalLayout(userLbl, userField));
 
-            MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
+            MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> searchTimeReporting())
                     .withStyleName(WebThemes.BUTTON_ACTION);
 
             MVerticalLayout searchPanel = new MVerticalLayout(searchLayout, queryBtn).withStyleName(WebThemes.BOX).withAlign(queryBtn, Alignment.MIDDLE_CENTER);

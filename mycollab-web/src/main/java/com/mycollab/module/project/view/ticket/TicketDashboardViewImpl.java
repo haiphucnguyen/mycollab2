@@ -254,7 +254,10 @@ public class TicketDashboardViewImpl extends AbstractVerticalPageView implements
     @Override
     public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
-        baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+        if (baseCriteria.getTypes() == null) {
+            baseCriteria.setTypes(CurrentProjectVariables.getRestrictedTicketTypes());
+        }
+
         queryAndDisplayTickets();
         displayTicketsStatistic();
     }
