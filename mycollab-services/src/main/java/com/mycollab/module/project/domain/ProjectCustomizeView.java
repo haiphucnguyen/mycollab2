@@ -447,7 +447,6 @@ public class ProjectCustomizeView extends ValuedBean {
         displaystandup,
         displaytimelogging,
         displaypage,
-        displayfile,
         displayinvoice,
         displayticket;
 

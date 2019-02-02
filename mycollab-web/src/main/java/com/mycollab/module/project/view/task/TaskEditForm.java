@@ -36,6 +36,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
@@ -70,14 +71,13 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
     }
 
-    class FormLayoutFactory extends AbstractFormLayoutFactory {
-        private IFormLayoutFactory formLayoutFactory;
+    class FormLayoutFactory extends WrappedFormLayoutFactory {
 
         @Override
         public AbstractComponent getLayout() {
             MVerticalLayout layout = new MVerticalLayout().withMargin(false);
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getAddForm());
-            AbstractComponent gridLayout = formLayoutFactory.getLayout();
+            wrappedLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getAddForm());
+            AbstractComponent gridLayout = wrappedLayoutFactory.getLayout();
 
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
             gridLayout.addStyleName("window-max-height");
@@ -111,6 +111,7 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
                             monitorItem.setTypeid(taskId + "");
                             monitorItem.setUsername(follower);
                             monitorItem.setExtratypeid(bean.getProjectid());
+                            monitorItem.setCreatedtime(LocalDateTime.now());
                             monitorItems.add(monitorItem);
                         }
                         MonitorItemService monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
@@ -132,15 +133,6 @@ public class TaskEditForm extends AdvancedEditBeanForm<SimpleTask> {
 
             layout.with(gridLayout, buttonControls).expand(gridLayout);
             return layout;
-        }
-
-        @Override
-        protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
-            try {
-                return formLayoutFactory.attachField(propertyId, field);
-            } catch (Exception e) {
-                throw new MyCollabException("Exception " + propertyId);
-            }
         }
     }
 }

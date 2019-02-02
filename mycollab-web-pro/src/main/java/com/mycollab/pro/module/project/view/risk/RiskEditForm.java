@@ -13,6 +13,7 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
@@ -43,14 +44,13 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
 
     }
 
-    class FormLayoutFactory extends AbstractFormLayoutFactory {
-        private IFormLayoutFactory formLayoutFactory;
+    class FormLayoutFactory extends WrappedFormLayoutFactory {
 
         @Override
         public AbstractComponent getLayout() {
             MVerticalLayout layout = new MVerticalLayout().withMargin(false);
-            formLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
-            AbstractComponent gridLayout = formLayoutFactory.getLayout();
+            wrappedLayoutFactory = new DefaultDynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
+            AbstractComponent gridLayout = wrappedLayoutFactory.getLayout();
             gridLayout.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
             gridLayout.addStyleName("window-max-height");
 
@@ -82,11 +82,6 @@ public class RiskEditForm extends AdvancedEditBeanForm<SimpleRisk> {
 
             layout.with(gridLayout, buttonControls).expand(gridLayout).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             return layout;
-        }
-
-        @Override
-        protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
-            return formLayoutFactory.attachField(propertyId, field);
         }
     }
 }
