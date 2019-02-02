@@ -17,6 +17,7 @@
 package com.mycollab.module.user.accountsettings.team.view;
 
 import com.mycollab.core.utils.RandomPasswordGenerator;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.billing.RegisterStatusConstants;
 import com.mycollab.module.billing.UserStatusConstants;
 import com.mycollab.module.user.accountsettings.view.AccountModule;
@@ -90,7 +91,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
         User existingUser = userService.findUserByUserName(user.getUsername());
         if (existingUser == null) {
-            if (user.getPassword() == null) {
+            if (StringUtils.isBlank(user.getPassword())) {
                 user.setPassword(RandomPasswordGenerator.generateRandomPassword());
             }
             String userPassword = user.getPassword();

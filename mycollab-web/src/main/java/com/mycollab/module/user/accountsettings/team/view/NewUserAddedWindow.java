@@ -40,8 +40,8 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd
  * @since 5.3.1
  */
-public class NewUserAddedWindow extends MWindow {
-    public NewUserAddedWindow(final SimpleUser user, String uncryptPassword) {
+class NewUserAddedWindow extends MWindow {
+    NewUserAddedWindow(final SimpleUser user, String uncryptPassword) {
         super(UserUIContext.getMessage(UserI18nEnum.NEW));
         MVerticalLayout content = new MVerticalLayout();
         this.withModal(true).withResizable(false).withClosable(false).withCenter().withWidth("600px").withContent(content);
