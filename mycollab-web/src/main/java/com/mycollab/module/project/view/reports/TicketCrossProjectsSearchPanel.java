@@ -8,8 +8,9 @@ import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.Param;
 import com.mycollab.db.query.SearchFieldInfo;
 import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
-import com.mycollab.module.project.view.ticket.TicketSearchPanel;
+import com.mycollab.module.project.ui.components.UserProjectListSelect;
 import com.mycollab.shell.event.ShellEvent;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
@@ -36,15 +37,17 @@ public class TicketCrossProjectsSearchPanel extends DefaultGenericSearchPanel<Pr
 
     private static Param[] paramFields = new Param[]{
             ProjectTicketSearchCriteria.p_projectIds,
-            ProjectTicketSearchCriteria.p_types,
-            ProjectTicketSearchCriteria.p_name, ProjectTicketSearchCriteria.p_priority,
-            ProjectTicketSearchCriteria.p_milestones, ProjectTicketSearchCriteria.p_startDate,
-            ProjectTicketSearchCriteria.p_endDate, ProjectTicketSearchCriteria.p_dueDate,
-            ProjectTicketSearchCriteria.p_assignee, ProjectTicketSearchCriteria.p_createdUser};
+            ProjectTicketSearchCriteria.p_name, ProjectTicketSearchCriteria.p_startDate,
+            ProjectTicketSearchCriteria.p_endDate, ProjectTicketSearchCriteria.p_dueDate};
 
     @Override
     protected SearchLayout<ProjectTicketSearchCriteria> createBasicSearchLayout() {
         return new TicketBasicSearchLayout();
+    }
+
+    @Override
+    protected SearchLayout<ProjectTicketSearchCriteria> createAdvancedSearchLayout() {
+        return new TicketAdvancedSearchLayout();
     }
 
     private class TicketBasicSearchLayout extends BasicSearchLayout<ProjectTicketSearchCriteria> {
@@ -103,6 +106,38 @@ public class TicketCrossProjectsSearchPanel extends DefaultGenericSearchPanel<Pr
             EventBusFactory.getInstance().post(new ShellEvent.AddQueryParam(this, searchFieldInfos));
             searchCriteria = SearchFieldInfo.buildSearchCriteria(ProjectTicketSearchCriteria.class, searchFieldInfos);
 
+            return searchCriteria;
+        }
+    }
+
+    private class TicketAdvancedSearchLayout extends DynamicQueryParamLayout<ProjectTicketSearchCriteria> {
+        private static final long serialVersionUID = 1L;
+
+        private TicketAdvancedSearchLayout() {
+            super(TicketCrossProjectsSearchPanel.this, ProjectTypeConstants.TICKET);
+        }
+
+        @Override
+        protected Class<ProjectTicketSearchCriteria> getType() {
+            return ProjectTicketSearchCriteria.class;
+        }
+
+        @Override
+        public Param[] getParamFields() {
+            return paramFields;
+        }
+
+        @Override
+        protected Component buildSelectionComp(String fieldId) {
+            if ("projectid".equals(fieldId)) {
+                return new UserProjectListSelect();
+            }
+            return null;
+        }
+
+        @Override
+        protected ProjectTicketSearchCriteria fillUpSearchCriteria() {
+            searchCriteria = super.fillUpSearchCriteria();
             return searchCriteria;
         }
     }

@@ -67,11 +67,11 @@ public class TicketQueryInfo {
         }
     };
 
-    public static final SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TICKETS,
+    public static final SearchQueryInfo allTicketsQuery = new SearchQueryInfo(ALL_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_TICKETS),
             SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_projectIds, new CurrentProjectIdInjector()));
 
-    public static final SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo(OPEN_TICKETS,
+    public static final SearchQueryInfo allOpenTicketsQuery = new SearchQueryInfo(OPEN_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_OPEN_TICKETS),
             SearchFieldInfo.notInCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
                 @Override
@@ -95,7 +95,7 @@ public class TicketQueryInfo {
                 }
             }));
 
-    public static final SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TICKETS,
+    public static final SearchQueryInfo overdueTicketsQuery = new SearchQueryInfo(OVERDUE_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_OVERDUE_TICKETS),
             new SearchFieldInfo(SearchField.AND, ProjectTicketSearchCriteria.p_dueDate, BEFORE.name(), new LazyValueInjector() {
                 @Override
@@ -124,7 +124,7 @@ public class TicketQueryInfo {
         }
     }));
 
-    public static final SearchQueryInfo allClosedTaskQuery = new SearchQueryInfo(CLOSED_TICKETS,
+    public static final SearchQueryInfo allClosedTicketsQuery = new SearchQueryInfo(CLOSED_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_ALL_CLOSED_TICKETS),
             SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_status, new VariableInjector() {
                 @Override
@@ -148,23 +148,23 @@ public class TicketQueryInfo {
                 }
             }));
 
-    public static final SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TICKETS,
+    public static final SearchQueryInfo myTicketsQuery = new SearchQueryInfo(MY_TICKETS,
             UserUIContext.getMessage(TicketI18nEnum.VAL_MY_TICKETS),
             SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_assignee,
                     ConstantValueInjector.valueOf(Sets.newHashSet(UserUIContext.getUsername()))));
 
-    public static final SearchQueryInfo tasksCreatedByMeQuery = new SearchQueryInfo(TICKETS_CREATED_BY_ME, UserUIContext.getMessage(TicketI18nEnum.VAL_TICKETS_CREATED_BY_ME),
+    public static final SearchQueryInfo ticketsCreatedByMeQuery = new SearchQueryInfo(TICKETS_CREATED_BY_ME, UserUIContext.getMessage(TicketI18nEnum.VAL_TICKETS_CREATED_BY_ME),
             SearchFieldInfo.inCollection(ProjectTicketSearchCriteria.p_createdUser, ConstantValueInjector.valueOf(Sets.newHashSet(UserUIContext.getUsername()))));
 
-    public static final SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo(NEW_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_THIS_WEEK),
+    public static final SearchQueryInfo newTicketsThisWeekQuery = new SearchQueryInfo(NEW_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_THIS_WEEK),
             SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.THIS_WEEK));
 
-    public static final SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_THIS_WEEK),
+    public static final SearchQueryInfo updateTicketsThisWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_THIS_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_THIS_WEEK),
             SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.THIS_WEEK));
 
-    public static final SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo(NEW_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_LAST_WEEK),
+    public static final SearchQueryInfo newTicketsLastWeekQuery = new SearchQueryInfo(NEW_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_NEW_LAST_WEEK),
             SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_createtime, VariableInjector.LAST_WEEK));
 
-    public static final SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_LAST_WEEK),
+    public static final SearchQueryInfo updateTicketsLastWeekQuery = new SearchQueryInfo(UPDATE_TICKETS_LAST_WEEK, UserUIContext.getMessage(TicketI18nEnum.VAL_UPDATE_LAST_WEEK),
             SearchFieldInfo.inDateRange(ProjectTicketSearchCriteria.p_lastupdatedtime, VariableInjector.LAST_WEEK));
 }

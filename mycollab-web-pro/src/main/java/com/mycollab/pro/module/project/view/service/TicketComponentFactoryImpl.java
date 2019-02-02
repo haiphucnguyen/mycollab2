@@ -13,7 +13,6 @@ import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.common.service.CommentService;
 import com.mycollab.common.service.MonitorItemService;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.core.SecureAccessException;
 import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.core.utils.StringUtils;
@@ -475,7 +474,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             MVerticalLayout content = new MVerticalLayout();
             withModal(true).withResizable(false).withCenter().withWidth(WebThemes.WINDOW_FORM_WIDTH).withContent(content);
 
-            UserProjectComboBox projectListSelect = new UserProjectComboBox(UserUIContext.getUsername());
+            UserProjectComboBox projectListSelect = new UserProjectComboBox();
             projectListSelect.setEmptySelectionAllowed(false);
             selectedProject = projectListSelect.setSelectedProjectById(projectId);
 
@@ -634,11 +633,11 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             protected void doHide() {
                 String timeVal = timeInput.getValue();
                 if (StringUtils.isNotBlank(timeVal)) {
-                    Long delta = HumanTime.eval(timeVal).getDelta();
+                    long delta = HumanTime.eval(timeVal).getDelta();
                     LocalDate date = dateField.getValue();
                     if (delta > 0) {
                         ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                        Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                        Double hours = (double) delta / (1000 * 60 * 60);
                         ItemTimeLogging timeLogging = new ItemTimeLogging();
                         timeLogging.setCreateduser(UserUIContext.getUsername());
                         timeLogging.setIsbillable(isBillable);
@@ -658,7 +657,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
                         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                         searchCriteria.setType(StringSearchField.and(ticket.getType()));
                         searchCriteria.setTypeId(new NumberSearchField(ticket.getTypeId()));
-                        Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                        double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                         if (isBillable) {
                             this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                         } else {
