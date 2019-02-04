@@ -11,6 +11,7 @@ import com.mycollab.vaadin.AsyncInvoker
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.ui.ELabel
 import com.mycollab.vaadin.web.ui.AbstractNotificationComponent
+import com.mycollab.vaadin.web.ui.WebThemes
 import com.vaadin.ui.Component
 import com.vaadin.ui.CssLayout
 import com.vaadin.ui.Notification
@@ -62,7 +63,8 @@ class NotificationComponent : AbstractNotificationComponent() {
 
     inner class ProjectNotificationComponent(notification: EntryUpdateNotification) : CssLayout() {
         init {
-            val noLabel = ELabel.html(notification.message)
+            setWidth("100%")
+            val noLabel = ELabel.html(notification.message).withStyleName(WebThemes.LABEL_WORD_WRAP)
             addComponent(noLabel)
         }
     }

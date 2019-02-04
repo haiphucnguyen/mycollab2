@@ -49,7 +49,6 @@ abstract class AbstractNotificationComponent : PopupButton(), PopupButton.PopupV
     private val notificationContainer = MVerticalLayout().withSpacing(false).withMargin(false).withStyleName(WebThemes.SCROLLABLE_CONTAINER)
 
     init {
-//        Restrain(notificationContainer).setMaxWidth("500px").setMaxHeight("500px")
         this.content = notificationContainer
         this.icon = VaadinIcons.BELL
         this.styleName = "notification-button"

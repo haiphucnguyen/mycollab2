@@ -243,7 +243,11 @@ $v-line-height--header:1.5em;
 
   .v-popupbutton-popup-notification-button .popupContent {
     @include my-box-shadow;
+    max-width: 500px;
+    max-height: 500px;
+    overflow-y: auto;
   }
+
   .v-slot-notification-type {
     padding: 10px;
     border-bottom: 1px solid $my-separator-color;
@@ -252,11 +256,9 @@ $v-line-height--header:1.5em;
     }
     .notification-type-warning .v-icon {
       color: #c31616;
-      font-size:15px;
     }
     .notification-type-news .v-icon {
       color: #12ca07;
-      font-size:15px;
     }
     .v-label span {
       word-wrap: break-word;
