@@ -1,6 +1,7 @@
 package com.mycollab.common.service.impl
 
 import com.mycollab.common.dao.NotificationItemMapper
+import com.mycollab.common.dao.NotificationItemMapperExt
 import com.mycollab.common.domain.NotificationItem
 import com.mycollab.common.domain.NotificationItemExample
 import com.mycollab.common.service.NotificationItemService
@@ -22,6 +23,7 @@ import javax.sql.DataSource
  */
 @Service
 class NotificationItemServiceImpl(private val notificationItemMapper: NotificationItemMapper,
+                                  private val notificationItemMapperExt: NotificationItemMapperExt,
                                   private val dataSource: DataSource) : DefaultCrudService<Int, NotificationItem>(), NotificationItemService {
 
     override val crudMapper: ICrudGenericDAO<Int, NotificationItem>
@@ -62,9 +64,12 @@ class NotificationItemServiceImpl(private val notificationItemMapper: Notificati
         notificationItemMapper.deleteByExample(example)
     }
 
-    override fun findUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem> {
+    override fun getTotalUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int): Long {
         val example = NotificationItemExample()
-        example.createCriteria().andNotificationuserEqualTo(targetUser).andIsreadEqualTo(false)
-        return notificationItemMapper.selectByExample(example)
+        example.createCriteria().andNotificationuserEqualTo(targetUser).andSaccountidEqualTo(sAccountId).andIsreadEqualTo(false)
+        return notificationItemMapper.countByExample(example)
     }
+
+    override fun findTopUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int, num: Int): List<NotificationItem> =
+            notificationItemMapperExt.findTopUnreadNotificationItemsByUser(targetUser, sAccountId, num)
 }
