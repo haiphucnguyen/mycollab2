@@ -13,5 +13,7 @@ interface NotificationItemService : ICrudService<Int, NotificationItem> {
 
     fun markNotificationRead(targetUser: String, module: String, type: String, typeId: String)
 
+    fun markProjectNotificationsAllRead(notificationIds: List<Int>)
+
     fun findUnreadNotificationItemsByUser(targetUser: String, sAccountId: Int): List<NotificationItem>
 }

@@ -1,7 +1,6 @@
 package com.mycollab.pro.vaadin.web.ui
 
 import com.mycollab.common.EntryUpdateNotification
-import com.mycollab.common.ModuleNameConstants
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.common.service.NotificationItemService
 import com.mycollab.core.AbstractNotification
@@ -17,6 +16,7 @@ import com.vaadin.ui.CssLayout
 import com.vaadin.ui.Notification
 import com.vaadin.ui.UI
 import org.slf4j.LoggerFactory
+import org.vaadin.viritin.button.MButton
 
 /**
  * @author MyCollab Ltd
@@ -63,9 +63,16 @@ class NotificationComponent : AbstractNotificationComponent() {
 
     inner class ProjectNotificationComponent(notification: EntryUpdateNotification) : CssLayout() {
         init {
+            val notificationService = AppContextUtil.getSpringBean(NotificationItemService::class.java)
             setWidth("100%")
             val noLabel = ELabel.html(notification.message).withStyleName(WebThemes.LABEL_WORD_WRAP)
             addComponent(noLabel)
+            val readBtn = MButton("Read").withStyleName(WebThemes.BUTTON_ACTION).withListener {
+                notificationService.markNotificationRead(UserUIContext.getUsername(), notification.module, notification.type, notification.typeId)
+                this@NotificationComponent.removeNotification(notification)
+                this@NotificationComponent.(notification)
+            }
+            addComponent(readBtn)
         }
     }
 
