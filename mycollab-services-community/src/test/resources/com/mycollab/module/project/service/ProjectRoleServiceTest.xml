@@ -5,5 +5,17 @@
 
     <m_prj_project id="1" name="aaa" shortName="a" status="Open" sAccountId="1"/>
 
+    <m_prj_project id="2" name="bbb" shortName="b" status="Open" sAccountId="1"/>
+
     <m_prj_role id="1" roleName="role1" sAccountId="1" projectId="1"/>
+
+    <m_prj_role id="2" roleName="role2" sAccountId="1" projectId="1"/>
+
+    <m_prj_role id="3" roleName="role3" sAccountId="1" projectId="2"/>
+
+    <m_prj_role_permission id="1" roleId="1" roleVal="\{'sample':true\}" projectId="1"/>
+
+    <m_prj_role_permission id="2" roleId="2" roleVal="\{'sample':true\}" projectId="1"/>
+
+    <m_prj_role_permission id="3" roleId="3" roleVal="\{'sample':true\}" projectId="2"/>
 </dataset>

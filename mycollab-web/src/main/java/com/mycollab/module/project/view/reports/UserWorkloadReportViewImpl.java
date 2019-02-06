@@ -51,34 +51,39 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
         wrapBody.removeAllComponents();
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        List<Integer> projects;
+        List<Integer> projectKeys;
         if (UserUIContext.isAdmin()) {
-            projects = projectService.getProjectKeysUserInvolved(null, AppUI.getAccountId());
+            projectKeys = projectService.getProjectKeysUserInvolved(null, AppUI.getAccountId());
         } else {
-            projects = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-        }
-
-        ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-        List<Tuple2<Integer, PermissionMap>> projectsPermissions;
-        if (UserUIContext.isAdmin()) {
-            projectsPermissions = roleService.findProjectsPermissions(null, projects, AppUI.getAccountId());
-        } else {
-            projectsPermissions = roleService.findProjectsPermissions(UserUIContext.getUsername(), projects, AppUI.getAccountId());
+            projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
         }
 
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             public void run() {
                 ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
 
-                projectsPermissions.forEach(prjPermission -> {
-                    Integer projectId = prjPermission.getItem1();
-                    PermissionMap permissionMap = prjPermission.getItem2();
-                    ProjectTicketSearchCriteria ticketSearchCriteria = new ProjectTicketSearchCriteria();
-                    ticketSearchCriteria.setProjectIds(new SetSearchField<>(projectId));
-                    List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(ticketSearchCriteria));
-                    ticketsByCriteria.forEach(ticket -> addComponent(new ELabel(ticket.getName())));
-                    push();
-                });
+                if (UserUIContext.isAdmin()) {
+                    projectKeys.forEach(key -> {
+                        ProjectTicketSearchCriteria ticketSearchCriteria = new ProjectTicketSearchCriteria();
+                        ticketSearchCriteria.setProjectIds(new SetSearchField<>(key));
+                        List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(ticketSearchCriteria));
+                        ticketsByCriteria.forEach(ticket -> addComponent(new ELabel(ticket.getName())));
+                        push();
+                    });
+                } else {
+                    ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
+                    List<Tuple2<Integer, PermissionMap>> projectsPermissions = roleService.findProjectsPermissions(UserUIContext.getUsername(), projectKeys, AppUI.getAccountId());
+                    projectsPermissions.forEach(prjPermission -> {
+                        Integer projectId = prjPermission.getItem1();
+                        PermissionMap permissionMap = prjPermission.getItem2();
+
+                        ProjectTicketSearchCriteria ticketSearchCriteria = new ProjectTicketSearchCriteria();
+                        ticketSearchCriteria.setProjectIds(new SetSearchField<>(projectId));
+                        List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(ticketSearchCriteria));
+                        ticketsByCriteria.forEach(ticket -> addComponent(new ELabel(ticket.getName())));
+                        push();
+                    });
+                }
             }
         });
 
