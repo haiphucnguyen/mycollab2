@@ -57,7 +57,7 @@ public class ProjectSearchItemsViewImpl extends AbstractVerticalPageView impleme
         ELabel headerLbl = ELabel.h2("");
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
-        List<Integer> projectKeys = projectService.getProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
+        List<Integer> projectKeys = projectService.getOpenProjectKeysUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
         if (projectKeys.size() > 0) {
             ProjectGenericItemSearchCriteria criteria = new ProjectGenericItemSearchCriteria();
         criteria.setPrjKeys(new SetSearchField<>(projectKeys));

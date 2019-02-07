@@ -502,43 +502,56 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
 
         private void loadAssociateTicketTypePerProject() {
             typeSelection.clear();
-            ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-            SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProject.getId(), AppUI.getAccountId());
             List<String> ticketTypes = new ArrayList<>();
-            if (member != null) {
-                if (member.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    ticketTypes.add(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
-                }
 
-                if (member.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                    ticketTypes.add(UserUIContext.getMessage(BugI18nEnum.SINGLE));
-                }
-
-                if (isIncludeMilestone && (member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
+            if (UserUIContext.isAdmin()) {
+                if (isIncludeMilestone) {
                     ticketTypes.add(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
                 }
+                ticketTypes.add(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+                ticketTypes.add(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+                ticketTypes.add(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
 
-                if (member.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                    ticketTypes.add(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
-                }
+            } else {
+                ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
+                SimpleProjectMember member = projectMemberService.findMemberByUsername(UserUIContext.getUsername(), selectedProject.getId(), AppUI.getAccountId());
 
-                if (ticketTypes.size() > 0) {
-                    typeSelection.setItems(ticketTypes);
-                    typeSelection.setValue(ticketTypes.get(0));
-                    typeSelection.setItemIconGenerator((IconGenerator<String>) item -> {
-                        if (item.equals(UserUIContext.getMessage(TaskI18nEnum.SINGLE))) {
-                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK);
-                        } else if (item.equals(UserUIContext.getMessage(BugI18nEnum.SINGLE))) {
-                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG);
-                        } else if (item.equals(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))) {
-                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
-                        } else if (item.equals(UserUIContext.getMessage(RiskI18nEnum.SINGLE))) {
-                            return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK);
-                        } else {
-                            throw new IllegalArgumentException();
-                        }
-                    });
+                if (member != null) {
+                    if (isIncludeMilestone && (member.canWrite(ProjectRolePermissionCollections.MILESTONES))) {
+                        ticketTypes.add(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE));
+                    }
+
+                    if (member.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                        ticketTypes.add(UserUIContext.getMessage(TaskI18nEnum.SINGLE));
+                    }
+
+                    if (member.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                        ticketTypes.add(UserUIContext.getMessage(BugI18nEnum.SINGLE));
+                    }
+
+                    if (member.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                        ticketTypes.add(UserUIContext.getMessage(RiskI18nEnum.SINGLE));
+                    }
                 }
+            }
+
+
+            if (ticketTypes.size() > 0) {
+                typeSelection.setItems(ticketTypes);
+                typeSelection.setValue(ticketTypes.get(0));
+                typeSelection.setItemIconGenerator((IconGenerator<String>) item -> {
+                    if (item.equals(UserUIContext.getMessage(TaskI18nEnum.SINGLE))) {
+                        return ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK);
+                    } else if (item.equals(UserUIContext.getMessage(BugI18nEnum.SINGLE))) {
+                        return ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG);
+                    } else if (item.equals(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))) {
+                        return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE);
+                    } else if (item.equals(UserUIContext.getMessage(RiskI18nEnum.SINGLE))) {
+                        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK);
+                    } else {
+                        throw new IllegalArgumentException();
+                    }
+                });
             }
         }
 

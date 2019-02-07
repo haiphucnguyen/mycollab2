@@ -1,7 +1,7 @@
 
 Release Notes
 ==============
-MyCollab is an open source Collaboration Platform of Project Management, CRM and Document.
+MyCollab is an open source Collaboration Platform of Project Management.
 
 MyCollab is licensed under the Affero GPLv3 terms.
 
@@ -45,18 +45,31 @@ Version 7.0.0
 
 **Library Upgrades**
 
-* Java driver, Vaadin, Infinispan, etc.
+* Java driver, Mybatis, Spring boot, Vaadin, Infinispan, etc.
 
 **Improvements & New Features**
 
 * Improve the overall performance
 * Remove the CRM, and File Management module
-* Support multiple database. Tested MyCollab with MySQL, MS SQL Server, Oracle, Postgre, and H2
+* Support multiple database. Tested MyCollab with MySQL, H2
 * New theme
 * Mobile friend-ly support
 * Upgrade the UI pages to Vaadin 8
 * Support java 8 date time
 * Reliable testing test cases
+* Can reuse the resource assets across multiple MyCollab instances
+* Update localization from the community
+* Support basic report features in the community version
+
+**Bug Fixes**
+
+* Can not reset password
+* Do not display project dashboard when project is archived
+* Only display open projects in the project list view
+* Export to Excel documents are failed in some categories
+* Can not search by types in the ticket dashboard
+* Export files support localization
+* Admin can see all projects in the organization not only their involved projects only
 
 Version 6.0.0
 -------------

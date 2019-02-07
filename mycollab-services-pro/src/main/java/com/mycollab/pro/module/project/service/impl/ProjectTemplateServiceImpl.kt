@@ -210,8 +210,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         LOG.info("Clone project members")
         val searchCriteria = ProjectMemberSearchCriteria()
         searchCriteria.projectIds = SetSearchField(projectId)
-        searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE,
-                ProjectMemberStatusConstants.NOT_ACCESS_YET)
+        searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET)
         val members = projectMemberService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectMember>
         members.forEach {
             it.id = null
