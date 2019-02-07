@@ -70,6 +70,7 @@ Version 7.0.0
 * Can not search by types in the ticket dashboard
 * Export files support localization
 * Admin can see all projects in the organization not only their involved projects only
+* Do not display the changesets of Project type
 
 Version 6.0.0
 -------------

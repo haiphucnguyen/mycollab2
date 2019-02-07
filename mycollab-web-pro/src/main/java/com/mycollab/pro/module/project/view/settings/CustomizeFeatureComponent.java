@@ -41,25 +41,25 @@ class CustomizeFeatureComponent extends BlockWidget {
 
         MVerticalLayout leftColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
-        final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
                 UserUIContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
-        final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
-        final FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
                 UserUIContext.getMessage(TicketI18nEnum.LIST),
                 customizeView.getDisplayticket());
         leftColLayout.addComponent(displayTicketSelection);
 
-        final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
                 UserUIContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
@@ -69,19 +69,19 @@ class CustomizeFeatureComponent extends BlockWidget {
 
         MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
-        final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
-        final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
-        final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
