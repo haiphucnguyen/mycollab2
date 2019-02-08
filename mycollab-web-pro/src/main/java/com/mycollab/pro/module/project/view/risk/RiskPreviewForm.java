@@ -15,15 +15,14 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.ui.field.DateViewField;
-import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
+import com.mycollab.vaadin.ui.field.StyleViewField;
 import com.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.ContentMode;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -56,7 +55,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 if (StringUtils.isNotBlank(risk.getPriority())) {
                     VaadinIcons fontPriority = ProjectAssetsManager.getPriority(risk.getPriority());
                     String priorityLbl = fontPriority.getHtml() + " " + UserUIContext.getMessage(OptionI18nEnum.Priority.class, risk.getPriority());
-                    DefaultViewField field = new DefaultViewField(priorityLbl, ContentMode.HTML);
+                    StyleViewField field = new StyleViewField(priorityLbl);
                     field.addStyleName("priority-" + risk.getPriority().toLowerCase());
                     return field;
                 }

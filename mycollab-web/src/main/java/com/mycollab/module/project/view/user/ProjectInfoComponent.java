@@ -19,6 +19,7 @@ package com.mycollab.module.project.view.user;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.html.DivLessFormatter;
@@ -78,6 +79,19 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     .appendText(project.getHomepage()).setTarget("_blank").write())
                     .withStyleName(ValoTheme.LABEL_SMALL).withUndefinedWidth();
             homepageLbl.setDescription(UserUIContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE));
+            footer.addComponent(homepageLbl);
+        }
+
+        if (project.getPlanstartdate() != null) {
+            ELabel dateLbl = ELabel.html(VaadinIcons.TIME_FORWARD.getHtml() + " " + UserUIContext.formatDate(project.getPlanstartdate()))
+                    .withStyleName(ValoTheme.LABEL_SMALL).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE)).withUndefinedWidth();
+            footer.addComponent(dateLbl);
+        }
+
+        if (project.getPlanenddate() != null) {
+            ELabel dateLbl = ELabel.html(VaadinIcons.TIME_BACKWARD.getHtml() + " " + UserUIContext.formatDate(project.getPlanenddate()))
+                    .withStyleName(ValoTheme.LABEL_SMALL).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE)).withUndefinedWidth();
+            footer.addComponent(dateLbl);
         }
 
         if (project.getClientid() != null && !SiteConfiguration.isCommunityEdition()) {

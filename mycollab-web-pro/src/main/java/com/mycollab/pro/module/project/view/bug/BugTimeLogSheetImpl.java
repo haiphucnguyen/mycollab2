@@ -109,7 +109,6 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         BugTimeLogEditWindow(final SimpleBug bean) {
             super(bean);
             this.setCaption(UserUIContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
-            this.setModal(true);
             this.addCloseListener((CloseListener) e -> BugTimeLogSheetImpl.this.displayTime(bean));
         }
 

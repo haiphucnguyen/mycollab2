@@ -76,18 +76,19 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         }
     }
 
-    private fun cloneProjectRoles(projectId: Int, newProjectId: Int?, username: String, sAccountId: Int): Map<Int, Int> {
+    private fun cloneProjectRoles(projectId: Int, newProjectId: Int, username: String, sAccountId: Int): Map<Int, Int> {
         LOG.info("Clone project roles")
         val mapRoleIds = mutableMapOf<Int, Int>()
         val searchCriteria = ProjectRoleSearchCriteria()
         searchCriteria.projectId = NumberSearchField(projectId)
         val roles = projectRoleService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectRole>
         roles.forEach {
+            val oldRoleId = it.id
             it.id = null
             it.projectid = newProjectId
             val newRoleId = projectRoleService.saveWithSession(it, username)
             projectRoleService.savePermission(projectId, newRoleId, it.permissionMap!!, sAccountId)
-            mapRoleIds[it.id] = newRoleId
+            mapRoleIds[oldRoleId] = newRoleId
         }
         return mapRoleIds
     }
@@ -256,7 +257,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.id = null
             it.projectid = newProjectId
             val newMilestoneId = milestoneService.saveWithSession(it, username)
-            milestoneMapIds.put(milestoneId, newMilestoneId)
+            milestoneMapIds[milestoneId] = newMilestoneId
         }
         return milestoneMapIds
     }
