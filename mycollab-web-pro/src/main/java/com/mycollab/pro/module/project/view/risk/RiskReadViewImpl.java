@@ -14,6 +14,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.risk.IRiskReadView;
+import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -47,6 +48,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
     private ProjectFollowersComp<SimpleRisk> followerSheet;
+    private PlanningInfoComp planningInfoComp;
 
     public RiskReadViewImpl() {
         super(UserUIContext.getMessage(RiskI18nEnum.DETAIL), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
@@ -73,15 +75,16 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
+        planningInfoComp = new PlanningInfoComp();
 
         ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
         MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         if (SiteConfiguration.isCommunityEdition()) {
-            detailLayout.with(dateInfoComp, peopleInfoComp, followerSheet);
+            detailLayout.with(peopleInfoComp, planningInfoComp, followerSheet, dateInfoComp);
         } else {
             timeLogComp = ViewManager.getCacheComponent(RiskTimeLogSheet.class);
-            detailLayout.with(dateInfoComp, peopleInfoComp, timeLogComp, followerSheet);
+            detailLayout.with(peopleInfoComp, planningInfoComp, timeLogComp, followerSheet, dateInfoComp);
         }
         Panel detailPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), detailLayout);
         UIUtils.makeStackPanel(detailPanel);
@@ -109,6 +112,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
         followerSheet.displayFollowers(beanItem);
+        planningInfoComp.displayPlanningInfo(beanItem);
     }
 
     @Override
@@ -182,6 +186,45 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             } catch (Exception e) {
                 LOG.error("Can not build user link {} ", e);
             }
+
+            this.addComponent(layout);
+        }
+    }
+
+    private static class PlanningInfoComp extends MVerticalLayout {
+        private void displayPlanningInfo(SimpleRisk risk) {
+            this.removeAllComponents();
+            this.withMargin(false);
+
+            Label peopleInfoHeader = ELabel.html(VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PLANNING));
+            peopleInfoHeader.setStyleName("info-hdr");
+            this.addComponent(peopleInfoHeader);
+
+            GridLayout layout = new GridLayout(2, 3);
+            layout.setSpacing(true);
+            layout.setWidth("100%");
+            layout.setMargin(new MarginInfo(false, false, false, true));
+
+            ELabel startDateLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE)).withStyleName(WebThemes.META_COLOR)
+                    .withUndefinedWidth();
+            layout.addComponent(startDateLbl, 0, 0);
+
+            ELabel startDateVal = new ELabel(UserUIContext.formatDate(risk.getStartdate()));
+            layout.addComponent(startDateVal, 1, 0);
+
+            ELabel endDateLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE)).withStyleName(WebThemes.META_COLOR).withUndefinedWidth();
+            layout.addComponent(endDateLbl, 0, 1);
+
+            ELabel endDateVal = new ELabel(UserUIContext.formatDate(risk.getEnddate()));
+            layout.addComponent(endDateVal, 1, 1);
+
+            ELabel dueDateLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE)).withStyleName(WebThemes.META_COLOR).withUndefinedWidth();
+            layout.addComponent(dueDateLbl, 0, 2);
+
+            ELabel dueDateVal = new ELabel(UserUIContext.formatDate(risk.getDuedate()));
+            layout.addComponent(dueDateVal, 1, 2);
+
+            layout.setColumnExpandRatio(1, 1.0f);
 
             this.addComponent(layout);
         }

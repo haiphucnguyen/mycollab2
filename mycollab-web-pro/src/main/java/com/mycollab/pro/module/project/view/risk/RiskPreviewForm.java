@@ -10,11 +10,9 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.RiskProbability;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.mycollab.module.project.ui.form.ProjectItemViewField;
-import com.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
-import com.mycollab.vaadin.ui.field.DateViewField;
 import com.mycollab.vaadin.ui.field.I18nFormViewField;
 import com.mycollab.vaadin.ui.field.RichTextViewField;
 import com.mycollab.vaadin.ui.field.StyleViewField;
@@ -34,7 +32,7 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
     @Override
     public void setBean(SimpleRisk bean) {
         setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.RISK,
-                RiskDefaultFormLayoutFactory.getForm(), Risk.Field.name.name()));
+                RiskDefaultFormLayoutFactory.getReadForm(), Risk.Field.name.name()));
         setBeanFormFieldFactory(new RiskReadFormFieldFactory(this));
         super.setBean(bean);
     }
@@ -61,19 +59,10 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 }
             } else if (Risk.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(StatusI18nEnum.class).withStyleName(WebThemes.FIELD_NOTE);
-            } else if (Risk.Field.duedate.equalTo(propertyId) || Risk.Field.startdate.equalTo(propertyId)
-                    || Risk.Field.enddate.equalTo(propertyId)) {
-                return new DateViewField();
-            } else if (Risk.Field.createduser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getProjectid(), risk.getCreateduser(),
-                        risk.getRaisedByUserAvatarId(), risk.getRaisedByUserFullName());
-            } else if (Risk.Field.assignuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getProjectid(), risk.getAssignuser(),
-                        risk.getAssignToUserAvatarId(), risk.getAssignedToUserFullName());
             } else if (Risk.Field.response.equalTo(propertyId)) {
                 return new RichTextViewField();
             } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "", risk.getMilestoneName());
+                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid(), risk.getMilestoneName());
             } else if ("section-attachments".equals(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(risk.getProjectid(), ProjectTypeConstants.RISK, risk.getId());
             } else if (Risk.Field.consequence.equalTo(propertyId)) {

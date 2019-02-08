@@ -9,7 +9,7 @@
       border-right: 1px solid $my-separator-color;
       .top-panel {
         border-bottom: 1px solid $my-separator-color;
-        padding: $my-space 0px;
+        padding: $my-space 0px $my-space 2*$my-space;
       }
     }
     .project-right-bar {

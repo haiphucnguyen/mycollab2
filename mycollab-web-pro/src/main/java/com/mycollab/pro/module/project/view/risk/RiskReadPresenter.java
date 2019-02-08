@@ -89,7 +89,7 @@ public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implemen
             public void onPrint(Object source, SimpleRisk data) {
                 PrintButton btn = (PrintButton) source;
                 btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
-                        RiskDefaultFormLayoutFactory.getForm(), Risk.Field.id.name()));
+                        RiskDefaultFormLayoutFactory.getAddForm(), Risk.Field.id.name()));
             }
 
             @Override
