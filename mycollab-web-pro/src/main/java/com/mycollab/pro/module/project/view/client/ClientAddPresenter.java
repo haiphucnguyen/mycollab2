@@ -1,7 +1,7 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.common.UrlEncodeDecoder;
-import com.mycollab.common.domain.SimpleClient;
+import com.mycollab.common.domain.Client;
 import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.service.ClientService;
@@ -29,11 +29,11 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<SimpleClient>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<Client>() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onSave(final SimpleClient client) {
+            public void onSave(final Client client) {
                 int accountId = saveClient(client);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoRead(this, accountId));
             }
@@ -44,7 +44,7 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
             }
 
             @Override
-            public void onSaveAndNew(final SimpleClient client) {
+            public void onSaveAndNew(Client client) {
                 saveClient(client);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
             }
@@ -58,9 +58,9 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         clientContainer.addComponent(view);
 
         if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
-            SimpleClient client = null;
-            if (data.getParams() instanceof SimpleClient) {
-                client = (SimpleClient) data.getParams();
+            Client client = null;
+            if (data.getParams() instanceof Client) {
+                client = (Client) data.getParams();
             } else if (data.getParams() instanceof Integer) {
                 ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
                 client = clientService.findById((Integer) data.getParams(), AppUI.getAccountId());
@@ -84,9 +84,8 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         }
     }
 
-    private int saveClient(SimpleClient client) {
+    private int saveClient(Client client) {
         ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
-        client.setSaccountid(AppUI.getAccountId());
         if (client.getId() == null) {
             clientService.saveWithSession(client, UserUIContext.getUsername());
         } else {

@@ -47,7 +47,7 @@ public class ProjectItemViewField extends CustomField<Integer> {
 
     @Override
     protected Component initContent() {
-        if (typeId.equals("null")) {
+        if (typeId == null || typeId.equals("null")) {
             return new Label();
         }
 

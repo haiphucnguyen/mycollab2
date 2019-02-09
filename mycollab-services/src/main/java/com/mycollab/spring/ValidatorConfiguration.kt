@@ -34,6 +34,7 @@ class ValidatorConfiguration {
     @Bean
     fun validator(): LocalValidatorFactoryBean {
         val bean = LocalValidatorFactoryBean()
+
         bean.setMappingLocations(
                 ClassPathResource("validator/user-constraints.xml"),
                 ClassPathResource("validator/project-constraints.xml"),

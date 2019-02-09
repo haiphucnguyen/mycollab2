@@ -1,5 +1,6 @@
 package com.mycollab.pro.module.project.view.client;
 
+import com.mycollab.common.domain.Client;
 import com.mycollab.common.domain.SimpleClient;
 import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.FileI18nEnum;
@@ -38,8 +39,8 @@ import static com.mycollab.vaadin.web.ui.utils.FormControlsGenerator.generateEdi
  */
 @ViewComponent
 public class ClientAddViewImpl extends AbstractVerticalPageView implements ClientAddView {
-    private final AdvancedEditBeanForm<SimpleClient> editForm;
-    private SimpleClient client;
+    private final AdvancedEditBeanForm<Client> editForm;
+    private Client client;
 
     public ClientAddViewImpl() {
         this.setMargin(true);
@@ -48,7 +49,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
     }
 
     @Override
-    public void editItem(SimpleClient account) {
+    public void editItem(Client account) {
         this.client = account;
         editForm.setFormLayoutFactory(new FormLayoutFactory());
         editForm.setBeanFormFieldFactory(new ClientEditFormFieldFactory<>(editForm));
@@ -56,7 +57,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
     }
 
     @Override
-    public HasEditFormHandlers<SimpleClient> getEditFormHandlers() {
+    public HasEditFormHandlers<Client> getEditFormHandlers() {
         return editForm;
     }
 
