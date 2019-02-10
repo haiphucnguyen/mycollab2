@@ -170,6 +170,9 @@
     &:hover {
       background-color: darken($my-note-color, 5%);
     }
+    a:visited, a:link {
+      color: $my-white-color;
+    }
   }
 
   .arrow-btn {

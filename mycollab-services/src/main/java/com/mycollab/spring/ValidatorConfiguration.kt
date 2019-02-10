@@ -19,8 +19,10 @@
  */
 package com.mycollab.spring
 
+import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.io.ClassPathResource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 
@@ -35,10 +37,21 @@ class ValidatorConfiguration {
     fun validator(): LocalValidatorFactoryBean {
         val bean = LocalValidatorFactoryBean()
 
+        bean.setValidationMessageSource(messageSource())
         bean.setMappingLocations(
                 ClassPathResource("validator/user-constraints.xml"),
                 ClassPathResource("validator/project-constraints.xml"),
                 ClassPathResource("validator/tracker-constraints.xml"))
         return bean
     }
+
+    @Bean
+    fun messageSource(): MessageSource {
+        val messageSource = ReloadableResourceBundleMessageSource()
+
+        messageSource.setBasename("classpath:validation")
+        messageSource.setDefaultEncoding("UTF-8")
+        return messageSource
+    }
+
 }
