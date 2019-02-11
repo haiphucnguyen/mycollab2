@@ -11,6 +11,7 @@ import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.vaadin.data.BeanValidationBinder;
 import com.vaadin.data.Binder;
 import com.vaadin.data.HasValue;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
@@ -94,7 +95,7 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     public PopupView build() {
         final PopupView view = new BeanPopupView(generateSmallContentAsHtml());
-        view.setDescription(generateDescription());
+        view.setDescription(generateDescription(), ContentMode.HTML);
         return view;
     }
 

@@ -71,6 +71,7 @@ Version 7.0.0
 * Export files support localization
 * Admin can see all projects in the organization not only their involved projects only
 * Do not display the changesets of Project type
+* Fix issue can not send notification for some users
 
 Version 6.0.0
 -------------

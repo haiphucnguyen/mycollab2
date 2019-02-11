@@ -60,6 +60,7 @@ import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
@@ -359,7 +360,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         BugStatusPopupView(SimpleBug bug) {
             super(VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
             this.beanItem = bug;
-            this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
+            this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP), ContentMode.HTML);
         }
 
         @Override

@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view;
 
 import com.google.common.eventbus.Subscribe;
-import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.domain.FavoriteItem;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -41,7 +40,6 @@ import com.mycollab.module.tracker.service.VersionService;
 import com.mycollab.pro.module.project.view.risk.RiskDefaultFormLayoutFactory;
 import com.mycollab.pro.module.project.view.risk.RiskPreviewForm;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;
 import com.mycollab.vaadin.EventBusFactory;
@@ -50,7 +48,10 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.reporting.FormReportLayout;
 import com.mycollab.vaadin.reporting.PrintButton;
-import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.ui.BeanList;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.IBeanList;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.SearchTextField;
@@ -446,9 +447,6 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-
-                AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
-                        ModuleNameConstants.PRJ, assignment.getType(), assignment.getTypeId()));
             }
         }
     }

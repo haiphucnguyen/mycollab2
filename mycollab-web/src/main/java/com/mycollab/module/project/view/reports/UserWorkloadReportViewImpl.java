@@ -1,6 +1,5 @@
 package com.mycollab.module.project.view.reports;
 
-import com.google.common.base.MoreObjects;
 import com.hp.gagawa.java.elements.*;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
@@ -13,6 +12,7 @@ import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.html.DivLessFormatter;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.ProjectLinkGenerator;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleProject;
@@ -45,8 +45,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.*;
 import java.util.Map;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -109,12 +109,27 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
                     projectsPermissions.forEach(prjPermission -> {
                         Integer projectId = prjPermission.getItem1();
                         PermissionMap permissionMap = prjPermission.getItem2();
+                        List<String> ticketTypes = new ArrayList<>();
+                        if (permissionMap.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                            ticketTypes.add(ProjectTypeConstants.TASK);
+                        }
+
+                        if (permissionMap.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                            ticketTypes.add(ProjectTypeConstants.BUG);
+                        }
+
+                        if (permissionMap.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                            ticketTypes.add(ProjectTypeConstants.RISK);
+                        }
 
                         ProjectTicketSearchCriteria ticketSearchCriteria = new ProjectTicketSearchCriteria();
                         ticketSearchCriteria.setProjectIds(new SetSearchField<>(projectId));
-                        List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(ticketSearchCriteria));
-                        ticketsByCriteria.forEach(ticket -> addComponent(new ELabel(ticket.getName())));
-                        push();
+                        if (!ticketTypes.isEmpty()) {
+                            ticketSearchCriteria.setTypes(new SetSearchField<>(ticketTypes));
+                            List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(ticketSearchCriteria));
+                            wrapBody.addComponent(buildProjectTicketsLayout(ticketsByCriteria));
+                            push();
+                        }
                     });
                 }
             }
@@ -202,7 +217,7 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     private MVerticalLayout buildTicketComp(ProjectTicket ticket) {
         A ticketDiv = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + "")).
                 appendText(ticket.getName());
-        MVerticalLayout layout = new MVerticalLayout(ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " +ticketDiv.write()));
+        MVerticalLayout layout = new MVerticalLayout(ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " + ticketDiv.write()));
         layout.addStyleName(WebThemes.BORDER_LIST_ROW);
         if (ticket.isTask()) {
             layout.addStyleName("task");
