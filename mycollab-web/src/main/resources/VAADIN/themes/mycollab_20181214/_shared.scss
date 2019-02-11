@@ -162,17 +162,9 @@
   }
 
   .field-note {
-    border-radius: 5px;
-    padding: 3px 5px;
+    border-radius: $my-border-radius;
+    padding: $my-space/4 $my-space/2;
     margin-right: 5px;
-    color: $my-white-color;
-    background-color: $my-note-color;
-    &:hover {
-      background-color: darken($my-note-color, 5%);
-    }
-    a:visited, a:link {
-      color: $my-white-color;
-    }
   }
 
   .arrow-btn {
