@@ -411,14 +411,14 @@
 
   .kanban-layout {
     .v-gridlayout-slot {
-      padding-bottom: 10px;
+      padding-bottom: $my-space;
     }
     .assignee-block {
-      background-color: #ffffff;
+      background-color: $my-white-color;
     }
     .kanban-block {
       background-color: #fdde86;
-      padding: 10px;
+      padding: $my-space;
       .header {
         font-weight: $my-font-weight-bold;
         color: black;
@@ -430,11 +430,14 @@
       .kanban-item {
         background-color: white;
         cursor: move;
-        padding: 5px 5px 5px 10px;
-        margin: 0px 0px 2px 0px;
+        padding: $my-space/2 $my-space/2 $my-space/2 $my-space;
+        margin: 0px 0px $my-space/4 0px;
         &:hover {
           background-color: $my-hover-background-color;
         }
+      }
+      #drag-container {
+        min-height: 21px;
       }
     }
   }
