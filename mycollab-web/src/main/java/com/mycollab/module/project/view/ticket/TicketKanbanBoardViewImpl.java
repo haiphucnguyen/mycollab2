@@ -309,7 +309,7 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setMargin(false);
             dragLayoutContainer.setSpacing(true);
-            dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
+            dragLayoutContainer.setComponentVerticalDropRatio(0.1f);
             dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
             dragLayoutContainer.setDropHandler(new DropHandler() {
                 @Override

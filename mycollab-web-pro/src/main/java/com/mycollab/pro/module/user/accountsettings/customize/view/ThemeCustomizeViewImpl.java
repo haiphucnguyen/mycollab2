@@ -58,7 +58,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
 
-        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
+        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.THEME_CUSTOMIZE).getHtml() + " " +
                 UserUIContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
@@ -258,6 +258,14 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         CustomColorPickerArea actionBtnText = new CustomColorPickerArea(accountTheme.getActionbtntext());
         actionBtnText.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
+            accountTheme.setActionbtntext(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
+        });
+        actionBtnColorPane.addComponent(actionBtnText);
+
+        CustomColorPickerArea actionBtnBorder = new CustomColorPickerArea(accountTheme.getActionbtn());
+        actionBtnBorder.addValueChangeListener(colorChangeEvent -> {
             String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setActionbtntext(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
