@@ -41,10 +41,10 @@
         <module>../mycollab-license</module>
         <module>../mycollab-web-pro</module>
         <module>../mycollab-web-ondemand</module>
-        <module>../mycollab-app-ondemand</module>
         <module>../mycollab-api</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-config-server</module>
+        <module>../mycollab-app-ondemand</module>
     </modules>
 </project>
