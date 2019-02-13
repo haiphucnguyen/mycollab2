@@ -70,26 +70,26 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                             .appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
                     .setTitle(project.getLeadFullName());
             ELabel leadLbl = ELabel.html(UserUIContext.getMessage(ProjectI18nEnum.FORM_LEADER) + ": " + leadAvatar.write()).withUndefinedWidth();
-            footer.add(leadLbl, ELabel.html("&nbsp;"));
+            footer.add(leadLbl, ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
         }
         if (StringUtils.isNotBlank(project.getHomepage())) {
             ELabel homepageLbl = ELabel.html(VaadinIcons.GLOBE.getHtml() + " " + new A(project.getHomepage())
                     .appendText(project.getHomepage()).setTarget("_blank").write())
                     .withStyleName(ValoTheme.LABEL_SMALL).withUndefinedWidth();
             homepageLbl.setDescription(UserUIContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE));
-            footer.add(homepageLbl, ELabel.html("&nbsp;"));
+            footer.add(homepageLbl, ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
         }
 
         if (project.getPlanstartdate() != null) {
             ELabel dateLbl = ELabel.html(VaadinIcons.TIME_FORWARD.getHtml() + " " + UserUIContext.formatDate(project.getPlanstartdate()))
                     .withStyleName(ValoTheme.LABEL_SMALL).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE)).withUndefinedWidth();
-            footer.add(dateLbl, ELabel.html("&nbsp;"));
+            footer.add(dateLbl, ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
         }
 
         if (project.getPlanenddate() != null) {
             ELabel dateLbl = ELabel.html(VaadinIcons.TIME_BACKWARD.getHtml() + " " + UserUIContext.formatDate(project.getPlanenddate()))
                     .withStyleName(ValoTheme.LABEL_SMALL).withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE)).withUndefinedWidth();
-            footer.add(dateLbl, ELabel.html("&nbsp;"));
+            footer.add(dateLbl, ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
         }
 
         if (project.getClientid() != null && !SiteConfiguration.isCommunityEdition()) {
@@ -105,13 +105,13 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     .appendText(StringUtils.trim(project.getClientName(), 30, true)));
             ELabel clientLink = ELabel.html(clientDiv.write()).withStyleName(WebThemes.BUTTON_LINK)
                     .withUndefinedWidth();
-            footer.add(clientLink, ELabel.html("&nbsp;"));
+            footer.add(clientLink, ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
         }
 
         if (!SiteConfiguration.isCommunityEdition()) {
             A tagLink = new A("#project/tag/" + UrlEncodeDecoder.encode(project.getId()))
                     .appendText(VaadinIcons.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG));
-            footer.add(ELabel.html(tagLink.write()), ELabel.html("&nbsp;"));
+            footer.add(ELabel.html(tagLink.write()), ELabel.html("&nbsp;&nbsp;&nbsp;&nbsp;"));
 
             A favoriteLink = new A("#project/favorite/" + UrlEncodeDecoder.encode(project.getId()))
                     .appendText(VaadinIcons.STAR.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FAVORITES));

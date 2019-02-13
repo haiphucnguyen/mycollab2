@@ -20,6 +20,7 @@ import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.configuration.EnDecryptHelper
 import com.mycollab.configuration.IDeploymentMode
 import com.mycollab.core.UserInvalidInputException
+import com.mycollab.core.utils.StringUtils
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
@@ -92,11 +93,11 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
             record.password = EnDecryptHelper.encryptSaltPassword(password)
         }
 
-        if (record.email == null) {
+        if (StringUtils.isBlank(record.email)) {
             record.email = record.username
         }
 
-        if (record.lastname == null) {
+        if (StringUtils.isBlank(record.lastname)) {
             val userEmail = record.email
             val index = userEmail.lastIndexOf("@")
             if (index > 0) {
@@ -185,11 +186,12 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
             }
         }
 
-        if (record.username != record.email) {
+        if (StringUtils.isBlank(record.email)) {
+            record.email = record.username
             val ex = UserExample()
             ex.createCriteria().andUsernameEqualTo(record.email)
             val numUsers = userMapper.countByExample(ex)
-            if (numUsers > 0) {
+            if (numUsers > 1) {
                 throw UserInvalidInputException("Email %s is already existed in system. Please choose another email ${record.email}")
             }
         }
@@ -197,7 +199,6 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         // now we keep username similar than email
         val ex = UserExample()
         ex.createCriteria().andUsernameEqualTo(record.username)
-        record.username = record.email
         userMapper.updateByExampleSelective(record, ex)
 
         val userAccountEx = UserAccountExample()
@@ -272,12 +273,11 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
                         val rolePer = roles[0] as RolePermission
                         val permissionMap = PermissionMap.fromJsonString(rolePer.roleval)
                         user.permissionMaps = permissionMap
-                        LOG.debug("Find role match to user $username")
                     } else {
-                        LOG.debug("We can not find any role associate to user $username")
+                        LOG.error("We can not find any role associate to user $username")
                     }
                 } else {
-                    LOG.debug("User %s has no any role $username")
+                    LOG.error("User %s has no any role $username")
                 }
             }
             user.password = null
@@ -317,10 +317,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         userAccountMapper.updateByExampleSelective(userAccount, userAccountEx)
 
         // notify users are "deleted"
-        for (username in usernames) {
-            val event = DeleteUserEvent(username, accountId)
-            asyncEventBus.post(event)
-        }
+        usernames.forEach { asyncEventBus.post(DeleteUserEvent(it, accountId)) }
     }
 
     override fun findUserByUserName(username: String): User? {

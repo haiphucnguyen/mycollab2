@@ -78,7 +78,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         planningInfoComp = new PlanningInfoComp();
 
         ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
-        MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
+        MVerticalLayout detailLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, true));
 
         if (SiteConfiguration.isCommunityEdition()) {
             detailLayout.with(peopleInfoComp, planningInfoComp, followerSheet, dateInfoComp);
@@ -162,8 +162,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
-                createdLbl.setSizeUndefined();
+                ELabel createdLbl = new ELabel(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE)).withStyleName(WebThemes.META_COLOR);
                 layout.addComponent(createdLbl, 0, 0);
 
                 String createdUserName = (String) PropertyUtils.getProperty(bean, "createduser");
@@ -174,8 +173,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
-                assigneeLbl.setSizeUndefined();
+                ELabel assigneeLbl = new ELabel(UserUIContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE)).withStyleName(WebThemes.META_COLOR);
                 layout.addComponent(assigneeLbl, 0, 1);
                 String assignUserName = (String) PropertyUtils.getProperty(bean, "assignuser");
                 String assignUserAvatarId = (String) PropertyUtils.getProperty(bean, "assignToUserAvatarId");
