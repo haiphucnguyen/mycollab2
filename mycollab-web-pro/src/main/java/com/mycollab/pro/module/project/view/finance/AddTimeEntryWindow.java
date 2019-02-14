@@ -22,7 +22,7 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -131,7 +131,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             saveTimeLoggingItems();
             close();
         }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD)
-                .withClickShortcut(ShortcutAction.KeyCode.ENTER);
+                .withClickShortcut(KeyCode.ENTER);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout(cancelBtn, saveBtn);
         footer.with(controlsLayout).withAlign(controlsLayout, Alignment.TOP_RIGHT);
@@ -202,7 +202,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
     }
 
     private void saveTimeLoggingItems() {
-        SimpleProjectMember projectMember =  projectMemberSelectionBox.getValue();
+        SimpleProjectMember projectMember = projectMemberSelectionBox.getValue();
         if (projectMember == null) {
             throw new UserInvalidInputException(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_MEMBER_NOT_NULL));
         }

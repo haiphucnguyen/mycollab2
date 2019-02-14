@@ -18,6 +18,8 @@ import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.HasValue;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
@@ -66,7 +68,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                         close();
                         Utils.reloadPage();
                     }
-                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
+                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withClickShortcut(KeyCode.ENTER);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);

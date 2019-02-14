@@ -19,6 +19,8 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.button.MButton;
@@ -89,7 +91,7 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
         MButton saveBtn = new MButton(UserUIContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), clickEvent -> {
             saveTimeLoggingItems();
             close();
-        }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
+        }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION).withClickShortcut(KeyCode.ENTER);
 
         MHorizontalLayout footer = new MHorizontalLayout(ticketLayout, new MHorizontalLayout(cancelBtn, saveBtn)).expand(ticketLayout);
         content.addComponent(footer);

@@ -25,6 +25,8 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractLazyPageView;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
@@ -329,7 +331,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             final MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);
 
-            final MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
+            MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
                 if (chosenPlan.getNumprojects() < numOfActiveProjects
                         || chosenPlan.getNumusers() < numOfActiveUsers
                         || chosenPlan.getVolume() * 1000 < usedStorageVolume
@@ -347,7 +349,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
                 billingService.updateBillingPlan(AppUI.getAccountId(), AppUI.getBillingAccount().getBillingPlan(), chosenPlan);
                 updateBillingPlan();
                 close();
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withClickShortcut(KeyCode.ENTER);
 
             SimpleBillingAccount billingAccount = AppUI.getBillingAccount();
             if (billingAccount.isNotActive()) {

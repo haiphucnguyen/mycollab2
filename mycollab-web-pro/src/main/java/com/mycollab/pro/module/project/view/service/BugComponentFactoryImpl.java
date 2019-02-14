@@ -214,7 +214,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     }
 
     @Override
-    public PopupView createStatusPopupField(final SimpleBug bug) {
+    public PopupView createStatusPopupField(SimpleBug bug) {
         final PopupView view = new BugStatusPopupView(bug);
         view.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
         return view;
@@ -262,12 +262,6 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 }).withStyleName(WebThemes.BUTTON_ACTION);
                 approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
-            } else if (StatusI18nEnum.Resolved.name().equals(beanItem.getStatus())) {
-                MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                        clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
-                        .withStyleName(WebThemes.BUTTON_ACTION);
-                reopenBtn.setVisible(hasPermission);
-                content.with(reopenBtn);
             }
             if (!hasPermission) {
                 content.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
@@ -293,7 +287,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     }
 
     @Override
-    public PopupView createMilestonePopupField(final SimpleBug bug) {
+    public PopupView createMilestonePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -319,7 +313,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     }
 
     @Override
-    public PopupView createDeadlinePopupField(final SimpleBug bug) {
+    public PopupView createDeadlinePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -341,7 +335,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     }
 
     @Override
-    public PopupView createStartDatePopupField(final SimpleBug bug) {
+    public PopupView createStartDatePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -434,11 +428,11 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doHide() {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
-                Long delta = HumanTime.eval(timeVal).getDelta();
+                long delta = HumanTime.eval(timeVal).getDelta();
                 LocalDate date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                    Double hours = (double) delta / (1000 * 60 * 60);
                     ItemTimeLogging timeLogging = new ItemTimeLogging();
                     timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
@@ -458,7 +452,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
-                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                    double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
                         this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {

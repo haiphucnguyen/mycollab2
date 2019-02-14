@@ -135,7 +135,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         MVerticalLayout spentTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(spentTimePanel);
 
-        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
+        MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         spentTimePanel.addComponent(totalLayout);
         Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
@@ -170,10 +170,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(remainTimePanel);
 
-        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
+        MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         remainTimePanel.addComponent(updateLayout);
 
-        final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
+        Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
         updateLayout.addComponent(lbTimeInstructTotal);
         remainTimeLbl = new Label("_");
         remainTimeLbl.addStyleName(ValoTheme.LABEL_LARGE);
