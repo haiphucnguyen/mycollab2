@@ -37,12 +37,12 @@ public class WatchersMultiSelection extends MVerticalLayout {
     private MonitorItemService monitorItemService;
 
     public WatchersMultiSelection(String type, Integer typeId, boolean canModified) {
+        withMargin(false);
         this.type = type;
         this.typeId = typeId;
         this.canModified = canModified;
         monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
         followers = monitorItemService.getWatchers(type, typeId);
-//        new Restrain(this).setMaxHeight("600px");
         this.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();

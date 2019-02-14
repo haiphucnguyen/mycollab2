@@ -266,7 +266,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             PopupBeanFieldBuilder<Task> builder = new PopupBeanFieldBuilder<Task>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (task.getStatus() == null) {
+                    if (StringUtils.isBlank(task.getStatus())) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
@@ -290,7 +290,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             PopupBeanFieldBuilder<Risk> builder = new PopupBeanFieldBuilder<Risk>() {
                 @Override
                 protected String generateSmallContentAsHtml() {
-                    if (risk.getStatus() == null) {
+                    if (StringUtils.isBlank(risk.getStatus())) {
                         Div divHint = new Div().setCSSClass("nonValue");
                         divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                         divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))

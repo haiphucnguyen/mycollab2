@@ -2,19 +2,22 @@ package com.mycollab.pro.vaadin.web.ui.field;
 
 import com.google.common.base.MoreObjects;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.db.persistence.service.ICrudService;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.vaadin.data.BeanValidationBinder;
 import com.vaadin.data.Binder;
+import com.vaadin.data.Converter;
 import com.vaadin.data.HasValue;
+import com.vaadin.server.SerializableFunction;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -25,7 +28,7 @@ public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
     protected String description;
-    protected HasValue<?> field;
+    protected HasValue field;
     private boolean hasPermission = true;
     protected B bean;
     private String bindProperty;
@@ -94,7 +97,7 @@ public abstract class PopupBeanFieldBuilder<B> {
     }
 
     public PopupView build() {
-        final PopupView view = new BeanPopupView(generateSmallContentAsHtml());
+        PopupView view = new BeanPopupView(generateSmallContentAsHtml());
         view.setDescription(generateDescription(), ContentMode.HTML);
         return view;
     }
@@ -107,8 +110,17 @@ public abstract class PopupBeanFieldBuilder<B> {
         @Override
         protected void doHide() {
             if (binder.hasChanges()) {
-                save();
-                this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
+                value = field.getValue();
+                try {
+                    if (field instanceof Converter) {
+                        value = ((Converter) field).convertToModel(value, null).getOrThrow(SerializableFunction.identity());
+                    }
+                    PropertyUtils.setProperty(bean, bindProperty, value);
+                    save();
+                    this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
+                } catch (Throwable e) {
+                    throw new MyCollabException(e);
+                }
                 setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                 BeanPopupView.this.setDescription(generateDescription());
             }
@@ -121,10 +133,21 @@ public abstract class PopupBeanFieldBuilder<B> {
             Label headerLbl = ELabel.h3(caption);
             layout.with(headerLbl, (Component) field);
 
-            binder = new BeanValidationBinder(bean.getClass());
-            binder.bind(field, bindProperty);
+            binder = new Binder(bean.getClass());
+            if (field instanceof Converter) {
+                binder.forField(field).withConverter((Converter) field).bind(bindProperty);
+            } else {
+                binder.bind(field, bindProperty);
+            }
             boolean checkPermission = isPermission();
             ((Component) field).setVisible(checkPermission);
+            if (field instanceof Converter) {
+                Converter converter = (Converter)field;
+                Object convertValue = converter.convertToPresentation(value, null);
+                field.setValue(convertValue);
+            } else {
+                field.setValue(value);
+            }
             if (!checkPermission) {
                 layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
