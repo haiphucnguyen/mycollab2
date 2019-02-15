@@ -12,7 +12,7 @@ import java.io.File;
  */
 public class SyncFiles {
     public static void main(String[] args) throws Exception {
-        GLProject project = new GLProject("mycollab", "haiphucnguyen@gmail.com", "HaiLinh7980");
+        GLProject project = new GLProject("mycollab", "haiphucnguyen@gmail.com", "=5EqGRN5Y=<%`tbX");
         project.setLanguageId("en-US");
 
         File parentFolder = new File("target/staging/i18n");

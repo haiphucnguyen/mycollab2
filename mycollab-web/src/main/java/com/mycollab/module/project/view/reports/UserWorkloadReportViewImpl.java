@@ -65,6 +65,7 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
 
     private ProjectRoleService projectRoleService;
     private ProjectTicketService projectTicketService;
+    private SimpleProject selectedProject = null;
 
     public UserWorkloadReportViewImpl() {
         projectRoleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
@@ -81,9 +82,9 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     }
 
     @Override
-    public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
-        this.baseCriteria = searchCriteria;
+    public void display() {
         wrapBody.removeAllComponents();
+        ProjectTicketSearchCriteria searchCriteria = new ProjectTicketSearchCriteria();
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects;
@@ -104,6 +105,16 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
         projectTicketsContentLayout = new MVerticalLayout();
         rightCol.setContent(projectTicketsContentLayout);
         row.addColumn(rightCol);
+
+        queryTickets(searchCriteria);
+    }
+
+    @Override
+    public void queryTickets(ProjectTicketSearchCriteria searchCriteria) {
+        this.baseCriteria = searchCriteria;
+        if (selectedProject != null) {
+            displayProjectTickets(selectedProject);
+        }
     }
 
     private class ProjectListComp extends MVerticalLayout {
@@ -120,6 +131,7 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     }
 
     private void displayProjectTickets(SimpleProject project) {
+        selectedProject = project;
         projectTicketsContentLayout.removeAllComponents();
         projectTicketsContentLayout.addComponent(buildProjectLink(project));
 
@@ -231,8 +243,14 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     }
 
     private MVerticalLayout buildTicketComp(ProjectTicket ticket) {
-        A ticketDiv = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + "")).
-                appendText(ticket.getName());
+        A ticketDiv;
+        if (ticket.isBug() || ticket.isTask()) {
+            ticketDiv = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getExtraTypeId() + "")).
+                    appendText(ticket.getName());
+        } else {
+            ticketDiv = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + "")).
+                    appendText(ticket.getName());
+        }
         MVerticalLayout layout = new MVerticalLayout(ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " + ticketDiv.write())
                 .withStyleName(WebThemes.LABEL_WORD_WRAP).withFullWidth());
         layout.addStyleName(WebThemes.BORDER_LIST_ROW);
@@ -245,6 +263,7 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
         }
         CssLayout footer = new CssLayout();
         footer.addComponent(buildTicketCommentComp(ticket));
+        footer.addComponent(buildTicketStatusComp(ticket));
         footer.addComponent(buildStartdateComp(ticket));
         footer.addComponent(buildEnddateComp(ticket));
         footer.addComponent(buildDuedateComp(ticket));
@@ -259,6 +278,11 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     private Component buildTicketCommentComp(ProjectTicket ticket) {
         return ELabel.html(VaadinIcons.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(ticket.getNumComments()))
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.OPT_COMMENTS)).withStyleName(WebThemes.META_INFO);
+    }
+
+    private Component buildTicketStatusComp(ProjectTicket ticket) {
+        return ELabel.html(VaadinIcons.INFO_CIRCLE.getHtml() + " " + ticket.getStatus())
+                .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS)).withStyleName(WebThemes.MARGIN_LEFT_HALF, WebThemes.META_INFO);
     }
 
     private Component buildStartdateComp(ProjectTicket ticket) {
