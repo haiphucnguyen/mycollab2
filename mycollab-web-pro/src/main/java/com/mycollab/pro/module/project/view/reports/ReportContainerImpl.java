@@ -63,9 +63,9 @@ public class ReportContainerImpl extends AbstractVerticalPageView implements IRe
         userWorkloadReport.setDefaultComponentAlignment(Alignment.TOP_CENTER);
         userWorkloadReport.addComponent(ELabel.fontIcon(VaadinIcons.CALENDAR_CLOCK).withStyleName("icon-38px"));
         A userWorkloadReportLink = new A(ProjectLinkGenerator.generateUsersWorkloadReportLink())
-                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD));
+                .appendText(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TICKET_ASSIGNMENT));
         userWorkloadReport.addComponent(ELabel.h3(userWorkloadReportLink.write()).withUndefinedWidth());
-        userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_USERS_WORKLOAD_HELP)).withFullWidth());
+        userWorkloadReport.addComponent(new ELabel(UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_TICKET_ASSIGNMENT_HELP)).withFullWidth());
         contentLayout.addComponent(userWorkloadReport);
 
         MVerticalLayout timesheetReport = new MVerticalLayout().withWidth("300px").withStyleName("member-block");

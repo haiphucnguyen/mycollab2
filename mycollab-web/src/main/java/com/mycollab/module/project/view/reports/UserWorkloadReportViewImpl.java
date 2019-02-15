@@ -1,9 +1,11 @@
 package com.mycollab.module.project.view.reports;
 
 import com.hp.gagawa.java.elements.*;
+import com.jarektoro.responsivelayout.ResponsiveColumn;
+import com.jarektoro.responsivelayout.ResponsiveLayout;
+import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.core.Tuple2;
 import com.mycollab.core.utils.NumberUtils;
 import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
@@ -27,7 +29,6 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.security.PermissionMap;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.AsyncInvoker;
 import com.mycollab.vaadin.TooltipHelper;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasSearchHandlers;
@@ -37,17 +38,17 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Map;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -59,13 +60,19 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     private ProjectTicketSearchCriteria baseCriteria;
 
     private TicketCrossProjectsSearchPanel searchPanel;
-    private MVerticalLayout wrapBody;
+    private ResponsiveLayout wrapBody;
+    private MVerticalLayout projectTicketsContentLayout;
+
+    private ProjectRoleService projectRoleService;
+    private ProjectTicketService projectTicketService;
 
     public UserWorkloadReportViewImpl() {
+        projectRoleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
+        projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
         searchPanel = new TicketCrossProjectsSearchPanel();
 
-        wrapBody = new MVerticalLayout().withMargin(new MarginInfo(true, false, false, false));
-        with(searchPanel, wrapBody).expand(wrapBody);
+        wrapBody = new ResponsiveLayout();
+        withSpacing(true).with(searchPanel, wrapBody).expand(wrapBody);
     }
 
     @Override
@@ -86,53 +93,63 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
             projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
         }
 
-        AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
-            public void run() {
-                ProjectTicketService projectTicketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+        ResponsiveRow row = wrapBody.addRow();
+        ProjectListComp projectListComp = new ProjectListComp(projects);
+        ResponsiveColumn leftCol = new ResponsiveColumn(12, 12, 3, 3);
+        leftCol.setContent(projectListComp);
 
-                if (UserUIContext.isAdmin()) {
-                    projects.forEach(project -> {
-                        wrapBody.addComponent(buildProjectLink(project));
+        row.addColumn(leftCol);
 
-                        baseCriteria.setProjectIds(new SetSearchField<>(project.getId()));
-                        baseCriteria.setOrderFields(Arrays.asList(new OrderField("assignUser", SearchCriteria.ASC)));
-                        List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(baseCriteria));
-                        wrapBody.addComponent(buildProjectTicketsLayout(ticketsByCriteria));
-                        push();
-                    });
-                } else {
-                    Map<Integer, SimpleProject> mapProjects = new HashMap<>();
-                    projects.forEach(project -> mapProjects.put(project.getId(), project));
-                    ProjectRoleService roleService = AppContextUtil.getSpringBean(ProjectRoleService.class);
-                    List<Tuple2<Integer, PermissionMap>> projectsPermissions = roleService.findProjectsPermissions(UserUIContext.getUsername(), new ArrayList<>(mapProjects.keySet()), AppUI.getAccountId());
-                    projectsPermissions.forEach(prjPermission -> {
-                        Integer projectId = prjPermission.getItem1();
-                        PermissionMap permissionMap = prjPermission.getItem2();
-                        List<String> ticketTypes = new ArrayList<>();
-                        if (permissionMap.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                            ticketTypes.add(ProjectTypeConstants.TASK);
-                        }
+        ResponsiveColumn rightCol = new ResponsiveColumn(12, 12, 9, 9);
+        projectTicketsContentLayout = new MVerticalLayout();
+        rightCol.setContent(projectTicketsContentLayout);
+        row.addColumn(rightCol);
+    }
 
-                        if (permissionMap.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                            ticketTypes.add(ProjectTypeConstants.BUG);
-                        }
+    private class ProjectListComp extends MVerticalLayout {
+        ProjectListComp(List<SimpleProject> projects) {
+            withSpacing(false).withMargin(false).withStyleName(WebThemes.BORDER_TOP);
+            projects.forEach(project -> addComponent(buildProjectComp(project)));
+        }
 
-                        if (permissionMap.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                            ticketTypes.add(ProjectTypeConstants.RISK);
-                        }
+        MHorizontalLayout buildProjectComp(SimpleProject project) {
+            MButton projectLink = new MButton(project.getName()).withListener((Button.ClickListener) event -> displayProjectTickets(project)).withStyleName(WebThemes.BUTTON_LINK);
+            return new MHorizontalLayout(projectLink).withMargin(new MarginInfo(false, true, false, true))
+                    .withFullWidth().withStyleName("list-row");
+        }
+    }
 
+    private void displayProjectTickets(SimpleProject project) {
+        projectTicketsContentLayout.removeAllComponents();
+        projectTicketsContentLayout.addComponent(buildProjectLink(project));
 
-                        baseCriteria.setProjectIds(new SetSearchField<>(projectId));
-                        if (!ticketTypes.isEmpty()) {
-                            baseCriteria.setTypes(new SetSearchField<>(ticketTypes));
-                            List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(baseCriteria));
-                            wrapBody.addComponent(buildProjectTicketsLayout(ticketsByCriteria));
-                            push();
-                        }
-                    });
-                }
+        if (UserUIContext.isAdmin()) {
+            baseCriteria.setProjectIds(new SetSearchField<>(project.getId()));
+            baseCriteria.setOrderFields(Arrays.asList(new OrderField("assignUser", SearchCriteria.ASC)));
+            List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(baseCriteria));
+            projectTicketsContentLayout.addComponent(buildProjectTicketsLayout(ticketsByCriteria));
+        } else {
+            PermissionMap permissionMap = projectRoleService.findProjectsPermission(UserUIContext.getUsername(), project.getId(), AppUI.getAccountId());
+            List<String> ticketTypes = new ArrayList<>();
+            if (permissionMap.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                ticketTypes.add(ProjectTypeConstants.TASK);
             }
-        });
+
+            if (permissionMap.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                ticketTypes.add(ProjectTypeConstants.BUG);
+            }
+
+            if (permissionMap.canWrite(ProjectRolePermissionCollections.RISKS)) {
+                ticketTypes.add(ProjectTypeConstants.RISK);
+            }
+
+            baseCriteria.setProjectIds(new SetSearchField<>(project.getId()));
+            if (!ticketTypes.isEmpty()) {
+                baseCriteria.setTypes(new SetSearchField<>(ticketTypes));
+                List<ProjectTicket> ticketsByCriteria = (List<ProjectTicket>) projectTicketService.findTicketsByCriteria(new BasicSearchRequest<>(baseCriteria));
+                wrapBody.addComponent(buildProjectTicketsLayout(ticketsByCriteria));
+            }
+        }
     }
 
     private MHorizontalLayout buildProjectLink(SimpleProject project) {
@@ -148,7 +165,7 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
         MHorizontalLayout footer = new MHorizontalLayout().withMargin(false).withStyleName(WebThemes.META_INFO, WebThemes.FLEX_DISPLAY);
         footer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        if (com.mycollab.core.utils.StringUtils.isNotBlank(project.getMemlead())) {
+        if (StringUtils.isNotBlank(project.getMemlead())) {
             Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageUtils.getAvatarPath
                             (project.getLeadAvatarId(), 16)).setCSSClass(WebThemes.CIRCLE_BOX), DivLessFormatter.EMPTY_SPACE,
                     new A(ProjectLinkGenerator.generateProjectMemberLink(project.getId(), project.getMemlead()))
@@ -216,7 +233,8 @@ public class UserWorkloadReportViewImpl extends AbstractVerticalPageView impleme
     private MVerticalLayout buildTicketComp(ProjectTicket ticket) {
         A ticketDiv = new A(ProjectLinkGenerator.generateProjectItemLink(ticket.getProjectShortName(), ticket.getProjectId(), ticket.getType(), ticket.getTypeId() + "")).
                 appendText(ticket.getName());
-        MVerticalLayout layout = new MVerticalLayout(ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " + ticketDiv.write()));
+        MVerticalLayout layout = new MVerticalLayout(ELabel.html(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " + ticketDiv.write())
+                .withStyleName(WebThemes.LABEL_WORD_WRAP).withFullWidth());
         layout.addStyleName(WebThemes.BORDER_LIST_ROW);
         if (ticket.isTask()) {
             layout.addStyleName("task");

@@ -30,6 +30,7 @@ import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
 import com.mycollab.vaadin.web.ui.*;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -136,8 +137,9 @@ public class InvoiceContainerImpl extends AbstractVerticalPageView implements II
             invoice.setStatus(Scheduled.name());
             invoice.setCreateduser(UserUIContext.getUsername());
             UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
-        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
-        createBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION)
+                .withClickShortcut(KeyCode.ENTER)
+                .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
         return new MHorizontalLayout(createBtn);
     }
 
