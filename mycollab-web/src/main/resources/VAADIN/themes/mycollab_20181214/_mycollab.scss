@@ -1061,6 +1061,9 @@ $v-line-height--header:1.5em;
           top: 15px;
           font-family: Vaadin-Icons;
         }
+        &:hover:after {
+          background-color: transparent;
+        }
       }
       .v-button-wrap {
         background: none no-repeat 0 0 transparent;
