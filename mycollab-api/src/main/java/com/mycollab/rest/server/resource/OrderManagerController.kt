@@ -178,6 +178,7 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
 
         }
 
+        /*
         @JvmStatic
         fun main(args: Array<String>) {
             val licenseInfo = LicenseInfo()
@@ -189,5 +190,6 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
             licenseInfo.licenseOrg = "On Call Computer Solutions"
             println(encode(licenseInfo))
         }
+        */
     }
 }
