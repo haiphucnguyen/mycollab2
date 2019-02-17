@@ -89,7 +89,7 @@ public class DesktopApplication extends AppUI {
     private BroadcastReceiverService broadcastReceiverService;
 
     @Override
-    protected void init(final VaadinRequest request) {
+    protected void init(VaadinRequest request) {
         broadcastReceiverService = AppContextUtil.getSpringBean(BroadcastReceiverService.class);
 
         ServerConfiguration serverConfiguration = AppContextUtil.getSpringBean(ServerConfiguration.class);
@@ -97,7 +97,7 @@ public class DesktopApplication extends AppUI {
             getPushConfiguration().setPushMode(PushMode.MANUAL);
         }
 
-        VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
+        UI.getCurrent().setErrorHandler(new DefaultErrorHandler() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -228,7 +228,7 @@ public class DesktopApplication extends AppUI {
                         confirmDialog -> {
                         });
                 Button okBtn = dialog.getOkButton();
-                BrowserWindowOpener opener = new BrowserWindowOpener("http://support.mycollab.com");
+                BrowserWindowOpener opener = new BrowserWindowOpener("https://support.mycollab.com");
                 opener.extend(okBtn);
                 return;
             }
@@ -244,7 +244,7 @@ public class DesktopApplication extends AppUI {
                     confirmDialog -> {
                     });
             Button okBtn = dialog.getOkButton();
-            BrowserWindowOpener opener = new BrowserWindowOpener("http://support.mycollab.com");
+            BrowserWindowOpener opener = new BrowserWindowOpener("https://support.mycollab.com");
             opener.extend(okBtn);
             if (request != null) {
                 String remoteAddress = request.getRemoteHost();
@@ -267,7 +267,7 @@ public class DesktopApplication extends AppUI {
                 confirmDialog -> {
                 });
         Button okBtn = dialog.getOkButton();
-        BrowserWindowOpener opener = new BrowserWindowOpener("https://mycollab.userecho.com/en/");
+        BrowserWindowOpener opener = new BrowserWindowOpener("https://support.mycollab.com");
         opener.extend(okBtn);
     }
 
@@ -365,7 +365,7 @@ public class DesktopApplication extends AppUI {
     private class ShellErrorHandler {
         @Subscribe
         public void handle(ShellEvent.NotifyErrorEvent event) {
-            final Throwable e = (Throwable) event.getData();
+            Throwable e = (Throwable) event.getData();
             AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
                 @Override
                 public void run() {

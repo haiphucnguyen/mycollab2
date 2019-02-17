@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component
 class EmailConfiguration(var smtphost: String?, var username: String?,
                          var password: String?, var port: Int,
                          var startTls: Boolean = false, var ssl: Boolean = false,
-                         var notifyEmail: String) : ValuedBean() {
+                         var errorTo: String) : ValuedBean() {
     constructor() : this("", "", "", -1, false, false, "")
 }
 
