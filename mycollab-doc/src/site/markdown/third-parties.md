@@ -15,7 +15,6 @@ MyCollab uses a lot of open source products, all of them are friendly for busine
 * Reflections - https://github.com/ronmamo/reflections - Any License
 * Flyways - http://flywaydb.org/ - Apache 2 License
 * AWS SDK - https://github.com/aws/aws-sdk-java - Apache 2 License
-* Dropbox SDK - https://github.com/dropbox/dropbox-sdk-java - MIT License
 * HirakiCP - https://github.com/brettwooldridge/HikariCP - Apache 2
 * Apache Camel - http://camel.apache.org/ - Apache 2
 * Apache Solr - http://lucene.apache.org/solr/ - Apache 2
