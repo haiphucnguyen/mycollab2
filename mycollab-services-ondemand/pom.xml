@@ -133,6 +133,7 @@
                 </dependencies>
 
                 <executions>
+                    <!--
                     <execution>
                         <id>Support Artifacts Generator</id>
                         <phase>validate</phase>
@@ -158,7 +159,7 @@
                             <overwrite>true</overwrite>
                         </configuration>
                     </execution>
-
+-->
                 </executions>
 
             </plugin>
