@@ -44,7 +44,7 @@
         
         #ifnotnull($searchCriteria.logUsers)
             ${searchCriteria.logUsers.operation}
-            m_prj_time_logging.loguser IN
+            m_prj_time_logging.logUser IN
             #repeat(${searchCriteria.logUsers.values} $logUser "," "(" ")")
                 @{logUser}
             #end
@@ -56,18 +56,18 @@
 
     <sql id="selectTask">
         <![CDATA[
-          	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+          	SELECT m_prj_time_logging.id, m_prj_time_logging.logUser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime,
                  m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                  m_prj_time_logging.logValue, m_prj_time_logging.note,
-                 m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveDate,
+                 m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
                  m_prj_task.id AS typeId, m_prj_time_logging.type, m_prj_task.taskkey AS extraTypeId,
                  s_user.avatarId AS logUserAvatarId,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                 concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                  m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                  m_prj_task.name,  m_prj_task.status, m_prj_task.dueDate, m_prj_task.percentagecomplete AS percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
             FROM m_prj_time_logging
-              INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
               INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
               INNER JOIN m_prj_task ON ( m_prj_time_logging.typeId = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
               INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_task.projectId)
@@ -76,18 +76,18 @@
 	
   	<sql id="selectBug">
        <![CDATA[
-       	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+       	SELECT m_prj_time_logging.id, m_prj_time_logging.logUser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime,
                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                 m_prj_time_logging.logValue, m_prj_time_logging.note,
-                m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveDate,
+                m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
                 m_tracker_bug.id AS typeId, m_prj_time_logging.type, m_tracker_bug.bugkey AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
-                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                 m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                 m_tracker_bug.name,  m_tracker_bug.status, m_tracker_bug.duedate AS dueDate, NULL as percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
-             INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+             INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
              INNER JOIN m_tracker_bug ON ( m_prj_time_logging.typeId = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
              INNER JOIN m_prj_project ON (m_prj_project.id=m_tracker_bug.projectId)
@@ -96,19 +96,19 @@
 	
 	<sql id="selectRisk">
        <![CDATA[
-         	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+         	SELECT m_prj_time_logging.id, m_prj_time_logging.logUser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime,
                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                 m_prj_time_logging.logValue, m_prj_time_logging.note,
-                m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveDate,
+                m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
                 m_prj_risk.id AS typeId, m_prj_time_logging.type,
                 NULL  AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
-                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                 m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                 m_prj_risk.name,  m_prj_risk.status, m_prj_risk.dueDate, NULL AS percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
-             INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+             INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
              INNER JOIN m_prj_risk ON ( m_prj_time_logging.typeId = m_prj_risk.id and m_prj_time_logging.type = "Project-Risk" )
              INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_risk.projectId)
@@ -117,18 +117,18 @@
 	
     <sql id="selectTimeLogginWithoutType">
         <![CDATA[
-        SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
+        SELECT m_prj_time_logging.id, m_prj_time_logging.logUser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime,
                  m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                  m_prj_time_logging.logValue, m_prj_time_logging.note,
-                 m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveDate,
+                 m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
                  m_prj_time_logging.typeId, m_prj_time_logging.type,
                  NULL AS extraTypeId, s_user.avatarId AS logUserAvatarId,
-                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
+                 concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                  m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
                  '' AS name,  '' AS status, NULL AS dueDate, NULL as percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
             FROM m_prj_time_logging
-              INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
               INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
               INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_time_logging.projectId)
         ]]>

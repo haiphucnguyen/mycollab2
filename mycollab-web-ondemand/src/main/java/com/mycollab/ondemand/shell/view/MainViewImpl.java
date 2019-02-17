@@ -26,20 +26,21 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.OptionPopupContent;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  * @author MyCollab Ltd
@@ -74,10 +75,10 @@ public class MainViewImpl extends AbstractMainView {
                 TrialBlock trialBlock = new TrialBlock();
                 accountLayout.with(trialBlock).withAlign(trialBlock, Alignment.MIDDLE_LEFT);
 
-                DateTime trialFrom = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime()));
-                DateTime trialTo = new DateTime(MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30)));
-                Duration dur = new Duration(new DateTime(), trialTo);
-                int daysLeft = dur.toStandardDays().getDays();
+                LocalDate trialFrom = MoreObjects.firstNonNull(billingAccount.getTrialfrom(), billingAccount.getCreatedtime().toLocalDate());
+                LocalDate trialTo = MoreObjects.firstNonNull(billingAccount.getTrialto(), trialFrom.plusDays(30));
+                Period dur = Period.between(LocalDate.now(), trialTo);
+                int daysLeft = dur.getDays();
                 if (daysLeft < 0) {
                     trialBlock.setText(String.format("<div class='informBlock'>%s<br></div>", UserUIContext.getMessage(ShellI18nEnum.OPT_TRIAL)));
                     UserUIContext.getInstance().setIsValidAccount(false);
@@ -87,9 +88,7 @@ public class MainViewImpl extends AbstractMainView {
             }
         }
 
-        Label accountNameLabel = new Label(AppUI.getSubDomain());
-        accountNameLabel.addStyleName("subDomain");
-        accountLayout.addComponent(accountNameLabel);
+        accountLayout.addComponent(new ELabel(AppUI.getSubDomain()).withStyleName("subDomain"));
 
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);
@@ -131,19 +130,19 @@ public class MainViewImpl extends AbstractMainView {
 
         accountPopupContent.addSeparator();
 
-        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(FontAwesome.MORTAR_BOARD);
+        MButton helpBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_HELP)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource helpRes = new ExternalResource("https://community.mycollab.com/meet-mycollab/");
         BrowserWindowOpener helpOpener = new BrowserWindowOpener(helpRes);
         helpOpener.extend(helpBtn);
         accountPopupContent.addOption(helpBtn);
 
-        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(FontAwesome.LIFE_SAVER);
+        MButton supportBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUPPORT)).withIcon(VaadinIcons.ACADEMY_CAP);
         ExternalResource supportRes = new ExternalResource("http://support.mycollab.com/");
         BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
         supportOpener.extend(supportBtn);
         accountPopupContent.addOption(supportBtn);
 
-        MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(FontAwesome.PENCIL);
+        MButton translateBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_TRANSLATE)).withIcon(VaadinIcons.PENCIL);
         ExternalResource translateRes = new ExternalResource("https://community.mycollab.com/docs/developing-mycollab/translating/");
         BrowserWindowOpener translateOpener = new BrowserWindowOpener(translateRes);
         translateOpener.extend(translateBtn);
@@ -160,10 +159,10 @@ public class MainViewImpl extends AbstractMainView {
             accountMenu.setPopupVisible(false);
             Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
             UI.getCurrent().addWindow(aboutWindow);
-        }).withIcon(FontAwesome.INFO_CIRCLE);
+        }).withIcon(VaadinIcons.INFO_CIRCLE);
         accountPopupContent.addOption(aboutBtn);
 
-        MButton releaseNotesBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES)).withIcon(FontAwesome.BULLHORN);
+        MButton releaseNotesBtn = new MButton(UserUIContext.getMessage(ShellI18nEnum.OPT_RELEASE_NOTES)).withIcon(VaadinIcons.LINES_LIST);
         ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
@@ -173,7 +172,7 @@ public class MainViewImpl extends AbstractMainView {
         MButton signoutBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), clickEvent -> {
             accountMenu.setPopupVisible(false);
             EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
-        }).withIcon(FontAwesome.SIGN_OUT);
+        }).withIcon(VaadinIcons.OUT);
         accountPopupContent.addSeparator();
         accountPopupContent.addOption(signoutBtn);
 

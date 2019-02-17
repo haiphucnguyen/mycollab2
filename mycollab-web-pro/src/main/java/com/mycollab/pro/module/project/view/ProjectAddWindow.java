@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.configuration.SiteConfiguration;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.event.ProjectEvent;
@@ -15,6 +14,7 @@ import com.mycollab.module.project.view.ProjectGeneralInfoStep;
 import com.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -47,12 +47,12 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
     private ProjectCustomizeFeatureStep customizeFeatureStep;
 
     public ProjectAddWindow() {
-        this(new Project());
+        this(new Project().withSaccountid(AppUI.getAccountId()));
     }
 
     public ProjectAddWindow(Project valuePrj) {
         super(valuePrj);
-        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
+        MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         setContent(contentLayout);
 
         wizard = new ProjectAddWizard();
@@ -134,13 +134,13 @@ public class ProjectAddWindow extends AbstractProjectAddWindow implements Wizard
             this.getBackButton().setStyleName(WebThemes.BUTTON_OPTION);
             this.getNextButton().setStyleName(WebThemes.BUTTON_ACTION);
             this.getFinishButton().setStyleName(WebThemes.BUTTON_ACTION);
-            footer.setMargin(new MarginInfo(true, true, false, false));
+            footer.setMargin(new MarginInfo(true, false, false, false));
 
             if (!SiteConfiguration.isCommunityEdition()) {
                 MButton newProjectFromTemplateBtn = new MButton(UserUIContext.getMessage(ProjectI18nEnum.OPT_CREATE_PROJECT_FROM_TEMPLATE), clickEvent -> {
-                            close();
-                            UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
-                        }).withStyleName(WebThemes.BUTTON_ACTION);
+                    close();
+                    UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
+                }).withStyleName(WebThemes.BUTTON_ACTION);
                 footer.addComponent(newProjectFromTemplateBtn, 0);
             }
         }

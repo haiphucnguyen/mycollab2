@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.settings;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectCustomizeView;
@@ -11,12 +10,12 @@ import com.mycollab.module.project.service.ProjectCustomizeViewService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.BlockWidget;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -25,44 +24,42 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class CustomizeFeatureComponent extends BlockWidget {
+class CustomizeFeatureComponent extends BlockWidget {
     private static final long serialVersionUID = 1L;
 
-    public CustomizeFeatureComponent() {
+    CustomizeFeatureComponent() {
         super(UserUIContext.getMessage(ProjectSettingI18nEnum.WIDGET_CUSTOMIZE_FEATURES));
         constructBody();
     }
 
     private void constructBody() {
-        final ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
+        ProjectCustomizeView customizeView = CurrentProjectVariables.getFeatures();
 
-        MVerticalLayout body = new MVerticalLayout().withFullWidth();
+        MVerticalLayout body = new MVerticalLayout().withFullWidth().withMargin(false);
 
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
 
-        VerticalLayout leftColLayout = new VerticalLayout();
-        leftColLayout.setSpacing(true);
-        leftColLayout.setWidth("100%");
+        MVerticalLayout leftColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
-        final FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayMsgSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
                 UserUIContext.getMessage(MessageI18nEnum.LIST),
                 customizeView.getDisplaymessage());
         leftColLayout.addComponent(displayMsgSelection);
 
-        final FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayPhaseSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
                 UserUIContext.getMessage(MilestoneI18nEnum.LIST),
                 customizeView.getDisplaymilestone());
         leftColLayout.addComponent(displayPhaseSelection);
 
-        final FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayTicketSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TICKET),
                 UserUIContext.getMessage(TicketI18nEnum.LIST),
                 customizeView.getDisplayticket());
         leftColLayout.addComponent(displayTicketSelection);
 
-        final FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayPageSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
                 UserUIContext.getMessage(PageI18nEnum.LIST),
                 customizeView.getDisplaypage());
@@ -72,25 +69,19 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         MVerticalLayout rightColLayout = new MVerticalLayout().withFullWidth().withMargin(false);
 
-        final FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
-                customizeView.getDisplayfile());
-        rightColLayout.addComponent(displayFileSelection);
-
-        final FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
-        final FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
-        final FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
+        FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
                 UserUIContext.getMessage(InvoiceI18nEnum.LIST),
                 customizeView.getDisplayinvoice());
@@ -104,7 +95,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
             customizeView.setDisplaymilestone(displayPhaseSelection.getSelected());
             customizeView.setDisplayticket(displayTicketSelection.getSelected());
             customizeView.setDisplaypage(displayPageSelection.getSelected());
-            customizeView.setDisplayfile(displayFileSelection.getSelected());
             customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
             customizeView.setDisplaystandup(displayStandupSelection.getSelected());
             customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
@@ -118,7 +108,8 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
             CurrentProjectVariables.getProject().setCustomizeView(customizeView);
             EventBusFactory.getInstance().post(new CustomizeUIEvent.UpdateFeaturesList(CustomizeFeatureComponent.this));
-        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE).withVisible(CurrentProjectVariables.isAdmin());
+        }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD)
+                .withVisible(CurrentProjectVariables.isSuperUser() && !CurrentProjectVariables.isProjectArchived());
 
         body.addComponent(updateFeaturesBtn);
         this.addToBody(body);

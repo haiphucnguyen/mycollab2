@@ -1,7 +1,5 @@
 package com.mycollab.pro.module.project.view.risk;
 
-import com.mycollab.common.i18n.ErrorI18nEnum;
-import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.file.AttachmentUtils;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -17,8 +15,10 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.I18nValueComboBox;
+import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
-import com.vaadin.ui.Field;
+import com.vaadin.data.HasValue;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.RichTextArea;
 import org.vaadin.viritin.fields.MTextField;
 
@@ -36,16 +36,11 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     }
 
     @Override
-    protected Field<?> onCreateField(Object propertyId) {
+    protected HasValue<?> onCreateField(Object propertyId) {
         Risk risk = attachForm.getBean();
         if (Risk.Field.description.equalTo(propertyId)) {
             final RichTextArea desc = new RichTextArea();
-            desc.setNullRepresentation("");
-            if (isValidateForm) {
-                desc.setRequired(true);
-                desc.setRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        UserUIContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
-            }
+            desc.setRequiredIndicatorVisible(true);
             return desc;
         } else if (Risk.Field.createduser.equalTo(propertyId)) {
             if (risk.getCreateduser() == null) {
@@ -60,31 +55,26 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             if (risk.getConsequence() == null) {
                 risk.setConsequence(RiskConsequence.Marginal.name());
             }
-            return new I18nValueComboBox(false, RiskConsequence.Catastrophic, RiskConsequence.Critical,
-                    RiskConsequence.Marginal, RiskConsequence.Negligible);
-        } else if (Risk.Field.probalitity.equalTo(propertyId)) {
-            if (risk.getProbalitity() == null) {
-                risk.setProbalitity(RiskProbability.Possible.name());
+            return new I18nValueComboBox<>(RiskConsequence.class, RiskConsequence.Catastrophic, RiskConsequence.Critical,
+                    RiskConsequence.Marginal, RiskConsequence.Negligible).withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        } else if (Risk.Field.probability.equalTo(propertyId)) {
+            if (risk.getProbability() == null) {
+                risk.setProbability(RiskProbability.Possible.name());
             }
-            return new I18nValueComboBox(false, RiskProbability.Certain, RiskProbability.Likely,
-                    RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare);
+            return new I18nValueComboBox<>(RiskProbability.class, RiskProbability.Certain, RiskProbability.Likely,
+                    RiskProbability.Possible, RiskProbability.Unlikely, RiskProbability.Rare).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Risk.Field.status.equalTo(propertyId)) {
             if (risk.getStatus() == null) {
                 risk.setStatus(StatusI18nEnum.Open.name());
             }
-            return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
+            return new I18nValueComboBox<>(StatusI18nEnum.class, StatusI18nEnum.Open, StatusI18nEnum.Closed).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         } else if (Risk.Field.priority.equalTo(propertyId)) {
             return new PriorityComboBox();
         } else if (Risk.Field.name.equalTo(propertyId)) {
-            MTextField field = new MTextField().withNullRepresentation("");
-            if (isValidateForm) {
-                field.withRequired(true).withRequiredError(UserUIContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL,
-                        UserUIContext.getMessage(GenericI18Enum.FORM_NAME)));
-            }
-            return field;
+            return new MTextField().withRequiredIndicatorVisible(true);
         } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
             return new MilestoneComboBox();
-        } else if (Risk.Field.id.equalTo(propertyId)) {
+        } else if ("section-attachments".equals(propertyId)) {
             Risk beanItem = attachForm.getBean();
             if (beanItem.getId() != null) {
                 String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(),
@@ -94,6 +84,9 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
                 attachmentUploadField = new AttachmentUploadField();
             }
             return attachmentUploadField;
+        } else if (Risk.Field.startdate.equalTo(propertyId) || Risk.Field.enddate.equalTo(propertyId)
+                || Risk.Field.duedate.equalTo(propertyId)) {
+            return new DateField();
         }
 
         return null;

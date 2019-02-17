@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*
  */
 @Api(value = "contact-us", tags = ["Support"])
 @RestController
-@RequestMapping(value = "/contact-us")
+@RequestMapping(value = ["/contact-us"])
 class ContactUsController(private val extMailService: ExtMailService,
                           private val applicationConfiguration: ApplicationConfiguration) {
 
     @ApiOperation(value = "Send the inquery request", response = String::class)
-    @RequestMapping(value = "/submit", method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
+    @RequestMapping(value = ["/submit"], method = [(RequestMethod.POST)], headers = ["Content-Type=application/x-www-form-urlencoded"])
     @CrossOrigin(origins = ["https://*.mycollab.com", "https://mycollab.com"])
     fun doContact(@RequestParam("name") name: String,
                   @RequestParam("email") email: String,

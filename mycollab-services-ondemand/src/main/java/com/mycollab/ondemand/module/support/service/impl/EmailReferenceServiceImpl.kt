@@ -4,10 +4,8 @@ import com.mycollab.ondemand.module.support.dao.EmailReferenceMapper
 import com.mycollab.ondemand.module.support.domain.EmailReference
 import com.mycollab.ondemand.module.support.domain.EmailReferenceExample
 import com.mycollab.ondemand.module.support.service.EmailReferenceService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import java.util.GregorianCalendar
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -19,9 +17,9 @@ class EmailReferenceServiceImpl(private val emailReferenceMapper: EmailReference
     override fun save(email: String) {
         val ex = EmailReferenceExample()
         ex.createCriteria().andEmailEqualTo(email)
-        if (emailReferenceMapper.countByExample(ex) == 0) {
+        if (emailReferenceMapper.countByExample(ex) == 0L) {
             val emailReference = EmailReference()
-            emailReference.createdtime = GregorianCalendar().time
+            emailReference.createdtime = LocalDateTime.now()
             emailReference.email = email
             emailReference.subscribe = java.lang.Boolean.TRUE
             emailReferenceMapper.insert(emailReference)

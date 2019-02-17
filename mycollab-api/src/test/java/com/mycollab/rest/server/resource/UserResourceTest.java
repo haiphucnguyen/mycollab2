@@ -4,7 +4,7 @@ import static com.jayway.restassured.RestAssured.given;
 
 import com.jayway.restassured.RestAssured;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.mycollab.test.DataSet;
 import com.mycollab.test.WebServer;

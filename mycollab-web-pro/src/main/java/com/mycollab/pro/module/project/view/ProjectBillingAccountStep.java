@@ -1,20 +1,22 @@
 package com.mycollab.pro.module.project.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.form.view.builder.DynaSectionBuilder;
 import com.mycollab.form.view.builder.TextDynaFieldBuilder;
 import com.mycollab.form.view.builder.type.DynaForm;
 import com.mycollab.form.view.builder.type.DynaSection;
-import com.mycollab.module.crm.view.account.AccountSelectionField;
 import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.mycollab.module.project.view.AbstractProjectAddWindow;
+import com.mycollab.pro.module.project.view.client.ClientSelectionField;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.*;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
-import com.mycollab.vaadin.web.ui.DoubleField;
+import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.data.HasValue;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import org.vaadin.viritin.fields.DoubleField;
 
 /**
  * @author MyCollab Ltd
@@ -36,9 +38,9 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
 
     private IDynaFormLayout buildFormLayout() {
         DynaForm defaultForm = new DynaForm();
-        DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
+        DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.TWO_COLUMN).build();
 
-        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.accountid)
+        mainSection.fields(new TextDynaFieldBuilder().fieldName(Project.Field.clientid)
                 .displayName(ProjectI18nEnum.FORM_ACCOUNT_NAME)
                 .contextHelp(ProjectI18nEnum.FORM_ACCOUNT_NAME_HELP)
                 .fieldIndex(0).colSpan(true).build());
@@ -94,15 +96,15 @@ class ProjectBillingAccountStep implements AbstractProjectAddWindow.FormWizardSt
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
+        protected HasValue<?> onCreateField(final Object propertyId) {
             if (Project.Field.currencyid.equalTo(propertyId)) {
                 return new CurrencyComboBoxField();
-            } else if (Project.Field.accountid.equalTo(propertyId)) {
-                return new AccountSelectionField();
+            } else if (Project.Field.clientid.equalTo(propertyId)) {
+                return new ClientSelectionField();
             } else if (Project.Field.targetbudget.equalTo(propertyId)
                     || Project.Field.defaultbillingrate.equalTo(propertyId)
                     || Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                return new DoubleField();
+                return new DoubleField().withWidth(WebThemes.FORM_CONTROL_WIDTH);
             }
             return null;
         }

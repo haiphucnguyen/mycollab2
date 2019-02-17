@@ -35,6 +35,7 @@ import javax.jcr.SimpleCredentials
  * @since 4.6.0
  */
 @Configuration
+@DependsOn("appContextUtil")
 class PageConfiguration {
 
     @Bean
@@ -42,7 +43,7 @@ class PageConfiguration {
     fun pageRepository(): RepositoryFactoryBean {
         val bean = RepositoryFactoryBean()
         bean.configuration = ClassPathResource("wiki-repo.xml")
-        bean.homeDir = FileSystemResource("repo2/wiki-workspace")
+        bean.homeDir = FileSystemResource("repo2/wiki-workspaces")
         return bean
     }
 

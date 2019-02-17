@@ -20,7 +20,7 @@ import java.util.*
 class CheckVersionController(private val editionInfo: EditionInfo) {
 
     @ApiOperation(value = "Check version whether it is the latest version. If it is not, return the latest version information", response = String::class)
-    @RequestMapping(value = "/checkupdate", method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
+    @RequestMapping(value = ["/checkupdate"], method = [(RequestMethod.GET)], produces = [(MediaType.APPLICATION_JSON_VALUE)])
     fun getLatestVersion(@RequestParam("version", required = false) version: String?): Properties {
         val props = Properties()
 
@@ -37,7 +37,7 @@ class CheckVersionController(private val editionInfo: EditionInfo) {
         return props
     }
 
-    @RequestMapping(value = "/checkpremiumupdate", method = [(RequestMethod.GET)])
+    @RequestMapping(value = ["/checkpremiumupdate"], method = [(RequestMethod.GET)])
     fun getLatestPremiumUpdate(@RequestParam("version") version: String, @RequestParam("customerId") customerId: String): Properties {
         val props = Properties()
         val liveVersion = editionInfo.version

@@ -1,5 +1,8 @@
 package com.mycollab.pro.module.project.view.reports;
 
+import com.jarektoro.responsivelayout.ResponsiveColumn;
+import com.jarektoro.responsivelayout.ResponsiveLayout;
+import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -9,6 +12,7 @@ import com.mycollab.db.query.ConstantValueInjector;
 import com.mycollab.db.query.DateParam;
 import com.mycollab.db.query.LazyValueInjector;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.Project;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -35,21 +39,21 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.PageActionChain;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.ValueComboBox;
+import com.mycollab.vaadin.web.ui.StringValueComboBox;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable;
-import com.vaadin.server.FontAwesome;
+import com.mycollab.vaadin.web.ui.table.IPagedTable;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.*;
-import java.util.Calendar;
+import java.util.stream.Collectors;
 
 /**
  * @author MyCollab Ltd
@@ -63,7 +67,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
     private UserInvolvedProjectsListSelect projectField;
     private UserInvolvedProjectsMemberListSelect userField;
-    private PopupDateFieldExt fromDateField, toDateField;
+    private DateField fromDateField, toDateField;
     private ComboBox groupField, orderField;
     private ItemTimeLoggingSearchCriteria searchCriteria;
 
@@ -75,14 +79,6 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
 
     public TimeTrackingViewImpl() {
         this.setMargin(new MarginInfo(false, false, true, false));
-    }
-
-    private void initListSelectStyle(ListSelect listSelect) {
-        listSelect.setWidth("300px");
-        listSelect.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
-        listSelect.setNullSelectionAllowed(false);
-        listSelect.setMultiSelect(true);
-        listSelect.setRows(4);
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {
@@ -139,96 +135,60 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
                 protected Object doEval() {
                     return searchCriteria;
                 }
-            }))).withIcon(FontAwesome.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
+            }))).withIcon(VaadinIcons.PRINT).withStyleName(WebThemes.BUTTON_OPTION)
                     .withDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_EXPORT));
 
-            headerWrapper.with(titleLbl, printBtn).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
+            ELabel groupLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            groupField = new StringValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
+                    .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
+            groupField.addValueChangeListener(event -> searchTimeReporting());
+
+            ELabel sortLbl = new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            orderField = new ItemOrderComboBox();
+            orderField.addValueChangeListener(event -> searchTimeReporting());
+
+            headerWrapper.with(titleLbl, new MHorizontalLayout(groupLbl, groupField, sortLbl, orderField, printBtn).alignAll(Alignment.MIDDLE_LEFT))
+                    .expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
 
             this.addComponent(headerWrapper);
 
-            CssLayout contentWrapper = new CssLayout();
-            contentWrapper.setWidth("100%");
+            ResponsiveLayout searchLayout = new ResponsiveLayout();
+            ResponsiveRow row = searchLayout.addRow();
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withFullWidth().withStyleName(WebThemes.BOX);
-            contentWrapper.addComponent(controlsPanel);
+            LocalDate now = LocalDate.now();
 
-            GridLayout selectionLayout = new GridLayout(9, 2);
-            selectionLayout.setSpacing(true);
-            selectionLayout.setMargin(true);
-            selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-            controlsPanel.addComponent(selectionLayout);
+            ELabel fromLbl = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            fromDateField = new DateField("", now.withDayOfMonth(1));
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_FROM)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 0);
+            ELabel toLbl = new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            toDateField = new DateField("", now.withDayOfMonth(now.lengthOfMonth()));
 
-            fromDateField = new PopupDateFieldExt();
-            fromDateField.setResolution(Resolution.DAY);
-            selectionLayout.addComponent(fromDateField, 1, 0);
+            row.addColumn().withDisplayRules(12, 12, 6, 4)
+                    .withComponent(new MVerticalLayout(new MHorizontalLayout(fromLbl, fromDateField), new MHorizontalLayout(toLbl, toDateField)));
 
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_TO)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 0);
+            ELabel projectLbl = new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
+            projectField = new UserInvolvedProjectsListSelect(projects);
+            projectField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            row.addColumn().withDisplayRules(12, 12, 6, 4).withComponent(new MHorizontalLayout(projectLbl, projectField));
 
-            toDateField = new PopupDateFieldExt();
-            toDateField.setResolution(Resolution.DAY);
-            selectionLayout.addComponent(toDateField, 3, 0);
-
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.OPT_GROUP)).withStyleName
-                    (WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 0, 1);
-
-            groupField = new ValueComboBox(false, UserUIContext.getMessage(ProjectI18nEnum.SINGLE), UserUIContext
-                    .getMessage(DayI18nEnum.OPT_DATE), UserUIContext.getMessage(UserI18nEnum.SINGLE));
-            groupField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
-            selectionLayout.addComponent(groupField, 1, 1);
-
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(GenericI18Enum.ACTION_SORT)).withStyleName(WebThemes
-                    .META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 2, 1);
-
-            orderField = new ItemOrderComboBox();
-            orderField.addValueChangeListener(valueChangeEvent -> searchTimeReporting());
-            selectionLayout.addComponent(orderField, 3, 1);
-
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.SINGLE))
-                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 4, 0);
-
-            projectField = new UserInvolvedProjectsListSelect();
-            initListSelectStyle(projectField);
-            selectionLayout.addComponent(projectField, 5, 0, 5, 1);
-
-            selectionLayout.addComponent(new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE))
-                    .withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px"), 6, 0);
-
+            ELabel userLbl = new ELabel(UserUIContext.getMessage(UserI18nEnum.SINGLE)).withStyleName(WebThemes.META_COLOR, WebThemes.TEXT_ALIGN_RIGHT).withWidth("60px");
             userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-            initListSelectStyle(userField);
-            selectionLayout.addComponent(userField, 7, 0, 7, 1);
+            userField.setWidth(WebThemes.FORM_CONTROL_WIDTH);
+            row.addColumn().withDisplayRules(12, 12, 6, 4).withComponent(new MHorizontalLayout(userLbl, userField));
 
-            MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), clickEvent -> searchTimeReporting())
+            MButton queryBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> searchTimeReporting())
                     .withStyleName(WebThemes.BUTTON_ACTION);
 
-            selectionLayout.addComponent(queryBtn, 8, 0);
+            MVerticalLayout searchPanel = new MVerticalLayout(searchLayout, queryBtn).withStyleName(WebThemes.BOX).withAlign(queryBtn, Alignment.MIDDLE_CENTER);
 
             totalHoursLoggingLabel = ELabel.h2("Total Hours Logging: 0 Hrs");
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withFullWidth();
-            loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
-            contentWrapper.addComponent(loggingPanel);
 
-            timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(new MarginInfo(true, false, true, false));
-            contentWrapper.addComponent(this.timeTrackingWrapper);
+            timeTrackingWrapper = new MVerticalLayout().withFullWidth().withMargin(false);
 
-            Calendar date = new GregorianCalendar();
-            date.set(java.util.Calendar.DAY_OF_MONTH, 1);
-            fromDateField.setValue(date.getTime());
-            date.add(java.util.Calendar.DAY_OF_MONTH, date.getActualMaximum(java.util.Calendar.DAY_OF_MONTH));
-            toDateField.setValue(date.getTime());
-            this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
+            this.with(searchPanel, new MCssLayout(totalHoursLoggingLabel).withFullWidth(), timeTrackingWrapper).expand(timeTrackingWrapper);
             searchTimeReporting();
         } else {
-            MVerticalLayout contentWrapper = new MVerticalLayout();
-            contentWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-
-            Label infoLbl = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT));
-            infoLbl.setWidthUndefined();
-            contentWrapper.with(infoLbl);
-            this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
+            this.with(new MCssLayout(new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_NOT_INVOLVED_ANY_PROJECT))).withFullWidth());
         }
     }
 
@@ -251,21 +211,21 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
             searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
-        final Date fromDate = fromDateField.getValue();
-        final Date toDate = toDateField.getValue();
+        final LocalDate fromDate = fromDateField.getValue();
+        final LocalDate toDate = toDateField.getValue();
         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                ConstantValueInjector.valueOf(Date.class, new Date[]{fromDate, toDate})));
+                ConstantValueInjector.valueOf(Date.class, new LocalDate[]{fromDate, toDate})));
 
-        Collection<String> selectedUsers = (Collection<String>) userField.getValue();
+        Collection<String> selectedUsers = userField.getSelectedUsers();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
-            searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
+            searchCriteria.setLogUsers(new SetSearchField<>(selectedUsers));
         } else {
-            searchCriteria.setLogUsers(new SetSearchField(userField.getUsernames()));
+            searchCriteria.setLogUsers(new SetSearchField<>(userField.getAllUsersInInvolvedProjects()));
         }
 
-        Collection<Integer> selectedProjects = (Collection<Integer>) projectField.getValue();
-        if (CollectionUtils.isNotEmpty(selectedProjects)) {
-            searchCriteria.setProjectIds(new SetSearchField<>(selectedProjects));
+        Collection<Integer> selectedProjectsKey = projectField.getSelectedProjectsKey();
+        if (CollectionUtils.isNotEmpty(selectedProjectsKey)) {
+            searchCriteria.setProjectIds(new SetSearchField<>(selectedProjectsKey));
         } else {
             searchCriteria.setProjectIds(new SetSearchField<>(getProjectIds()));
         }
@@ -285,6 +245,7 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         timeTrackingWrapper.removeAllComponents();
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
+
         timeTrackingWrapper.addComponent(timeDisplayComp);
         AsyncInvoker.access(getUI(), new AsyncInvoker.PageCommand() {
             @Override
@@ -304,11 +265,11 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         });
     }
 
-    private IPagedBeanTable.TableClickListener tableClickListener = new IPagedBeanTable.TableClickListener() {
+    private IPagedTable.TableClickListener tableClickListener = new IPagedTable.TableClickListener() {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public void itemClick(final IPagedBeanTable.TableClickEvent event) {
+        public void itemClick(final IPagedTable.TableClickEvent event) {
             SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
             if ("name".equals(event.getFieldName())) {
                 int typeId = itemLogging.getTypeid();
@@ -338,38 +299,39 @@ public class TimeTrackingViewImpl extends AbstractVerticalPageView implements Ti
         return keys;
     }
 
-    private class UserInvolvedProjectsListSelect extends ListSelect {
+    private class UserInvolvedProjectsListSelect extends ListSelect<SimpleProject> {
         private static final long serialVersionUID = 1L;
 
-        UserInvolvedProjectsListSelect() {
-            for (SimpleProject project : projects) {
-                this.addItem(project.getId());
-                this.setItemCaption(project.getId(), project.getName());
-            }
+        UserInvolvedProjectsListSelect(List<SimpleProject> projects) {
+            this.setItems(projects);
+            this.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
+            this.setRows(4);
         }
 
+        Collection<Integer> getSelectedProjectsKey() {
+            Set<SimpleProject> selectedItems = getValue();
+            return selectedItems.stream().map(Project::getId).collect(Collectors.toList());
+        }
     }
 
-    private static class UserInvolvedProjectsMemberListSelect extends ListSelect {
+    private static class UserInvolvedProjectsMemberListSelect extends ListSelect<SimpleUser> {
         private static final long serialVersionUID = 1L;
 
         private List<SimpleUser> users;
 
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
             users = AppContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppUI.getAccountId());
-
-            for (SimpleUser user : users) {
-                this.addItem(user.getUsername());
-                this.setItemCaption(user.getUsername(), user.getDisplayName());
-            }
+            setItems(users);
+            setItemCaptionGenerator((ItemCaptionGenerator<SimpleUser>) user -> user.getDisplayName());
+            this.setRows(4);
         }
 
-        List<String> getUsernames() {
-            List<String> keys = new ArrayList<>();
-            for (SimpleUser user : users) {
-                keys.add(user.getUsername());
-            }
-            return keys;
+        List<String> getSelectedUsers() {
+            return getValue().stream().map(SimpleUser::getUsername).collect(Collectors.toList());
+        }
+
+        List<String> getAllUsersInInvolvedProjects() {
+            return users.stream().map(SimpleUser::getUsername).collect(Collectors.toList());
         }
     }
 }

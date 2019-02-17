@@ -1,8 +1,8 @@
 package com.mycollab.license
 
-import org.joda.time.LocalDateTime
-
-import java.util.Date
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 /**
  * @author MyCollab Ltd
@@ -12,9 +12,9 @@ class LicenseInfo {
 
     var customerId: String? = null
 
-    var issueDate: Date? = null
+    var issueDate: LocalDate? = null
 
-    var expireDate: Date? = null
+    var expireDate: LocalDate? = null
 
     var licenseOrg: String? = null
 
@@ -23,7 +23,7 @@ class LicenseInfo {
     var maxUsers: Int = Integer.MAX_VALUE
 
     val isExpired: Boolean
-        get() = expireDate!!.before(LocalDateTime().toDate())
+        get() = expireDate!!.isBefore(LocalDate.now())
 
     val isTrial: Boolean
         get() = LicenseType.PRO_TRIAL == licenseType

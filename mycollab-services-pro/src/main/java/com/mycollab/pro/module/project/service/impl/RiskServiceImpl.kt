@@ -6,7 +6,6 @@ import com.mycollab.aspect.ClassInfoMap
 import com.mycollab.aspect.Traceable
 import com.mycollab.cache.CleanCacheEvent
 import com.mycollab.common.ModuleNameConstants
-import com.mycollab.common.event.TimelineTrackingUpdateEvent
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
@@ -59,8 +58,6 @@ class RiskServiceImpl(private val riskMapper: RiskMapper,
 
     private fun cleanAfterUpdate(record: Risk) {
         asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
-        asyncEventBus.post(TimelineTrackingUpdateEvent(ProjectTypeConstants.RISK, record.id, "status",
-                record.status, record.projectid, record.saccountid))
     }
 
     override fun removeByCriteria(criteria: RiskSearchCriteria, sAccountId: Int) {

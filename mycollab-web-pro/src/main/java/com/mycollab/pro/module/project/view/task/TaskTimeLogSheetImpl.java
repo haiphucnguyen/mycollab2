@@ -7,21 +7,21 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ProjectTaskService;
 import com.mycollab.module.project.view.task.TaskTimeLogSheet;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.UI;
@@ -34,12 +34,12 @@ import com.vaadin.ui.UI;
 public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     private static final long serialVersionUID = 1L;
 
-    private ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent> timeChangeHandler = new
-            ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>() {
+    private ApplicationEventListener<TimeLoggingChangedEvent> timeChangeHandler = new
+            ApplicationEventListener<TimeLoggingChangedEvent>() {
                 @Override
                 @Subscribe
                 @AllowConcurrentEvents
-                public void handle(ProjectEvent.TimeLoggingChangedEvent event) {
+                public void handle(TimeLoggingChangedEvent event) {
                     reloadTimeInfos();
                 }
             };

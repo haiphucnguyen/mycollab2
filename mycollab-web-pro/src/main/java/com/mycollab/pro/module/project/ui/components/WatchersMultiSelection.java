@@ -18,12 +18,10 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -39,12 +37,12 @@ public class WatchersMultiSelection extends MVerticalLayout {
     private MonitorItemService monitorItemService;
 
     public WatchersMultiSelection(String type, Integer typeId, boolean canModified) {
+        withMargin(false);
         this.type = type;
         this.typeId = typeId;
         this.canModified = canModified;
         monitorItemService = AppContextUtil.getSpringBean(MonitorItemService.class);
         followers = monitorItemService.getWatchers(type, typeId);
-        new Restrain(this).setMaxHeight("600px");
         this.addStyleName(WebThemes.SCROLLABLE_CONTAINER);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -64,11 +62,10 @@ public class WatchersMultiSelection extends MVerticalLayout {
         unsavedMembers.forEach(member -> {
             MonitorItem item = new MonitorItem();
             item.setExtratypeid(CurrentProjectVariables.getProjectId());
-            item.setMonitorDate(new GregorianCalendar().getTime());
             item.setSaccountid(AppUI.getAccountId());
             item.setType(type);
-            item.setTypeid(typeId);
-            item.setUser(member.getUsername());
+            item.setTypeid(typeId + "");
+            item.setUsername(member.getUsername());
             items.add(item);
         });
         return items;

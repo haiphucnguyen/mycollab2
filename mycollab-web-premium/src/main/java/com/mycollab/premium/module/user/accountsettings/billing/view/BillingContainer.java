@@ -1,6 +1,7 @@
 package com.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.mycollab.common.i18n.LicenseI18nEnum;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.license.LicenseInfo;
 import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
@@ -37,7 +38,8 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
         setContent(bodyLayout);
     }
 
-    void display() {
+    @Override
+    public void display() {
         bodyLayout.removeAllComponents();
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
@@ -45,15 +47,15 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
             if (licenseInfo.isExpired()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_DATE, UserUIContext.formatDate
-                        (licenseInfo.getExpireDate()))).withStyleName(WebThemes.LABEL_OVERDUE).withWidthUndefined());
+                        (licenseInfo.getExpireDate()))).withStyleName(WebThemes.LABEL_OVERDUE).withUndefinedWidth());
             } else if (licenseInfo.isTrial()) {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_EXPIRE_SOON_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
-                        .withWidthUndefined());
+                        .withUndefinedWidth());
             } else {
                 bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.OPT_LICENSE_VALID_TO_DATE, UserUIContext.formatDate(licenseInfo.getExpireDate())))
-                        .withWidthUndefined());
+                        .withUndefinedWidth());
             }
-            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
             layoutHelper.addComponent(new Label(licenseInfo.getLicenseOrg()), UserUIContext.getMessage
                     (LicenseI18nEnum.FORM_ORGANIZATION), 0, 0);
             layoutHelper.addComponent(new Label(UserUIContext.formatDate(licenseInfo.getIssueDate())), UserUIContext
@@ -75,7 +77,7 @@ public class BillingContainer extends AbstractSingleContainerPageView implements
                         new MHorizontalLayout(checkoutBtn, licenseBtn).alignAll(Alignment.MIDDLE_CENTER));
             }
         } catch (Exception e) {
-            bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withWidthUndefined());
+            bodyLayout.with(ELabel.h2(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID)).withUndefinedWidth());
         }
     }
 }

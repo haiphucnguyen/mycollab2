@@ -1,0 +1,63 @@
+@mixin section-header() {
+  padding: 0px;
+  border-bottom: 1px solid $my-separator-color;
+  .v-label-h3 {
+    color: $my-link-color;
+  }
+}
+
+/** Form
+* Custom required indicator. Remove the default required indicator and replace the new one
+**/
+.required-field-indicator::after {
+  content: ' (*Required)';
+  color: $my-meta-color;
+  font-size: small;
+}
+
+.v-required-field-indicator {
+  display: none !important;
+}
+
+@mixin mycollab-form {
+  .form {
+    .v-stackpanel.section {
+      border-style: none;
+      box-shadow: none;
+      .v-panel-caption {
+        border-style: none;
+        padding: 0px;
+        font-size: $v-font-size--h3;
+        > span {
+          color: $my-link-color;
+        }
+      }
+    }
+  }
+
+  .colored-gridlayout {
+    .rl-row {
+
+    }
+    .gridform-caption, .gridform-field {
+      @include margin-container(8px, 4px, 8px, 4px);
+    }
+
+    .gridform-caption {
+      .v-label {
+        text-align: left;
+        color: $my-meta-color;
+      }
+    }
+  }
+  .borderless .v-gridlayout-slot {
+    border: none !important;
+  }
+
+  /* Activity component style */
+
+  .section {
+    @include section-header();
+  }
+
+}

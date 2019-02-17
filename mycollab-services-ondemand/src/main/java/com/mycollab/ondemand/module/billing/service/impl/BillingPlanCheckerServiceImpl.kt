@@ -5,7 +5,7 @@ import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.module.billing.UsageExceedBillingPlanException
 import com.mycollab.module.billing.service.BillingPlanCheckerService
-import com.mycollab.module.ecm.service.DriveInfoService
+import com.mycollab.common.service.DriveInfoService
 import com.mycollab.module.project.dao.ProjectMapperExt
 import com.mycollab.module.project.domain.criteria.ProjectSearchCriteria
 import com.mycollab.module.user.service.BillingAccountService
@@ -28,7 +28,7 @@ class BillingPlanCheckerServiceImpl(private val billingService: BillingService,
         val billingPlan = billingService.findBillingPlan(sAccountId)
         val criteria = ProjectSearchCriteria()
         criteria.saccountid = NumberSearchField(sAccountId)
-        criteria.projectStatuses = SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name)
+        criteria.statuses = SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name)
         val numOfActiveProjects = projectMapperExt.getTotalCount(criteria)
 
         if (numOfActiveProjects >= billingPlan!!.numprojects) {

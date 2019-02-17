@@ -32,13 +32,13 @@ class BankwireSelectionWindow extends MWindow {
         withModal(true).withResizable(false).withWidth("500px").withContent(contentLayout);
         ELabel billingType = ELabel.h3(billingPlan.getBillingtype()).withStyleName("billing-type");
         Label billingPrice = ELabel.html("<span class='billing-price'>$" + billingPlan.getPricing() * 10 + "</span>/year")
-                .withStyleName("billing-price-lbl").withWidthUndefined();
+                .withStyleName("billing-price-lbl").withUndefinedWidth();
         Label billingUser = ELabel.html("<span class='billing-user'>" + billingPlan.getNumusers() + "</span>&nbsp;" +
-                "Users").withWidthUndefined();
+                "Users").withUndefinedWidth();
         String planVolume = FileUtils.getVolumeDisplay(billingPlan.getVolume());
-        Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withWidthUndefined();
+        Label billingStorage = ELabel.html("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage").withUndefinedWidth();
         Label billingProject = ELabel.html("<span class='billing-project'>" + billingPlan.getNumprojects() +
-                "</span>&nbsp;Projects").withWidthUndefined();
+                "</span>&nbsp;Projects").withUndefinedWidth();
         MButton chargeBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_CHARGE), event -> close()).withStyleName(WebThemes.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener(billingPlan.getBanktransferpath() +
                 "?referrer=" + EnDecryptHelper.encryptTextWithEncodeFriendly(AppUI.getAccountId() + ";" + billingPlan.getId()));

@@ -19,7 +19,7 @@ server.cdnUrl=http://%s:%d/assets/
 #=====================================================
 #    DATABASE CONFIGURATION
 #=====================================================
-spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
 spring.datasource.url=${dbUrl}
 spring.datasource.username=${dbUser}
 spring.datasource.password=${dbPassword}
@@ -44,4 +44,4 @@ mail.ssl=${smtpSSLEnable}
 # want to send report automatically to our team, you can
 # leave this field to empty
 #=====================================================
-error.sendTo=error@mycollab.com
+mail.errorTo=error@mycollab.com

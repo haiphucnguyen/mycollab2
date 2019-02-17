@@ -23,7 +23,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -48,21 +48,16 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -102,7 +97,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(bug.getAssignUserAvatarId(), 16);
                 Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -112,7 +107,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 SimpleBug newBug = bugService.findById(bug.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -149,9 +144,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             this.bug = bug;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
             if (bug.getNumFollowers() == null || bug.getNumFollowers() == 0) {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " 0");
+                this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " 0");
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + bug.getNumFollowers());
+                this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + bug.getNumFollowers());
             }
         }
 
@@ -176,7 +171,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + numFollowers);
         }
     }
 
@@ -187,9 +182,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             super("");
             this.bug = bug;
             if (bug.getNumComments() == null) {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " 0");
+                this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " 0");
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + bug.getNumComments());
+                this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + bug.getNumComments());
             }
         }
 
@@ -214,12 +209,12 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             searchCriteria.setTypeId(StringSearchField.and(bug.getId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + commentCount);
         }
     }
 
     @Override
-    public PopupView createStatusPopupField(final SimpleBug bug) {
+    public PopupView createStatusPopupField(SimpleBug bug) {
         final PopupView view = new BugStatusPopupView(bug);
         view.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_CLICK_TO_EDIT));
         return view;
@@ -229,7 +224,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         private SimpleBug beanItem;
 
         BugStatusPopupView(SimpleBug bug) {
-            super(FontAwesome.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
+            super(VaadinIcons.INFO_CIRCLE.getHtml() + " " + UserUIContext.getMessage(StatusI18nEnum.class, bug.getStatus()));
             this.beanItem = bug;
             this.setDescription(UserUIContext.getMessage(BugI18nEnum.FORM_STATUS_HELP));
         }
@@ -267,12 +262,6 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 }).withStyleName(WebThemes.BUTTON_ACTION);
                 approveNCloseBtn.setVisible(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
-            } else if (StatusI18nEnum.Resolved.name().equals(beanItem.getStatus())) {
-                MButton reopenBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                        clickEvent -> UI.getCurrent().addWindow(bindCloseWindow(new ReOpenWindow(beanItem))))
-                        .withStyleName(WebThemes.BUTTON_ACTION);
-                reopenBtn.setVisible(hasPermission);
-                content.with(reopenBtn);
             }
             if (!hasPermission) {
                 content.addComponent(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
@@ -281,7 +270,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
         @Override
         protected void doHide() {
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
         }
 
@@ -291,14 +280,14 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         }
 
         private void refresh() {
-            setMinimizedValueAsHTML(FontAwesome.INFO_CIRCLE.getHtml() + " " +
+            setMinimizedValueAsHTML(VaadinIcons.INFO_CIRCLE.getHtml() + " " +
                     UserUIContext.getMessage(StatusI18nEnum.class, beanItem.getStatus()));
             markAsDirty();
         }
     }
 
     @Override
-    public PopupView createMilestonePopupField(final SimpleBug bug) {
+    public PopupView createMilestonePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -309,7 +298,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
+                    String milestoneName = ((MilestoneComboBox) field).getValue().getName();
                     return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
                             StringUtils.trim(milestoneName, 20, true);
                 }
@@ -324,29 +313,29 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
     }
 
     @Override
-    public PopupView createDeadlinePopupField(final SimpleBug bug) {
+    public PopupView createDeadlinePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
                 if (bug.getDueDateRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendText(VaadinIcons.CLOCK.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
+                    return String.format(" %s %s", VaadinIcons.CLOCK.getHtml(), UserUIContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
                 }
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
     @Override
-    public PopupView createStartDatePopupField(final SimpleBug bug) {
+    public PopupView createStartDatePopupField(SimpleBug bug) {
         PopupBeanFieldBuilder<SimpleBug> builder = new PopupBeanFieldBuilder<SimpleBug>() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -362,7 +351,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             }
         };
         builder.withBean(bug).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -383,7 +372,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             }
         };
         builder.withBean(bug).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
@@ -400,7 +389,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
 
     private static class BugBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private PopupDateFieldExt dateField;
+        private DateField dateField;
         private SimpleBug bug;
         private boolean isBillable;
 
@@ -409,9 +398,9 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
             this.bug = bug;
             this.isBillable = isBillable;
             if (isBillable) {
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + bug.getBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + bug.getBillableHours());
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + bug.getNonBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + bug.getNonBillableHours());
             }
         }
 
@@ -425,8 +414,8 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
-                dateField = new PopupDateFieldExt();
-                dateField.setValue(new GregorianCalendar().getTime());
+                dateField = new DateField();
+                dateField.setValue(LocalDate.now());
                 layout.with(headerLbl, timeInput);
                 Label dateCaption = ELabel.html(UserUIContext.getMessage(DayI18nEnum.OPT_DATE));
                 layout.with(dateCaption, dateField);
@@ -439,11 +428,11 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
         protected void doHide() {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
-                Long delta = HumanTime.eval(timeVal).getDelta();
-                Date date = dateField.getValue();
+                long delta = HumanTime.eval(timeVal).getDelta();
+                LocalDate date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                    Double hours = (double) delta / (1000 * 60 * 60);
                     ItemTimeLogging timeLogging = new ItemTimeLogging();
                     timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
@@ -455,7 +444,7 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     timeLogging.setTypeid(bug.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
+                    EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
@@ -463,11 +452,11 @@ public class BugComponentFactoryImpl implements BugComponentFactory {
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                     searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
-                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                    double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
-                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {
-                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));

@@ -7,7 +7,7 @@
         <result column="createUserAvatarId" jdbcType="VARCHAR" property="createUserAvatarId" />
         <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
         <result column="assignUserAvatarId" jdbcType="VARCHAR" property="assignUserAvatarId" />
-        <association property="client" resultMap="com.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+        <association property="client" resultMap="com.mycollab.common.dao.ClientMapper.BaseResultMap"
                      columnPrefix="client_"/>
     </resultMap>
 
@@ -39,16 +39,16 @@
             m_prj_invoice.assignUser, m_prj_invoice.amount, m_prj_invoice.currentId, m_prj_invoice.clientId,
             m_prj_invoice.contactUserFullName, m_prj_invoice.sAccountId, m_prj_invoice.status, m_prj_invoice.note,
             m_prj_invoice.type, m_prj_invoice.noId, m_prj_invoice.projectId, m_prj_invoice.description, m_prj_invoice.issuedate,
-            m_crm_account.id AS client_id, m_crm_account.accountName AS client_accountName,
-            m_crm_account.website AS client_website, m_crm_account.phoneOffice AS client_phoneOffice,
-            m_crm_account.fax AS client_fax, m_crm_account.billingAddress AS client_billingAddress, m_crm_account.city AS client_city,
-            m_crm_account.postalCode AS client_postalCode, m_crm_account.state AS client_state,
-            concat(createUserTbl.firstname, ' ', LTRIM(concat(IFNULL(createUserTbl.middlename, ''), ' ')), createUserTbl.lastname) AS createUserFullName,
+            m_client.id AS client_id, m_client.name AS client_name,
+            m_client.website AS client_website, m_client.phoneOffice AS client_phoneOffice,
+            m_client.fax AS client_fax, m_client.billingAddress AS client_billingAddress, m_client.city AS client_city,
+            m_client.postalCode AS client_postalCode, m_client.state AS client_state,
+            concat(createUserTbl.firstname, ' ', createUserTbl.lastname) AS createUserFullName,
             createUserTbl.avatarId AS createUserAvatarId,
-            concat(assignUserTbl.firstname, ' ', LTRIM(concat(IFNULL(assignUserTbl.middlename, ''), ' ')), assignUserTbl.lastname) AS assignUserFullName,
+            concat(assignUserTbl.firstname, ' ', assignUserTbl.lastname) AS assignUserFullName,
             assignUserTbl.avatarId AS assignUserAvatarId
         FROM m_prj_invoice
-            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id = m_prj_invoice.clientId)
+            LEFT OUTER JOIN m_client ON (m_client.id = m_prj_invoice.clientId)
             LEFT OUTER JOIN s_user AS createUserTbl ON (m_prj_invoice.createdUser = createUserTbl.username)
             LEFT OUTER JOIN s_user AS assignUserTbl ON (m_prj_invoice.assignUser = assignUserTbl.username)
         ]]>

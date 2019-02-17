@@ -4,12 +4,13 @@ import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.mycollab.test.DataSet;
 import com.mycollab.test.WebServer;
+import com.mycollab.test.rule.DbUnitInitializerRule;
 import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith({SpringExtension.class, DbUnitInitializerRule.class})
 public class AccountResourceTest extends RestServiceTest {
 
     @WebServer

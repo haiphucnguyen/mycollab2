@@ -3,13 +3,14 @@ package com.mycollab.ondemand.module.project.service
 import com.mycollab.module.project.service.ProjectMemberService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.DataSet
+import com.mycollab.test.rule.DbUnitInitializerRule
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@RunWith(SpringJUnit4ClassRunner::class)
+@ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class ProjectMemberServiceExtTest : IntegrationServiceTest() {
 
     @Autowired

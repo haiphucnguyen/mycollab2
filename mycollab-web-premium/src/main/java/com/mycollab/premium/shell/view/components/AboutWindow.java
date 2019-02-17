@@ -12,14 +12,12 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.AbstractAboutWindow;
 import com.mycollab.vaadin.web.ui.WebResourceIds;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
@@ -27,8 +25,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  * @author MyCollab Ltd
@@ -42,16 +39,15 @@ public class AboutWindow extends AbstractAboutWindow {
 
         Image about = new Image("", new ExternalResource(StorageUtils.generateAssetRelativeLink(WebResourceIds._about)));
         MVerticalLayout rightPanel = new MVerticalLayout();
-        ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", Version.getVersion()));
-        Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),
-                System.getProperty("java.runtime.version")));
+        ELabel versionLbl = ELabel.h2(String.format("MyCollab Enterprise Edition %s", Version.getVersion())).withFullWidth();
+        ELabel javaNameLbl = new ELabel(String.format("%s, %s", System.getProperty("java.vm.name"),
+                System.getProperty("java.runtime.version"))).withFullWidth();
         WebBrowser browser = Page.getCurrent().getWebBrowser();
-        Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication()));
-        osLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
+        ELabel osLbl = new ELabel(String.format("%s, %s", System.getProperty("os.name"), browser.getBrowserApplication())).withFullWidth();
         Div licenseDiv = new Div().appendChild(new Text("Powered by: "))
                 .appendChild(new A("https://www.mycollab.com")
                         .appendText("MyCollab")).appendChild(new Text(". MyCollab commercial license"));
-        Label licenseLbl = new Label(licenseDiv.write(), ContentMode.HTML);
+        ELabel licenseLbl = ELabel.html(licenseDiv.write()).withFullWidth();
         rightPanel.with(versionLbl, javaNameLbl, osLbl, licenseLbl);
 
         LicenseResolver licenseResolver = AppContextUtil.getSpringBean(LicenseResolver.class);
@@ -62,17 +58,16 @@ public class AboutWindow extends AbstractAboutWindow {
         } else {
             Label licenseInfoLbl;
             if (licenseInfo.isExpired()) {
-                licenseInfoLbl = new Label("License to <b>" + licenseInfo.getLicenseOrg() + "</b>. The license is expired", ContentMode.HTML);
+                licenseInfoLbl = ELabel.html("License to <b>" + licenseInfo.getLicenseOrg() + "</b>. The license is expired").withFullWidth();
             } else {
                 if (licenseInfo.isTrial()) {
-                    licenseInfoLbl = new Label("License to <b>" + licenseInfo
+                    licenseInfoLbl = ELabel.html("License to <b>" + licenseInfo
                             .getLicenseOrg() + "</b>. Trial, Expire at <b>" + UserUIContext.formatPrettyTime(licenseInfo
-                            .getExpireDate()) + "</b>", ContentMode.HTML);
+                            .getExpireDate()) + "</b>").withFullWidth();
                 } else {
-                    licenseInfoLbl = new Label("License to <b>" + licenseInfo
+                    licenseInfoLbl = ELabel.html("License to <b>" + licenseInfo
                             .getLicenseOrg() + "</b>. Expire at <b>" + UserUIContext.formatPrettyTime(licenseInfo
-                            .getExpireDate()) + "</b>. Max users is <b>" + licenseInfo.getMaxUsers() + "</b>",
-                            ContentMode.HTML);
+                            .getExpireDate()) + "</b>. Max users is <b>" + licenseInfo.getMaxUsers() + "</b>").withFullWidth();
                 }
             }
             rightPanel.add(licenseInfoLbl);
@@ -90,8 +85,8 @@ public class AboutWindow extends AbstractAboutWindow {
             rightPanel.addComponent(new MHorizontalLayout(buyBtn, editLicenseBtn));
         }
 
-        Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
-                new GregorianCalendar().get(Calendar.YEAR) + ""), ContentMode.HTML);
+        ELabel copyRightLbl = ELabel.html(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
+                LocalDate.now().getYear() + "")).withFullWidth();
         rightPanel.with(copyRightLbl);
         content.with(about, rightPanel).expand(rightPanel);
     }

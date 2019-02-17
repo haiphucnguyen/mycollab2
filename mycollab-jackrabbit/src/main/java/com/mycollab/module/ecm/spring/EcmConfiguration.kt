@@ -20,6 +20,7 @@
 package com.mycollab.module.ecm.spring
 
 import com.mycollab.module.ecm.ContentSessionFactory
+import org.apache.jackrabbit.core.persistence.pool.PostgreSQLPersistenceManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.DependsOn
@@ -34,6 +35,7 @@ import javax.jcr.SimpleCredentials
  * @since 4.6.0
  */
 @Configuration
+@DependsOn("appContextUtil")
 class EcmConfiguration {
 
     @DependsOn(value = ["dataSource"])
@@ -41,7 +43,7 @@ class EcmConfiguration {
     fun repository(): RepositoryFactoryBean {
         val bean = RepositoryFactoryBean()
         bean.configuration = ClassPathResource("jackrabbit-repo.xml")
-        bean.homeDir = FileSystemResource("repo2/content-workspace")
+        bean.homeDir = FileSystemResource("repo2/workspaces")
         return bean
     }
 

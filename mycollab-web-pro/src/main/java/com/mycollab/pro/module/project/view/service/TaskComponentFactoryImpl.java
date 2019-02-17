@@ -18,7 +18,6 @@ import com.mycollab.db.arguments.BooleanSearchField;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.db.arguments.StringSearchField;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
@@ -26,7 +25,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ItemTimeLogging;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -44,25 +43,21 @@ import com.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
 import com.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.field.DateTimeOptionField;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -79,7 +74,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -89,7 +84,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 SimpleTask newTask = taskService.findById(task.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
-                        .setCSSClass(UIConstants.CIRCLE_BOX);
+                        .setCSSClass(WebThemes.CIRCLE_BOX);
                 return img.write();
             }
 
@@ -134,12 +129,12 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getStatus() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
+                    divHint.appendText(VaadinIcons.INFO_CIRCLE.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
+                    return VaadinIcons.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
                 }
             }
         };
@@ -162,9 +157,10 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
-                            StringUtils.trim(milestoneName, 20, true);
+//                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+//                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+//                            StringUtils.trim(milestoneName, 20, true);
+                    return "";
                 }
             }
         };
@@ -207,18 +203,18 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             protected String generateSmallContentAsHtml() {
                 if (task.getDeadlineRoundPlusOne() == null) {
                     Div divHint = new Div().setCSSClass("nonValue");
-                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendText(VaadinIcons.CLOCK.getHtml());
                     divHint.appendChild(new Span().appendText(" " + UserUIContext.getMessage(GenericI18Enum.BUTTON_EDIT))
                             .setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), UserUIContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                    return String.format(" %s %s", VaadinIcons.CLOCK.getHtml(), UserUIContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
                 }
 
             }
         };
         builder.withBean(task).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getDuedate()).withHasPermission(CurrentProjectVariables.canWrite
                 (ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -242,7 +238,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -266,7 +262,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateTimeOptionField(true)).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
                 .class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -306,7 +302,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             super("");
             this.task = task;
             this.setDescription(UserUIContext.getMessage(FollowerI18nEnum.FOLLOWER_EXPLAIN_HELP));
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
         }
 
         @Override
@@ -330,7 +326,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(new NumberSearchField(task.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+            this.setMinimizedValueAsHTML(VaadinIcons.EYE.getHtml() + " " + numFollowers);
         }
     }
 
@@ -340,7 +336,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         TaskCommentsPopupView(SimpleTask task) {
             super("");
             this.task = task;
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumComments()));
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumComments()));
         }
 
         @Override
@@ -359,7 +355,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             searchCriteria.setTypeId(StringSearchField.and(task.getId() + ""));
             CommentService commentService = AppContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
-            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
+            this.setMinimizedValueAsHTML(VaadinIcons.COMMENT_O.getHtml() + " " + commentCount);
         }
 
         @Override
@@ -370,7 +366,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
-        private PopupDateFieldExt dateField;
+        private DateField dateField;
         private SimpleTask task;
         private boolean isBillable;
 
@@ -379,9 +375,9 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             this.task = task;
             this.isBillable = isBillable;
             if (isBillable) {
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + task.getBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + task.getBillableHours());
             } else {
-                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + task.getNonBillableHours());
+                this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + task.getNonBillableHours());
             }
         }
 
@@ -395,8 +391,8 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 String title = (isBillable) ? UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS) :
                         UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS);
                 Label headerLbl = ELabel.h3(title);
-                dateField = new PopupDateFieldExt();
-                dateField.setValue(new GregorianCalendar().getTime());
+                dateField = new DateField();
+//                dateField.setValue(new GregorianCalendar().getTime());
                 layout.with(headerLbl, timeInput);
                 layout.with(ELabel.h3(UserUIContext.getMessage(DayI18nEnum.OPT_DATE)), dateField);
             } else {
@@ -409,7 +405,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             String timeVal = timeInput.getValue();
             if (StringUtils.isNotBlank(timeVal)) {
                 Long delta = HumanTime.eval(timeVal).getDelta();
-                Date date = dateField.getValue();
+//                Date date = dateField.getValue();
                 if (delta > 0) {
                     ItemTimeLoggingService timeLoggingService = AppContextUtil.getSpringBean(ItemTimeLoggingService.class);
                     Double hours = delta.doubleValue() / (1000 * 60 * 60);
@@ -417,14 +413,14 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     timeLogging.setCreateduser(UserUIContext.getUsername());
                     timeLogging.setIsbillable(isBillable);
                     timeLogging.setLoguser(UserUIContext.getUsername());
-                    timeLogging.setLogforday(date);
+//                    timeLogging.setLogforday(date);
                     timeLogging.setLogvalue(hours);
                     timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
                     timeLogging.setType(ProjectTypeConstants.TASK);
                     timeLogging.setTypeid(task.getId());
                     timeLogging.setSaccountid(AppUI.getAccountId());
                     timeLoggingService.saveWithSession(timeLogging, UserUIContext.getUsername());
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
+                    EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
 
                     // load hours again
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
@@ -434,9 +430,9 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                     searchCriteria.setTypeId(new NumberSearchField(task.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {
-                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.MONEY.getHtml() + " " + calculatedHours);
                     } else {
-                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                        this.setMinimizedValueAsHTML(VaadinIcons.GIFT.getHtml() + " " + calculatedHours);
                     }
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(TimeTrackingI18nEnum.ERROR_TIME_FORMAT));

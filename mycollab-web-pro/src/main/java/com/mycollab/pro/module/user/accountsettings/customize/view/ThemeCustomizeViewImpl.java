@@ -2,7 +2,6 @@ package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ThemeI18nEnum;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
@@ -12,6 +11,7 @@ import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.ui.SettingAssetsManager;
 import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.security.RolePermissionCollections;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
@@ -23,12 +23,12 @@ import com.mycollab.vaadin.web.ui.ServiceMenu;
 import com.mycollab.vaadin.web.ui.VerticalTabsheet;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.web.CustomLayoutExt;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.colorpicker.Color;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -59,13 +59,14 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
 
-        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
+        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.THEME_CUSTOMIZE).getHtml() + " " +
                 UserUIContext.getMessage(ThemeI18nEnum.OPT_THEME_CUSTOMIZATION));
 
         MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme)))
-                .withIcon(FontAwesome.SAVE).withStyleName(WebThemes.BUTTON_ACTION);
-        saveBtn.setVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+                .withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION)
+                .withClickShortcut(KeyCode.ENTER)
+                .withVisible(UserUIContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         MButton resetToDefaultBtn = new MButton(UserUIContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 clickEvent -> EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null)))
@@ -90,32 +91,32 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         propertyLayout.setWidth("250px");
 
         CustomColorPickerArea topMenuBg = new CustomColorPickerArea(accountTheme.getTopmenubg());
-        topMenuBg.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setTopmenubg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        topMenuBg.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenubg(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(topMenuBg, 1, 0);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(accountTheme.getTopmenutext());
-        topMenuText.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setTopmenutext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        topMenuText.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenutext(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(accountTheme.getTopmenubgselected());
-        topMenuBgSelected.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setTopmenubgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        topMenuBgSelected.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenubgselected(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
         CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(accountTheme.getTopmenutextselected());
-        topMenuTextSelected.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setTopmenutextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        topMenuTextSelected.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setTopmenutextselected(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
@@ -169,32 +170,32 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         propertyLayout.setWidth("250px");
 
         CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea(accountTheme.getVtabsheetbg());
-        vTabsheetBg.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setVtabsheetbg(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        vTabsheetBg.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheetbg(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
         CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(accountTheme.getVtabsheettext());
-        vTabsheetText.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setVtabsheettext(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        vTabsheetText.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheettext(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(vTabsheetText, 1, 1);
 
         CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(accountTheme.getVtabsheetbgselected());
-        vTabsheetBgSelected.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setVtabsheetbgselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        vTabsheetBgSelected.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheetbgselected(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU)), 0, 2);
         propertyLayout.addComponent(vTabsheetBgSelected, 1, 2);
 
         CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(accountTheme.getVtabsheettextselected());
-        vTabsheetTextSelected.addColorChangeListener(colorChangeEvent -> {
-            accountTheme.setVtabsheettextselected(colorChangeEvent.getColor().getCSS().substring(1).toUpperCase());
+        vTabsheetTextSelected.addValueChangeListener(colorChangeEvent -> {
+            accountTheme.setVtabsheettextselected(colorChangeEvent.getValue().getCSS().substring(1).toUpperCase());
             ThemeManager.loadDemoTheme(accountTheme);
         });
         propertyLayout.addComponent(new Label(UserUIContext.getMessage(ThemeI18nEnum.OPT_SELECTED_MENU_TEXT)), 0, 3);
@@ -214,12 +215,11 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         VerticalTabsheet tabsheetDemo = new VerticalTabsheet();
         tabsheetDemo.setWidth("100%");
-        tabsheetDemo.getNavigatorWrapper().addStyleName("sidebar-menu");
-        tabsheetDemo.getNavigatorWrapper().setWidth("250px");
+        tabsheetDemo.setNavigatorWidth("250px");
 
-        tabsheetDemo.addTab(new VerticalLayout(), "dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
-        tabsheetDemo.addTab(new VerticalLayout(), "bugs", UserUIContext.getMessage(BugI18nEnum.LIST));
-        tabsheetDemo.addTab(new VerticalLayout(), "components", UserUIContext.getMessage(ComponentI18nEnum.LIST));
+        tabsheetDemo.addTab("dashboard", UserUIContext.getMessage(GenericI18Enum.VIEW_DASHBOARD));
+        tabsheetDemo.addTab("bugs", UserUIContext.getMessage(BugI18nEnum.LIST));
+        tabsheetDemo.addTab("components", UserUIContext.getMessage(ComponentI18nEnum.LIST));
 
         tabsheetDemo.selectTab("dashboard");
         previewLayout.addComponent(tabsheetDemo);
@@ -238,10 +238,8 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         blockBody.addComponent(propertyLayout);
 
         // Action Button
-        VerticalLayout actionBtnPanel = new VerticalLayout();
+        MVerticalLayout actionBtnPanel = new MVerticalLayout();
         actionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        actionBtnPanel.setSizeUndefined();
-        actionBtnPanel.setSpacing(true);
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
         Button exampleActionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
@@ -253,16 +251,24 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         actionBtnPanel.addComponent(actionBtnColorPane);
 
         CustomColorPickerArea actionBtnBg = new CustomColorPickerArea(accountTheme.getActionbtn());
-        actionBtnBg.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        actionBtnBg.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setActionbtn(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
         actionBtnColorPane.addComponent(actionBtnBg);
 
         CustomColorPickerArea actionBtnText = new CustomColorPickerArea(accountTheme.getActionbtntext());
-        actionBtnText.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        actionBtnText.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
+            accountTheme.setActionbtntext(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
+        });
+        actionBtnColorPane.addComponent(actionBtnText);
+
+        CustomColorPickerArea actionBtnBorder = new CustomColorPickerArea(accountTheme.getActionbtn());
+        actionBtnBorder.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setActionbtntext(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
@@ -270,11 +276,8 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         // Option Button
 
-        VerticalLayout optionBtnPanel = new VerticalLayout();
+        MVerticalLayout optionBtnPanel = new MVerticalLayout();
         optionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        optionBtnPanel.setSizeUndefined();
-        optionBtnPanel.setSpacing(true);
-        optionBtnPanel.setMargin(false);
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
         Button exampleOptionBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
@@ -287,25 +290,24 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         optionBtnPanel.addComponent(optionBtnColorPane);
 
         CustomColorPickerArea optionBtnBg = new CustomColorPickerArea(accountTheme.getOptionbtn());
-        optionBtnBg.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        optionBtnBg.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setOptionbtn(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
         optionBtnColorPane.addComponent(optionBtnBg);
 
         CustomColorPickerArea optionBtnText = new CustomColorPickerArea(accountTheme.getOptionbtntext());
-        optionBtnText.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        optionBtnText.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setOptionbtntext(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
         optionBtnColorPane.addComponent(optionBtnText);
 
         // Danger Button
-        MVerticalLayout dangerBtnPanel = new MVerticalLayout().withMargin(false);
+        MVerticalLayout dangerBtnPanel = new MVerticalLayout();
         dangerBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        dangerBtnPanel.setSizeUndefined();
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button(UserUIContext.getMessage(ThemeI18nEnum.OPT_BUTTON));
@@ -317,16 +319,16 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         dangerBtnPanel.addComponent(dangerBtnColorPane);
 
         CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(accountTheme.getDangerbtn());
-        dangerBtnBg.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        dangerBtnBg.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setDangerbtn(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
         dangerBtnColorPane.addComponent(dangerBtnBg);
 
         CustomColorPickerArea dangerBtnText = new CustomColorPickerArea(accountTheme.getDangerbtntext());
-        dangerBtnText.addColorChangeListener(colorChangeEvent -> {
-            String colorHexString = colorChangeEvent.getColor().getCSS().substring(1).toUpperCase();
+        dangerBtnText.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
             accountTheme.setDangerbtntext(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
@@ -341,7 +343,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         CustomColorPickerArea(String initialColor) {
             super();
             if (initialColor != null) {
-                this.setColor(new Color(Integer.parseInt(initialColor, 16)));
+                this.setValue(new Color(Integer.parseInt(initialColor, 16)));
             }
 
             this.setWidth("55px");

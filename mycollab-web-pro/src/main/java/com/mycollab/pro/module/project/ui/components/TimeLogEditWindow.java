@@ -3,38 +3,33 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.arguments.ValuedBean;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.mycollab.module.project.event.ProjectEvent;
+import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.fielddef.TimeTableFieldDef;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
 import com.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.web.ui.DoubleField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.WebUIConstants;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.DoubleField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
@@ -54,9 +49,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
     private boolean hasTimeChange = false;
     private MButton addBtn;
     private Label totalSpentTimeLbl;
+    private DateField logDateField;
     private DoubleField newTimeInputField;
     private CheckBox isBillableField, isOvertimeField;
-    private PopupDateFieldExt forDateField;
 
     private DoubleField remainTimeInputField;
     private Label remainTimeLbl;
@@ -72,7 +67,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         this.loadTimeValue();
         this.addCloseListener(closeEvent -> {
             if (hasTimeChange) {
-                EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
+                EventBusFactory.getInstance().post(new TimeLoggingChangedEvent(TimeLogEditWindow.this));
             }
         });
     }
@@ -107,14 +102,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
 
         tableItem.addGeneratedColumn("isbillable", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+            ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
             icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
             return icon;
         });
 
         tableItem.addGeneratedColumn("isovertime", (source, itemId, columnId) -> {
             SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+            ELabel icon = Boolean.TRUE.equals(monitorItem.getIsovertime()) ? ELabel.fontIcon(VaadinIcons.CHECK) : ELabel.fontIcon(VaadinIcons.CLOSE);
             icon.setStyleName(WebThemes.BUTTON_ICON_ONLY);
             return icon;
         });
@@ -125,10 +120,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 itemTimeLoggingService.removeWithSession(itemTimeLogging, UserUIContext.getUsername(), AppUI.getAccountId());
                 loadTimeValue();
                 hasTimeChange = true;
-            }).withIcon(FontAwesome.TRASH_O).withStyleName(WebThemes.BUTTON_ICON_ONLY);
+            }).withIcon(VaadinIcons.TRASH).withStyleName(WebThemes.BUTTON_ICON_ONLY);
             itemTimeLogging.setExtraData(deleteBtn);
 
-            deleteBtn.setVisible(CurrentProjectVariables.isAdmin() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
+            deleteBtn.setVisible(CurrentProjectVariables.isSuperUser() || UserUIContext.getUsername().equals(itemTimeLogging.getLoguser()));
             return deleteBtn;
         });
 
@@ -140,22 +135,21 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         MVerticalLayout spentTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(spentTimePanel);
 
-        final MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
+        MVerticalLayout totalLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         spentTimePanel.addComponent(totalLayout);
         Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_SPENT_HOURS));
         totalLayout.addComponent(lbTimeInstructTotal);
         totalSpentTimeLbl = new ELabel("_").withStyleName(ValoTheme.LABEL_LARGE, ValoTheme.LABEL_BOLD);
         totalLayout.addComponent(totalSpentTimeLbl);
 
-        MHorizontalLayout addLayout = new MHorizontalLayout().withWidthUndefined();
+        MHorizontalLayout addLayout = new MHorizontalLayout().withUndefinedWidth();
         addLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         spentTimePanel.addComponent(addLayout);
 
         newTimeInputField = new DoubleField();
         newTimeInputField.setWidth("80px");
 
-        forDateField = new PopupDateFieldExt();
-        forDateField.setValue(new GregorianCalendar().getTime());
+        logDateField = new DateField();
 
         isBillableField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
         isOvertimeField = new CheckBox(UserUIContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
@@ -168,18 +162,18 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
                 loadTimeValue();
                 newTimeInputField.setValue(0d);
             }
-        }).withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
-        addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
+        }).withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION).withVisible(isEnableAdd());
+        addLayout.with(newTimeInputField, logDateField, isBillableField, isOvertimeField, addBtn);
     }
 
     private void constructRemainTimeEntryPanel() {
         MVerticalLayout remainTimePanel = new MVerticalLayout().withMargin(false);
         headerPanel.addComponent(remainTimePanel);
 
-        final MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
+        MVerticalLayout updateLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
         remainTimePanel.addComponent(updateLayout);
 
-        final Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
+        Label lbTimeInstructTotal = new Label(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_REMAINING_WORK_HOURS));
         updateLayout.addComponent(lbTimeInstructTotal);
         remainTimeLbl = new Label("_");
         remainTimeLbl.addStyleName(ValoTheme.LABEL_LARGE);
@@ -243,9 +237,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends MWindow {
         return isOvertimeField.getValue();
     }
 
-    protected Date forLogDate() {
-        Date date = forDateField.getValue();
-        return (date != null) ? date : new GregorianCalendar().getTime();
+    protected LocalDate forLogDate() {
+        LocalDate date = logDateField.getValue();
+        return (date != null) ? date : LocalDate.now();
     }
 
     protected abstract void saveTimeInvest();

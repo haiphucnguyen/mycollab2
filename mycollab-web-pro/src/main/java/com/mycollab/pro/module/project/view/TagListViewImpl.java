@@ -18,10 +18,9 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
 import com.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -61,8 +60,8 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withFullWidth();
-        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
-                .withWidthUndefined());
+        header.with(ELabel.h2(VaadinIcons.TAGS.getHtml() + " " + UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TAG))
+                .withUndefinedWidth());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
         assignmentList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectGenericItemService.class),
@@ -98,11 +97,11 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
 
     private class TagCloudComp extends CssLayout {
         TagCloudComp() {
-            this.setStyleName("tagcloud");
+            this.setStyleName("tag-cloud");
         }
 
         void displayTagItems() {
-            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
+            List<AggregateTag> tags = tagService.findAggregateTagsInProject(CurrentProjectVariables.getProjectId(), AppUI.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
                 this.addComponent(new Label(UserUIContext.getMessage(TagI18nEnum.OPT_NO_TAG_EXISTED)));
             } else {
@@ -122,7 +121,7 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
 
         TagButton(final AggregateTag tag) {
             super(tag.getName() + " (" + tag.getCount() + ")");
-            this.setStyleName("tagbutton");
+            this.setStyleName("tag-button");
             this.addClickListener(clickEvent -> {
                 isSelected = !isSelected;
                 if (isSelected) {
@@ -138,9 +137,9 @@ public class TagListViewImpl extends AbstractVerticalPageView implements ITagLis
         public void setSelected(boolean isSelected) {
             if (isSelected) {
                 removeStyleName(WebThemes.BUTTON_OPTION);
-                addStyleName(UIConstants.BLOCK);
+                addStyleName(WebThemes.BLOCK);
             } else {
-                removeStyleName(UIConstants.BLOCK);
+                removeStyleName(WebThemes.BLOCK);
                 addStyleName(WebThemes.BUTTON_OPTION);
             }
         }

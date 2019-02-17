@@ -8,12 +8,12 @@ import com.mycollab.ondemand.module.support.SupportLinkGenerator
 import com.mycollab.ondemand.module.support.dao.CommunityLeadMapper
 import com.mycollab.ondemand.module.support.domain.CommunityLeadExample
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.joda.time.LocalDate
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -28,9 +28,9 @@ class FollowupDownloadedUsersAfterOneWeekJob(private val communityLeadMapper: Co
 
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
-        val sevenDaysAgo = LocalDate().minusDays(5)
+        val sevenDaysAgo = LocalDateTime.now().minusDays(5)
         val ex = CommunityLeadExample()
-        ex.createCriteria().andRegisterdateEqualTo(sevenDaysAgo.toDate()).andValidEqualTo(true)
+        ex.createCriteria().andRegisterdateEqualTo(sevenDaysAgo).andValidEqualTo(true)
         val leads = communityLeadMapper.selectByExample(ex)
         leads.forEach {
             val leadName = "${it.firstname} ${it.lastname}"

@@ -18,14 +18,13 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
 import org.springframework.stereotype.Service;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -40,7 +39,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageUtils.getAvatarPath(milestone.getOwnerAvatarId(), 16);
-                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
+                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setCSSClass(WebThemes.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(milestone.getOwnerFullName());
                 }
@@ -52,7 +51,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
                 MilestoneService milestoneService = AppContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
-                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(UIConstants.CIRCLE_BOX);
+                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setCSSClass(WebThemes.CIRCLE_BOX);
                 if (isDisplayName) {
                     img.setTitle(newMilestone.getOwnerFullName());
                 }
@@ -89,7 +88,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             }
         };
         builder.withBean(milestone).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -113,7 +112,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
             }
         };
         builder.withBean(milestone).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new PopupDateFieldExt()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(MilestoneService.class))
                 .withValue(milestone.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         return builder.build();
@@ -124,7 +123,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         PopupView popupView = new PopupView(new PopupView.Content() {
             @Override
             public String getMinimizedValueAsHTML() {
-                return FontAwesome.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone.getTotalTaskBillableHours());
+                return VaadinIcons.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone.getTotalTaskBillableHours());
             }
 
             @Override
@@ -146,7 +145,7 @@ public class MilestoneComponentFactoryImpl implements MilestoneComponentFactory 
         PopupView popupView = new PopupView(new PopupView.Content() {
             @Override
             public String getMinimizedValueAsHTML() {
-                return FontAwesome.GIFT.getHtml() + " " + (milestone.getTotalBugNonBillableHours() + milestone
+                return VaadinIcons.GIFT.getHtml() + " " + (milestone.getTotalBugNonBillableHours() + milestone
                         .getTotalTaskNonBillableHours());
             }
 

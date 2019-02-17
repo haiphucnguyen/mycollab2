@@ -2,29 +2,26 @@ package com.mycollab.pro.module.user.accountsettings.customize.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.vaadin.ApplicationEventListener;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.user.accountsettings.customize.view.AccountSettingContainer;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizePresenter;
 import com.mycollab.module.user.accountsettings.customize.view.IThemeCustomizeView;
 import com.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
+import com.mycollab.module.user.accountsettings.view.AccountModule;
 import com.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent.ResetTheme;
 import com.mycollab.module.user.accountsettings.view.event.SettingEvent.SaveTheme;
 import com.mycollab.module.user.domain.AccountTheme;
 import com.mycollab.module.user.service.AccountThemeService;
+import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.AppUI;
-import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.*;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.vaadin.server.Page;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
@@ -52,7 +49,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             public void handle(SaveTheme event) {
                 if (event.getData() instanceof AccountTheme) {
                     saveTheme((AccountTheme) event.getData());
-                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                    Utils.reloadPage();
                 }
             }
         });
@@ -68,7 +65,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 themeService.removeTheme(AppUI.getAccountId());
-                                Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                                Utils.reloadPage();
                             }
                         });
             }
@@ -77,8 +74,8 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        AccountSettingContainer customizeContainer = (AccountSettingContainer) container;
-        customizeContainer.gotoSubView(UserUIContext.getMessage(AdminI18nEnum.OPT_THEME));
+        AccountModule accountModule = (AccountModule) container;
+        accountModule.gotoSubView(SettingUIConstants.THEME_CUSTOMIZE, view);
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {

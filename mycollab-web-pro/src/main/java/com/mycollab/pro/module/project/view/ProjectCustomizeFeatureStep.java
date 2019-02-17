@@ -21,7 +21,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizardStep {
     private Project project;
     private FeatureSelectionBox displayMsgSelection, displayPhaseSelection,
-            displayTicketSelection, displayPageSelection, displayFileSelection,
+            displayTicketSelection, displayPageSelection,
             displayTimeSelection,
             displayStandupSelection, displayInvoiceSelection;
 
@@ -77,12 +77,6 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         rightColLayout.setWidth("100%");
         rightColLayout.setSpacing(true);
 
-        displayFileSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
-                true);
-        rightColLayout.addComponent(displayFileSelection);
-
         displayTimeSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
@@ -110,7 +104,6 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         features.setProjectid(project.getId());
         features.setDisplayinvoice(getFeatureSelected(displayInvoiceSelection));
         features.setDisplayticket(getFeatureSelected(displayTicketSelection));
-        features.setDisplayfile(getFeatureSelected(displayFileSelection));
         features.setDisplaymessage(getFeatureSelected(displayMsgSelection));
         features.setDisplaymilestone(getFeatureSelected(displayPhaseSelection));
         features.setDisplaypage(getFeatureSelected(displayPageSelection));

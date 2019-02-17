@@ -1,9 +1,9 @@
 package com.mycollab.pro.module.project.view.risk;
 
-import com.mycollab.common.ModuleNameConstants;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
+import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -12,11 +12,12 @@ import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.event.RiskEvent;
 import com.mycollab.module.project.event.TicketEvent;
-import com.mycollab.module.project.event.UpdateNotificationItemReadStatusEvent;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
+import com.mycollab.module.project.view.ProjectView;
+import com.mycollab.module.project.view.risk.IRiskReadPresenter;
+import com.mycollab.module.project.view.risk.IRiskReadView;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.spring.AppEventBus;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
@@ -38,11 +39,11 @@ import com.vaadin.ui.UI;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
+public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implements IRiskReadPresenter {
     private static final long serialVersionUID = 1L;
 
     public RiskReadPresenter() {
-        super(RiskReadView.class);
+        super(IRiskReadView.class);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void onPrint(Object source, SimpleRisk data) {
                 PrintButton btn = (PrintButton) source;
                 btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.RISK, Risk.Field.name.name(),
-                        RiskDefaultFormLayoutFactory.getForm(), Risk.Field.id.name()));
+                        RiskDefaultFormLayoutFactory.getAddForm(), Risk.Field.id.name()));
             }
 
             @Override
@@ -97,7 +98,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoNext(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 criteria.setId(NumberSearchField.greaterThan(data.getId()));
                 Integer nextId = riskService.getNextItemKey(criteria);
                 if (nextId != null) {
@@ -112,7 +113,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
             public void gotoPrevious(SimpleRisk data) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
+                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = riskService.getPreviousItemKey(criteria);
                 if (nextId != null) {
@@ -131,16 +132,12 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                 SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
                 if (risk != null) {
-                    RiskContainer riskContainer = (RiskContainer) container;
-                    riskContainer.removeAllComponents();
-                    riskContainer.addComponent(view);
+                    ProjectView projectView = (ProjectView) container;
+                    projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
                     view.previewItem(risk);
 
                     ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadCrumb.gotoRiskRead(risk);
-
-                    AppEventBus.getInstance().post(new UpdateNotificationItemReadStatusEvent(UserUIContext.getUsername(),
-                            ModuleNameConstants.PRJ, ProjectTypeConstants.RISK, risk.getId().toString()));
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
                 }

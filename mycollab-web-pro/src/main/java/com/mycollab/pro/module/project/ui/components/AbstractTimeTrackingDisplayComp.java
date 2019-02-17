@@ -3,14 +3,12 @@ package com.mycollab.pro.module.project.ui.components;
 import com.mycollab.common.TableViewField;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.pro.module.project.view.time.TimeTrackingTableDisplay;
+import com.mycollab.pro.module.project.view.finance.TimeTrackingTableDisplay;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.ui.UIConstants;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import com.vaadin.shared.ui.MarginInfo;
+import com.mycollab.vaadin.web.ui.WebThemes;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -23,7 +21,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.1
  */
-public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
+public abstract class AbstractTimeTrackingDisplayComp extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     protected List<TableViewField> visibleFields;
@@ -32,11 +30,10 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     private String currentItemSearchCriteria = "";
     private List<SimpleItemTimeLogging> itemEntries;
 
-    public AbstractTimeTrackingDisplayComp(List<TableViewField> fields, TableClickListener tableClickListener) {
-        super();
-
+    AbstractTimeTrackingDisplayComp(List<TableViewField> fields, TableClickListener tableClickListener) {
         this.visibleFields = fields;
         this.tableClickListener = tableClickListener;
+        withMargin(false).withFullWidth();
     }
 
     public void insertItem(SimpleItemTimeLogging item) {
@@ -64,17 +61,14 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     static class TimeLoggingBockLayout extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
-        public TimeLoggingBockLayout() {
-            super();
-        }
-
-        public TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
-                                     List<SimpleItemTimeLogging> timeLoggingEntries) {
-            withMargin(new MarginInfo(true, false, true, false));
+        TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
+                              List<SimpleItemTimeLogging> timeLoggingEntries) {
+            withMargin(false);
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
             table.addTableListener(tableClickListener);
             table.setCurrentDataList(timeLoggingEntries);
-            addComponent(table);
+
+            with(table);
 
             double billableHours = 0, nonBillableHours = 0, cost = 0;
             for (SimpleItemTimeLogging item : timeLoggingEntries) {
@@ -94,21 +88,23 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             }
 
             MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
-            with(summaryLayout);
+
             ELabel totalHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_TOTAL_HOURS_VALUE, (billableHours + nonBillableHours)))
-                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    .withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             ELabel totalBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS_VALUE, billableHours))
-                    .withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    .withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             ELabel totalNonBillableHoursLbl = new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_NON_BILLABLE_HOURS_VALUE,
-                    nonBillableHours)).withStyleName(UIConstants.META_INFO).withWidthUndefined();
+                    nonBillableHours)).withStyleName(WebThemes.META_INFO).withUndefinedWidth();
             MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
                     totalNonBillableHoursLbl).withMargin(false);
             summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);
 
             MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_COST))
-                            .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
-                    ELabel.hr(), new ELabel(cost + "").withWidthUndefined()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
+                            .withStyleName(ValoTheme.LABEL_COLORED).withUndefinedWidth(),
+                    ELabel.hr(), new ELabel(cost + "").withUndefinedWidth()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
             summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);
+
+            with(summaryLayout);
         }
     }
 }

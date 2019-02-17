@@ -1,17 +1,17 @@
 package com.mycollab.pro.module.project.ui.components;
 
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.mycollab.common.TableViewField;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -22,7 +22,6 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
 
     public TimeTrackingProjectOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
-        this.setWidth("100%");
     }
 
     @Override
@@ -33,8 +32,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
             Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml() + " ").
                     appendChild(new A(ProjectLinkGenerator.generateProjectLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
             ELabel link = ELabel.h3(projectDiv.write());
-            addComponent(link);
-            addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
+            with(link, new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
     }
 

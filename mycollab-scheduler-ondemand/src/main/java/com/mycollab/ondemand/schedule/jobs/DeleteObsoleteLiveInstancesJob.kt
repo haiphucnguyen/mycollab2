@@ -3,12 +3,12 @@ package com.mycollab.ondemand.schedule.jobs
 import com.mycollab.common.domain.LiveInstanceExample
 import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.joda.time.LocalDate
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -21,7 +21,7 @@ class DeleteObsoleteLiveInstancesJob(private val liveInstanceMapper: LiveInstanc
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val ex = LiveInstanceExample()
-        ex.createCriteria().andLastupdateddateLessThan(LocalDate().minusDays(1).toDate())
+        ex.createCriteria().andLastupdateddateLessThan(LocalDateTime.now().minusDays(1))
         liveInstanceMapper.deleteByExample(ex)
     }
 }

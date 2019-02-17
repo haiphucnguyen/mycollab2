@@ -6,10 +6,10 @@ import com.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import com.mycollab.vaadin.web.ui.table.IPagedTable.TableClickListener;
+import org.apache.commons.collections4.CollectionUtils;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -19,20 +19,18 @@ import java.util.List;
 public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
 
-    private DateTimeFormatter formatter = DateTimeFormat.forPattern(AppUI.getLongDateFormat()).withLocale
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppUI.getLongDateFormat()).withLocale
             (UserUIContext.getUserLocale());
 
     public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
-        this.setWidth("100%");
     }
 
     @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
-        if (timeLoggingEntries.size() > 0) {
-            ELabel label = ELabel.h3(formatter.print(timeLoggingEntries.get(0).getLogforday().getTime()));
-            addComponent(label);
-            addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
+        if (CollectionUtils.isNotEmpty(timeLoggingEntries)) {
+            ELabel label = ELabel.h3(formatter.format(timeLoggingEntries.get(0).getLogforday()));
+            with(label, new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
     }
 

@@ -2,7 +2,7 @@ package com.mycollab.pro.module.project.view.settings;
 
 import com.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.mycollab.module.project.view.settings.ProjectNotificationSettingViewComponent;
-import com.mycollab.module.project.view.settings.ProjectSettingView;
+import com.mycollab.module.project.view.settings.ProjectCustomView;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -12,17 +12,15 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 2.0
  */
 @ViewComponent
-public class ProjectSettingViewImpl extends AbstractVerticalPageView implements ProjectSettingView {
+public class ProjectSettingViewImpl extends AbstractVerticalPageView implements ProjectCustomView {
     private static final long serialVersionUID = 1L;
 
     private final MHorizontalLayout mainBody;
 
     public ProjectSettingViewImpl() {
-        this.setWidth("100%");
-        this.setSpacing(true);
         this.addStyleName("readview-layout");
 
-        mainBody = new MHorizontalLayout().withMargin(true).withFullWidth();
+        mainBody = new MHorizontalLayout().withMargin(false).withFullWidth();
         this.addComponent(mainBody);
     }
 
@@ -33,8 +31,8 @@ public class ProjectSettingViewImpl extends AbstractVerticalPageView implements 
         if (notification == null) {
             notification = new ProjectNotificationSetting();
         }
-        ProjectNotificationSettingViewComponent component = new ProjectNotificationSettingViewComponent(notification);
-        mainBody.addComponent(component);
-        mainBody.addComponent(new CustomizeFeatureComponent());
+
+        mainBody.with(new ProjectNotificationSettingViewComponent(notification),
+                new CustomizeFeatureComponent());
     }
 }

@@ -1,0 +1,176 @@
+@mixin mycollab-button {
+
+  .v-button {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    background-image: none;
+    &:after {
+      content: none;
+    }
+    &:focus:after {
+      content: none;
+      box-shadow:none;
+      border-color: $my-separator-color;
+    }
+    .v-icon {
+      margin-left: 0px;
+    }
+    &.link {
+      text-align: left;
+      text-decoration: none;
+      &:focus, &:active {
+        background-color: transparent;
+        border-radius: 0px;
+      }
+      .v-button-caption {
+        text-decoration: none;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .v-button-wrap {
+        padding: 0px;
+      }
+      .v-icon {
+        margin-left: 0;
+      }
+    }
+  }
+
+  /* Ellipsis Button Link */
+  .v-button.text-ellipsis {
+    @include text-ellipsis;
+  }
+
+  .v-button-wrap {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 6px 15px;
+    margin: 0px;
+    background-image: none;
+  }
+
+  .v-button.v-button-action-button {
+    color: white;
+    font-weight: normal;
+    background-color:#1a8fcb;
+  }
+
+  .v-button.v-button-block {
+    color: white;
+    font-weight: normal;
+    margin: 0px 3px 3px 0px;
+  }
+
+  /* End round border button */
+
+  /* .v-buttongroup .v-button.v-button-right */
+
+  .v-button-selected-style {
+    background: none repeat scroll 0 0 #A1A1A1;
+    border-color: #ABABAB;
+  }
+
+  .splitbutton .parent-button {
+    border-right: 1px solid $my-separator-color;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 0px 5px;
+  }
+
+  .splitbutton .v-popupbutton {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 0px 10px 0px 5px;
+    .v-button-wrap {
+      padding-left: 3px;
+      padding-right: 3px;
+      .v-popup-indicator::before {
+        font-size: 1em !important;
+        vertical-align: middle !important;
+        margin: 0 -0.2em 0 0.2em !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  div.v-button-nonPopupIndicator div.v-popup-indicator {
+    display: none;
+  }
+
+  .v-button.small-padding {
+    background: transparent;
+    &.v-pressed .v-button-wrap, .v-button-wrap {
+      padding: 4px 4px;
+      .v-icon {
+        width: 13px;
+      }
+    }
+    &.v-popupbutton .v-button-wrap {
+      padding: 4px 6px;
+      &:active {
+        padding: 4px 6px;
+      }
+    }
+  }
+
+  div.v-button.button-icon-only, div.v-button.button-icon-only:active, div.v-button.button-icon-only:focus,
+     div.v-button.button-icon-only.v-pressed {
+    background-color:transparent;
+    height: auto;
+    .v-button-wrap {
+      padding: 0px;
+      &:hover {
+        background-color:transparent;
+      }
+      .v-icon.FontAwesome {
+        vertical-align: bottom;
+      }
+      .v-popup-indicator::before {
+        content: "";
+      }
+    }
+  }
+
+  .multiselect.v-popupbutton {
+    border-left: 1px solid #e4e4e4;
+    padding: 0px 10px 0px 5px;
+    border-radius: 0px $v-border-radius $v-border-radius 0px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $my-separator-color;
+    background-color: white;
+    .v-button-wrap {
+      padding-left: 0px;
+      padding-right: 0px;
+      .v-popup-indicator::before {
+        font-size: 1em !important;
+        vertical-align: middle !important;
+        margin: 0 -0.2em 0 0.2em !important;
+        opacity: 1 !important;
+        color: #a3a3a3;
+      }
+    }
+  }
+
+  /* Button group style */
+  .toggle-btn-group  {
+    .v-button {
+      border-radius: 0px;
+    }
+    .v-button {
+      border-radius: 0px;
+    }
+    .v-button:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .v-button:last-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+  }
+}

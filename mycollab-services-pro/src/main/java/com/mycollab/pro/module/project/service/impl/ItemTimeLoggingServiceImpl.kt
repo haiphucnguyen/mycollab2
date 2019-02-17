@@ -3,6 +3,7 @@ package com.mycollab.pro.module.project.service.impl
 import com.google.common.eventbus.AsyncEventBus
 import com.mycollab.cache.CleanCacheEvent
 import com.mycollab.core.cache.CacheKey
+import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
@@ -72,7 +73,7 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
         val dataSource = AppContextUtil.getSpringBean(DataSource::class.java)
         val jdbcTemplate = JdbcTemplate(dataSource)
         jdbcTemplate.batchUpdate(
-                "insert into m_prj_time_logging (projectId, type, typeid, logValue, loguser, createdTime, lastUpdatedTime, sAccountId, logForDay, isBillable, createdUser, " + "note) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "insert into m_prj_time_logging (projectId, type, typeid, logValue, loguser, createdTime, lastUpdatedTime, sAccountId, logForDay, isBillable, createdUser, note) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 object : BatchPreparedStatementSetter {
 
                     @Throws(SQLException::class)
@@ -89,10 +90,10 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
 
                         ps.setDouble(4, itemLogging.logvalue!!)
                         ps.setString(5, itemLogging.loguser)
-                        ps.setTimestamp(6, Timestamp(GregorianCalendar().time.time))
-                        ps.setTimestamp(7, Timestamp(GregorianCalendar().time.time))
+                        ps.setTimestamp(6, Timestamp(System.currentTimeMillis()))
+                        ps.setTimestamp(7, Timestamp(System.currentTimeMillis()))
                         ps.setInt(8, itemLogging.saccountid!!)
-                        ps.setTimestamp(9, Timestamp(itemLogging.logforday.time))
+                        ps.setTimestamp(9, Timestamp(DateTimeUtils.toMilliseconds(itemLogging.logforday)))
                         ps.setBoolean(10, itemLogging.isbillable!!)
                         ps.setString(11, itemLogging.createduser)
                         ps.setString(12, itemLogging.note)

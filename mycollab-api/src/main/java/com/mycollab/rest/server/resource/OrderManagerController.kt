@@ -1,26 +1,23 @@
 package com.mycollab.rest.server.resource
 
 import com.google.common.base.MoreObjects
+import com.javax0.license3j.licensor.License
 import com.mycollab.configuration.EnDecryptHelper
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.license.LicenseInfo
 import com.mycollab.license.LicenseType
-import com.mycollab.module.mail.service.ExtMailService
-import com.mycollab.module.mail.service.IContentGenerator
 import com.mycollab.ondemand.module.billing.dao.ProEditionInfoMapper
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfo
 import com.mycollab.ondemand.module.billing.domain.ProEditionInfoExample
-import com.verhas.licensor.License
 import io.swagger.annotations.Api
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.StringWriter
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -49,14 +46,14 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
                         @RequestParam(value = "test", required = false) test: String,
                         @RequestParam(value = "subscriptionReference", required = false) subscriptionReference: String): String {
         LOG.info("Generate license email: $email company: $company")
-        val now = LocalDateTime()
+        val now = LocalDateTime.now()
         val proEditionInfo = ProEditionInfo()
         proEditionInfo.internalproductname = internalProductName
         proEditionInfo.email = email
         proEditionInfo.name = name
         proEditionInfo.quantity = 1
         proEditionInfo.orderid = reference
-        proEditionInfo.issuedate = now.toDate()
+        proEditionInfo.issuedate = now
         proEditionInfo.type = "New"
         val customerId = proEditionMapper.insertAndReturnKey(proEditionInfo)
 
@@ -69,9 +66,9 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
             licenseInfo.maxUsers = 9999
         }
 
-        licenseInfo.issueDate = now.toDate()
+        licenseInfo.issueDate = now.toLocalDate()
         licenseInfo.licenseOrg = MoreObjects.firstNonNull(company, "Default")
-        licenseInfo.expireDate = now.plusYears(1).toDate()
+        licenseInfo.expireDate = now.toLocalDate().plusYears(1)
         val license = encode(licenseInfo)
         val result = StringBuilder()
         result.append("Mime-Version: 1.0\n")
@@ -129,8 +126,8 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
         val info = LicenseInfo()
         info.customerId = "0"
         info.licenseType = LicenseType.PRO_TRIAL
-        info.expireDate = LocalDate().plusDays(30).toDate()
-        info.issueDate = LocalDate().toDate()
+        info.expireDate = LocalDate.now().plusDays(30)
+        info.issueDate = LocalDate.now()
         info.licenseOrg = "MyCollab"
         info.maxUsers = 30
         return encode(info)
@@ -180,17 +177,17 @@ class OrderManagerController(private val proEditionMapper: ProEditionInfoMapper)
             }
 
         }
-/*
+
         @JvmStatic
         fun main(args: Array<String>) {
             val licenseInfo = LicenseInfo()
             licenseInfo.customerId = "10"
-            licenseInfo.expireDate = DateTime().plusDays(365).toDate()
-            licenseInfo.issueDate = DateTime().toDate()
+            licenseInfo.expireDate = LocalDateTime.now().plusDays(365).toLocalDate()
+            licenseInfo.issueDate = LocalDateTime.now().toLocalDate()
             licenseInfo.maxUsers = 10
             licenseInfo.licenseType = LicenseType.PRO
             licenseInfo.licenseOrg = "On Call Computer Solutions"
             println(encode(licenseInfo))
-        } */
+        }
     }
 }

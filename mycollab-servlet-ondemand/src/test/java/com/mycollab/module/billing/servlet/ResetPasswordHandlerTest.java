@@ -4,7 +4,8 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.module.servlet.GenericServletTest;
 import com.mycollab.module.user.domain.User;
 import com.mycollab.module.user.service.UserService;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,19 +25,20 @@ public class ResetPasswordHandlerTest extends GenericServletTest {
     @Mock
     private UserService userService;
 
-    @Test(expected = UserInvalidInputException.class)
-    public void testInvalidPassword() throws ServletException, IOException {
+    @Test
+    public void testInvalidPassword() {
         when(request.getParameter("username")).thenReturn("hainguyen@esofthead.com");
         when(request.getParameter("password")).thenReturn("123456");
-        resetPasswordHandler.onHandleRequest(request, response);
+        Assertions.assertThrows(UserInvalidInputException.class, () -> resetPasswordHandler.onHandleRequest(request, response));
     }
 
-    @Test(expected = UserInvalidInputException.class)
-    public void testResetPasswordOfInactiveUser() throws ServletException, IOException {
+    @Test
+    public void testResetPasswordOfInactiveUser() {
         when(request.getParameter("username")).thenReturn("hainguyen@esofthead.com");
         when(request.getParameter("password")).thenReturn("abc123");
         when(userService.findUserByUserName(anyString())).thenReturn(null);
-        resetPasswordHandler.onHandleRequest(request, response);
+
+        Assertions.assertThrows(UserInvalidInputException.class, () -> resetPasswordHandler.onHandleRequest(request, response));
     }
 
     @Test

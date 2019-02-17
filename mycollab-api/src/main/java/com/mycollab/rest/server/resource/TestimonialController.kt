@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
  * @since 5.1.2
  */
 @RestController
-@RequestMapping(value = "/testimonial")
+@RequestMapping(value = ["/testimonial"])
 class TestimonialController(private val extMailService: ExtMailService,
                             private val applicationConfiguration: ApplicationConfiguration) {
 

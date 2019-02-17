@@ -76,18 +76,19 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         }
     }
 
-    private fun cloneProjectRoles(projectId: Int, newProjectId: Int?, username: String, sAccountId: Int): Map<Int, Int> {
+    private fun cloneProjectRoles(projectId: Int, newProjectId: Int, username: String, sAccountId: Int): Map<Int, Int> {
         LOG.info("Clone project roles")
         val mapRoleIds = mutableMapOf<Int, Int>()
         val searchCriteria = ProjectRoleSearchCriteria()
         searchCriteria.projectId = NumberSearchField(projectId)
         val roles = projectRoleService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectRole>
         roles.forEach {
+            val oldRoleId = it.id
             it.id = null
             it.projectid = newProjectId
             val newRoleId = projectRoleService.saveWithSession(it, username)
             projectRoleService.savePermission(projectId, newRoleId, it.permissionMap!!, sAccountId)
-            mapRoleIds[it.id] = newRoleId
+            mapRoleIds[oldRoleId] = newRoleId
         }
         return mapRoleIds
     }
@@ -210,16 +211,13 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         LOG.info("Clone project members")
         val searchCriteria = ProjectMemberSearchCriteria()
         searchCriteria.projectIds = SetSearchField(projectId)
-        searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE,
-                ProjectMemberStatusConstants.NOT_ACCESS_YET)
+        searchCriteria.statuses = SetSearchField(ProjectMemberStatusConstants.ACTIVE, ProjectMemberStatusConstants.NOT_ACCESS_YET)
         val members = projectMemberService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleProjectMember>
         members.forEach {
             it.id = null
             it.projectid = newProjectId
-            if (java.lang.Boolean.FALSE == it.isadmin) {
-                val newRoleId = mapRoleIds[it.projectroleid]
-                it.projectroleid = newRoleId
-            }
+            val newRoleId = mapRoleIds[it.projectroleid]
+            it.projectroleid = newRoleId
             projectMemberService.saveWithSession(it, username)
         }
     }
@@ -227,7 +225,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
     private fun cloneProjectMessages(projectId: Int, newProjectId: Int, username: String) {
         LOG.info("Clone project messages")
         val searchCriteria = MessageSearchCriteria()
-        searchCriteria.projectids = SetSearchField(projectId)
+        searchCriteria.projectIds = SetSearchField(projectId)
         val messages = messageService.findPageableListByCriteria(BasicSearchRequest(searchCriteria, 0, Integer.MAX_VALUE)) as List<SimpleMessage>
         messages.forEach {
             it.id = null
@@ -239,7 +237,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
     private fun cloneProjectRisks(projectId: Int, newProjectId: Int, username: String) {
         LOG.info("Clone project risks")
         val searchCriteria = RiskSearchCriteria()
-        searchCriteria.projectId = NumberSearchField.equal(projectId)
+        searchCriteria.projectIds = SetSearchField(projectId)
         val risks = riskService.findPageableListByCriteria(BasicSearchRequest(searchCriteria)) as List<SimpleRisk>
         risks.forEach {
             it.id = null
@@ -259,7 +257,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             it.id = null
             it.projectid = newProjectId
             val newMilestoneId = milestoneService.saveWithSession(it, username)
-            milestoneMapIds.put(milestoneId, newMilestoneId)
+            milestoneMapIds[milestoneId] = newMilestoneId
         }
         return milestoneMapIds
     }

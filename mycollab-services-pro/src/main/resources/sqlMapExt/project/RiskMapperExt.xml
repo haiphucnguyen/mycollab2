@@ -27,9 +27,13 @@
         #ifnotnull($searchCriteria.name)
             ${searchCriteria.name.operation} m_prj_risk.name LIKE '%${searchCriteria.name.value}%'
         #end
-        
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_risk.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation}
+                m_prj_risk.projectId IN
+                #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                    @{projectId,jdbcType=NUMERIC}
+            #end
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)
@@ -60,8 +64,12 @@
             ${searchCriteria.name.operation} m_prj_risk.name LIKE '%${searchCriteria.name.value}%'
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_risk.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation}
+                m_prj_risk.projectId IN
+                #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                    @{projectId,jdbcType=NUMERIC}
+            #end
         #end
         
         #ifnotnull($searchCriteria.raisedByUser)
@@ -83,13 +91,13 @@
     <sql id="selectRisk">
         <![CDATA[
           SELECT m_prj_risk.id, m_prj_risk.name, m_prj_risk.description, m_prj_risk.projectId, m_prj_risk.createdUser,
-                 m_prj_risk.assignUser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised,
+                 m_prj_risk.assignUser, m_prj_risk.consequence, m_prj_risk.probability, m_prj_risk.status, m_prj_risk.raisedDate,
                  m_prj_risk.dueDate, m_prj_risk.startdate, m_prj_risk.enddate, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.priority,
                  m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime,  m_prj_risk.sAccountId,
                  raisedUser.avatarId AS raisedByUserAvatarId,
-                 concat(raisedUser.firstname, ' ', LTRIM(concat(IFNULL(raisedUser.middlename, ''), ' ')), raisedUser.lastname) AS raisedByUserFullName,
+                 concat(raisedUser.firstname, ' ', raisedUser.lastname) AS raisedByUserFullName,
                  assignedUser.avatarId AS assignToUserAvatarId,
-                 concat(assignedUser.firstname, ' ', LTRIM(concat(IFNULL(assignedUser.middlename, ''), ' ')), assignedUser.lastname) AS assignedToUserFullName, 
+                 concat(assignedUser.firstname, ' ', assignedUser.lastname) AS assignedToUserFullName,
                  m_prj_project.name as projectName, m_prj_project.shortname AS projectShortName, m_prj_risk.milestoneid, m_prj_milestone.name AS milestoneName,
                  (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = m_prj_risk.projectId
                      AND m_prj_time_logging.type='Project-Risk' AND m_prj_time_logging.typeId=m_prj_risk.id AND m_prj_time_logging.isBillable = 1) AS billableHours,

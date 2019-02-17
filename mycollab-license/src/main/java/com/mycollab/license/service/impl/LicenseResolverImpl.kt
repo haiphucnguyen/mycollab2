@@ -1,24 +1,21 @@
 package com.mycollab.license.service.impl
 
+import com.javax0.license3j.licensor.License
 import com.mycollab.common.service.AppPropertiesService
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.core.MyCollabException
 import com.mycollab.core.UserInvalidInputException
 import com.mycollab.core.Version
-import com.mycollab.core.utils.DateTimeUtils
 import com.mycollab.core.utils.FileUtils
 import com.mycollab.license.LicenseInfo
 import com.mycollab.license.LicenseType
 import com.mycollab.license.service.LicenseResolver
-import com.verhas.licensor.License
-import org.joda.time.DateTime
-import org.joda.time.Duration
-import org.joda.time.LocalDate
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
 import java.io.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
@@ -28,6 +25,8 @@ import java.util.*
 @Service
 class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
                           private val appPropertiesService: AppPropertiesService) : LicenseResolver, InitializingBean {
+
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     private lateinit var _licenseInfo: LicenseInfo
     override var licenseInfo: LicenseInfo? = null
@@ -66,20 +65,21 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
 
     }
 
+    // TODO
     private fun acquireALicense() {
-        LOG.info("Acquire the trial license")
-        val startDate = DateTime(appPropertiesService.startDate)
-        val now = DateTime()
-        val days = Duration(startDate, now).standardDays.toInt()
-        val edition = appPropertiesService.edition
-        val restTemplate = RestTemplate()
-        try {
-            val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
-            checkAndSaveLicenseInfo(licenseRequest!!)
-        } catch (e: Exception) {
-            LOG.error("Can not retrieve a trial license", e)
-            _licenseInfo = createTempValidLicense(30 - days)
-        }
+//        LOG.info("Acquire the trial license")
+//        val startDate = DateTime(appPropertiesService.startDate)
+//        val now = LocalDate.now()
+//        val days = Duration(startDate, now).standardDays.toInt()
+//        val edition = appPropertiesService.edition
+//        val restTemplate = RestTemplate()
+//        try {
+//            val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
+//            checkAndSaveLicenseInfo(licenseRequest!!)
+//        } catch (e: Exception) {
+//            LOG.error("Can not retrieve a trial license", e)
+//            _licenseInfo = createTempValidLicense(30 - days)
+//        }
     }
 
     override fun checkLicenseInfo(licenseBytes: ByteArray, isSave: Boolean): LicenseInfo {
@@ -94,24 +94,24 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
             val prop = Properties()
             val bytes = outputStream.toByteArray()
             prop.load(ByteArrayInputStream(bytes))
-            val expireDate = DateTime(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")))
+            val expireDate = LocalDate.parse(prop.getProperty("expireDate"), formatter)
             if (Version.getReleasedDate().isAfter(expireDate)) {
                 return createInvalidLicense()
             }
             val newLicenseInfo = LicenseInfo()
             newLicenseInfo.customerId = prop.getProperty("customerId")
             newLicenseInfo.licenseType = LicenseType.valueOf(prop.getProperty("licenseType"))
-            newLicenseInfo.expireDate = expireDate.toDate()
-            newLicenseInfo.issueDate = DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate"))
+            newLicenseInfo.expireDate = expireDate
+            newLicenseInfo.issueDate = LocalDate.parse(prop.getProperty("issueDate"), formatter)
             newLicenseInfo.licenseOrg = prop.getProperty("licenseOrg")
             newLicenseInfo.maxUsers = Integer.parseInt(prop.getProperty("maxUsers", "10"))
             if (isSave) {
                 if (newLicenseInfo.isExpired) {
                     throw UserInvalidInputException("License is expired")
                 }
-//                if (newLicenseInfo.isTrial) {
-//                    throw UserInvalidInputException("You can not enter another trial license during trial period")
-//                }
+                if (newLicenseInfo.isTrial) {
+                    throw UserInvalidInputException("You can not enter another trial license during trial period")
+                }
                 val licenseFile = licenseFile
                 val fileOutputStream = FileOutputStream(licenseFile)
                 fileOutputStream.write(licenseBytes)
@@ -128,20 +128,20 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
     private fun createInvalidLicense(): LicenseInfo {
         val tmpLicenseInfo = LicenseInfo()
         tmpLicenseInfo.customerId = ""
-        tmpLicenseInfo.expireDate = GregorianCalendar().time
-        tmpLicenseInfo.issueDate = GregorianCalendar().time
+        tmpLicenseInfo.expireDate = LocalDate.now()
+        tmpLicenseInfo.issueDate = LocalDate.now()
         tmpLicenseInfo.licenseOrg = ""
         tmpLicenseInfo.maxUsers = 1
         tmpLicenseInfo.licenseType = LicenseType.INVALID
         return tmpLicenseInfo
     }
 
-    private fun createTempValidLicense(days: Int): LicenseInfo {
-        val now = LocalDate()
+    private fun createTempValidLicense(days: Long): LicenseInfo {
+        val now = LocalDate.now()
         val tmpLicenseInfo = LicenseInfo()
         tmpLicenseInfo.customerId = ""
-        tmpLicenseInfo.expireDate = now.plusDays(days).toDate()
-        tmpLicenseInfo.issueDate = now.toDate()
+        tmpLicenseInfo.expireDate = now.plusDays(days)
+        tmpLicenseInfo.issueDate = now
         tmpLicenseInfo.licenseOrg = ""
         tmpLicenseInfo.maxUsers = 10
         tmpLicenseInfo.licenseType = LicenseType.PRO_TRIAL

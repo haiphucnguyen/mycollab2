@@ -1,9 +1,7 @@
 package com.mycollab.pro.module.project.view.reports;
 
 import com.hp.gagawa.java.elements.A;
-import com.mycollab.common.i18n.DayI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.module.project.ProjectLinkBuilder;
 import com.mycollab.module.project.ProjectLinkGenerator;
 import com.mycollab.module.project.domain.SimpleProject;
 import com.mycollab.module.project.domain.SimpleProjectMember;
@@ -14,7 +12,6 @@ import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectService;
 import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.module.project.ui.components.ProjectMemberLink;
-import com.mycollab.pro.module.project.ui.components.ProjectMultiSelect;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -22,24 +19,24 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
-import com.mycollab.vaadin.ui.UIConstants;
+import com.mycollab.vaadin.web.ui.RangeDateField;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.mycollab.vaadin.web.ui.WeeklyCalendarFieldExp;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.ItemCaptionGenerator;
 import org.apache.commons.collections.CollectionUtils;
-import org.joda.time.DateTime;
+import org.vaadin.addons.ComboBoxMultiselect;
 import org.vaadin.alump.distributionbar.DistributionBar;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,9 +54,9 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
     @Override
     public void display() {
         removeAllComponents();
-        with(ELabel.h2(FontAwesome.BALANCE_SCALE.getHtml() + " " + UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_WEEKLY)));
-        MVerticalLayout container = new MVerticalLayout().withStyleName(WebThemes.BOX);
-        with(container);
+        with(ELabel.h2(VaadinIcons.CHART_LINE.getHtml() + " " + UserUIContext.getMessage(ProjectReportI18nEnum.REPORT_HOURS_SPENT)));
+        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName(WebThemes.BOX);
+        with(contentLayout);
 
         GridLayout searchLayout = new GridLayout(5, 1);
         searchLayout.setSpacing(true);
@@ -67,24 +64,23 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
 
         ProjectService projectService = AppContextUtil.getSpringBean(ProjectService.class);
         List<SimpleProject> projects = projectService.getProjectsUserInvolved(UserUIContext.getUsername(), AppUI.getAccountId());
-        final ProjectMultiSelect projectsSelection = new ProjectMultiSelect(projects);
+        ComboBoxMultiselect<SimpleProject> projectsSelection = buildMultiProjectsSelection(projects);
         searchLayout.addComponent(new ELabel(UserUIContext.getMessage(ProjectI18nEnum.LIST)).withStyleName(WebThemes.META_COLOR), 0, 0);
         searchLayout.addComponent(projectsSelection, 1, 0);
-        searchLayout.addComponent(new ELabel(UserUIContext.getMessage(DayI18nEnum.OPT_WEEK)).withStyleName(WebThemes.META_COLOR), 2, 0);
-        final WeeklyCalendarFieldExp dateFieldExt = new WeeklyCalendarFieldExp();
-        dateFieldExt.setValue(new DateTime().toDate());
+        RangeDateField rangeDatesField = new RangeDateField();
 
-        searchLayout.addComponent(dateFieldExt, 3, 0);
-        container.with(searchLayout);
+        searchLayout.addComponent(rangeDatesField, 2, 0);
+        contentLayout.with(searchLayout);
         MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> {
-            Collection<SimpleProject> selectedProjects = (Collection<SimpleProject>) projectsSelection.getValue();
+            Collection<SimpleProject> selectedProjects = projectsSelection.getValue();
             if (CollectionUtils.isEmpty(selectedProjects)) {
                 NotificationUtil.showErrorNotification("You must select at least one project");
             } else {
-                buildHourlyProjectsReport(selectedProjects, dateFieldExt.getValue());
+                LocalDate[] bounds = rangeDatesField.getBounds();
+                buildHourlyProjectsReport(selectedProjects, bounds[0], bounds[1]);
             }
         }).withStyleName(WebThemes.BUTTON_ACTION);
-        searchLayout.addComponent(searchBtn, 4, 0);
+        searchLayout.addComponent(searchBtn, 3, 0);
         with(new MCssLayout(new MHorizontalLayout(new ELabel(UserUIContext.getMessage(TimeTrackingI18nEnum.OPT_BILLABLE_HOURS)))
                 .withWidth("180px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-1")).withStyleName("alump-dbar"));
@@ -95,21 +91,28 @@ public class MembersWeeklyHoursViewImpl extends AbstractVerticalPageView impleme
                 .withWidth("180px").withMargin(new MarginInfo(false, true, false, true))
                 .withStyleName("alump-dbar-part-3")).withStyleName("alump-dbar"));
         searchResultLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
-        with(searchResultLayout);
+        with(searchResultLayout).expand(searchResultLayout);
     }
 
-    private void buildHourlyProjectsReport(Collection<SimpleProject> selectedProjects, Date dateInWeek) {
+    private ComboBoxMultiselect<SimpleProject> buildMultiProjectsSelection(List<SimpleProject> projects) {
+        ComboBoxMultiselect<SimpleProject> projectsSelection = new ComboBoxMultiselect<>();
+        projectsSelection.setWidth("200px");
+        projectsSelection.setTextInputAllowed(false);
+        projectsSelection.setItems(projects);
+        projectsSelection.setItemCaptionGenerator((ItemCaptionGenerator<SimpleProject>) project -> project.getName());
+        projectsSelection.setStyleGenerator(project -> WebThemes.TEXT_ELLIPSIS);
+        return projectsSelection;
+    }
+
+    private void buildHourlyProjectsReport(Collection<SimpleProject> selectedProjects, LocalDate start, LocalDate end) {
         searchResultLayout.removeAllComponents();
         for (SimpleProject project : selectedProjects) {
             MVerticalLayout contentLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false));
             Component projectLogo = ProjectAssetsUtil.projectLogoComp(project.getShortname(), project.getId(), project.getAvatarid(), 32);
             A projectDiv = new A(ProjectLinkGenerator.generateProjectLink(project.getId())).appendText(project.getName());
-            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withFullWidth();
+            ELabel projectLbl = ELabel.h3(projectDiv.write()).withStyleName(WebThemes.TEXT_ELLIPSIS).withFullWidth();
             contentLayout.with(new MHorizontalLayout(projectLogo, projectLbl).expand(projectLbl).withFullWidth());
             ProjectMemberService projectMemberService = AppContextUtil.getSpringBean(ProjectMemberService.class);
-            DateTime now = new DateTime(dateInWeek);
-            Date start = now.dayOfWeek().withMinimumValue().toDate();
-            Date end = now.dayOfWeek().withMaximumValue().toDate();
             List<SimpleProjectMember> members = projectMemberService.findMembersHourlyInProject(project.getId(),
                     AppUI.getAccountId(), start, end);
 

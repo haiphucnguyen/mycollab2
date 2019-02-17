@@ -1,23 +1,22 @@
 package com.mycollab.pro.module.project.view.client;
 
+import com.mycollab.common.domain.Client;
+import com.mycollab.common.domain.SimpleClient;
+import com.mycollab.common.domain.criteria.ClientSearchCriteria;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.service.ClientService;
 import com.mycollab.db.arguments.NumberSearchField;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.crm.CrmTypeConstants;
-import com.mycollab.module.crm.domain.Account;
-import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.mycollab.module.crm.service.AccountService;
-import com.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.ClientEvent;
-import com.mycollab.vaadin.reporting.FormReportLayout;
-import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.DefaultPreviewFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
+import com.mycollab.vaadin.reporting.FormReportLayout;
+import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
@@ -39,14 +38,14 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleAccount>() {
+        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleClient>() {
             @Override
-            public void onEdit(SimpleAccount data) {
+            public void onEdit(SimpleClient data) {
                 EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, data));
             }
 
             @Override
-            public void onDelete(final SimpleAccount data) {
+            public void onDelete(final SimpleClient data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
@@ -54,30 +53,30 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
                         UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-                                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                                accountService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
+                                ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+                                clientService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new ClientEvent.GotoList(this, null));
                             }
                         });
             }
 
             @Override
-            public void onAdd(SimpleAccount data) {
+            public void onAdd(SimpleClient data) {
                 EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
             }
 
             @Override
-            public void onClone(SimpleAccount data) {
-                Account cloneData = (Account) data.copy();
+            public void onClone(SimpleClient data) {
+                SimpleClient cloneData = (SimpleClient) data.copy();
                 cloneData.setId(null);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoEdit(this, cloneData));
             }
 
             @Override
-            public void onPrint(Object source, SimpleAccount data) {
+            public void onPrint(Object source, SimpleClient data) {
                 PrintButton btn = (PrintButton) source;
-                btn.doPrint(data, new FormReportLayout(CrmTypeConstants.ACCOUNT, Account.Field.accountname.name(),
-                        AccountDefaultDynaFormLayoutFactory.getForm()));
+                btn.doPrint(data, new FormReportLayout(ProjectTypeConstants.CLIENT, Client.Field.name.name(),
+                        ClientDefaultDynaFormLayoutFactory.getForm()));
             }
 
             @Override
@@ -86,12 +85,12 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             }
 
             @Override
-            public void gotoNext(SimpleAccount data) {
-                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                AccountSearchCriteria criteria = new AccountSearchCriteria();
+            public void gotoNext(SimpleClient data) {
+                ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+                ClientSearchCriteria criteria = new ClientSearchCriteria();
                 criteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
                 criteria.setId(NumberSearchField.greaterThan(data.getId()));
-                Integer nextId = accountService.getNextItemKey(criteria);
+                Integer nextId = clientService.getNextItemKey(criteria);
                 if (nextId != null) {
                     EventBusFactory.getInstance().post(new ClientEvent.GotoRead(this, nextId));
                 } else {
@@ -100,9 +99,9 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
             }
 
             @Override
-            public void gotoPrevious(SimpleAccount data) {
-                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                AccountSearchCriteria criteria = new AccountSearchCriteria();
+            public void gotoPrevious(SimpleClient data) {
+                ClientService accountService = AppContextUtil.getSpringBean(ClientService.class);
+                ClientSearchCriteria criteria = new ClientSearchCriteria();
                 criteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
                 criteria.setId(NumberSearchField.lessThan(data.getId()));
                 Integer nextId = accountService.getPreviousItemKey(criteria);
@@ -117,14 +116,14 @@ public class ClientReadPresenter extends AbstractPresenter<ClientReadView> {
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        if (UserUIContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
-            AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-            SimpleAccount account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
-            if (account != null) {
+        if (UserUIContext.canRead(RolePermissionCollections.CLIENT)) {
+            ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+            SimpleClient client = clientService.findById((Integer) data.getParams(), AppUI.getAccountId());
+            if (client != null) {
                 ClientContainer clientContainer = (ClientContainer) container;
                 clientContainer.removeAllComponents();
                 clientContainer.addComponent(view);
-                view.previewItem(account);
+                view.previewItem(client);
             } else {
                 LOG.error("Can not find the account " + data.getParams());
                 NotificationUtil.showMessagePermissionAlert();

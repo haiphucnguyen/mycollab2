@@ -1,17 +1,16 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.common.UrlEncodeDecoder;
+import com.mycollab.common.domain.Client;
+import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.service.ClientService;
 import com.mycollab.core.ResourceNotFoundException;
-import com.mycollab.vaadin.EventBusFactory;
-import com.mycollab.module.crm.domain.Account;
-import com.mycollab.module.crm.domain.SimpleAccount;
-import com.mycollab.module.crm.service.AccountService;
 import com.mycollab.module.project.event.ClientEvent;
-import com.mycollab.module.project.i18n.ClientI18nEnum;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.IEditFormHandler;
 import com.mycollab.vaadin.mvp.ScreenData;
@@ -30,12 +29,12 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<SimpleAccount>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<Client>() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onSave(final SimpleAccount account) {
-                int accountId = saveAccount(account);
+            public void onSave(final Client client) {
+                int accountId = saveClient(client);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoRead(this, accountId));
             }
 
@@ -45,8 +44,8 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
             }
 
             @Override
-            public void onSaveAndNew(final SimpleAccount account) {
-                saveAccount(account);
+            public void onSaveAndNew(Client client) {
+                saveClient(client);
                 EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null));
             }
         });
@@ -57,41 +56,41 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
         ClientContainer clientContainer = (ClientContainer) container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
-            SimpleAccount account = null;
-            if (data.getParams() instanceof SimpleAccount) {
-                account = (SimpleAccount) data.getParams();
+
+        if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
+            Client client = null;
+            if (data.getParams() instanceof Client) {
+                client = (Client) data.getParams();
             } else if (data.getParams() instanceof Integer) {
-                AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-                account = accountService.findById((Integer) data.getParams(), AppUI.getAccountId());
+                ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+                client = clientService.findById((Integer) data.getParams(), AppUI.getAccountId());
             }
 
-            if (account == null) {
+            if (client == null) {
                 throw new ResourceNotFoundException();
             }
 
-            view.editItem(account);
-            if (account.getId() == null) {
+            view.editItem(client);
+            if (client.getId() == null) {
                 AppUI.addFragment("project/client/add", UserUIContext.getMessage(GenericI18Enum
                         .BROWSER_ADD_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE)));
             } else {
-                AppUI.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(account.getId()),
+                AppUI.addFragment("project/client/edit/" + UrlEncodeDecoder.encode(client.getId()),
                         UserUIContext.getMessage(GenericI18Enum.BROWSER_EDIT_ITEM_TITLE, UserUIContext.getMessage(ClientI18nEnum.SINGLE),
-                                account.getAccountname()));
+                                client.getName()));
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
     }
 
-    private int saveAccount(Account account) {
-        AccountService accountService = AppContextUtil.getSpringBean(AccountService.class);
-        account.setSaccountid(AppUI.getAccountId());
-        if (account.getId() == null) {
-            accountService.saveWithSession(account, UserUIContext.getUsername());
+    private int saveClient(Client client) {
+        ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
+        if (client.getId() == null) {
+            clientService.saveWithSession(client, UserUIContext.getUsername());
         } else {
-            accountService.updateWithSession(account, UserUIContext.getUsername());
+            clientService.updateWithSession(client, UserUIContext.getUsername());
         }
-        return account.getId();
+        return client.getId();
     }
 }

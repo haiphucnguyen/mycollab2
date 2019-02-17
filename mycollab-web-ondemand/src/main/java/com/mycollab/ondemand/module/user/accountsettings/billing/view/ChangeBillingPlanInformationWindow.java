@@ -3,21 +3,27 @@ package com.mycollab.ondemand.module.user.accountsettings.billing.view;
 import com.google.common.eventbus.AsyncEventBus;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.utils.BeanUtility;
+import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
 import com.mycollab.ondemand.module.billing.dao.BillingSubscriptionMapper;
 import com.mycollab.ondemand.module.billing.domain.BillingSubscription;
 import com.mycollab.ondemand.module.billing.esb.UpdateSubscriptionEvent;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
-import com.vaadin.ui.*;
+import com.vaadin.data.HasValue;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -44,13 +50,12 @@ class ChangeBillingPlanInformationWindow extends MWindow {
         }
 
         class FormLayoutFactory extends AbstractFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
 
             @Override
             public AbstractComponent getLayout() {
                 VerticalLayout layout = new VerticalLayout();
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
                 layout.addComponent(informationLayout.getLayout());
 
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
@@ -61,9 +66,9 @@ class ChangeBillingPlanInformationWindow extends MWindow {
                         AsyncEventBus eventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                         eventBus.post(event);
                         close();
-                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                        Utils.reloadPage();
                     }
-                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.SAVE);
+                }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.CLIPBOARD).withClickShortcut(KeyCode.ENTER);
 
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);
@@ -76,7 +81,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             }
 
             @Override
-            protected Component onAttachField(Object propertyId, Field<?> field) {
+            protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
                 if (BillingSubscription.Field.name.equalTo(propertyId)) {
                     informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
                 } else if (BillingSubscription.Field.email.equalTo(propertyId)) {
@@ -96,7 +101,7 @@ class ChangeBillingPlanInformationWindow extends MWindow {
             }
 
             @Override
-            protected Field<?> onCreateField(Object propertyId) {
+            protected HasValue<?> onCreateField(Object propertyId) {
                 return null;
             }
         }

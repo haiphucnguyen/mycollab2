@@ -1,23 +1,23 @@
 package com.mycollab.pro.module.project.view.client;
 
+import com.mycollab.common.domain.criteria.ClientSearchCriteria;
+import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.Param;
-import com.mycollab.module.crm.CrmTypeConstants;
-import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.mycollab.module.crm.ui.components.ComponentUtils;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.ClientEvent;
-import com.mycollab.module.project.i18n.ClientI18nEnum;
+import com.mycollab.module.project.ui.components.ComponentUtils;
 import com.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.mycollab.vaadin.ui.HeaderWithIcon;
 import com.mycollab.vaadin.web.ui.*;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
@@ -28,43 +28,43 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.2.9
  */
-public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCriteria> {
+public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCriteria> {
 
     private static Param[] paramFields = new Param[]{
-            AccountSearchCriteria.p_accountName, AccountSearchCriteria.p_anyPhone, AccountSearchCriteria.p_website,
-            AccountSearchCriteria.p_numemployees, AccountSearchCriteria.p_assignee, AccountSearchCriteria.p_industries,
-            AccountSearchCriteria.p_types, AccountSearchCriteria.p_billingCountry,
-            AccountSearchCriteria.p_shippingCountry, AccountSearchCriteria.p_anyCity, AccountSearchCriteria.p_createdtime,
-            AccountSearchCriteria.p_lastupdatedtime};
+            ClientSearchCriteria.p_name, ClientSearchCriteria.p_anyPhone, ClientSearchCriteria.p_website,
+            ClientSearchCriteria.p_numemployees, ClientSearchCriteria.p_assignee,
+            ClientSearchCriteria.p_anyCity, ClientSearchCriteria.p_createdtime,
+            ClientSearchCriteria.p_lastupdatedtime
+    };
 
     @Override
-    protected HeaderWithFontAwesome buildSearchTitle() {
-        return ComponentUtils.header(CrmTypeConstants.ACCOUNT, UserUIContext.getMessage(ClientI18nEnum.LIST));
+    protected HeaderWithIcon buildSearchTitle() {
+        return ComponentUtils.headerH2(ProjectTypeConstants.CLIENT, UserUIContext.getMessage(ClientI18nEnum.LIST));
     }
 
     @Override
     protected Component buildExtraControls() {
-        if (UserUIContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
+        if (UserUIContext.canWrite(RolePermissionCollections.CLIENT)) {
             return new MButton(UserUIContext.getMessage(ClientI18nEnum.NEW),
                     clickEvent -> EventBusFactory.getInstance().post(new ClientEvent.GotoAdd(this, null)))
-                    .withIcon(FontAwesome.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
+                    .withIcon(VaadinIcons.PLUS).withStyleName(WebThemes.BUTTON_ACTION);
         } else return null;
     }
 
     @Override
-    protected BasicSearchLayout<AccountSearchCriteria> createBasicSearchLayout() {
+    protected BasicSearchLayout<ClientSearchCriteria> createBasicSearchLayout() {
         return new AccountBasicSearchLayout();
     }
 
     @Override
-    protected SearchLayout<AccountSearchCriteria> createAdvancedSearchLayout() {
+    protected SearchLayout<ClientSearchCriteria> createAdvancedSearchLayout() {
         return new AccountAdvancedSearchLayout();
     }
 
-    private class AccountAdvancedSearchLayout extends DynamicQueryParamLayout<AccountSearchCriteria> {
+    private class AccountAdvancedSearchLayout extends DynamicQueryParamLayout<ClientSearchCriteria> {
 
         private AccountAdvancedSearchLayout() {
-            super(ClientSearchPanel.this, CrmTypeConstants.ACCOUNT);
+            super(ClientSearchPanel.this, ProjectTypeConstants.CLIENT);
         }
 
         @Override
@@ -73,8 +73,8 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         }
 
         @Override
-        protected Class<AccountSearchCriteria> getType() {
-            return AccountSearchCriteria.class;
+        protected Class<ClientSearchCriteria> getType() {
+            return ClientSearchCriteria.class;
         }
 
         @Override
@@ -86,7 +86,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         }
     }
 
-    private class AccountBasicSearchLayout extends BasicSearchLayout<AccountSearchCriteria> {
+    private class AccountBasicSearchLayout extends BasicSearchLayout<ClientSearchCriteria> {
         private TextField nameField;
         private CheckBox myItemCheckbox;
 
@@ -96,14 +96,14 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
 
         @Override
         public ComponentContainer constructBody() {
-            nameField = new MTextField().withInputPrompt(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
+            nameField = new MTextField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.ACTION_QUERY_BY_TEXT))
                     .withWidth(WebUIConstants.DEFAULT_CONTROL_WIDTH);
 
             myItemCheckbox = new CheckBox(UserUIContext.getMessage(GenericI18Enum.OPT_MY_ITEMS));
             myItemCheckbox.addStyleName(ValoTheme.CHECKBOX_SMALL);
 
             MButton searchBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SEARCH), clickEvent -> callSearchAction())
-                    .withIcon(FontAwesome.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withIcon(VaadinIcons.SEARCH).withStyleName(WebThemes.BUTTON_ACTION)
                     .withClickShortcut(ShortcutAction.KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CLEAR), clickEvent -> nameField.setValue(""))
@@ -117,10 +117,10 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<AccountSearchCr
         }
 
         @Override
-        protected AccountSearchCriteria fillUpSearchCriteria() {
-            AccountSearchCriteria searchCriteria = new AccountSearchCriteria();
+        protected ClientSearchCriteria fillUpSearchCriteria() {
+            ClientSearchCriteria searchCriteria = new ClientSearchCriteria();
             searchCriteria.setSaccountid(NumberSearchField.equal(AppUI.getAccountId()));
-            searchCriteria.setAccountname(StringSearchField.and(nameField.getValue().trim()));
+            searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {
                 searchCriteria.setAssignUser(StringSearchField.and(UserUIContext.getUsername()));
             } else {

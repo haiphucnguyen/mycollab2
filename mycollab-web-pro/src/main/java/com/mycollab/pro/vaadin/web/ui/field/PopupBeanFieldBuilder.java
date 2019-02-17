@@ -9,14 +9,15 @@ import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.PropertyChangedEvent;
 import com.mycollab.vaadin.web.ui.LazyPopupView;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.Field;
+import com.vaadin.data.Binder;
+import com.vaadin.data.Converter;
+import com.vaadin.data.HasValue;
+import com.vaadin.server.SerializableFunction;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
-import org.vaadin.jouni.restrain.Restrain;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -27,11 +28,11 @@ public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
     protected String description;
-    protected Field field;
+    protected HasValue field;
     private boolean hasPermission = true;
     protected B bean;
     private String bindProperty;
-    private BeanFieldGroup fieldGroup;
+    private Binder binder;
     private ICrudService crudService;
 
     public PopupBeanFieldBuilder withValue(Object value) {
@@ -44,7 +45,7 @@ public abstract class PopupBeanFieldBuilder<B> {
         return this;
     }
 
-    public PopupBeanFieldBuilder withField(Field field) {
+    public PopupBeanFieldBuilder withField(HasValue<?> field) {
         this.field = field;
         return this;
     }
@@ -96,8 +97,8 @@ public abstract class PopupBeanFieldBuilder<B> {
     }
 
     public PopupView build() {
-        final PopupView view = new BeanPopupView(generateSmallContentAsHtml());
-        view.setDescription(generateDescription());
+        PopupView view = new BeanPopupView(generateSmallContentAsHtml());
+        view.setDescription(generateDescription(), ContentMode.HTML);
         return view;
     }
 
@@ -108,38 +109,45 @@ public abstract class PopupBeanFieldBuilder<B> {
 
         @Override
         protected void doHide() {
-            try {
-                if (fieldGroup.isModified()) {
-                    fieldGroup.commit();
+            if (binder.hasChanges()) {
+                value = field.getValue();
+                try {
+                    if (field instanceof Converter) {
+                        value = ((Converter) field).convertToModel(value, null).getOrThrow(SerializableFunction.identity());
+                    }
+                    PropertyUtils.setProperty(bean, bindProperty, value);
                     save();
                     this.fireEvent(new PropertyChangedEvent(bean, bindProperty));
-                    setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
-                    BeanPopupView.this.setDescription(generateDescription());
+                } catch (Throwable e) {
+                    throw new MyCollabException(e);
                 }
-            } catch (FieldGroup.CommitException e) {
-                throw new MyCollabException(e);
+                setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
+                BeanPopupView.this.setDescription(generateDescription());
             }
         }
 
         @Override
         protected void doShow() {
-            BeanItem item = new BeanItem(bean);
-            fieldGroup = new BeanFieldGroup(bean.getClass());
-
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             Label headerLbl = ELabel.h3(caption);
-            layout.with(headerLbl);
-            layout.with(field);
-            if (field instanceof AbstractComponent) {
-                new Restrain((AbstractComponent) field).setMaxWidth("600px");
-            }
+            layout.with(headerLbl, (Component) field);
 
-            fieldGroup.setBuffered(true);
-            fieldGroup.setItemDataSource(item);
-            fieldGroup.bind(field, bindProperty);
+            binder = new Binder(bean.getClass());
+            if (field instanceof Converter) {
+                binder.forField(field).withConverter((Converter) field).bind(bindProperty);
+            } else {
+                binder.bind(field, bindProperty);
+            }
             boolean checkPermission = isPermission();
-            field.setVisible(checkPermission);
+            ((Component) field).setVisible(checkPermission);
+            if (field instanceof Converter) {
+                Converter converter = (Converter)field;
+                Object convertValue = converter.convertToPresentation(value, null);
+                field.setValue(convertValue);
+            } else {
+                field.setValue(value);
+            }
             if (!checkPermission) {
                 layout.add(new Label(UserUIContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }

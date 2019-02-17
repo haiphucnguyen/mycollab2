@@ -36,7 +36,7 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
                 task.name = assignment.name
                 task.id = assignment.typeId
                 task.milestoneid = assignment.milestoneId
-                task.saccountid = assignment.sAccountId
+                task.saccountid = assignment.saccountid
                 taskService.updateSelectiveWithSession(task, username)
             }
             assignment.isBug -> {
@@ -44,7 +44,7 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
                 bug.name = assignment.name
                 bug.id = assignment.typeId
                 bug.milestoneid = assignment.milestoneId
-                bug.saccountid = assignment.sAccountId
+                bug.saccountid = assignment.saccountid
                 bugService.updateSelectiveWithSession(bug, username)
             }
             assignment.isRisk -> {
@@ -52,13 +52,13 @@ class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
                 risk.name = assignment.name
                 risk.id = assignment.typeId
                 risk.milestoneid = assignment.milestoneId
-                risk.saccountid = assignment.sAccountId
+                risk.saccountid = assignment.saccountid
                 riskService.updateSelectiveWithSession(risk, username)
             }
             else -> throw MyCollabException("Not support")
         }
 
-        asyncEventBus.post(CleanCacheEvent(assignment.sAccountId, arrayOf(ProjectService::class.java)))
+        asyncEventBus.post(CleanCacheEvent(assignment.saccountid, arrayOf(ProjectService::class.java)))
     }
 
     override fun closeSubAssignmentOfMilestone(milestoneId: Int) {

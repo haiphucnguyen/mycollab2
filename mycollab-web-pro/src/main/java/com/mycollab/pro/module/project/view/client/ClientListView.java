@@ -1,6 +1,6 @@
 package com.mycollab.pro.module.project.view.client;
 
-import com.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.mycollab.common.domain.criteria.ClientSearchCriteria;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.mvp.PageView;
 
@@ -9,7 +9,8 @@ import com.mycollab.vaadin.mvp.PageView;
  * @since 5.2.9
  */
 public interface ClientListView extends PageView {
-    HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
-    void display(AccountSearchCriteria searchCriteria);
+    HasSearchHandlers<ClientSearchCriteria> getSearchHandlers();
+
+    void display(ClientSearchCriteria searchCriteria);
 }

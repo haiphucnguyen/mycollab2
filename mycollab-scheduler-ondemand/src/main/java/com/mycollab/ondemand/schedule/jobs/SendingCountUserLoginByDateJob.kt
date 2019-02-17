@@ -2,7 +2,6 @@ package com.mycollab.ondemand.schedule.jobs
 
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.configuration.ApplicationConfiguration
-import com.mycollab.configuration.SiteConfiguration
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.SearchCriteria
 import com.mycollab.module.mail.service.ExtMailService
@@ -11,13 +10,13 @@ import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria
 import com.mycollab.module.user.service.UserService
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
-import org.joda.time.LocalDateTime
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
@@ -34,10 +33,10 @@ class SendingCountUserLoginByDateJob(private val userService: UserService,
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val criteria = UserSearchCriteria()
-        val to = LocalDateTime()
+        val to = LocalDateTime.now()
         val from = to.minusDays(1)
         criteria.saccountid = null
-        criteria.setLastAccessTimeRange(from.toDate(), to.toDate())
+        criteria.setLastAccessTimeRange(from, to)
         criteria.setOrderFields(mutableListOf(SearchCriteria.OrderField("subDomain", SearchCriteria.ASC)))
 
         val accessedUsers = userService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleUser>

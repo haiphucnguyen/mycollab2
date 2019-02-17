@@ -27,8 +27,8 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer> imple
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
-        accountContainer.gotoSubView(SettingUIConstants.BILLING);
-        ((BillingContainer) view).display();
+        accountContainer.gotoSubView(SettingUIConstants.BILLING, view);
+        view.display();
 
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoBillingPage();
