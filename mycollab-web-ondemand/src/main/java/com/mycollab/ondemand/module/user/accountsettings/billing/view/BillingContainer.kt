@@ -9,4 +9,9 @@ import com.mycollab.vaadin.mvp.ViewComponent
  * @since 1.0
  */
 @ViewComponent
-class BillingContainer : AbstractSingleContainerPageView()
+class BillingContainer : IBillingContainer, AbstractSingleContainerPageView() {
+
+    override fun display() {
+
+    }
+}
