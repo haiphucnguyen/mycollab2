@@ -90,7 +90,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
         Label spaceLbl = new Label();
         faqLayout.with(ELabel.h3(UserUIContext.getMessage(BillingI18nEnum.HELP_QUESTION)), ELabel.html(UserUIContext
-                .getMessage(BillingI18nEnum.HELP_INFO)), spaceLbl).expand(spaceLbl);
+                .getMessage(BillingI18nEnum.HELP_INFO)).withFullWidth(), spaceLbl).expand(spaceLbl);
 
         topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
@@ -101,9 +101,11 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
         MButton bankwireBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT),
                 event -> UI.getCurrent().addWindow(new BankwireSelectionWindow(currentBillingPlan)))
                 .withIcon(VaadinIcons.PIGGY_BANK).withStyleName(WebThemes.BUTTON_LINK);
-        ELabel conditionLbl = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC));
+        ELabel conditionLbl = ELabel.html(UserUIContext.getMessage(BillingI18nEnum.OPT_PAYMENT_BANKWIRE_DESC))
+                .withFullWidth();
         this.with(layout, new MHorizontalLayout(bankWireTransfer, bankwireBtn).alignAll(Alignment.MIDDLE_CENTER)
-                .withMargin(new MarginInfo(true, false, false, false)), conditionLbl, ELabel.html(UserUIContext.getMessage(OPTION_BILLING_FAQ)));
+                .withMargin(new MarginInfo(true, false, false, false)), conditionLbl,
+                ELabel.html(UserUIContext.getMessage(OPTION_BILLING_FAQ)).withFullWidth());
         loadCurrentPlan();
         displayBillingMonthly();
     }
@@ -334,7 +336,6 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
             MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_OK), clickEvent -> {
                 if (chosenPlan.getNumprojects() < numOfActiveProjects
                         || chosenPlan.getNumusers() < numOfActiveUsers
-                        || chosenPlan.getVolume() * 1000 < usedStorageVolume
                         || chosenPlan.getVolume() * 1000 < usedStorageVolume) {
                     NotificationUtil.showErrorNotification(UserUIContext.getMessage(BillingI18nEnum.OPT_CANNOT_CHANGE_PLAN));
                     close();

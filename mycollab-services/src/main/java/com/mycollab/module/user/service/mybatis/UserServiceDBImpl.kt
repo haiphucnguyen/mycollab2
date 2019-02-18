@@ -233,6 +233,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
     }
 
     override fun authentication(username: String, password: String, subDomain: String, isPasswordEncrypt: Boolean): SimpleUser {
+        LOG.info("Authenticate user $username in sub-domain $subDomain")
         val criteria = UserSearchCriteria()
         criteria.username = StringSearchField.and(username)
         criteria.registerStatuses = SetSearchField(RegisterStatusConstants.ACTIVE, RegisterStatusConstants.NOT_LOG_IN_YET)
