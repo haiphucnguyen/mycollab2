@@ -49,7 +49,9 @@ class MailAppender : SMTPAppender() {
     override fun sendBuffer(cb: CyclicBuffer<ILoggingEvent>?, lastEventObject: ILoggingEvent?) {
         if (!isSessionCreated) {
             try {
+                System.out.println("Create new mail session")
                 val emailConfiguration = AppContextUtil.getSpringBean(EmailConfiguration::class.java)
+                System.out.println("Mail configuration $emailConfiguration")
                 val props = Properties(OptionHelper.getSystemProperties())
                 isSessionCreated = true;
                 this.addTo(emailConfiguration.errorTo)
@@ -70,6 +72,7 @@ class MailAppender : SMTPAppender() {
 
                 if (emailConfiguration.ssl && emailConfiguration.startTls) {
                     addError("Both SSL and StartTLS cannot be enabled simultaneously")
+                    System.out.println("Both SSL and StartTLS cannot be enabled simultaneously")
                 } else {
                     if (emailConfiguration.startTls) {
                         // see also http://jira.qos.ch/browse/LBCORE-225
