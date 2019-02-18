@@ -54,6 +54,7 @@ class MailAppender : SMTPAppender() {
                 System.out.println("Mail configuration $emailConfiguration")
                 val props = Properties(OptionHelper.getSystemProperties())
                 isSessionCreated = true;
+                this.from = emailConfiguration.username
                 this.addTo(emailConfiguration.errorTo)
 
                 props["mail.smtp.host"] = emailConfiguration.smtphost
