@@ -306,8 +306,8 @@ public class DesktopApplication extends AppUI {
         BillingAccountService billingAccountService = AppContextUtil.getSpringBean(BillingAccountService.class);
 
         SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppUI.getAccountId());
-        LOG.info(String.format("Get billing account successfully - Pricing: %s, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
-                user.getUsername(), user.getDisplayName()));
+        LOG.info(String.format("Get billing account successfully - Pricing: %s, Account: %d, User: %s - %s", "" + billingAccount.getBillingPlan().getPricing(),
+                billingAccount.getId(), user.getUsername(), user.getDisplayName()));
         UserUIContext.getInstance().setSessionVariables(user, billingAccount);
 
         UserAccountMapper userAccountMapper = AppContextUtil.getSpringBean(UserAccountMapper.class);
