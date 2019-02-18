@@ -19,7 +19,7 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
     }
 
     override val isDemandEdition: Boolean
-        get() = false
+        get() = true
 
     override val isCommunityEdition: Boolean
         get() = false
