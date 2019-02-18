@@ -45,6 +45,5 @@ public class ProjectSummaryPresenter extends AbstractPresenter<ProjectSummaryVie
 
         ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
         breadcrumb.gotoProjectSummary();
-        throw new MyCollabException("E");
     }
 }
