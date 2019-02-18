@@ -81,7 +81,13 @@ class TimezoneVal(val id: String?) : Comparable<TimezoneVal> {
         @JvmStatic
         fun valueOf(timeZoneId: String?): ZoneId = if (StringUtils.isBlank(timeZoneId)) {
             ZoneId.systemDefault()
-        } else ZoneId.of(timeZoneId)
+        } else {
+            try {
+                ZoneId.of(timeZoneId)
+            } catch (e: Exception) {
+                ZoneId.systemDefault()
+            }
+        }
 
         @JvmStatic
         fun getDisplayName(locale: Locale, timeZoneId: String?): String {
