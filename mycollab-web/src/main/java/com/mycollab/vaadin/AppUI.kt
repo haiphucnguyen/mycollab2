@@ -54,11 +54,13 @@ abstract class AppUI : UI() {
     protected fun postSetupApp(request: VaadinRequest) {
         initialSubDomain = Utils.getSubDomain(request)
         val billingService = AppContextUtil.getSpringBean(BillingAccountService::class.java)
+        LOG.info("Load account info of sub-domain $initialSubDomain")
         _billingAccount = billingService.getAccountByDomain(initialSubDomain)
 
         if (_billingAccount == null) {
             throw SubDomainNotExistException(UserUIContext.getMessage(ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, initialSubDomain))
         } else {
+            LOG.info("Billing account info $_billingAccount")
             val accountId = _billingAccount!!.id
             ThemeManager.loadDesktopTheme(accountId!!)
         }
