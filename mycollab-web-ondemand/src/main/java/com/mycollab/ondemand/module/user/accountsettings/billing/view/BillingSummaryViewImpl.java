@@ -127,7 +127,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             final BillingPlan plan = availablePlans.get(i);
 
-            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
+            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type").withFullWidth();
             Label billingPrice = ELabel.html("<span class='billing-price'>$" + plan.getPricing() + "</span>/" + UserUIContext.getMessage(DayI18nEnum.OPT_MONTH))
                     .withStyleName("billing-price-lbl").withUndefinedWidth();
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
@@ -184,7 +184,7 @@ public class BillingSummaryViewImpl extends AbstractLazyPageView implements Bill
 
             final BillingPlan plan = availablePlans.get(i);
 
-            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type");
+            ELabel billingType = ELabel.h3(plan.getBillingtype()).withStyleName("billing-type").withFullWidth();
             Label billingPrice = ELabel.html("<span class='billing-price'>$" + Math.round(plan.getPricing() * 10) + "</span>/" +
                     UserUIContext.getMessage(DayI18nEnum.OPT_YEAR)).withStyleName("billing-price-lbl").withUndefinedWidth();
             Label billingUser = ELabel.html("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;" +
