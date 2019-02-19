@@ -1,11 +1,9 @@
 package com.mycollab.ondemand.module.file.service.impl
 
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model.*
 import com.mycollab.core.MyCollabException
 import com.mycollab.module.file.service.RawContentService
 import com.mycollab.ondemand.module.file.service.AmazonServiceConfiguration
-
 import java.io.InputStream
 
 /**
@@ -14,10 +12,10 @@ import java.io.InputStream
  */
 class S3RawContentServiceImpl : RawContentService {
 
-    private val amazonServiceConfiguration: AmazonServiceConfiguration = AmazonServiceConfiguration.instance
+    private val amazonServiceConfiguration = AmazonServiceConfiguration.instance
 
     override fun saveContent(objectPath: String, stream: InputStream) {
-        val s3client = AmazonServiceConfiguration.instance.newS3Client()
+        val s3client = amazonServiceConfiguration.newS3Client()
         try {
             val metaData = ObjectMetadata()
             metaData.cacheControl = "max-age=8640000"
