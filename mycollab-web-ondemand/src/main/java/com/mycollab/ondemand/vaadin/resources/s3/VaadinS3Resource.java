@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.mycollab.core.MyCollabException;
-import com.mycollab.ondemand.module.file.service.impl.S3StorageServiceImpl;
+import com.mycollab.ondemand.module.file.service.AmazonServiceConfiguration;
 import com.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.Resource;
@@ -59,13 +59,9 @@ public class VaadinS3Resource implements VaadinResource {
 
         @Override
         public InputStream getStream() {
-            String fileName = extractFileName(documentPath);
-            // TODO : Work with S3
-            S3StorageServiceImpl storageConfiguration = null;// = (S3StorageServiceImpl) StorageFactory.getInstance();
-            fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
-            AmazonS3 s3Client = storageConfiguration.newS3Client();
+            AmazonS3 s3Client = AmazonServiceConfiguration.getInstance().newS3Client();
             try {
-                S3Object obj = s3Client.getObject(new GetObjectRequest(storageConfiguration.getBucket(), documentPath));
+                S3Object obj = s3Client.getObject(new GetObjectRequest(AmazonServiceConfiguration.getInstance().getBucket(), documentPath));
                 return obj.getObjectContent();
             } catch (Exception e) {
                 throw new MyCollabException("Error when get input stream from s3 with path " + documentPath, e);

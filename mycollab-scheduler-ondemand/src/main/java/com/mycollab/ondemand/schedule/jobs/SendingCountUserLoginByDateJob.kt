@@ -50,7 +50,7 @@ class SendingCountUserLoginByDateJob(private val userService: UserService,
 
         }
 
-        LOG.info("Sending the number of users access the system ${accessedUsers?.size}")
+        LOG.info("Sending the number of users access the system ${accessedUsers.size}")
     }
 
     companion object {

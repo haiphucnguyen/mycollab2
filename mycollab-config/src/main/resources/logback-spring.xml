@@ -15,6 +15,8 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
+        <filter class="com.mycollab.logging.ExceptionFilter"/>
+        <filter class="com.mycollab.logging.LogFilter"/>
     </appender>
 
     <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
