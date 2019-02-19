@@ -26,9 +26,8 @@ class S3RawContentServiceImpl : RawContentService {
 
             s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead))
         } catch (e: Exception) {
-            throw MyCollabException("Can not save s3 object path $objectPath", e)
+            throw MyCollabException("Can not save s3 object path $objectPath to bucket ${amazonServiceConfiguration.bucket}", e)
         }
-
     }
 
     override fun getContentStream(objectPath: String): InputStream {
@@ -38,9 +37,8 @@ class S3RawContentServiceImpl : RawContentService {
             val obj = s3client.getObject(GetObjectRequest(amazonServiceConfiguration.bucket, objectPath))
             return obj.objectContent
         } catch (e: Exception) {
-            throw MyCollabException("Can not get s3 resource $objectPath", e)
+            throw MyCollabException("Can not get s3 resource $objectPath from bucket ${amazonServiceConfiguration.bucket}", e)
         }
-
     }
 
     override fun removePath(objectPath: String) {
@@ -52,9 +50,8 @@ class S3RawContentServiceImpl : RawContentService {
                 s3client.deleteObject(amazonServiceConfiguration.bucket, objectSummary.key)
             }
         } catch (e: Exception) {
-            throw MyCollabException("Can not remove object path $objectPath", e)
+            throw MyCollabException("Can not remove object path $objectPath from bucket ${amazonServiceConfiguration.bucket}", e)
         }
-
     }
 
     override fun renamePath(oldPath: String, newPath: String) {
@@ -78,9 +75,8 @@ class S3RawContentServiceImpl : RawContentService {
             }
 
         } catch (e: Exception) {
-            throw MyCollabException("Can not rename from path $oldPath to $newPath", e)
+            throw MyCollabException("Can not rename from path $oldPath to $newPath in bucket ${amazonServiceConfiguration.bucket}", e)
         }
-
     }
 
     override fun movePath(oldPath: String, destinationPath: String) {
@@ -96,8 +92,7 @@ class S3RawContentServiceImpl : RawContentService {
             return listObjects.objectSummaries.map { it.size }.sum()
 
         } catch (e: Exception) {
-            throw MyCollabException("Can not get size of path $objectPath", e)
+            throw MyCollabException("Can not get size of path $objectPath in bucket ${amazonServiceConfiguration.bucket}", e)
         }
-
     }
 }
