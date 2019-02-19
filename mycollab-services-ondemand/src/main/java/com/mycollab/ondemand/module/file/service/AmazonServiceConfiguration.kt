@@ -4,6 +4,7 @@ import com.amazonaws.SDKGlobalConfiguration
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.mycollab.spring.AppContextUtil
+import org.slf4j.LoggerFactory
 
 import java.util.Properties
 
@@ -30,11 +31,15 @@ class AmazonServiceConfiguration {
         }
         System.setProperty(SDKGlobalConfiguration.ACCESS_KEY_ENV_VAR, awsKey)
         System.setProperty(SDKGlobalConfiguration.SECRET_KEY_ENV_VAR, awsSecretKey)
+
+        LOG.info("Load s3 configurarion successfully with key ${awsKey.substring(3)} secretKey ${awsSecretKey.substring(3)} and bucket $bucket")
     }
 
     fun newS3Client(): AmazonS3 = AmazonS3ClientBuilder.defaultClient()
 
     companion object {
+        val LOG = LoggerFactory.getLogger(AmazonServiceConfiguration::class.java)
+
         @JvmStatic val instance = AmazonServiceConfiguration()
     }
 }
