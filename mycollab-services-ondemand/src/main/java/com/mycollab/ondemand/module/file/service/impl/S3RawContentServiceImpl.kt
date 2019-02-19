@@ -17,7 +17,7 @@ class S3RawContentServiceImpl : RawContentService {
     private val amazonServiceConfiguration: AmazonServiceConfiguration = AmazonServiceConfiguration.instance
 
     override fun saveContent(objectPath: String, stream: InputStream) {
-        val s3client = AmazonS3ClientBuilder.defaultClient()
+        val s3client = AmazonServiceConfiguration.instance.newS3Client()
         try {
             val metaData = ObjectMetadata()
             metaData.cacheControl = "max-age=8640000"
