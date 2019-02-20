@@ -29,6 +29,7 @@ import com.mycollab.db.persistence.ICrudGenericDAO
 import com.mycollab.db.persistence.ISearchableDAO
 import com.mycollab.db.persistence.service.DefaultService
 import com.mycollab.module.billing.RegisterStatusConstants
+import com.mycollab.module.billing.UserStatusConstants
 import com.mycollab.module.billing.service.BillingPlanCheckerService
 import com.mycollab.module.file.service.UserAvatarService
 import com.mycollab.module.user.dao.RolePermissionMapper
@@ -262,13 +263,18 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
                 user = users[0]
             }
 
-            if (user.password == null || !EnDecryptHelper.checkPassword(password, user.password, isPasswordEncrypt)) {
+            if (StringUtils.isBlank(user.password) || !EnDecryptHelper.checkPassword(password, user.password, isPasswordEncrypt)) {
                 throw UserInvalidInputException("Invalid username or password")
             }
 
             if (RegisterStatusConstants.NOT_LOG_IN_YET == user.registerstatus) {
                 updateUserAccountStatus(user.username, user.accountId!!, RegisterStatusConstants.ACTIVE)
                 asyncEventBus.post(NewUserJoinEvent(user.username, user.accountId!!))
+            }
+
+            if (user.status != UserStatusConstants.EMAIL_VERIFIED) {
+                user.status = UserStatusConstants.EMAIL_VERIFIED
+                userMapper.updateByPrimaryKeySelective(user)
             }
             LOG.debug("User $username login to system successfully!")
 

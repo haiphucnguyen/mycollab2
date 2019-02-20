@@ -23,8 +23,6 @@ class AmazonServiceConfiguration @Throws(Exception::class) private constructor()
         if ("" == awsKey || "" == awsSecretKey || "" == bucket) {
             throw IllegalArgumentException(
                     "Invalid s3 configuration. All values awsKey, awsSecretKey, bucket must be set")
-        } else {
-            LOG.info("Load s3 configuration successfully with key ${awsKey.substring(3)} secretKey ${awsSecretKey.substring(3)} and bucket $bucket")
         }
         System.setProperty(SDKGlobalConfiguration.ACCESS_KEY_SYSTEM_PROPERTY, awsKey)
         System.setProperty(SDKGlobalConfiguration.SECRET_KEY_SYSTEM_PROPERTY, awsSecretKey)
