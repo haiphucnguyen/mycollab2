@@ -116,6 +116,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
         val userEx = UserExample()
         userEx.createCriteria().andUsernameEqualTo(record.username)
         if (userMapper.countByExample(userEx) == 0L) {
+            record.registeredtime = LocalDateTime.now()
             userMapper.insert(record)
             userAvatarService.uploadDefaultAvatar(record.username)
         }
