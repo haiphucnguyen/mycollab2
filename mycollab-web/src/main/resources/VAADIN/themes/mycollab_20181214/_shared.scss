@@ -517,11 +517,11 @@
   /*Wizard style*/
   .wizard {
     .wizard-progress-bar {
-      padding: 5px 0px;
+      padding: $my-space/2 0px;
       border-bottom: 1px solid $my-separator-color;
       .v-progressbar-indicator {
         background: none;
-        background-color: #fdde86;
+        background-color: $my-note-color;
       }
     }
     .v-panel {

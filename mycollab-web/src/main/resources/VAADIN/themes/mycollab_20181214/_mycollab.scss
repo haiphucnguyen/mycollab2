@@ -939,15 +939,16 @@ $v-line-height--header:1.5em;
   /* Vaadin Notification */
 
   .v-Notification {
+    text-align: left;
     &.v-Notification-humanized h1, &.v-Notification-error h1, &.v-Notification-warning h1, &.v-Notification-tray h1 {
       display: inline;
       background: none;
       border: none;
       font-size: $font-x-large;
-      padding: 7px 10px;
+      padding: $my-space/2 0px;
     }
     p {
-      padding: 5px 10px;
+      padding: $my-space/2 $my-space;
       display: block;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -957,6 +958,9 @@ $v-line-height--header:1.5em;
     &.tray {
       background-color: darken($my-white-color, 10%);
       border: 1px solid $my-separator-color;
+    }
+    &.warning {
+      background-color: #ffcc00;
     }
   }
 
