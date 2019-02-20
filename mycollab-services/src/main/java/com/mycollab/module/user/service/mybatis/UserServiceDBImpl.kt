@@ -71,6 +71,7 @@ class UserServiceDBImpl(private val userMapper: UserMapper,
     override val searchMapper: ISearchableDAO<UserSearchCriteria>
         get() = userMapperExt
 
+    @Transactional
     override fun saveUserAccount(record: User, roleId: Int?, subDomain: String, sAccountId: Int, inviteUser: String, isSendInvitationEmail: Boolean) {
         billingPlanCheckerService.validateAccountCanCreateNewUser(sAccountId)
 
