@@ -251,6 +251,7 @@ $v-line-height--header:1.5em;
   .v-slot-notification-type {
     padding: 10px;
     border-bottom: 1px solid $my-separator-color;
+    min-width: 400px;
     &:last-child {
       border-style: none;
     }
