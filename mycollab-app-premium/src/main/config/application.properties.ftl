@@ -1,5 +1,5 @@
 #=====================================================
-# You can visit link https://doc.mycollab.com/getting-started/configuration/
+# You can visit link https://docs.mycollab.com/getting-started/configuration/
 # to get all configuration fieldBuilder and their meanings
 #=====================================================
 
