@@ -10,31 +10,31 @@ You can checkout our latest development source codes at [https://github.com/MyCo
 For further information, please visit:
 
 * [https://www.mycollab.com/](https://www.mycollab.com/)
-* [https://community.mycollab.com/](https://community.mycollab.com/)
+* [https://docs.mycollab.com/](https://docs.mycollab.com/)
 
 Contact the MyCollab team at:
 
-* Our Q&A page [https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/)
+* Our Q&A page [https://docs.mycollab.com/frequently-questions-and-answers/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/)
 * Our web form [https://www.mycollab.com/contact/](https://www.mycollab.com/contact/)
 
 System requirements
 ===================
 
-MyCollab requires a running Java Runtime Environment (7 or greater), Java command should be presented in PATH environment and MySQL (InnoDB support recommended).
+MyCollab requires a running Java Runtime Environment (8 or greater), Java command should be presented in PATH environment and MySQL (InnoDB support recommended).
 
 
 Please have a look at MyCollab requirements
 
-* [https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/installing-mycollab/)
+* [https://docs.mycollab.com/getting-started/installation/](https://docs.mycollab.com/getting-started/installation/)
 
 Installation
 ============
 
 1. Download MyCollab Binary File mycollab-x.xxx-dist
-2. Follow installation guideline at [https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/frequently-questions-and-answers/)
-3. If you already installed MyCollab and you want to upgrade to MyCollab latest version, this link [https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/upgrade-mycollab-manually/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/upgrade-mycollab-manually/) will instruct steps to make your bug easily
+2. Follow installation guideline at [https://docs.mycollab.com/frequently-questions-and-answers/](https://docs.mycollab.com/frequently-questions-and-answers/)
+3. If you already installed MyCollab and you want to upgrade to MyCollab latest version, this link [https://docs.mycollab.com/administration/upgrade-mycollab-manually/](https://docs.mycollab.com/administration/upgrade-mycollab-manually/) will instruct steps to make your bug easily
 
-If you want to understand more MyCollab advanced configuration settings, please visit the link [https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/advanced-configuration/](https://community.mycollab.com/docs/hosting-mycollab-on-your-own-server/advanced-configuration/). You will finish reading and
+If you want to understand more MyCollab advanced configuration settings, please visit the link [https://docs.mycollab.com/getting-started/configuration/](https://docs.mycollab.com/getting-started/configuration/). You will finish reading and
 understanding in a matter of minutes.
 
 Last changelog
