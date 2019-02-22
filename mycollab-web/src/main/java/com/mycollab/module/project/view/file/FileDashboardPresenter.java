@@ -16,6 +16,9 @@
  */
 package com.mycollab.module.project.view.file;
 
+import com.mycollab.core.SecureAccessException;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.vaadin.mvp.LoadPolicy;
@@ -39,12 +42,16 @@ public class FileDashboardPresenter extends AbstractPresenter<FileDashboardView>
 
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
-        ProjectView projectView = (ProjectView) container;
-        projectView.gotoSubView(ProjectView.FILE_ENTRY, view);
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.FILES)) {
+            ProjectView projectView = (ProjectView) container;
+            projectView.gotoSubView(ProjectView.FILE_ENTRY, view);
 
-        view.displayProjectFiles();
+            view.displayProjectFiles();
 
-        ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-        breadcrumb.gotoFileList();
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            breadcrumb.gotoFileList();
+        } else {
+            throw new SecureAccessException();
+        }
     }
 }

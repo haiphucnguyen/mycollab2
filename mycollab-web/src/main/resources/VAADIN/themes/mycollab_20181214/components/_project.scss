@@ -164,7 +164,7 @@
 
   /* Pages List View */
   .pages-list-layout {
-    padding-top: 12px;
+    padding-top: $my-space;
     &:after {
       content: "";
       width: 100%;
@@ -191,10 +191,6 @@
 
   /* Milestone View */
 
-  .milestone-view {
-    padding: 0px 0px 30px;
-  }
-
   .milestone-view-header {
     text-align: center;
     height: 30px;
@@ -220,10 +216,8 @@
 
   .milestone-box {
     background-color: $my-white-color;
-    border-color: $my-separator-color;
-    border-style: solid;
-    border-width: 1px 1px 1px 1px;
-    padding: 12px 20px;
+    border: 1px solid $my-separator-color;
+    padding: $my-space;
     &:hover {
       background-color: $my-hover-background-color;
       box-shadow: inset 5px 0px 0px 0px $my-link-color;

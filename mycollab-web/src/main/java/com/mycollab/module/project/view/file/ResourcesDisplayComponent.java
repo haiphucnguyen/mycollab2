@@ -166,7 +166,6 @@ class ResourcesDisplayComponent extends MVerticalLayout {
     }
 
     private class ResourcesContainer extends MVerticalLayout {
-
         private Resource selectedResource;
         private List<Resource> resources;
         private MVerticalLayout selectedResourceControlLayout;
@@ -207,10 +206,12 @@ class ResourcesDisplayComponent extends MVerticalLayout {
 
                 MButton renameBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_RENAME), clickEvent -> UI.getCurrent()
                         .addWindow(new RenameResourceWindow(selectedResource)))
-                        .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK);
+                        .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK)
+                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.FILES));
 
                 MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
-                        .withStyleName(WebThemes.BUTTON_LINK).withIcon(VaadinIcons.DOWNLOAD);
+                        .withStyleName(WebThemes.BUTTON_LINK).withIcon(VaadinIcons.DOWNLOAD)
+                        .withVisible(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.FILES));
 
                 LazyStreamSource streamSource = new LazyStreamSource() {
                     private static final long serialVersionUID = 1L;
@@ -233,11 +234,13 @@ class ResourcesDisplayComponent extends MVerticalLayout {
 
                 MButton moveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_MOVE) + "...", clickEvent ->
                         UI.getCurrent().addWindow(new MoveResourceWindow(selectedResource)))
-                        .withIcon(VaadinIcons.ARROWS).withStyleName(WebThemes.BUTTON_LINK);
+                        .withIcon(VaadinIcons.ARROWS).withStyleName(WebThemes.BUTTON_LINK)
+                        .withVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.FILES));
 
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                         clickEvent -> deleteResourceAction(Collections.singletonList(selectedResource)))
-                        .withStyleName(WebThemes.DANGER, WebThemes.BUTTON_LINK).withIcon(VaadinIcons.TRASH);
+                        .withStyleName(WebThemes.DANGER, WebThemes.BUTTON_LINK).withIcon(VaadinIcons.TRASH)
+                        .withVisible(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.FILES));
 
                 selectedResourceControlLayout.with(renameBtn, downloadBtn, moveBtn, deleteBtn);
             } else {
@@ -249,7 +252,7 @@ class ResourcesDisplayComponent extends MVerticalLayout {
             if (resource.getName().startsWith(".")) {
                 return null;
             }
-            MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
+            MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, true))
                     .withFullWidth().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, WebThemes.BORDER_BOTTOM);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedResource = resource;

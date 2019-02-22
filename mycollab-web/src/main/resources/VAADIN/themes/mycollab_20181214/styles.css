@@ -1,5 +1,9 @@
 .hover-effect-not-box:hover {
 	background-color: #f5f5f5;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .text-ellipsis a {
@@ -1644,6 +1648,10 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .hover-effect-not-box:hover {
+	background-color: #f5f5f5;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 	background-color: #f5f5f5;
 }
 
@@ -17730,10 +17738,6 @@ div.v-csslayout.followers-container .v-checkbox {
 	margin: 2px;
 }
 
-.milestone-view {
-	padding: 0px 0px 30px;
-}
-
 .milestone-view-header {
 	text-align: center;
 	height: 30px;
@@ -17760,10 +17764,8 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .milestone-box {
 	background-color: #ffffff;
-	border-color: #e5e5e5;
-	border-style: solid;
-	border-width: 1px 1px 1px 1px;
-	padding: 12px 20px;
+	border: 1px solid #e5e5e5;
+	padding: 12px;
 }
 
 .milestone-box:hover {

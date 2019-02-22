@@ -49,7 +49,7 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
                           private val billingPlanCheckerService: BillingPlanCheckerService,
                           private val asyncEventBus: AsyncEventBus) : ResourceService {
 
-    override fun getResources(path: String): List<Resource> {
+    override fun getResources(path: String): List<Resource>? {
         val resources = contentJcrDao.getResources(path)
         return if (CollectionUtils.isNotEmpty(resources)) {
             Collections.sort(resources)
@@ -58,9 +58,9 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
 
     }
 
-    override fun getContents(path: String): List<Content> = contentJcrDao.getContents(path)
+    override fun getContents(path: String): List<Content>? = contentJcrDao.getContents(path)
 
-    override fun getSubFolders(path: String): List<Folder> = contentJcrDao.getSubFolders(path)
+    override fun getSubFolders(path: String): List<Folder>? = contentJcrDao.getSubFolders(path)
 
     override fun createNewFolder(baseFolderPath: String, folderName: String, description: String, createdBy: String): Folder {
         if (FileUtils.isValidFileName(folderName)) {
@@ -141,7 +141,7 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
         rawContentService.renamePath(oldPath, newPath)
     }
 
-    override fun searchResourcesByName(baseFolderPath: String, resourceName: String): List<Resource> =
+    override fun searchResourcesByName(baseFolderPath: String, resourceName: String): List<Resource>? =
             contentJcrDao.searchResourcesByName(baseFolderPath, resourceName)
 
     override fun moveResource(oldPath: String, newPath: String, userMove: String) {
@@ -187,7 +187,7 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
 
     private fun isDuplicateFileName(srcRes: Resource, destRes: Resource): Boolean {
         val lstRes = this.getResources(destRes.path)
-        val result = lstRes.firstOrNull { srcRes.name == it.name }
+        val result = lstRes?.firstOrNull { srcRes.name == it.name }
         return result != null
     }
 

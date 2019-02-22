@@ -40,6 +40,7 @@ $font-largest: 36px;
 
 .hover-effect-not-box:hover{
   background-color: $my-hover-background-color;
+  @include hover-effect;
 }
 
 @mixin text-ellipsis {
