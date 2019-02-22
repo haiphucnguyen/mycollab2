@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component
 class ApplicationConfiguration(var siteName: String = "MyCollab", var description: String = "",
                                var facebookUrl: String = "", var twitterUrl: String = "",
                                var googleUrl: String = "", var linkedinUrl: String = "",
-                               var notifyEmail: String = "MyCollab") {
+                               var notifyEmail: String = "noreply@mycollab.com") {
 
     fun defaultUrls() =
             mutableMapOf("facebook_url" to (facebookUrl ?: ""),
