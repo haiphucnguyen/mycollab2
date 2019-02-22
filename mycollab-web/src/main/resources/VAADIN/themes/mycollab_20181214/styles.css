@@ -1832,11 +1832,6 @@ a.pending {
 	border: 1px solid #e5e5e5;
 }
 
-.panel-body {
-	border: 1px solid #e5e5e5;
-	border-top: 0;
-}
-
 .box {
 	border: 1px solid #e5e5e5;
 }
@@ -16672,11 +16667,6 @@ a.pending {
 	border: 1px solid #e5e5e5;
 }
 
-.panel-body {
-	border: 1px solid #e5e5e5;
-	border-top: 0;
-}
-
 .box {
 	border: 1px solid #e5e5e5;
 }
@@ -17511,12 +17501,6 @@ div.v-window .v-panel {
 
 .section .v-label-h3 {
 	color: #0083ce;
-}
-
-.floatControl {
-	z-index: 10;
-	border-bottom: 1px solid #e5e5e5;
-	background-color: #ffffff;
 }
 
 .v-label.volumeUsageInfo {

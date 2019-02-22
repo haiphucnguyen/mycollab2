@@ -40,6 +40,17 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 7.0.1
+-------------
+
+**Improvements & New Features**
+
+* Add file module to the project
+
+**Bug Fixes**
+
+* Show error message when user edit ticket which has unset duration value
+
 Version 7.0.0
 -------------
 

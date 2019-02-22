@@ -35,6 +35,7 @@ import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.FileEvent;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.spring.AppContextUtil;
@@ -46,16 +47,15 @@ import com.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AttachmentPanel;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ExternalResource;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -100,15 +100,12 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         fileBreadCrumb = new FileBreadcrumb(rootPath);
         fileBreadCrumb.addSearchHandler(criteria -> {
-            Resource selectedFolder;
-            selectedFolder = resourceService.getResource(criteria.getBaseFolder());
+            Resource selectedFolder = resourceService.getResource(criteria.getBaseFolder());
 
             if (selectedFolder == null) {
-                throw new DebugException(String.format("Can not find folder with path %s--%s in account", criteria.getBaseFolder(),
-                        criteria.getRootFolder(), AppUI.getAccountId()));
+                throw new DebugException(String.format("Can not find folder with path %s--%s in account", criteria.getBaseFolder(), criteria.getRootFolder()));
             } else if (!(selectedFolder instanceof Folder)) {
-                LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),
-                        criteria.getRootFolder()));
+                LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(), criteria.getRootFolder()));
             } else {
                 Folder resultFolder = (Folder) selectedFolder;
                 constructBodyItemContainer(resultFolder);
@@ -132,7 +129,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
         resourcesContainer = new ResourcesContainer();
         MVerticalLayout floatControl = new MVerticalLayout(headerLayout, fileBreadCrumb).withMargin(new MarginInfo
-                (false, false, true, false)).withStyleName("floatControl");
+                (false, false, true, false));
         this.with(floatControl, resourcesContainer);
 
         fileBreadCrumb.initBreadcrumb();
@@ -177,19 +174,16 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private MVerticalLayout bodyContainer;
         private MVerticalLayout selectedResourceControlLayout;
         private List<Resource> resources;
+        private Panel resourceActionPanel;
 
         ResourcesContainer() {
-            this.setId("resource-container");
             withFullWidth();
+            bodyContainer = new MVerticalLayout().withSpacing(false).withMargin(false);
+            with(bodyContainer);
         }
 
         private void constructBody(Folder currentFolder) {
-            this.removeAllComponents();
-
-            bodyContainer = new MVerticalLayout().withSpacing(false).withMargin(false);
-            selectedResourceControlLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("400px")
-                    .withStyleName(WebThemes.MARGIN_TOP, WebThemes.MARGIN_LEFT_HALF);
-
+            bodyContainer.removeAllComponents();
             resources = resourceService.getResources(currentFolder.getPath());
 
             if (CollectionUtils.isNotEmpty(resources)) {
@@ -203,16 +197,22 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         }
 
         private void displaySelectedResourceControls() {
+            if (resourceActionPanel == null) {
+                ProjectView projectView = UIUtils.getRoot(this, ProjectView.class);
+                selectedResourceControlLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, true));
+                resourceActionPanel = new Panel(UserUIContext.getMessage(GenericI18Enum.OPT_DETAILS), selectedResourceControlLayout);
+                UIUtils.makeStackPanel(resourceActionPanel);
+                projectView.addComponentToRightBar(resourceActionPanel);
+            }
+
             if (selectedResource != null) {
+                resourceActionPanel.setVisible(true);
+                resourceActionPanel.setCaption(selectedResource.getName());
                 selectedResourceControlLayout.removeAllComponents();
-                ELabel resourceHeaderLbl = ELabel.h3(selectedResource.getName()).withStyleName(WebThemes.TEXT_ELLIPSIS);
-                MHorizontalLayout headerLayout = new MHorizontalLayout(resourceHeaderLbl).withMargin(new MarginInfo
-                        (false, true, false, true)).withStyleName(WebThemes.PANEL_HEADER).withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
-                selectedResourceControlLayout.with(headerLayout);
 
                 MButton renameBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.ACTION_RENAME), clickEvent -> UI.getCurrent()
                         .addWindow(new RenameResourceWindow(selectedResource)))
-                        .withIcon(FontAwesome.EDIT).withStyleName(WebThemes.BUTTON_LINK);
+                        .withIcon(VaadinIcons.EDIT).withStyleName(WebThemes.BUTTON_LINK);
 
                 MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
                         .withStyleName(WebThemes.BUTTON_LINK).withIcon(VaadinIcons.DOWNLOAD);
@@ -242,13 +242,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 MButton deleteBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                         clickEvent -> deleteResourceAction(Collections.singletonList(selectedResource)))
-                        .withStyleName(WebThemes.BUTTON_LINK).withIcon(FontAwesome.TRASH_O);
+                        .withStyleName(WebThemes.DANGER, WebThemes.BUTTON_LINK).withIcon(VaadinIcons.TRASH);
 
-                selectedResourceControlLayout.with(new MVerticalLayout(renameBtn, downloadBtn, moveBtn, deleteBtn)
-                        .withStyleName("panel-body"));
+                selectedResourceControlLayout.with(renameBtn, downloadBtn, moveBtn, deleteBtn);
             } else {
-                selectedResourceControlLayout.removeAllComponents();
-                selectedResourceControlLayout.removeStyleName(WebThemes.BOX);
+               resourceActionPanel.setVisible(false);
             }
         }
 
@@ -256,7 +254,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             if (resource.getName().startsWith(".")) {
                 return null;
             }
-            final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
+            MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                     .withFullWidth().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, "border-bottom");
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedResource = resource;
@@ -380,7 +378,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private void constructBody() {
             VerticalLayout contentLayout = new VerticalLayout();
             GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
-            final TextField folderName = layoutHelper.addComponent(new TextField("", renameResource.getName()),
+            TextField folderName = layoutHelper.addComponent(new TextField("", renameResource.getName()),
                     UserUIContext.getMessage(GenericI18Enum.FORM_NAME), 0, 0);
             contentLayout.addComponent(layoutHelper.getLayout());
 
@@ -394,11 +392,13 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 resourceService.rename(oldPath, newPath, UserUIContext.getUsername());
                 resourcesContainer.constructBody(baseFolder);
                 close();
-            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
+            }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION)
+                    .withClickShortcut(KeyCode.ENTER);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);
-            final MHorizontalLayout controlButtons = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(true);
+            MHorizontalLayout controlButtons = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(false);
+
             contentLayout.addComponent(controlButtons);
             contentLayout.setComponentAlignment(controlButtons, Alignment.MIDDLE_RIGHT);
 
@@ -489,7 +489,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 } else {
                     NotificationUtil.showWarningNotification(UserUIContext.getMessage(FileI18nEnum.NOT_ATTACH_FILE_WARNING));
                 }
-            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(FontAwesome.UPLOAD);
+            }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.UPLOAD);
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);

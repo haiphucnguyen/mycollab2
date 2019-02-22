@@ -1,10 +1,4 @@
 @mixin mycollab-document {
-  /* volume usage info */
-  .floatControl {
-    z-index: 10;
-    border-bottom: 1px solid $my-separator-color;
-    background-color: $my-white-color;
-  }
 
   .v-label.volumeUsageInfo {
     border-left: 12px solid transparent;

@@ -49,7 +49,7 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
 
     private String rootFolderPath;
 
-    public FileBreadcrumb(String rootFolderPath) {
+    FileBreadcrumb(String rootFolderPath) {
         if (StringUtils.isBlank(rootFolderPath)) {
             throw new MyCollabException("Root folder path can not be empty");
         }
@@ -69,64 +69,60 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
         this.with(documentBtnLink);
     }
 
-    void gotoFolder(final Folder folder) {
+    void gotoFolder(Folder folder) {
         initBreadcrumb();
 
         if (folder == null) {
             throw new MyCollabException("Folder is null");
         } else {
-            displayMyCollabFolder(folder);
-        }
-    }
+            String folderPath = folder.getPath();
+            if (!folderPath.startsWith(rootFolderPath)) {
+                throw new MyCollabException("Invalid path " + rootFolderPath + "---" + folderPath);
+            }
 
-    private void displayMyCollabFolder(final Folder folder) {
-        String folderPath = folder.getPath();
-        if (!folderPath.startsWith(rootFolderPath)) {
-            throw new MyCollabException("Invalid path " + rootFolderPath + "---" + folderPath);
-        }
+            String remainPath = folderPath.substring(rootFolderPath.length());
+            if (remainPath.startsWith("/")) {
+                remainPath = remainPath.substring(1);
+            }
 
-        String remainPath = folderPath.substring(rootFolderPath.length());
-        if (remainPath.startsWith("/")) {
-            remainPath = remainPath.substring(1);
-        }
+            MButton btn1, btn2 = null;
+            int index;
+            if ((index = remainPath.lastIndexOf('/')) != -1) {
+                String pathName = remainPath.substring(index + 1);
+                final String newPath = remainPath.substring(0, index);
+                remainPath = newPath;
+                btn2 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
+                    FileSearchCriteria criteria = new FileSearchCriteria();
+                    criteria.setBaseFolder(rootFolderPath + "/" + newPath);
+                    criteria.setRootFolder(rootFolderPath);
+                    notifySearchHandler(criteria);
+                }).withDescription(pathName).withStyleName(WebThemes.BUTTON_LINK);
+            }
 
-        MButton btn1, btn2 = null;
-        int index;
-        if ((index = remainPath.lastIndexOf('/')) != -1) {
-            String pathName = remainPath.substring(index + 1);
-            final String newPath = remainPath.substring(0, index);
-            remainPath = newPath;
-            btn2 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
-                FileSearchCriteria criteria = new FileSearchCriteria();
-                criteria.setBaseFolder(rootFolderPath + "/" + newPath);
-                criteria.setRootFolder(rootFolderPath);
-                notifySearchHandler(criteria);
-            }).withDescription(pathName).withStyleName(WebThemes.BUTTON_LINK);
-        }
+            if ((index = remainPath.lastIndexOf('/')) != -1) {
+                String pathName = remainPath.substring(index + 1);
+                final String newPath = remainPath.substring(0, index);
+                btn1 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
+                    FileSearchCriteria criteria = new FileSearchCriteria();
+                    criteria.setBaseFolder(rootFolderPath + "/" + newPath);
+                    criteria.setRootFolder(rootFolderPath);
+                    notifySearchHandler(criteria);
+                }).withDescription(pathName).withStyleName(WebThemes.BUTTON_LINK);
+            } else {
+                final String newPath = remainPath;
+                btn1 = new MButton(StringUtils.trim(newPath, 25, true), clickEvent -> {
+                    FileSearchCriteria criteria = new FileSearchCriteria();
+                    criteria.setBaseFolder(rootFolderPath + "/" + newPath);
+                    criteria.setRootFolder(rootFolderPath);
+                    notifySearchHandler(criteria);
+                }).withDescription(newPath).withStyleName(WebThemes.BUTTON_LINK);
+            }
 
-        if ((index = remainPath.lastIndexOf('/')) != -1) {
-            String pathName = remainPath.substring(index + 1);
-            final String newPath = remainPath.substring(0, index);
-            btn1 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
-                FileSearchCriteria criteria = new FileSearchCriteria();
-                criteria.setBaseFolder(rootFolderPath + "/" + newPath);
-                criteria.setRootFolder(rootFolderPath);
-                notifySearchHandler(criteria);
-            }).withDescription(pathName).withStyleName(WebThemes.BUTTON_LINK);
-        } else {
-            final String newPath = remainPath;
-            btn1 = new MButton(StringUtils.trim(newPath, 25, true), clickEvent -> {
-                FileSearchCriteria criteria = new FileSearchCriteria();
-                criteria.setBaseFolder(rootFolderPath + "/" + newPath);
-                criteria.setRootFolder(rootFolderPath);
-                notifySearchHandler(criteria);
-            }).withDescription(newPath).withStyleName(WebThemes.BUTTON_LINK);
-        }
+            with(new ELabel("/"), btn1);
 
-        with(new ELabel("/"), btn1);
-
-        if (btn2 != null) {
-            with(new ELabel("/"), btn2);
+            if (btn2 != null) {
+                with(new ELabel("/"), btn2);
+            }
         }
     }
 
