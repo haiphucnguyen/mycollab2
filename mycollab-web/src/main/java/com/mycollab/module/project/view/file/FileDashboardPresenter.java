@@ -40,7 +40,7 @@ public class FileDashboardPresenter extends AbstractPresenter<FileDashboardView>
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         ProjectView projectView = (ProjectView) container;
-        projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
+        projectView.gotoSubView(ProjectView.FILE_ENTRY, view);
 
         view.displayProjectFiles();
 

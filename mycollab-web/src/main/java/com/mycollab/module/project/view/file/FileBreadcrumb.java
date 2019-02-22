@@ -21,6 +21,7 @@ import com.mycollab.core.MyCollabException;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.ecm.domain.Folder;
 import com.mycollab.module.project.domain.criteria.FileSearchCriteria;
+import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasSearchHandlers;
 import com.mycollab.vaadin.event.SearchHandler;
@@ -29,6 +30,7 @@ import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.CommonUIFactory;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import org.vaadin.viritin.button.MButton;
@@ -49,18 +51,19 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
 
     private String rootFolderPath;
 
-    FileBreadcrumb(String rootFolderPath) {
-        if (StringUtils.isBlank(rootFolderPath)) {
-            throw new MyCollabException("Root folder path can not be empty");
-        }
+    public FileBreadcrumb() {
         setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+    }
+
+    public void setRootFolderPath(String rootFolderPath) {
         this.rootFolderPath = rootFolderPath;
+        initBreadcrumb();
     }
 
     void initBreadcrumb() {
         removeAllComponents();
 
-        MButton documentBtnLink = generateBreadcrumbLink(UserUIContext.getMessage(FileI18nEnum.OPT_MY_DOCUMENTS), clickEvent -> {
+        MButton documentBtnLink = generateBreadcrumbLink(UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE), clickEvent -> {
             FileSearchCriteria criteria = new FileSearchCriteria();
             criteria.setBaseFolder(rootFolderPath);
             criteria.setRootFolder(rootFolderPath);
@@ -85,11 +88,11 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
                 remainPath = remainPath.substring(1);
             }
 
-            MButton btn1, btn2 = null;
+            MButton btn1 = null, btn2 = null;
             int index;
             if ((index = remainPath.lastIndexOf('/')) != -1) {
                 String pathName = remainPath.substring(index + 1);
-                final String newPath = remainPath.substring(0, index);
+                String newPath = remainPath.substring(0, index);
                 remainPath = newPath;
                 btn2 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
                     FileSearchCriteria criteria = new FileSearchCriteria();
@@ -101,7 +104,7 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
 
             if ((index = remainPath.lastIndexOf('/')) != -1) {
                 String pathName = remainPath.substring(index + 1);
-                final String newPath = remainPath.substring(0, index);
+                String newPath = remainPath.substring(0, index);
                 btn1 = new MButton(StringUtils.trim(pathName, 25, true), clickEvent -> {
                     FileSearchCriteria criteria = new FileSearchCriteria();
                     criteria.setBaseFolder(rootFolderPath + "/" + newPath);
@@ -109,19 +112,23 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
                     notifySearchHandler(criteria);
                 }).withDescription(pathName).withStyleName(WebThemes.BUTTON_LINK);
             } else {
-                final String newPath = remainPath;
-                btn1 = new MButton(StringUtils.trim(newPath, 25, true), clickEvent -> {
-                    FileSearchCriteria criteria = new FileSearchCriteria();
-                    criteria.setBaseFolder(rootFolderPath + "/" + newPath);
-                    criteria.setRootFolder(rootFolderPath);
-                    notifySearchHandler(criteria);
-                }).withDescription(newPath).withStyleName(WebThemes.BUTTON_LINK);
+                String newPath = remainPath;
+                if (StringUtils.isNotBlank(newPath)) {
+                    btn1 = new MButton(StringUtils.trim(newPath, 25, true), clickEvent -> {
+                        FileSearchCriteria criteria = new FileSearchCriteria();
+                        criteria.setBaseFolder(rootFolderPath + "/" + newPath);
+                        criteria.setRootFolder(rootFolderPath);
+                        notifySearchHandler(criteria);
+                    }).withDescription(newPath).withStyleName(WebThemes.BUTTON_LINK);
+                }
             }
 
-            with(new ELabel("/"), btn1);
+            if (btn1 != null) {
+                with(ELabel.html(VaadinIcons.ANGLE_RIGHT.getHtml()), btn1);
+            }
 
             if (btn2 != null) {
-                with(new ELabel("/"), btn2);
+                with(ELabel.html(VaadinIcons.ANGLE_RIGHT.getHtml()), btn2);
             }
         }
     }
@@ -132,7 +139,7 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
     }
 
     @Override
-    public void addSearchHandler(final SearchHandler<FileSearchCriteria> handler) {
+    public void addSearchHandler(SearchHandler<FileSearchCriteria> handler) {
         if (handlers == null) {
             handlers = new ArrayList<>();
         }
@@ -140,7 +147,7 @@ public class FileBreadcrumb extends MHorizontalLayout implements CacheableCompon
     }
 
     @Override
-    public void notifySearchHandler(final FileSearchCriteria criteria) {
+    public void notifySearchHandler(FileSearchCriteria criteria) {
         if (handlers != null) {
             handlers.forEach(handler -> handler.onSearch(criteria));
         }

@@ -26,7 +26,6 @@ import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Tree;
@@ -78,10 +77,9 @@ abstract class AbstractResourceMovingWindow extends MWindow {
         folderTree.setSizeFull();
 
         folderTree.addExpandListener(expandEvent -> {
-            final Folder expandFolder = (Folder) expandEvent.getExpandedItem();
-            // load externalResource if currentExpandFolder is rootFolder
+            Folder expandFolder = (Folder) expandEvent.getExpandedItem();
 
-            final List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
+            List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
 //            folderTree.setItemIcon(expandFolder, FontAwesome.FOLDER_OPEN);
 
 //            if (subFolders != null) {
@@ -90,7 +88,7 @@ abstract class AbstractResourceMovingWindow extends MWindow {
 //                    if (!subFolderName.startsWith(".")) {
 //                        expandFolder.addChild(subFolder);
 //                        folderTree.addItem(subFolder);
-//                        folderTree.setItemIcon(subFolder, FontAwesome.FOLDER);
+//                        folderTree.setItemIcon(subFolder, VaadinIcons.FOLDER);
 //                        folderTree.setItemCaption(subFolder, subFolderName);
 //                        folderTree.setParent(subFolder, expandFolder);
 //                    }

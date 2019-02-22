@@ -16,7 +16,6 @@
  */
 package com.mycollab.module.project.view.file;
 
-import com.google.common.collect.Collections2;
 import com.mycollab.common.i18n.ErrorI18nEnum;
 import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.i18n.GenericI18Enum;
@@ -31,6 +30,7 @@ import com.mycollab.module.ecm.domain.Folder;
 import com.mycollab.module.ecm.domain.Resource;
 import com.mycollab.module.ecm.service.ResourceService;
 import com.mycollab.module.file.StorageUtils;
+import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.FileEvent;
@@ -42,6 +42,7 @@ import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.resources.LazyStreamSource;
 import com.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.mycollab.vaadin.resources.file.FileAssetsUtil;
@@ -79,26 +80,26 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ResourcesDisplayComponent extends MVerticalLayout {
+class ResourcesDisplayComponent extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ResourcesDisplayComponent.class);
 
     private ResourceService resourceService;
+    private Folder baseFolder;
+    private String rootPath;
 
     private FileBreadcrumb fileBreadCrumb;
     private ResourcesContainer resourcesContainer;
 
-    private Folder baseFolder;
-    private final String rootPath;
-
-    public ResourcesDisplayComponent(final Folder rootFolder) {
+    ResourcesDisplayComponent(Folder rootFolder) {
         this.baseFolder = rootFolder;
         this.rootPath = rootFolder.getPath();
         resourceService = AppContextUtil.getSpringBean(ResourceService.class);
 
         withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
-        fileBreadCrumb = new FileBreadcrumb(rootPath);
+        fileBreadCrumb = ViewManager.getCacheComponent(FileBreadcrumb.class);
+        fileBreadCrumb.setRootFolderPath(rootPath);
         fileBreadCrumb.addSearchHandler(criteria -> {
             Resource selectedFolder = resourceService.getResource(criteria.getBaseFolder());
 
@@ -158,39 +159,33 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 });
     }
 
-    public void constructBodyItemContainer(Folder folder) {
+    private void constructBodyItemContainer(Folder folder) {
         this.baseFolder = folder;
         fileBreadCrumb.gotoFolder(folder);
         resourcesContainer.constructBody(folder);
     }
 
-    public Collection<Resource> getSelectedResources() {
-        return resourcesContainer.getSelectedResourceCollection();
-    }
-
-    private class ResourcesContainer extends MHorizontalLayout {
+    private class ResourcesContainer extends MVerticalLayout {
 
         private Resource selectedResource;
-        private MVerticalLayout bodyContainer;
-        private MVerticalLayout selectedResourceControlLayout;
         private List<Resource> resources;
+        private MVerticalLayout selectedResourceControlLayout;
         private Panel resourceActionPanel;
 
         ResourcesContainer() {
-            withFullWidth();
-            bodyContainer = new MVerticalLayout().withSpacing(false).withMargin(false);
-            with(bodyContainer);
+            withMargin(false).withSpacing(false).withFullWidth();
+            this.addStyleName(WebThemes.BORDER_TOP);
         }
 
         private void constructBody(Folder currentFolder) {
-            bodyContainer.removeAllComponents();
+            this.removeAllComponents();
             resources = resourceService.getResources(currentFolder.getPath());
 
             if (CollectionUtils.isNotEmpty(resources)) {
                 for (Resource res : resources) {
                     ComponentContainer resContainer = buildResourceRowComp(res);
                     if (resContainer != null) {
-                        bodyContainer.addComponent(resContainer);
+                        this.addComponent(resContainer);
                     }
                 }
             }
@@ -246,7 +241,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 selectedResourceControlLayout.with(renameBtn, downloadBtn, moveBtn, deleteBtn);
             } else {
-               resourceActionPanel.setVisible(false);
+                resourceActionPanel.setVisible(false);
             }
         }
 
@@ -255,12 +250,12 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 return null;
             }
             MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                    .withFullWidth().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, "border-bottom");
+                    .withFullWidth().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX, WebThemes.BORDER_BOTTOM);
             layout.addLayoutClickListener(layoutClickEvent -> {
                 selectedResource = resource;
                 displaySelectedResourceControls();
-                for (int i = 0; i < bodyContainer.getComponentCount(); i++) {
-                    bodyContainer.getComponent(i).removeStyleName("selected");
+                for (int i = 0; i < this.getComponentCount(); i++) {
+                    this.getComponent(i).removeStyleName("selected");
                 }
                 layout.addStyleName("selected");
             });
@@ -345,22 +340,12 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     userLink.addStyleName(WebThemes.META_INFO);
                     moreInfoAboutResLayout.addComponent(userLink);
                 } else {
-                    Label usernameLbl = new Label(resource.getCreatedBy());
-                    usernameLbl.addStyleName(WebThemes.META_INFO);
-                    moreInfoAboutResLayout.addComponent(usernameLbl);
+                    moreInfoAboutResLayout.addComponent(new ELabel(resource.getCreatedBy()).withStyleName(WebThemes.META_INFO));
                 }
             }
 
             layout.with(informationLayout).withAlign(informationLayout, Alignment.MIDDLE_LEFT).expand(informationLayout);
             return layout;
-        }
-
-        Collection<Resource> getSelectedResourceCollection() {
-            if (CollectionUtils.isNotEmpty(resources)) {
-                return Collections2.filter(resources, Resource::isSelected);
-            } else {
-                return new ArrayList<>();
-            }
         }
     }
 
@@ -393,7 +378,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 resourcesContainer.constructBody(baseFolder);
                 close();
             }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION)
-                    .withClickShortcut(KeyCode.ENTER);
+                    .withClickShortcut(KeyCode.ENTER).withEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.FILES));
 
             MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                     .withStyleName(WebThemes.BUTTON_OPTION);
@@ -408,7 +393,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
     private class AddNewFolderWindow extends MWindow {
         private static final long serialVersionUID = 1L;
-
 
         AddNewFolderWindow() {
             this.setCaption(UserUIContext.getMessage(FileI18nEnum.ACTION_NEW_FOLDER));
