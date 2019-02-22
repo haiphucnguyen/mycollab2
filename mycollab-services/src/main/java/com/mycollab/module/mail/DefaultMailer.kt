@@ -42,6 +42,7 @@ class DefaultMailer(private val emailConf: EmailConfiguration) : IMailer {
             email.isSSLOnConnect = emailConf.ssl
             email.setFrom(fromEmail, fromName)
             email.setCharset(EmailConstants.UTF_8)
+            email.setDebug(true)
             toEmail.forEach {
                 when {
                     isValidate(it.email) && isValidate(it.name) -> email.addTo(it.email, it.name)
