@@ -75,11 +75,11 @@ class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.getDisplaytimelogging());
         rightColLayout.addComponent(displayTimeSelection);
 
-        FeatureSelectionBox displayStandupSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
-                customizeView.getDisplaystandup());
-        rightColLayout.addComponent(displayStandupSelection);
+        FeatureSelectionBox displayFileSelection = new FeatureSelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
+                customizeView.getDisplayfile());
+        rightColLayout.addComponent(displayFileSelection);
 
         FeatureSelectionBox displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
@@ -96,7 +96,7 @@ class CustomizeFeatureComponent extends BlockWidget {
             customizeView.setDisplayticket(displayTicketSelection.getSelected());
             customizeView.setDisplaypage(displayPageSelection.getSelected());
             customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
-            customizeView.setDisplaystandup(displayStandupSelection.getSelected());
+            customizeView.setDisplayfile(displayFileSelection.getSelected());
             customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
 
             ProjectCustomizeViewService projectCustomizeService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);

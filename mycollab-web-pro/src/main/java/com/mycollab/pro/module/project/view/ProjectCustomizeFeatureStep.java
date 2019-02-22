@@ -23,7 +23,7 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
     private FeatureSelectionBox displayMsgSelection, displayPhaseSelection,
             displayTicketSelection, displayPageSelection,
             displayTimeSelection,
-            displayStandupSelection, displayInvoiceSelection;
+            displayFileSelection, displayInvoiceSelection;
 
     ProjectCustomizeFeatureStep(Project project) {
         this.project = project;
@@ -83,11 +83,11 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
                 true);
         rightColLayout.addComponent(displayTimeSelection);
 
-        displayStandupSelection = new FeatureSelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
-                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
+        displayFileSelection = new FeatureSelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
+                UserUIContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
                 true);
-        rightColLayout.addComponent(displayStandupSelection);
+        rightColLayout.addComponent(displayFileSelection);
 
         displayInvoiceSelection = new FeatureSelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
@@ -107,7 +107,7 @@ class ProjectCustomizeFeatureStep implements AbstractProjectAddWindow.FormWizard
         features.setDisplaymessage(getFeatureSelected(displayMsgSelection));
         features.setDisplaymilestone(getFeatureSelected(displayPhaseSelection));
         features.setDisplaypage(getFeatureSelected(displayPageSelection));
-        features.setDisplaystandup(getFeatureSelected(displayStandupSelection));
+        features.setDisplayfile(getFeatureSelected(displayFileSelection));
         features.setDisplaytimelogging(getFeatureSelected(displayTimeSelection));
         ProjectCustomizeViewService projectCustomizeViewService = AppContextUtil.getSpringBean(ProjectCustomizeViewService.class);
         projectCustomizeViewService.saveWithSession(features, UserUIContext.getUsername());

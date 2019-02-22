@@ -152,7 +152,7 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
         if (oldResource is Folder && newPath.contains(oldPath)) {
             throw UserInvalidInputException("Can not move asset(s) to folder $newPath")
         } else {
-            val destinationPath = newPath + "/" + oldResourceName
+            val destinationPath = "$newPath/$oldResourceName"
             contentJcrDao.moveResource(oldPath, destinationPath)
             rawContentService.movePath(oldPath, destinationPath)
         }
@@ -170,6 +170,26 @@ class ResourceServiceImpl(private val contentJcrDao: ContentJcrDao,
     }
 
     override fun getResource(path: String): Resource? = contentJcrDao.getResource(path)
+
+    /**
+     * destRes must be instanceof Folder
+     */
+    override fun moveResource(srcRes: Resource, destRes: Resource, userMove: String, sAccountId: Int?) {
+
+        if (destRes is Content)
+            throw MyCollabException("You can't move somethings to content path.That is impossible.")
+        if (isDuplicateFileName(srcRes, destRes)) {
+            throw MyCollabException("Please check duplicate file, before move")
+        }
+
+        this.moveResource(srcRes.path, destRes.path, userMove)
+    }
+
+    private fun isDuplicateFileName(srcRes: Resource, destRes: Resource): Boolean {
+        val lstRes = this.getResources(destRes.path)
+        val result = lstRes.firstOrNull { srcRes.name == it.name }
+        return result != null
+    }
 
     companion object {
         private val LOG = LoggerFactory.getLogger(ResourceServiceImpl::class.java)

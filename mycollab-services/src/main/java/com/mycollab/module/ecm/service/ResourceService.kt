@@ -112,6 +112,11 @@ interface ResourceService : IService {
     fun moveResource(oldPath: String, newPath: String, userMove: String)
 
     /**
+     *
+     */
+    fun moveResource(scrRes: Resource, descRes: Resource, userMove: String, sAccountId: Int?)
+
+    /**
      * @param path
      * @return
      */

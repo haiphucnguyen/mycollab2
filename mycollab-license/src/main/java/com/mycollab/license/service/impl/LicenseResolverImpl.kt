@@ -13,8 +13,11 @@ import com.mycollab.license.service.LicenseResolver
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Service
+import org.springframework.web.client.RestTemplate
 import java.io.*
+import java.time.Duration
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -65,21 +68,20 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
 
     }
 
-    // TODO
     private fun acquireALicense() {
-//        LOG.info("Acquire the trial license")
-//        val startDate = DateTime(appPropertiesService.startDate)
-//        val now = LocalDate.now()
-//        val days = Duration(startDate, now).standardDays.toInt()
-//        val edition = appPropertiesService.edition
-//        val restTemplate = RestTemplate()
-//        try {
-//            val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
-//            checkAndSaveLicenseInfo(licenseRequest!!)
-//        } catch (e: Exception) {
-//            LOG.error("Can not retrieve a trial license", e)
-//            _licenseInfo = createTempValidLicense(30 - days)
-//        }
+        LOG.info("Acquire the trial license")
+        val startDate = LocalDate.from(appPropertiesService.startDate)
+        val now = LocalDate.now()
+        val days = Period.between(startDate, now).days
+        val edition = appPropertiesService.edition
+        val restTemplate = RestTemplate()
+        try {
+            val licenseRequest = restTemplate.postForObject(serverConfiguration.getApiUrl("order/register-trial"), null, String::class.java)
+            checkAndSaveLicenseInfo(licenseRequest!!)
+        } catch (e: Exception) {
+            LOG.error("Can not retrieve a trial license", e)
+            _licenseInfo = createTempValidLicense(30L - days)
+        }
     }
 
     override fun checkLicenseInfo(licenseBytes: ByteArray, isSave: Boolean): LicenseInfo {
