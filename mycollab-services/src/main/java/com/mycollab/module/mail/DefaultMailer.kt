@@ -42,7 +42,6 @@ class DefaultMailer(private val emailConf: EmailConfiguration) : IMailer {
             email.isSSLOnConnect = emailConf.ssl
             email.setFrom(fromEmail, fromName)
             email.setCharset(EmailConstants.UTF_8)
-            email.setDebug(true)
             toEmail.forEach {
                 when {
                     isValidate(it.email) && isValidate(it.name) -> email.addTo(it.email, it.name)
@@ -97,8 +96,8 @@ class DefaultMailer(private val emailConf: EmailConfiguration) : IMailer {
     }
 
     override fun sendHTMLMail(fromEmail: String, fromName: String, toEmails: List<MailRecipientField>,
-                     ccEmails: List<MailRecipientField>?, bccEmails: List<MailRecipientField>?,
-                     subject: String, html: String, attachments: List<AttachmentSource>?) {
+                              ccEmails: List<MailRecipientField>?, bccEmails: List<MailRecipientField>?,
+                              subject: String, html: String, attachments: List<AttachmentSource>?) {
         try {
             when (attachments) {
                 null -> sendHTMLMail(fromEmail, fromName, toEmails, ccEmails, bccEmails, subject, html)
