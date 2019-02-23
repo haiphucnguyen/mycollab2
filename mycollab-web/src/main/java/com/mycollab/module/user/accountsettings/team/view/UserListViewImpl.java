@@ -23,6 +23,8 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.LazyValueInjector;
+import com.mycollab.module.billing.UserStatusConstants;
+import com.mycollab.module.user.esb.SendUserEmailVerifyRequestEvent;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.billing.RegisterStatusConstants;
 import com.mycollab.module.user.AccountLinkGenerator;
@@ -172,6 +174,17 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
                         .getMessage(UserI18nEnum.OPT_SEND_INVITATION_SUCCESSFULLY, member.getDisplayName()));
             }).withStyleName(WebThemes.BUTTON_LINK);
             buttonControls.with(resendBtn);
+        } else {
+            if (!UserStatusConstants.EMAIL_VERIFIED.equals(member.getStatus())) {
+                MButton resendBtn = new MButton(UserUIContext.getMessage(UserI18nEnum.ACTION_CONFIRM_EMAIL), clickEvent -> {
+                    SendUserEmailVerifyRequestEvent confirmEvent = new SendUserEmailVerifyRequestEvent(AppUI.getAccountId(), member);
+                    AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
+                    asyncEventBus.post(confirmEvent);
+                    NotificationUtil.showNotification(UserUIContext.getMessage(GenericI18Enum.OPT_SUCCESS), UserUIContext
+                            .getMessage(UserI18nEnum.OPT_SEND_INVITATION_SUCCESSFULLY, member.getDisplayName()));
+                }).withStyleName(WebThemes.BUTTON_LINK).withDescription(UserUIContext.getMessage(UserI18nEnum.ACTION_CONFIRM_EMAIL_HELP));
+                buttonControls.with(resendBtn);
+            }
         }
 
         MButton editBtn = new MButton("", clickEvent -> EventBusFactory.getInstance().post(new UserEvent.GotoEdit(UserListViewImpl.this, member)))
