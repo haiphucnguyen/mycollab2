@@ -35,14 +35,14 @@ class SendVerifyUserEmailCommand(private val deploymentMode: DeploymentMode,
     @AllowConcurrentEvents
     @Subscribe
     fun sendVerifyEmailRequest(event: SendUserEmailVerifyRequestEvent) {
-        sendConfirmEmailToUser(event.user)
+//        sendConfirmEmailToUser(event.user)
         event.user.status = UserStatusConstants.EMAIL_VERIFIED_REQUEST
         userService.updateWithSession(event.user, event.user.username)
     }
 
     fun sendConfirmEmailToUser(user: User) {
         contentGenerator.putVariable("user", user)
-        val siteUrl = deploymentMode.getSiteUrl("app")
+        val siteUrl = deploymentMode.getSiteUrl("api")
         contentGenerator.putVariable("siteUrl", siteUrl)
         val confirmLink = "${siteUrl}user/confirm_signup/${UrlEncodeDecoder.encode(user.username)}"
         contentGenerator.putVariable("linkConfirm", confirmLink)
