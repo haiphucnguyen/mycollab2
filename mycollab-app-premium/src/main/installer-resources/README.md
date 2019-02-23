@@ -46,6 +46,8 @@ Version 7.0.1
 **Improvements & New Features**
 
 * Add file module to the project
+* Manage email verification statuses
+* Align with the cloud edition that support users can login to multiple accounts
 
 **Bug Fixes**
 
