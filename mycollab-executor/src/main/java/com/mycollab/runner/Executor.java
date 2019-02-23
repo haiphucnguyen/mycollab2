@@ -126,7 +126,6 @@ public class Executor {
                             if ((currentTime - lastInvokeTime > 5000) || !fileContent.equalsIgnoreCase(lastFileContent)) {
                                 lastInvokeTime = currentTime;
                                 lastFileContent = fileContent;
-                                LOG.info("Processing " + kind.hashCode() + "---" + event + "---" + fileContent + "--" + lastFileContent);
                                 if (fileContent.startsWith("UPGRADE")) {
                                     String filePath = fileContent.substring("UPGRADE:".length());
                                     LOG.info(String.format("Upgrade MyCollab with file %s", filePath));
