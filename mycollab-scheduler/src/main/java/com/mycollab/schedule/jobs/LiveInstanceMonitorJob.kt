@@ -31,7 +31,6 @@ import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 /**
  * @author MyCollab Ltd
