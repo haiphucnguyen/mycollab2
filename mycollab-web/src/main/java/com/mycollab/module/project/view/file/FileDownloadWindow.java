@@ -33,8 +33,8 @@ import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.UserLink;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -104,7 +104,7 @@ class FileDownloadWindow extends MWindow {
         layout.addComponent(infoLayout.getLayout());
 
         MButton downloadBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_DOWNLOAD))
-                .withIcon(FontAwesome.DOWNLOAD).withStyleName(WebThemes.BUTTON_ACTION);
+                .withIcon(VaadinIcons.DOWNLOAD).withStyleName(WebThemes.BUTTON_ACTION);
         List<Resource> resources = new ArrayList<>();
         resources.add(content);
 
@@ -115,7 +115,7 @@ class FileDownloadWindow extends MWindow {
 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                 .withStyleName(WebThemes.BUTTON_OPTION);
-        final MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, downloadBtn);
+        MHorizontalLayout buttonControls = new MHorizontalLayout(cancelBtn, downloadBtn);
         layout.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         this.setContent(layout);
     }

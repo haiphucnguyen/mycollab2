@@ -21,7 +21,6 @@ import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus
 import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.vaadin.icons.VaadinIcons
-import com.vaadin.server.FontAwesome
 
 /**
  * @author MyCollab Ltd.

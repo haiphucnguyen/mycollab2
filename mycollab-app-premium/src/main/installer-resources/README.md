@@ -52,6 +52,7 @@ Version 7.0.1
 **Bug Fixes**
 
 * Show error message when user edit ticket which has unset duration value
+* Some long text don't display in the box
 
 Version 7.0.0
 -------------
