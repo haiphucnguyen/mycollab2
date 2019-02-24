@@ -1,16 +1,16 @@
 /**
  * Copyright © MyCollab
- *
+ * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,25 +23,28 @@ import com.mycollab.db.arguments.BasicSearchRequest;
 import com.mycollab.db.arguments.SearchCriteria;
 import com.mycollab.db.arguments.StringSearchField;
 import com.mycollab.db.query.LazyValueInjector;
-import com.mycollab.module.billing.UserStatusConstants;
-import com.mycollab.module.user.esb.SendUserEmailVerifyRequestEvent;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.module.billing.RegisterStatusConstants;
+import com.mycollab.module.billing.UserStatusConstants;
 import com.mycollab.module.user.AccountLinkGenerator;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.module.user.domain.criteria.UserSearchCriteria;
+import com.mycollab.module.user.esb.SendUserEmailVerifyRequestEvent;
 import com.mycollab.module.user.esb.SendUserInvitationEvent;
 import com.mycollab.module.user.event.UserEvent;
 import com.mycollab.module.user.service.UserService;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.ui.*;
+import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.HeaderWithIcon;
+import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.SearchTextField;
 import com.mycollab.vaadin.web.ui.WebThemes;
@@ -150,7 +153,8 @@ public class UserListViewImpl extends AbstractVerticalPageView implements UserLi
 
     private Component generateMemberBlock(SimpleUser member) {
         MVerticalLayout blockContent = new MVerticalLayout().withWidth("350px").withStyleName("member-block");
-        if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())) {
+        if (RegisterStatusConstants.NOT_LOG_IN_YET.equals(member.getRegisterstatus())
+                || !UserStatusConstants.EMAIL_VERIFIED.equals(member.getStatus())) {
             blockContent.addStyleName("inactive");
         }
         MHorizontalLayout blockTop = new MHorizontalLayout().withFullWidth();

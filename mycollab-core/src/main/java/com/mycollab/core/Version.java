@@ -28,7 +28,7 @@ public class Version {
     public static final String THEME_VERSION = "mycollab_20190223";
 
     public static String getVersion() {
-        return "7.0.0";
+        return "7.0.1";
     }
 
     public static LocalDate getReleasedDate() {

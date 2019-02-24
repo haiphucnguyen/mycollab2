@@ -81,7 +81,7 @@ public class GenericTicketDetailMapper {
             StandupReportService service = AppContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
-                ticket.setName(Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
+                ticket.setName(Jsoup.parse(DateTimeUtils.convertDateTimeToStringWithUserTimeZone(
                         standup.getCreatedtime(), AppUI.getDateFormat(), UserUIContext.getUserLocale(), timeZone)).html());
                 ticket.setProjectId(standup.getProjectid());
                 ticket.setProjectShortName(standup.getProjectShortName());

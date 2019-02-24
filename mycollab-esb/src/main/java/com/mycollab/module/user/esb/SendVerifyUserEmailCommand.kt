@@ -3,7 +3,6 @@ package com.mycollab.module.user.esb
 import com.google.common.eventbus.AllowConcurrentEvents
 import com.google.common.eventbus.Subscribe
 import com.mycollab.common.GenericLinkUtils
-import com.mycollab.common.UrlEncodeDecoder
 import com.mycollab.common.domain.MailRecipientField
 import com.mycollab.common.i18n.MailI18nEnum
 import com.mycollab.configuration.ApplicationConfiguration
@@ -54,8 +53,8 @@ class SendVerifyUserEmailCommand(private val deploymentMode: IDeploymentMode,
                     DateTimeUtils.getCurrentYear()))
             extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                     listOf(MailRecipientField(user.email, "${user.firstname} ${user.lastname}")),
-                    LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT),
-                    contentGenerator.parseFile("src/main/resources/mailConfirmUserSignUpNotification.ftl", Locale.US))
+                    LocalizationHelper.getMessage(Locale.US, UserI18nEnum.MAIL_CONFIRM_EMAIL_SUBJECT),
+                    contentGenerator.parseFile("mailVerifyEmailUser.ftl", Locale.US))
         } else {
             LOG.error("Can not find account with id $sAccountId then can not send the verification email")
         }
