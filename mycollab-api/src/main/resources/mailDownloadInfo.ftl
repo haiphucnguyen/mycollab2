@@ -9,7 +9,7 @@
       <td>
         <div style="padding: 25px 25px 10px 25px">
           Dear ${lastname}, <br/>
-          Thank you for trialing MyCollab!
+          Thank you for using MyCollab!
         <div style="padding: 0px 25px;">
         As you get started with MyCollab, we recommend that you:
           <ul>

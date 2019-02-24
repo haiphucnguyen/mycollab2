@@ -145,7 +145,11 @@
   }
 
   .border-left {
-      border-left: 1px solid $my-separator-color;
+    border-left: 1px solid $my-separator-color;
+  }
+
+  .border-right {
+    border-right: 1px solid $my-separator-color;
   }
 
   .border {
