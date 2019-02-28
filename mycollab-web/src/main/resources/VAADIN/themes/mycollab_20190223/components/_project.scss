@@ -108,19 +108,13 @@
 
   /* End Messages */
 
-  .projectfeed-hdr-wrapper {
-    padding: $my-space 2*$my-space;
-    border-bottom: 1px solid $my-separator-color;
-    background-color: $my-block-background-color;
-  }
-
   div.v-csslayout.followers-container {
     @include flex-compatible;
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
     flex-wrap: wrap;
     -ms-writing-mode:lr-tb;
     .v-checkbox {
-      margin-right: 10px;
+      margin-right: $my-space;
     }
   }
 

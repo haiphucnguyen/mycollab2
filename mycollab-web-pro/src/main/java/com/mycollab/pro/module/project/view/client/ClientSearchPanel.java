@@ -79,7 +79,7 @@ public class ClientSearchPanel extends DefaultGenericSearchPanel<ClientSearchCri
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("account-assignuser".equals(fieldId)) {
+            if ("assignuser".equals(fieldId)) {
                 return new ActiveUserListSelect();
             }
             return null;

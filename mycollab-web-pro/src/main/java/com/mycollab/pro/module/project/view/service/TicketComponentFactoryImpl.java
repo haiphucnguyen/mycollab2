@@ -468,7 +468,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         private boolean isIncludeMilestone;
         private SimpleProject selectedProject;
 
-        NewTicketWindow(LocalDate date, final Integer projectId, final Integer milestoneId, boolean isIncludeMilestone) {
+        NewTicketWindow(LocalDate date, Integer projectId, Integer milestoneId, boolean isIncludeMilestone) {
             super(UserUIContext.getMessage(TicketI18nEnum.NEW));
             this.isIncludeMilestone = isIncludeMilestone;
             this.addStyleName(WebThemes.NO_SCROLLABLE_CONTAINER);

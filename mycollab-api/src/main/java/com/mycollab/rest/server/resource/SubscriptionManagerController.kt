@@ -171,10 +171,10 @@ class SubscriptionManagerController(private val subscriptionMapper: BillingSubsc
             subscriptionHistory.orderid = orderId
             subscriptionHistory.createdtime = LocalDateTime.now()
             subscriptionHistory.status = "Success"
-            // TODO
-//            subscriptionHistory.expireddate = dateFormatter.parseLocalDate(nextPeriodDate).toDate()
+
+            subscriptionHistory.expireddate = LocalDateTime.parse(nextPeriodDate, dateFormatter)
             subscriptionHistory.productname = orderProductName
-            subscriptionHistory.totalprice = java.lang.Double.parseDouble(orderSubTotalUSD)
+            subscriptionHistory.totalprice = orderSubTotalUSD.toDouble()
             subscriptionHistoryMapper.insert(subscriptionHistory)
 
             val accountEx = BillingAccountExample()
