@@ -45,11 +45,12 @@ Version 7.0.2
 
 **Library Upgrades**
 
-* 
+**Bug Fixes**
+
+* Can not send email notification to the all members in the project
 
 **Improvements & New Features**
 
-* Links among tickets
 * Minor UI improvements
 
 **Bug Fixes**

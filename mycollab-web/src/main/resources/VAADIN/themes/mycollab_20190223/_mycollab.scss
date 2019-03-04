@@ -29,7 +29,6 @@ $v-line-height--header:1.5em;
 @import "components/icons";
 @import "components/form";
 @import "components/tabsheet";
-@import "components/document";
 @import "components/project";
 @import "components/alump_dbar";
 
@@ -56,7 +55,6 @@ $v-line-height--header:1.5em;
   @include mycollab-tooltip;
   @include mycollab-shared;
   @include mycollab-form;
-  @include mycollab-document;
   @include mycollab-project;
   @include alump-dbar;
 
