@@ -40,6 +40,20 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 7.0.2
+-------------
+
+**Library Upgrades**
+
+* 
+
+**Improvements & New Features**
+
+* Links among tickets
+* Minor UI improvements
+
+**Bug Fixes**
+
 Version 7.0.1
 -------------
 

@@ -48,7 +48,7 @@ class FollowupSignupUserAfterOneWeekJob(private val billingService: BillingServi
                             SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"),
                                     it.email))
                     LOG.info("Send follow up email to sign up user ${it.email}")
-                    extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
+                    extMailService.sendHTMLMail("john.adams@mycollab.com", "John Adams",
                             listOf(MailRecipientField(it.email, leadName)),
                             "How are things going with MyCollab?",
                             contentGenerator.parseFile("mailFollowupSignupUserAfter1Week.ftl"))

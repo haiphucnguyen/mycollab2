@@ -36,7 +36,7 @@ class FollowupDownloadedUsersAfterOneWeekJob(private val communityLeadMapper: Co
             val leadName = "${it.firstname} ${it.lastname}"
             contentGenerator.putVariable("lead", leadName)
             contentGenerator.putVariable("unsubscribeUrl", SupportLinkGenerator.generateUnsubscribeEmailFullLink(deploymentMode.getSiteUrl("settings"), it.email))
-            extMailService.sendHTMLMail("john.adam@mycollab.com", "John Adams",
+            extMailService.sendHTMLMail("john.adams@mycollab.com", "John Adams",
                     listOf(MailRecipientField(it.email, leadName)),
                     "How are things going with MyCollab?", contentGenerator.parseFile("mailFollowupDownloadedUserAfter1Week.ftl"))
         }

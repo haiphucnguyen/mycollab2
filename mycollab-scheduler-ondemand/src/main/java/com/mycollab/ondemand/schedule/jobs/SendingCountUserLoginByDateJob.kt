@@ -40,15 +40,12 @@ class SendingCountUserLoginByDateJob(private val userService: UserService,
         criteria.setOrderFields(mutableListOf(SearchCriteria.OrderField("subDomain", SearchCriteria.ASC)))
 
         val accessedUsers = userService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleUser>
-        if (accessedUsers.isNotEmpty()) {
-            contentGenerator.putVariable("lstUser", accessedUsers)
-            contentGenerator.putVariable("count", accessedUsers.size)
+        contentGenerator.putVariable("lstUser", accessedUsers)
+        contentGenerator.putVariable("count", accessedUsers.size)
 
-            extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.notifyEmail,
-                    listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
-                    "Today system-logins count", contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE))
-
-        }
+        extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.notifyEmail,
+                listOf(MailRecipientField("haiphucnguyen@gmail.com", "Hai Nguyen")),
+                "Today system-logins count", contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE))
 
         LOG.info("Sending the number of users access the system ${accessedUsers.size}")
     }

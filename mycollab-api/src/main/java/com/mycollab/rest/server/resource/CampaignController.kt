@@ -71,11 +71,6 @@ class CampaignController(private val communityLeadMapper: CommunityLeadMapper,
 
                 contentGenerator.putVariable("lastname", lastname)
                 contentGenerator.putVariable("version", editionInfo.version)
-                if ("Ultimate" == edition) {
-                    contentGenerator.putVariable("downloadLink", "https://api.mycollab.com/download/verify?email=$email&&edition=Ultimate")
-                } else {
-                    contentGenerator.putVariable("downloadLink", "https://api.mycollab.com/download/verify?email=$email")
-                }
 
                 extMailService.sendHTMLMail(applicationConfiguration.notifyEmail, applicationConfiguration.siteName,
                         listOf(MailRecipientField(email, "$firstname $lastname")),
