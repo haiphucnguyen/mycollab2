@@ -25,7 +25,7 @@ class DeploymentMode(private val serverConfiguration: ServerConfiguration) : IDe
         get() = false
 
     override val isPremiumEdition: Boolean
-        get() = true
+        get() = false
 
     override fun getSiteUrl(subDomain: String?) = String.format(serverConfiguration.siteUrl, subDomain)
 
