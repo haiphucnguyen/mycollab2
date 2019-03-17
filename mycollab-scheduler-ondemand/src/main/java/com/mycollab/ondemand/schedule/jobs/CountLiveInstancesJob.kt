@@ -9,13 +9,17 @@ import com.mycollab.pro.common.dao.LiveInstanceMapper
 import com.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.config.BeanDefinition
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
 
 /**
  * @author MyCollab Ltd
  * @since 6.0.0
  */
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class CountLiveInstancesJob(private val liveInstanceMapper: LiveInstanceMapper,
                             private val contentGenerator: IContentGenerator,
                             private val extMailService: ExtMailService,

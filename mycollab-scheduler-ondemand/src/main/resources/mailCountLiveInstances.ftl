@@ -26,8 +26,8 @@
     <tr>
       <th>${instance.appversion!}</th>
       <th>${instance.javaversion!}</th>
-      <th>${instance.installeddate?date!}</th>
-      <th>${instance.lastupdateddate?date!}</th>
+      <th>${instance.installeddate?date?string["yyyy-MM-dd"]}</th>
+      <th>${instance.lastupdateddate?date?string["yyyy-MM-dd"]}</th>
       <th>${instance.sysproperties!}</th>
       <th>${instance.numusers!}</th>
       <th>${instance.numprojects!}</th>

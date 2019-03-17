@@ -21,7 +21,7 @@ class DeleteObsoleteLiveInstancesJob(private val liveInstanceMapper: LiveInstanc
     @Throws(JobExecutionException::class)
     override fun executeJob(context: JobExecutionContext) {
         val ex = LiveInstanceExample()
-        ex.createCriteria().andLastupdateddateLessThan(LocalDateTime.now().minusDays(1))
+        ex.createCriteria().andLastupdateddateLessThan(LocalDateTime.now().minusDays(2))
         liveInstanceMapper.deleteByExample(ex)
     }
 }

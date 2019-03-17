@@ -23,9 +23,9 @@
     <tr>
       <th>${user.username}</th>
       <th>${user.email}</th>
-      <th>${user.registeredtime?date}</th>
+      <th>${user.registeredtime?datetime}</th>
       <th>${user.lastaccessedtime?datetime}</th>
-      <th>${user.subdomain}</th>
+      <th>${user.subdomain!}</th>
     </tr>
     </#list>
   </table>
