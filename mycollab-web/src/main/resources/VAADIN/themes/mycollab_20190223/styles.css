@@ -1704,10 +1704,6 @@ a.pending {
 	font-size: 35px;
 }
 
-.v-window-header {
-	font-size: 18px !important;
-}
-
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
 	color: #0083ce;
 }
@@ -2353,11 +2349,13 @@ div.v-window .v-panel {
 }
 
 .v-window-header {
-	font-size: 16px;
+	font-size: 24px;
+	color: black;
+	margin-top: 12px;
 }
 
 .v-window-header .v-icon {
-	margin-right: 10px;
+	margin-right: 12px;
 }
 
 .v-textfield.v-readonly {
@@ -16540,10 +16538,6 @@ a.pending {
 	font-size: 35px;
 }
 
-.v-window-header {
-	font-size: 18px !important;
-}
-
 .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
 	color: #0083ce;
 }
@@ -17189,11 +17183,13 @@ div.v-window .v-panel {
 }
 
 .v-window-header {
-	font-size: 16px;
+	font-size: 24px;
+	color: black;
+	margin-top: 12px;
 }
 
 .v-window-header .v-icon {
-	margin-right: 10px;
+	margin-right: 12px;
 }
 
 .v-textfield.v-readonly {

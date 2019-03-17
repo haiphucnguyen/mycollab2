@@ -27,10 +27,6 @@
     font-size: 35px;
   }
 
-  .v-window-header {
-    font-size: 18px !important;
-  }
-
   .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
     color: $my-link-color;
   }
@@ -638,9 +634,11 @@
 
   /*Change the font, color of window header title*/
   .v-window-header {
-    font-size: $font-larger;
+    font-size: $font-xx-large;
+    color: black;
+    margin-top: $my-space;
     .v-icon {
-      margin-right: 10px;
+      margin-right: $my-space;
     }
   }
 
