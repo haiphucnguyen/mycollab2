@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class Main
 
 fun main(args: Array<String>) {
+    System.setProperty("org.quartz.scheduler.instanceId", "MyCollab")
     SpringApplicationBuilder(Main::class.java).web(WebApplicationType.NONE).run(*args)
 }
 
