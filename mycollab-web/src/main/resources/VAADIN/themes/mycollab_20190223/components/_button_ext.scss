@@ -166,5 +166,9 @@
       border-top-right-radius: $v-border-radius;
       border-bottom-right-radius: $v-border-radius;
     }
+
+    .v-button:not(:last-child) {
+      border-right: none;
+    }
   }
 }

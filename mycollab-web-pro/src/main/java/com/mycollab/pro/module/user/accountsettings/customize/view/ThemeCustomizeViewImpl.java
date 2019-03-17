@@ -131,7 +131,7 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
 
         Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
-        final ServiceMenu serviceMenu = new ServiceMenu();
+        ServiceMenu serviceMenu = new ServiceMenu();
 
         Button.ClickListener clickListener = new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -266,13 +266,13 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         });
         actionBtnColorPane.addComponent(actionBtnText);
 
-        CustomColorPickerArea actionBtnBorder = new CustomColorPickerArea(accountTheme.getActionbtn());
+        CustomColorPickerArea actionBtnBorder = new CustomColorPickerArea(accountTheme.getActionbtnborder());
         actionBtnBorder.addValueChangeListener(colorChangeEvent -> {
             String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
-            accountTheme.setActionbtntext(colorHexString);
+            accountTheme.setActionbtnborder(colorHexString);
             ThemeManager.loadDemoTheme(accountTheme);
         });
-        actionBtnColorPane.addComponent(actionBtnText);
+        actionBtnColorPane.addComponent(actionBtnBorder);
 
         // Option Button
 
@@ -305,6 +305,14 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
         });
         optionBtnColorPane.addComponent(optionBtnText);
 
+        CustomColorPickerArea optionBtnBorder = new CustomColorPickerArea(accountTheme.getOptionbtnborder());
+        optionBtnBorder.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
+            accountTheme.setOptionbtnborder(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
+        });
+        optionBtnColorPane.addComponent(optionBtnBorder);
+
         // Danger Button
         MVerticalLayout dangerBtnPanel = new MVerticalLayout();
         dangerBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
@@ -333,6 +341,14 @@ public class ThemeCustomizeViewImpl extends AbstractVerticalPageView implements 
             ThemeManager.loadDemoTheme(accountTheme);
         });
         dangerBtnColorPane.addComponent(dangerBtnText);
+
+        CustomColorPickerArea dangerBtnBorder = new CustomColorPickerArea(accountTheme.getDangerbtnborder());
+        dangerBtnBorder.addValueChangeListener(colorChangeEvent -> {
+            String colorHexString = colorChangeEvent.getValue().getCSS().substring(1).toUpperCase();
+            accountTheme.setDangerbtnborder(colorHexString);
+            ThemeManager.loadDemoTheme(accountTheme);
+        });
+        dangerBtnColorPane.addComponent(dangerBtnBorder);
 
         return blockLayout;
     }

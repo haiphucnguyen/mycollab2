@@ -16395,6 +16395,10 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	border-bottom-right-radius: 4px;
 }
 
+.toggle-btn-group .v-button:not(:last-child) {
+	border-right: none;
+}
+
 .v-icon .black {
 	color: black;
 }
@@ -17510,20 +17514,6 @@ div.v-window .v-panel {
 
 .section .v-label-h3 {
 	color: #0083ce;
-}
-
-.v-label.volumeUsageInfo {
-	border-left: 12px solid transparent;
-	border-right: 12px solid transparent;
-	border-top: 25px solid gray;
-	height: 0;
-	overflow: visible;
-}
-
-.v-label.volumeUsageInfo div {
-	position: relative;
-	margin-top: -20px;
-	text-align: center;
 }
 
 .project-view .main-content {
