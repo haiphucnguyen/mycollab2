@@ -40,14 +40,11 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 7.0.2
+Version 7.0.3
 -------------
 
 **Library Upgrades**
 
-**Bug Fixes**
-
-* Can not send email notification to the all members in the project
 
 **Improvements & New Features**
 
@@ -57,13 +54,31 @@ Version 7.0.2
 * [Premium] Support the new ticket type: Spike
 * [Premium] Support custom types for the tickets
 * [Premium] Admin site to manage the MyCollab instance
-* Support bulk invitations of users
 * Support links among ticket types
 * Improve Kanban display
+
+Version 7.0.2
+-------------
+
+**Bug Fixes**
+
+* Can not send email notification to the all members in the project
+* Not display the permissions when edit the project member
+
+**Improvements & New Features**
+
+* [Premium] Can change the border color of action, option or danger buttons
+* Kanban can not display tickets when user navigate to the view
+* Support bulk invitations of users
 * Minor UI improvements
+
 
 Version 7.0.1
 -------------
+
+**Library Upgrades**
+
+* Guava, Vaadin
 
 **Improvements & New Features**
 

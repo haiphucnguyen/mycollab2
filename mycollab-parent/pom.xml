@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>7.0.1</version>
+    <version>7.0.2</version>
     <packaging>pom</packaging>
     <!-- Inherit defaults from Spring Boot -->
     <parent>
@@ -19,7 +19,7 @@
     <properties>
         <java.version>1.8</java.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <vaadin.version>8.7.0</vaadin.version>
+        <vaadin.version>8.7.1</vaadin.version>
         <mysql.version>8.0.15</mysql.version>
         <jackson.version>2.9.8</jackson.version>
 
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>27.0.1-jre</version>
+            <version>27.1-jre</version>
         </dependency>
 
         <dependency>
