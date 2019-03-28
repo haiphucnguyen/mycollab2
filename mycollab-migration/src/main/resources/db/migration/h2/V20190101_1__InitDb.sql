@@ -814,13 +814,13 @@ CREATE TABLE `m_prj_time_logging` (
 
 
 --
--- Table structure for table `m_tracker_bug`
+-- Table structure for table `m_prj_bug`
 --
 
-DROP TABLE IF EXISTS `m_tracker_bug`;
+DROP TABLE IF EXISTS `m_prj_bug`;
 
 
-CREATE TABLE `m_tracker_bug` (
+CREATE TABLE `m_prj_bug` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(4000) NOT NULL,
   `detail` mediumtext  ,
@@ -847,48 +847,48 @@ CREATE TABLE `m_tracker_bug` (
   `endDate` date DEFAULT NULL,
   `percentagecomplete` double DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_m_tracker_bug_6` (`milestoneId`),
-  KEY `FK_m_tracker_bug_4` (`projectId`),
-  KEY `FK_m_tracker_bug_5` (`sAccountId`),
-  KEY `FK_m_tracker_bug_1` (`assignUser`),
-  KEY `FK_m_tracker_bug_2` (`createdUser`),
-  CONSTRAINT `FK_m_tracker_bug_1` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_bug_2` FOREIGN KEY (`assignUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_bug_3` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_bug_4` FOREIGN KEY (`milestoneId`) REFERENCES `m_prj_milestone` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_bug_5` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_m_prj_bug_6` (`milestoneId`),
+  KEY `FK_m_prj_bug_4` (`projectId`),
+  KEY `FK_m_prj_bug_5` (`sAccountId`),
+  KEY `FK_m_prj_bug_1` (`assignUser`),
+  KEY `FK_m_prj_bug_2` (`createdUser`),
+  CONSTRAINT `FK_m_prj_bug_1` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_bug_2` FOREIGN KEY (`assignUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_bug_3` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_bug_4` FOREIGN KEY (`milestoneId`) REFERENCES `m_prj_milestone` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_bug_5` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
 
 --
--- Table structure for table `m_tracker_bug_related_item`
+-- Table structure for table `m_prj_bug_related_item`
 --
 
-DROP TABLE IF EXISTS `m_tracker_bug_related_item`;
+DROP TABLE IF EXISTS `m_prj_bug_related_item`;
 
 
-CREATE TABLE `m_tracker_bug_related_item` (
+CREATE TABLE `m_prj_bug_related_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bugId` int(10) unsigned NOT NULL,
   `type` varchar(45) NOT NULL,
   `typeId` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_ m_tracker_bug_related_item_1` (`bugId`),
-  KEY `INDEX_m_tracker_bug_related_item_2` (`type`) ,
-  KEY `INDEX_m_tracker_bug_related_item_3` (`typeId`) ,
-  CONSTRAINT `FK_m_tracker_bug_related_item_1` FOREIGN KEY (`bugId`) REFERENCES `m_tracker_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_ m_prj_bug_related_item_1` (`bugId`),
+  KEY `INDEX_m_prj_bug_related_item_2` (`type`) ,
+  KEY `INDEX_m_prj_bug_related_item_3` (`typeId`) ,
+  CONSTRAINT `FK_m_prj_bug_related_item_1` FOREIGN KEY (`bugId`) REFERENCES `m_prj_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
 --
--- Table structure for table `m_tracker_component`
+-- Table structure for table `m_prj_component`
 --
 
-DROP TABLE IF EXISTS `m_tracker_component`;
+DROP TABLE IF EXISTS `m_prj_component`;
 
 
-CREATE TABLE `m_tracker_component` (
+CREATE TABLE `m_prj_component` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `projectId` int(10) unsigned NOT NULL,
   `name` varchar(1000) NOT NULL,
@@ -901,14 +901,14 @@ CREATE TABLE `m_tracker_component` (
   `status` varchar(45) DEFAULT NULL,
   `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_m_tracker_component_1` (`projectId`),
-  KEY `FK_m_tracker_component_4` (`sAccountId`),
-  KEY `FK_m_tracker_component_2` (`userlead`),
-  KEY `FK_m_tracker_component_3` (`createdUser`),
-  CONSTRAINT `FK_m_tracker_component_1` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_component_2` FOREIGN KEY (`userlead`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_component_3` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_component_4` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_m_prj_component_1` (`projectId`),
+  KEY `FK_m_prj_component_4` (`sAccountId`),
+  KEY `FK_m_prj_component_2` (`userlead`),
+  KEY `FK_m_prj_component_3` (`createdUser`),
+  CONSTRAINT `FK_m_prj_component_1` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_component_2` FOREIGN KEY (`userlead`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_component_3` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_component_4` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
@@ -929,20 +929,20 @@ CREATE TABLE `m_tracker_related_bug` (
   PRIMARY KEY (`id`),
   KEY `FK_m_tracker_related_bug_1` (`bugid`),
   KEY `FK_m_tracker_related_bug_2` (`relatedid`),
-  CONSTRAINT `FK_m_tracker_related_bug_1` FOREIGN KEY (`bugid`) REFERENCES `m_tracker_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_related_bug_2` FOREIGN KEY (`relatedid`) REFERENCES `m_tracker_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_m_tracker_related_bug_1` FOREIGN KEY (`bugid`) REFERENCES `m_prj_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_tracker_related_bug_2` FOREIGN KEY (`relatedid`) REFERENCES `m_prj_bug` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 
 
 --
--- Table structure for table `m_tracker_version`
+-- Table structure for table `m_project_bug`
 --
 
-DROP TABLE IF EXISTS `m_tracker_version`;
+DROP TABLE IF EXISTS `m_prj_version`;
 
 
-CREATE TABLE `m_tracker_version` (
+CREATE TABLE `m_prj_version` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `projectId` int(10) unsigned NOT NULL,
   `description` mediumtext  ,
@@ -955,12 +955,12 @@ CREATE TABLE `m_tracker_version` (
   `status` varchar(45) DEFAULT NULL,
   `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_m_tracker_version_1` (`projectId`),
-  KEY `FK_m_tracker_version_3` (`sAccountId`),
-  KEY `FK_m_tracker_version_2` (`createdUser`),
-  CONSTRAINT `FK_m_tracker_version_1` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_version_2` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_tracker_version_3` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_m_project_bug_1` (`projectId`),
+  KEY `FK_m_project_bug_3` (`sAccountId`),
+  KEY `FK_m_project_bug_2` (`createdUser`),
+  CONSTRAINT `FK_m_project_bug_1` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_project_bug_2` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_project_bug_3` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
 --

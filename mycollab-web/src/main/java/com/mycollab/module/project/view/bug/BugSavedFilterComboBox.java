@@ -23,7 +23,7 @@ import com.mycollab.db.query.*;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.query.CurrentProjectIdInjector;
-import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.mycollab.module.project.domain.criteria.BugSearchCriteria;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.SavedFilterComboBox;
 

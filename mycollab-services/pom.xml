@@ -100,7 +100,7 @@
                     </dependency>
                 </dependencies>
                 <executions>
-<!--
+
                     <execution>
                         <id>Project Artifacts Generator</id>
                         <phase>validate</phase>
@@ -112,7 +112,7 @@
                             <overwrite>true</overwrite>
                         </configuration>
                     </execution>
-
+<!--
                     <execution>
                         <id>User Artifacts Generator</id>
                         <phase>validate</phase>
@@ -160,6 +160,7 @@
                             <overwrite>true</overwrite>
                         </configuration>
                     </execution>
+
                     <execution>
                         <id>Tracker Artifacts Generator</id>
                         <phase>validate</phase>
@@ -171,6 +172,7 @@
                             <overwrite>true</overwrite>
                         </configuration>
                     </execution>
+
                     <execution>
                         <id>Form Artifacts Generator</id>
                         <phase>validate</phase>

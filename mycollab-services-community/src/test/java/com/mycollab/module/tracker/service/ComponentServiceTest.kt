@@ -19,8 +19,9 @@ package com.mycollab.module.tracker.service
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.StringSearchField
-import com.mycollab.module.tracker.domain.SimpleComponent
-import com.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria
+import com.mycollab.module.project.domain.SimpleComponent
+import com.mycollab.module.project.domain.criteria.ComponentSearchCriteria
+import com.mycollab.module.project.service.ComponentService
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
 import com.mycollab.test.spring.IntegrationServiceTest

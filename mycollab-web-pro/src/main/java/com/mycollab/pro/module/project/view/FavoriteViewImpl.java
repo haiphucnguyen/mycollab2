@@ -33,10 +33,9 @@ import com.mycollab.module.project.view.settings.VersionDefaultFormLayoutFactory
 import com.mycollab.module.project.view.settings.VersionPreviewForm;
 import com.mycollab.module.project.view.task.TaskDefaultFormLayoutFactory;
 import com.mycollab.module.project.view.task.TaskPreviewForm;
-import com.mycollab.module.tracker.domain.*;
-import com.mycollab.module.tracker.service.BugService;
-import com.mycollab.module.tracker.service.ComponentService;
-import com.mycollab.module.tracker.service.VersionService;
+import com.mycollab.module.project.service.BugService;
+import com.mycollab.module.project.service.ComponentService;
+import com.mycollab.module.project.service.VersionService;
 import com.mycollab.pro.module.project.view.risk.RiskDefaultFormLayoutFactory;
 import com.mycollab.pro.module.project.view.risk.RiskPreviewForm;
 import com.mycollab.spring.AppContextUtil;
@@ -387,8 +386,8 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT,
-                                        com.mycollab.module.tracker.domain.Component.Field.name.name(),
-                                        ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.tracker.domain.Component.Field.id.name()))
+                                        com.mycollab.module.project.domain.Component.Field.name.name(),
+                                        ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.project.domain.Component.Field.id.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));

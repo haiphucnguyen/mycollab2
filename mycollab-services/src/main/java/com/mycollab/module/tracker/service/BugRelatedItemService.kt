@@ -18,8 +18,8 @@ package com.mycollab.module.tracker.service
 
 import com.mycollab.cache.IgnoreCacheClass
 import com.mycollab.db.persistence.service.IService
-import com.mycollab.module.tracker.domain.Component
-import com.mycollab.module.tracker.domain.Version
+import com.mycollab.module.project.domain.Component
+import com.mycollab.module.project.domain.Version
 
 /**
  * @author MyCollab Ltd.

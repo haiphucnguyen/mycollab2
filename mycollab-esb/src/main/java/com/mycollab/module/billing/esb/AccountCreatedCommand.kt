@@ -32,12 +32,12 @@ import com.mycollab.module.page.service.PageService
 import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import com.mycollab.module.project.service.*
-import com.mycollab.module.tracker.domain.BugWithBLOBs
-import com.mycollab.module.tracker.domain.Version
+import com.mycollab.module.project.domain.BugWithBLOBs
+import com.mycollab.module.project.domain.Version
 import com.mycollab.module.tracker.service.BugRelatedItemService
-import com.mycollab.module.tracker.service.BugService
-import com.mycollab.module.tracker.service.ComponentService
-import com.mycollab.module.tracker.service.VersionService
+import com.mycollab.module.project.service.BugService
+import com.mycollab.module.project.service.ComponentService
+import com.mycollab.module.project.service.VersionService
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -151,7 +151,7 @@ class AccountCreatedCommand(private val optionValService: OptionValService,
         taskD.enddate = nowDate.plusDays(2)
         taskService.saveWithSession(taskD, initialUser)
 
-        val component = com.mycollab.module.tracker.domain.Component()
+        val component = com.mycollab.module.project.domain.Component()
         component.name = "Component 1"
         component.createduser = initialUser
         component.description = "Sample Component 1"

@@ -19,9 +19,10 @@ package com.mycollab.module.tracker.service
 import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.StringSearchField
-import com.mycollab.module.tracker.domain.SimpleVersion
-import com.mycollab.module.tracker.domain.Version
-import com.mycollab.module.tracker.domain.criteria.VersionSearchCriteria
+import com.mycollab.module.project.domain.SimpleVersion
+import com.mycollab.module.project.domain.Version
+import com.mycollab.module.project.domain.criteria.VersionSearchCriteria
+import com.mycollab.module.project.service.VersionService
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
 import com.mycollab.test.spring.IntegrationServiceTest
@@ -33,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.text.ParseException
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @ExtendWith(SpringExtension::class, DbUnitInitializerRule::class)
 class VersionServiceTest : IntegrationServiceTest() {

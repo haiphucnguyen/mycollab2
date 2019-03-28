@@ -16,6 +16,8 @@
  */
 package com.mycollab.module.tracker.domain
 
+import com.mycollab.module.project.domain.BugWithBLOBs
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.0

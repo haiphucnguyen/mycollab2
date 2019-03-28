@@ -6,8 +6,8 @@ import com.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.mycollab.module.project.schedule.email.service.BugRelayEmailNotificationActionImpl;
 import com.mycollab.module.project.service.ProjectMemberService;
 import com.mycollab.module.project.service.ProjectNotificationSettingService;
-import com.mycollab.module.tracker.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugService;
+import com.mycollab.module.project.domain.SimpleBug;
+import com.mycollab.module.project.service.BugService;
 import com.mycollab.module.user.domain.SimpleUser;
 import com.mycollab.schedule.email.GenericJobTest;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +19,6 @@ import org.mockito.Spy;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;

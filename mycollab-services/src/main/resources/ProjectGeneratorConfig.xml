@@ -41,6 +41,9 @@
         <table domainObjectName="ProjectMember" schema="mycollab" tableName="m_prj_member" />
         <table domainObjectName="KanbanBoard" schema="mycollab" tableName="m_prj_kanban_board" />
         <table domainObjectName="StandupReport" schema="mycollab" tableName="m_prj_standup" />
+        <table domainObjectName="Bug" schema="mycollab" tableName="m_prj_bug" />
+        <table domainObjectName="Component" schema="mycollab" tableName="m_prj_component" />
+        <table domainObjectName="Version" schema="mycollab" tableName="m_prj_version" />
     </context>
 
 </generatorConfiguration>

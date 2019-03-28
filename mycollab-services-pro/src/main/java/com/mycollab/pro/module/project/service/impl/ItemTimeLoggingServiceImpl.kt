@@ -11,11 +11,11 @@ import com.mycollab.module.project.dao.MilestoneMapperExt
 import com.mycollab.module.project.domain.ItemTimeLogging
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.service.*
-import com.mycollab.module.tracker.dao.ComponentMapperExt
-import com.mycollab.module.tracker.dao.VersionMapperExt
-import com.mycollab.module.tracker.service.BugService
-import com.mycollab.module.tracker.service.ComponentService
-import com.mycollab.module.tracker.service.VersionService
+import com.mycollab.module.project.dao.ComponentMapperExt
+import com.mycollab.module.project.dao.VersionMapperExt
+import com.mycollab.module.project.service.BugService
+import com.mycollab.module.project.service.ComponentService
+import com.mycollab.module.project.service.VersionService
 import com.mycollab.pro.module.project.dao.ItemTimeLoggingMapper
 import com.mycollab.pro.module.project.dao.ItemTimeLoggingMapperExt
 import com.mycollab.spring.AppContextUtil
@@ -26,7 +26,6 @@ import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Timestamp
 import java.sql.Types
-import java.util.*
 import javax.sql.DataSource
 
 /**

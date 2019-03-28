@@ -16,8 +16,12 @@
  */
 package com.mycollab.module.tracker.service.impl
 
+import com.mycollab.module.project.domain.Component
+import com.mycollab.module.project.domain.Version
 import com.mycollab.module.tracker.dao.BugRelatedItemMapper
-import com.mycollab.module.tracker.domain.*
+import com.mycollab.module.tracker.domain.BugRelatedItem
+import com.mycollab.module.tracker.domain.BugRelatedItemExample
+import com.mycollab.module.tracker.domain.SimpleRelatedBug
 import com.mycollab.module.tracker.service.BugRelatedItemService
 import org.springframework.stereotype.Service
 

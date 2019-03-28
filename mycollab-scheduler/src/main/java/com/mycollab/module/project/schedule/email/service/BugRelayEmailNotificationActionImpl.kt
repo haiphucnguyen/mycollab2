@@ -41,9 +41,9 @@ import com.mycollab.module.project.i18n.MilestoneI18nEnum
 import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import com.mycollab.module.project.service.MilestoneService
 import com.mycollab.module.project.service.ProjectNotificationSettingService
-import com.mycollab.module.tracker.domain.BugWithBLOBs
-import com.mycollab.module.tracker.domain.SimpleBug
-import com.mycollab.module.tracker.service.BugService
+import com.mycollab.module.project.domain.BugWithBLOBs
+import com.mycollab.module.project.domain.SimpleBug
+import com.mycollab.module.project.service.BugService
 import com.mycollab.module.user.AccountLinkGenerator
 import com.mycollab.module.user.domain.SimpleUser
 import com.mycollab.module.user.service.UserService

@@ -80,17 +80,17 @@
                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                 m_prj_time_logging.logValue, m_prj_time_logging.note,
                 m_prj_time_logging.isApproved, m_prj_time_logging.approveUser, m_prj_time_logging.approveTime,
-                m_tracker_bug.id AS typeId, m_prj_time_logging.type, m_tracker_bug.bugkey AS extraTypeId,
+                m_prj_bug.id AS typeId, m_prj_time_logging.type, m_prj_bug.bugkey AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
                 concat(s_user.firstname, ' ', s_user.lastname) AS logUserFullName,
                 m_prj_member.billingRate AS logUserRate, m_prj_member.overtimeBillingRate AS logUserOvertimeRate,
-                m_tracker_bug.name,  m_tracker_bug.status, m_tracker_bug.duedate AS dueDate, NULL as percentageComplete,
+                m_prj_bug.name,  m_prj_bug.status, m_prj_bug.duedate AS dueDate, NULL as percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
              INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
-             INNER JOIN m_tracker_bug ON ( m_prj_time_logging.typeId = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
-             INNER JOIN m_prj_project ON (m_prj_project.id=m_tracker_bug.projectId)
+             INNER JOIN m_prj_bug ON ( m_prj_time_logging.typeId = m_prj_bug.id and m_prj_time_logging.type = "Project-Bug" )
+             INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_bug.projectId)
        ]]>
     </sql>
 	

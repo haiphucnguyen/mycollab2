@@ -14,9 +14,9 @@ import com.mycollab.module.project.service.ProjectService
 import com.mycollab.module.project.service.ProjectTaskService
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.service.impl.AbstractProjectTicketServiceImpl
-import com.mycollab.module.tracker.domain.BugWithBLOBs
-import com.mycollab.module.tracker.domain.criteria.BugSearchCriteria
-import com.mycollab.module.tracker.service.BugService
+import com.mycollab.module.project.domain.BugWithBLOBs
+import com.mycollab.module.project.domain.criteria.BugSearchCriteria
+import com.mycollab.module.project.service.BugService
 import org.springframework.stereotype.Service
 
 /**

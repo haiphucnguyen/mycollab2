@@ -43,7 +43,7 @@
     <m_prj_task id="1" projectId="4" taskindex="1" taskkey="10" priority="Medium"
                 name="taskname" sAccountId="1" percentagecomplete="20"/>
 
-    <m_tracker_bug status="Open" sAccountId="1" id="1" priority="Medium"
+    <m_prj_bug status="Open" sAccountId="1" id="1" priority="Medium"
                    projectId="4" name="AAA" bugkey="20"/>
 
     <m_prj_risk name="risk1" sAccountId="1" projectId="4" priority="Medium" id="1"/>

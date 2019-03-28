@@ -15,8 +15,8 @@ import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria
 import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.view.bug.BugTimeLogSheet;
-import com.mycollab.module.tracker.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugService;
+import com.mycollab.module.project.domain.SimpleBug;
+import com.mycollab.module.project.service.BugService;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;

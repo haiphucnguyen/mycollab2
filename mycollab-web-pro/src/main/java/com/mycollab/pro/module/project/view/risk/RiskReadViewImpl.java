@@ -14,7 +14,6 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.risk.IRiskReadView;
-import com.mycollab.module.tracker.domain.SimpleBug;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.event.HasPreviewFormHandlers;
 import com.mycollab.vaadin.mvp.ViewComponent;

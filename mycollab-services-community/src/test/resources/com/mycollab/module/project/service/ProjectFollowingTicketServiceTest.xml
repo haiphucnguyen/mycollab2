@@ -23,16 +23,16 @@
     <m_prj_task sAccountId="1" projectId="2" id="4" percentagecomplete="90" name="task 4" taskkey="4"
                 assignUser="nghiemle@esofthead.com" priority="Medium"/>
 
-    <m_tracker_bug sAccountId="1" projectId="1" id="1" priority="Medium"
+    <m_prj_bug sAccountId="1" projectId="1" id="1" priority="Medium"
                    name="bug 1" status="Open" assignUser="hainguyen@esofthead.com"/>
 
-    <m_tracker_bug sAccountId="1" projectId="1" id="2" priority="Medium"
+    <m_prj_bug sAccountId="1" projectId="1" id="2" priority="Medium"
                    name="bug 2" status="Closed" assignUser="nghiemle@esofthead.com"/>
 
-    <m_tracker_bug sAccountId="1" projectId="2" id="3" priority="Medium"
+    <m_prj_bug sAccountId="1" projectId="2" id="3" priority="Medium"
                    name="bug 3" status="Open" assignUser="hainguyen@esofthead.com"/>
 
-    <m_tracker_bug sAccountId="1" projectId="2" id="4" priority="Medium"
+    <m_prj_bug sAccountId="1" projectId="2" id="4" priority="Medium"
                    name="bug 4" status="Closed" assignUser="nghiemle@esofthead.com"/>
 
     <m_prj_risk sAccountId="1" projectId="1" id="1" priority="Medium"
