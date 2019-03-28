@@ -40,7 +40,7 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 7.0.3
+Version 7.1.0
 -------------
 
 **Library Upgrades**
@@ -54,11 +54,16 @@ Version 7.0.3
 * [Premium] Support the new ticket type: Spike
 * [Premium] Support custom types for the tickets
 * [Premium] Admin site to manage the MyCollab instance
+* [Premium] Customize the dashboard widgets
 * Support links among ticket types
 * Improve Kanban display
 
 Version 7.0.2
 -------------
+
+**Library Upgrades**
+
+* Vaadin 8.7.1
 
 **Bug Fixes**
 
@@ -68,7 +73,6 @@ Version 7.0.2
 **Improvements & New Features**
 
 * [Premium] Can change the border color of action, option or danger buttons
-* Kanban can not display tickets when user navigate to the view
 * Support bulk invitations of users
 * Minor UI improvements
 
