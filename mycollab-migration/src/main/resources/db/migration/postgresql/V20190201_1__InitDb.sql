@@ -1022,6 +1022,20 @@ CREATE TABLE m_prj_version (
   CONSTRAINT FK_m_prj_version_3 FOREIGN KEY (sAccountId) REFERENCES s_account (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 
+CREATE TABLE m_prj_ticket_key (
+  id integer UNSIGNED NOT NULL AUTO_INCREMENT,
+  projectId integer UNSIGNED NOT NULL,
+  ticketId integer UNSIGNED NOT NULL,
+  ticketType varchar(45) NOT NULL,
+  ticketKey integer UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  INDEX PK_m_prj_ticket_id_1_idx (projectId ASC) VISIBLE,
+  CONSTRAINT PK_m_prj_ticket_id_1
+    FOREIGN KEY (projectId)
+    REFERENCES m_prj_project (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+
 --
 -- Table structure for table s_account_theme
 --

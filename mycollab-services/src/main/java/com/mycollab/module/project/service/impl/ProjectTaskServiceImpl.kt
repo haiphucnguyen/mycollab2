@@ -203,7 +203,6 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
     companion object {
         init {
             val taskInfo = ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK)
-            taskInfo.addExcludeHistoryField(Task.Field.taskindex.name)
             ClassInfoMap.put(ProjectTaskServiceImpl::class.java, taskInfo)
         }
     }

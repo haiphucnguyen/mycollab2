@@ -343,13 +343,12 @@
             SELECT DISTINCT m_prj_bug.id, m_prj_bug.name, m_prj_bug.detail, m_prj_bug.assignUser, m_prj_bug.createdTime,
                  m_prj_bug.createdUser, m_prj_bug.severity, m_prj_bug.priority, m_prj_bug.lastUpdatedTime,
                  m_prj_bug.status, m_prj_bug.duedate, m_prj_bug.environment, m_prj_bug.resolution,
-                 m_prj_bug.bugindex, m_prj_bug.projectId,
-                 m_prj_bug.resolveddate, m_prj_bug.sAccountId, m_prj_bug.description, m_prj_bug.originalEstimate,
-                 m_prj_bug.startDate, m_prj_bug.endDate,
+                 m_prj_bug.projectId, m_prj_bug.resolveddate, m_prj_bug.sAccountId,
+                 m_prj_bug.description, m_prj_bug.originalEstimate, m_prj_bug.startDate, m_prj_bug.endDate,
                  (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Bug' AND m_comment.typeId=m_prj_bug.id) AS numComments,
-                 m_prj_bug.remainEstimate, m_prj_bug.milestoneId, bugkey, milestone.name as milestoneName,
+                 m_prj_bug.remainEstimate, m_prj_bug.milestoneId, m_prj_ticket_key.ticketKey AS key, milestone.name as milestoneName,
                  concat(assignuserTbl.firstname, ' ', assignuserTbl.lastname) as assignuserFullName,
                  assignuserTbl.avatarId AS assignUserAvatarId,
                  concat(loguserTbl.firstname, ' ', loguserTbl.lastname) as loguserFullName,
@@ -382,6 +381,7 @@
                 LEFT OUTER JOIN m_prj_ticket_relation AS relatedItem3 ON (relatedItem3.ticketId = m_prj_bug.id AND relatedItem3.type='Component' AND relatedItem3.ticketType='Project-Bug')
                 LEFT OUTER JOIN m_prj_component AS component ON (component.id = relatedItem3.typeId)
                 LEFT OUTER JOIN m_prj_milestone AS milestone ON (m_prj_bug.milestoneId=milestone.id)
+                LEFT OUTER JOIN m_prj_ticket_key ON (m_prj_ticket_key.ticketId = m_prj_bug.id AND m_prj_ticket_key.ticketType = 'Project-Bug')
                
         ]]>
     </sql>
@@ -394,7 +394,7 @@
     <select id="findByProjectAndBugKey" resultMap="SimpleBugResult" parameterType="map" lang="velocity">
         <include refid="selectBug" />
         WHERE m_prj_bug.sAccountId = @{sAccountId,jdbcType=NUMERIC}
-            AND m_prj_bug.bugkey = @{bugkey}
+            AND m_prj_ticket_key.ticketKey = @{key}
             AND m_prj_project.shortname = @{prjShortName}
     </select>
 
@@ -581,14 +581,6 @@
         #ifnotnull($_parameter.searchCriteria)
             <include refid="querySearchCriteria" />
         #end
-    </select>
-
-    <select id="getMaxKey" parameterType="java.lang.Integer" resultType="java.lang.Integer" lang="velocity">
-        <![CDATA[
-        SELECT MAX(bugkey) 
-            FROM m_prj_bug
-            WHERE m_prj_bug.projectId=@{projectId, jdbcType=NUMERIC}
-        ]]>
     </select>
 
 </mapper>

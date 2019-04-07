@@ -350,15 +350,15 @@
                 createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
                 concat(createdUserTbl.firstname, ' ', createdUserTbl.lastname) AS createdUserFullName,
                 mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
-                m_prj_project.shortname AS projectShortName, mainTbl.bugkey AS extraTypeId, mainTbl.status,
+                m_prj_project.shortname AS projectShortName, m_prj_ticket_key.ticketKey AS extraTypeId, mainTbl.status,
                 'Project-Bug' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
                 (SELECT count(*)
                     FROM m_comment
                     WHERE m_comment.type='Project-Bug' AND m_comment.typeId=mainTbl.id) AS numComments,
-            (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Bug') AS numFollowers,
-            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                (SELECT COUNT(*) FROM m_monitor_item WHERE m_monitor_item.typeId = mainTbl.id AND m_monitor_item.type = 'Project-Bug') AS numFollowers,
+                (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
                      AND m_prj_time_logging.type='Project-Bug' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 1) AS billableHours,
-            (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
+                (SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0) FROM m_prj_time_logging WHERE m_prj_time_logging.projectId = mainTbl.projectId
                      AND m_prj_time_logging.type='Project-Bug' AND m_prj_time_logging.typeId=mainTbl.id AND m_prj_time_logging.isBillable = 0) AS nonBillableHours,
                 mainTbl.priority, mainTbl.sAccountId, mainTbl.startDate, mainTbl.endDate,
                 mainTbl.milestoneId, mainTbl.originalEstimate, mainTbl.remainEstimate,
@@ -368,6 +368,7 @@
               LEFT OUTER JOIN s_user AS assignUserTbl ON (mainTbl.assignUser=assignUserTbl.username)
               LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
               LEFT OUTER JOIN m_prj_milestone ON (mainTbl.milestoneId=m_prj_milestone.id)
+              LEFT OUTER JOIN m_prj_ticket_key ON (m_prj_ticket_key.ticketId = mainTbl.id AND m_prj_ticket_key.ticketType = 'Project-Bug')
         ]]>
     </sql>
 
@@ -379,7 +380,7 @@
             createdUserTbl.username AS createdUser, createdUserTbl.avatarId as createdUserAvatarId,
             concat(createdUserTbl.firstname, ' ', createdUserTbl.lastname) AS createdUserFullName,
             mainTbl.dueDate, mainTbl.projectId, m_prj_project.name AS projectName,
-            m_prj_project.shortname AS projectShortName, mainTbl.taskkey AS extraTypeId, mainTbl.status,
+            m_prj_project.shortname AS projectShortName, m_prj_ticket_key.ticketKey AS extraTypeId, mainTbl.status,
             'Project-Task' AS type, mainTbl.id AS typeId, mainTbl.createdTime, mainTbl.lastUpdatedTime,
             (SELECT count(*)
                     FROM m_comment
@@ -397,6 +398,7 @@
             LEFT OUTER JOIN s_user assignUserTbl ON (mainTbl.assignUser=assignUserTbl.username)
             LEFT OUTER JOIN s_user createdUserTbl ON (mainTbl.createdUser=createdUserTbl.username)
             LEFT OUTER JOIN m_prj_milestone ON (mainTbl.milestoneId=m_prj_milestone.id)
+            LEFT OUTER JOIN m_prj_ticket_key ON (mainTbl.id = m_prj_ticket_key.ticketId AND m_prj_ticket_key.ticketType = 'Project-Task')
         ]]>
     </sql>
 

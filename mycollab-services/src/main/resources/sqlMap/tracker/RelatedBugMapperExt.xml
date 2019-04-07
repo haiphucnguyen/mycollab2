@@ -27,7 +27,8 @@
               m_prj_bug.detail AS related_detail, m_prj_bug.environment AS related_environment,
               m_prj_bug.description AS related_description
             FROM m_prj_bug, m_tracker_related_bug
-            WHERE m_tracker_related_bug.bugid = @{bugId} AND m_tracker_related_bug.relatedid = m_prj_bug.id)
+            WHERE m_tracker_related_bug.bugid = @{bugId}
+                AND m_tracker_related_bug.relatedid = m_prj_bug.id)
             UNION
             (SELECT DISTINCT m_tracker_related_bug.relatetype AS relatedType, m_tracker_related_bug.id, 0 AS isRelated,
               m_prj_bug.id as related_id, m_prj_bug.name AS related_name, m_prj_bug.assignUser AS related_assignUser,

@@ -347,10 +347,11 @@
         concat(s_user.firstname, ' ', s_user.lastname) AS createdUserDisplayName,
         m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.name, m_prj_task.description
         AS description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
-        m_prj_project.shortname AS projectShortName, m_prj_task.taskkey AS extraTypeId
+        m_prj_project.shortname AS projectShortName, m_prj_ticket_key.ticketKey AS extraTypeId
         FROM m_prj_task
-        LEFT OUTER JOIN s_user ON (m_prj_task.createdUser = s_user.username)
-        INNER JOIN m_prj_project ON (m_prj_task.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_task.createdUser = s_user.username)
+            INNER JOIN m_prj_project ON (m_prj_task.projectId = m_prj_project.id)
+            LEFT OUTER JOIN m_prj_ticket_key ON (m_prj_ticket_key.ticketId = m_prj_task.id AND m_prj_ticket_key.ticketType = 'Project-Task')
     </sql>
 
     <sql id="selectMessageItem">
@@ -361,8 +362,8 @@
         m_prj_message.message AS description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
         m_prj_project.shortname AS projectShortName, NULL AS extraTypeId
         FROM m_prj_message
-        LEFT OUTER JOIN s_user ON (m_prj_message.createdUser = s_user.username)
-        INNER JOIN m_prj_project ON (m_prj_message.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_message.createdUser = s_user.username)
+            INNER JOIN m_prj_project ON (m_prj_message.projectId = m_prj_project.id)
     </sql>
 
     <sql id="selectMilestoneItem">
@@ -373,8 +374,8 @@
         m_prj_milestone.description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
         m_prj_project.shortname AS projectShortName, NULL AS extraTypeId
         FROM m_prj_milestone
-        LEFT OUTER JOIN s_user ON (m_prj_milestone.createduser = s_user.username)
-        INNER JOIN m_prj_project ON (m_prj_milestone.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_milestone.createduser = s_user.username)
+            INNER JOIN m_prj_project ON (m_prj_milestone.projectId = m_prj_project.id)
     </sql>
 
     <sql id="selectBugItem">
@@ -384,10 +385,11 @@
         createdUserDisplayName,
           m_prj_bug.createdTime, m_prj_bug.lastUpdatedTime, m_prj_bug.name,
           m_prj_bug.description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
-          m_prj_project.shortname AS projectShortName, m_prj_bug.bugkey AS extraTypeId
+          m_prj_project.shortname AS projectShortName, m_prj_ticket_key.ticketKey AS extraTypeId
         FROM m_prj_bug
-          LEFT OUTER JOIN s_user ON (m_prj_bug.createdUser = s_user.username)
-          INNER JOIN m_prj_project ON (m_prj_bug.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_bug.createdUser = s_user.username)
+            INNER JOIN m_prj_project ON (m_prj_bug.projectId = m_prj_project.id)
+            LEFT OUTER JOIN m_prj_ticket_key ON (m_prj_ticket_key.ticketId = m_prj_bug.id AND m_prj_ticket_key.ticketType = 'Project-Bug')
     </sql>
 
     <sql id="selectComponentItem">
@@ -399,8 +401,8 @@
         m_prj_component.description, m_prj_project.id AS projectId, m_prj_project.name AS projectName,
         m_prj_project.shortname AS projectShortName, NULL AS extraTypeId
         FROM m_prj_component
-        LEFT OUTER JOIN s_user ON (m_prj_component.createdUser = s_user.username)
-        INNER JOIN m_prj_project ON (m_prj_component.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_component.createdUser = s_user.username)
+            INNER JOIN m_prj_project ON (m_prj_component.projectId = m_prj_project.id)
     </sql>
 
     <sql id="selectVersionItem">

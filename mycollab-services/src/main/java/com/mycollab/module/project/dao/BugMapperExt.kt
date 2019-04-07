@@ -32,7 +32,7 @@ interface BugMapperExt : ISearchableDAO<BugSearchCriteria> {
 
     fun getBugById(bugId: Int): SimpleBug?
 
-    fun findByProjectAndBugKey(@Param("bugkey") bugKey: Int, @Param("prjShortName") projectShortName: String,
+    fun findByProjectAndBugKey(@Param("key") key: Int, @Param("prjShortName") projectShortName: String,
                                @Param("sAccountId") sAccountId: Int): SimpleBug?
 
     fun getStatusSummary(@Param("searchCriteria") criteria: BugSearchCriteria): List<GroupItem>
@@ -48,6 +48,4 @@ interface BugMapperExt : ISearchableDAO<BugSearchCriteria> {
     fun getVersionDefectsSummary(@Param("searchCriteria") criteria: BugSearchCriteria): List<GroupItem>
 
     fun getComponentDefectsSummary(@Param("searchCriteria") criteria: BugSearchCriteria): List<GroupItem>
-
-    fun getMaxKey(projectId: Int): Int?
 }
