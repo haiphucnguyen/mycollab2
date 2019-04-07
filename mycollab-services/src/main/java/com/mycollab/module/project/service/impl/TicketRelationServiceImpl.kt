@@ -33,13 +33,14 @@ import org.springframework.stereotype.Service
 class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelationMapper) : TicketRelationService {
 
     override fun saveAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        insertAffectedVersionsOfBug(ticketId, versions)
+        insertAffectedVersionsOfTicket(ticketId, ticketType, versions)
     }
 
-    private fun insertAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
+    private fun insertAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
         versions?.forEach {
             val relatedItem = TicketRelation()
-            relatedItem.ticketid = bugId
+            relatedItem.ticketid = ticketId
+            relatedItem.tickettype = ticketType
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.AFFVERSION
             bugRelatedItemMapper.insert(relatedItem)
@@ -47,13 +48,14 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
     }
 
     override fun saveFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        insertFixedVersionsOfBug(ticketId, versions)
+        insertFixedVersionsOfTicket(ticketId, ticketType, versions)
     }
 
-    private fun insertFixedVersionsOfBug(bugId: Int, versions: List<Version>?) {
+    private fun insertFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
         versions?.forEach {
             val relatedItem = TicketRelation()
-            relatedItem.ticketid = bugId
+            relatedItem.ticketid = ticketId
+            relatedItem.tickettype=ticketType
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.FIXVERSION
             bugRelatedItemMapper.insert(relatedItem)
@@ -61,44 +63,45 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
     }
 
     override fun saveComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
-        insertComponentsOfBug(ticketId, components)
+        insertComponentsOfTicket(ticketId, ticketType, components)
     }
 
-    private fun insertComponentsOfBug(bugId: Int, components: List<Component>?) {
+    private fun insertComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
         components?.forEach {
             val relatedItem = TicketRelation()
-            relatedItem.ticketid = bugId
+            relatedItem.ticketid = ticketId
+            relatedItem.tickettype = ticketType
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.COMPONENT
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
 
-    private fun deleteTrackerBugRelatedItem(bugId: Int, type: String) {
+    private fun deleteTrackerBugRelatedItem(ticketId: Int, ticketType: String, type: String) {
         val ex = TicketRelationExample()
-        ex.createCriteria().andTicketidEqualTo(bugId).andTypeEqualTo(type)
+        ex.createCriteria().andTicketidEqualTo(ticketId).andTickettypeEqualTo(ticketType).andTypeEqualTo(type)
         bugRelatedItemMapper.deleteByExample(ex)
     }
 
 
     override fun updateAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.AFFVERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.AFFVERSION)
         if (versions != null) {
-            insertAffectedVersionsOfBug(ticketId, versions)
+            insertAffectedVersionsOfTicket(ticketId, ticketType, versions)
         }
     }
 
     override fun updateFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.FIXVERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.FIXVERSION)
         if (versions != null) {
-            insertFixedVersionsOfBug(ticketId, versions)
+            insertFixedVersionsOfTicket(ticketId, ticketType, versions)
         }
     }
 
     override fun updateComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
-        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.COMPONENT)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.COMPONENT)
         if (components != null) {
-            insertComponentsOfBug(ticketId, components)
+            insertComponentsOfTicket(ticketId, ticketType, components)
         }
     }
 }
