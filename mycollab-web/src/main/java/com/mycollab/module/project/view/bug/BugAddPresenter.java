@@ -124,9 +124,9 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
 
             // save component
             TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
-            ticketRelationService.saveAffectedVersionsOfBug(bugId, view.getAffectedVersions());
-            ticketRelationService.saveFixedVersionsOfBug(bugId, view.getFixedVersion());
-            ticketRelationService.saveComponentsOfBug(bugId, view.getComponents());
+            ticketRelationService.saveAffectedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, view.getAffectedVersions());
+            ticketRelationService.saveFixedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, view.getFixedVersion());
+            ticketRelationService.saveComponentsOfTicket(bugId, ProjectTypeConstants.BUG, view.getComponents());
             asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
             List<String> followers = view.getFollowers();
@@ -153,9 +153,9 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
 
             int bugId = bug.getId();
             TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
-            ticketRelationService.updateAffectedVersionsOfBug(bugId, view.getAffectedVersions());
-            ticketRelationService.updateFixedVersionsOfBug(bugId, view.getFixedVersion());
-            ticketRelationService.updateComponentsOfBug(bugId, view.getComponents());
+            ticketRelationService.updateAffectedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, view.getAffectedVersions());
+            ticketRelationService.updateFixedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, view.getFixedVersion());
+            ticketRelationService.updateComponentsOfTicket(bugId, ProjectTypeConstants.BUG, view.getComponents());
             asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
         }
 

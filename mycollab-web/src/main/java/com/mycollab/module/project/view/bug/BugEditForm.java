@@ -95,8 +95,9 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                     // save component
                     BugEditFormFieldFactory bugEditFormFieldFactory = (BugEditFormFieldFactory) fieldFactory;
                     TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
-                    ticketRelationService.saveAffectedVersionsOfBug(bugId, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
-                    ticketRelationService.saveComponentsOfBug(bugId, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
+                    ticketRelationService.saveAffectedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
+                    ticketRelationService.saveFixedVersionsOfTicket(bugId, ProjectTypeConstants.BUG, bugEditFormFieldFactory.getFixedVersionSelect().getSelectedItems());
+                    ticketRelationService.saveComponentsOfTicket(bugId, ProjectTypeConstants.BUG, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
                     asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
                     AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();

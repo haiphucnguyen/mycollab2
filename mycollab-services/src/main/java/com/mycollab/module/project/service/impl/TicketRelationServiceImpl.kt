@@ -32,8 +32,8 @@ import org.springframework.stereotype.Service
 @Service
 class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelationMapper) : TicketRelationService {
 
-    override fun saveAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
-        insertAffectedVersionsOfBug(bugId, versions)
+    override fun saveAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
+        insertAffectedVersionsOfBug(ticketId, versions)
     }
 
     private fun insertAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
@@ -46,8 +46,8 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
         }
     }
 
-    override fun saveFixedVersionsOfBug(bugId: Int, versions: List<Version>?) {
-        insertFixedVersionsOfBug(bugId, versions)
+    override fun saveFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
+        insertFixedVersionsOfBug(ticketId, versions)
     }
 
     private fun insertFixedVersionsOfBug(bugId: Int, versions: List<Version>?) {
@@ -60,8 +60,8 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
         }
     }
 
-    override fun saveComponentsOfBug(bugId: Int, components: List<Component>?) {
-        insertComponentsOfBug(bugId, components)
+    override fun saveComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
+        insertComponentsOfBug(ticketId, components)
     }
 
     private fun insertComponentsOfBug(bugId: Int, components: List<Component>?) {
@@ -81,24 +81,24 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
     }
 
 
-    override fun updateAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(bugId, SimpleRelatedBug.AFFVERSION)
+    override fun updateAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
+        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.AFFVERSION)
         if (versions != null) {
-            insertAffectedVersionsOfBug(bugId, versions)
+            insertAffectedVersionsOfBug(ticketId, versions)
         }
     }
 
-    override fun updateFixedVersionsOfBug(bugId: Int, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(bugId, SimpleRelatedBug.FIXVERSION)
+    override fun updateFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
+        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.FIXVERSION)
         if (versions != null) {
-            insertFixedVersionsOfBug(bugId, versions)
+            insertFixedVersionsOfBug(ticketId, versions)
         }
     }
 
-    override fun updateComponentsOfBug(bugId: Int, components: List<Component>?) {
-        deleteTrackerBugRelatedItem(bugId, SimpleRelatedBug.COMPONENT)
+    override fun updateComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
+        deleteTrackerBugRelatedItem(ticketId, SimpleRelatedBug.COMPONENT)
         if (components != null) {
-            insertComponentsOfBug(bugId, components)
+            insertComponentsOfBug(ticketId, components)
         }
     }
 }

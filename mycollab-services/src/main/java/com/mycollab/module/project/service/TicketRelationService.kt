@@ -28,15 +28,15 @@ import com.mycollab.module.project.domain.Version
 @IgnoreCacheClass
 interface TicketRelationService : IService {
 
-    fun saveAffectedVersionsOfBug(bugId: Int, versions: List<Version>?)
+    fun saveAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?)
 
-    fun saveFixedVersionsOfBug(bugId: Int, versions: List<Version>?)
+    fun saveFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?)
 
-    fun saveComponentsOfBug(bugId: Int, components: List<Component>?)
+    fun saveComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?)
 
-    fun updateAffectedVersionsOfBug(bugId: Int, versions: List<Version>?)
+    fun updateAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?)
 
-    fun updateFixedVersionsOfBug(bugId: Int, versions: List<Version>?)
+    fun updateFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?)
 
-    fun updateComponentsOfBug(bugId: Int, components: List<Component>?)
+    fun updateComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?)
 }

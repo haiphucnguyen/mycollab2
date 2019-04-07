@@ -29,6 +29,7 @@ import com.mycollab.module.file.PathUtils
 import com.mycollab.module.page.domain.Folder
 import com.mycollab.module.page.domain.Page
 import com.mycollab.module.page.service.PageService
+import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import com.mycollab.module.project.service.*
@@ -193,8 +194,8 @@ class AccountCreatedCommand(private val optionValService: OptionValService,
         bugB.priority = Priority.Low.name
         bugService.saveWithSession(bugB, initialUser)
 
-        bugRelatedService.saveAffectedVersionsOfBug(bugAId, listOf(version))
-        bugRelatedService.saveComponentsOfBug(bugAId, listOf(component))
+        bugRelatedService.saveAffectedVersionsOfTicket(bugAId, ProjectTypeConstants.BUG, listOf(version))
+        bugRelatedService.saveComponentsOfTicket(bugAId, ProjectTypeConstants.BUG, listOf(component))
 
         val page = Page()
         page.subject = "Welcome to sample workspace"

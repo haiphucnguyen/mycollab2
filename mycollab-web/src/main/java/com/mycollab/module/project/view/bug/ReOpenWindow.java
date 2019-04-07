@@ -109,8 +109,8 @@ public class ReOpenWindow extends MWindow {
                         bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
 
                         TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
-                        ticketRelationService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
-                        ticketRelationService.updateFixedVersionsOfBug(bug.getId(), null);
+                        ticketRelationService.updateAffectedVersionsOfTicket(bug.getId(), ProjectTypeConstants.BUG, affectedVersionsSelect.getSelectedItems());
+                        ticketRelationService.updateFixedVersionsOfTicket(bug.getId(),ProjectTypeConstants.BUG , null);
 
                         BugRelationService bugRelationService = AppContextUtil.getSpringBean(BugRelationService.class);
                         bugRelationService.removeDuplicatedBugs(bug.getId());
