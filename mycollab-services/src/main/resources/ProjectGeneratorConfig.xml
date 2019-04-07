@@ -45,6 +45,7 @@
         <table domainObjectName="Component" schema="mycollab" tableName="m_prj_component" />
         <table domainObjectName="Version" schema="mycollab" tableName="m_prj_version" />
         <table domainObjectName="TicketRelation" schema="mycollab" tableName="m_prj_ticket_relation" />
+        <table domainObjectName="TicketKey" schema="mycollab" tableName="m_prj_ticket_key" />
     </context>
 
 </generatorConfiguration>

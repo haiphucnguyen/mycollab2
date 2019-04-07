@@ -49,11 +49,11 @@ public class DbMigrationRunner {
             String[] locations;
 
             if (dbProductName.equals("H2")) {
-                locations = new String[]{"db/migration/h2"};
+                locations = new String[]{"db/migration", "db/migration/h2"};
             } else if (dbProductName.equals("PostgreSQL")) {
-                locations = new String[]{"db/migration/postgresql"};
+                locations = new String[]{"db/migration", "db/migration/postgresql"};
             } else {
-                locations = deploymentMode.isDemandEdition() ? new String[]{"db/migration/mysql", "db/migration2"} : new String[]{"db/migration/mysql"};
+                locations = deploymentMode.isDemandEdition() ? new String[]{"db/migration", "db/migration/mysql", "db/migration2"} : new String[]{"db/migration", "db/migration/mysql"};
             }
 
             Flyway flyway = Flyway.configure().baselineOnMigrate(true).dataSource(dataSource).validateOnMigrate(false).locations(locations).load();

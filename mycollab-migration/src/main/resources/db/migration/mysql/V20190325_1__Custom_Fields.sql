@@ -164,6 +164,18 @@ ALTER TABLE `m_prj_ticket_relation` ALTER INDEX `INDEX_m_prj_ticket_relation_ite
 ALTER TABLE `m_prj_ticket_relation` RENAME INDEX `INDEX_m_tracker_bug_related_item_3` TO `INDEX_m_prj_ticket_relation_item_3`;
 ALTER TABLE `m_prj_ticket_relation` ALTER INDEX `INDEX_m_prj_ticket_relation_item_3` VISIBLE;
 
-
+CREATE TABLE `m_prj_ticket_key` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `projectId` INT(10) UNSIGNED NOT NULL,
+  `ticketId` INT(11) UNSIGNED NOT NULL,
+  `ticketType` VARCHAR(45) NOT NULL,
+  `ticketKey` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `PK_m_prj_ticket_id_1_idx` (`projectId` ASC) VISIBLE,
+  CONSTRAINT `PK_m_prj_ticket_id_1`
+    FOREIGN KEY (`projectId`)
+    REFERENCES `m_prj_project` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 

@@ -38,6 +38,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.Priority
 import com.mycollab.module.project.service.*
 import com.mycollab.module.project.dao.BugMapper
 import com.mycollab.module.project.dao.BugMapperExt
+import com.mycollab.module.project.dao.TicketKeyMapper
 import com.mycollab.module.project.domain.BugWithBLOBs
 import com.mycollab.module.project.domain.SimpleBug
 import com.mycollab.module.project.domain.criteria.BugSearchCriteria
@@ -61,6 +62,7 @@ import javax.sql.DataSource
 @Traceable(nameField = "name", extraFieldName = "projectid")
 class BugServiceImpl(private val bugMapper: BugMapper,
                      private val bugMapperExt: BugMapperExt,
+                     private val ticketKeyService: TicketKeyService,
                      private val asyncEventBus: AsyncEventBus,
                      private val dataSource: DataSource) : DefaultService<Int, BugWithBLOBs, BugSearchCriteria>(), BugService {
 
@@ -75,15 +77,18 @@ class BugServiceImpl(private val bugMapper: BugMapper,
         val lock = DistributionLockUtil.getLock("bug-" + record.saccountid!!)
         try {
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
-                val maxKey = bugMapperExt.getMaxKey(record.projectid!!)
-                record.bugkey = if (maxKey == null) 1 else maxKey + 1
+                val maxKey = ticketKeyService.getMaxKey(record.projectid!!)
+                val bugKey = if (maxKey == null) 1 else maxKey + 1
+                record.bugkey = bugKey
                 if (record.priority == null) {
                     record.priority = Priority.Medium.name
                 }
                 if (record.status == null) {
                     record.status = StatusI18nEnum.Open.name
                 }
-                return super.saveWithSession(record, username)
+                val bugId = super.saveWithSession(record, username)
+                ticketKeyService.saveKey(record.projectid!!, bugId, ProjectTypeConstants.BUG, bugKey)
+                return bugId
             } else {
                 throw MyCollabException("Timeout operation")
             }
