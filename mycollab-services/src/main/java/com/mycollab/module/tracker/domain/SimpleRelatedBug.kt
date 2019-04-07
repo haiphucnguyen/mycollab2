@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.tracker.domain
 
-import com.mycollab.module.project.domain.BugWithBLOBs
+import com.mycollab.module.project.domain.SimpleBug
 
 /**
  * @author MyCollab Ltd
@@ -25,13 +25,13 @@ import com.mycollab.module.project.domain.BugWithBLOBs
 class SimpleRelatedBug {
 
     var id: Int? = null
-    var relatedBug: BugWithBLOBs? = null
+    var relatedBug: SimpleBug? = null
     var relatedType: String? = null
     var related: Boolean? = null
 
     companion object {
-        val AFFVERSION = "AffVersion"
-        val FIXVERSION = "FixVersion"
+        val AFF_VERSION = "AffVersion"
+        val FIX_VERSION = "FixVersion"
         val COMPONENT = "Component"
     }
 }

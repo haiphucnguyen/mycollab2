@@ -42,7 +42,7 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.ticketid = ticketId
             relatedItem.tickettype = ticketType
             relatedItem.typeid = it.id
-            relatedItem.type = SimpleRelatedBug.AFFVERSION
+            relatedItem.type = SimpleRelatedBug.AFF_VERSION
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
@@ -57,7 +57,7 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.ticketid = ticketId
             relatedItem.tickettype=ticketType
             relatedItem.typeid = it.id
-            relatedItem.type = SimpleRelatedBug.FIXVERSION
+            relatedItem.type = SimpleRelatedBug.FIX_VERSION
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
@@ -85,14 +85,14 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
 
 
     override fun updateAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.AFFVERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.AFF_VERSION)
         if (versions != null) {
             insertAffectedVersionsOfTicket(ticketId, ticketType, versions)
         }
     }
 
     override fun updateFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.FIXVERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.FIX_VERSION)
         if (versions != null) {
             insertFixedVersionsOfTicket(ticketId, ticketType, versions)
         }

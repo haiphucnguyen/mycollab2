@@ -79,7 +79,6 @@ class BugServiceImpl(private val bugMapper: BugMapper,
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
                 val maxKey = ticketKeyService.getMaxKey(record.projectid!!)
                 val bugKey = if (maxKey == null) 1 else maxKey + 1
-                record.bugkey = bugKey
                 if (record.priority == null) {
                     record.priority = Priority.Medium.name
                 }
@@ -155,9 +154,7 @@ class BugServiceImpl(private val bugMapper: BugMapper,
 
     companion object {
         init {
-            val bugInfo = ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.BUG)
-            bugInfo.addExcludeHistoryField(BugWithBLOBs.Field.bugindex.name)
-            ClassInfoMap.put(BugServiceImpl::class.java, bugInfo)
+            ClassInfoMap.put(BugServiceImpl::class.java, ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.BUG))
         }
     }
 }

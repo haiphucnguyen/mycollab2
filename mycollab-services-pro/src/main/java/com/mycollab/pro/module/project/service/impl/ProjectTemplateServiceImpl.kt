@@ -182,7 +182,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             affectedVersions?.forEach {
                 val bugRelatedItem = TicketRelation()
                 bugRelatedItem.ticketid = newBugId
-                bugRelatedItem.type = SimpleRelatedBug.AFFVERSION
+                bugRelatedItem.type = SimpleRelatedBug.AFF_VERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
                 ticketRelationMapper.insert(bugRelatedItem)
             }
@@ -191,7 +191,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             fixedVersions?.forEach {
                 val bugRelatedItem = TicketRelation()
                 bugRelatedItem.ticketid = newBugId
-                bugRelatedItem.type = SimpleRelatedBug.FIXVERSION
+                bugRelatedItem.type = SimpleRelatedBug.FIX_VERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
                 ticketRelationMapper.insert(bugRelatedItem)
             }

@@ -262,7 +262,7 @@ class ProjectColumnBuilderMapper : InitializingBean {
         val taskNameHrefExpr = object : AbstractSimpleExpression<String>() {
 
             override fun evaluate(reportParameters: ReportParameters): String {
-                val taskKey = reportParameters.getFieldValue<Int>(Task.Field.taskkey.name)
+                val taskKey = reportParameters.getFieldValue<Int>("key")
                 val projectShortName = reportParameters.getFieldValue<String>("projectShortname")
                 val siteUrl = reportParameters.getParameterValue<String>("siteUrl")
                 return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, taskKey, projectShortName)

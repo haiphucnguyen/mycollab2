@@ -178,4 +178,9 @@ CREATE TABLE `m_prj_ticket_key` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
+ALTER TABLE `m_prj_task` DROP COLUMN `taskkey`;
+ALTER TABLE `m_prj_bug`
+DROP COLUMN `bugIndex`,
+DROP COLUMN `bugkey`;
+
 

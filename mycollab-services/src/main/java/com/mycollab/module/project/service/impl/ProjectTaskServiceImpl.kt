@@ -96,7 +96,6 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
             if (lock.tryLock(120, TimeUnit.SECONDS)) {
                 val key = ticketKeyService.getMaxKey(record.projectid!!)
                 val taskKey = if (key == null) 1 else key + 1
-                record.taskkey = taskKey
 
                 val taskId =  super.saveWithSession(record, username)
                 ticketKeyService.saveKey(record.projectid!!, taskId, ProjectTypeConstants.TASK, taskKey)
