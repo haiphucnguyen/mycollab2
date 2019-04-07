@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.tracker.service
+package com.mycollab.module.project.service
 
 import com.mycollab.db.arguments.*
 import com.mycollab.module.project.domain.BugWithBLOBs

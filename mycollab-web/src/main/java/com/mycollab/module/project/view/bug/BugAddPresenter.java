@@ -31,7 +31,7 @@ import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugRelatedItemService;
+import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.project.service.BugService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -123,10 +123,10 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             uploadField.saveContentsToRepo(attachPath);
 
             // save component
-            BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-            bugRelatedItemService.saveAffectedVersionsOfBug(bugId, view.getAffectedVersions());
-            bugRelatedItemService.saveFixedVersionsOfBug(bugId, view.getFixedVersion());
-            bugRelatedItemService.saveComponentsOfBug(bugId, view.getComponents());
+            TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+            ticketRelationService.saveAffectedVersionsOfBug(bugId, view.getAffectedVersions());
+            ticketRelationService.saveFixedVersionsOfBug(bugId, view.getFixedVersion());
+            ticketRelationService.saveComponentsOfBug(bugId, view.getComponents());
             asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
             List<String> followers = view.getFollowers();
@@ -152,10 +152,10 @@ public class BugAddPresenter extends ProjectGenericPresenter<BugAddView> {
             uploadField.saveContentsToRepo(attachPath);
 
             int bugId = bug.getId();
-            BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-            bugRelatedItemService.updateAffectedVersionsOfBug(bugId, view.getAffectedVersions());
-            bugRelatedItemService.updateFixedVersionsOfBug(bugId, view.getFixedVersion());
-            bugRelatedItemService.updateComponentsOfBug(bugId, view.getComponents());
+            TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+            ticketRelationService.updateAffectedVersionsOfBug(bugId, view.getAffectedVersions());
+            ticketRelationService.updateFixedVersionsOfBug(bugId, view.getFixedVersion());
+            ticketRelationService.updateComponentsOfBug(bugId, view.getComponents());
             asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
         }
 

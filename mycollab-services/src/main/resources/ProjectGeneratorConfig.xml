@@ -44,6 +44,7 @@
         <table domainObjectName="Bug" schema="mycollab" tableName="m_prj_bug" />
         <table domainObjectName="Component" schema="mycollab" tableName="m_prj_component" />
         <table domainObjectName="Version" schema="mycollab" tableName="m_prj_version" />
+        <table domainObjectName="TicketRelation" schema="mycollab" tableName="m_prj_ticket_relation" />
     </context>
 
 </generatorConfiguration>

@@ -39,15 +39,18 @@
                 m_prj_version.sAccountId, m_prj_version.lastUpdatedTime,
                 m_prj_version.createdTime, m_prj_version.status,
                  (SELECT COUNT(*) 
-                        FROM m_prj_bug, m_tracker_bug_related_item
-                        WHERE m_prj_bug.id=m_tracker_bug_related_item.bugid
-                            AND m_tracker_bug_related_item.type IN ('AffVersion','Fix Version') 
-                            AND m_tracker_bug_related_item.typeId=m_prj_version.id) AS numBugs,
+                        FROM m_prj_bug, m_prj_ticket_relation
+                        WHERE m_prj_bug.id=m_prj_ticket_relation.ticketId
+                            AND m_prj_ticket_relation.ticketType='Project-Bug'
+                            AND m_prj_ticket_relation.type IN ('AffVersion','Fix Version')
+                            AND m_prj_ticket_relation.typeId=m_prj_version.id) AS numBugs,
                 (SELECT COUNT(*) 
-                        FROM m_prj_bug, m_tracker_bug_related_item
-                        WHERE m_prj_bug.id=m_tracker_bug_related_item.bugid  AND m_prj_bug.status IN ('Open', 'InProgress', 'Reopenned')
-                            AND m_tracker_bug_related_item.type IN ('AffVersion','Fix Version') 
-                            AND m_tracker_bug_related_item.typeId=m_prj_version.id) AS numOpenBugs,
+                        FROM m_prj_bug, m_prj_ticket_relation
+                        WHERE m_prj_bug.id=m_prj_ticket_relation.ticketId
+                            AND m_prj_ticket_relation.ticketType='Project-Bug'
+                            AND m_prj_bug.status IN ('Open', 'InProgress', 'Reopenned')
+                            AND m_prj_ticket_relation.type IN ('AffVersion','Fix Version')
+                            AND m_prj_ticket_relation.typeId=m_prj_version.id) AS numOpenBugs,
                 m_prj_project.name AS projectName, m_prj_project.shortName AS projectShortName
         FROM m_prj_version
             LEFT OUTER JOIN m_prj_project ON (m_prj_version.projectId=m_prj_project.id)
@@ -104,27 +107,37 @@
 
     <select id="getTotalBillableHours" parameterType="int" resultType="double" lang="velocity">
         SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
-            FROM m_prj_version, m_prj_bug, m_tracker_bug_related_item, m_prj_time_logging
-            WHERE m_prj_version.id = @{versionid} AND m_prj_version.id = m_tracker_bug_related_item.typeId
-                AND m_tracker_bug_related_item.type = 'FixVersion' AND m_tracker_bug_related_item.bugid = m_prj_bug.id
-                AND m_prj_time_logging.typeId =  m_prj_bug.id  AND m_prj_time_logging.type = 'Project-Bug'
+            FROM m_prj_version, m_prj_bug, m_prj_ticket_relation, m_prj_time_logging
+            WHERE m_prj_version.id = @{versionid}
+                AND m_prj_version.id = m_prj_ticket_relation.typeId
+                AND m_prj_ticket_relation.ticketType='Project-Bug'
+                AND m_prj_ticket_relation.type = 'FixVersion'
+                AND m_prj_ticket_relation.ticketId = m_prj_bug.id
+                AND m_prj_time_logging.typeId =  m_prj_bug.id
+                AND m_prj_time_logging.type = 'Project-Bug'
                 AND m_prj_time_logging.isBillable = '1'
     </select>
 
     <select id="getTotalNonBillableHours" parameterType="int"
             resultType="double" lang="velocity">
         SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
-            FROM m_prj_version, m_prj_bug, m_tracker_bug_related_item, m_prj_time_logging
-            WHERE m_prj_version.id = @{versionid} AND m_prj_version.id = m_tracker_bug_related_item.typeId
-                AND m_tracker_bug_related_item.type = 'FixVersion' AND m_tracker_bug_related_item.bugid = m_prj_bug.id
-                AND m_prj_time_logging.typeId =  m_prj_bug.id  AND m_prj_time_logging.type = 'Project-Bug'
+            FROM m_prj_version, m_prj_bug, m_prj_ticket_relation, m_prj_time_logging
+            WHERE m_prj_version.id = @{versionid}
+                AND m_prj_version.id = m_prj_ticket_relation.typeId
+                AND m_prj_ticket_relation.ticketType='Project-Bug'
+                AND m_prj_ticket_relation.type = 'FixVersion'
+                AND m_prj_ticket_relation.ticketId = m_prj_bug.id
+                AND m_prj_time_logging.typeId =  m_prj_bug.id
+                AND m_prj_time_logging.type = 'Project-Bug'
                 AND m_prj_time_logging.isBillable = '0'
     </select>
 
     <select id="getRemainHours" parameterType="int" resultType="double" lang="velocity">
         SELECT COALESCE(SUM(m_prj_bug.remainEstimate), 0)
-            FROM m_prj_bug, m_tracker_bug_related_item
-            WHERE m_tracker_bug_related_item.typeId = @{versionid} AND m_tracker_bug_related_item.type = 'FixVersion'
-                AND m_tracker_bug_related_item.bugid = m_prj_bug.id
+            FROM m_prj_bug, m_prj_ticket_relation
+            WHERE m_prj_ticket_relation.typeId = @{versionid}
+                AND m_prj_ticket_relation.ticketType='Project-Bug'
+                AND m_prj_ticket_relation.type = 'FixVersion'
+                AND m_prj_ticket_relation.ticketId = m_prj_bug.id
     </select>
 </mapper>

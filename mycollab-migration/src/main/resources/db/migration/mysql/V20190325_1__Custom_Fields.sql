@@ -140,6 +140,30 @@ ADD CONSTRAINT `FK_m_prj_version_3`
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
+ALTER TABLE `m_tracker_bug_related_item`
+DROP FOREIGN KEY `FK_ m_tracker_bug_related_item_1`;
+ALTER TABLE `m_tracker_bug_related_item`
+ADD COLUMN `ticketType` VARCHAR(45) NULL,
+CHANGE COLUMN `bugId` `ticketId` INT(10) UNSIGNED NOT NULL ,
+DROP INDEX `FK_ m_tracker_bug_related_item_1` ;
+
+ALTER TABLE `m_tracker_bug_related_item`
+RENAME TO  `m_prj_ticket_relation` ;
+
+UPDATE m_prj_ticket_relation
+SET ticketType = 'Project-Bug'
+WHERE id > 0;
+
+ALTER TABLE `m_prj_ticket_relation`
+CHANGE COLUMN `ticketType` `ticketType` VARCHAR(45) NOT NULL ;
+
+
+ALTER TABLE `m_prj_ticket_relation`;
+ALTER TABLE `m_prj_ticket_relation` RENAME INDEX `INDEX_m_tracker_bug_related_item_2` TO `INDEX_m_prj_ticket_relation_item_2`;
+ALTER TABLE `m_prj_ticket_relation` ALTER INDEX `INDEX_m_prj_ticket_relation_item_2` VISIBLE;
+ALTER TABLE `m_prj_ticket_relation` RENAME INDEX `INDEX_m_tracker_bug_related_item_3` TO `INDEX_m_prj_ticket_relation_item_3`;
+ALTER TABLE `m_prj_ticket_relation` ALTER INDEX `INDEX_m_prj_ticket_relation_item_3` VISIBLE;
+
 
 
 

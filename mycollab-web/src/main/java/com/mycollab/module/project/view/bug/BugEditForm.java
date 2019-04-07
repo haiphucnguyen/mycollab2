@@ -27,7 +27,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.module.project.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugRelatedItemService;
+import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.project.service.BugService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
@@ -94,9 +94,9 @@ public class BugEditForm extends AdvancedEditBeanForm<SimpleBug> {
                     AsyncEventBus asyncEventBus = AppContextUtil.getSpringBean(AsyncEventBus.class);
                     // save component
                     BugEditFormFieldFactory bugEditFormFieldFactory = (BugEditFormFieldFactory) fieldFactory;
-                    BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-                    bugRelatedItemService.saveAffectedVersionsOfBug(bugId, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
-                    bugRelatedItemService.saveComponentsOfBug(bugId, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
+                    TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+                    ticketRelationService.saveAffectedVersionsOfBug(bugId, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
+                    ticketRelationService.saveComponentsOfBug(bugId, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
                     asyncEventBus.post(new CleanCacheEvent(AppUI.getAccountId(), new Class[]{BugService.class}));
 
                     AttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();

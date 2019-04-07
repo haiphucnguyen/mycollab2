@@ -29,7 +29,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.mycollab.module.project.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugRelatedItemService;
+import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.tracker.service.BugRelationService;
 import com.mycollab.module.project.service.BugService;
 import com.mycollab.spring.AppContextUtil;
@@ -108,9 +108,9 @@ public class ReOpenWindow extends MWindow {
                         BugService bugService = AppContextUtil.getSpringBean(BugService.class);
                         bugService.updateSelectiveWithSession(bug, UserUIContext.getUsername());
 
-                        BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-                        bugRelatedItemService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
-                        bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), null);
+                        TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+                        ticketRelationService.updateAffectedVersionsOfBug(bug.getId(), affectedVersionsSelect.getSelectedItems());
+                        ticketRelationService.updateFixedVersionsOfBug(bug.getId(), null);
 
                         BugRelationService bugRelationService = AppContextUtil.getSpringBean(BugRelationService.class);
                         bugRelationService.removeDuplicatedBugs(bug.getId());

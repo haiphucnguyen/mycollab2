@@ -33,7 +33,7 @@ import com.mycollab.module.project.view.settings.component.VersionMultiSelectFie
 import com.mycollab.module.project.domain.BugWithBLOBs;
 import com.mycollab.module.tracker.domain.RelatedBug;
 import com.mycollab.module.project.domain.SimpleBug;
-import com.mycollab.module.tracker.service.BugRelatedItemService;
+import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.tracker.service.BugRelationService;
 import com.mycollab.module.project.service.BugService;
 import com.mycollab.spring.AppContextUtil;
@@ -119,8 +119,8 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                     }
                     bug.setStatus(StatusI18nEnum.Resolved.name());
 
-                    BugRelatedItemService bugRelatedItemService = AppContextUtil.getSpringBean(BugRelatedItemService.class);
-                    bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
+                    TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+                    ticketRelationService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
 
                     // Save bug status and assignee
                     BugService bugService = AppContextUtil.getSpringBean(BugService.class);

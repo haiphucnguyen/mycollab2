@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.tracker.service.impl
+package com.mycollab.module.project.service.impl
 
+import com.mycollab.module.project.dao.TicketRelationMapper
 import com.mycollab.module.project.domain.Component
+import com.mycollab.module.project.domain.TicketRelation
+import com.mycollab.module.project.domain.TicketRelationExample
 import com.mycollab.module.project.domain.Version
-import com.mycollab.module.tracker.dao.BugRelatedItemMapper
-import com.mycollab.module.tracker.domain.BugRelatedItem
-import com.mycollab.module.tracker.domain.BugRelatedItemExample
 import com.mycollab.module.tracker.domain.SimpleRelatedBug
-import com.mycollab.module.tracker.service.BugRelatedItemService
+import com.mycollab.module.project.service.TicketRelationService
 import org.springframework.stereotype.Service
 
 /**
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class BugRelatedItemServiceImpl(private val bugRelatedItemMapper: BugRelatedItemMapper) : BugRelatedItemService {
+class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelationMapper) : TicketRelationService {
 
     override fun saveAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
         insertAffectedVersionsOfBug(bugId, versions)
@@ -38,8 +38,8 @@ class BugRelatedItemServiceImpl(private val bugRelatedItemMapper: BugRelatedItem
 
     private fun insertAffectedVersionsOfBug(bugId: Int, versions: List<Version>?) {
         versions?.forEach {
-            val relatedItem = BugRelatedItem()
-            relatedItem.bugid = bugId
+            val relatedItem = TicketRelation()
+            relatedItem.ticketid = bugId
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.AFFVERSION
             bugRelatedItemMapper.insert(relatedItem)
@@ -52,8 +52,8 @@ class BugRelatedItemServiceImpl(private val bugRelatedItemMapper: BugRelatedItem
 
     private fun insertFixedVersionsOfBug(bugId: Int, versions: List<Version>?) {
         versions?.forEach {
-            val relatedItem = BugRelatedItem()
-            relatedItem.bugid = bugId
+            val relatedItem = TicketRelation()
+            relatedItem.ticketid = bugId
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.FIXVERSION
             bugRelatedItemMapper.insert(relatedItem)
@@ -66,8 +66,8 @@ class BugRelatedItemServiceImpl(private val bugRelatedItemMapper: BugRelatedItem
 
     private fun insertComponentsOfBug(bugId: Int, components: List<Component>?) {
         components?.forEach {
-            val relatedItem = BugRelatedItem()
-            relatedItem.bugid = bugId
+            val relatedItem = TicketRelation()
+            relatedItem.ticketid = bugId
             relatedItem.typeid = it.id
             relatedItem.type = SimpleRelatedBug.COMPONENT
             bugRelatedItemMapper.insert(relatedItem)
@@ -75,8 +75,8 @@ class BugRelatedItemServiceImpl(private val bugRelatedItemMapper: BugRelatedItem
     }
 
     private fun deleteTrackerBugRelatedItem(bugId: Int, type: String) {
-        val ex = BugRelatedItemExample()
-        ex.createCriteria().andBugidEqualTo(bugId).andTypeEqualTo(type)
+        val ex = TicketRelationExample()
+        ex.createCriteria().andTicketidEqualTo(bugId).andTypeEqualTo(type)
         bugRelatedItemMapper.deleteByExample(ex)
     }
 

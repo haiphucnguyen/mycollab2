@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
  */
-package com.mycollab.module.tracker.service
+package com.mycollab.module.project.service
 
 import com.mycollab.cache.IgnoreCacheClass
 import com.mycollab.db.persistence.service.IService
@@ -26,7 +26,7 @@ import com.mycollab.module.project.domain.Version
  * @since 1.0
  */
 @IgnoreCacheClass
-interface BugRelatedItemService : IService {
+interface TicketRelationService : IService {
 
     fun saveAffectedVersionsOfBug(bugId: Int, versions: List<Version>?)
 

@@ -7,10 +7,10 @@ import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.module.project.ProjectMemberStatusConstants
+import com.mycollab.module.project.dao.TicketRelationMapper
 import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.domain.criteria.*
 import com.mycollab.module.project.service.*
-import com.mycollab.module.tracker.dao.BugRelatedItemMapper
 import com.mycollab.module.tracker.domain.*
 import com.mycollab.module.project.domain.criteria.BugSearchCriteria
 import com.mycollab.module.project.domain.criteria.ComponentSearchCriteria
@@ -32,7 +32,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
                                  private val projectMemberService: ProjectMemberService,
                                  private val projectTaskService: ProjectTaskService,
                                  private val bugService: BugService,
-                                 private val bugRelatedItemMapper: BugRelatedItemMapper,
+                                 private val ticketRelationMapper: TicketRelationMapper,
                                  private val milestoneService: MilestoneService,
                                  private val componentService: ComponentService,
                                  private val versionService: VersionService,
@@ -180,29 +180,29 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
 
             val affectedVersions = it.affectedVersions
             affectedVersions?.forEach {
-                val bugRelatedItem = BugRelatedItem()
-                bugRelatedItem.bugid = newBugId
+                val bugRelatedItem = TicketRelation()
+                bugRelatedItem.ticketid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.AFFVERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
-                bugRelatedItemMapper.insert(bugRelatedItem)
+                ticketRelationMapper.insert(bugRelatedItem)
             }
 
             val fixedVersions = it.fixedVersions
             fixedVersions?.forEach {
-                val bugRelatedItem = BugRelatedItem()
-                bugRelatedItem.bugid = newBugId
+                val bugRelatedItem = TicketRelation()
+                bugRelatedItem.ticketid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.FIXVERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
-                bugRelatedItemMapper.insert(bugRelatedItem)
+                ticketRelationMapper.insert(bugRelatedItem)
             }
 
             val components = it.components
             components?.forEach {
-                val bugRelatedItem = BugRelatedItem()
-                bugRelatedItem.bugid = newBugId
+                val bugRelatedItem = TicketRelation()
+                bugRelatedItem.ticketid = newBugId
                 bugRelatedItem.type = SimpleRelatedBug.COMPONENT
                 bugRelatedItem.typeid = componentMapIds[it.id]
-                bugRelatedItemMapper.insert(bugRelatedItem)
+                ticketRelationMapper.insert(bugRelatedItem)
             }
         }
     }

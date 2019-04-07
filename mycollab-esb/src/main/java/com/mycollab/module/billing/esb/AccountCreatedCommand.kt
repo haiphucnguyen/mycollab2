@@ -34,7 +34,7 @@ import com.mycollab.module.project.i18n.OptionI18nEnum.*
 import com.mycollab.module.project.service.*
 import com.mycollab.module.project.domain.BugWithBLOBs
 import com.mycollab.module.project.domain.Version
-import com.mycollab.module.tracker.service.BugRelatedItemService
+import com.mycollab.module.project.service.TicketRelationService
 import com.mycollab.module.project.service.BugService
 import com.mycollab.module.project.service.ComponentService
 import com.mycollab.module.project.service.VersionService
@@ -54,7 +54,7 @@ class AccountCreatedCommand(private val optionValService: OptionValService,
                             private val milestoneService: MilestoneService,
                             private val taskService: ProjectTaskService,
                             private val bugService: BugService,
-                            private val bugRelatedService: BugRelatedItemService,
+                            private val bugRelatedService: TicketRelationService,
                             private val componentService: ComponentService,
                             private val versionService: VersionService,
                             private val pageService: PageService,

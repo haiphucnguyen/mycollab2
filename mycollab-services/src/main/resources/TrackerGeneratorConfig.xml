@@ -39,7 +39,6 @@
         </javaClientGenerator>
 
         <table domainObjectName="RelatedBug" schema="mycollab" tableName="m_tracker_related_bug" />
-        <table domainObjectName="BugRelatedItem" schema="mycollab" tableName="m_tracker_bug_related_item" />
     </context>
 
 </generatorConfiguration>
