@@ -84,7 +84,7 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
                             }
                         }),
                 new SearchFieldInfo(SearchField.AND, new StringParam("id-status",
-                        "m_tracker_bug", "status"), IS_NOT.name(),
+                        "m_prj_bug", "status"), IS_NOT.name(),
                         ConstantValueInjector.valueOf(StatusI18nEnum.Verified.name())));
 
         SearchQueryInfo myBugsQuery = new SearchQueryInfo(MY_BUGS, UserUIContext.getMessage(BugI18nEnum.VAL_MY_BUGS),

@@ -65,12 +65,14 @@ class BugSearchCriteria : SearchCriteria() {
                 val result = object : SQL() {
                     init {
                         SELECT("COUNT(*)")
-                        FROM("m_tracker_bug_related_item")
-                        WHERE("m_tracker_bug_related_item.type='$type'")
+                        FROM("m_prj_ticket_relation")
+                        WHERE("m_prj_ticket_relation.type='$type'")
                         AND()
-                        WHERE("m_tracker_bug_related_item.typeid=$affectedVersion")
+                        WHERE("m_prj_ticket_relation.typeid=$affectedVersion")
                         AND()
-                        WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id")
+                        WHERE("m_prj_ticket_relation.ticketId=m_tracker_bug.id")
+                        AND()
+                        WHERE("m_prj_ticket_relation.ticketType='${ProjectTypeConstants.BUG}'")
                     }
                 }.toString()
                 sqlResult.append("(").append(result).append(") > 0")
@@ -98,12 +100,14 @@ class BugSearchCriteria : SearchCriteria() {
                 val result = object : SQL() {
                     init {
                         SELECT("COUNT(*)")
-                        FROM("m_tracker_bug_related_item")
-                        WHERE("m_tracker_bug_related_item.type='$type'")
+                        FROM("m_prj_ticket_relation")
+                        WHERE("m_prj_ticket_relation.type='$type'")
                         AND()
-                        WHERE("m_tracker_bug_related_item.typeid=$affectedVersion")
+                        WHERE("m_prj_ticket_relation.typeid=$affectedVersion")
                         AND()
-                        WHERE("m_tracker_bug_related_item.bugid=m_tracker_bug.id")
+                        WHERE("m_prj_ticket_relation.ticketId=m_tracker_bug.id")
+                        AND()
+                        WHERE("m_prj_ticket_relation.ticketType='${ProjectTypeConstants.BUG}'")
                     }
                 }.toString()
                 sqlResult.append("(").append(result).append(") = 0")
@@ -126,51 +130,51 @@ class BugSearchCriteria : SearchCriteria() {
         @JvmField
         val p_textDesc = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_ANY_TEXT,
                 CompositionStringParam("textDesc",
-                        StringParam("", "m_tracker_bug", "name"),
-                        StringParam("", "m_tracker_bug", "detail"),
-                        StringParam("", "m_tracker_bug", "environment")))
+                        StringParam("", "m_prj_bug", "name"),
+                        StringParam("", "m_prj_bug", "detail"),
+                        StringParam("", "m_prj_bug", "environment")))
 
         @JvmField
         val p_createdtime = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_CREATED_TIME,
-                DateParam("createdtime", "m_tracker_bug", "createdTime"))
+                DateParam("createdtime", "m_prj_bug", "createdTime"))
 
         @JvmField
         val p_lastupdatedtime = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_LAST_UPDATED_TIME,
-                DateParam("lastupdatedtime", "m_tracker_bug", "lastUpdatedTime"))
+                DateParam("lastupdatedtime", "m_prj_bug", "lastUpdatedTime"))
 
         @JvmField
         val p_resolveddate = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_RESOLVED_DATE,
-                DateParam("resolveddate", "m_tracker_bug", "resolveddate"))
+                DateParam("resolveddate", "m_prj_bug", "resolveddate"))
 
         @JvmField
         val p_createddate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_CREATED_TIME,
-                DateParam("createdTime", "m_tracker_bug", "createdTime"))
+                DateParam("createdTime", "m_prj_bug", "createdTime"))
 
         @JvmField
         val p_duedate = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_DUE_DATE,
-                DateParam("dueDate", "m_tracker_bug", "dueDate"))
+                DateParam("dueDate", "m_prj_bug", "dueDate"))
 
         @JvmField
         val p_bugkey = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_BUG_KEY,
-                NumberParam("key", "m_tracker_bug", "bugkey"))
+                NumberParam("key", "m_prj_bug", "bugkey"))
 
         @JvmField
         val p_milestones = CacheParamMapper.register(ProjectTypeConstants.BUG, MilestoneI18nEnum.SINGLE,
-                PropertyListParam<Int>("milestones", "m_tracker_bug", "milestoneId"))
+                PropertyListParam<Int>("milestones", "m_prj_bug", "milestoneId"))
 
         @JvmField
         val p_priority = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_PRIORITY,
-                I18nStringListParam("priority", "m_tracker_bug", "priority",
+                I18nStringListParam("priority", "m_prj_bug", "priority",
                         setOf(Priority.Urgent, Priority.High, Priority.Medium,
                                 Priority.Low, Priority.None)))
 
         @JvmField
         val p_severity = CacheParamMapper.register(ProjectTypeConstants.BUG, BugI18nEnum.FORM_SEVERITY,
-                I18nStringListParam("severity", "m_tracker_bug", "severity",
+                I18nStringListParam("severity", "m_prj_bug", "severity",
                         setOf(BugSeverity.Critical, BugSeverity.Major, BugSeverity.Minor, BugSeverity.Trivial)))
         @JvmField
         val p_status = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_STATUS,
-                I18nStringListParam("status", "m_tracker_bug", "status",
+                I18nStringListParam("status", "m_prj_bug", "status",
                         setOf(StatusI18nEnum.Verified, StatusI18nEnum.Open, StatusI18nEnum.ReOpen, StatusI18nEnum.Resolved)))
 
         @JvmField
@@ -187,14 +191,14 @@ class BugSearchCriteria : SearchCriteria() {
 
         @JvmField
         val p_assignee = CacheParamMapper.register(ProjectTypeConstants.BUG, GenericI18Enum.FORM_ASSIGNEE,
-                PropertyListParam<String>("assignUser", "m_tracker_bug", "assignUser"))
+                PropertyListParam<String>("assignUser", "m_prj_bug", "assignUser"))
 
         @JvmField
         val p_createdUser = CacheParamMapper.register(ProjectTypeConstants.BUG, ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE,
-                PropertyListParam<String>("createdUser", "m_tracker_bug", "createdUser"))
+                PropertyListParam<String>("createdUser", "m_prj_bug", "createdUser"))
 
         @JvmField
         val p_projectIds = CacheParamMapper.register(ProjectTypeConstants.BUG, null,
-                PropertyListParam<Int>("projectId", "m_tracker_bug", "projectId"))
+                PropertyListParam<Int>("projectId", "m_prj_bug", "projectId"))
     }
 }

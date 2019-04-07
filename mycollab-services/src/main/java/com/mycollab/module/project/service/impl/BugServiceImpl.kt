@@ -137,7 +137,7 @@ class BugServiceImpl(private val bugMapper: BugMapper,
 
     override fun massUpdateBugIndexes(mapIndexes: List<Map<String, Int>>, @CacheKey sAccountId: Int) {
         val jdbcTemplate = JdbcTemplate(dataSource)
-        jdbcTemplate.batchUpdate("UPDATE `m_tracker_bug` SET `bugIndex`=? WHERE `id`=?", object : BatchPreparedStatementSetter {
+        jdbcTemplate.batchUpdate("UPDATE `m_prj_bug` SET `bugIndex`=? WHERE `id`=?", object : BatchPreparedStatementSetter {
             @Throws(SQLException::class)
             override fun setValues(preparedStatement: PreparedStatement, i: Int) {
                 preparedStatement.setInt(1, mapIndexes[i].getValue("index"))
