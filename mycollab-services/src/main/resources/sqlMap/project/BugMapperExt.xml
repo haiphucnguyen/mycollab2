@@ -14,6 +14,7 @@
         <result column="billableHours" property="billableHours" jdbcType="DOUBLE" />
         <result column="nonBillableHours" property="nonBillableHours" jdbcType="DOUBLE" />
         <result column="numFollowers" property="numFollowers" jdbcType="INTEGER"/>
+        <result column="ticketKey" property="ticketKey" jdbcType="INTEGER"/>
         <collection columnPrefix="affectedversion_" notNullColumn="id"
             ofType="com.mycollab.module.project.domain.Version"
             property="affectedVersions"

@@ -7,5 +7,9 @@ package com.mycollab.module.project.service
 interface TicketKeyService {
     fun getMaxKey(projectId: Int): Int?
 
+    fun getNextKey(projectId: Int, currentKey:Int): Int?
+
+    fun getPreviousKey(projectId: Int, currentKey: Int): Int?
+
     fun saveKey(projectId: Int, ticketId:Int, ticketType:String, ticketKey: Int)
 }

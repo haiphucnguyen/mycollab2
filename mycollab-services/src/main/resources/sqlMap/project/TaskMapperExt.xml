@@ -18,6 +18,7 @@
         <result column="billableHours" property="billableHours" jdbcType="DOUBLE"/>
         <result column="nonBillableHours" property="nonBillableHours" jdbcType="DOUBLE"/>
         <result column="numFollowers" property="numFollowers" jdbcType="INTEGER"/>
+        <result column="ticketKey" property="ticketKey" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="querySearchCriteria">

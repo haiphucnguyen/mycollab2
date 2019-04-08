@@ -6,4 +6,8 @@ package com.mycollab.module.project.dao
  */
 interface TicketKeyMapperExt {
     fun getMaxKey(projectId: Int): Int?
+
+    fun getNextKey(projectId: Int, currentKey:Int): Int?
+
+    fun getPreviousKey(projectId: Int, currentKey: Int): Int?
 }

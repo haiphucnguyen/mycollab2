@@ -184,8 +184,8 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
         jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `taskindex`=? WHERE `id`=?", object : BatchPreparedStatementSetter {
             @Throws(SQLException::class)
             override fun setValues(preparedStatement: PreparedStatement, i: Int) {
-                preparedStatement.setInt(1, mapIndexes[i]["index"]!!)
-                preparedStatement.setInt(2, mapIndexes[i]["id"]!!)
+                preparedStatement.setInt(1, mapIndexes[i].getValue("index"))
+                preparedStatement.setInt(2, mapIndexes[i].getValue("id"))
             }
 
             override fun getBatchSize(): Int = mapIndexes.size

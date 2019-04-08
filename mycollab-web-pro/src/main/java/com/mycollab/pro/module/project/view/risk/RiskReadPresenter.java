@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.risk;
 
 import com.mycollab.common.i18n.GenericI18Enum;
-import com.mycollab.core.MyCollabException;
 import com.mycollab.db.arguments.NumberSearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -128,21 +127,24 @@ public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implemen
     @Override
     protected void onGo(HasComponents container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
+            SimpleRisk risk = null;
             if (data.getParams() instanceof Integer) {
                 RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                SimpleRisk risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
-                if (risk != null) {
-                    ProjectView projectView = (ProjectView) container;
-                    projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
-                    view.previewItem(risk);
+                risk = riskService.findById((Integer) data.getParams(), AppUI.getAccountId());
 
-                    ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-                    breadCrumb.gotoRiskRead(risk);
-                } else {
-                    NotificationUtil.showRecordNotExistNotification();
-                }
+            } else if (data.getParams() instanceof SimpleRisk) {
+                risk = (SimpleRisk) data.getParams();
+            }
+
+            if (risk != null) {
+                ProjectView projectView = (ProjectView) container;
+                projectView.gotoSubView(ProjectView.TICKET_ENTRY, view);
+                view.previewItem(risk);
+
+                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                breadCrumb.gotoRiskRead(risk);
             } else {
-                throw new MyCollabException("Unhandle this case yet");
+                NotificationUtil.showRecordNotExistNotification();
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();

@@ -23,4 +23,8 @@ class TicketKeyServiceImpl(private val ticketKeyMapper: TicketKeyMapper,
         key.ticketkey = ticketKey
         ticketKeyMapper.insertAndReturnKey(key)
     }
+
+    override fun getNextKey(projectId: Int, currentKey: Int): Int? = ticketKeyMapperExt.getNextKey(projectId, currentKey)
+
+    override fun getPreviousKey(projectId: Int, currentKey: Int): Int? = ticketKeyMapperExt.getPreviousKey(projectId, currentKey)
 }
