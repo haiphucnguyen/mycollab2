@@ -89,12 +89,12 @@ class TooltipGeneratorServletRequestHandler : GenericHttpServlet() {
                     val risk = service.findById(Integer.parseInt(typeId), sAccountId)
                     html = ProjectTooltipGenerator.generateToolTipRisk(locale, dateFormat, risk, siteURL, timeZone, false)
                 }
-                ProjectTypeConstants.BUG_VERSION -> {
+                ProjectTypeConstants.VERSION -> {
                     val service = AppContextUtil.getSpringBean(VersionService::class.java)
                     val version = service.findById(Integer.parseInt(typeId), sAccountId)
                     html = ProjectTooltipGenerator.generateToolTipVersion(locale, dateFormat, version, siteURL, timeZone)
                 }
-                ProjectTypeConstants.BUG_COMPONENT -> {
+                ProjectTypeConstants.COMPONENT -> {
                     val service = AppContextUtil.getSpringBean(ComponentService::class.java)
                     val component = service.findById(Integer.parseInt(typeId), sAccountId)
                     html = ProjectTooltipGenerator.generateToolTipComponent(locale, component, siteURL, timeZone)

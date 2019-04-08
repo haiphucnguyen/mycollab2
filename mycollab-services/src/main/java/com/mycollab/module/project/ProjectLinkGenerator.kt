@@ -215,8 +215,8 @@ object ProjectLinkGenerator {
                 ProjectTypeConstants.RISK -> generateRiskPreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.TASK -> generateTaskPreviewLink(Integer.parseInt(typeId), prjShortName)
                 ProjectTypeConstants.BUG -> generateBugPreviewLink(Integer.parseInt(typeId), prjShortName)
-                ProjectTypeConstants.BUG_COMPONENT -> generateBugComponentPreviewLink(projectId, Integer.parseInt(typeId))
-                ProjectTypeConstants.BUG_VERSION -> generateBugVersionPreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.COMPONENT -> generateBugComponentPreviewLink(projectId, Integer.parseInt(typeId))
+                ProjectTypeConstants.VERSION -> generateBugVersionPreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.PAGE -> generatePageRead(projectId, typeId)
                 else -> ""
             }

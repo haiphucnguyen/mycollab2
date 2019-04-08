@@ -113,7 +113,7 @@ class ComponentRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Sim
 
     override fun getItemFieldMapper(): ItemFieldMapper = mapper
 
-    override fun getType(): String = ProjectTypeConstants.BUG_COMPONENT
+    override fun getType(): String = ProjectTypeConstants.COMPONENT
 
     override fun getTypeId(): String = "${bean!!.id}"
 

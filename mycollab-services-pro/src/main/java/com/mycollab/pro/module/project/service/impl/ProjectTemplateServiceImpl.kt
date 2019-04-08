@@ -7,11 +7,12 @@ import com.mycollab.db.arguments.BasicSearchRequest
 import com.mycollab.db.arguments.NumberSearchField
 import com.mycollab.db.arguments.SetSearchField
 import com.mycollab.module.project.ProjectMemberStatusConstants
+import com.mycollab.module.project.ProjectTypeConstants
+import com.mycollab.module.project.TicketRelationConstants
 import com.mycollab.module.project.dao.TicketRelationMapper
 import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.domain.criteria.*
 import com.mycollab.module.project.service.*
-import com.mycollab.module.tracker.domain.*
 import com.mycollab.module.project.domain.criteria.BugSearchCriteria
 import com.mycollab.module.project.domain.criteria.ComponentSearchCriteria
 import com.mycollab.module.project.domain.criteria.VersionSearchCriteria
@@ -182,8 +183,10 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             affectedVersions?.forEach {
                 val bugRelatedItem = TicketRelation()
                 bugRelatedItem.ticketid = newBugId
-                bugRelatedItem.type = SimpleRelatedBug.AFF_VERSION
+                bugRelatedItem.tickettype = ProjectTypeConstants.BUG
+                bugRelatedItem.type = ProjectTypeConstants.VERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
+                bugRelatedItem.rel = TicketRelationConstants.AFF_VERSION
                 ticketRelationMapper.insert(bugRelatedItem)
             }
 
@@ -191,8 +194,10 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             fixedVersions?.forEach {
                 val bugRelatedItem = TicketRelation()
                 bugRelatedItem.ticketid = newBugId
-                bugRelatedItem.type = SimpleRelatedBug.FIX_VERSION
+                bugRelatedItem.tickettype = ProjectTypeConstants.BUG
+                bugRelatedItem.type = ProjectTypeConstants.VERSION
                 bugRelatedItem.typeid = versionMapIds[it.id]
+                bugRelatedItem.rel = TicketRelationConstants.FIX_VERSION
                 ticketRelationMapper.insert(bugRelatedItem)
             }
 
@@ -200,8 +205,10 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
             components?.forEach {
                 val bugRelatedItem = TicketRelation()
                 bugRelatedItem.ticketid = newBugId
-                bugRelatedItem.type = SimpleRelatedBug.COMPONENT
+                bugRelatedItem.tickettype = ProjectTypeConstants.BUG
+                bugRelatedItem.type = ProjectTypeConstants.COMPONENT
                 bugRelatedItem.typeid = componentMapIds[it.id]
+                bugRelatedItem.rel = TicketRelationConstants.COMPONENT
                 ticketRelationMapper.insert(bugRelatedItem)
             }
         }

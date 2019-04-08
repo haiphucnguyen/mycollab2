@@ -108,7 +108,7 @@ class VersionRelayEmailNotificationActionImpl : SendMailToAllMembersAction<Simpl
     override fun getBeanInContext(notification: ProjectRelayEmailNotification): SimpleVersion? =
             versionService.findById(notification.typeid.toInt(), notification.saccountid)
 
-    override fun getType(): String = ProjectTypeConstants.BUG_VERSION
+    override fun getType(): String = ProjectTypeConstants.VERSION
 
     override fun getTypeId(): String = "${bean!!.id}"
 

@@ -16,12 +16,13 @@
  */
 package com.mycollab.module.project.service.impl
 
+import com.mycollab.module.project.ProjectTypeConstants
+import com.mycollab.module.project.TicketRelationConstants
 import com.mycollab.module.project.dao.TicketRelationMapper
 import com.mycollab.module.project.domain.Component
 import com.mycollab.module.project.domain.TicketRelation
 import com.mycollab.module.project.domain.TicketRelationExample
 import com.mycollab.module.project.domain.Version
-import com.mycollab.module.tracker.domain.SimpleRelatedBug
 import com.mycollab.module.project.service.TicketRelationService
 import org.springframework.stereotype.Service
 
@@ -42,7 +43,8 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.ticketid = ticketId
             relatedItem.tickettype = ticketType
             relatedItem.typeid = it.id
-            relatedItem.type = SimpleRelatedBug.AFF_VERSION
+            relatedItem.type = ProjectTypeConstants.VERSION
+            relatedItem.rel = TicketRelationConstants.AFF_VERSION
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
@@ -57,7 +59,8 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.ticketid = ticketId
             relatedItem.tickettype=ticketType
             relatedItem.typeid = it.id
-            relatedItem.type = SimpleRelatedBug.FIX_VERSION
+            relatedItem.type = ProjectTypeConstants.VERSION
+            relatedItem.rel = TicketRelationConstants.FIX_VERSION
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
@@ -72,7 +75,8 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.ticketid = ticketId
             relatedItem.tickettype = ticketType
             relatedItem.typeid = it.id
-            relatedItem.type = SimpleRelatedBug.COMPONENT
+            relatedItem.type = ProjectTypeConstants.COMPONENT
+            relatedItem.rel = TicketRelationConstants.COMPONENT
             bugRelatedItemMapper.insert(relatedItem)
         }
     }
@@ -85,21 +89,21 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
 
 
     override fun updateAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.AFF_VERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, TicketRelationConstants.AFF_VERSION)
         if (versions != null) {
             insertAffectedVersionsOfTicket(ticketId, ticketType, versions)
         }
     }
 
     override fun updateFixedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
-        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.FIX_VERSION)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, TicketRelationConstants.FIX_VERSION)
         if (versions != null) {
             insertFixedVersionsOfTicket(ticketId, ticketType, versions)
         }
     }
 
     override fun updateComponentsOfTicket(ticketId: Int, ticketType: String, components: List<Component>?) {
-        deleteTrackerBugRelatedItem(ticketId, ticketType, SimpleRelatedBug.COMPONENT)
+        deleteTrackerBugRelatedItem(ticketId, ticketType, TicketRelationConstants.COMPONENT)
         if (components != null) {
             insertComponentsOfTicket(ticketId, ticketType, components)
         }

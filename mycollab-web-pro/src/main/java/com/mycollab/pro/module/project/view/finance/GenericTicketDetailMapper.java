@@ -60,7 +60,7 @@ public class GenericTicketDetailMapper {
                 ticket.setProjectId(risk.getProjectid());
                 ticket.setProjectShortName(risk.getProjectShortName());
             } else return null;
-        } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
+        } else if (ProjectTypeConstants.VERSION.equals(type)) {
             VersionService service = AppContextUtil
                     .getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
@@ -69,7 +69,7 @@ public class GenericTicketDetailMapper {
                 ticket.setProjectId(version.getProjectid());
                 ticket.setProjectShortName(version.getProjectShortName());
             } else return null;
-        } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
+        } else if (ProjectTypeConstants.COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             if (component != null) {

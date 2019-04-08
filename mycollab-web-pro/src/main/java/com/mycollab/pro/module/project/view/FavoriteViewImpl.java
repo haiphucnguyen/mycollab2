@@ -375,7 +375,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.BUG_COMPONENT.equals(assignment.getType())) {
+            } else if (ProjectTypeConstants.COMPONENT.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
                     ComponentService componentService = AppContextUtil.getSpringBean(ComponentService.class);
                     SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
@@ -385,7 +385,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
 
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.BUG_COMPONENT,
+                                printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.COMPONENT,
                                         com.mycollab.module.project.domain.Component.Field.name.name(),
                                         ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.project.domain.Component.Field.id.name()))
                         );
@@ -405,14 +405,14 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         ComponentPreviewForm form = new ComponentPreviewForm();
                         form.setBean(component);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.COMPONENT, assignment.getProjectId());
                         activityComponent.loadActivities("" + component.getId());
                         addComponent(activityComponent);
                     }
                 } else {
                     addComponent(ELabel.h3(UserUIContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
-            } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
+            } else if (ProjectTypeConstants.VERSION.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
                     VersionService versionService = AppContextUtil.getSpringBean(VersionService.class);
                     final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()),
@@ -421,7 +421,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         ELabel headerLbl = ELabel.h2(String.format("%s %s", ProjectAssetsManager.getAsset(assignment.getType()).getHtml(), version.getName()));
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
-                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.BUG_VERSION, Version.Field.name.name(),
+                                printBtn.doPrint(version, new FormReportLayout(ProjectTypeConstants.VERSION, Version.Field.name.name(),
                                         VersionDefaultFormLayoutFactory.getForm(), Version.Field.id.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
@@ -439,7 +439,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         VersionPreviewForm form = new VersionPreviewForm();
                         form.setBean(version);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment.getProjectId());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.VERSION, assignment.getProjectId());
                         activityComponent.loadActivities("" + version.getId());
                         addComponent(activityComponent);
                     }

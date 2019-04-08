@@ -17,8 +17,10 @@
 package com.mycollab.module.project.service
 
 import com.mycollab.cache.IgnoreCacheClass
+import com.mycollab.db.persistence.service.ICrudService
 import com.mycollab.db.persistence.service.IService
 import com.mycollab.module.project.domain.Component
+import com.mycollab.module.project.domain.TicketRelation
 import com.mycollab.module.project.domain.Version
 
 /**
@@ -26,7 +28,7 @@ import com.mycollab.module.project.domain.Version
  * @since 1.0
  */
 @IgnoreCacheClass
-interface TicketRelationService : IService {
+interface TicketRelationService : ICrudService<Integer, TicketRelation>, IService {
 
     fun saveAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?)
 

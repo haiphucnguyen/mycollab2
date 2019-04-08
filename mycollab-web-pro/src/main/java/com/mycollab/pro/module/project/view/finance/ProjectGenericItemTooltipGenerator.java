@@ -48,12 +48,12 @@ class ProjectGenericItemTooltipGenerator {
             SimpleRisk risk = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipRisk(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     risk, siteURL, timeZone, false);
-        } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
+        } else if (ProjectTypeConstants.VERSION.equals(type)) {
             VersionService service = AppContextUtil.getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipVersion(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     version, siteURL, timeZone);
-        } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
+        } else if (ProjectTypeConstants.COMPONENT.equals(type)) {
             ComponentService service = AppContextUtil.getSpringBean(ComponentService.class);
             SimpleComponent component = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipComponent(UserUIContext.getUserLocale(), component, siteURL, timeZone);
