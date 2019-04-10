@@ -390,7 +390,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         addSummaryLink();
         addEnabledLink(new Button(UserUIContext.getMessage(VersionI18nEnum.LIST), new GotoVersionListener()));
         addLink(generateBreadcrumbLink(version.getName()));
-        AppUI.addFragment(ProjectLinkGenerator.generateBugVersionPreviewLink(project.getId(), version.getId()),
+        AppUI.addFragment(ProjectLinkGenerator.generateVersionPreviewLink(project.getId(), version.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(VersionI18nEnum.SINGLE), version.getName()));
     }
@@ -448,7 +448,7 @@ public class ProjectBreadcrumb extends MHorizontalLayout implements CacheableCom
         addSummaryLink();
         addLink(new Button(UserUIContext.getMessage(ComponentI18nEnum.LIST), new GotoComponentListener()));
         addLink(generateBreadcrumbLink(component.getName()));
-        AppUI.addFragment(ProjectLinkGenerator.generateBugComponentPreviewLink(project.getId(), component.getId()),
+        AppUI.addFragment(ProjectLinkGenerator.generateComponentPreviewLink(project.getId(), component.getId()),
                 UserUIContext.getMessage(GenericI18Enum.BROWSER_PREVIEW_ITEM_TITLE,
                         UserUIContext.getMessage(ComponentI18nEnum.SINGLE), component.getName()));
     }

@@ -11,7 +11,7 @@
 
     <select id="getNextKey" parameterType="map" resultType="java.lang.Integer" lang="velocity">
         <![CDATA[
-        SELECT MAX(ticketKey)
+        SELECT MIN(ticketKey)
             FROM m_prj_ticket_key
             WHERE m_prj_ticket_key.projectId = @{projectId, jdbcType=NUMERIC}
                 AND m_prj_ticket_key.ticketKey > @{currentKey, jdbcType=NUMERIC}
@@ -20,10 +20,22 @@
 
     <select id="getPreviousKey" parameterType="map" resultType="java.lang.Integer" lang="velocity">
         <![CDATA[
-        SELECT MIN(ticketKey)
+        SELECT MAX(ticketKey)
             FROM m_prj_ticket_key
             WHERE m_prj_ticket_key.projectId = @{projectId, jdbcType=NUMERIC}
                 AND m_prj_ticket_key.ticketKey < @{currentKey, jdbcType=NUMERIC}
+        ]]>
+    </select>
+
+    <select id="getTicketKeyByPrjShortNameAndKey" parameterType="map"
+            resultMap="com.mycollab.module.project.dao.TicketKeyMapper.BaseResultMap" lang="velocity">
+        <![CDATA[
+        SELECT m_prj_ticket_key.id, m_prj_ticket_key.projectId, m_prj_ticket_key.ticketId,
+            m_prj_ticket_key.ticketType, m_prj_ticket_key.ticketKey
+            FROM m_prj_ticket_key, m_prj_project
+            WHERE m_prj_project.shortName = @{prjShortName, jdbcType=VARCHAR}
+                AND m_prj_ticket_key.projectId = m_prj_project.id
+                AND m_prj_ticket_key.ticketKey = @{ticketKey, jdbcType=NUMERIC}
         ]]>
     </select>
 </mapper>

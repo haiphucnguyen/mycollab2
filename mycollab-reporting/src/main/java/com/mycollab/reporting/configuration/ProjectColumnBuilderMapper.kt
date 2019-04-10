@@ -411,7 +411,7 @@ class ProjectColumnBuilderMapper : InitializingBean {
                 val componentId = reportParameters.getFieldValue<Int>("id")
                 val projectId = reportParameters.getFieldValue<Int>("projectid")
                 val siteUrl = reportParameters.getParameterValue<String>("siteUrl")
-                return ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, projectId!!, componentId!!)
+                return ProjectLinkGenerator.generateComponentPreviewFullLink(siteUrl, projectId!!, componentId!!)
             }
         }
         map["name"] = HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr)
@@ -454,7 +454,7 @@ class ProjectColumnBuilderMapper : InitializingBean {
                 val versionId = reportParameters.getFieldValue<Int>("id")
                 val projectId = reportParameters.getFieldValue<Int>("projectid")
                 val siteUrl = reportParameters.getParameterValue<String>("siteUrl")
-                return ProjectLinkGenerator.generateBugVersionPreviewFullLink(siteUrl, projectId!!, versionId!!)
+                return ProjectLinkGenerator.generateVersionPreviewFullLink(siteUrl, projectId!!, versionId!!)
             }
         }
         map.put(Version.Field.name.name, HyperlinkBuilderGenerator(summaryTitleExpr, summaryHrefExpr))

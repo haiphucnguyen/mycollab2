@@ -1,5 +1,7 @@
 package com.mycollab.module.project.dao
 
+import com.mycollab.module.project.domain.TicketKey
+
 /**
  * @author MyCollab
  * @since 7.0.2
@@ -10,4 +12,6 @@ interface TicketKeyMapperExt {
     fun getNextKey(projectId: Int, currentKey:Int): Int?
 
     fun getPreviousKey(projectId: Int, currentKey: Int): Int?
+
+    fun getTicketKeyByPrjShortNameAndKey(prjShortName:String, ticketKey:Int): TicketKey
 }
