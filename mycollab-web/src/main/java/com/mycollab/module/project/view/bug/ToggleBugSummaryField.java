@@ -69,7 +69,7 @@ class ToggleBugSummaryField extends AbstractToggleSummaryField {
                 if (isRead) {
                     ToggleBugSummaryField.this.removeComponent(titleLinkLbl);
                     ToggleBugSummaryField.this.removeComponent(buttonControls);
-                    final TextField editField = new TextField();
+                    TextField editField = new TextField();
                     editField.setValue(bug.getName());
                     editField.setWidth("100%");
                     editField.focus();

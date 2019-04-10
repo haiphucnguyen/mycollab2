@@ -16,13 +16,13 @@
  */
 package com.mycollab.module.project.service.impl
 
+import com.mycollab.db.persistence.ICrudGenericDAO
+import com.mycollab.db.persistence.service.DefaultCrudService
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.TicketRelationConstants
 import com.mycollab.module.project.dao.TicketRelationMapper
-import com.mycollab.module.project.domain.Component
-import com.mycollab.module.project.domain.TicketRelation
-import com.mycollab.module.project.domain.TicketRelationExample
-import com.mycollab.module.project.domain.Version
+import com.mycollab.module.project.dao.TicketRelationMapperExt
+import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.service.TicketRelationService
 import org.springframework.stereotype.Service
 
@@ -31,7 +31,11 @@ import org.springframework.stereotype.Service
  * @since 1.0
  */
 @Service
-class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelationMapper) : TicketRelationService {
+class TicketRelationServiceImpl(private val ticketRelationMapper: TicketRelationMapper,
+                                private val ticketRelationMapperExt: TicketRelationMapperExt) : DefaultCrudService<Int, TicketRelation>(), TicketRelationService {
+
+    override val crudMapper: ICrudGenericDAO<Int, TicketRelation>
+        get() = ticketRelationMapper as ICrudGenericDAO<Int, TicketRelation>
 
     override fun saveAffectedVersionsOfTicket(ticketId: Int, ticketType: String, versions: List<Version>?) {
         insertAffectedVersionsOfTicket(ticketId, ticketType, versions)
@@ -45,7 +49,7 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.typeid = it.id
             relatedItem.type = ProjectTypeConstants.VERSION
             relatedItem.rel = TicketRelationConstants.AFF_VERSION
-            bugRelatedItemMapper.insert(relatedItem)
+            ticketRelationMapper.insert(relatedItem)
         }
     }
 
@@ -61,7 +65,7 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.typeid = it.id
             relatedItem.type = ProjectTypeConstants.VERSION
             relatedItem.rel = TicketRelationConstants.FIX_VERSION
-            bugRelatedItemMapper.insert(relatedItem)
+            ticketRelationMapper.insert(relatedItem)
         }
     }
 
@@ -77,14 +81,14 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
             relatedItem.typeid = it.id
             relatedItem.type = ProjectTypeConstants.COMPONENT
             relatedItem.rel = TicketRelationConstants.COMPONENT
-            bugRelatedItemMapper.insert(relatedItem)
+            ticketRelationMapper.insert(relatedItem)
         }
     }
 
     private fun deleteTrackerBugRelatedItem(ticketId: Int, ticketType: String, type: String) {
         val ex = TicketRelationExample()
         ex.createCriteria().andTicketidEqualTo(ticketId).andTickettypeEqualTo(ticketType).andTypeEqualTo(type)
-        bugRelatedItemMapper.deleteByExample(ex)
+        ticketRelationMapper.deleteByExample(ex)
     }
 
 
@@ -107,5 +111,13 @@ class TicketRelationServiceImpl(private val bugRelatedItemMapper: TicketRelation
         if (components != null) {
             insertComponentsOfTicket(ticketId, ticketType, components)
         }
+    }
+
+    override fun findRelatedTickets(ticketId: Int, ticketType: String): List<SimpleTicketRelation> = ticketRelationMapperExt.findRelatedTickets(ticketId, ticketType)
+
+    override fun removeRelationsByRel(ticketId: Int, ticketType: String, rel: String) {
+        val ex = TicketRelationExample()
+        ex.createCriteria().andTicketidEqualTo(ticketId).andTickettypeEqualTo(ticketType).andRelEqualTo(rel)
+        ticketRelationMapper.deleteByExample(ex)
     }
 }
