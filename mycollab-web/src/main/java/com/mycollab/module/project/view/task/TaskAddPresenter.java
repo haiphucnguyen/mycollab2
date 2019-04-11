@@ -29,6 +29,7 @@ import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.TaskService;
+import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectGenericPresenter;
 import com.mycollab.module.project.view.ProjectView;
@@ -121,6 +122,9 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
         if (item.getId() == null) {
             item.setCreateduser(UserUIContext.getUsername());
             int taskId = taskService.saveWithSession(item, UserUIContext.getUsername());
+
+            TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+            ticketRelationService.saveComponentsOfTicket(taskId, ProjectTypeConstants.TASK, view.getComponents());
 
             List<String> followers = view.getFollowers();
             if (followers.size() > 0) {

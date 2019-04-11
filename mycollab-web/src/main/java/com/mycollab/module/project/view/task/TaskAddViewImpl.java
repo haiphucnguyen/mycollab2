@@ -18,6 +18,7 @@ package com.mycollab.module.project.view.task;
 
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.Component;
 import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
@@ -103,5 +104,10 @@ public class TaskAddViewImpl extends AbstractEditItemComp<SimpleTask> implements
     @Override
     public List<String> getFollowers() {
         return editFormFieldFactory.getSubscribersComp().getFollowers();
+    }
+
+    @Override
+    public List<Component> getComponents() {
+        return editFormFieldFactory.getComponentSelect().getSelectedItems();
     }
 }

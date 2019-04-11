@@ -28,6 +28,7 @@ import com.mycollab.module.project.ui.components.PriorityComboBox;
 import com.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
+import com.mycollab.module.project.view.settings.component.ComponentMultiSelectField;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
@@ -51,6 +52,7 @@ import java.time.LocalDate;
 class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
     private static final long serialVersionUID = 1L;
 
+    private ComponentMultiSelectField componentSelect;
     private ProjectSubscribersComp subscribersComp;
     private AttachmentUploadField attachmentUploadField;
 
@@ -129,6 +131,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             return new CheckBox();
         } else if ("section-followers".equals(propertyId)) {
             return subscribersComp;
+        } else if ("components".equals(propertyId)) {
+            componentSelect = new ComponentMultiSelectField();
+            return componentSelect;
         }
         return null;
     }
@@ -158,5 +163,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
 
     public ProjectSubscribersComp getSubscribersComp() {
         return subscribersComp;
+    }
+
+    public ComponentMultiSelectField getComponentSelect() {
+        return componentSelect;
     }
 }

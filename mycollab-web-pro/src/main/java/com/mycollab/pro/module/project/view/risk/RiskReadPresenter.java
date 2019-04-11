@@ -60,7 +60,7 @@ public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implemen
             }
 
             @Override
-            public void onDelete(final SimpleRisk data) {
+            public void onDelete(SimpleRisk data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppUI.getSiteName()),
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
