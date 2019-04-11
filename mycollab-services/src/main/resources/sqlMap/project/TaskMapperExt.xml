@@ -192,13 +192,6 @@
         ]]>
     </sql>
 
-    <select id="findByProjectAndTaskKey" parameterType="map" resultMap="TaskResult" lang="velocity">
-        <include refid="selectTask"/>
-        WHERE m_prj_project.shortname = @{prjShortName}
-            AND m_prj_ticket_key.ticketKey = @{key}
-            AND m_prj_task.sAccountId = @{sAccountId}
-    </select>
-
     <select id="getTotalCount" resultType="int" parameterType="com.mycollab.module.project.domain.criteria.TaskSearchCriteria" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_task
         #ifnotnull($_parameter.searchCriteria)

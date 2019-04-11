@@ -31,7 +31,7 @@ import java.util.*
 class ProjectTemplateServiceImpl(private val projectService: ProjectService,
                                  private val projectRoleService: ProjectRoleService,
                                  private val projectMemberService: ProjectMemberService,
-                                 private val projectTaskService: ProjectTaskService,
+                                 private val projectTaskService: TaskService,
                                  private val bugService: BugService,
                                  private val ticketRelationMapper: TicketRelationMapper,
                                  private val milestoneService: MilestoneService,

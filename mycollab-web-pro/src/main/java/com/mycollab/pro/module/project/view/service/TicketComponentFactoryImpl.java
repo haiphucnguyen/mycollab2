@@ -279,7 +279,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             };
             builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                     .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
-                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                    .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(TaskService.class))
                     .withValue(ticket.getStatus())
                     .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             return builder.build();

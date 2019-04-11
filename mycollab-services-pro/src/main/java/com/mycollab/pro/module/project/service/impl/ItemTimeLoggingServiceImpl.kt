@@ -107,7 +107,7 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
 
     private fun cleanCache(sAccountId: Int) {
         asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectService::class.java,
-                MilestoneService::class.java, ProjectTaskService::class.java, BugService::class.java,
+                MilestoneService::class.java, TaskService::class.java, BugService::class.java,
                 ComponentService::class.java, VersionService::class.java, RiskService::class.java,
                 ItemTimeLoggingService::class.java, ProjectMemberService::class.java)))
     }

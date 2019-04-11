@@ -31,7 +31,7 @@ import com.mycollab.module.project.domain.criteria.TaskSearchCriteria
  * @author MyCollab Ltd.
  * @since 1.0
  */
-interface ProjectTaskService : IDefaultService<Int, Task, TaskSearchCriteria> {
+interface TaskService : IDefaultService<Int, Task, TaskSearchCriteria> {
 
     @Cacheable
     fun findById(taskId: Int, @CacheKey sAccountId: Int): SimpleTask?

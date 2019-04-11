@@ -23,18 +23,17 @@ import com.mycollab.module.project.ProjectLinkParams
 import com.mycollab.module.project.ProjectTypeConstants
 import com.mycollab.module.project.event.ProjectEvent
 import com.mycollab.module.project.service.BugService
-import com.mycollab.module.project.service.ProjectTaskService
+import com.mycollab.module.project.service.TaskService
+import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.service.TicketKeyService
 import com.mycollab.module.project.view.ProjectUrlResolver
-import com.mycollab.module.project.view.parameters.BugScreenData
-import com.mycollab.module.project.view.parameters.ProjectScreenData
-import com.mycollab.module.project.view.parameters.TaskScreenData
-import com.mycollab.module.project.view.parameters.TicketScreenData
+import com.mycollab.module.project.view.parameters.*
 import com.mycollab.module.project.view.task.TaskUrlResolver
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.vaadin.mvp.PageActionChain
+import java.util.*
 
 /**
  * @author MyCollab Ltd
@@ -45,6 +44,7 @@ class TicketUrlResolver : ProjectUrlResolver() {
         this.addSubResolver("dashboard", DashboardUrlResolver())
         this.addSubResolver("kanban", KanbanUrlResolver())
         this.addSubResolver("preview", ReadUrlResolver())
+        this.addSubResolver("edit", EditUrlResolver())
         this.defaultUrlResolver = DashboardUrlResolver()
     }
 
@@ -77,13 +77,13 @@ class TicketUrlResolver : ProjectUrlResolver() {
                 if (ticketKey != null) {
                     when(ticketKey.tickettype) {
                         ProjectTypeConstants.TASK -> {
-                            val taskService = AppContextUtil.getSpringBean(ProjectTaskService::class.java)
+                            val taskService = AppContextUtil.getSpringBean(TaskService::class.java)
                             val task = taskService.findById(ticketKey.ticketid, AppUI.accountId)
                             if (task != null) {
                                 val chain = PageActionChain(ProjectScreenData.Goto(task.projectid), TaskScreenData.Read(task.id))
                                 EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
                             } else {
-                                throw ResourceNotFoundException("Can not find task with itemKey $itemKey and project $prjShortName")
+                                throw ResourceNotFoundException("Can not find task with key $itemKey and project $prjShortName")
                             }
                         }
                         ProjectTypeConstants.BUG -> {
@@ -94,15 +94,81 @@ class TicketUrlResolver : ProjectUrlResolver() {
                                     val chain = PageActionChain(ProjectScreenData.Goto(bug.projectid), BugScreenData.Read(bug.id))
                                     EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
                                 }
-                                else -> throw ResourceNotFoundException("Can not get bug with bugkey $itemKey and project short name $prjShortName")
+                                else -> throw ResourceNotFoundException("Can not get bug with key $itemKey and project short name $prjShortName")
                             }
                         }
+                        ProjectTypeConstants.RISK -> {
+                            val riskService = AppContextUtil.getSpringBean(RiskService::class.java)
+                            val risk = riskService.findById(ticketKey.ticketid, AppUI.accountId)
+                            when {
+                                risk != null -> {
+                                    val chain = PageActionChain(ProjectScreenData.Goto(risk.projectid), RiskScreenData.Read(risk.id))
+                                    EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+                                }
+                                else -> throw ResourceNotFoundException("Can not get risk with key $itemKey and project short name $prjShortName")
+                            }
+                        }
+                        else -> throw MyCollabException("Not support type ${ticketKey.tickettype} with id ${ticketKey.ticketid}")
                     }
                 } else {
                     throw ResourceNotFoundException("Can not find item with itemKey $itemKey and project $prjShortName")
                 }
             } else {
                 throw MyCollabException("Invalid url ${params[0]}")
+            }
+        }
+    }
+
+    private class EditUrlResolver : ProjectUrlResolver() {
+        override fun handlePage(vararg params: String) {
+            if (ProjectLinkParams.isValidParam(params[0])) {
+                val prjShortName = ProjectLinkParams.getProjectShortName(params[0])
+                val itemKey = ProjectLinkParams.getItemKey(params[0])
+                val ticketKeyService = AppContextUtil.getSpringBean(TicketKeyService::class.java)
+                val ticketKey = ticketKeyService.getTicketKeyByPrjShortNameAndKey(prjShortName, itemKey)
+                if (ticketKey != null) {
+                    when(ticketKey.tickettype) {
+                        ProjectTypeConstants.TASK -> {
+                            val taskService = AppContextUtil.getSpringBean(TaskService::class.java)
+                            val task = taskService.findById(ticketKey.ticketid, AppUI.accountId) ?: throw ResourceNotFoundException("Can not find task with path ${Arrays.toString(params)}")
+                            when (task) {
+                                null -> throw ResourceNotFoundException("Can not edit task with path ${Arrays.toString(params)}")
+                                else -> {
+                                    val chain = PageActionChain(ProjectScreenData.Goto(task.projectid), TaskScreenData.Edit(task))
+                                    EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+                                }
+                            }
+                        }
+                        ProjectTypeConstants.BUG -> {
+                            val bugService = AppContextUtil.getSpringBean(BugService::class.java)
+                            val bug = bugService.findById(ticketKey.ticketid, AppUI.accountId)
+                            when (bug) {
+                                null -> throw ResourceNotFoundException("Can not edit bug with path ${Arrays.toString(params)}")
+                                else -> {
+                                    val chain = PageActionChain(ProjectScreenData.Goto(bug.projectid), BugScreenData.Edit(bug))
+                                    EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+                                }
+                            }
+                        }
+                        ProjectTypeConstants.RISK -> {
+                            val riskService = AppContextUtil.getSpringBean(RiskService::class.java)
+                            val risk = riskService.findById(ticketKey.ticketid, AppUI.accountId)
+                            when {
+                                risk != null -> {
+                                    val chain = PageActionChain(ProjectScreenData.Goto(risk.projectid), RiskScreenData.Edit(risk))
+                                    EventBusFactory.getInstance().post(ProjectEvent.GotoMyProject(this, chain))
+                                }
+                                else -> throw ResourceNotFoundException("Can not find risk $params")
+                            }
+                        }
+                    }
+                } else {
+                    throw ResourceNotFoundException("Can not find item with itemKey $itemKey and project $prjShortName")
+                }
+
+
+            } else {
+                throw MyCollabException("Can not find task link ${params[0]}")
             }
         }
     }

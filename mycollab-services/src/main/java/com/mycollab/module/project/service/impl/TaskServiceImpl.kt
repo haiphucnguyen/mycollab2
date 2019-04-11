@@ -63,11 +63,11 @@ import javax.sql.DataSource
 @Service
 @Transactional
 @Traceable(nameField = "name", extraFieldName = "projectid")
-class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
-                             private val taskMapperExt: TaskMapperExt,
-                             private val ticketKeyService: TicketKeyService,
-                             private val asyncEventBus: AsyncEventBus,
-                             private val dataSource: DataSource) : DefaultService<Int, Task, TaskSearchCriteria>(), ProjectTaskService {
+class TaskServiceImpl(private val taskMapper: TaskMapper,
+                      private val taskMapperExt: TaskMapperExt,
+                      private val ticketKeyService: TicketKeyService,
+                      private val asyncEventBus: AsyncEventBus,
+                      private val dataSource: DataSource) : DefaultService<Int, Task, TaskSearchCriteria>(), TaskService {
     override val crudMapper: ICrudGenericDAO<Int, Task>
         get() = taskMapper as ICrudGenericDAO<Int, Task>
 
@@ -203,7 +203,7 @@ class ProjectTaskServiceImpl(private val taskMapper: TaskMapper,
     companion object {
         init {
             val taskInfo = ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK)
-            ClassInfoMap.put(ProjectTaskServiceImpl::class.java, taskInfo)
+            ClassInfoMap.put(TaskServiceImpl::class.java, taskInfo)
         }
     }
 }

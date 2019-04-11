@@ -15,7 +15,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.mycollab.module.project.event.TimeTrackingEvent.TimeLoggingChangedEvent;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.view.task.TaskTimeLogSheet;
 import com.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.mycollab.spring.AppContextUtil;
@@ -134,7 +134,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
 
         @Override
         protected void updateTimeRemain() {
-            ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+            TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
             bean.setRemainestimate(getUpdateRemainTime());
             taskService.updateWithSession(bean, UserUIContext.getUsername());
         }

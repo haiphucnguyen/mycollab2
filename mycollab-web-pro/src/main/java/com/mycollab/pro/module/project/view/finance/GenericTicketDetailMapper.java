@@ -7,7 +7,7 @@ import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.domain.SimpleBug;
@@ -45,7 +45,7 @@ public class GenericTicketDetailMapper {
                 ticket.setProjectShortName(bug.getProjectShortName());
             } else return null;
         } else if (ProjectTypeConstants.TASK.equals(type)) {
-            ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
+            TaskService service = AppContextUtil.getSpringBean(TaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             if (task != null) {
                 ticket.setName(task.getName());

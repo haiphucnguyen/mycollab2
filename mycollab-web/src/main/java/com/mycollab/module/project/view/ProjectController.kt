@@ -32,7 +32,7 @@ import com.mycollab.module.project.domain.*
 import com.mycollab.module.project.domain.criteria.*
 import com.mycollab.module.project.event.*
 import com.mycollab.module.project.service.BugService
-import com.mycollab.module.project.service.ProjectTaskService
+import com.mycollab.module.project.service.TaskService
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.view.bug.BugAddPresenter
 import com.mycollab.module.project.view.bug.BugReadPresenter
@@ -147,7 +147,7 @@ class ProjectController(val projectView: ProjectView) : AbstractController() {
                                 } else throw ResourceNotFoundException("Can not find risk with id = ${ticketKey.ticketid} in account ${AppUI.accountId}")
                             }
                             ProjectTypeConstants.TASK -> {
-                                val taskService = AppContextUtil.getSpringBean(ProjectTaskService::class.java)
+                                val taskService = AppContextUtil.getSpringBean(TaskService::class.java)
                                 val task = taskService.findById(ticketKey.ticketid, AppUI.accountId)
                                 if (task != null) {
                                     val presenter = PresenterResolver.getPresenter(TaskReadPresenter::class.java)

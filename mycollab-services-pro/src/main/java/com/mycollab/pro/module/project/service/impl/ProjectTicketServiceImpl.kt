@@ -11,7 +11,7 @@ import com.mycollab.module.project.domain.Task
 import com.mycollab.module.project.domain.criteria.RiskSearchCriteria
 import com.mycollab.module.project.domain.criteria.TaskSearchCriteria
 import com.mycollab.module.project.service.ProjectService
-import com.mycollab.module.project.service.ProjectTaskService
+import com.mycollab.module.project.service.TaskService
 import com.mycollab.module.project.service.RiskService
 import com.mycollab.module.project.service.impl.AbstractProjectTicketServiceImpl
 import com.mycollab.module.project.domain.BugWithBLOBs
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service
  * @since 5.4.2
  */
 @Service
-class ProjectTicketServiceImpl(private val taskService: ProjectTaskService,
+class ProjectTicketServiceImpl(private val taskService: TaskService,
                                private val bugService: BugService,
                                private val riskService: RiskService,
                                private val asyncEventBus: AsyncEventBus) : AbstractProjectTicketServiceImpl() {

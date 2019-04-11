@@ -29,7 +29,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class ProjectTaskServiceTest : IntegrationServiceTest() {
 
     @Autowired
-    private lateinit var projectTaskService: ProjectTaskService
+    private lateinit var projectTaskService: TaskService
 
     @DataSet
     @Test

@@ -93,7 +93,7 @@
           SELECT m_prj_risk.id, m_prj_risk.name, m_prj_risk.description, m_prj_risk.projectId, m_prj_risk.createdUser,
                  m_prj_risk.assignUser, m_prj_risk.consequence, m_prj_risk.probability, m_prj_risk.status, m_prj_risk.raisedDate,
                  m_prj_risk.dueDate, m_prj_risk.startdate, m_prj_risk.enddate, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.priority,
-                 m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime,  m_prj_risk.sAccountId,
+                 m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime,  m_prj_risk.sAccountId, m_prj_ticket_key.ticketKey AS ticketKey,
                  raisedUser.avatarId AS raisedByUserAvatarId,
                  concat(raisedUser.firstname, ' ', raisedUser.lastname) AS raisedByUserFullName,
                  assignedUser.avatarId AS assignToUserAvatarId,
@@ -108,6 +108,7 @@
               LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assignUser=assignedUser.username)
               LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectId = m_prj_project.id)
               LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_risk.milestoneid)
+              LEFT OUTER JOIN m_prj_ticket_key ON (m_prj_risk.id = m_prj_ticket_key.ticketId AND m_prj_ticket_key.ticketType = 'Project-Risk')
         ]]>
     </sql>
 

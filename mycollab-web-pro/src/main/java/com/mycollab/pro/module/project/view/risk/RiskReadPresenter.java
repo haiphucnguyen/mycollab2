@@ -12,6 +12,7 @@ import com.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.mycollab.module.project.event.RiskEvent;
 import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.RiskService;
+import com.mycollab.module.project.service.TicketKeyService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.risk.IRiskReadPresenter;
@@ -95,30 +96,23 @@ public class RiskReadPresenter extends AbstractPresenter<IRiskReadView> implemen
 
             @Override
             public void gotoNext(SimpleRisk data) {
-                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                criteria.setId(NumberSearchField.greaterThan(data.getId()));
-                Integer nextId = riskService.getNextItemKey(criteria);
+                TicketKeyService ticketKeyService = AppContextUtil.getSpringBean(TicketKeyService.class);
+                Integer nextId = ticketKeyService.getNextKey(data.getProjectid(), data.getTicketKey());
                 if (nextId != null) {
-                    EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, nextId));
+                    EventBusFactory.getInstance().post(new TicketEvent.GotoRead(this, data.getProjectid(), nextId));
                 } else {
                     NotificationUtil.showGotoLastRecordNotification();
                 }
-
             }
 
             @Override
             public void gotoPrevious(SimpleRisk data) {
-                RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
-                RiskSearchCriteria criteria = new RiskSearchCriteria();
-                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                criteria.setId(NumberSearchField.lessThan(data.getId()));
-                Integer nextId = riskService.getPreviousItemKey(criteria);
-                if (nextId != null) {
-                    EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, nextId));
+                TicketKeyService ticketKeyService = AppContextUtil.getSpringBean(TicketKeyService.class);
+                Integer previousId = ticketKeyService.getPreviousKey(data.getProjectid(), data.getTicketKey());
+                if (previousId != null) {
+                    EventBusFactory.getInstance().post(new TicketEvent.GotoRead(this, data.getProjectid(), previousId));
                 } else {
-                    NotificationUtil.showGotoFirstRecordNotification();
+                    NotificationUtil.showGotoLastRecordNotification();
                 }
             }
         });

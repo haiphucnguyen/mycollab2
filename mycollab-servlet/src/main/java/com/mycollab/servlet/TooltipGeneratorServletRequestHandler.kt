@@ -80,7 +80,7 @@ class TooltipGeneratorServletRequestHandler : GenericHttpServlet() {
                     html = ProjectTooltipGenerator.generateToolTipBug(locale, dateFormat, bug, siteURL, timeZone, false)
                 }
                 ProjectTypeConstants.TASK -> {
-                    val service = AppContextUtil.getSpringBean(ProjectTaskService::class.java)
+                    val service = AppContextUtil.getSpringBean(TaskService::class.java)
                     val task = service.findById(Integer.parseInt(typeId), sAccountId)
                     html = ProjectTooltipGenerator.generateToolTipTask(locale, dateFormat, task, siteURL, timeZone, false)
                 }

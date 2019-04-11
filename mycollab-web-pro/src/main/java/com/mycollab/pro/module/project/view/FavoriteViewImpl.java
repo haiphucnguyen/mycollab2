@@ -17,7 +17,7 @@ import com.mycollab.module.project.event.*;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.service.MilestoneService;
 import com.mycollab.module.project.service.ProjectGenericItemService;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.ProjectActivityComponent;
@@ -275,7 +275,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                 }
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
                 if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                    TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                     SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppUI.getAccountId());
                     if (task != null) {
                         ELabel headerLbl = ELabel.h2(String.format("%s %s", ProjectAssetsManager.getAsset(assignment.getType()).getHtml(), task.getName()));

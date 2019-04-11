@@ -30,7 +30,7 @@ import com.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.mycollab.module.project.service.ItemTimeLoggingService;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.CommentDisplay;
 import com.mycollab.module.project.ui.components.PriorityComboBox;
@@ -80,7 +80,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
 
             @Override
             protected String generateSmallAsHtmlAfterUpdate() {
-                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppUI.getAccountId());
                 String avatarLink = StorageUtils.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName())
@@ -95,7 +95,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         };
         builder.withBean(task).withBindProperty("assignuser").withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
+                .withService(AppContextUtil.getSpringBean(TaskService.class)).withValue(task.getAssignuser())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -117,7 +117,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
                 .withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY))
                 .withDescription(UserUIContext.getMessage(GenericI18Enum.FORM_PRIORITY_HELP))
                 .withField(new PriorityComboBox())
-                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
+                .withService(AppContextUtil.getSpringBean(TaskService.class)).withValue(task.getPriority())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -140,7 +140,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         };
         builder.withBean(task).withBindProperty("status").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_STATUS))
                 .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_STATUS_HELP))
-                .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
+                .withField(new TaskStatusComboBox()).withService(AppContextUtil.getSpringBean(TaskService.class)).withValue(task.getStatus())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -167,7 +167,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
         milestoneComboBox.setWidth("300px");
         builder.withBean(task).withBindProperty("milestoneid").withCaption(UserUIContext.getMessage(MilestoneI18nEnum.SINGLE))
-                .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(milestoneComboBox).withService(AppContextUtil.getSpringBean(TaskService.class))
                 .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -191,7 +191,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
         builder.withBean(task).withBindProperty("percentagecomplete")
                 .withCaption(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskSliderField())
                 .withDescription(UserUIContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
-                .withService(AppContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
+                .withService(AppContextUtil.getSpringBean(TaskService.class)).withValue(task.getPercentagecomplete())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
@@ -214,7 +214,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("duedate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_DUE_DATE))
-                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(TaskService.class))
                 .withValue(task.getDuedate()).withHasPermission(CurrentProjectVariables.canWrite
                 (ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -238,7 +238,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("startdate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_START_DATE))
-                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(TaskService
                 .class)).withValue(task.getStartdate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
@@ -262,7 +262,7 @@ public class TaskComponentFactoryImpl implements TaskComponentFactory {
             }
         };
         builder.withBean(task).withBindProperty("enddate").withCaption(UserUIContext.getMessage(GenericI18Enum.FORM_END_DATE))
-                .withField(new DateField()).withService(AppContextUtil.getSpringBean(ProjectTaskService
+                .withField(new DateField()).withService(AppContextUtil.getSpringBean(TaskService
                 .class)).withValue(task.getEnddate())
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();

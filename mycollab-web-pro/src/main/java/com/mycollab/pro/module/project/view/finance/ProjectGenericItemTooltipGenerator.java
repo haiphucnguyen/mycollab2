@@ -5,7 +5,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleRisk;
 import com.mycollab.module.project.domain.SimpleStandupReport;
 import com.mycollab.module.project.domain.SimpleTask;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.service.RiskService;
 import com.mycollab.module.project.service.StandupReportService;
 import com.mycollab.module.project.domain.SimpleBug;
@@ -39,7 +39,7 @@ class ProjectGenericItemTooltipGenerator {
             html = ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     bug, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.TASK.equals(type)) {
-            ProjectTaskService service = AppContextUtil.getSpringBean(ProjectTaskService.class);
+            TaskService service = AppContextUtil.getSpringBean(TaskService.class);
             SimpleTask task = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipTask(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     task, siteURL, timeZone, false);

@@ -24,7 +24,7 @@ import com.mycollab.module.project.domain.SimpleTask;
 import com.mycollab.module.project.domain.Task;
 import com.mycollab.module.project.event.TaskEvent;
 import com.mycollab.module.project.event.TicketEvent;
-import com.mycollab.module.project.service.ProjectTaskService;
+import com.mycollab.module.project.service.TaskService;
 import com.mycollab.module.project.service.TicketKeyService;
 import com.mycollab.module.project.view.ProjectBreadcrumb;
 import com.mycollab.module.project.view.ProjectView;
@@ -93,7 +93,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
                         UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
-                                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                                TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                                 taskService.removeWithSession(data, UserUIContext.getUsername(), AppUI.getAccountId());
                                 EventBusFactory.getInstance().post(new TicketEvent.GotoDashboard(this, null));
                             }
@@ -144,7 +144,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
             SimpleTask task = null;
             if (data.getParams() instanceof Integer) {
-                ProjectTaskService taskService = AppContextUtil.getSpringBean(ProjectTaskService.class);
+                TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                 task = taskService.findById((Integer) data.getParams(), AppUI.getAccountId());
             } else if (data.getParams() instanceof SimpleTask) {
                 task = (SimpleTask) data.getParams();

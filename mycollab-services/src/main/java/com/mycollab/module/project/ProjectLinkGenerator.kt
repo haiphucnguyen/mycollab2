@@ -44,12 +44,12 @@ object ProjectLinkGenerator {
     fun generateTicketKanbanLink(projectId: Int): String = "${URL_PREFIX_PARAM}project/ticket/kanban/${UrlEncodeDecoder.encode(projectId)}"
 
     @JvmStatic
-    fun generateTaskPreviewLink(taskKey: Int?, prjShortName: String): String =
+    fun generateTaskPreviewLink(prjShortName: String, taskKey: Int?): String =
             "${URL_PREFIX_PARAM}project/ticket/preview/$prjShortName-$taskKey"
 
     @JvmStatic
-    fun generateTaskPreviewFullLink(siteUrl: String, taskKey: Int?, prjShortName: String): String =
-            "$siteUrl${generateTaskPreviewLink(taskKey, prjShortName)}"
+    fun generateTaskPreviewFullLink(siteUrl: String, prjShortName: String, taskKey: Int?): String =
+            "$siteUrl${generateTaskPreviewLink(prjShortName, taskKey)}"
 
     @JvmStatic
     fun generateTaskEditLink(taskKey: Int?, prjShortName: String): String =
@@ -104,21 +104,19 @@ object ProjectLinkGenerator {
             memberName?: "$siteUrl${generateProjectMemberLink(projectId, memberName)}"
 
     @JvmStatic
-    fun generateRiskPreviewLink(projectId: Int, riskId: Int?): String =
-            "${URL_PREFIX_PARAM}project/risk/preview/${GenericLinkUtils.encodeParam(projectId, riskId)}"
+    fun generateRiskPreviewLink(prjShortName: String, riskKey: Int?): String =
+            "${URL_PREFIX_PARAM}project/ticket/preview/$prjShortName-$riskKey"
+    @JvmStatic
+    fun generateRiskPreviewFullLink(siteUrl: String, prjShortName: String, riskKey: Int?): String =
+            "$siteUrl${generateRiskPreviewLink(prjShortName, riskKey)}"
 
     @JvmStatic
-    fun generateRiskPreviewFullLink(siteUrl: String, projectId: Int, riskId: Int): String {
-        return "$siteUrl${generateRiskPreviewLink(projectId, riskId)}"
-    }
+    fun generateRiskEditLink(prjShortName: String, riskKey: Int): String =
+            "${URL_PREFIX_PARAM}project/ticket/edit/$prjShortName-$riskKey"
 
     @JvmStatic
-    fun generateRiskEditLink(projectId: Int, riskId: Int): String =
-            "${URL_PREFIX_PARAM}project/risk/edit/${UrlEncodeDecoder.encode("$projectId/$riskId")}"
-
-    @JvmStatic
-    fun generateRiskAddLink(projectId: Int): String =
-            "${URL_PREFIX_PARAM}project/risk/add/${UrlEncodeDecoder.encode(projectId)}"
+    fun generateRiskAddLink(prjShortName: Int): String =
+            "${URL_PREFIX_PARAM}project/ticket/add/$prjShortName"
 
     @JvmStatic
     fun generateMessagesLink(projectId: Int): String = "${URL_PREFIX_PARAM}project/message/list/${UrlEncodeDecoder.encode(projectId)}"
@@ -148,15 +146,15 @@ object ProjectLinkGenerator {
             "$siteUrl${generateVersionPreviewLink(projectId, versionId)}"
 
     @JvmStatic
-    fun generateBugPreviewLink(bugKey: Int?, prjShortName: String): String =
+    fun generateBugPreviewLink(prjShortName: String?, bugKey: Int?): String =
             "${URL_PREFIX_PARAM}project/ticket/preview/$prjShortName-$bugKey"
 
     @JvmStatic
     fun generateBugEditLink(bugKey: Int?, prjShortName: String): String = "${URL_PREFIX_PARAM}project/ticket/edit/$prjShortName-$bugKey"
 
     @JvmStatic
-    fun generateBugPreviewFullLink(siteUrl: String, bugKey: Int?, prjShortName: String): String =
-            "$siteUrl${generateBugPreviewLink(bugKey, prjShortName)}"
+    fun generateBugPreviewFullLink(siteUrl: String, prjShortName: String?, bugKey: Int?): String =
+            "$siteUrl${generateBugPreviewLink(prjShortName, bugKey)}"
 
     @JvmStatic
     fun generateTimeReportLink(projectId: Int): String =
@@ -209,9 +207,9 @@ object ProjectLinkGenerator {
             return when (type) {
                 ProjectTypeConstants.MESSAGE -> generateMessagePreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.MILESTONE -> generateMilestonePreviewLink(projectId, Integer.parseInt(typeId))
-                ProjectTypeConstants.RISK -> generateRiskPreviewLink(projectId, Integer.parseInt(typeId))
-                ProjectTypeConstants.TASK -> generateTaskPreviewLink(Integer.parseInt(typeId), prjShortName)
-                ProjectTypeConstants.BUG -> generateBugPreviewLink(Integer.parseInt(typeId), prjShortName)
+                ProjectTypeConstants.RISK -> generateRiskPreviewLink(prjShortName, Integer.parseInt(typeId))
+                ProjectTypeConstants.TASK -> generateTaskPreviewLink(prjShortName, Integer.parseInt(typeId))
+                ProjectTypeConstants.BUG -> generateBugPreviewLink(prjShortName, Integer.parseInt(typeId))
                 ProjectTypeConstants.COMPONENT -> generateComponentPreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.VERSION -> generateVersionPreviewLink(projectId, Integer.parseInt(typeId))
                 ProjectTypeConstants.PAGE -> generatePageRead(projectId, typeId)

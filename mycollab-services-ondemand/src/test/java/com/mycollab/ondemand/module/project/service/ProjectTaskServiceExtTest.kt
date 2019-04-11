@@ -2,7 +2,7 @@ package com.mycollab.ondemand.module.project.service
 
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.mycollab.module.project.domain.Task
-import com.mycollab.module.project.service.ProjectTaskService
+import com.mycollab.module.project.service.TaskService
 import com.mycollab.ondemand.test.spring.IntegrationServiceTest
 import com.mycollab.test.rule.DbUnitInitializerRule
 import org.junit.jupiter.api.Test
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors
 class ProjectTaskServiceExtTest : IntegrationServiceTest() {
 
     @Autowired
-    private lateinit var projectTaskService: ProjectTaskService
+    private lateinit var projectTaskService: TaskService
 
     @Test
     @Throws(ExecutionException::class, InterruptedException::class)
