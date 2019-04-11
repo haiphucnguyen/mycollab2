@@ -152,9 +152,6 @@ class TaskServiceImpl(private val taskMapper: TaskMapper,
     override fun getAssignedTasksSummary(criteria: TaskSearchCriteria): List<GroupItem> =
             taskMapperExt.getAssignedDefectsSummary(criteria)
 
-    override fun findByProjectAndTaskKey(taskKey: Int, projectShortName: String, sAccountId: Int): SimpleTask? =
-            taskMapperExt.findByProjectAndTaskKey(taskKey, projectShortName, sAccountId)
-
     override fun findSubTasks(parentTaskId: Int, sAccountId: Int, orderField: SearchCriteria.OrderField): List<SimpleTask> {
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.saccountid = NumberSearchField(sAccountId)

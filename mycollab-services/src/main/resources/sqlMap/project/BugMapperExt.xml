@@ -391,13 +391,6 @@
         <include refid="selectBug" />
         WHERE m_prj_bug.id = @{bugid,jdbcType=NUMERIC}
     </select>
-    
-    <select id="findByProjectAndBugKey" resultMap="SimpleBugResult" parameterType="map" lang="velocity">
-        <include refid="selectBug" />
-        WHERE m_prj_bug.sAccountId = @{sAccountId,jdbcType=NUMERIC}
-            AND m_prj_ticket_key.ticketKey = @{key}
-            AND m_prj_project.shortname = @{prjShortName}
-    </select>
 
     <select id="getTotalCount" parameterType="com.mycollab.module.project.domain.criteria.BugSearchCriteria" resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_bug
