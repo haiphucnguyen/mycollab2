@@ -81,9 +81,10 @@ class RiskServiceImpl(private val riskMapper: RiskMapper,
         asyncEventBus.post(CleanCacheEvent(record.saccountid, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ProjectTicketService::class.java)))
     }
 
-    override fun removeByCriteria(criteria: RiskSearchCriteria, sAccountId: Int) {
-        super.removeByCriteria(criteria, sAccountId)
-        asyncEventBus.post(CleanCacheEvent(sAccountId, arrayOf(ProjectService::class.java, ProjectTicketService::class.java, ProjectActivityStreamService::class.java, ItemTimeLoggingService::class.java)))
+    override fun removeWithSession(item: Risk, username: String?, sAccountId: Int) {
+        super.removeWithSession(item, username, sAccountId)
+        val event = DeleteProjectRiskEvent(arrayOf(item), username, sAccountId)
+        asyncEventBus.post(event)
     }
 
     override fun massRemoveWithSession(items: List<Risk>, username: String?, sAccountId: Int) {
