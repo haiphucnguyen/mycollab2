@@ -46,10 +46,6 @@ class BugSearchCriteria : SearchCriteria() {
     var resolutions: SetSearchField<String>? = null
 
     var componentids: SetSearchField<Int>? = null
-    var affectedversionids: SetSearchField<Int>? = null
-    var fixedversionids: SetSearchField<Int>? = null
-    var versionids: SetSearchField<Int>? = null
-    var priorities: SetSearchField<String>? = null
     var statuses: SetSearchField<String>? = null
     var projectId: NumberSearchField? = null
 
