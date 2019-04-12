@@ -26,12 +26,7 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.service.ProjectTicketService;
-import com.mycollab.module.project.view.bug.BugRowRenderer;
-import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.Version;
-import com.mycollab.module.project.domain.criteria.BugSearchCriteria;
-import com.mycollab.module.project.service.BugService;
-import com.mycollab.module.project.view.milestone.MilestonePreviewForm;
 import com.mycollab.module.project.view.ticket.TicketRowRenderer;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -60,7 +55,7 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
     @Override
     public void setBean(Version bean) {
         setFormLayoutFactory(new DefaultDynaFormLayout(ProjectTypeConstants.VERSION,
-                VersionDefaultFormLayoutFactory.getForm(), Version.Field.name.name()));
+                VersionDefaultFormLayoutFactory.getReadForm(), Version.Field.name.name()));
         setBeanFormFieldFactory(new ReadFormFieldFactory(this));
         super.setBean(bean);
     }
@@ -77,7 +72,7 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
             Version beanItem = attachForm.getBean();
             if (Version.Field.duedate.equalTo(propertyId)) {
                 return new DateViewField();
-            } else if (Version.Field.id.equalTo(propertyId)) {
+            } else if ("section-assignments".equals(propertyId)) {
                 ContainerViewField containerField = new ContainerViewField();
                 containerField.addComponentField(new TicketsComp(beanItem));
                 return containerField;
