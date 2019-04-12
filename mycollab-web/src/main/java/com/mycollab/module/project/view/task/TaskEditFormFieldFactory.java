@@ -30,6 +30,7 @@ import com.mycollab.module.project.ui.components.TaskSliderField;
 import com.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.mycollab.module.project.view.settings.component.ComponentMultiSelectField;
 import com.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.mycollab.module.project.view.settings.component.VersionMultiSelectField;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -53,6 +54,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     private static final long serialVersionUID = 1L;
 
     private ComponentMultiSelectField componentSelect;
+    private VersionMultiSelectField affectedVersionSelect;
     private ProjectSubscribersComp subscribersComp;
     private AttachmentUploadField attachmentUploadField;
 
@@ -98,7 +100,7 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             field.addValueChangeListener((HasValue.ValueChangeListener<Long>) event -> {
                 Long duration = event.getValue();
                 LocalDate startDateVal = startDateField.getValue();
-                if (duration!= null && startDateVal != null && duration > 0) {
+                if (duration != null && startDateVal != null && duration > 0) {
                     int daysDuration = (int) (duration / DateTimeUtils.MILLISECONDS_IN_A_DAY);
                     if (daysDuration > 0) {
                         LocalDate endDateVal = BusinessDayTimeUtils.plusDays(startDateVal, daysDuration);
@@ -134,6 +136,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
         } else if ("components".equals(propertyId)) {
             componentSelect = new ComponentMultiSelectField();
             return componentSelect;
+        } else if (propertyId.equals("affectedVersions")) {
+            affectedVersionSelect = new VersionMultiSelectField();
+            return affectedVersionSelect;
         }
         return null;
     }
@@ -167,5 +172,9 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
 
     public ComponentMultiSelectField getComponentSelect() {
         return componentSelect;
+    }
+
+    public VersionMultiSelectField getAffectedVersionSelect() {
+        return affectedVersionSelect;
     }
 }

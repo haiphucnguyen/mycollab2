@@ -64,7 +64,7 @@ Version 7.0.2
 
 **Library Upgrades**
 
-* Vaadin 8.7.1
+* Vaadin 8.7.2, Mybatis 3.5.1
 
 **Bug Fixes**
 
@@ -76,7 +76,9 @@ Version 7.0.2
 * [Premium] Can change the border color of action, option or danger buttons
 * Support bulk invitations of users
 * Minor UI improvements
-
+* Support versions, components relationship in task, and risk
+* Support relationship among tickets
+* Easy navigating among tickets by ticket key
 
 Version 7.0.1
 -------------

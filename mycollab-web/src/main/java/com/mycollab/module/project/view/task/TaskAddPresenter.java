@@ -125,6 +125,7 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
 
             TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
             ticketRelationService.saveComponentsOfTicket(taskId, ProjectTypeConstants.TASK, view.getComponents());
+            ticketRelationService.saveAffectedVersionsOfTicket(taskId, ProjectTypeConstants.TASK, view.getAffectedVersions());
 
             List<String> followers = view.getFollowers();
             if (followers.size() > 0) {
@@ -143,6 +144,9 @@ public class TaskAddPresenter extends ProjectGenericPresenter<TaskAddView> {
             }
         } else {
             taskService.updateWithSession(item, UserUIContext.getUsername());
+            TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
+            ticketRelationService.updateComponentsOfTicket(item.getId(), ProjectTypeConstants.TASK, view.getComponents());
+            ticketRelationService.updateAffectedVersionsOfTicket(item.getId(), ProjectTypeConstants.TASK, view.getAffectedVersions());
         }
         AttachmentUploadField uploadField = view.getAttachUploadField();
         String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(AppUI.getAccountId(), item.getProjectid(),
