@@ -17,6 +17,9 @@
 package com.mycollab.module.project.view.settings;
 
 import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.mycollab.core.utils.DateTimeUtils;
+import com.mycollab.db.arguments.DateSearchField;
+import com.mycollab.db.arguments.SearchField;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
@@ -28,6 +31,7 @@ import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.Version;
 import com.mycollab.module.project.domain.criteria.BugSearchCriteria;
 import com.mycollab.module.project.service.BugService;
+import com.mycollab.module.project.view.milestone.MilestonePreviewForm;
 import com.mycollab.module.project.view.ticket.TicketRowRenderer;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
@@ -94,12 +98,30 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
             withMargin(false).withFullWidth();
             MHorizontalLayout header = new MHorizontalLayout();
 
-            final CheckBox openSelection = new TicketStatusCheckbox(StatusI18nEnum.Open, true);
-            CheckBox closedSelection = new TicketStatusCheckbox(StatusI18nEnum.Closed, true);
+            CheckBox openSelection = new CheckBox(UserUIContext.getMessage(StatusI18nEnum.Open), true);
+            openSelection.addValueChangeListener(valueChangeEvent -> {
+                if (openSelection.getValue()) {
+                    searchCriteria.setOpen(new SearchField());
+                } else {
+                    searchCriteria.setOpen(null);
+                }
+                updateSearchStatus();
+            });
+
+            CheckBox overdueSelection = new CheckBox(UserUIContext.getMessage(StatusI18nEnum.Overdue), false);
+            overdueSelection.addValueChangeListener(valueChangeEvent -> {
+                if (overdueSelection.getValue()) {
+                    searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS().toLocalDate(),
+                            DateSearchField.LESS_THAN));
+                } else {
+                    searchCriteria.setDueDate(null);
+                }
+                updateSearchStatus();
+            });
 
             Label spacingLbl1 = new Label("");
 
-            header.with(openSelection, closedSelection, spacingLbl1).alignAll(Alignment.MIDDLE_LEFT);
+            header.with(openSelection, overdueSelection, spacingLbl1).alignAll(Alignment.MIDDLE_LEFT);
 
             ticketList = new DefaultBeanPagedList<>(AppContextUtil.getSpringBean(ProjectTicketService.class), new TicketRowRenderer());
             ticketList.setControlStyle("");
@@ -114,20 +136,8 @@ public class VersionPreviewForm extends AdvancedPreviewBeanForm<Version> {
             this.with(header, ticketList);
         }
 
-        private void updateTypeSearchStatus(boolean selection, String type) {
-
-            updateSearchStatus();
-        }
-
         private void updateSearchStatus() {
             ticketList.setSearchCriteria(searchCriteria);
-        }
-
-        private class TicketStatusCheckbox extends CheckBox {
-            TicketStatusCheckbox(final Enum name, boolean defaultValue) {
-                super(UserUIContext.getMessage(name), defaultValue);
-                this.addValueChangeListener(event -> updateTypeSearchStatus(getValue(), name.name()));
-            }
         }
     }
 }
