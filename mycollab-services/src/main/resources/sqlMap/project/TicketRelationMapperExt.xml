@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycollab.module.project.dao.TicketRelationMapperExt">
+
+    <resultMap type="com.mycollab.module.project.domain.SimpleTicketRelation"
+               extends="com.mycollab.module.project.dao.TicketRelationMapper.ResultMapWithBLOBs" id="SimpleTicketRelationResult">
+        <result column="ticketKey" jdbcType="INTEGER" property="ticketKey" />
+        <result column="ticketName" jdbcType="VARCHAR" property="ticketName" />
+        <result column="typeKey" jdbcType="INTEGER" property="typeKey" />
+        <result column="typeName" jdbcType="VARCHAR" property="typeName" />
+        <result column="ltr" jdbcType="BOOLEAN" property="ltr" />
+    </resultMap>
+
+    <select id="findRelatedTickets" parameterType="map" resultMap="SimpleTicketRelationResult" lang="velocity">
+        SELECT m_prj_ticket_relation.id, m_prj_ticket_relation.ticketId, m_prj_ticket_relation.ticketType,
+            m_prj_ticket_relation.type, m_prj_ticket_relation.typeId, m_prj_ticket_relation.rel, m_prj_ticket_relation.comment,
+
+            FROM m_prj_ticket_relation
+            WHERE m_prj_ticket_relation.ticketId = @{ticketId} AND m_prj_ticket_relation.ticketType = @{ticketType}
+    </select>
 </mapper>
