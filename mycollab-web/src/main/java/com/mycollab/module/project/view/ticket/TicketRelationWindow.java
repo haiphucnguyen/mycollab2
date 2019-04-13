@@ -87,11 +87,15 @@ public class TicketRelationWindow extends MWindow {
 
             @Override
             public AbstractComponent getLayout() {
-                VerticalLayout layout = new VerticalLayout();
+                MVerticalLayout layout = new MVerticalLayout();
                 informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(LayoutType.ONE_COLUMN);
                 layout.addComponent(informationLayout.getLayout());
 
                 MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), clickEvent -> {
+                    ProjectTicket relatedTicket = ticketRelationSelectField.getSelectedTicket();
+                    ticketRelation.setType(relatedTicket.getType());
+                    ticketRelation.setTypeid(relatedTicket.getTypeId());
+
                     if (editForm.validateForm()) {
                         TicketRelationService relatedBugService = AppContextUtil.getSpringBean(TicketRelationService.class);
 
@@ -117,8 +121,7 @@ public class TicketRelationWindow extends MWindow {
                         .withStyleName(WebThemes.BUTTON_OPTION);
 
                 MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(false);
-                layout.addComponent(controlsBtn);
-                layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+                layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
             }
 

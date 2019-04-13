@@ -34,7 +34,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 public class TicketRelationSelectField extends CustomField<Integer> implements FieldSelection<ProjectTicket> {
     private ProjectTicket selectedTicket;
-    private TextField bugField;
+    private TextField ticketField;
 
     public ProjectTicket getSelectedTicket() {
         return selectedTicket;
@@ -42,12 +42,12 @@ public class TicketRelationSelectField extends CustomField<Integer> implements F
 
     @Override
     protected Component initContent() {
-        bugField = new MTextField().withReadOnly(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
+        ticketField = new MTextField().withReadOnly(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         MHorizontalLayout layout = new MHorizontalLayout();
         MButton browseBtn = new MButton(VaadinIcons.ELLIPSIS_H)
                 .withListener(clickEvent -> UI.getCurrent().addWindow(new TicketSelectionWindow(TicketRelationSelectField.this)))
                 .withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
-        layout.with(bugField, browseBtn);
+        layout.with(ticketField, browseBtn);
         return layout;
     }
 
@@ -64,6 +64,6 @@ public class TicketRelationSelectField extends CustomField<Integer> implements F
     @Override
     public void fireValueChange(ProjectTicket data) {
         selectedTicket = data;
-        bugField.setValue(selectedTicket.getName());
+        ticketField.setValue(selectedTicket.getName());
     }
 }

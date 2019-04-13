@@ -20,10 +20,11 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTooltipGenerator;
+import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.fielddef.TicketTableFieldDef;
-import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.AppUI;
@@ -48,7 +49,7 @@ class TicketSelectionWindow extends MWindow {
     private FieldSelection<ProjectTicket> fieldSelection;
 
     TicketSelectionWindow(FieldSelection<ProjectTicket> fieldSelection) {
-        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(BugI18nEnum.SINGLE)));
+        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(TicketI18nEnum.SINGLE)));
 
         this.withWidth("900px").withModal(true).withResizable(false).withCenter();
         this.fieldSelection = fieldSelection;
@@ -56,11 +57,13 @@ class TicketSelectionWindow extends MWindow {
         DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> tableItem = createTicketTable();
         ProjectTicketSearchCriteria baseCriteria = new ProjectTicketSearchCriteria();
         baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        baseCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
         tableItem.setSearchCriteria(baseCriteria);
 
         TicketSearchPanel bugSearchPanel = new TicketSearchPanel();
         bugSearchPanel.addSearchHandler(criteria -> {
             criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+            criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
             tableItem.setSearchCriteria(criteria);
         });
         this.setContent(new MVerticalLayout(bugSearchPanel, tableItem));
