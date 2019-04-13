@@ -51,32 +51,34 @@
                 concat(createdUserTbl.firstname,' ', createdUserTbl.lastname) AS createdUserFullName,
                 s_user.avatarId AS userLeadAvatarId,
                concat(s_user.firstname, ' ', s_user.lastname) AS userLeadFullName,
-               (SELECT COUNT(*) 
+               (SELECT COUNT(DISTINCT m_prj_bug.id)
                         FROM m_prj_bug, m_prj_ticket_relation
                         WHERE m_prj_bug.id=m_prj_ticket_relation.ticketId
                             AND m_prj_ticket_relation.ticketType='Project-Bug'
-                            AND m_prj_ticket_relation.type IN ('Component')
+                            AND m_prj_ticket_relation.type = 'Project-Component'
+                            AND m_prj_ticket_relation.rel IN ('Component')
                             AND m_prj_ticket_relation.typeId=m_prj_component.id) AS numBugs,
-               (SELECT COUNT(*)
+               (SELECT COUNT(DISTINCT m_prj_bug.id)
                         FROM m_prj_bug, m_prj_ticket_relation
                         WHERE m_prj_bug.id=m_prj_ticket_relation.ticketId
                             AND m_prj_ticket_relation.ticketType='Project-Bug'
                             AND m_prj_bug.status IN ('Open', 'InProgress', 'Reopenned')
-                            AND m_prj_ticket_relation.type IN ('Component')
+                            AND m_prj_ticket_relation.type = 'Project-Component'
+                            AND m_prj_ticket_relation.rel IN ('Component')
                             AND m_prj_ticket_relation.typeId=m_prj_component.id) AS numOpenBugs,
-               (SELECT COUNT(m_prj_task.id)
+               (SELECT COUNT(DISTINCT m_prj_task.id)
                         FROM m_prj_task, m_prj_ticket_relation
                         WHERE m_prj_task.id = m_prj_ticket_relation.ticketId
                             AND m_prj_ticket_relation.typeId = m_prj_component.id
                             AND m_prj_ticket_relation.ticketType = 'Project-Task'
                             AND m_prj_ticket_relation.type = 'Project-Component'
                             AND m_prj_ticket_relation.rel IN ('Component')) AS numTasks,
-                (SELECT COUNT(m_prj_task.id)
+               (SELECT COUNT(DISTINCT m_prj_task.id)
                         FROM m_prj_task, m_prj_ticket_relation
                         WHERE m_prj_task.id = m_prj_ticket_relation.ticketId
-                            AND m_prj_ticket_relation.ticketType = 'Project-Component'
+                            AND m_prj_ticket_relation.ticketType = 'Project-Task'
                             AND m_prj_task.status IN ('Open')
-                            AND m_prj_ticket_relation.type = 'Project-Version'
+                            AND m_prj_ticket_relation.type = 'Project-Component'
                             AND m_prj_ticket_relation.rel IN ('Component')
                             AND m_prj_ticket_relation.typeId = m_prj_component.id) AS numOpenTasks,
                m_prj_project.name AS projectName, m_prj_project.shortName AS projectShortName
