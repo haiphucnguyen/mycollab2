@@ -83,9 +83,9 @@
                             AND m_prj_ticket_relation.typeId = m_prj_component.id) AS numOpenTasks,
                m_prj_project.name AS projectName, m_prj_project.shortName AS projectShortName
         FROM m_prj_component
-        LEFT OUTER JOIN s_user ON (m_prj_component.userlead = s_user.username)
-        LEFT OUTER JOIN s_user AS createdUserTbl ON (m_prj_component.createduser= c reatedUserTbl.username)
-        LEFT OUTER JOIN m_prj_project ON (m_prj_component.projectId = m_prj_project.id)
+            LEFT OUTER JOIN s_user ON (m_prj_component.userlead = s_user.username)
+            LEFT OUTER JOIN s_user AS createdUserTbl ON (m_prj_component.createduser= createdUserTbl.username)
+            LEFT OUTER JOIN m_prj_project ON (m_prj_component.projectId = m_prj_project.id)
         ]]>
     </sql>
     
@@ -149,9 +149,9 @@
             WHERE m_prj_component.id = @{componentid}
                 AND m_prj_component.id = m_prj_ticket_relation.typeId
                 AND m_prj_ticket_relation.type = 'Project-Component'
+                AND m_prj_ticket_relation.ticketId = m_prj_bug.id
                 AND m_prj_ticket_relation.ticketType='Project-Bug'
                 AND m_prj_ticket_relation.rel IN ('Component')
-                AND m_prj_ticket_relation.ticketId = m_prj_bug.id
                 AND m_prj_time_logging.typeId = m_prj_bug.id
                 AND m_prj_time_logging.type = 'Project-Bug'
                 AND m_prj_time_logging.isBillable = '1')
@@ -161,9 +161,9 @@
             WHERE m_prj_component.id = @{componentid}
                 AND m_prj_component.id = m_prj_ticket_relation.typeId
                 AND m_prj_ticket_relation.type = 'Project-Component'
+                AND m_prj_ticket_relation.ticketId = m_prj_task.id
                 AND m_prj_ticket_relation.ticketType = 'Project-Task'
                 AND m_prj_ticket_relation.rel IN ('Component')
-                AND m_prj_ticket_relation.ticketId = m_prj_task.id
                 AND m_prj_time_logging.typeId = m_prj_task.id
                 AND m_prj_time_logging.type = 'Project-Task'
                 AND m_prj_time_logging.isBillable = '1')) AS timeTable
@@ -176,9 +176,9 @@
             FROM m_prj_component, m_prj_bug, m_prj_ticket_relation, m_prj_time_logging
             WHERE m_prj_component.id = @{componentid}
                 AND m_prj_component.id = m_prj_ticket_relation.typeId
-                AND m_prj_ticket_relation.type = 'Project-Version'
+                AND m_prj_ticket_relation.type = 'Project-Component'
                 AND m_prj_ticket_relation.ticketType='Project-Bug'
-                AND m_prj_ticket_relation.rel IN ('FixVersion', 'AffVersion')
+                AND m_prj_ticket_relation.rel IN ('Component')
                 AND m_prj_ticket_relation.ticketId = m_prj_bug.id
                 AND m_prj_time_logging.typeId = m_prj_bug.id
                 AND m_prj_time_logging.type = 'Project-Bug'
@@ -188,9 +188,9 @@
             FROM m_prj_component, m_prj_task, m_prj_ticket_relation, m_prj_time_logging
             WHERE m_prj_component.id = @{componentid}
                 AND m_prj_component.id = m_prj_ticket_relation.typeId
-                AND m_prj_ticket_relation.type = 'Project-Version'
+                AND m_prj_ticket_relation.type = 'Project-Component'
                 AND m_prj_ticket_relation.ticketType = 'Project-Task'
-                AND m_prj_ticket_relation.rel IN ('AffVersion')
+                AND m_prj_ticket_relation.rel IN ('Component')
                 AND m_prj_ticket_relation.ticketId = m_prj_task.id
                 AND m_prj_time_logging.typeId = m_prj_task.id
                 AND m_prj_time_logging.type = 'Project-Task'
