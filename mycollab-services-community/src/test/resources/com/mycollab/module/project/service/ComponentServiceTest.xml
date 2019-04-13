@@ -28,17 +28,17 @@
     <m_prj_component id="1" name="com 1"
                          projectId="1" sAccountId="1" status="Open" userlead="hai79"
                          createdUser="hai79" description="aaaaaaa" lastUpdatedTime="2014-10-02 06:45:22"
-                         createdTime="2014-10-02 06:45:22" prjKey="1"/>
+                         createdTime="2014-10-02 06:45:22"/>
     <m_prj_component id="2" name="com 2"
                          projectId="1" sAccountId="1" status="Closed" userlead="nghiemle"
                          createdUser="nghiemle" description="bbbbbbb" lastUpdatedTime="2014-10-02 07:45:22"
-                         createdTime="2014-10-02 07:45:22" prjKey="1"/>
+                         createdTime="2014-10-02 07:45:22"/>
     <m_prj_component id="3" name="com 3"
                          projectId="1" sAccountId="1" status="Closed" userlead="hai79"
                          createdUser="hai79" description="ccccccc" lastUpdatedTime="2014-10-03 06:45:22"
-                         createdTime="2014-10-03 06:45:22" prjKey="1"/>
+                         createdTime="2014-10-03 06:45:22"/>
     <m_prj_component id="4" name="com 4"
                          projectId="1" sAccountId="1" status="Open" userlead="nghiemle"
                          createdUser="nghiemle" description="ddddddd" lastUpdatedTime="2014-10-02 06:32:22"
-                         createdTime="2014-10-02 06:32:22" prjKey="1"/>
+                         createdTime="2014-10-02 06:32:22"/>
 </dataset>
