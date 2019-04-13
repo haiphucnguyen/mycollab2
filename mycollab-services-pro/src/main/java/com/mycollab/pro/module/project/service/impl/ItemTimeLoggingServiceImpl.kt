@@ -63,10 +63,8 @@ class ItemTimeLoggingServiceImpl(private val itemTimeLoggingMapper: ItemTimeLogg
         cleanCache(sAccountId)
     }
 
-    override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double {
-        val value = itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria)
-        return value
-    }
+    override fun getTotalHoursByCriteria(criteria: ItemTimeLoggingSearchCriteria): Double =
+            itemTimeLoggingMapperExt.getTotalHoursByCriteria(criteria)
 
     override fun batchSaveTimeLogging(timeLoggings: List<ItemTimeLogging>, @CacheKey sAccountId: Int) {
         val dataSource = AppContextUtil.getSpringBean(DataSource::class.java)

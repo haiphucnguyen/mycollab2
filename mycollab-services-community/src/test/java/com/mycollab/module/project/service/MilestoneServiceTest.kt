@@ -85,7 +85,7 @@ class MilestoneServiceTest : IntegrationServiceTest() {
     @Throws(ParseException::class)
     fun testFindMilestoneById() {
         val milestone = milestoneService.findById(1, 1)
-        assertThat(milestone).extracting("createdUserFullName", "numOpenBugs").contains("Hai Nguyen", 2)
+        assertThat(milestone).extracting("createdUserFullName", "numOpenBugs", "totalTaskBillableHours", "totalBugBillableHours", "totalTaskNonBillableHours", "totalBugNonBillableHours").contains("Hai Nguyen", 2, 2.0, 3.0, 4.0, 5.0)
     }
 
     @DataSet

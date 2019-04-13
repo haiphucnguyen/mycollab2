@@ -40,7 +40,7 @@ class ItemTimeLoggingServiceTest : IntegrationServiceTest() {
     fun testGetListItemTimeLoggings() {
         val itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<ItemTimeLogging>
 
-        assertThat(itemTimeLoggings.size).isEqualTo(2)
+        assertThat(itemTimeLoggings.size).isEqualTo(3)
         assertThat(itemTimeLoggings).extracting("id", "type", "logforday", "loguser", "name").contains(
                 tuple(4, "Project-Task", DF.parse("2014-04-19 13:29:23"), "hai79", "task1"),
                 tuple(2, "Project-Bug", DF.parse("2014-06-10 13:29:23"), "nghiemle", "name 2"))
@@ -50,11 +50,10 @@ class ItemTimeLoggingServiceTest : IntegrationServiceTest() {
     @Test
     fun testGetTotalCount() {
         val itemTimeLoggings = itemTimeLoggingService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<ItemTimeLogging>
-        assertThat(itemTimeLoggings.size).isEqualTo(2)
+        assertThat(itemTimeLoggings.size).isEqualTo(3)
     }
 
     companion object {
-
         private val DF = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
     }
 }

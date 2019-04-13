@@ -69,7 +69,7 @@
             FROM m_prj_time_logging
               INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
               INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid = m_prj_time_logging.projectId)
-              INNER JOIN m_prj_task ON ( m_prj_time_logging.typeId = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
+              INNER JOIN m_prj_task ON ( m_prj_time_logging.typeId = m_prj_task.id and m_prj_time_logging.type = 'Project-Task' )
               INNER JOIN m_prj_project ON (m_prj_project.id = m_prj_task.projectId)
               INNER JOIN m_prj_ticket_key ON (m_prj_ticket_key.ticketId = m_prj_task.id AND m_prj_ticket_key.ticketType='Project-Task')
         ]]>
@@ -112,7 +112,7 @@
            FROM m_prj_time_logging
              INNER JOIN s_user ON (m_prj_time_logging.logUser=s_user.username)
              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
-             INNER JOIN m_prj_risk ON ( m_prj_time_logging.typeId = m_prj_risk.id and m_prj_time_logging.type = "Project-Risk" )
+             INNER JOIN m_prj_risk ON ( m_prj_time_logging.typeId = m_prj_risk.id and m_prj_time_logging.type = 'Project-Risk' )
              INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_risk.projectId)
        ]]>
     </sql>
