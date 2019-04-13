@@ -1,0 +1,91 @@
+/**
+ * Copyright © MyCollab
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.mycollab.module.project.view.ticket;
+
+import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.db.arguments.SetSearchField;
+import com.mycollab.module.project.CurrentProjectVariables;
+import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.SimpleBug;
+import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
+import com.mycollab.module.project.fielddef.TicketTableFieldDef;
+import com.mycollab.module.project.i18n.BugI18nEnum;
+import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.ui.components.TicketTableDisplay;
+import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.FieldSelection;
+import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
+import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
+
+import java.util.Arrays;
+
+/**
+ * @author MyCollab Ltd.
+ * @since 1.0
+ */
+class TicketSelectionWindow extends MWindow {
+    private static final long serialVersionUID = 1L;
+
+    private FieldSelection<SimpleBug> fieldSelection;
+
+    TicketSelectionWindow(FieldSelection<SimpleBug> fieldSelection) {
+        super(UserUIContext.getMessage(GenericI18Enum.ACTION_SELECT_VALUE, UserUIContext.getMessage(BugI18nEnum.SINGLE)));
+
+        this.withWidth("900px").withModal(true).withResizable(false).withCenter();
+        this.fieldSelection = fieldSelection;
+
+        DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> tableItem = createTicketTable();
+        ProjectTicketSearchCriteria baseCriteria = new ProjectTicketSearchCriteria();
+        baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        tableItem.setSearchCriteria(baseCriteria);
+
+        TicketSearchPanel bugSearchPanel = new TicketSearchPanel();
+        bugSearchPanel.addSearchHandler(criteria -> {
+            criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+            tableItem.setSearchCriteria(criteria);
+        });
+        this.setContent(new MVerticalLayout(bugSearchPanel, tableItem));
+    }
+
+    private DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> createTicketTable() {
+        DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> tableItem = new TicketTableDisplay(
+                Arrays.asList(TicketTableFieldDef.name, TicketTableFieldDef.priority, TicketTableFieldDef.status));
+        tableItem.setWidth("100%");
+        tableItem.setDisplayNumItems(10);
+        tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
+            ProjectTicket bug = tableItem.getBeanByIndex(itemId);
+            return null;
+//            MButton bugLink = new MButton(bug.getName(), clickEvent -> {
+//                fieldSelection.fireValueChange(bug);
+//                close();
+//            }).withStyleName(WebThemes.BUTTON_LINK).withFullWidth();
+//
+//            if (bug.isCompleted()) {
+//                bugLink.addStyleName(WebThemes.LINK_COMPLETED);
+//            } else if (bug.isOverdue()) {
+//                bugLink.addStyleName(WebThemes.LINK_OVERDUE);
+//            }
+//
+//            bugLink.setDescription(ProjectTooltipGenerator.generateToolTipBug(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+//                    bug, AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false), ContentMode.HTML);
+//            bugLink.addStyleName(WebThemes.TEXT_ELLIPSIS);
+//            return bugLink;
+        });
+        return tableItem;
+    }
+}

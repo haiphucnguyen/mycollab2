@@ -34,7 +34,7 @@ import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.module.project.view.ProjectView;
-import com.mycollab.module.project.view.ticket.LinkIssueWindow;
+import com.mycollab.module.project.view.ticket.TicketRelationWindow;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;
@@ -290,7 +290,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             MButton linkBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES),
-                    clickEvent -> UI.getCurrent().addWindow(new LinkIssueWindow(beanItem)))
+                    clickEvent -> UI.getCurrent().addWindow(new TicketRelationWindow(beanItem)))
                     .withIcon(VaadinIcons.BOLT);
             bugPreviewFormControls.addOptionButton(linkBtn);
         }

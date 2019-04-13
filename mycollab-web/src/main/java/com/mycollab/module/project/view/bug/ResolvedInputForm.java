@@ -35,6 +35,7 @@ import com.mycollab.module.project.view.settings.component.VersionMultiSelectFie
 import com.mycollab.module.project.domain.BugWithBLOBs;
 import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.service.TicketRelationService;
+import com.mycollab.module.project.view.ticket.TicketRelationSelectField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
@@ -62,7 +63,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
     private static final long serialVersionUID = 1L;
     private SimpleBug bug;
     private RichTextArea commentArea;
-    private BugSelectionField bugSelectionField;
+    private TicketRelationSelectField bugSelectionField;
     private VersionMultiSelectField fixedVersionSelect;
 
     ResolvedInputForm(SimpleBug bugValue) {
@@ -220,7 +221,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                 resolutionComboBox.addValueChangeListener(valueChangeEvent -> {
                     BugResolution value = resolutionComboBox.getValue();
                     if (BugResolution.Duplicate == value) {
-                        bugSelectionField = new BugSelectionField();
+                        bugSelectionField = new TicketRelationSelectField();
                         layout.with(new Label(" with "), bugSelectionField);
                     } else {
                         if (layout.getComponentCount() > 1) {

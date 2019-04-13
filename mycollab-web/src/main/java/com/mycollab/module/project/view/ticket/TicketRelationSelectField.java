@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.bug;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.vaadin.ui.FieldSelection;
@@ -32,7 +32,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-public class BugSelectionField extends CustomField<Integer> implements FieldSelection<SimpleBug> {
+public class TicketRelationSelectField extends CustomField<Integer> implements FieldSelection<SimpleBug> {
     private SimpleBug selectedBug;
     private TextField bugField;
 
@@ -45,7 +45,7 @@ public class BugSelectionField extends CustomField<Integer> implements FieldSele
         bugField = new MTextField().withReadOnly(true).withWidth(WebThemes.FORM_CONTROL_WIDTH);
         MHorizontalLayout layout = new MHorizontalLayout();
         MButton browseBtn = new MButton(VaadinIcons.ELLIPSIS_H)
-                .withListener(clickEvent -> UI.getCurrent().addWindow(new BugSelectionWindow(BugSelectionField.this)))
+                .withListener(clickEvent -> UI.getCurrent().addWindow(new TicketSelectionWindow(TicketRelationSelectField.this)))
                 .withStyleName(WebThemes.BUTTON_OPTION, WebThemes.BUTTON_SMALL_PADDING);
         layout.with(bugField, browseBtn);
         return layout;

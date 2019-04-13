@@ -23,11 +23,9 @@ import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.TicketRelation;
 import com.mycollab.module.project.event.BugEvent;
-import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugRelation;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.TicketRelationService;
-import com.mycollab.module.project.view.bug.BugSelectionField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
@@ -53,13 +51,13 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-public class LinkIssueWindow extends MWindow {
+public class TicketRelationWindow extends MWindow {
     private RelatedBugEditForm editForm;
-    private BugSelectionField bugSelectionField;
+    private TicketRelationSelectField bugSelectionField;
     private SimpleBug hostedBug;
     private TicketRelation relatedBug;
 
-    public LinkIssueWindow(SimpleBug bug) {
+    public TicketRelationWindow(SimpleBug bug) {
         super(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES));
         this.hostedBug = bug;
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false).withFullWidth();
@@ -116,7 +114,7 @@ public class LinkIssueWindow extends MWindow {
                 MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), clickEvent -> close())
                         .withStyleName(WebThemes.BUTTON_OPTION);
 
-                final MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(false);
+                MHorizontalLayout controlsBtn = new MHorizontalLayout(cancelBtn, saveBtn).withMargin(false);
                 layout.addComponent(controlsBtn);
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
@@ -148,7 +146,7 @@ public class LinkIssueWindow extends MWindow {
                     relationSelection.setWidth(WebThemes.FORM_CONTROL_WIDTH);
                     return relationSelection;
                 } else if (TicketRelation.Field.typeid.equalTo(propertyId)) {
-                    bugSelectionField = new BugSelectionField();
+                    bugSelectionField = new TicketRelationSelectField();
                     return bugSelectionField;
                 } else if (TicketRelation.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
