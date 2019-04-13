@@ -157,6 +157,20 @@
             ${searchCriteria.dueDate.operation} mainTbl.dueDate ${searchCriteria.dueDate.comparison} @{searchCriteria.dueDate.value}
         #end
 
+        #ifnotnull($searchCriteria.versionIds)
+            ${searchCriteria.versionIds.operation}  EXISTS (SELECT 1
+                FROM m_prj_ticket_relation
+                WHERE m_prj_ticket_relation.rel IN ('AffVersion', 'FixVersion')
+                    AND m_prj_ticket_relation.type = 'Project-Version'
+                    AND m_prj_ticket_relation.ticketType = 'Project-Bug'
+                    AND m_prj_ticket_relation.ticketId = mainTbl.id
+                    AND m_prj_ticket_relation.typeId IN
+                    #repeat(${searchCriteria.versionIds.values} $versionId "," "(" ")")
+                        @{versionId}
+                    #end
+            LIMIT 1)
+        #end
+
         #selectExpr($searchCriteria.extraFields)
         ]]>
     </sql>
@@ -219,6 +233,20 @@
         
         #ifnotnull($searchCriteria.dueDate)
             ${searchCriteria.dueDate.operation} mainTbl.dueDate ${searchCriteria.dueDate.comparison} @{searchCriteria.dueDate.value}
+        #end
+
+        #ifnotnull($searchCriteria.versionIds)
+            ${searchCriteria.versionIds.operation}  EXISTS (SELECT 1
+                FROM m_prj_ticket_relation
+                WHERE m_prj_ticket_relation.rel IN ('AffVersion', 'FixVersion')
+                    AND m_prj_ticket_relation.type = 'Project-Version'
+                    AND m_prj_ticket_relation.ticketType = 'Project-Task'
+                    AND m_prj_ticket_relation.ticketId = mainTbl.id
+                    AND m_prj_ticket_relation.typeId IN
+                    #repeat(${searchCriteria.versionIds.values} $versionId "," "(" ")")
+                        @{versionId}
+                    #end
+            LIMIT 1)
         #end
 
         #selectExpr($searchCriteria.extraFields)
