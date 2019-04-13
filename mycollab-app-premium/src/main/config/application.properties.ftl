@@ -16,6 +16,7 @@ server.storageSystem=file
 server.siteUrl=http://%s:%d/
 server.resourceDownloadUrl=http://%s:%d/file/
 server.cdnUrl=http://%s:%d/assets/
+server.dataDir=userdir
 
 #=====================================================
 #    DATABASE CONFIGURATION

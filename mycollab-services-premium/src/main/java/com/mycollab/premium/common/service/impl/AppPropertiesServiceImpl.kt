@@ -1,10 +1,11 @@
 package com.mycollab.premium.common.service.impl
 
 import com.mycollab.common.service.AppPropertiesService
+import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.core.utils.DateTimeUtils
-import com.mycollab.core.utils.FileUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.io.File
 import java.io.FileInputStream
@@ -12,10 +13,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
-
 
 /**
  * @author MyCollab Ltd
@@ -25,6 +24,9 @@ import java.util.*
 class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
 
     private lateinit var properties: Properties
+
+    @Autowired
+    private lateinit var serverConfiguration: ServerConfiguration
 
     // TODO: would get the miliseconds of now
     override val sysId: String
@@ -47,7 +49,7 @@ class AppPropertiesServiceImpl : AppPropertiesService, InitializingBean {
     @Throws(Exception::class)
     override fun afterPropertiesSet() {
         try {
-            val homeFolder = FileUtils.homeFolder
+            val homeFolder = serverConfiguration.getHomeDir()
             val sysFile = File(homeFolder, ".app.properties")
             properties = Properties()
             if (sysFile.isFile && sysFile.exists()) {

@@ -12,6 +12,7 @@ import com.mycollab.license.LicenseType
 import com.mycollab.license.service.LicenseResolver
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import java.io.*
@@ -37,7 +38,7 @@ class LicenseResolverImpl(private val serverConfiguration: ServerConfiguration,
 
     private val licenseFile: File
         get() {
-            val homeDir = FileUtils.homeFolder
+            val homeDir = serverConfiguration.getHomeDir()
             val potentialOldFile = File(homeDir, "mycollab.lic")
             val licenseFile = File(homeDir, ".mycollab.lic")
             if (potentialOldFile.exists() && !licenseFile.exists()) {
