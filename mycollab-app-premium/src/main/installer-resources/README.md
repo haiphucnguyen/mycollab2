@@ -59,6 +59,19 @@ Version 7.1.0
 * Support links among ticket types
 * Improve Kanban display
 
+Version 7.0.3
+-------------
+
+**Library Upgrades**
+
+
+**Bug Fixes**
+
+
+**Improvements & New Features**
+
+
+
 Version 7.0.2
 -------------
 
