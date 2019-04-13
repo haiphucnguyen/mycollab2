@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.mycollab.module.project.view.bug;
+package com.mycollab.module.project.view.ticket;
 
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.UserInvalidInputException;
@@ -25,7 +25,9 @@ import com.mycollab.module.project.domain.TicketRelation;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum.BugRelation;
+import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.TicketRelationService;
+import com.mycollab.module.project.view.bug.BugSelectionField;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
@@ -51,14 +53,14 @@ import org.vaadin.viritin.layouts.MWindow;
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-class LinkIssueWindow extends MWindow {
+public class LinkIssueWindow extends MWindow {
     private RelatedBugEditForm editForm;
     private BugSelectionField bugSelectionField;
     private SimpleBug hostedBug;
     private TicketRelation relatedBug;
 
-    LinkIssueWindow(SimpleBug bug) {
-        super("Dependencies");
+    public LinkIssueWindow(SimpleBug bug) {
+        super(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES));
         this.hostedBug = bug;
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false).withFullWidth();
 
@@ -96,7 +98,7 @@ class LinkIssueWindow extends MWindow {
 
                         SimpleBug selectedBug = bugSelectionField.getSelectedBug();
                         if (selectedBug == null) {
-                            throw new UserInvalidInputException("The related bug must be not null");
+                            throw new UserInvalidInputException("The related ticket must be not null");
                         }
 
                         if (selectedBug.getId().equals(hostedBug.getId())) {
@@ -123,9 +125,9 @@ class LinkIssueWindow extends MWindow {
             @Override
             protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
                 if (TicketRelation.Field.rel.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, "This bug", 0, 0);
+                    return informationLayout.addComponent(field, "This ticket", 0, 0);
                 } else if (TicketRelation.Field.typeid.equalTo(propertyId)) {
-                    return informationLayout.addComponent(field, UserUIContext.getMessage(BugI18nEnum.SINGLE), 0, 1);
+                    return informationLayout.addComponent(field, UserUIContext.getMessage(TicketI18nEnum.SINGLE), 0, 1);
                 } else if (TicketRelation.Field.comment.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.OPT_COMMENT), 0, 2);
                 }
