@@ -387,7 +387,7 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(component, new FormReportLayout(ProjectTypeConstants.COMPONENT,
                                         com.mycollab.module.project.domain.Component.Field.name.name(),
-                                        ComponentDefaultFormLayoutFactory.getForm(), com.mycollab.module.project.domain.Component.Field.id.name()))
+                                        ComponentDefaultFormLayoutFactory.getAddForm(), com.mycollab.module.project.domain.Component.Field.id.name()))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));
