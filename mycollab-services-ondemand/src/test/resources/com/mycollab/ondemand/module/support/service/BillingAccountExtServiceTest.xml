@@ -4,19 +4,19 @@
     <s_account id="2" status="Active" paymentMethod="Credit Card" subDomain="test2" createdTime="2014-04-10 00:00:00"/>
     <s_account id="3" status="Pending" paymentMethod="Credit Card" subDomain="test3" createdTime="2014-04-10 00:00:00"/>
 
-    <s_user username="hainguyen@esofthead.com" firstname="Hai" lastname="Nguyen" email="hainguyen@esofthead.com"/>
-    <s_user username="linhduong@esofthead.com" firstname="Linh" lastname="Duong" email="linhduong@esofthead.com"/>
-    <s_user username="cannguyen@esofthead.com" firstname="Can" lastname="Nguyen" email="cannguyen@esofthead.com"/>
+    <s_user username="hainguyen@mycollab.com" firstname="Hai" lastname="Nguyen" email="hainguyen@mycollab.com"/>
+    <s_user username="linhduong@mycollab.com" firstname="Linh" lastname="Duong" email="linhduong@mycollab.com"/>
+    <s_user username="cannguyen@mycollab.com" firstname="Can" lastname="Nguyen" email="cannguyen@mycollab.com"/>
 
-    <s_user_account id="1" username="hainguyen@esofthead.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+    <s_user_account id="1" username="hainguyen@mycollab.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
                     registerStatus="Active" lastAccessedTime="2015-12-15 00:00:00"/>
-    <s_user_account id="2" username="linhduong@esofthead.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+    <s_user_account id="2" username="linhduong@mycollab.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
                     registerStatus="Active" lastAccessedTime="2016-01-01 00:00:00"/>
-    <s_user_account id="3" username="cannguyen@esofthead.com" accountId="1" isAccountOwner="0" registeredTime="2014-04-10 00:00:00"
+    <s_user_account id="3" username="cannguyen@mycollab.com" accountId="1" isAccountOwner="0" registeredTime="2014-04-10 00:00:00"
                     registerStatus="Active" lastAccessedTime="2016-01-01 00:00:00"/>
-    <s_user_account id="4" username="hainguyen@esofthead.com" accountId="2" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+    <s_user_account id="4" username="hainguyen@mycollab.com" accountId="2" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
                     registerStatus="Active" lastAccessedTime="2015-12-17 00:00:00"/>
-    <s_user_account id="5" username="hainguyen@esofthead.com" accountId="3" isAccountOwner="1"
+    <s_user_account id="5" username="hainguyen@mycollab.com" accountId="3" isAccountOwner="1"
                     registeredTime="2014-04-10 00:00:00" registerStatus="Active" lastAccessedTime="2015-12-15 00:00:00"/>
     <m_prj_project id="1" name="Prj 1" shortName="1" status="Active" sAccountId="1"/>
     <m_prj_project id="2" name="Prj 2" shortName="2" status="Active" sAccountId="1"/>

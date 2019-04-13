@@ -2,8 +2,8 @@
 <!DOCTYPE dataset PUBLIC "-//MyCollab/MyCollab Database Schema//EN" "http://www.mycollab.com/mycollab.dtd">
 <dataset>
     <s_account id="1" createdTime="2013-04-10 13:29:23" paymentMethod="Credit Card" status="Active"/>
-    <s_user username="hai79" firstname="Nguyen" lastname="Hai" email="hainguyen@esofthead.com"/>
-    <s_user username="nghiemle" firstname="Nghiem" lastname="Le" email="nghiemle@esofthead.com"/>
+    <s_user username="hai79" firstname="Nguyen" lastname="Hai" email="hainguyen@mycollab.com"/>
+    <s_user username="nghiemle" firstname="Nghiem" lastname="Le" email="nghiemle@mycollab.com"/>
     <m_prj_project id="1" name="aaa" sAccountId="1" shortName="aaa" status="Open"/>
 
     <m_prj_bug name="name 1" id="1" projectId="1" priority="Medium"

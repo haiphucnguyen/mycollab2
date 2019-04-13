@@ -44,30 +44,30 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
     public void testGetListNotifyUsersWithFilterAndNone() {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
-        notUser1.setUsername("hainguyen@esofthead.com");
+        notUser1.setUsername("hainguyen@mycollab.com");
 
         SimpleUser notUser2 = new SimpleUser();
-        notUser2.setUsername("linhduong@esofthead.com");
+        notUser2.setUsername("linhduong@mycollab.com");
 
         List<SimpleUser> notifyUsers = Arrays.asList(notUser1, notUser2);
         prjRelayNotification.setNotifyUsers(notifyUsers);
 
         ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
         noSetting1.setLevel(NotificationType.None.name());
-        noSetting1.setUsername("hainguyen@esofthead.com");
+        noSetting1.setUsername("hainguyen@mycollab.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt())).thenReturn(Collections.singletonList(noSetting1));
 
         List<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assertions.assertEquals(1, users.size());
-        assertThat(users.get(0).getUsername()).isEqualTo("linhduong@esofthead.com");
+        assertThat(users.get(0).getUsername()).isEqualTo("linhduong@mycollab.com");
     }
 
     @Test
     public void testGetListNotifyUsersWithFilter2() {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
-        notUser1.setUsername("hainguyen@esofthead.com");
+        notUser1.setUsername("hainguyen@mycollab.com");
         List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
@@ -77,13 +77,13 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setLevel(NotificationType.Minimal.name());
         noSetting1.setProjectid(1);
         noSetting1.setSaccountid(1);
-        noSetting1.setUsername("hainguyen@esofthead.com");
+        noSetting1.setUsername("hainguyen@mycollab.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
                 .thenReturn(Collections.singletonList(noSetting1));
 
         SimpleBug bug = new SimpleBug();
-        bug.setAssignuser("hainguyen@esofthead.com");
+        bug.setAssignuser("hainguyen@mycollab.com");
         when(bugService.findById(anyInt(), anyInt())).thenReturn(bug);
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
@@ -96,7 +96,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
     public void testGetListNotifyUsersWithFilter3() {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
-        notUser1.setUsername("hainguyen@esofthead.com");
+        notUser1.setUsername("hainguyen@mycollab.com");
         List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
@@ -106,12 +106,12 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setLevel(NotificationType.Minimal.name());
         noSetting1.setProjectid(1);
         noSetting1.setSaccountid(1);
-        noSetting1.setUsername("hainguyen@esofthead.com");
+        noSetting1.setUsername("hainguyen@mycollab.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt())).thenReturn(Collections.singletonList(noSetting1));
 
         SimpleBug bug = new SimpleBug();
-        bug.setAssignuser("hainguyen@esofthead.com");
+        bug.setAssignuser("hainguyen@mycollab.com");
         when(bugService.findById(anyInt(), anyInt())).thenReturn(bug);
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
@@ -124,7 +124,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
     public void testGetListNotifyUsersWithFull() {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
-        notUser1.setUsername("linhduong@esofthead.com");
+        notUser1.setUsername("linhduong@mycollab.com");
         List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
@@ -134,7 +134,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setLevel(NotificationType.Full.name());
         noSetting1.setProjectid(1);
         noSetting1.setSaccountid(1);
-        noSetting1.setUsername("hainguyen@esofthead.com");
+        noSetting1.setUsername("hainguyen@mycollab.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
                 .thenReturn(Collections.singletonList(noSetting1));

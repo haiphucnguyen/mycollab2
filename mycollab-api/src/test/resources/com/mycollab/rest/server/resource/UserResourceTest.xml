@@ -11,7 +11,7 @@
         createdTime="2013-04-10 13:29:23" billingPlanId="1" subDomain="xyz" />
 
     <s_user firstname="Nguyen" lastname="Hai"
-        username="hai79" password="123" email="hainguyen@esofthead.com"
+        username="hai79" password="123" email="hainguyen@mycollab.com"
         avatarId="1" />
 
     <s_user_account id="1" isAccountOwner="1"

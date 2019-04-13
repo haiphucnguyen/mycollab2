@@ -27,14 +27,14 @@ public class ResetPasswordHandlerTest extends GenericServletTest {
 
     @Test
     public void testInvalidPassword() {
-        when(request.getParameter("username")).thenReturn("hainguyen@esofthead.com");
+        when(request.getParameter("username")).thenReturn("hainguyen@mycollab.com");
         when(request.getParameter("password")).thenReturn("123456");
         Assertions.assertThrows(UserInvalidInputException.class, () -> resetPasswordHandler.onHandleRequest(request, response));
     }
 
     @Test
     public void testResetPasswordOfInactiveUser() {
-        when(request.getParameter("username")).thenReturn("hainguyen@esofthead.com");
+        when(request.getParameter("username")).thenReturn("hainguyen@mycollab.com");
         when(request.getParameter("password")).thenReturn("abc123");
         when(userService.findUserByUserName(anyString())).thenReturn(null);
 
@@ -43,7 +43,7 @@ public class ResetPasswordHandlerTest extends GenericServletTest {
 
     @Test
     public void testResetEmailSuccessful() throws ServletException, IOException {
-        when(request.getParameter("username")).thenReturn("hainguyen@esofthead.com");
+        when(request.getParameter("username")).thenReturn("hainguyen@mycollab.com");
         when(request.getParameter("password")).thenReturn("abc123");
         when(userService.findUserByUserName(anyString())).thenReturn(new User());
         resetPasswordHandler.onHandleRequest(request, response);

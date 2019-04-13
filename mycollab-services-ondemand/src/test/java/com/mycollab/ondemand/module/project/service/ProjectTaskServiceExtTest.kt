@@ -35,7 +35,7 @@ class ProjectTaskServiceExtTest : IntegrationServiceTest() {
             LOG.info("Initialize thread $i")
             val exeService = {
                 val record = baseRecord.copy() as Task
-                projectTaskService.saveWithSession(record, "hainguyen@esofthead.com")
+                projectTaskService.saveWithSession(record, "hainguyen@mycollab.com")
             }
 
             val result = executorService.submit(exeService)

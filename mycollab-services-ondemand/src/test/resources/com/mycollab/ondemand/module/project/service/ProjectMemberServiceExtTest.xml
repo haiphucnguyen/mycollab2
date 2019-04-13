@@ -2,14 +2,14 @@
 <dataset>
     <s_account id="1" status="Active" paymentMethod="CreditCard" />
 
-    <s_user username="hainguyen@esofthead.com" lastname="Hai"
-        email="hainguyen@esofthead.com" firstname="Nguyen" />
+    <s_user username="hainguyen@mycollab.com" lastname="Hai"
+        email="hainguyen@mycollab.com" firstname="Nguyen" />
 
     <s_roles rolename="Guest" sAccountId="1" id="1"
         isSystemRole="1" />
 
     <s_user_account id="1" isAccountOwner="1"
-        registerStatus="Active" username="hainguyen@esofthead.com"
+        registerStatus="Active" username="hainguyen@mycollab.com"
         roleId="1" accountId="1" registeredTime="2013-04-10 13:29:23" />
 
     <m_prj_project shortName="ABC" status="Active"

@@ -28,7 +28,7 @@ class BillingServiceTest : IntegrationServiceTest() {
 
         assertThat(account.owners.size).isEqualTo(1)
         val user = account.owners[0]
-        assertThat(user.username).isEqualTo("hainguyen@esofthead.com")
+        assertThat(user.username).isEqualTo("hainguyen@mycollab.com")
     }
 
     @Test
@@ -36,7 +36,7 @@ class BillingServiceTest : IntegrationServiceTest() {
     fun registerAccountFailedBecauseDomainIsNotAsciiString() {
 
         Assertions.assertThrows(UserInvalidInputException::class.java) {
-            billingService.registerAccount("ANguyễnHai", 1, "hainguyen@esofthead.com", "123", "hainguyen@esofthead.com", "3", false)
+            billingService.registerAccount("ANguyễnHai", 1, "hainguyen@mycollab.com", "123", "hainguyen@mycollab.com", "3", false)
         }
     }
 
@@ -44,8 +44,8 @@ class BillingServiceTest : IntegrationServiceTest() {
     @DataSet
     fun registerTheExistingUsernameAndDifferentPassword() {
         Assertions.assertThrows(UserInvalidInputException::class.java) {
-            billingService.registerAccount("xyz", 1, "hainguyen@esofthead.com", "abc", "hainguyen@esofthead.com", "3", false);
-            "There is already user hainguyen@esofthead.com in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise you must use the different email."
+            billingService.registerAccount("xyz", 1, "hainguyen@mycollab.com", "abc", "hainguyen@mycollab.com", "3", false);
+            "There is already user hainguyen@mycollab.com in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise you must use the different email."
         }
     }
 

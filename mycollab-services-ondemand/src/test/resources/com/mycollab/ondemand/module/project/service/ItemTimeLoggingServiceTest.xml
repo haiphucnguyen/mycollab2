@@ -5,9 +5,9 @@
 
     <m_prj_project id="1" name="a" sAccountId="1" shortName="aaa" status="Open"/>
 
-    <s_user firstname="Hai" lastname="Nguyen" username="hai79" email="hainguyen@esofthead.com"/>
+    <s_user firstname="Hai" lastname="Nguyen" username="hai79" email="hainguyen@mycollab.com"/>
 
-    <s_user firstname="Nghiem" lastname="Le" username="nghiemle" email="nghiemle@esofthead.com"/>
+    <s_user firstname="Nghiem" lastname="Le" username="nghiemle" email="nghiemle@mycollab.com"/>
 
     <m_prj_task sAccountId="1" projectId="1" id="1" percentagecomplete="40" name="task1" priority="Medium"/>
 

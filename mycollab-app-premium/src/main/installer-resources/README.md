@@ -74,6 +74,7 @@ Version 7.0.2
 **Improvements & New Features**
 
 * [Premium] Can change the border color of action, option or danger buttons
+* [Premium] Milestone display the wrong logging time in some special cases
 * Support bulk invitations of users
 * Minor UI improvements
 * Support versions, components relationship in task, and risk

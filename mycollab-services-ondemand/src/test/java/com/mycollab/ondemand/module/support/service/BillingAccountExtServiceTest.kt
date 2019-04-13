@@ -38,7 +38,7 @@ class BillingAccountExtServiceTest : IntegrationServiceTest() {
         val account = filter.iterator().next()
         assertThat(account).extracting("numProjects", "numUsers", "lastAccessTime").containsSequence(2, 3, LocalDate.of(2016, 1, 1))
         val accountOwners = account.accountOwners
-        assertThat(accountOwners).hasSize(2).extracting("username").contains("hainguyen@esofthead.com",
-                "linhduong@esofthead.com")
+        assertThat(accountOwners).hasSize(2).extracting("username").contains("hainguyen@mycollab.com",
+                "linhduong@mycollab.com")
     }
 }

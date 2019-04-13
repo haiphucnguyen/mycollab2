@@ -6,17 +6,17 @@
                createdTime="2013-04-10 13:29:23" billingPlanId="1" subDomain="abc"/>
 
     <s_user firstname="Nguyen" lastname="Hai"
-            username="hainguyen@esofthead.com" password="123" email="hainguyen@esofthead.com"
+            username="hainguyen@mycollab.com" password="123" email="hainguyen@mycollab.com"
             avatarId="1"/>
 
-    <s_user firstname="Duong" lastname="Linh" username="linhduong@esofthead.com"
-            password="123" email="linhduong@esofthead.com" avatarId="1"/>
+    <s_user firstname="Duong" lastname="Linh" username="linhduong@mycollab.com"
+            password="123" email="linhduong@mycollab.com" avatarId="1"/>
 
     <s_user_account id="1" isAccountOwner="1"
-                    registerStatus="active" username="hainguyen@esofthead.com" accountId="1"
+                    registerStatus="active" username="hainguyen@mycollab.com" accountId="1"
                     registeredTime="2013-04-10 13:29:23"/>
 
     <s_user_account id="2" isAccountOwner="0"
-                    registerStatus="active" username="linhduong@esofthead.com" accountId="1"
+                    registerStatus="active" username="linhduong@mycollab.com" accountId="1"
                     registeredTime="2013-04-10 13:29:23"/>
 </dataset>
