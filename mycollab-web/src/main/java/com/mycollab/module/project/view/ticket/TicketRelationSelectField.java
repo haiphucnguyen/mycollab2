@@ -16,7 +16,7 @@
  */
 package com.mycollab.module.project.view.ticket;
 
-import com.mycollab.module.project.domain.SimpleBug;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.icons.VaadinIcons;
@@ -32,12 +32,12 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-public class TicketRelationSelectField extends CustomField<Integer> implements FieldSelection<SimpleBug> {
-    private SimpleBug selectedBug;
+public class TicketRelationSelectField extends CustomField<Integer> implements FieldSelection<ProjectTicket> {
+    private ProjectTicket selectedTicket;
     private TextField bugField;
 
-    public SimpleBug getSelectedBug() {
-        return selectedBug;
+    public ProjectTicket getSelectedTicket() {
+        return selectedTicket;
     }
 
     @Override
@@ -52,18 +52,18 @@ public class TicketRelationSelectField extends CustomField<Integer> implements F
     }
 
     @Override
-    protected void doSetValue(Integer simpleBug) {
+    protected void doSetValue(Integer ticketId) {
 
     }
 
     @Override
     public Integer getValue() {
-        return (selectedBug != null) ? selectedBug.getId() : null;
+        return (selectedTicket != null) ? selectedTicket.getTypeId() : null;
     }
 
     @Override
-    public void fireValueChange(SimpleBug data) {
-        selectedBug = data;
-        bugField.setValue(selectedBug.getName());
+    public void fireValueChange(ProjectTicket data) {
+        selectedTicket = data;
+        bugField.setValue(selectedTicket.getName());
     }
 }

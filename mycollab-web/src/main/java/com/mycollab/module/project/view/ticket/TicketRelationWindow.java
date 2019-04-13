@@ -20,6 +20,7 @@ import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.TicketRelation;
 import com.mycollab.module.project.event.BugEvent;
@@ -53,21 +54,21 @@ import org.vaadin.viritin.layouts.MWindow;
  */
 public class TicketRelationWindow extends MWindow {
     private RelatedBugEditForm editForm;
-    private TicketRelationSelectField bugSelectionField;
-    private SimpleBug hostedBug;
-    private TicketRelation relatedBug;
+    private TicketRelationSelectField ticketRelationSelectField;
+    private ProjectTicket hostedTicket;
+    private TicketRelation ticketRelation;
 
-    public TicketRelationWindow(SimpleBug bug) {
+    public TicketRelationWindow(ProjectTicket ticket) {
         super(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES));
-        this.hostedBug = bug;
+        this.hostedTicket = ticket;
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false).withFullWidth();
 
         editForm = new RelatedBugEditForm();
-        relatedBug = new TicketRelation();
-        relatedBug.setTicketid(bug.getId());
-        relatedBug.setTickettype(ProjectTypeConstants.BUG);
-        relatedBug.setRel(BugRelation.Duplicated.name());
-        editForm.setBean(relatedBug);
+        ticketRelation = new TicketRelation();
+        ticketRelation.setTicketid(ticket.getTypeId());
+        ticketRelation.setTickettype(ticket.getType());
+        ticketRelation.setRel(BugRelation.Duplicated.name());
+        editForm.setBean(ticketRelation);
         contentLayout.add(editForm);
 
         this.withWidth("750px").withModal(true).withResizable(false).withContent(contentLayout).withCenter();
@@ -94,20 +95,21 @@ public class TicketRelationWindow extends MWindow {
                     if (editForm.validateForm()) {
                         TicketRelationService relatedBugService = AppContextUtil.getSpringBean(TicketRelationService.class);
 
-                        SimpleBug selectedBug = bugSelectionField.getSelectedBug();
-                        if (selectedBug == null) {
+                        ProjectTicket relationTicket = ticketRelationSelectField.getSelectedTicket();
+                        if (relationTicket == null) {
                             throw new UserInvalidInputException("The related ticket must be not null");
                         }
 
-                        if (selectedBug.getId().equals(hostedBug.getId())) {
+                        if (relationTicket.getTypeId().equals(hostedTicket.getTypeId()) && relationTicket.getType().equals(hostedTicket.getType())) {
                             throw new UserInvalidInputException("The relation is invalid since the both entries are the same");
                         }
 
-                        relatedBug.setTypeid(selectedBug.getId());
-                        relatedBug.setType(ProjectTypeConstants.BUG);
-                        relatedBugService.saveWithSession(relatedBug, UserUIContext.getUsername());
+                        ticketRelation.setTypeid(relationTicket.getTypeId());
+                        ticketRelation.setType(relationTicket.getType());
+                        relatedBugService.saveWithSession(ticketRelation, UserUIContext.getUsername());
                         close();
-                        EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedBug.getId()));
+                        // TODO handle change event
+//                        EventBusFactory.getInstance().post(new BugEvent.BugChanged(this, hostedTicket.getId()));
                     }
                 }).withIcon(VaadinIcons.CLIPBOARD).withStyleName(WebThemes.BUTTON_ACTION);
 
@@ -146,8 +148,8 @@ public class TicketRelationWindow extends MWindow {
                     relationSelection.setWidth(WebThemes.FORM_CONTROL_WIDTH);
                     return relationSelection;
                 } else if (TicketRelation.Field.typeid.equalTo(propertyId)) {
-                    bugSelectionField = new TicketRelationSelectField();
-                    return bugSelectionField;
+                    ticketRelationSelectField = new TicketRelationSelectField();
+                    return ticketRelationSelectField;
                 } else if (TicketRelation.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
                 }

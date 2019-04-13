@@ -174,6 +174,23 @@ class ProjectTicket : ValuedBean(), Serializable {
         }
 
         @JvmStatic
+        fun buildTicketByBug(bug: SimpleBug): ProjectTicket {
+            val ticket = ProjectTicket()
+            ticket.typeId = bug.id
+            ticket.type = ProjectTypeConstants.BUG
+            ticket.projectId = bug.projectid
+            ticket.name = bug.name
+            ticket.saccountid = bug.saccountid
+            ticket.startDate = bug.startdate
+            ticket.endDate = bug.enddate
+            ticket.dueDate = bug.duedate
+            ticket.milestoneId = bug.milestoneid
+            ticket.assignUser = bug.assignuser
+            ticket.priority = bug.priority
+            return ticket
+        }
+
+        @JvmStatic
         fun buildBug(bean: ProjectTicket): SimpleBug {
             val bug = SimpleBug()
             bug.id = bean.typeId

@@ -22,6 +22,7 @@ import com.mycollab.configuration.SiteConfiguration;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
+import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.SimpleTicketRelation;
 import com.mycollab.module.project.event.BugEvent;
@@ -290,7 +291,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             MButton linkBtn = new MButton(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES),
-                    clickEvent -> UI.getCurrent().addWindow(new TicketRelationWindow(beanItem)))
+                    clickEvent -> UI.getCurrent().addWindow(new TicketRelationWindow(ProjectTicket.buildTicketByBug(beanItem))))
                     .withIcon(VaadinIcons.BOLT);
             bugPreviewFormControls.addOptionButton(linkBtn);
         }
