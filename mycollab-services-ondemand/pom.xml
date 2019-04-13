@@ -44,7 +44,7 @@
 
         <dependency>
             <groupId>com.mycollab</groupId>
-            <artifactId>mycollab-migration-ondemand</artifactId>
+            <artifactId>mycollab-migration</artifactId>
             <version>${project.version}</version>
         </dependency>
 

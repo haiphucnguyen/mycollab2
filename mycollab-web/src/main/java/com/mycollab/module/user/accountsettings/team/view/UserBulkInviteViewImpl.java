@@ -5,11 +5,17 @@ import com.jarektoro.responsivelayout.ResponsiveLayout;
 import com.jarektoro.responsivelayout.ResponsiveRow;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.common.i18n.ShellI18nEnum;
+import com.mycollab.core.Tuple2;
+import com.mycollab.core.utils.RandomPasswordGenerator;
+import com.mycollab.core.utils.StringUtils;
 import com.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
 import com.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.mycollab.module.user.domain.SimpleRole;
 import com.mycollab.module.user.event.UserEvent;
+import com.mycollab.module.user.service.UserService;
 import com.mycollab.module.user.view.component.RoleComboBox;
+import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
@@ -21,9 +27,13 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.PasswordField;
+import org.apache.commons.collections4.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.fields.EmailField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -34,6 +44,7 @@ public class UserBulkInviteViewImpl extends AbstractVerticalPageView implements 
 
     private RolePermissionContainer rolePermissionDisplayLayout = new RolePermissionContainer();
     private GridLayout bulkInviteUsersLayout;
+    private RoleComboBox roleComboBox;
 
     public UserBulkInviteViewImpl() {
         this.withMargin(true).withSpacing(true);
@@ -46,11 +57,13 @@ public class UserBulkInviteViewImpl extends AbstractVerticalPageView implements 
         MButton cancelBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_CANCEL), (Button.ClickListener) clickEvent -> {
             EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
         }).withStyleName(WebThemes.BUTTON_OPTION);
-        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE)).withStyleName(WebThemes.BUTTON_ACTION);
+        MButton saveBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SAVE), (Button.ClickListener) clickEvent -> {
+            sendInviteBulkUsers();
+        }).withStyleName(WebThemes.BUTTON_ACTION);
 
         this.with(new MHorizontalLayout(titleLbl, cancelBtn, saveBtn).withExpand(titleLbl, 1.0f).withFullWidth());
 
-        RoleComboBox roleComboBox = new RoleComboBox();
+        roleComboBox = new RoleComboBox();
         roleComboBox.addValueChangeListener((HasValue.ValueChangeListener<SimpleRole>) valueChangeEvent -> {
             displayRolePermission(valueChangeEvent.getSource().getValue());
         });
@@ -67,7 +80,7 @@ public class UserBulkInviteViewImpl extends AbstractVerticalPageView implements 
         mainRow.addColumn(column1);
         mainRow.addColumn(column2);
 
-        bulkInviteUsersLayout.addComponent(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withWidth("250px"), 0, 0);
+        bulkInviteUsersLayout.addComponent(ELabel.h3(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withWidth("220px"), 0, 0);
         bulkInviteUsersLayout.addComponent(ELabel.h3(UserUIContext.getMessage(ShellI18nEnum.FORM_PASSWORD)), 1, 0);
 
         this.with(mainLayout);
@@ -77,7 +90,7 @@ public class UserBulkInviteViewImpl extends AbstractVerticalPageView implements 
     }
 
     private void buildInviteUserBlock() {
-        EmailField emailField = new EmailField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withWidth("250px");
+        EmailField emailField = new EmailField().withPlaceholder(UserUIContext.getMessage(GenericI18Enum.FORM_EMAIL)).withWidth("220px");
         PasswordField passwordField = new PasswordField();
         passwordField.setPlaceholder(UserUIContext.getMessage(UserI18nEnum.FORM_PASSWORD_HINT));
         passwordField.setDescription(UserUIContext.getMessage(UserI18nEnum.FORM_PASSWORD_HINT));
@@ -107,5 +120,31 @@ public class UserBulkInviteViewImpl extends AbstractVerticalPageView implements 
 
     private void displayRolePermission(SimpleRole role) {
         rolePermissionDisplayLayout.displayRolePermission(role);
+    }
+
+    private void sendInviteBulkUsers() {
+        int rows = bulkInviteUsersLayout.getRows();
+        List<Tuple2<String, String>> tuples = new ArrayList<>();
+        for (int i = 1; i < rows; i++) {
+            EmailField emailField = (EmailField) bulkInviteUsersLayout.getComponent(0, i);
+            PasswordField passwordField = (PasswordField) bulkInviteUsersLayout.getComponent(1, i);
+
+            String email = emailField.getValue();
+            String password = passwordField.getValue();
+            if (StringUtils.isBlank(email)) {
+                continue;
+            }
+            if (StringUtils.isBlank(password)) {
+                password = RandomPasswordGenerator.generateRandomPassword();
+            }
+            tuples.add(new Tuple2<>(email, password));
+        }
+
+        if (CollectionUtils.isNotEmpty(tuples)) {
+            UserService userService = AppContextUtil.getSpringBean(UserService.class);
+            SimpleRole role = roleComboBox.getValue();
+            userService.bulkInviteUsers(tuples, role.getId(), AppUI.getSubDomain(), AppUI.getAccountId(), UserUIContext.getUsername(), true);
+        }
+        EventBusFactory.getInstance().post(new UserEvent.GotoList(this, null));
     }
 }

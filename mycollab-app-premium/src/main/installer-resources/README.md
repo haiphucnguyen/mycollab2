@@ -83,6 +83,7 @@ Version 7.0.2
 
 * Can not send email notification to the all members in the project
 * Not display the permissions when edit the project member
+* Display the pretty time against the UTC timezone instead of the user timezone
 
 **Improvements & New Features**
 
