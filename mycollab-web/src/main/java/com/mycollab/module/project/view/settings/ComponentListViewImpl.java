@@ -118,7 +118,7 @@ public class ComponentListViewImpl extends AbstractVerticalPageView implements C
         tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
             SimpleComponent component = tableItem.getBeanByIndex(itemId);
             return new ProgressBarIndicator(component.getNumBugs() + component.getNumTasks(),
-                    component.getNumOpenBugs() + component.getNumOpenTasks(), false);
+                    component.getNumBugs() + component.getNumTasks() - (component.getNumOpenBugs() + component.getNumOpenTasks()), false);
         });
 
         tableItem.addGeneratedColumn("status", (source, itemId, columnId) -> {
