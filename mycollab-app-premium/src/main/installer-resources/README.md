@@ -56,7 +56,6 @@ Version 7.1.0
 * [Premium] Admin site to manage the MyCollab instance
 * [Premium] Customize the dashboard widgets
 * [Premium] Support workflow for tickets
-* Support links among ticket types
 * Improve Kanban display
 
 Version 7.0.3
@@ -81,8 +80,8 @@ Version 7.0.2
 
 **Bug Fixes**
 
-* Can not send email notification to the all members in the project
-* Not display the permissions when edit the project member
+* Can not send the email notification to all members in the project
+* Not display the permissions when editing the project member
 * Display the pretty time against the UTC timezone instead of the user timezone
 
 **Improvements & New Features**

@@ -153,7 +153,7 @@ public class AddTimeEntryWindow extends MWindow implements AssignmentSelectableC
             ticketLayout.addComponent(unlinkTicketBtn);
 
             ELabel linkTicketBtn = new ELabel(StringUtils.trim(selectedTicket.getName(), 60, true))
-                    .withDescription( ProjectGenericItemTooltipGenerator.generateTooltipForEntity(selectedTicket.getType(),
+                    .withDescription(ProjectGenericItemTooltipGenerator.generateTooltipForEntity(selectedTicket.getType(),
                             selectedTicket.getTypeId()));
             ticketLayout.addComponent(linkTicketBtn);
         }

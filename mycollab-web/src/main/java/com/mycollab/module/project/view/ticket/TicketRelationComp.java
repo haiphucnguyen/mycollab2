@@ -52,6 +52,7 @@ public class TicketRelationComp extends AbstractToggleSummaryField {
         buildTicketLink(ticketRelation);
         this.addComponent(titleLinkLbl);
         this.addStyleName("editable-field");
+        // TODO: may check the permission here?
         buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
         MButton unlinkBtn = new MButton("", clickEvent -> {
             ConfirmDialogExt.show(UI.getCurrent(), UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
