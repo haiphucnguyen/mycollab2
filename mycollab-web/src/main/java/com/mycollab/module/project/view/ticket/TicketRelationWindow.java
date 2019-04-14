@@ -19,16 +19,11 @@ package com.mycollab.module.project.view.ticket;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.form.view.LayoutType;
-import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.module.project.domain.SimpleBug;
-import com.mycollab.module.project.domain.TicketRelation;
-import com.mycollab.module.project.event.BugEvent;
-import com.mycollab.module.project.i18n.OptionI18nEnum.BugRelation;
+import com.mycollab.module.project.i18n.OptionI18nEnum.TicketRelation;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.TicketRelationService;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.AbstractFormLayoutFactory;
@@ -42,7 +37,6 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -56,7 +50,7 @@ public class TicketRelationWindow extends MWindow {
     private RelatedBugEditForm editForm;
     private TicketRelationSelectField ticketRelationSelectField;
     private ProjectTicket hostedTicket;
-    private TicketRelation ticketRelation;
+    private com.mycollab.module.project.domain.TicketRelation ticketRelation;
 
     public TicketRelationWindow(ProjectTicket ticket) {
         super(UserUIContext.getMessage(TicketI18nEnum.OPT_DEPENDENCIES));
@@ -64,19 +58,19 @@ public class TicketRelationWindow extends MWindow {
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false).withFullWidth();
 
         editForm = new RelatedBugEditForm();
-        ticketRelation = new TicketRelation();
+        ticketRelation = new com.mycollab.module.project.domain.TicketRelation();
         ticketRelation.setTicketid(ticket.getTypeId());
         ticketRelation.setTickettype(ticket.getType());
-        ticketRelation.setRel(BugRelation.Duplicated.name());
+        ticketRelation.setRel(TicketRelation.Duplicated.name());
         editForm.setBean(ticketRelation);
         contentLayout.add(editForm);
 
         this.withWidth("750px").withModal(true).withResizable(false).withContent(contentLayout).withCenter();
     }
 
-    private class RelatedBugEditForm extends AdvancedEditBeanForm<TicketRelation> {
+    private class RelatedBugEditForm extends AdvancedEditBeanForm<com.mycollab.module.project.domain.TicketRelation> {
         @Override
-        public void setBean(TicketRelation newDataSource) {
+        public void setBean(com.mycollab.module.project.domain.TicketRelation newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new EditFormFieldFactory(RelatedBugEditForm.this));
             super.setBean(newDataSource);
@@ -127,33 +121,33 @@ public class TicketRelationWindow extends MWindow {
 
             @Override
             protected HasValue<?> onAttachField(Object propertyId, HasValue<?> field) {
-                if (TicketRelation.Field.rel.equalTo(propertyId)) {
+                if (com.mycollab.module.project.domain.TicketRelation.Field.rel.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, "This ticket", 0, 0);
-                } else if (TicketRelation.Field.typeid.equalTo(propertyId)) {
+                } else if (com.mycollab.module.project.domain.TicketRelation.Field.typeid.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(TicketI18nEnum.SINGLE), 0, 1);
-                } else if (TicketRelation.Field.comment.equalTo(propertyId)) {
+                } else if (com.mycollab.module.project.domain.TicketRelation.Field.comment.equalTo(propertyId)) {
                     return informationLayout.addComponent(field, UserUIContext.getMessage(GenericI18Enum.OPT_COMMENT), 0, 2);
                 }
                 return null;
             }
         }
 
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<TicketRelation> {
-            EditFormFieldFactory(GenericBeanForm<TicketRelation> form) {
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<com.mycollab.module.project.domain.TicketRelation> {
+            EditFormFieldFactory(GenericBeanForm<com.mycollab.module.project.domain.TicketRelation> form) {
                 super(form);
             }
 
             @Override
             protected HasValue<?> onCreateField(Object propertyId) {
-                if (TicketRelation.Field.rel.equalTo(propertyId)) {
-                    I18nValueComboBox<BugRelation> relationSelection = new I18nValueComboBox<>(BugRelation.class,
-                            BugRelation.Block, BugRelation.Duplicated, BugRelation.Related);
+                if (com.mycollab.module.project.domain.TicketRelation.Field.rel.equalTo(propertyId)) {
+                    I18nValueComboBox<TicketRelation> relationSelection = new I18nValueComboBox<>(TicketRelation.class,
+                            TicketRelation.Block, TicketRelation.Duplicated, TicketRelation.Related);
                     relationSelection.setWidth(WebThemes.FORM_CONTROL_WIDTH);
                     return relationSelection;
-                } else if (TicketRelation.Field.typeid.equalTo(propertyId)) {
+                } else if (com.mycollab.module.project.domain.TicketRelation.Field.typeid.equalTo(propertyId)) {
                     ticketRelationSelectField = new TicketRelationSelectField();
                     return ticketRelationSelectField;
-                } else if (TicketRelation.Field.comment.equalTo(propertyId)) {
+                } else if (com.mycollab.module.project.domain.TicketRelation.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
                 }
                 return null;

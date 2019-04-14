@@ -157,6 +157,23 @@ class ProjectTicket : ValuedBean(), Serializable {
         private const val serialVersionUID = 1L
 
         @JvmStatic
+        fun buildTicketByTask(task: SimpleTask): ProjectTicket {
+            val ticket = ProjectTicket()
+            ticket.typeId = task.id
+            ticket.type = ProjectTypeConstants.TASK
+            ticket.projectId = task.projectid
+            ticket.name = task.name
+            ticket.saccountid = task.saccountid
+            ticket.startDate = task.startdate
+            ticket.endDate = task.enddate
+            ticket.dueDate = task.duedate
+            ticket.milestoneId = task.milestoneid
+            ticket.assignUser = task.assignuser
+            ticket.priority = task.priority
+            return ticket
+        }
+
+        @JvmStatic
         fun buildTask(bean: ProjectTicket): Task {
             val task = Task()
             task.id = bean.typeId

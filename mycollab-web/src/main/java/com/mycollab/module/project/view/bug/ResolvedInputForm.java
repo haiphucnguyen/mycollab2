@@ -25,7 +25,6 @@ import com.mycollab.form.view.LayoutType;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
-import com.mycollab.module.project.domain.TicketRelation;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
 import com.mycollab.module.project.i18n.OptionI18nEnum;
@@ -102,10 +101,10 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                             }
 
                             TicketRelationService relatedBugService = AppContextUtil.getSpringBean(TicketRelationService.class);
-                            TicketRelation relatedTicket = new TicketRelation();
+                            com.mycollab.module.project.domain.TicketRelation relatedTicket = new com.mycollab.module.project.domain.TicketRelation();
                             relatedTicket.setTicketid(bug.getId());
                             relatedTicket.setTickettype(ProjectTypeConstants.BUG);
-                            relatedTicket.setRel(OptionI18nEnum.BugRelation.Duplicated.name());
+                            relatedTicket.setRel(OptionI18nEnum.TicketRelation.Duplicated.name());
                             relatedTicket.setTypeid(relationTicket.getTypeId());
                             relatedTicket.setType(relatedTicket.getType());
                             relatedBugService.saveWithSession(relatedTicket, UserUIContext.getUsername());
