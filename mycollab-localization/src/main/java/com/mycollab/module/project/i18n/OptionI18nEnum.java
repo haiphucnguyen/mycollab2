@@ -70,7 +70,7 @@ public class OptionI18nEnum {
 
     @BaseName("project-ticket-relation")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
-    public enum TicketRelation {
+    public enum TicketRel {
         Related, Duplicated, Block, DependsOn, Duplicate, Relation;
 
         public Enum getReverse() {

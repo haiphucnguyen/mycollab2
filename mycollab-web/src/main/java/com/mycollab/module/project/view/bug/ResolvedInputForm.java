@@ -104,7 +104,7 @@ public class ResolvedInputForm extends AdvancedEditBeanForm<SimpleBug> {
                             com.mycollab.module.project.domain.TicketRelation relatedTicket = new com.mycollab.module.project.domain.TicketRelation();
                             relatedTicket.setTicketid(bug.getId());
                             relatedTicket.setTickettype(ProjectTypeConstants.BUG);
-                            relatedTicket.setRel(OptionI18nEnum.TicketRelation.Duplicated.name());
+                            relatedTicket.setRel(OptionI18nEnum.TicketRel.Duplicated.name());
                             relatedTicket.setTypeid(relationTicket.getTypeId());
                             relatedTicket.setType(relatedTicket.getType());
                             relatedBugService.saveWithSession(relatedTicket, UserUIContext.getUsername());

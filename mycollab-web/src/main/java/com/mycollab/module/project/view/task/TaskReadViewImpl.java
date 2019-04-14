@@ -213,14 +213,14 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             if (CollectionUtils.isNotEmpty(ticketsRelation)) {
                 for (SimpleTicketRelation ticketRelation : ticketsRelation) {
                     if (Boolean.TRUE.equals(ticketRelation.getLtr())) {
-                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(OptionI18nEnum.TicketRelation.class,
+                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(OptionI18nEnum.TicketRel.class,
                                 ticketRelation.getRel())).withStyleName(WebThemes.ARROW_BTN).withUndefinedWidth();
                         TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);
                         MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
                                 .expand(toggleRelatedBugField).withFullWidth();
                         header.with(bugContainer);
                     } else {
-                        Enum relatedEnum = OptionI18nEnum.TicketRelation.valueOf(ticketRelation.getRel()).getReverse();
+                        Enum relatedEnum = OptionI18nEnum.TicketRel.valueOf(ticketRelation.getRel()).getReverse();
                         ELabel relatedLink = new ELabel(UserUIContext.getMessage(relatedEnum)).withStyleName(WebThemes.ARROW_BTN)
                                 .withUndefinedWidth();
                         TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);

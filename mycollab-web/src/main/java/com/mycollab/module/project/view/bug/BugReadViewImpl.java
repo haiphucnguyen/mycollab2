@@ -27,7 +27,7 @@ import com.mycollab.module.project.domain.SimpleBug;
 import com.mycollab.module.project.domain.SimpleTicketRelation;
 import com.mycollab.module.project.event.BugEvent;
 import com.mycollab.module.project.i18n.BugI18nEnum;
-import com.mycollab.module.project.i18n.OptionI18nEnum.TicketRelation;
+import com.mycollab.module.project.i18n.OptionI18nEnum.TicketRel;
 import com.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.BugService;
@@ -253,14 +253,14 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             if (CollectionUtils.isNotEmpty(ticketsRelation)) {
                 for (SimpleTicketRelation ticketRelation : ticketsRelation) {
                     if (Boolean.TRUE.equals(ticketRelation.getLtr())) {
-                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(TicketRelation.class,
+                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(TicketRel.class,
                                 ticketRelation.getRel())).withStyleName(WebThemes.ARROW_BTN).withUndefinedWidth();
                         TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);
                         MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
                                 .expand(toggleRelatedBugField).withFullWidth();
                         header.with(bugContainer);
                     } else {
-                        Enum relatedEnum = TicketRelation.valueOf(ticketRelation.getRel()).getReverse();
+                        Enum relatedEnum = TicketRel.valueOf(ticketRelation.getRel()).getReverse();
                         ELabel relatedLink = new ELabel(UserUIContext.getMessage(relatedEnum)).withStyleName(WebThemes.ARROW_BTN)
                                 .withUndefinedWidth();
                         TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);

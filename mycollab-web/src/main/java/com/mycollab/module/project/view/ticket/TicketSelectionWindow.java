@@ -16,6 +16,7 @@
  */
 package com.mycollab.module.project.view.ticket;
 
+import com.hp.gagawa.java.elements.A;
 import com.mycollab.common.i18n.GenericI18Enum;
 import com.mycollab.db.arguments.SetSearchField;
 import com.mycollab.module.project.CurrentProjectVariables;
@@ -26,13 +27,16 @@ import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
 import com.mycollab.module.project.fielddef.TicketTableFieldDef;
 import com.mycollab.module.project.i18n.TicketI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
+import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.TicketTableDisplay;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
+import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.FieldSelection;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Button;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.viritin.layouts.MWindow;
@@ -71,26 +75,32 @@ class TicketSelectionWindow extends MWindow {
 
     private DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> createTicketTable() {
         DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> tableItem = new TicketTableDisplay(
-                Arrays.asList(TicketTableFieldDef.name, TicketTableFieldDef.priority, TicketTableFieldDef.status));
+                Arrays.asList(TicketTableFieldDef.name, TicketTableFieldDef.priority, TicketTableFieldDef.status, TicketTableFieldDef.id));
         tableItem.setWidth("100%");
         tableItem.setDisplayNumItems(10);
         tableItem.addGeneratedColumn("name", (source, itemId, columnId) -> {
             ProjectTicket ticket = tableItem.getBeanByIndex(itemId);
-            MButton ticketLink = new MButton(ticket.getName(), clickEvent -> {
-                fieldSelection.fireValueChange(ticket);
-                close();
-            }).withStyleName(WebThemes.BUTTON_LINK).withFullWidth();
+            A ticketLink = new A("#").appendText(ProjectAssetsManager.getAsset(ticket.getType()).getHtml() + " " + ticket.getName());
 
+            ELabel ticketLbl = ELabel.html(ticketLink.write());
             if (ticket.isClosed()) {
-                ticketLink.addStyleName(WebThemes.LINK_COMPLETED);
+                ticketLbl.addStyleName(WebThemes.LINK_COMPLETED);
             } else if (ticket.isOverdue()) {
-                ticketLink.addStyleName(WebThemes.LINK_OVERDUE);
+                ticketLbl.addStyleName(WebThemes.LINK_OVERDUE);
             }
 
-            ticketLink.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
+            ticketLbl.setDescription(ProjectTooltipGenerator.generateTooltipEntity(UserUIContext.getUserLocale(), AppUI.getDateFormat(),
                     ticket.getType(), ticket.getTypeId(), AppUI.getAccountId(), AppUI.getSiteUrl(), UserUIContext.getUserTimeZone(), false), ContentMode.HTML);
-            ticketLink.addStyleName(WebThemes.TEXT_ELLIPSIS);
-            return ticketLink;
+            ticketLbl.addStyleName(WebThemes.TEXT_ELLIPSIS);
+            return ticketLbl;
+        });
+        tableItem.addGeneratedColumn("id", (source, itemId, columnId) -> {
+            ProjectTicket ticket = tableItem.getBeanByIndex(itemId);
+            MButton selectBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_SELECT), (Button.ClickListener) clickEvent -> {
+                fieldSelection.fireValueChange(ticket);
+                close();
+            }).withStyleName(WebThemes.BUTTON_ACTION);
+            return selectBtn;
         });
         return tableItem;
     }
