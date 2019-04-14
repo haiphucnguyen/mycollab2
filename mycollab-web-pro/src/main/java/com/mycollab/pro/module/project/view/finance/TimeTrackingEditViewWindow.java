@@ -19,7 +19,6 @@ import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
@@ -113,8 +112,8 @@ public class TimeTrackingEditViewWindow extends MWindow implements AssignmentSel
                     .appendText(StringUtils.trim(ticket.getName(), 60, true));
 
             ELabel linkTicketBtn = ELabel.html(ticketLink.write())
-                    .withDescription(new ProjectGenericItemTooltipGenerator(ticket.getType(),
-                            ticket.getTypeId()).getContent()).withFullWidth();
+                    .withDescription(ProjectGenericItemTooltipGenerator.generateTooltipForEntity(ticket.getType(),
+                            ticket.getTypeId())).withFullWidth();
             ticketLayout.with(detachTaskBtn, linkTicketBtn).expand(linkTicketBtn);
         }
     }

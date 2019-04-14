@@ -36,6 +36,7 @@ import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.module.project.ui.components.*;
 import com.mycollab.module.project.view.ProjectView;
 import com.mycollab.module.project.view.ticket.TicketRelationWindow;
+import com.mycollab.module.project.view.ticket.TicketRelationComp;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.ApplicationEventListener;
@@ -54,6 +55,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
@@ -247,24 +249,24 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             }
 
             TicketRelationService ticketRelationService = AppContextUtil.getSpringBean(TicketRelationService.class);
-            List<SimpleTicketRelation> relatedTickets = ticketRelationService.findRelatedTickets(bug.getId(), ProjectTypeConstants.BUG);
-            if (CollectionUtils.isNotEmpty(relatedTickets)) {
-                for (SimpleTicketRelation relatedTicket : relatedTickets) {
-                    if (Boolean.TRUE.equals(relatedTicket.getLtr())) {
+            List<SimpleTicketRelation> ticketsRelation = ticketRelationService.findRelatedTickets(bug.getId(), ProjectTypeConstants.BUG);
+            if (CollectionUtils.isNotEmpty(ticketsRelation)) {
+                for (SimpleTicketRelation ticketRelation : ticketsRelation) {
+                    if (Boolean.TRUE.equals(ticketRelation.getLtr())) {
                         ELabel relatedLink = new ELabel(UserUIContext.getMessage(BugRelation.class,
-                                relatedTicket.getRel())).withStyleName(WebThemes.ARROW_BTN).withUndefinedWidth();
-//                        ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedTicket.getRelatedBug());
-//                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
-//                                .expand(toggleRelatedBugField).withFullWidth();
-//                        header.with(bugContainer);
+                                ticketRelation.getRel())).withStyleName(WebThemes.ARROW_BTN).withUndefinedWidth();
+                        TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);
+                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
+                                .expand(toggleRelatedBugField).withFullWidth();
+                        header.with(bugContainer);
                     } else {
-//                        Enum relatedEnum = BugRelation.valueOf(relatedTicket.getRelatedType()).getReverse();
-//                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(relatedEnum)).withStyleName(WebThemes.ARROW_BTN)
-//                                .withUndefinedWidth();
-//                        ToggleBugSummaryWithDependentField toggleRelatedBugField = new ToggleBugSummaryWithDependentField(bug, relatedTicket.getRelatedBug());
-//                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
-//                                .expand(toggleRelatedBugField).withFullWidth();
-//                        header.with(bugContainer);
+                        Enum relatedEnum = BugRelation.valueOf(ticketRelation.getRel()).getReverse();
+                        ELabel relatedLink = new ELabel(UserUIContext.getMessage(relatedEnum)).withStyleName(WebThemes.ARROW_BTN)
+                                .withUndefinedWidth();
+                        TicketRelationComp toggleRelatedBugField = new TicketRelationComp(ticketRelation);
+                        MHorizontalLayout bugContainer = new MHorizontalLayout(relatedLink, toggleRelatedBugField)
+                                .expand(toggleRelatedBugField).withFullWidth();
+                        header.with(bugContainer);
                     }
                 }
             }
