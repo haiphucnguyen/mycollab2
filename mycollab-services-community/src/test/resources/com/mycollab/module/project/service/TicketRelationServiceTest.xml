@@ -15,4 +15,10 @@
 
     <m_prj_ticket_relation id="1" ticketId="1" ticketType="Project-Bug" type="Project-Task" typeId="1" rel="Duplicated"/>
     <m_prj_ticket_relation id="2" ticketId="2" ticketType="Project-Task" type="Project-Bug" typeId="1" rel="Block"/>
+    <m_prj_ticket_relation id="3" ticketId="1" ticketType="Project-Bug" type="Project-Bug" typeId="2" rel="Block"/>
+
+    <m_prj_ticket_key id="1" projectId="1" ticketId="1" ticketType="Project-Task" ticketKey="1"/>
+    <m_prj_ticket_key id="2" projectId="1" ticketId="1" ticketType="Project-Bug" ticketKey="2"/>
+    <m_prj_ticket_key id="3" projectId="1" ticketId="2" ticketType="Project-Bug" ticketKey="3"/>
+    <m_prj_ticket_key id="4" projectId="1" ticketId="2" ticketType="Project-Task" ticketKey="4"/>
 </dataset>
