@@ -64,13 +64,13 @@ class TicketSelectionWindow extends MWindow {
         baseCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
         tableItem.setSearchCriteria(baseCriteria);
 
-        TicketSearchPanel bugSearchPanel = new TicketSearchPanel();
-        bugSearchPanel.addSearchHandler(criteria -> {
+        TicketSearchPanel ticketSearchPanel = new TicketSearchPanel();
+        ticketSearchPanel.addSearchHandler(criteria -> {
             criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             criteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
             tableItem.setSearchCriteria(criteria);
         });
-        this.setContent(new MVerticalLayout(bugSearchPanel, tableItem));
+        this.setContent(new MVerticalLayout(ticketSearchPanel, tableItem));
     }
 
     private DefaultPagedBeanTable<ProjectTicketService, ProjectTicketSearchCriteria, ProjectTicket> createTicketTable() {
