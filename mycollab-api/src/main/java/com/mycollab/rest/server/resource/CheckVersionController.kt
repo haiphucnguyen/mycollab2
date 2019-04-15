@@ -30,7 +30,7 @@ class CheckVersionController(private val editionInfo: EditionInfo) {
         props["releaseNotes"] = "https://docs.mycollab.com/releases/"
 
         if (version != null && Version.isEditionNewer(liveVersion, version) &&
-                Version.isEditionNewer(version, "7.0.0")) {
+                Version.isEditionNewer(version, "7.0.2")) {
             props["autoDownload"] = editionInfo.communityUpgradeLink
         }
 
