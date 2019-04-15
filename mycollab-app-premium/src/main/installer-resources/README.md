@@ -48,14 +48,9 @@ Version 7.1.0
 
 **Improvements & New Features**
 
-* [Premium] Permission to approve timesheet
-* [Premium] Notification of approving timesheet
 * [Premium] Notification of obsolete invoices
 * [Premium] Support the new ticket type: Spike
-* [Premium] Support custom fields for the tickets
 * [Premium] Admin site to manage the MyCollab instance
-* [Premium] Customize the dashboard widgets
-* [Premium] Support workflow for tickets
 * Improve Kanban display
 
 Version 7.0.3
@@ -69,7 +64,12 @@ Version 7.0.3
 
 **Improvements & New Features**
 
-
+* [Premium] Permission to approve timesheet
+* [Premium] Notification of approving timesheet
+* [Premium] Customize the dashboard widgets
+* [Premium] Support workflow for tickets
+* [Premium] Support custom fields for the tickets
+* Support tickets hierachy
 
 Version 7.0.2
 -------------
