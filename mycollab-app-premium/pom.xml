@@ -324,6 +324,7 @@
                                       tofile="${installer.staging.dir}/lib/mycollab-runner-${project.version}.jar"/>
                                 <chmod dir="${installer.staging.dir}/bin/" includes="*.sh" perm="700"/>
                                 <fixcrlf srcdir="${installer.staging.dir}/bin/" includes="**/*.bat" eol="crlf"/>
+                                <fixcrlf srcdir="${installer.staging.dir}/config/" includes="**/*" eol="crlf"/>
                             </target>
                         </configuration>
                     </execution>

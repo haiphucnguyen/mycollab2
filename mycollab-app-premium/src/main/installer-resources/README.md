@@ -69,7 +69,7 @@ Version 7.0.3
 * [Premium] Customize the dashboard widgets
 * [Premium] Support workflow for tickets
 * [Premium] Support custom fields for the tickets
-* Support tickets hierachy
+* Support tickets hierarchy
 
 Version 7.0.2
 -------------
