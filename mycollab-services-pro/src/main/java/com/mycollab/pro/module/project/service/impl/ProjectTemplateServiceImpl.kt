@@ -108,7 +108,7 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
         val pendingTasks = ArrayList<SimpleTask>()
         tasks.forEach {
             val taskId = it.id
-            val parentTaskId = it.parenttaskid
+            val parentTaskId = null //it.parenttaskid
             if (parentTaskId == null) {
                 it.id = null
                 it.milestoneid = milestoneMapIds[it.milestoneid]
@@ -116,12 +116,12 @@ class ProjectTemplateServiceImpl(private val projectService: ProjectService,
                 val newTaskId = projectTaskService.saveWithSession(it, username)
                 taskMapIds[taskId] = newTaskId
             } else {
-                val candidateParentTaskId = taskMapIds[parentTaskId]
+                val candidateParentTaskId = null //taskMapIds[parentTaskId]
                 if (candidateParentTaskId != null) {
                     it.id = null
                     it.projectid = newProjectId
                     it.milestoneid = milestoneMapIds[it.milestoneid]
-                    it.parenttaskid = candidateParentTaskId
+//                    it.parenttaskid = candidateParentTaskId
                     val newTaskId = projectTaskService.saveWithSession(it, username)
                     taskMapIds[taskId] = newTaskId
                 } else {

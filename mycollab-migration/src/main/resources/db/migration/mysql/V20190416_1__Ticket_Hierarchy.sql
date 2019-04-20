@@ -17,3 +17,9 @@ INSERT INTO m_prj_ticket_hierarchy(parentId, parentType, ticketId, ticketType, p
     SELECT m_prj_task.parentTaskId as parentId, 'Project-Task' AS parentType, m_prj_task.id AS ticketId, 'Project-Task' AS ticketType,
         m_prj_task.projectId AS projectId
     FROM m_prj_task WHERE m_prj_task.parentTaskId IS NOT NULL;
+
+ALTER TABLE `m_prj_task`
+DROP FOREIGN KEY `FK_m_prj_task_6`;
+ALTER TABLE `m_prj_task`
+DROP COLUMN `parentTaskId`,
+DROP INDEX `FK_m_prj_task_6_idx` ;

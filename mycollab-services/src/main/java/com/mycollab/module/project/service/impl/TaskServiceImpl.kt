@@ -161,14 +161,12 @@ class TaskServiceImpl(private val taskMapper: TaskMapper,
     override fun findSubTasks(parentTaskId: Int, sAccountId: Int, orderField: SearchCriteria.OrderField): List<SimpleTask> {
         val searchCriteria = TaskSearchCriteria()
         searchCriteria.saccountid = NumberSearchField(sAccountId)
-        searchCriteria.parentTaskId = NumberSearchField(parentTaskId)
         searchCriteria.setOrderFields(arrayListOf(orderField))
         return taskMapperExt.findPageableListByCriteria(searchCriteria, RowBounds(0, Integer.MAX_VALUE)) as List<SimpleTask>
     }
 
     override fun getCountOfOpenSubTasks(taskId: Int): Int {
         val searchCriteria = TaskSearchCriteria()
-        searchCriteria.parentTaskId = NumberSearchField(taskId)
         searchCriteria.addExtraField(TaskSearchCriteria.p_status.buildPropertyParamNotInList(SearchField.AND,
                 setOf(StatusI18nEnum.Closed.name)))
         return taskMapperExt.getTotalCount(searchCriteria)
@@ -176,7 +174,6 @@ class TaskServiceImpl(private val taskMapper: TaskMapper,
 
     override fun massUpdateTaskStatuses(parentTaskId: Int, status: String, @CacheKey sAccountId: Int) {
         val searchCriteria = TaskSearchCriteria()
-        searchCriteria.parentTaskId = NumberSearchField(parentTaskId)
         searchCriteria.saccountid = NumberSearchField(sAccountId)
         val jdbcTemplate = JdbcTemplate(dataSource)
         jdbcTemplate.update("UPDATE `m_prj_task` SET `status`=? WHERE `parentTaskId`=?", status, parentTaskId)

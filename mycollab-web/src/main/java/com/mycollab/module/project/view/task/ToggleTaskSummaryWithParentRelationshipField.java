@@ -39,7 +39,8 @@ public class ToggleTaskSummaryWithParentRelationshipField extends CustomField<Si
     public ToggleTaskSummaryWithParentRelationshipField(final SimpleTask task) {
         toggleTaskSummaryField = new ToggleTaskSummaryField(task, false);
         MButton unlinkBtn = new MButton("", clickEvent -> {
-            task.setParenttaskid(null);
+            // TODO
+//            task.setParenttaskid(null);
             TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
             taskService.updateWithSession(task, UserUIContext.getUsername());
             UIUtils.removeChildAssociate(ToggleTaskSummaryWithParentRelationshipField.this, RemoveInlineComponentMarker.class);

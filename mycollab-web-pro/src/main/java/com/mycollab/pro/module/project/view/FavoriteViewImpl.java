@@ -283,8 +283,8 @@ public class FavoriteViewImpl extends AbstractVerticalPageView implements IFavor
                         final PrintButton printBtn = new PrintButton();
                         printBtn.addClickListener(clickEvent ->
                                 printBtn.doPrint(task, new FormReportLayout(ProjectTypeConstants.TASK, Task.Field.name.name(),
-                                        TaskDefaultFormLayoutFactory.getReadForm(), Task.Field.name.name(), Task.Field.id.name(),
-                                        Task.Field.parenttaskid.name()))
+                                        TaskDefaultFormLayoutFactory.getReadForm(), Task.Field.name.name(), Task.Field.id.name()
+                                        /*Task.Field.parenttaskid.name()*/))
                         );
                         printBtn.setStyleName(WebThemes.BUTTON_OPTION);
                         printBtn.setDescription(UserUIContext.getMessage(GenericI18Enum.ACTION_PRINT));

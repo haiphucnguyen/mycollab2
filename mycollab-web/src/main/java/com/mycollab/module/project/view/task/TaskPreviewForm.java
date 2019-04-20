@@ -70,6 +70,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
+// TODO
 public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     @Override
     public void setBean(SimpleTask bean) {
@@ -112,7 +113,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 return new BooleanViewField();
             } else if (Task.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField();
-            } else if ("section-subTasks".equals(propertyId)) {
+            } else if ("section-subTickets".equals(propertyId)) {
                 return new SubTasksComp(beanItem);
             } else if (Task.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(StatusI18nEnum.class).withStyleName(WebThemes.FIELD_NOTE);
@@ -166,7 +167,8 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 MButton addNewTaskBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
                     SimpleTask task = new SimpleTask();
                     task.setMilestoneid(beanItem.getMilestoneid());
-                    task.setParenttaskid(beanItem.getId());
+                    // TODO
+//                    task.setParenttaskid(beanItem.getId());
                     task.setPriority(Priority.Medium.name());
                     task.setProjectid(beanItem.getProjectid());
                     task.setSaccountid(beanItem.getSaccountid());
@@ -268,14 +270,14 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
 
             TaskSearchCriteria baseSearchCriteria = new TaskSearchCriteria();
             baseSearchCriteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
-            baseSearchCriteria.setHasParentTask(new BooleanSearchField(false));
+//            baseSearchCriteria.setHasParentTask(new BooleanSearchField(false));
 
             taskSearchPanel = new TaskSearchPanel(false);
             DefaultBeanPagedList<TaskService, TaskSearchCriteria, SimpleTask> taskList = new DefaultBeanPagedList<>(
                     AppContextUtil.getSpringBean(TaskService.class), new TaskRowRenderer(), 10);
             taskSearchPanel.addSearchHandler(criteria -> {
                 criteria.setProjectId(NumberSearchField.equal(CurrentProjectVariables.getProjectId()));
-                criteria.setHasParentTask(new BooleanSearchField(false));
+//                criteria.setHasParentTask(new BooleanSearchField(false));
                 taskList.setSearchCriteria(criteria);
             });
             MVerticalLayout content = new MVerticalLayout(taskSearchPanel, taskList).withSpacing(false);
@@ -290,7 +292,7 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                     if (item.getId().equals(parentTask.getId())) {
                         NotificationUtil.showErrorNotification(UserUIContext.getMessage(TaskI18nEnum.ERROR_CAN_NOT_ASSIGN_PARENT_TASK_TO_ITSELF));
                     } else {
-                        item.setParenttaskid(parentTask.getId());
+//                        item.setParenttaskid(parentTask.getId());
                         TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
                         taskService.updateWithSession(item, UserUIContext.getUsername());
                         EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getId()));
