@@ -556,7 +556,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
             }
         }
 
-        private void doChange(LocalDate dateValue, final Integer milestoneId) {
+        private void doChange(LocalDate dateValue, Integer milestoneId) {
             formLayout.removeAllComponents();
             String value = typeSelection.getValue();
             if (UserUIContext.getMessage(TaskI18nEnum.SINGLE).equals(value)) {
