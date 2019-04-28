@@ -288,7 +288,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     }
 
     private static class PeopleInfoComp extends MVerticalLayout {
-        private static final long serialVersionUID = 1L;
 
         private PeopleInfoComp() {
             this.withMargin(false);
