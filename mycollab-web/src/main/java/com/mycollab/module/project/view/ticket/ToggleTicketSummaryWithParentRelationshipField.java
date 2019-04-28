@@ -16,8 +16,11 @@
  */
 package com.mycollab.module.project.view.ticket;
 
+import com.mycollab.module.project.dao.TicketHierarchyMapper;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.domain.TicketHierarchyExample;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
+import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.RemoveInlineComponentMarker;
 import com.mycollab.vaadin.ui.UIUtils;
@@ -36,10 +39,11 @@ public class ToggleTicketSummaryWithParentRelationshipField extends CssLayout {
     public ToggleTicketSummaryWithParentRelationshipField(ProjectTicket parentTicket, ProjectTicket subTicket) {
         toggleTicketSummaryField = new ToggleTicketSummaryField(subTicket);
         MButton unlinkBtn = new MButton("", clickEvent -> {
-            // TODO
-//            task.setParenttaskid(null);
-//            TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-//            taskService.updateWithSession(projectTicket, UserUIContext.getUsername());
+            TicketHierarchyExample ex = new TicketHierarchyExample();
+            ex.createCriteria().andParentidEqualTo(parentTicket.getTypeId()).andParenttypeEqualTo(parentTicket.getType())
+                    .andTickettypeEqualTo(subTicket.getType()).andTicketidEqualTo(subTicket.getTypeId());
+            TicketHierarchyMapper ticketHierarchyMapper = AppContextUtil.getSpringBean(TicketHierarchyMapper.class);
+            ticketHierarchyMapper.deleteByExample(ex);
             UIUtils.removeChildAssociate(ToggleTicketSummaryWithParentRelationshipField.this, RemoveInlineComponentMarker.class);
         }).withIcon(VaadinIcons.UNLINK).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP, ValoTheme.BUTTON_ICON_ONLY)
                 .withDescription(UserUIContext.getMessage(TaskI18nEnum.OPT_REMOVE_PARENT_CHILD_RELATIONSHIP));
