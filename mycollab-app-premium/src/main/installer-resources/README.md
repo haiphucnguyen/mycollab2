@@ -53,7 +53,7 @@ Version 7.1.0
 * [Premium] Admin site to manage the MyCollab instance
 * Improve Kanban display
 
-Version 7.0.3
+Version 7.0.4
 -------------
 
 **Library Upgrades**
@@ -70,6 +70,18 @@ Version 7.0.3
 * [Premium] Support workflow for tickets
 * [Premium] Support custom fields for the tickets
 * Support tickets hierarchy
+
+
+Version 7.0.3
+-------------
+
+**Library Upgrades**
+
+* Jackrabbit 2.19.3
+
+**Bug Fixes**
+
+* Fix the content issue in Jackrabbit to prevent adding new entity
 
 Version 7.0.2
 -------------

@@ -1,7 +1,6 @@
 package com.mycollab.pro.module.project.view.client;
 
 import com.mycollab.common.domain.Client;
-import com.mycollab.common.domain.SimpleClient;
 import com.mycollab.common.i18n.ClientI18nEnum;
 import com.mycollab.common.i18n.FileI18nEnum;
 import com.mycollab.common.service.ClientService;
@@ -12,12 +11,12 @@ import com.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.AppUI;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.event.HasEditFormHandlers;
 import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.ViewComponent;
 import com.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.mycollab.vaadin.ui.ELabel;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.ui.WrappedFormLayoutFactory;
 import com.mycollab.vaadin.web.ui.AddViewLayout;
 import com.mycollab.vaadin.web.ui.DefaultDynaFormLayout;
@@ -72,7 +71,7 @@ public class ClientAddViewImpl extends AbstractVerticalPageView implements Clien
             ClientService clientService = AppContextUtil.getSpringBean(ClientService.class);
             client.setAvatarid(newLogoId);
             clientService.updateSelectiveWithSession(client, UserUIContext.getUsername());
-            Utils.reloadPage();
+            UIUtils.reloadPage();
         }
 
         private Layout createButtonControls() {

@@ -507,6 +507,19 @@
     &:hover {
       background-color: darken($my-note-color, 10%);
     }
+    &.v-link-block {
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: none;
+        color: $my-white-color !important;
+      }
+    }
+  }
+
+  .v-link.v-link-block {
+    text-decoration: none;
   }
 
   /*Wizard style*/
