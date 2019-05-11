@@ -1,7 +1,7 @@
 package com.mycollab.ondemand.vaadin.ui.service.impl
 
 import com.mycollab.core.BroadcastMessage
-import com.mycollab.vaadin.Utils
+import com.mycollab.vaadin.ui.UIUtils
 import com.mycollab.vaadin.web.ui.service.AbstractBroadcastReceiverService
 import org.springframework.stereotype.Service
 
@@ -15,7 +15,7 @@ class BroadcastReceiverServiceImpl : AbstractBroadcastReceiverService() {
         if (message.sAccountId != null) {
             val context = myCollabApp.associateContext
             if (context.isMatchAccount(message.sAccountId)) {
-                Utils.reloadPage()
+                UIUtils.reloadPage()
             }
         }
     }

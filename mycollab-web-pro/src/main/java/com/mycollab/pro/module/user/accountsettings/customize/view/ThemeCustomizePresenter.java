@@ -16,10 +16,14 @@ import com.mycollab.module.user.ui.SettingUIConstants;
 import com.mycollab.security.BooleanPermissionFlag;
 import com.mycollab.security.RolePermissionCollections;
 import com.mycollab.spring.AppContextUtil;
-import com.mycollab.vaadin.*;
+import com.mycollab.vaadin.AppUI;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
+import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewPermission;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
@@ -49,7 +53,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
             public void handle(SaveTheme event) {
                 if (event.getData() instanceof AccountTheme) {
                     saveTheme((AccountTheme) event.getData());
-                    Utils.reloadPage();
+                    UIUtils.reloadPage();
                 }
             }
         });
@@ -65,7 +69,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<IThemeCustomizeVi
                         confirmDialog -> {
                             if (confirmDialog.isConfirmed()) {
                                 themeService.removeTheme(AppUI.getAccountId());
-                                Utils.reloadPage();
+                                UIUtils.reloadPage();
                             }
                         });
             }

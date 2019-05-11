@@ -8,9 +8,9 @@ import com.mycollab.license.LicenseInfo;
 import com.mycollab.license.service.LicenseResolver;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
-import com.mycollab.vaadin.Utils;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.NotificationUtil;
+import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -70,7 +70,7 @@ public class LicenseActivationWindow extends MWindow {
                     NotificationUtil.showErrorNotification(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
                 } else {
                     close();
-                    Utils.reloadPage();
+                    UIUtils.reloadPage();
                 }
 
             } else {
@@ -84,7 +84,7 @@ public class LicenseActivationWindow extends MWindow {
                             NotificationUtil.showErrorNotification(UserUIContext.getMessage(LicenseI18nEnum.ERROR_LICENSE_INVALID));
                         } else {
                             close();
-                            Utils.reloadPage();
+                            UIUtils.reloadPage();
                         }
                     } catch (Exception e) {
                         LOG.error("Error", e);
