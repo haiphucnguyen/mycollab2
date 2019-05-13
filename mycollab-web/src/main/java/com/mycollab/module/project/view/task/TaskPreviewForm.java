@@ -47,7 +47,6 @@ import com.vaadin.icons.VaadinIcons;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-// TODO
 public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
     @Override
     public void setBean(SimpleTask bean) {

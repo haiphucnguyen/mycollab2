@@ -63,6 +63,8 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;
@@ -72,6 +74,7 @@ import org.vaadin.viritin.layouts.MWindow;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -457,8 +460,9 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
         }
     }
 
+    @NotNull
     @Override
-    public MWindow createNewTicketWindow(LocalDate date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
+    public MWindow createNewTicketWindow(@Nullable LocalDate date, @Nullable Integer prjId, @Nullable Integer milestoneId, boolean isIncludeMilestone, @Nullable Map<String, ?> argumentsMap) {
         return new NewTicketWindow(date, prjId, milestoneId, isIncludeMilestone);
     }
 

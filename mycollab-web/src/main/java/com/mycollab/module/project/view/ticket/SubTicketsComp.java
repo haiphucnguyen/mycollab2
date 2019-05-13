@@ -1,16 +1,22 @@
 package com.mycollab.module.project.view.ticket;
 
+import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.mycollab.common.i18n.GenericI18Enum;
+import com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.mycollab.module.file.StorageUtils;
 import com.mycollab.module.project.CurrentProjectVariables;
 import com.mycollab.module.project.ProjectRolePermissionCollections;
 import com.mycollab.module.project.ProjectTypeConstants;
 import com.mycollab.module.project.domain.ProjectTicket;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
+import com.mycollab.module.project.view.service.TicketComponentFactory;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.ApplicationEventListener;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IgnoreBindingField;
@@ -25,24 +31,29 @@ import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MWindow;
 
 import java.util.List;
 
+/**
+ * @author MyCollab Ltd
+ * @since 7.0.3
+ */
 public class SubTicketsComp extends IgnoreBindingField {
     private static final long serialVersionUID = 1L;
 
-//        private ApplicationEventListener<TaskEvent.NewTaskAdded> newTaskAddedHandler = new
-//                ApplicationEventListener<TaskEvent.NewTaskAdded>() {
-//                    @Override
-//                    @Subscribe
-//                    public void handle(TaskEvent.NewTaskAdded event) {
-//                        final TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-//                        SimpleTask task = taskService.findById(event.getData(), AppUI.getAccountId());
-//                        if (task != null && tasksLayout != null) {
-//                            tasksLayout.addComponent(generateSubTicketContent(task), 0);
-//                        }
-//                    }
-//                };
+        private ApplicationEventListener<TicketEvent.SubTicketAdded> subTicketAddedEvent = new
+                ApplicationEventListener<TicketEvent.SubTicketAdded>() {
+                    @Override
+                    @Subscribe
+                    public void handle(TicketEvent.SubTicketAdded event) {
+                        ProjectTicketService ticketService = AppContextUtil.getSpringBean(ProjectTicketService.class);
+                        ProjectTicket ticket = ticketService.findTicket(event.getTicketType(), event.getTicketId());
+                        if (ticket != null) {
+                            ticketsLayout.addComponent(generateSubTicketContent(ticket), 0);
+                        }
+                    }
+                };
 
     private MVerticalLayout ticketsLayout;
     private ProjectTicket parentTicket;
@@ -53,13 +64,13 @@ public class SubTicketsComp extends IgnoreBindingField {
 
     @Override
     public void attach() {
-//            EventBusFactory.getInstance().register(newTaskAddedHandler);
+            EventBusFactory.getInstance().register(subTicketAddedEvent);
         super.attach();
     }
 
     @Override
     public void detach() {
-//            EventBusFactory.getInstance().unregister(newTaskAddedHandler);
+            EventBusFactory.getInstance().unregister(subTicketAddedEvent);
         super.detach();
     }
 
@@ -71,14 +82,9 @@ public class SubTicketsComp extends IgnoreBindingField {
 
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             MButton addNewTaskBtn = new MButton(UserUIContext.getMessage(GenericI18Enum.BUTTON_ADD), clickEvent -> {
-//                SimpleTask task = new SimpleTask();
-//                task.setMilestoneid(beanItem.getMilestoneid());
-                // TODO
-//                    task.setParenttaskid(beanItem.getId());
-//                task.setPriority(OptionI18nEnum.Priority.Medium.name());
-//                task.setProjectid(beanItem.getProjectid());
-//                task.setSaccountid(beanItem.getSaccountid());
-//                UI.getCurrent().addWindow(new TaskAddWindow(task));
+                MWindow newTicketWindow = AppContextUtil.getSpringBean(TicketComponentFactory.class)
+                        .createNewTicketWindow(null, parentTicket.getProjectId(), parentTicket.getMilestoneId(), true, null);
+                UI.getCurrent().addWindow(newTicketWindow);
             }).withStyleName(WebThemes.BUTTON_ACTION).withIcon(VaadinIcons.PLUS);
 
             SplitButton splitButton = new SplitButton(addNewTaskBtn);
@@ -116,18 +122,16 @@ public class SubTicketsComp extends IgnoreBindingField {
     }
 
     private HorizontalLayout generateSubTicketContent(ProjectTicket subTicket) {
-        MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX);
+        MHorizontalLayout layout = new MHorizontalLayout().withStyleName(WebThemes.HOVER_EFFECT_NOT_BOX).withMargin(new MarginInfo(false, false, false, true));
         layout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
-        CheckBox checkBox = new CheckBox("", subTicket.isClosed());
-        checkBox.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-        layout.with(checkBox);
+        layout.with(ELabel.fontIcon(ProjectAssetsManager.getAsset(subTicket.getType())));
 
         Span priorityLink = new Span().appendText(ProjectAssetsManager.getPriorityHtml(subTicket.getPriority()))
                 .setTitle(subTicket.getPriority());
         layout.with(ELabel.html(priorityLink.write()).withUndefinedWidth());
 
-        String taskStatus = UserUIContext.getMessage(com.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class, subTicket.getStatus());
+        String taskStatus = UserUIContext.getMessage(StatusI18nEnum.class, subTicket.getStatus());
         ELabel statusLbl = new ELabel(taskStatus).withStyleName(WebThemes.FIELD_NOTE).withUndefinedWidth();
         layout.with(statusLbl);
 
@@ -138,28 +142,6 @@ public class SubTicketsComp extends IgnoreBindingField {
 
         ToggleTicketSummaryWithParentRelationshipField toggleTaskSummaryField = new ToggleTicketSummaryWithParentRelationshipField(parentTicket, subTicket);
         layout.with(toggleTaskSummaryField).expand(toggleTaskSummaryField);
-
-//            checkBox.addValueChangeListener(valueChangeEvent -> {
-//                Boolean selectedFlag = checkBox.getValue();
-//                TaskService taskService = AppContextUtil.getSpringBean(TaskService.class);
-//                if (selectedFlag) {
-//                    statusLbl.setValue(UserUIContext.getMessage(StatusI18nEnum.class, StatusI18nEnum.Closed.name()));
-//                    subTicket.setStatus(StatusI18nEnum.Closed.name());
-//                    subTicket.setPercentagecomplete(100d);
-//                    toggleTaskSummaryField.closeTask();
-//                } else {
-//                    statusLbl.setValue(UserUIContext.getMessage(StatusI18nEnum.class, StatusI18nEnum.Open.name()));
-//                    subTicket.setStatus(StatusI18nEnum.Open.name());
-//                    subTicket.setPercentagecomplete(0d);
-//                    if (subTicket.isOverdue()) {
-//                        toggleTaskSummaryField.overdueTask();
-//                    } else {
-//                        toggleTaskSummaryField.reOpenTask();
-//                    }
-//                }
-//                taskService.updateSelectiveWithSession(subTicket, UserUIContext.getUsername());
-//                toggleTaskSummaryField.updateLabel();
-//            });
         return layout;
     }
 }

@@ -54,6 +54,7 @@ import org.vaadin.viritin.layouts.MWindow;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -161,7 +162,7 @@ public class TicketComponentFactoryImpl implements TicketComponentFactory {
     }
 
     @Override
-    public MWindow createNewTicketWindow(LocalDate date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone) {
+    public MWindow createNewTicketWindow(LocalDate date, Integer prjId, Integer milestoneId, boolean isIncludeMilestone, Map<String, ?> arguments) {
         return new NewTicketWindow(date, prjId, milestoneId, isIncludeMilestone);
     }
 

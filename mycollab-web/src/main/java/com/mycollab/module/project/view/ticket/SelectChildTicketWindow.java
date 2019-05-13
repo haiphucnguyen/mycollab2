@@ -7,10 +7,12 @@ import com.mycollab.module.project.dao.TicketHierarchyMapper;
 import com.mycollab.module.project.domain.ProjectTicket;
 import com.mycollab.module.project.domain.TicketHierarchy;
 import com.mycollab.module.project.domain.criteria.ProjectTicketSearchCriteria;
+import com.mycollab.module.project.event.TicketEvent;
 import com.mycollab.module.project.i18n.TaskI18nEnum;
 import com.mycollab.module.project.service.ProjectTicketService;
 import com.mycollab.module.project.ui.ProjectAssetsManager;
 import com.mycollab.spring.AppContextUtil;
+import com.mycollab.vaadin.EventBusFactory;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.mycollab.vaadin.ui.IBeanList;
@@ -69,7 +71,7 @@ public class SelectChildTicketWindow extends MWindow {
                     ticketHierarchy.setTickettype(item.getType());
                     TicketHierarchyMapper ticketHierarchyMapper = AppContextUtil.getSpringBean(TicketHierarchyMapper.class);
                     ticketHierarchyMapper.insert(ticketHierarchy);
-//                    EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(this, item.getTypeId()));
+                    EventBusFactory.getInstance().post(new TicketEvent.SubTicketAdded(this, item.getType(), item.getTypeId()));
                 }
 
                 close();
