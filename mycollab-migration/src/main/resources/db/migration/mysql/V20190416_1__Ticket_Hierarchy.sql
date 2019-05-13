@@ -1,17 +1,17 @@
 CREATE TABLE `m_prj_ticket_hierarchy` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `parentId` INT(10) NOT NULL,
   `parentType` VARCHAR(45) NOT NULL,
   `ticketId` INT(10) NOT NULL,
   `ticketType` VARCHAR(45) NOT NULL,
   `projectId` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_1_idx` (`projectId` ASC) VISIBLE,
+  INDEX `FK_m_prj_ticket_hierarchy_1` (`projectId` ASC),
   CONSTRAINT `FK_m_prj_ticket_hierarchy`
     FOREIGN KEY (`projectId`)
     REFERENCES `m_prj_project` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
 
 INSERT INTO m_prj_ticket_hierarchy(parentId, parentType, ticketId, ticketType, projectId)
     SELECT m_prj_task.parentTaskId as parentId, 'Project-Task' AS parentType, m_prj_task.id AS ticketId, 'Project-Task' AS ticketType,
