@@ -21,7 +21,7 @@
                     href="https://docs.mycollab.com/getting-started/startup-as-unix-service/">Startup as Unix Service</a></li>
             <li style="padding: 5px 0px">Common questions that MyCollab users asked us, such as how to change the server port, are
               described at our FAQ page <a href="https://docs.mycollab.com/frequently-questions-and-answers/">FAQ</a></li>
-            <li style="padding: 5px 0px">If you still have any question, suggestion etc to make MyCollab better, you are welcome to post a message into our support page <a href="http://support.mycollab.com">http://support.mycollab.com</a></li>
+            <li style="padding: 5px 0px">If you still have any question, suggestion etc to make MyCollab better, you are welcome to post a message into our support page <a href="https://mycollab.userecho.com/en/">https://mycollab.userecho.com/en/</a></li>
           </ul>
         </div>
         <div style="padding: 0px 25px;">
