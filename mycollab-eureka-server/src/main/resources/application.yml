@@ -1,6 +1,7 @@
 server.port: 8765
 
 eureka.client:
+  healthcheck: true
   register-with-eureka: false
   fetch-registry: false
 

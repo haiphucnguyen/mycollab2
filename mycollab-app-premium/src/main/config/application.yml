@@ -1,0 +1,8 @@
+spring.application.name: MyCollab MainApp
+server.port: 808${SEQUENCE_NO}
+eureka:
+  instance:
+    instanceId: ${spring.application.name}-${SEQUENCE_NO}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8765/eureka/

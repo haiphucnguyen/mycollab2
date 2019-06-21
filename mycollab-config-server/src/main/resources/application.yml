@@ -11,5 +11,5 @@ spring:
           password: HaiLinh7980
   security:
     user:
-      name: root
-      password: esofthead321
+      name: admin
+      password: HaiLinh7980
