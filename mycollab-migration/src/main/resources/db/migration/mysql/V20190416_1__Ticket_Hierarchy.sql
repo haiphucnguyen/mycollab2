@@ -6,7 +6,7 @@ CREATE TABLE `m_prj_ticket_hierarchy` (
   `ticketType` VARCHAR(45) NOT NULL,
   `projectId` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_1_idx` (`projectId` ASC) VISIBLE,
+  INDEX `FK_1_idx` (`projectId` ASC),
   CONSTRAINT `FK_m_prj_ticket_hierarchy`
     FOREIGN KEY (`projectId`)
     REFERENCES `m_prj_project` (`id`)
