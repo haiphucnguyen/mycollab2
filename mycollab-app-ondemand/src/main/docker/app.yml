@@ -1,20 +1,25 @@
 version: '3.1'
 services:
+    hlsoft-mysql:
+        image: mysql:8.0.15
+        restart: always
+        hostname: mysql
+        command: mysqld --default-authentication-plugin=mysql_native_password
+        ports:
+            - "3306:3306"
+                environment:
+                    MYSQL_ROOT_PASSWORD: mycollab123
+                    MYSQL_DATABASE: mycollab
     hlsoft-app:
-        image: mycollab
+        image: mycollab/mycollab
         environment:
-            - SPRING_PROFILES_ACTIVE=prod,swagger
-            - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
-            - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
-            - SPRING_DATA_MONGODB_URI=mongodb://hlsoft-mongodb:27017
-            - SPRING_DATA_MONGODB_DATABASE=hlsoft
-            - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
-            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=hlsoft-elasticsearch:9300
+            - SPRING_PROFILES_ACTIVE=prod
             - JAVA_OPTS=-Djgroups.tcp.address=NON_LOOPBACK -Djava.net.preferIPv4Stack=true -Xmx2g -Xms2g
             - ES_JAVA_OPTS= -Xms750m -Xmx750m
+        tty: true
         ports:
             - 8080:8080
-    hlsoft-mysql:
-        extends:
-            file: mysql.yml
-            service: hlsoft-mysql
+        links:
+            - hlsoft-mysql
+        depends_on:
+            - hlsoft-mysql
