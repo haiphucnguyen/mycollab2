@@ -22,7 +22,7 @@ import com.mycollab.shell.event.ShellEvent
 import com.mycollab.vaadin.mvp.AbstractController
 import com.mycollab.vaadin.mvp.PresenterResolver
 import com.mycollab.web.DesktopApplication
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 
 /**
  * @author MyCollab Ltd

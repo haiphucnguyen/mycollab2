@@ -23,7 +23,7 @@ import com.mycollab.vaadin.mvp.AbstractVerticalPageView;
 import com.mycollab.vaadin.mvp.LazyPageView;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.vaadin.viritin.layouts.MWindow;
 
 /**

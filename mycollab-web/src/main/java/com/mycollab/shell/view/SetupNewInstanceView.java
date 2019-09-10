@@ -37,11 +37,7 @@ import com.mycollab.vaadin.web.ui.TimeZoneSelectionField;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.mycollab.web.DesktopApplication;
-import com.vaadin.ui.*;
-import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,10 +49,12 @@ import java.util.TimeZone;
  * @author MyCollab Ltd
  * @since 5.3.0
  */
-class SetupNewInstanceView extends MHorizontalLayout {
+class SetupNewInstanceView extends HorizontalLayout {
     SetupNewInstanceView() {
-        this.withFullSize().withStyleName(WebThemes.SCROLLABLE_CONTAINER);
-        this.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        this.setSizeFull();
+        this.addClassName(WebThemes.SCROLLABLE_CONTAINER);
+        this.setDefaultVerticalComponentAlignment(Alignment.CENTER);
+
         this.with(new MHorizontalLayout(ELabel.html(UserUIContext.getMessage(ShellI18nEnum.OPT_SUPPORTED_LANGUAGES_INTRO))
                 .withStyleName(WebThemes.META_COLOR).withFullWidth()).withMargin(true).withWidth("400px").withStyleName(WebThemes.ALIGN_RIGHT, "separator"));
         MVerticalLayout formLayout = new MVerticalLayout().withWidth("600px");
@@ -133,7 +131,7 @@ class SetupNewInstanceView extends MHorizontalLayout {
             ((DesktopApplication) UI.getCurrent()).doLogin(adminName, password, false);
         }).withStyleName(WebThemes.BUTTON_ACTION);
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout(createSampleDataSelection, installBtn).alignAll(Alignment.MIDDLE_RIGHT);
+        HorizontalLayout buttonControls = new HorizontalLayout(createSampleDataSelection, installBtn).alignAll(Alignment.MIDDLE_RIGHT);
         formLayout.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
     }
 

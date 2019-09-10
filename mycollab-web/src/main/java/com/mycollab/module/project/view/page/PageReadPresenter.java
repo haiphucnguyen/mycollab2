@@ -37,7 +37,7 @@ import com.mycollab.vaadin.mvp.ViewManager;
 import com.mycollab.vaadin.mvp.ViewScope;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 /**
  * @author MyCollab Ltd.

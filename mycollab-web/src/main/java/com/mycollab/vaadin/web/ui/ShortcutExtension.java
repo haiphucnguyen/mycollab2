@@ -17,7 +17,7 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.vaadin.event.ShortcutListener;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 
 /**
  * @author MyCollab Ltd.

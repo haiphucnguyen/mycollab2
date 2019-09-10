@@ -45,7 +45,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.RadioButtonGroup;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import com.vaadin.v7.ui.Table;
 import org.tepi.listbuilder.ListBuilder;
 import org.vaadin.viritin.button.MButton;

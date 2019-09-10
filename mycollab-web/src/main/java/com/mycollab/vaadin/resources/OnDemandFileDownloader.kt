@@ -18,7 +18,7 @@ package com.mycollab.vaadin.resources
 
 import com.vaadin.server.FileDownloader
 import com.vaadin.server.StreamResource
-import com.vaadin.server.VaadinRequest
+import com.vaadin.flow.server.VaadinRequest
 import com.vaadin.server.VaadinResponse
 
 import java.io.IOException

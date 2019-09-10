@@ -4,7 +4,7 @@ import com.mycollab.core.utils.HumanTime;
 import com.mycollab.core.utils.StringUtils;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 
 /**
  * @author MyCollab Ltd

@@ -25,7 +25,7 @@ import com.mycollab.vaadin.mvp.ScreenData;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.web.DesktopApplication;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.apache.commons.lang3.StringUtils;
 
 /**

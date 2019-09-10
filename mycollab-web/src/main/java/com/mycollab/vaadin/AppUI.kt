@@ -31,9 +31,9 @@ import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.ui.ThemeManager
 import com.mycollab.vaadin.ui.UIUtils
 import com.vaadin.server.Page
-import com.vaadin.server.VaadinRequest
+import com.vaadin.flow.server.VaadinRequest
 import com.vaadin.server.VaadinServletRequest
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 import org.slf4j.LoggerFactory
 import java.util.*
 

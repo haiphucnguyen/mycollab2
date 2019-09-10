@@ -19,7 +19,7 @@ package com.mycollab.vaadin
 import com.mycollab.core.MyCollabException
 import com.vaadin.server.UIClassSelectionEvent
 import com.vaadin.server.UIProvider
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 
 /**
  * @author MyCollab Ltd.

@@ -11,7 +11,7 @@ import com.mycollab.pro.module.project.ui.components.FeatureSelectionBox;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.UserUIContext;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**

@@ -19,15 +19,13 @@ package com.mycollab.shell.view
 import com.mycollab.common.i18n.GenericI18Enum
 import com.mycollab.common.i18n.ShellI18nEnum
 import com.mycollab.configuration.SiteConfiguration
-import com.mycollab.vaadin.EventBusFactory
 import com.mycollab.module.mail.service.ExtMailService
-import com.mycollab.shell.event.ShellEvent
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.UserUIContext
 import com.mycollab.vaadin.ui.NotificationUtil
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt
 import com.vaadin.server.Page
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 
 /**
  * @author MyCollab Ltd.
@@ -37,7 +35,8 @@ object SystemUIChecker {
     /**
      * @return true if the system has the valid smtp account, false if otherwise
      */
-    @JvmStatic fun hasValidSmtpAccount(): Boolean {
+    @JvmStatic
+    fun hasValidSmtpAccount(): Boolean {
         if (!SiteConfiguration.isDemandEdition()) {
             val extMailService = AppContextUtil.getSpringBean(ExtMailService::class.java)
             when {
@@ -48,10 +47,8 @@ object SystemUIChecker {
                                 UserUIContext.getMessage(ShellI18nEnum.WINDOW_SMTP_CONFIRM_SETUP_FOR_ADMIN),
                                 UserUIContext.getMessage(GenericI18Enum.ACTION_YES),
                                 UserUIContext.getMessage(GenericI18Enum.ACTION_NO)
-                        ) { confirmDialog ->
-                            if (confirmDialog.isConfirmed) {
-                                Page.getCurrent().javaScript.execute("window.open('https://docs.mycollab.com/administration/email-configuration/', \"_blank\", \"\");")
-                            }
+                        ) {
+                            Page.getCurrent().javaScript.execute("window.open('https://docs.mycollab.com/administration/email-configuration/', \"_blank\", \"\");")
                         }
                         else -> NotificationUtil.showErrorNotification(UserUIContext.getMessage(ShellI18nEnum.WINDOW_SMTP_CONFIRM_SETUP_FOR_USER))
                     }

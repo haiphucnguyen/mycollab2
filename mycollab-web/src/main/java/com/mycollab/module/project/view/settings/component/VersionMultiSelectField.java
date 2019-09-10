@@ -27,7 +27,7 @@ import com.mycollab.module.project.service.VersionService;
 import com.mycollab.spring.AppContextUtil;
 import com.mycollab.vaadin.web.ui.MultiSelectComp;
 import com.mycollab.vaadin.web.ui.WebThemes;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 import java.util.List;
 

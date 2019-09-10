@@ -23,7 +23,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import static com.mycollab.core.utils.StringUtils.isNotBlank;

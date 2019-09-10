@@ -29,7 +29,7 @@ import com.mycollab.vaadin.ui.MyCollabSession;
 import com.mycollab.web.DesktopApplication;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.vaadin.viritin.util.BrowserCookie;
 
 /**

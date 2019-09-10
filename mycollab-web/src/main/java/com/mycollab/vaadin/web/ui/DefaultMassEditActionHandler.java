@@ -28,7 +28,7 @@ import com.mycollab.vaadin.event.ViewItemAction;
 import com.mycollab.vaadin.reporting.ReportStreamSource;
 import com.mycollab.vaadin.web.ui.table.IPagedTable;
 import com.vaadin.server.StreamResource;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 import java.util.HashMap;
 import java.util.Map;

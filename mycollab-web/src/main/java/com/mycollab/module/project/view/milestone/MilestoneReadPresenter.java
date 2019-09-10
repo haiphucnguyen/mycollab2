@@ -47,7 +47,7 @@ import com.mycollab.vaadin.reporting.PrintButton;
 import com.mycollab.vaadin.ui.NotificationUtil;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 /**
  * @author MyCollab Ltd.

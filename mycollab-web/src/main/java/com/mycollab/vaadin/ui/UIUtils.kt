@@ -23,7 +23,7 @@ import com.mycollab.configuration.SiteConfiguration
 import com.vaadin.data.HasValue
 import com.vaadin.icons.VaadinIcons
 import com.vaadin.server.Page
-import com.vaadin.server.VaadinRequest
+import com.vaadin.flow.server.VaadinRequest
 import com.vaadin.server.VaadinServletRequest
 import com.vaadin.ui.*
 import org.slf4j.Logger

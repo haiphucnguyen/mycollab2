@@ -18,7 +18,7 @@ package com.mycollab.vaadin
 
 import com.mycollab.configuration.ServerConfiguration
 import com.mycollab.spring.AppContextUtil
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 import org.slf4j.LoggerFactory
 
 /**

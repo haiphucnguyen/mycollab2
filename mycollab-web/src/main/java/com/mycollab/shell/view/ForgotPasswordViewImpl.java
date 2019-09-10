@@ -39,7 +39,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 import org.vaadin.viritin.button.MButton;
 
 /**

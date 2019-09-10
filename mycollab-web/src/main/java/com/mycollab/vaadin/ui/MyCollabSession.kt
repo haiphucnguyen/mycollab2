@@ -19,7 +19,7 @@ package com.mycollab.vaadin.ui
 import com.mycollab.core.SessionExpireException
 import com.mycollab.vaadin.AppUI
 import com.vaadin.server.VaadinSession
-import com.vaadin.ui.UI
+import com.vaadin.flow.component.UI
 
 /**
  * @author MyCollab Ltd.

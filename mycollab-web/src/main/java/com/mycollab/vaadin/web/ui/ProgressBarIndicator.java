@@ -19,7 +19,7 @@ package com.mycollab.vaadin.web.ui;
 import com.mycollab.web.CustomLayoutExt;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressBar;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 import java.util.concurrent.locks.Lock;
 

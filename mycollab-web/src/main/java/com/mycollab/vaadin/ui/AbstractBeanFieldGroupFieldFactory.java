@@ -28,7 +28,7 @@ import com.mycollab.vaadin.ui.field.DefaultViewField;
 import com.vaadin.data.*;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 import org.apache.commons.beanutils.BeanUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;

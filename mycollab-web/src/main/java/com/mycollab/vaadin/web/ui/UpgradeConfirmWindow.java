@@ -26,7 +26,7 @@ import com.mycollab.server.DefaultServerRunner;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.ui.ELabel;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.button.MButton;

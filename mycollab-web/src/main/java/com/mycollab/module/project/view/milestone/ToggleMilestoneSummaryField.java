@@ -49,15 +49,12 @@ import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.fields.MTextField;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd
@@ -67,7 +64,7 @@ class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
     private boolean isRead = true;
     private SimpleMilestone milestone;
     private int maxLength;
-    private CheckBox toggleStatusSelect;
+    private Checkbox toggleStatusSelect;
 
     ToggleMilestoneSummaryField(final SimpleMilestone milestone, boolean toggleStatusSupport, boolean isDeleteSupport) {
         this(milestone, Integer.MAX_VALUE, toggleStatusSupport, isDeleteSupport);
@@ -77,11 +74,11 @@ class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
         this.milestone = milestone;
         this.maxLength = maxLength;
         this.setWidth("100%");
-        this.addStyleName("editable-field");
+        this.addClassName("editable-field");
         if (toggleStatusSupport && CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
             toggleStatusSelect = new CheckBox();
             toggleStatusSelect.setValue(milestone.isCompleted());
-            this.addComponent(toggleStatusSelect);
+            this.add(toggleStatusSelect);
             this.addComponent(ELabel.EMPTY_SPACE());
             displayTooltip();
 
@@ -110,11 +107,7 @@ class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                             UserUIContext.getMessage(ProjectCommonI18nEnum.OPT_CLOSE_SUB_ASSIGNMENTS),
                             UserUIContext.getMessage(GenericI18Enum.ACTION_YES),
                             UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
-                            confirmDialog -> {
-                                if (confirmDialog.isConfirmed()) {
-                                    genericTaskService.closeSubAssignmentOfMilestone(milestone.getId());
-                                }
-                            });
+                            () -> genericTaskService.closeSubAssignmentOfMilestone(milestone.getId()));
                 }
             });
         }
@@ -151,16 +144,14 @@ class ToggleMilestoneSummaryField extends AbstractToggleSummaryField {
                         UserUIContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                         UserUIContext.getMessage(GenericI18Enum.ACTION_YES),
                         UserUIContext.getMessage(GenericI18Enum.ACTION_NO),
-                        confirmDialog -> {
-                            if (confirmDialog.isConfirmed()) {
-                                AppContextUtil.getSpringBean(MilestoneService.class).removeWithSession(milestone,
-                                        UserUIContext.getUsername(), AppUI.getAccountId());
-                                TicketRowRender rowRenderer = UIUtils.getRoot(ToggleMilestoneSummaryField.this, TicketRowRender.class);
-                                if (rowRenderer != null) {
-                                    rowRenderer.selfRemoved();
-                                }
-                                EventBusFactory.getInstance().post(new MilestoneEvent.MilestoneDeleted(this, milestone.getId()));
+                        ()-> {
+                            AppContextUtil.getSpringBean(MilestoneService.class).removeWithSession(milestone,
+                                    UserUIContext.getUsername(), AppUI.getAccountId());
+                            TicketRowRender rowRenderer = UIUtils.getRoot(ToggleMilestoneSummaryField.this, TicketRowRender.class);
+                            if (rowRenderer != null) {
+                                rowRenderer.selfRemoved();
                             }
+                            EventBusFactory.getInstance().post(new MilestoneEvent.MilestoneDeleted(this, milestone.getId()));
                         });
             }).withIcon(VaadinIcons.TRASH).withStyleName(ValoTheme.BUTTON_ICON_ALIGN_TOP);
             buttonControls.with(removeBtn);

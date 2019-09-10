@@ -49,7 +49,7 @@ import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.mycollab.vaadin.web.ui.field.AttachmentUploadField;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 /**
  * @author MyCollab Ltd.

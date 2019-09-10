@@ -2,7 +2,7 @@ package com.mycollab.ondemand.vaadin.ui.service.impl;
 
 import com.mycollab.configuration.IDeploymentMode;
 import com.mycollab.vaadin.ui.MyCollabSession;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.googleanalytics.tracking.GoogleAnalyticsTracker;

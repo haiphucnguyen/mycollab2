@@ -21,7 +21,7 @@ import com.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.mycollab.vaadin.ui.GenericBeanForm;
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 import org.vaadin.viritin.fields.MTextField;
 
 /**

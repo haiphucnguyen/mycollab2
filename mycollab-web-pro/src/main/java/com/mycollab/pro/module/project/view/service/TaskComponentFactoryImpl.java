@@ -53,7 +53,7 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.stereotype.Service;
 import org.vaadin.viritin.layouts.MVerticalLayout;

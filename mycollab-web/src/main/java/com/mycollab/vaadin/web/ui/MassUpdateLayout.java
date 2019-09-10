@@ -17,7 +17,7 @@
 package com.mycollab.vaadin.web.ui;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 /**
  * @author MyCollab Ltd.

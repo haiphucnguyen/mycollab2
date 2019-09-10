@@ -40,7 +40,7 @@ import com.mycollab.vaadin.mvp.ViewPermission;
 import com.mycollab.vaadin.ui.UIUtils;
 import com.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 /**
  * @author MyCollab Ltd.

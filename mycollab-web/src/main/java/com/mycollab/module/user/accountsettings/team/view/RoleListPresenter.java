@@ -39,7 +39,7 @@ import com.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
 import com.mycollab.vaadin.web.ui.ListSelectionPresenter;
 import com.mycollab.vaadin.web.ui.MailFormWindow;
 import com.vaadin.ui.HasComponents;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 import java.util.ArrayList;
 import java.util.Collection;

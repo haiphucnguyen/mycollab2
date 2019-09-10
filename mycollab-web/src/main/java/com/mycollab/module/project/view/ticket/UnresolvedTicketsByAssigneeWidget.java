@@ -41,7 +41,7 @@ import com.mycollab.vaadin.web.ui.WebThemes;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MCssLayout;

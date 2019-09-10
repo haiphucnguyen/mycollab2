@@ -16,28 +16,28 @@
  */
 package com.mycollab.vaadin.web.ui;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.12
  */
-public class AbstractToggleSummaryField extends MCssLayout {
+public class AbstractToggleSummaryField extends Div {
     protected Label titleLinkLbl;
-    protected MHorizontalLayout buttonControls;
+    protected HorizontalLayout buttonControls;
 
     public void addLabelStyleNames(String... styleNames) {
-        titleLinkLbl.addStyleNames(styleNames);
+        titleLinkLbl.addClassNames(styleNames);
     }
 
     public void removeLabelStyleName(String styleName) {
-        titleLinkLbl.removeStyleName(styleName);
+        titleLinkLbl.removeClassName(styleName);
     }
 
     public void addControl(Component control) {
-        buttonControls.addComponent(control);
+        buttonControls.add(control);
     }
 }

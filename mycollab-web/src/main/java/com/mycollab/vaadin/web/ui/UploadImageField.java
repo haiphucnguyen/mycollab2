@@ -20,7 +20,7 @@ import com.mycollab.core.UserInvalidInputException;
 import com.mycollab.core.utils.ImageUtil;
 import com.mycollab.vaadin.web.ui.ImagePreviewCropWindow.ImageSelectionCommand;
 import com.mycollab.vaadin.web.ui.utils.UploadField;
-import com.vaadin.ui.UI;
+import com.vaadin.flow.component.UI;
 
 /**
  * @author MyCollab Ltd
