@@ -16,11 +16,13 @@
  */
 package com.mycollab.module.project.service
 
-import com.mycollab.db.arguments.*
+import com.mycollab.db.arguments.BasicSearchRequest
+import com.mycollab.db.arguments.DateSearchField
+import com.mycollab.db.arguments.NumberSearchField
+import com.mycollab.db.arguments.StringSearchField
 import com.mycollab.module.project.domain.BugWithBLOBs
 import com.mycollab.module.project.domain.SimpleBug
 import com.mycollab.module.project.domain.criteria.BugSearchCriteria
-import com.mycollab.module.project.service.BugService
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
 import com.mycollab.test.spring.IntegrationServiceTest
@@ -46,7 +48,7 @@ class BugServiceTest : IntegrationServiceTest() {
         val bugs = bugService.findPageableListByCriteria(BasicSearchRequest<BugSearchCriteria>(criteria)) as List<SimpleBug>
 
         assertThat(bugs.size).isEqualTo(3)
-        assertThat<SimpleBug>(bugs).extracting("id", "detail", "name").contains(
+        assertThat(bugs).extracting("id", "detail", "name").contains(
                 tuple(1, "detail 1", "name 1"),
                 tuple(2, "detail 2", "name 2"),
                 tuple(3, "detail 3", "name 3"))
@@ -63,7 +65,7 @@ class BugServiceTest : IntegrationServiceTest() {
 
         val bugs = bugService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleBug>
         assertThat(bugs.size).isEqualTo(1)
-        assertThat<SimpleBug>(bugs).extracting("id", "detail", "name").contains(tuple(2, "detail 2", "name 2"))
+        assertThat(bugs).extracting("id", "detail", "name").contains(tuple(2, "detail 2", "name 2"))
     }
 
     @DataSet

@@ -53,7 +53,7 @@ class ProjectFollowingTicketServiceTest : IntegrationServiceTest() {
     @Throws(ParseException::class)
     fun testGetListProjectFollowingTicket() {
         val projectFollowingTickets = projectFollowingTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<FollowingTicket>
-        assertThat<FollowingTicket>(projectFollowingTickets).extracting("type", "name").contains(
+        assertThat(projectFollowingTickets).extracting("type", "name").contains(
                 tuple("Project-Task", "task 1"),
                 tuple("Project-Task", "task 2"),
                 tuple("Project-Bug", "bug 1"),
@@ -90,7 +90,7 @@ class ProjectFollowingTicketServiceTest : IntegrationServiceTest() {
         val criteria = criteria
         criteria.types = SetSearchField("Project-Task", "Project-Bug")
         val projectFollowingTickets = projectFollowingTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<FollowingTicket>
-        assertThat<FollowingTicket>(projectFollowingTickets).extracting("type", "name").contains(
+        assertThat(projectFollowingTickets).extracting("type", "name").contains(
                 tuple("Project-Task", "task 1"),
                 tuple("Project-Task", "task 2"),
                 tuple("Project-Task", "task 3"),
@@ -109,7 +109,7 @@ class ProjectFollowingTicketServiceTest : IntegrationServiceTest() {
         val criteria = criteria
         criteria.type = StringSearchField.and("Project-Task")
         val projectFollowingTickets = projectFollowingTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<FollowingTicket>
-        assertThat<FollowingTicket>(projectFollowingTickets).extracting("type", "name").contains(
+        assertThat(projectFollowingTickets).extracting("type", "name").contains(
                 tuple("Project-Task", "task 1"),
                 tuple("Project-Task", "task 2"),
                 tuple("Project-Task", "task 3"),
@@ -125,7 +125,7 @@ class ProjectFollowingTicketServiceTest : IntegrationServiceTest() {
         criteria.type = StringSearchField.and("Project-Risk")
         val projectFollowingTickets = projectFollowingTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<FollowingTicket>
 
-        assertThat<FollowingTicket>(projectFollowingTickets).extracting("type", "name").contains(
+        assertThat(projectFollowingTickets).extracting("type", "name").contains(
                 tuple("Project-Risk", "risk 1"),
                 tuple("Project-Risk", "risk 2"),
                 tuple("Project-Risk", "risk 3"),
@@ -141,7 +141,7 @@ class ProjectFollowingTicketServiceTest : IntegrationServiceTest() {
         criteria.type = StringSearchField.and("Project-Bug")
         val projectFollowingTickets = projectFollowingTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<FollowingTicket>
 
-        assertThat<FollowingTicket>(projectFollowingTickets).extracting("type", "name").contains(
+        assertThat(projectFollowingTickets).extracting("type", "name").contains(
                 tuple("Project-Bug", "bug 1"),
                 tuple("Project-Bug", "bug 2"),
                 tuple("Project-Bug", "bug 3"),

@@ -64,7 +64,7 @@ class MilestoneServiceTest : IntegrationServiceTest() {
         val milestones = milestoneService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleMilestone>
 
         assertThat(milestones.size).isEqualTo(1)
-        assertThat<SimpleMilestone>(milestones).extracting("id", "description", "createdUserFullName", "ownerFullName",
+        assertThat(milestones).extracting("id", "description", "createdUserFullName", "ownerFullName",
                 "numTasks", "numOpenTasks", "numBugs", "numOpenBugs").contains(
                 tuple(1, "milestone no1", "Hai Nguyen", "Hai Nguyen", 1, 0, 2, 2))
     }
@@ -76,7 +76,7 @@ class MilestoneServiceTest : IntegrationServiceTest() {
         val milestones = milestoneService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleMilestone>
 
         assertThat(milestones.size).isEqualTo(4)
-        assertThat<SimpleMilestone>(milestones).extracting("id", "description", "createdUserFullName",
+        assertThat(milestones).extracting("id", "description", "createdUserFullName",
                 "numTasks", "numOpenTasks", "numBugs", "numOpenBugs").contains(
                 tuple(4, "milestone no4", "Nghiem Le", 0, 0, 3, 3),
                 tuple(3, "milestone no3", "Nghiem Le", 0, 0, 1, 1),

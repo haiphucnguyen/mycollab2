@@ -22,7 +22,6 @@ import com.mycollab.db.arguments.StringSearchField
 import com.mycollab.module.project.dao.ComponentMapperExt
 import com.mycollab.module.project.domain.SimpleComponent
 import com.mycollab.module.project.domain.criteria.ComponentSearchCriteria
-import com.mycollab.module.project.service.ComponentService
 import com.mycollab.test.DataSet
 import com.mycollab.test.rule.DbUnitInitializerRule
 import com.mycollab.test.spring.IntegrationServiceTest
@@ -80,7 +79,7 @@ class ComponentServiceTest : IntegrationServiceTest() {
 
         val components = componentService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleComponent>
         assertThat(components.size).isEqualTo(1)
-        assertThat<SimpleComponent>(components).extracting("id", "description", "status",
+        assertThat(components).extracting("id", "description", "status",
                 "name", "numBugs", "numOpenBugs").contains(
                 tuple(1, "aaaaaaa", "Open", "com 1", 1, 1))
     }
@@ -96,7 +95,7 @@ class ComponentServiceTest : IntegrationServiceTest() {
 
         val components = componentService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<SimpleComponent>
         assertThat(components.size).isEqualTo(1)
-        assertThat<SimpleComponent>(components).extracting("id", "description", "status",
+        assertThat(components).extracting("id", "description", "status",
                 "name", "numBugs", "numOpenBugs").contains(
                 tuple(2, "bbbbbbb", "Closed", "com 2", 2, 1))
     }

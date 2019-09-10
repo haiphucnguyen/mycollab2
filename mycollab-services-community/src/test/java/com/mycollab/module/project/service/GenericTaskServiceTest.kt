@@ -47,7 +47,7 @@ class GenericTaskServiceTest : IntegrationServiceTest() {
         criteria.saccountid = NumberSearchField(1)
         val tasks = projectTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<ProjectTicket>
         assertThat(tasks.size).isEqualTo(2)
-        assertThat<ProjectTicket>(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"), tuple("Project-Bug", "name 1"))
+        assertThat(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"), tuple("Project-Bug", "name 1"))
     }
 
     @DataSet
@@ -61,7 +61,7 @@ class GenericTaskServiceTest : IntegrationServiceTest() {
         criteria.saccountid = NumberSearchField(1)
         val tasks = projectTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<ProjectTicket>
         assertThat(tasks.size).isEqualTo(1)
-        assertThat<ProjectTicket>(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"))
+        assertThat(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"))
     }
 
     @DataSet
@@ -77,6 +77,6 @@ class GenericTaskServiceTest : IntegrationServiceTest() {
         val tasks = projectTicketService.findPageableListByCriteria(BasicSearchRequest(criteria)) as List<ProjectTicket>
 
         assertThat(tasks.size).isEqualTo(1)
-        assertThat<ProjectTicket>(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"))
+        assertThat(tasks).extracting("type", "name").contains(tuple("Project-Risk", "b"))
     }
 }

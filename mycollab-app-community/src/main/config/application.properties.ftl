@@ -10,7 +10,6 @@ app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
 server.address=${serveraddress}
-server.port=8080
 
 # You do not change the rest server information if you are not sure what you are doing
 server.apiUrl=https://api.mycollab.com/
