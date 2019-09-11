@@ -187,12 +187,14 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                     List<ProjectTicket> tickets = (List<ProjectTicket>) ticketService.findPageableListByCriteria(new BasicSearchRequest<>(searchCriteria, page + 1, 50));
                     if (CollectionUtils.isNotEmpty(tickets)) {
                         tickets.forEach(ticket -> {
-                            String status = ticket.getStatus();
-                            String assignee = MoreObjects.firstNonNull(ticket.getAssignUser(), "");
-                            Pair pair = new Pair(assignee, status);
-                            KanbanBlock kanbanBlock = kanbanBlocks.get(pair);
-                            if (kanbanBlock != null) {
-                                kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
+                            if (!ticket.isMilestone()) {
+                                String status = ticket.getStatus();
+                                String assignee = MoreObjects.firstNonNull(ticket.getAssignUser(), "");
+                                Pair pair = new Pair(assignee, status);
+                                KanbanBlock kanbanBlock = kanbanBlocks.get(pair);
+                                if (kanbanBlock != null) {
+                                    kanbanBlock.addBlockItem(new KanbanBlockItem(ticket));
+                                }
                             }
                         });
                         this.push();
@@ -212,12 +214,10 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
     }
 
     private class MemberLayout extends MVerticalLayout {
-        private SimpleUser member;
         private MHorizontalLayout bodyLayout;
 
         MemberLayout(SimpleUser member) {
             withMargin(false);
-            this.member = member;
             bodyLayout = new MHorizontalLayout();
             for (StatusI18nEnum status : statuses) {
                 KanbanBlock kanbanBlock = new KanbanBlock(member.getUsername(), status.name());
@@ -293,18 +293,16 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
 
     private static class KanbanBlock extends MVerticalLayout implements IBlockContainer {
         private String status;
-        private String assignee;
 
         private MVerticalLayout dragLayoutContainer;
         private Label header;
 
         KanbanBlock(String assignee, String stage) {
             this.status = stage;
-            this.assignee = assignee;
-            this.withWidth("250px").withStyleName("kanban-block").withMargin(false);
+            this.withStyleName("kanban-block").withMargin(false);
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
             this.setId(optionId);
-//            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'lightgray'});");
+            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'width':'300px'});");
 
             dragLayoutContainer = new MVerticalLayout().withMargin(false).withId("drag-container");
             DropTargetExtension<VerticalLayout> dropTarget = new DropTargetExtension<>(dragLayoutContainer);
@@ -348,7 +346,6 @@ public class TicketKanbanBoardViewImpl extends AbstractVerticalPageView implemen
                             RiskService riskService = AppContextUtil.getSpringBean(RiskService.class);
                             riskService.updateSelectiveWithSession(risk, UserUIContext.getUsername());
                         }
-
 
                         refresh();
 
