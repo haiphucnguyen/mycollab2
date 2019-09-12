@@ -17,8 +17,8 @@
 package com.mycollab.module.project.view.service
 
 import com.mycollab.module.project.domain.ProjectTicket
+import com.vaadin.flow.component.dialog.Dialog
 import com.vaadin.ui.AbstractComponent
-import org.vaadin.viritin.layouts.MWindow
 import java.time.LocalDate
 
 /**
@@ -47,5 +47,5 @@ interface TicketComponentFactory {
 
     fun createStatusPopupField(ticket: ProjectTicket): AbstractComponent
 
-    fun createNewTicketWindow(date: LocalDate?, prjId: Int?, milestoneId: Int?, isIncludeMilestone: Boolean, argumentsMap:Map<String, Any>?): MWindow
+    fun createNewTicketWindow(date: LocalDate?, prjId: Int?, milestoneId: Int?, isIncludeMilestone: Boolean, argumentsMap:Map<String, Any>?): Dialog
 }

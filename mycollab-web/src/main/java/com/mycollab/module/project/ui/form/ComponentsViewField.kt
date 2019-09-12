@@ -7,10 +7,10 @@ import com.mycollab.module.project.ProjectLinkGenerator
 import com.mycollab.module.project.domain.Component
 import com.mycollab.vaadin.ui.ELabel
 import com.mycollab.vaadin.web.ui.WebThemes
-import com.vaadin.ui.CustomField
-import com.vaadin.ui.Label
+import com.vaadin.flow.component.customfield.CustomField
+import com.vaadin.flow.component.html.Div
+import com.vaadin.flow.component.html.Label
 import org.apache.commons.collections4.CollectionUtils
-import org.vaadin.viritin.layouts.MCssLayout
 
 /**
  * @author MyCollab Ltd
@@ -18,14 +18,16 @@ import org.vaadin.viritin.layouts.MCssLayout
  */
 class ComponentsViewField : CustomField<Collection<Component>>() {
 
-    private val containerLayout: MCssLayout = MCssLayout()
+    private val containerLayout = Div()
 
-    override fun initContent(): com.vaadin.ui.Component = containerLayout
-
-    override fun doSetValue(components: Collection<Component>) {
+    override fun setPresentationValue(components: Collection<Component>?) {
         if (CollectionUtils.isNotEmpty(components)) {
-            components.forEach { component -> containerLayout.addComponent(buildComponentLink(component)) }
+            components?.forEach { component -> containerLayout.add(buildComponentLink(component)) }
         }
+    }
+
+    override fun generateModelValue(): Collection<Component> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun buildComponentLink(component: Component): Label {
@@ -35,11 +37,9 @@ class ComponentsViewField : CustomField<Collection<Component>>() {
         val lbl = ELabel.html(componentLink.write()).withStyleName(WebThemes.FIELD_NOTE)
 
         if (component.status != null && component.status == OptionI18nEnum.StatusI18nEnum.Closed.name) {
-            lbl.addStyleName(WebThemes.LINK_COMPLETED)
+            lbl.addClassName(WebThemes.LINK_COMPLETED)
         }
 
         return lbl
     }
-
-    override fun getValue(): Collection<Component>? = null
 }

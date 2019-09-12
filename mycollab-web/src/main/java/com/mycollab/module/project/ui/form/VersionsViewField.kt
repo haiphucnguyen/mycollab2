@@ -7,10 +7,9 @@ import com.mycollab.module.project.ProjectLinkGenerator
 import com.mycollab.module.project.domain.Version
 import com.mycollab.vaadin.ui.ELabel
 import com.mycollab.vaadin.web.ui.WebThemes
-import com.vaadin.ui.Component
-import com.vaadin.ui.CustomField
+import com.vaadin.flow.component.customfield.CustomField
+import com.vaadin.flow.component.html.Div
 import org.apache.commons.collections4.CollectionUtils
-import org.vaadin.viritin.layouts.MCssLayout
 
 /**
  * @author MyCollab Ltd
@@ -18,14 +17,16 @@ import org.vaadin.viritin.layouts.MCssLayout
  */
 class VersionsViewField : CustomField<Collection<Version>>() {
 
-    private val containerLayout: MCssLayout = MCssLayout()
+    private val containerLayout = Div()
 
-    override fun initContent(): Component = containerLayout
-
-    override fun doSetValue(versions: Collection<Version>) {
+    override fun setPresentationValue(versions: Collection<Version>?) {
         if (CollectionUtils.isNotEmpty(versions)) {
-            versions.forEach { containerLayout.addComponent(buildVersionLink(it)) }
+            versions?.forEach { containerLayout.add(buildVersionLink(it)) }
         }
+    }
+
+    override fun generateModelValue(): Collection<Version> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun buildVersionLink(version: Version): ELabel {
@@ -35,7 +36,7 @@ class VersionsViewField : CustomField<Collection<Version>>() {
         val lbl = ELabel.html(componentLink.write()).withStyleName(WebThemes.FIELD_NOTE)
 
         if (version.status != null && version.status == OptionI18nEnum.StatusI18nEnum.Closed.name) {
-            lbl.addStyleName(WebThemes.LINK_COMPLETED)
+            lbl.addClassName(WebThemes.LINK_COMPLETED)
         }
 
         return lbl

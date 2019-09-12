@@ -20,10 +20,9 @@ import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.resources.VaadinResourceFactory
 import com.mycollab.vaadin.web.ui.WebThemes
-import com.vaadin.server.ExternalResource
-import com.vaadin.server.Resource
-import com.vaadin.ui.Button
-import org.vaadin.viritin.button.MButton
+import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.html.Image
 
 /**
  * @author MyCollab Ltd.
@@ -31,11 +30,16 @@ import org.vaadin.viritin.button.MButton
  */
 object AccountAssetsResolver {
     @JvmStatic
-    fun createAccountLogoImageComponent(logoId: String?, size: Int): Button = MButton().withStyleName(WebThemes.BUTTON_LINK).withIcon(createLogoResource(logoId, size))
+    fun createAccountLogoImageComponent(logoId: String?, size: Int): Button {
+        val btn = Button()
+        btn.addClassName(WebThemes.BUTTON_LINK)
+        btn.icon = createLogoResource(logoId, size)
+        return btn;
+    }
 
     @JvmStatic
-    fun createLogoResource(logoId: String?, size: Int): Resource = if (logoId == null) {
-        ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
-                .generateAssetRelativeLink("icons/logo.png"))
+    fun createLogoResource(logoId: String?, size: Int): Component = if (logoId == null) {
+        Image(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+                .generateAssetRelativeLink("icons/logo.png"), "Logo")
     } else VaadinResourceFactory.getLogoResource(logoId, size)
 }

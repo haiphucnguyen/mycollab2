@@ -16,14 +16,14 @@
  */
 package com.mycollab.vaadin.mvp
 
-import org.vaadin.viritin.layouts.MCssLayout
+import com.vaadin.flow.component.html.Div
 import java.io.Serializable
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-abstract class AbstractCssPageView : MCssLayout(), PageView, Serializable {
+abstract class AbstractCssPageView : Div(), PageView, Serializable {
     init {
         this.setSizeFull()
     }

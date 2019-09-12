@@ -16,9 +16,8 @@
  */
 package com.mycollab.vaadin.web.ui;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
 
 import java.util.Arrays;
 
@@ -26,31 +25,32 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ButtonGroup extends CssLayout {
+public class ButtonGroup extends Div {
     private static final long serialVersionUID = 1L;
 
     private Button selectedBtn;
 
     public ButtonGroup() {
-        this.addStyleName("toggle-btn-group");
+        this.addClassName("toggle-btn-group");
     }
 
     public ButtonGroup(Button... buttons) {
-        this.addStyleName("toggle-btn-group");
+        this.addClassName("toggle-btn-group");
         addButtons(buttons);
     }
 
+    // TODO
     public void addButton(Button button) {
-        addComponent(button);
-        button.addClickListener(clickEvent -> {
-            if (!clickEvent.getButton().equals(selectedBtn)) {
-                selectedBtn = clickEvent.getButton();
-                for (Component component : ButtonGroup.this) {
-                    component.removeStyleName(WebThemes.BTN_ACTIVE);
-                }
-                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
-            }
-        });
+        add(button);
+//        button.addClickListener(clickEvent -> {
+//            if (!clickEvent.getButton().equals(selectedBtn)) {
+//                selectedBtn = clickEvent.getButton();
+//                for (Component component : ButtonGroup.this) {
+//                    component.removeStyleName(WebThemes.BTN_ACTIVE);
+//                }
+//                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
+//            }
+//        });
     }
 
     public void addButtons(Button... buttons) {
@@ -58,15 +58,15 @@ public class ButtonGroup extends CssLayout {
     }
 
     public ButtonGroup withDefaultButton(Button button) {
-        for (Component component : ButtonGroup.this) {
-            Button currentBtn = (Button) component;
-            if (currentBtn.equals(button)) {
-                selectedBtn = button;
-                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
-            } else {
-                currentBtn.removeStyleName(WebThemes.BTN_ACTIVE);
-            }
-        }
+//        for (Component component : ButtonGroup.this) {
+//            Button currentBtn = (Button) component;
+//            if (currentBtn.equals(button)) {
+//                selectedBtn = button;
+//                selectedBtn.addStyleName(WebThemes.BTN_ACTIVE);
+//            } else {
+//                currentBtn.removeStyleName(WebThemes.BTN_ACTIVE);
+//            }
+//        }
         return this;
     }
 }

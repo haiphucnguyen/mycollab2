@@ -21,9 +21,8 @@ import com.hp.gagawa.java.elements.A;
 import com.mycollab.core.utils.StringUtils;
 import com.mycollab.vaadin.UserUIContext;
 import com.mycollab.vaadin.web.ui.WebThemes;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.time.LocalDate;
@@ -43,16 +42,8 @@ public class ELabel extends Label {
         super(content);
     }
 
-    public ELabel(ContentMode mode) {
-        this("", mode);
-    }
-
-    public ELabel(String content, ContentMode mode) {
-        super(content, mode);
-    }
-
     public ELabel withDescription(String description) {
-        this.setDescription(description, ContentMode.HTML);
+        this.setTitle(description);
         return this;
     }
 
@@ -80,34 +71,32 @@ public class ELabel extends Label {
     }
 
     public ELabel withStyleName(String... styleNames) {
-        for (String styleName : styleNames) {
-            this.addStyleName(styleName);
-        }
+        this.addClassNames(styleNames);
         return this;
     }
 
     public ELabel prettyDate(LocalDate date) {
-        this.setValue(UserUIContext.formatPrettyTime(date));
-        this.setDescription(UserUIContext.formatDate(date));
+        this.setText(UserUIContext.formatPrettyTime(date));
+        this.setTitle(UserUIContext.formatDate(date));
         return this;
     }
 
     public ELabel prettyDateTime(LocalDateTime date) {
-        this.setValue(UserUIContext.formatPrettyTime(date));
-        this.setDescription(UserUIContext.formatDateTime(date));
+        this.setText(UserUIContext.formatPrettyTime(date));
+        this.setTitle(UserUIContext.formatDateTime(date));
         return this;
     }
 
     public static ELabel html(String value) {
-        return new ELabel(value, ContentMode.HTML);
+        return new ELabel(value);
     }
 
     public static ELabel html(String value, String link) {
-        return new ELabel(new A(link).appendText(value).write(), ContentMode.HTML);
+        return new ELabel(new A(link).appendText(value).write());
     }
 
     public static ELabel email(String email) {
-        return new ELabel(new A("mailto:" + email).appendText(MoreObjects.firstNonNull(email, "")).write(), ContentMode.HTML);
+        return new ELabel(new A("mailto:" + email).appendText(MoreObjects.firstNonNull(email, "")).write());
     }
 
     public static ELabel richText(String value) {

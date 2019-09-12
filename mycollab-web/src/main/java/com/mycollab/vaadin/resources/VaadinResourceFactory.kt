@@ -22,8 +22,7 @@ import com.mycollab.module.file.service.AbstractStorageService
 import com.mycollab.spring.AppContextUtil
 import com.mycollab.vaadin.AppUI
 import com.mycollab.vaadin.resources.file.VaadinFileResource
-import com.vaadin.server.ExternalResource
-import com.vaadin.server.Resource
+import com.vaadin.flow.component.html.Image
 
 /**
  * @author MyCollab Ltd
@@ -56,17 +55,17 @@ class VaadinResourceFactory private constructor() {
 
         @JvmStatic
         fun getResource(documentPath: String) =
-                ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
-                        .getResourcePath(documentPath))
+                Image(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+                        .getResourcePath(documentPath), documentPath)
 
         @JvmStatic
         fun getLogoResource(logoId: String, size: Int) =
-                ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
-                        .getLogoPath(AppUI.accountId, logoId, size))
+                Image(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+                        .getLogoPath(AppUI.accountId, logoId, size), "Logo")
 
         @JvmStatic
         fun getAvatarResource(avatarId: String, size: Int) =
-                ExternalResource(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
-                        .getAvatarPath(avatarId, size))
+                Image(AppContextUtil.getSpringBean(AbstractStorageService::class.java)
+                        .getAvatarPath(avatarId, size), "Avatar")
     }
 }

@@ -32,12 +32,13 @@ class OnDemandFileDownloader(private val lazyStreamSource: LazyStreamSource) : F
     private val resource: StreamResource
         get() = this.getResource("dl") as StreamResource
 
-    @Throws(IOException::class)
-    override fun handleConnectorRequest(request: VaadinRequest, response: VaadinResponse, path: String): Boolean = try {
-        resource.filename = lazyStreamSource.filename
-        super.handleConnectorRequest(request, response, path)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
-    }
+    // TODO: implment it
+//    @Throws(IOException::class)
+//    override fun handleConnectorRequest(request: VaadinRequest, response: VaadinResponse, path: String): Boolean = try {
+//        resource.filename = lazyStreamSource.filename
+//        super.handleConnectorRequest(request, response, path)
+//    } catch (e: Exception) {
+//        e.printStackTrace()
+//        false
+//    }
 }

@@ -16,20 +16,23 @@
  */
 package com.mycollab.vaadin.mvp
 
-import com.mycollab.vaadin.event.ViewEvent
-import org.vaadin.viritin.layouts.MVerticalLayout
+import com.mycollab.core.MyCollabException
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-abstract class AbstractVerticalPageView : MVerticalLayout(), PageView {
+abstract class AbstractVerticalPageView : VerticalLayout(), PageView {
 
     init {
-        this.withSpacing(false).withMargin(false).withFullSize()
+        this.isSpacing = false
+        this.isPadding = false
+        this.setSizeFull()
     }
 
     override fun <E> addViewListener(listener: PageView.ViewListener<E>) {
-        addListener(ViewEvent.VIEW_IDENTIFIER, ViewEvent::class.java, listener, PageView.ViewListener.viewInitMethod)
+        throw MyCollabException("Error")
+//        addListener(ViewEvent.VIEW_IDENTIFIER, ViewEvent::class.java, listener, PageView.ViewListener.viewInitMethod)
     }
 }

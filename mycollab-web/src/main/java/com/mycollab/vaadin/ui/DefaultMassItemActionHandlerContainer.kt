@@ -24,21 +24,20 @@ import com.mycollab.vaadin.event.MassItemActionHandler
 import com.mycollab.vaadin.event.ViewItemAction
 import com.mycollab.vaadin.web.ui.ButtonGroup
 import com.mycollab.vaadin.web.ui.WebThemes
-import com.vaadin.icons.VaadinIcons
+import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.server.FileDownloader
-import com.vaadin.server.Resource
 import com.vaadin.server.StreamResource
 import com.vaadin.shared.ui.MarginInfo
-import com.vaadin.ui.Button
-import org.vaadin.viritin.button.MButton
-import org.vaadin.viritin.layouts.MHorizontalLayout
+import com.vaadin.ui.HorizontalLayout
 import java.io.InputStream
 
 /**
  * @author MyCollab Ltd
  * @since 6.0.0
  */
-class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemActionHandler {
+class DefaultMassItemActionHandlerContainer : HorizontalLayout(), HasMassItemActionHandler {
     private var actionHandler: MassItemActionHandler? = null
     private val groupMap = mutableMapOf<String, ButtonGroup>()
 
@@ -53,24 +52,26 @@ class DefaultMassItemActionHandlerContainer : MHorizontalLayout(), HasMassItemAc
      * @param groupId
      * @param description
      */
-    private fun addActionItem(id: String, resource: Resource, groupId: String, description: String) {
+    private fun addActionItem(id: String, resource: Component, groupId: String, description: String) {
         var group = groupMap[groupId]
         if (group == null) {
             group = ButtonGroup()
             groupMap[groupId] = group
             this.addComponent(group)
         }
-        val optionBtn = MButton("", Button.ClickListener {
-        }).withIcon(resource).withStyleName(WebThemes.BUTTON_SMALL_PADDING).withDescription(description)
+        val optionBtn = Button("")
+        optionBtn.icon = resource
+        optionBtn.addClassName(WebThemes.BUTTON_SMALL_PADDING)
+        optionBtn.text = description
         when (groupId) {
-            "delete" -> optionBtn.addStyleName(WebThemes.BUTTON_DANGER)
-            else -> optionBtn.addStyleName(WebThemes.BUTTON_ACTION)
+            "delete" -> optionBtn.addClassName(WebThemes.BUTTON_DANGER)
+            else -> optionBtn.addClassName(WebThemes.BUTTON_ACTION)
         }
         group.addButton(optionBtn)
     }
 
     fun addDeleteActionItem() {
-        addActionItem(ViewItemAction.DELETE_ACTION, VaadinIcons.TRASH, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
+        addActionItem(ViewItemAction.DELETE_ACTION, VaadinIcon.TRASH, "delete", UserUIContext.getMessage(GenericI18Enum.BUTTON_DELETE))
     }
 
     fun addMailActionItem() {
