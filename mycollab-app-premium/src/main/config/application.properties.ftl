@@ -9,6 +9,8 @@
 app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
+vaadin.servlet.productionMode=true
+
 server.address=${serveraddress}
 server.apiUrl=https://api.mycollab.com/
 server.storageSystem=file

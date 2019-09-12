@@ -9,6 +9,8 @@
 app.siteName=${sitename}
 app.notifyEmail=${mailNotify}
 
+vaadin.servlet.productionMode=true
+
 server.address=${serveraddress}
 
 # You do not change the rest server information if you are not sure what you are doing
