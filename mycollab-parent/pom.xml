@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>7.0.3</version>
+    <version>7.0.4</version>
     <packaging>pom</packaging>
     <!-- Inherit defaults from Spring Boot -->
     <parent>
@@ -23,7 +23,7 @@
         <mysql.version>8.0.15</mysql.version>
         <jackson.version>2.9.8</jackson.version>
 
-        <kotlin.version>1.3.40</kotlin.version>
+        <kotlin.version>1.3.50</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
 
         <!--Override Spring boot version-->
